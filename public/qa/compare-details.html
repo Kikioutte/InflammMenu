@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Détails de comparaison — Inflamm’Menu</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 24px 52px; background: #ece9df; color: #25311e; font-family: system-ui, sans-serif; }
+      h1 { margin: 0 0 16px; font-size: 16px; text-transform: uppercase; letter-spacing: .06em; }
+      section { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 22px; }
+      figure { margin: 0; }
+      figcaption { margin-bottom: 8px; font-size: 12px; font-weight: 700; }
+      .crop { width: 530px; overflow: hidden; background: white; box-shadow: 0 10px 28px rgba(32, 40, 26, .13); }
+      .crop img { display: block; width: 530px; height: 1149px; object-fit: fill; }
+      .top { height: 575px; }
+      .bottom { height: 315px; }
+      .bottom img { transform: translateY(-834px); }
+    </style>
+  </head>
+  <body>
+    <h1>Hiérarchie, typographie et image</h1>
+    <section>
+      <figure><figcaption>Source — partie haute</figcaption><div class="crop top"><img src="/qa/source-option-1.png" alt="Source partie haute" /></div></figure>
+      <figure><figcaption>Prototype — partie haute</figcaption><div class="crop top"><img src="/qa/implementation-home.png" alt="Prototype partie haute" /></div></figure>
+    </section>
+    <h1>Rythme, détails de repas et navigation</h1>
+    <section>
+      <figure><figcaption>Source — partie basse</figcaption><div class="crop bottom"><img src="/qa/source-option-1.png" alt="Source partie basse" /></div></figure>
+      <figure><figcaption>Prototype — partie basse</figcaption><div class="crop bottom"><img src="/qa/implementation-home.png" alt="Prototype partie basse" /></div></figure>
+    </section>
+  </body>
+</html>
