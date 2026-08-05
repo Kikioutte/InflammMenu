@@ -13,7 +13,7 @@
       "masse": "grammes",
       "volume": "millilitres"
     },
-    "nombre_recettes": 42
+    "nombre_recettes": 50
   },
   "principes_anti_inflammatoires": [
     {
@@ -2680,6 +2680,432 @@
         "titre": "Shot gingembre curcuma citron maison",
         "meta_description": "Shot anti-inflammatoire au gingembre et curcuma frais, citron et poivre noir. Une préparation pour toute la semaine.",
         "mots_cles": ["shot gingembre curcuma", "ginger shot maison", "boisson anti-inflammatoire", "cure gingembre"]
+      }
+    },
+    {
+      "id": "r043",
+      "slug": "skyr-figues-fraiches-pistaches",
+      "titre": "Skyr aux figues fraîches et pistaches concassées",
+      "categorie": "petit-dejeuner",
+      "description": "Un petit-déjeuner sans cuisson, prêt en moins de dix minutes : du skyr bien protéiné garni de figues fraîches et de pistaches concassées pour les fibres et les graisses insaturées. Le miel reste facultatif et minoritaire.",
+      "temps": { "preparation": 8, "cuisson": 0, "repos": 0, "total": 8 },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": ["vegetarien", "sans-gluten"],
+      "saisons": ["ete", "automne"],
+      "tags": ["polyphenols", "probiotiques", "fibres-microbiote", "petit-dejeuner"],
+      "composes_actifs": [
+        { "aliment": "Figues fraîches", "compose": "Fibres solubles et polyphénols", "action": "Contribuent à la santé du microbiote et apportent des composés antioxydants." },
+        { "aliment": "Pistaches", "compose": "Acides gras mono-insaturés et lutéine", "action": "Graisses de bonne qualité associées à un profil lipidique favorable dans les études d'observation." },
+        { "aliment": "Skyr nature", "compose": "Protéines complètes et ferments lactiques", "action": "Apportent une satiété durable; les ferments contribuent aussi à la diversité du microbiote." }
+      ],
+      "ingredients": [
+        { "quantite": 300, "unite": "g", "nom": "skyr nature", "note": "Ou fromage blanc à 0-3 %, très riche en protéines" },
+        { "quantite": 2, "unite": "piece", "nom": "figues fraîches", "note": "Ou 4 figues séchées réhydratées hors saison" },
+        { "quantite": 20, "unite": "g", "nom": "pistaches non salées", "note": "Concassées grossièrement" },
+        { "quantite": 1, "unite": "c. à c.", "nom": "miel", "note": "Facultatif, à doser selon le goût" },
+        { "quantite": 1, "unite": "piece", "nom": "zeste de citron", "note": "Finement râpé" },
+        { "quantite": 6, "unite": "piece", "nom": "feuilles de menthe fraîche", "note": "Facultatif" }
+      ],
+      "etapes": [
+        "Répartir le skyr dans deux bols.",
+        "Couper les figues en quartiers et les répartir sur le skyr.",
+        "Parsemer de pistaches concassées et de zeste de citron.",
+        "Ajouter le miel en filet si souhaité, puis quelques feuilles de menthe."
+      ],
+      "conseils": [
+        "Hors saison des figues fraîches, utiliser des figues séchées réhydratées 15 minutes dans l'eau tiède.",
+        "Le skyr peut être remplacé par un fromage blanc épais pour une version plus légère."
+      ],
+      "substitutions": [
+        { "remplacer": "Skyr", "par": "Fromage blanc 3 % ou yaourt grec", "note": "Légèrement moins riche en protéines" },
+        { "remplacer": "Pistaches", "par": "Amandes effilées", "note": "Autre source de graisses insaturées" },
+        { "remplacer": "Figues fraîches", "par": "Poire ou pêche mûre", "note": "Selon la saison" }
+      ],
+      "conservation": "À préparer juste avant de servir; le skyr et les fruits ne se conservent pas assemblés.",
+      "nutrition_par_portion": { "calories": 230, "proteines_g": 19, "glucides_g": 22, "sucres_g": 16, "lipides_g": 7, "acides_gras_satures_g": 2, "fibres_g": 3, "sodium_mg": 60 },
+      "score_anti_inflammatoire": 6,
+      "image": { "nom_fichier": "skyr-figues-pistaches.jpg", "alt": "Bol de skyr garni de quartiers de figues fraîches, de pistaches concassées et de zeste de citron" },
+      "seo": {
+        "titre": "Bol de skyr anti-inflammatoire, figues et pistaches",
+        "meta_description": "Un petit-déjeuner riche en protéines à base de skyr, figues fraîches et pistaches, prêt en moins de 10 minutes.",
+        "mots_cles": ["skyr figues", "petit-déjeuner riche en protéines", "pistaches anti-inflammatoires"]
+      }
+    },
+    {
+      "id": "r044",
+      "slug": "socca-pois-chiches-tomates-confites",
+      "titre": "Socca de pois chiches aux herbes et tomates confites",
+      "categorie": "petit-dejeuner",
+      "description": "Une galette de farine de pois chiches sans gluten, cuite à la poêle, garnie de tomates cerises confites et de basilic frais. Un petit-déjeuner salé, riche en fibres et en protéines végétales.",
+      "temps": { "preparation": 8, "cuisson": 12, "repos": 0, "total": 20 },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": ["vegetalien", "vegetarien", "sans-gluten", "sans-lactose"],
+      "saisons": ["printemps", "ete"],
+      "tags": ["fibres-microbiote", "oleocanthal", "petit-dejeuner"],
+      "composes_actifs": [
+        { "aliment": "Farine de pois chiches", "compose": "Fibres et protéines végétales", "action": "Ralentissent l'absorption des glucides et nourrissent le microbiote intestinal." },
+        { "aliment": "Tomates cerises confites", "compose": "Lycopène", "action": "Caroténoïde antioxydant, mieux assimilé après cuisson et en présence d'huile d'olive." },
+        { "aliment": "Huile d'olive vierge extra", "compose": "Oléocanthal et acide oléique", "action": "Phénols et graisses mono-insaturées associés à un profil lipidique favorable." }
+      ],
+      "ingredients": [
+        { "quantite": 120, "unite": "g", "nom": "farine de pois chiches", "note": "Aussi appelée farine de gram" },
+        { "quantite": 300, "unite": "ml", "nom": "eau", "note": "" },
+        { "quantite": 3, "unite": "c. à s.", "nom": "huile d'olive vierge extra", "note": "Dont un peu pour la cuisson" },
+        { "quantite": 1, "unite": "pincée", "nom": "sel", "note": "" },
+        { "quantite": 1, "unite": "c. à c.", "nom": "herbes de Provence", "note": "" },
+        { "quantite": 150, "unite": "g", "nom": "tomates cerises", "note": "Coupées en deux, confites au four ou à la poêle" },
+        { "quantite": 6, "unite": "piece", "nom": "feuilles de basilic frais", "note": "" }
+      ],
+      "etapes": [
+        "Dans un saladier, fouetter la farine de pois chiches avec l'eau, une pincée de sel et les herbes de Provence jusqu'à obtenir une pâte lisse sans grumeaux.",
+        "Laisser reposer la pâte 10 minutes à température ambiante pendant la préparation des tomates.",
+        "Faire confire les tomates cerises coupées en deux dans une poêle avec un filet d'huile d'olive, 5 minutes à feu doux.",
+        "Dans une poêle bien chaude et huilée, verser une louche de pâte et cuire 3 à 4 minutes de chaque côté jusqu'à ce que la socca soit dorée.",
+        "Répéter pour former plusieurs galettes. Garnir de tomates confites et de basilic frais avant de servir."
+      ],
+      "conseils": [
+        "Une pâte reposée plus longtemps (jusqu'à 1 heure) donne une texture plus fine, mais la recette fonctionne aussi sans repos long.",
+        "La socca se mange traditionnellement chaude, à la cuillère ou pliée comme une crêpe salée."
+      ],
+      "substitutions": [
+        { "remplacer": "Tomates cerises", "par": "Poivrons rôtis", "note": "Autre légume méditerranéen" },
+        { "remplacer": "Herbes de Provence", "par": "Cumin et paprika fumé", "note": "Version aux épices" }
+      ],
+      "conservation": "Se conserve 2 jours au réfrigérateur; réchauffer à la poêle pour retrouver le croustillant.",
+      "nutrition_par_portion": { "calories": 310, "proteines_g": 12, "glucides_g": 30, "sucres_g": 4, "lipides_g": 15, "acides_gras_satures_g": 2, "fibres_g": 7, "sodium_mg": 340 },
+      "score_anti_inflammatoire": 8,
+      "image": { "nom_fichier": "socca-pois-chiches-tomates.jpg", "alt": "Galettes de socca dorées garnies de tomates cerises confites et de basilic frais" },
+      "seo": {
+        "titre": "Socca de pois chiches sans gluten aux tomates confites",
+        "meta_description": "Une galette de pois chiches croustillante, sans gluten, garnie de tomates cerises confites et de basilic.",
+        "mots_cles": ["socca pois chiches", "recette sans gluten", "farine de pois chiches"]
+      }
+    },
+    {
+      "id": "r045",
+      "slug": "soupe-froide-concombre-yaourt-aneth",
+      "titre": "Soupe froide de concombre, yaourt et aneth",
+      "categorie": "soupe",
+      "description": "Une soupe froide façon tzatziki, mixée en quelques minutes avec du concombre, du yaourt nature et de l'aneth frais. Fraîche et peu transformée, idéale en entrée d'été.",
+      "temps": { "preparation": 12, "cuisson": 0, "repos": 15, "total": 27 },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": ["vegetarien", "sans-gluten"],
+      "saisons": ["ete"],
+      "tags": ["probiotiques", "polyphenols", "dejeuner"],
+      "composes_actifs": [
+        { "aliment": "Concombre", "compose": "Eau, fibres et cucurbitacines", "action": "Contribue à l'hydratation et apporte peu de calories pour un grand volume alimentaire." },
+        { "aliment": "Yaourt nature", "compose": "Ferments lactiques", "action": "Contribuent à la diversité du microbiote intestinal." },
+        { "aliment": "Aneth frais", "compose": "Flavonoïdes", "action": "Composés végétaux antioxydants présents dans les herbes fraîches." }
+      ],
+      "ingredients": [
+        { "quantite": 1, "unite": "piece", "nom": "concombre", "note": "Environ 400 g, pelé si la peau est amère" },
+        { "quantite": 250, "unite": "g", "nom": "yaourt nature", "note": "Ou skyr pour plus de protéines" },
+        { "quantite": 1, "unite": "piece", "nom": "gousse d'ail", "note": "" },
+        { "quantite": 2, "unite": "c. à s.", "nom": "huile d'olive vierge extra", "note": "" },
+        { "quantite": 1, "unite": "piece", "nom": "citron", "note": "Jus, à doser selon l'acidité souhaitée" },
+        { "quantite": 4, "unite": "c. à s.", "nom": "aneth frais ciselé", "note": "" },
+        { "quantite": 15, "unite": "g", "nom": "noix concassées", "note": "En garniture, facultatif" },
+        { "quantite": 1, "unite": "pincée", "nom": "sel", "note": "" }
+      ],
+      "etapes": [
+        "Éplucher le concombre si la peau est amère, puis le couper en morceaux.",
+        "Mixer le concombre avec le yaourt, l'ail, l'huile d'olive et le jus de citron jusqu'à obtenir une texture lisse.",
+        "Assaisonner de sel et incorporer l'aneth ciselé.",
+        "Réserver au réfrigérateur au moins 15 minutes avant de servir bien frais.",
+        "Répartir dans des bols et garnir de noix concassées et d'un filet d'huile d'olive."
+      ],
+      "conseils": [
+        "Pour une texture plus épaisse, égoutter le yaourt 30 minutes dans une passoire tapissée d'un linge avant utilisation.",
+        "Cette soupe se sert idéalement en été, en entrée fraîche."
+      ],
+      "substitutions": [
+        { "remplacer": "Yaourt nature", "par": "Skyr ou fromage blanc", "note": "Pour plus de protéines" },
+        { "remplacer": "Aneth", "par": "Menthe fraîche", "note": "Autre herbe fraîche méditerranéenne" },
+        { "remplacer": "Noix", "par": "Graines de courge", "note": "Pour une version sans fruits à coque" }
+      ],
+      "conservation": "Se garde 24 heures au réfrigérateur dans un contenant hermétique; mélanger avant de servir.",
+      "nutrition_par_portion": { "calories": 180, "proteines_g": 8, "glucides_g": 10, "sucres_g": 7, "lipides_g": 12, "acides_gras_satures_g": 2.5, "fibres_g": 2, "sodium_mg": 220 },
+      "score_anti_inflammatoire": 6,
+      "image": { "nom_fichier": "soupe-froide-concombre-yaourt.jpg", "alt": "Bol de soupe froide au concombre et au yaourt, parsemée d'aneth frais et de noix concassées" },
+      "seo": {
+        "titre": "Soupe froide concombre, yaourt et aneth",
+        "meta_description": "Une soupe fraîche et légère au concombre, au yaourt nature et à l'aneth, idéale en été.",
+        "mots_cles": ["soupe froide concombre", "recette anti-inflammatoire été", "tzatziki soupe"]
+      }
+    },
+    {
+      "id": "r046",
+      "slug": "soupe-poisson-blanc-fenouil-safran",
+      "titre": "Soupe de poisson blanc, fenouil, tomate et safran",
+      "categorie": "soupe",
+      "description": "Une soupe méditerranéenne mijotée avec du poisson blanc, du fenouil, de la tomate et quelques pistils de safran. Un plat réconfortant et riche en protéines maigres.",
+      "temps": { "preparation": 15, "cuisson": 20, "repos": 0, "total": 35 },
+      "portions": 3,
+      "difficulte": "intermediaire",
+      "cout": "moyen",
+      "regimes": ["pescetarien", "sans-gluten", "sans-lactose"],
+      "saisons": ["automne", "hiver"],
+      "tags": ["omega-3", "polyphenols", "diner"],
+      "composes_actifs": [
+        { "aliment": "Cabillaud ou lieu noir", "compose": "Protéines maigres", "action": "Poisson blanc peu gras, source de protéines de bonne qualité." },
+        { "aliment": "Fenouil", "compose": "Anéthol et fibres", "action": "Composé aromatique aux propriétés digestives traditionnellement reconnues." },
+        { "aliment": "Safran", "compose": "Crocine et safranal", "action": "Caroténoïdes colorés étudiés pour leurs propriétés antioxydantes, en petite quantité culinaire." }
+      ],
+      "ingredients": [
+        { "quantite": 400, "unite": "g", "nom": "filet de cabillaud ou lieu noir", "note": "Coupé en morceaux" },
+        { "quantite": 1, "unite": "piece", "nom": "fenouil", "note": "Émincé, fanes réservées" },
+        { "quantite": 1, "unite": "piece", "nom": "oignon", "note": "Émincé" },
+        { "quantite": 2, "unite": "piece", "nom": "gousses d'ail", "note": "" },
+        { "quantite": 400, "unite": "g", "nom": "tomates concassées", "note": "En conserve, sans sel ajouté si possible" },
+        { "quantite": 600, "unite": "ml", "nom": "bouillon de légumes peu salé", "note": "" },
+        { "quantite": 1, "unite": "pincée", "nom": "pistils de safran", "note": "" },
+        { "quantite": 2, "unite": "c. à s.", "nom": "huile d'olive vierge extra", "note": "" },
+        { "quantite": 3, "unite": "c. à s.", "nom": "persil plat ciselé", "note": "" }
+      ],
+      "etapes": [
+        "Émincer le fenouil, l'oignon et l'ail.",
+        "Faire suer l'oignon et le fenouil dans l'huile d'olive à feu doux pendant 5 minutes, sans coloration.",
+        "Ajouter l'ail, les tomates concassées, le bouillon et le safran. Porter à frémissement.",
+        "Laisser mijoter à couvert 15 minutes pour que les saveurs se concentrent.",
+        "Ajouter les morceaux de poisson et poursuivre la cuisson 5 à 6 minutes à feu doux, jusqu'à ce que le poisson soit cuit à cœur.",
+        "Parsemer de persil frais avant de servir."
+      ],
+      "conseils": [
+        "Ne pas faire bouillir fort une fois le poisson ajouté, pour préserver sa texture.",
+        "Un filet d'huile d'olive cru en finition renforce les arômes du safran."
+      ],
+      "substitutions": [
+        { "remplacer": "Cabillaud", "par": "Lieu noir ou dorade", "note": "Autre poisson blanc à chair ferme" },
+        { "remplacer": "Safran", "par": "Curcuma et une lanière de zeste d'orange", "note": "Alternative économique, saveur différente" }
+      ],
+      "conservation": "Se garde 24 heures au réfrigérateur; le poisson est délicat à réchauffer, privilégier une remise à température douce.",
+      "nutrition_par_portion": { "calories": 260, "proteines_g": 28, "glucides_g": 12, "sucres_g": 7, "lipides_g": 10, "acides_gras_satures_g": 1.5, "fibres_g": 4, "sodium_mg": 430 },
+      "score_anti_inflammatoire": 7,
+      "image": { "nom_fichier": "soupe-poisson-fenouil-safran.jpg", "alt": "Soupe de poisson blanc au fenouil, à la tomate et au safran, parsemée de persil" },
+      "seo": {
+        "titre": "Soupe de poisson blanc au fenouil et au safran",
+        "meta_description": "Une soupe méditerranéenne de poisson blanc, fenouil, tomate et safran, riche en protéines.",
+        "mots_cles": ["soupe de poisson", "fenouil safran", "recette méditerranéenne"]
+      }
+    },
+    {
+      "id": "r047",
+      "slug": "salade-pois-chiches-rotis-feta-grenade",
+      "titre": "Salade de pois chiches rôtis, feta et grenade",
+      "categorie": "salade",
+      "description": "Des pois chiches rôtis au four jusqu'à devenir dorés, mélangés à du concombre, de la grenade et de la feta émiettée. Une salade riche en fibres et en protéines végétales.",
+      "temps": { "preparation": 15, "cuisson": 20, "repos": 0, "total": 35 },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": ["vegetarien", "sans-gluten"],
+      "saisons": ["automne", "hiver"],
+      "tags": ["fibres-microbiote", "polyphenols", "oleocanthal", "dejeuner"],
+      "composes_actifs": [
+        { "aliment": "Pois chiches", "compose": "Fibres et protéines végétales", "action": "Ralentissent la réponse glycémique et nourrissent le microbiote." },
+        { "aliment": "Grenade", "compose": "Punicalagines", "action": "Polyphénols spécifiques à la grenade, étudiés pour leur activité antioxydante." },
+        { "aliment": "Huile d'olive vierge extra", "compose": "Oléocanthal", "action": "Phénol dont le mécanisme d'action rappelle celui de l'ibuprofène à très faible dose." }
+      ],
+      "ingredients": [
+        { "quantite": 300, "unite": "g", "nom": "pois chiches cuits", "note": "Rincés et égouttés" },
+        { "quantite": 1, "unite": "piece", "nom": "concombre", "note": "Coupé en dés" },
+        { "quantite": 80, "unite": "g", "nom": "feta", "note": "Émiettée" },
+        { "quantite": 60, "unite": "g", "nom": "graines de grenade", "note": "" },
+        { "quantite": 4, "unite": "c. à s.", "nom": "menthe fraîche ciselée", "note": "" },
+        { "quantite": 2, "unite": "c. à s.", "nom": "huile d'olive vierge extra", "note": "" },
+        { "quantite": 1, "unite": "piece", "nom": "citron", "note": "Jus" },
+        { "quantite": 1, "unite": "c. à c.", "nom": "cumin en poudre", "note": "" }
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C.",
+        "Égoutter et sécher les pois chiches, les mélanger avec un filet d'huile d'olive, le cumin et une pincée de sel.",
+        "Étaler sur une plaque et rôtir 18 à 20 minutes en remuant à mi-cuisson, jusqu'à ce qu'ils soient dorés et légèrement croustillants.",
+        "Pendant ce temps, couper le concombre en dés et égrener la grenade.",
+        "Mélanger les pois chiches tièdes avec le concombre, la grenade, la feta émiettée et la menthe.",
+        "Assaisonner avec le jus de citron et l'huile d'olive restante."
+      ],
+      "conseils": [
+        "Servir les pois chiches encore tièdes pour un contraste de textures avec les ingrédients frais.",
+        "La grenade peut se préparer à l'avance et se conserver égrenée au réfrigérateur 2 jours."
+      ],
+      "substitutions": [
+        { "remplacer": "Feta", "par": "Fromage de chèvre frais", "note": "Autre fromage à pâte fraîche" },
+        { "remplacer": "Grenade", "par": "Raisins secs ou dés de pomme", "note": "Selon la saison" }
+      ],
+      "conservation": "Se garde 24 heures au réfrigérateur; ajouter la feta et l'assaisonnement au moment de servir pour préserver les textures.",
+      "nutrition_par_portion": { "calories": 340, "proteines_g": 15, "glucides_g": 28, "sucres_g": 9, "lipides_g": 18, "acides_gras_satures_g": 5, "fibres_g": 9, "sodium_mg": 430 },
+      "score_anti_inflammatoire": 7,
+      "image": { "nom_fichier": "salade-pois-chiches-feta-grenade.jpg", "alt": "Salade de pois chiches rôtis, feta émiettée, concombre et graines de grenade" },
+      "seo": {
+        "titre": "Salade de pois chiches rôtis, feta et grenade",
+        "meta_description": "Pois chiches rôtis au four, feta, concombre et grenade : une salade riche en fibres et en protéines végétales.",
+        "mots_cles": ["salade pois chiches rôtis", "feta grenade", "recette méditerranéenne"]
+      }
+    },
+    {
+      "id": "r048",
+      "slug": "salade-riz-complet-edamame-sesame",
+      "titre": "Salade de riz complet, edamame, carotte et sésame",
+      "categorie": "salade",
+      "description": "Une salade froide qui associe riz complet, edamame et carotte râpée, relevée d'une sauce tamari-gingembre-sésame. Rapide à préparer avec du riz déjà cuit.",
+      "temps": { "preparation": 15, "cuisson": 5, "repos": 0, "total": 20 },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": ["vegetalien", "vegetarien", "sans-gluten", "sans-lactose"],
+      "saisons": ["ete", "toute-annee"],
+      "tags": ["fibres-microbiote", "polyphenols", "dejeuner"],
+      "composes_actifs": [
+        { "aliment": "Edamame", "compose": "Protéines de soja et isoflavones", "action": "Légumineuse complète en acides aminés, source de composés végétaux étudiés pour la santé cardiovasculaire." },
+        { "aliment": "Riz complet", "compose": "Fibres et magnésium", "action": "Céréale complète qui limite les pics glycémiques par rapport au riz blanc." },
+        { "aliment": "Graines de sésame", "compose": "Lignanes (sésamine)", "action": "Polyphénols végétaux associés à un profil antioxydant favorable." }
+      ],
+      "ingredients": [
+        { "quantite": 300, "unite": "g", "nom": "riz complet cuit", "note": "Refroidi, idéalement cuit la veille" },
+        { "quantite": 150, "unite": "g", "nom": "edamame écossés", "note": "Cuits, frais ou surgelés" },
+        { "quantite": 1, "unite": "piece", "nom": "carotte", "note": "Râpée" },
+        { "quantite": 2, "unite": "c. à s.", "nom": "graines de sésame", "note": "" },
+        { "quantite": 1, "unite": "c. à s.", "nom": "tamari réduit en sel", "note": "" },
+        { "quantite": 1, "unite": "c. à c.", "nom": "huile de sésame grillé", "note": "" },
+        { "quantite": 1, "unite": "c. à c.", "nom": "gingembre frais râpé", "note": "" },
+        { "quantite": 3, "unite": "c. à s.", "nom": "coriandre fraîche", "note": "Facultatif" }
+      ],
+      "etapes": [
+        "Dans un saladier, détendre le riz complet cuit à la fourchette.",
+        "Réchauffer brièvement les edamame 3 à 4 minutes à la vapeur ou dans une casserole d'eau frémissante s'ils sont surgelés, puis égoutter.",
+        "Ajouter les edamame, la carotte râpée, les graines de sésame et la coriandre au riz.",
+        "Dans un petit bol, mélanger le tamari, l'huile de sésame et le gingembre râpé.",
+        "Verser la sauce sur la salade et mélanger délicatement. Servir à température ambiante ou frais."
+      ],
+      "conseils": [
+        "Utiliser du riz cuit la veille et refroidi : sa texture tient mieux en salade qu'un riz tout juste cuit.",
+        "Ajouter la sauce au tamari progressivement pour ajuster le sel selon le goût."
+      ],
+      "substitutions": [
+        { "remplacer": "Edamame", "par": "Petits pois", "note": "Autre légumineuse verte" },
+        { "remplacer": "Riz complet", "par": "Quinoa ou riz semi-complet", "note": "Autre céréale complète" }
+      ],
+      "conservation": "Se garde 2 jours au réfrigérateur dans un contenant hermétique.",
+      "nutrition_par_portion": { "calories": 360, "proteines_g": 13, "glucides_g": 52, "sucres_g": 5, "lipides_g": 11, "acides_gras_satures_g": 1.5, "fibres_g": 7, "sodium_mg": 340 },
+      "score_anti_inflammatoire": 7,
+      "image": { "nom_fichier": "salade-riz-edamame-sesame.jpg", "alt": "Bol de riz complet, edamame, carotte râpée et graines de sésame" },
+      "seo": {
+        "titre": "Salade de riz complet, edamame et sésame",
+        "meta_description": "Une salade froide de riz complet, edamame et graines de sésame, sauce tamari-gingembre.",
+        "mots_cles": ["salade riz complet", "edamame sésame", "recette végétalienne"]
+      }
+    },
+    {
+      "id": "r049",
+      "slug": "crevettes-ail-persil-quinoa-citronne",
+      "titre": "Crevettes à l'ail et au persil, quinoa citronné",
+      "categorie": "plat",
+      "description": "Des crevettes saisies à la poêle avec ail et persil, servies sur un quinoa citronné et des tomates cerises. Un plat marin léger en graisses saturées et riche en protéines.",
+      "temps": { "preparation": 15, "cuisson": 12, "repos": 0, "total": 27 },
+      "portions": 2,
+      "difficulte": "intermediaire",
+      "cout": "eleve",
+      "regimes": ["pescetarien", "sans-gluten", "sans-lactose"],
+      "saisons": ["printemps", "ete"],
+      "tags": ["polyphenols", "diner", "batch-cooking"],
+      "composes_actifs": [
+        { "aliment": "Crevettes", "compose": "Protéines maigres et astaxanthine", "action": "Fruits de mer peu gras; l'astaxanthine est le pigment antioxydant responsable de leur couleur rosée." },
+        { "aliment": "Ail", "compose": "Composés organosulfurés (allicine)", "action": "Composés aromatiques étudiés pour leur activité antioxydante." },
+        { "aliment": "Huile d'olive vierge extra", "compose": "Acide oléique", "action": "Graisse mono-insaturée associée à un profil cardiovasculaire favorable." }
+      ],
+      "ingredients": [
+        { "quantite": 250, "unite": "g", "nom": "crevettes décortiquées", "note": "Crues, déveinées" },
+        { "quantite": 3, "unite": "piece", "nom": "gousses d'ail", "note": "Émincées" },
+        { "quantite": 4, "unite": "c. à s.", "nom": "persil plat ciselé", "note": "" },
+        { "quantite": 2, "unite": "c. à s.", "nom": "huile d'olive vierge extra", "note": "" },
+        { "quantite": 1, "unite": "piece", "nom": "citron", "note": "Zeste et jus" },
+        { "quantite": 1, "unite": "pincée", "nom": "piment doux", "note": "Facultatif" },
+        { "quantite": 160, "unite": "g", "nom": "quinoa cru", "note": "Rincé avant cuisson" },
+        { "quantite": 100, "unite": "g", "nom": "tomates cerises", "note": "Coupées en deux" }
+      ],
+      "etapes": [
+        "Décortiquer et éponger les crevettes si nécessaire.",
+        "Faire cuire le quinoa selon les instructions, puis l'assaisonner avec le zeste de citron et un filet d'huile d'olive.",
+        "Dans une poêle chaude avec le reste de l'huile d'olive, saisir les crevettes 2 minutes de chaque côté jusqu'à ce qu'elles soient roses et opaques.",
+        "Ajouter l'ail émincé et le piment doux en fin de cuisson pour éviter qu'ils ne brûlent, cuire 1 minute.",
+        "Ajouter le jus de citron, le persil et les tomates cerises, mélanger hors du feu.",
+        "Servir les crevettes sur le quinoa citronné."
+      ],
+      "conseils": [
+        "Cuire les crevettes jusqu'à ce qu'elles soient bien roses et opaques à cœur, sans les dessécher.",
+        "Des crevettes surgelées décongelées au réfrigérateur conviennent très bien pour cette recette."
+      ],
+      "substitutions": [
+        { "remplacer": "Crevettes", "par": "Dés de cabillaud", "note": "Version sans crustacés" },
+        { "remplacer": "Quinoa", "par": "Boulgour ou riz complet", "note": "Autre céréale complète" }
+      ],
+      "conservation": "À consommer de préférence le jour même; les crevettes cuites se gardent 24 heures au réfrigérateur.",
+      "nutrition_par_portion": { "calories": 410, "proteines_g": 30, "glucides_g": 40, "sucres_g": 3, "lipides_g": 14, "acides_gras_satures_g": 2, "fibres_g": 5, "sodium_mg": 380 },
+      "score_anti_inflammatoire": 7,
+      "image": { "nom_fichier": "crevettes-ail-persil-quinoa.jpg", "alt": "Crevettes poêlées à l'ail et au persil servies sur un quinoa citronné" },
+      "seo": {
+        "titre": "Crevettes à l'ail et au persil, quinoa citronné",
+        "meta_description": "Crevettes poêlées à l'ail et au persil servies sur un quinoa citronné, riches en protéines maigres.",
+        "mots_cles": ["crevettes ail persil", "quinoa citronné", "recette de la mer"]
+      }
+    },
+    {
+      "id": "r050",
+      "slug": "porridge-sarrasin-potiron-pecan",
+      "titre": "Porridge de sarrasin au potiron, noix de pécan et cannelle",
+      "categorie": "petit-dejeuner",
+      "description": "Un porridge sans gluten à base de gruau de sarrasin et de purée de potiron, parfumé à la cannelle et garni de noix de pécan. Prêt en moins de vingt minutes.",
+      "temps": { "preparation": 5, "cuisson": 12, "repos": 0, "total": 17 },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": ["vegetalien", "vegetarien", "sans-gluten", "sans-lactose"],
+      "saisons": ["automne", "hiver"],
+      "tags": ["fibres-microbiote", "polyphenols", "petit-dejeuner", "batch-cooking"],
+      "composes_actifs": [
+        { "aliment": "Sarrasin", "compose": "Rutine et fibres", "action": "Pseudo-céréale sans gluten riche en flavonoïdes et en fibres." },
+        { "aliment": "Potiron", "compose": "Bêta-carotène", "action": "Caroténoïde antioxydant, précurseur de la vitamine A." },
+        { "aliment": "Noix de pécan", "compose": "Acides gras insaturés", "action": "Graisses de bonne qualité et petite quantité de polyphénols." },
+        { "aliment": "Cannelle de Ceylan", "compose": "Cinnamaldéhyde", "action": "Contribue à la sensibilité à l'insuline et apporte des polyphénols." }
+      ],
+      "ingredients": [
+        { "quantite": 90, "unite": "g", "nom": "gruau de sarrasin", "note": "Kasha, naturellement sans gluten" },
+        { "quantite": 300, "unite": "ml", "nom": "boisson végétale non sucrée", "note": "" },
+        { "quantite": 150, "unite": "g", "nom": "purée de potiron", "note": "Maison ou en conserve nature" },
+        { "quantite": 1, "unite": "c. à c.", "nom": "cannelle de Ceylan en poudre", "note": "" },
+        { "quantite": 20, "unite": "g", "nom": "noix de pécan concassées", "note": "" },
+        { "quantite": 1, "unite": "c. à c.", "nom": "sirop d'érable", "note": "Facultatif" },
+        { "quantite": 1, "unite": "pincée", "nom": "sel", "note": "" }
+      ],
+      "etapes": [
+        "Verser le gruau de sarrasin, la boisson végétale et la purée de potiron dans une casserole.",
+        "Ajouter la cannelle et une pincée de sel, mélanger.",
+        "Porter à frémissement puis cuire à feu doux 10 à 12 minutes en remuant régulièrement, jusqu'à ce que le porridge épaississe.",
+        "Répartir dans des bols et garnir de noix de pécan concassées.",
+        "Ajouter un filet de sirop d'érable si souhaité."
+      ],
+      "conseils": [
+        "La purée de potiron en conserve nature (sans sucre ajouté) convient très bien hors saison.",
+        "Le gruau de sarrasin peut être remplacé par des flocons de sarrasin pour une cuisson plus rapide."
+      ],
+      "substitutions": [
+        { "remplacer": "Potiron", "par": "Patate douce cuite écrasée", "note": "Même texture, saveur plus sucrée" },
+        { "remplacer": "Noix de pécan", "par": "Graines de courge", "note": "Pour une version sans fruits à coque" }
+      ],
+      "conservation": "Se garde 3 jours au réfrigérateur; réchauffer avec un peu de boisson végétale.",
+      "nutrition_par_portion": { "calories": 340, "proteines_g": 9, "glucides_g": 48, "sucres_g": 9, "lipides_g": 13, "acides_gras_satures_g": 2, "fibres_g": 7, "sodium_mg": 90 },
+      "score_anti_inflammatoire": 8,
+      "image": { "nom_fichier": "porridge-sarrasin-potiron-pecan.jpg", "alt": "Bol de porridge de sarrasin au potiron, garni de noix de pécan et de cannelle" },
+      "seo": {
+        "titre": "Porridge de sarrasin au potiron et à la cannelle",
+        "meta_description": "Un porridge sans gluten au sarrasin, potiron et cannelle, garni de noix de pécan.",
+        "mots_cles": ["porridge sarrasin", "petit-déjeuner sans gluten", "potiron cannelle"]
       }
     }
   ]

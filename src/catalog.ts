@@ -129,6 +129,14 @@ export const CATALOGUE_REVIEWS = {
   r040: { status: "caution", summary: "Poisson, haricots verts, aromates et épices composent une base intéressante.", caution: "Choisir du lait de coco léger, limiter l'huile de coco et doser la sauce de poisson pour contenir graisses saturées et sodium." },
   r041: { status: "validated", summary: "Haricots blancs, champignons, verdure, noisettes et huile d'olive forment un plat végétal riche en fibres." },
   r042: { status: "caution", summary: "Petite boisson concentrée en gingembre et agrumes, à considérer comme une préparation culinaire ponctuelle.", caution: "Elle ne traite pas l'inflammation. Prudence en cas de reflux, calculs biliaires ou traitement; l'acidité impose aussi de protéger l'émail dentaire." },
+  r043: { status: "validated", summary: "Skyr, figues fraîches et pistaches offrent un petit-déjeuner riche en protéines, fibres et graisses insaturées; le miel reste facultatif et minoritaire." },
+  r044: { status: "validated", summary: "Farine de pois chiches, tomates et huile d'olive composent une base végétale sans gluten et peu transformée." },
+  r045: { status: "validated", summary: "Concombre, yaourt nature et aneth forment une soupe froide fraîche et peu transformée." },
+  r046: { status: "caution", summary: "Poisson blanc, fenouil, tomate et safran forment une soupe méditerranéenne riche en protéines maigres.", caution: "Le bouillon et le poisson apportent du sodium: choisir un bouillon peu salé et ne pas resaler en fin de cuisson." },
+  r047: { status: "caution", summary: "Pois chiches rôtis, concombre, grenade et feta offrent fibres et protéines végétales.", caution: "La feta est salée: en utiliser une quantité modérée et ne pas resaler la salade." },
+  r048: { status: "caution", summary: "Riz complet, edamame, carotte et sésame apportent céréale complète, protéines végétales et graisses insaturées.", caution: "Choisir un tamari réduit en sel et doser la sauce progressivement." },
+  r049: { status: "validated", summary: "Crevettes, ail, persil, huile d'olive et quinoa complet forment une assiette légère en graisses saturées, riche en protéines marines." },
+  r050: { status: "validated", summary: "Sarrasin, potiron, cannelle et noix de pécan composent un porridge sans gluten riche en fibres." },
 } as const satisfies Record<string, CatalogueRecipeReview>;
 
 export function reviewFor(recipe: CatalogueRecipe): CatalogueRecipeReview {
@@ -146,11 +154,11 @@ function normalize(value: string): string {
 
 function categoryForIngredient(name: string): IngredientCategory {
   const normalized = normalize(name);
-  if (/(saumon|maquereau|sardine|anchois|cabillaud|poisson|poulet)/.test(normalized)) return "meat-fish";
+  if (/(saumon|maquereau|sardine|anchois|cabillaud|poisson|poulet|crevette|gambas|langoustine)/.test(normalized)) return "meat-fish";
   if (/(pain|levain)/.test(normalized)) return "bakery";
   if (/(boisson-vegetale|eau-de-coco|the-vert)/.test(normalized)) return "beverage";
-  if (/(oeuf|tofu|feta|fromage|yaourt)/.test(normalized)) return "fresh";
-  if (/(carotte|epinard|myrtille|grenade|ananas|avocat|citron|menthe|oignon|ail|gingembre|brocoli|patate|chou|roquette|tomate|fenouil|persil|aneth|poivron|aubergine|betterave|pomme|champignon|coriandre|basilic|haricot-vert|pois-gourmand|panais|celeri)/.test(normalized)) return "fruit-vegetable";
+  if (/(oeuf|tofu|feta|fromage|yaourt|skyr)/.test(normalized)) return "fresh";
+  if (/(carotte|epinard|myrtille|grenade|ananas|avocat|citron|menthe|oignon|ail|gingembre|brocoli|patate|chou|roquette|tomate|fenouil|persil|aneth|poivron|aubergine|betterave|pomme|champignon|coriandre|basilic|haricot-vert|pois-gourmand|panais|celeri|concombre|figue|potiron)/.test(normalized)) return "fruit-vegetable";
   return "grocery";
 }
 
@@ -174,8 +182,9 @@ function allergensFor(recipe: CatalogueRecipe): string[] {
   if (/(moutarde)/.test(names)) allergens.add("moutarde");
   if (/(celeri)/.test(names)) allergens.add("celeri");
   if (/(saumon|maquereau|sardine|anchois|cabillaud|poisson)/.test(names)) allergens.add("poisson");
+  if (/(crevette|gambas|langoustine|crabe|homard)/.test(names)) allergens.add("crustaces");
   if (/(amande|noix(?!-de-coco)|pistache|noisette|pignon)/.test(names)) allergens.add("fruits-a-coque");
-  if (/(feta|fromage|yaourt|lait(?!-de-coco)|beurre)/.test(names)) allergens.add("lait");
+  if (/(feta|fromage|yaourt|skyr|lait(?!-de-coco)|beurre)/.test(names)) allergens.add("lait");
   return [...allergens];
 }
 
@@ -211,6 +220,7 @@ function seasonsFor(recipe: CatalogueRecipe): readonly Season[] {
 
 function imageFor(recipe: CatalogueRecipe): string {
   const title = normalize(recipe.titre);
+  if (title.includes("crevette")) return "/assets/inflamm-hero-bowl.png";
   if (title.includes("saumon")) return "/assets/recipes/saumon-brocoli-riz-complet.png";
   if (title.includes("maquereau")) return "/assets/recipes/salade-maquereau-betterave-pomme-terre.png";
   if (title.includes("sardine")) return "/assets/recipes/salade-sardines-pommes-terre-haricots.png";
@@ -221,6 +231,8 @@ function imageFor(recipe: CatalogueRecipe): string {
   if (title.includes("quinoa")) return "/assets/recipes/bowl-quinoa-legumes-houmous.png";
   if (title.includes("omelette")) return "/assets/recipes/omelette-legumes-quinoa.png";
   if (title.includes("avoine") || title.includes("chia")) return "/assets/recipes/overnight-oats-myrtilles-noix.png";
+  if (title.includes("porridge")) return "/assets/recipes/porridge-millet-pomme.png";
+  if (title.includes("skyr") || title.includes("figue")) return "/assets/recipes/yaourt-pomme-amandes.png";
   return "/assets/inflamm-hero-bowl.png";
 }
 

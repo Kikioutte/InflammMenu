@@ -10,11 +10,11 @@ const catalogue = JSON.parse(await readFile(dataUrl, "utf8"));
 const catalogueSource = await readFile(sourceUrl, "utf8");
 const prototypeSource = await readFile(prototypeUrl, "utf8");
 
-test("the imported catalogue contains 42 complete and internally consistent recipes", () => {
-  assert.equal(catalogue.recipes.length, 42);
-  assert.equal(catalogue.meta.nombre_recettes, 42);
-  assert.equal(new Set(catalogue.recipes.map((recipe) => recipe.id)).size, 42);
-  assert.equal(new Set(catalogue.recipes.map((recipe) => recipe.slug)).size, 42);
+test("the imported catalogue contains 50 complete and internally consistent recipes", () => {
+  assert.equal(catalogue.recipes.length, 50);
+  assert.equal(catalogue.meta.nombre_recettes, 50);
+  assert.equal(new Set(catalogue.recipes.map((recipe) => recipe.id)).size, 50);
+  assert.equal(new Set(catalogue.recipes.map((recipe) => recipe.slug)).size, 50);
 
   for (const recipe of catalogue.recipes) {
     assert.equal(
@@ -30,7 +30,7 @@ test("the imported catalogue contains 42 complete and internally consistent reci
 
 test("every recipe has an explicit editorial review", () => {
   const reviewedIds = [...catalogueSource.matchAll(/^\s{2}(r\d{3}): \{/gm)].map((match) => match[1]);
-  assert.equal(reviewedIds.length, 42);
+  assert.equal(reviewedIds.length, 50);
   assert.deepEqual(new Set(reviewedIds), new Set(catalogue.recipes.map((recipe) => recipe.id)));
 });
 
