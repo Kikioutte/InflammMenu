@@ -2,12 +2,14 @@
 
 ## Statut
 
-Ce lot contient 25 brouillons complets conformes au socle du catalogue v2 et enrichis de propositions v2.1 non encore intégrées au code :
+Ce lot contient 25 brouillons complets conformes au schéma `2.1.0`, sans être intégrés au catalogue publié :
 
-- `meta.schema_version: 2.1.0-draft` avec référence explicite au schéma `2.0.0` ;
-- `app.review.stage: draft`, tout en conservant `status: caution` compris par le modèle v2 actuel ;
-- `nutrition_par_portion.estimation` avec statut, méthode et provenance ;
-- `score_note` pour signaler que l'indice éditorial n'a pas encore été attribué.
+- chaque ingrédient possède un identifiant canonique, une quantité et une unité normalisées, ainsi que `facultatif: false` ;
+- `app.planner.active_minutes` distingue le temps actif du temps total ;
+- les allergènes du planificateur sont exactement l'union des allergènes des ingrédients, dans le vocabulaire contrôlé ;
+- la provenance racine identifie ces créations originales, mais ne revendique encore aucune source nutritionnelle ou tarifaire ;
+- `app.review.stage: draft` et `status: caution` restent explicites ;
+- `nutrition_par_portion.estimation` et `score_note` signalent que les chiffres et l'indice éditorial ne sont pas validés.
 
 Toutes les recettes ont `app.planner.eligible: false`. Aucune ne doit entrer dans la génération de menus avant test culinaire, recalcul nutritionnel, vérification des allergènes, contrôle du coût et validation éditoriale.
 
@@ -17,8 +19,9 @@ Toutes les recettes ont `app.planner.eligible: false`. Aucune ne doit entrer dan
 - **Allergènes** : la liste couvre les allergènes évidents de la formulation. Une validation finale doit vérifier chaque référence commerciale, les mentions « peut contenir » et les contaminations croisées.
 - **Coûts** : les estimations sont indicatives, sans date, enseigne, zone géographique ni prix source. Elles doivent être recalculées avec une grille tarifaire versionnée.
 - **Portions** : 2 à 4 portions ont été utilisées. Le poids final par portion doit être mesuré lors des essais.
+- **Temps actif** : `active_minutes` est une estimation éditoriale fondée sur les étapes ; il doit être chronométré pendant les essais culinaires.
 - **Score éditorial** : `score_anti_inflammatoire` vaut provisoirement `0` pour rester compatible avec le type v2. Cela signifie « non évalué », pas « mauvais profil » ; la v2.1 devrait permettre `null` ou un état séparé.
-- **Matériel** : le vocabulaire v2 ne prévoit que `oven`, `hob` et `blender`. `r066` nécessite un gaufrier mais conserve provisoirement `hob` comme catégorie de cuisson ; ajouter `waffle-maker` au schéma avant validation.
+- **Matériel** : le vocabulaire v2.1 prévoit `hob`, `oven`, `microwave`, `blender`, `toaster` et `steamer`. `r066` nécessite néanmoins un gaufrier et conserve provisoirement `hob` comme catégorie de cuisson ; ajouter `waffle-maker` au schéma avant validation.
 
 ## Points à vérifier par recette
 

@@ -7,6 +7,7 @@
     "check:runtime": "node scripts/check-mobile-runtime.mjs",
     "validate:catalogue": "node scripts/validate-catalogue.mjs",
     "validate:research": "node scripts/validate-recipe-research.mjs",
+    "validate:pilots": "node scripts/validate-pilot-batches.mjs",
     "update:runtime-lock": "node scripts/update-mobile-runtime-lock.mjs",
     "build:pages": "npm run check:runtime && tsc && vite build --base=/InflammMenu/ --outDir dist/pages && node scripts/prepare-github-pages.mjs",
     "test:runtime": "playwright test",

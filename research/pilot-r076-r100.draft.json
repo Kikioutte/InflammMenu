@@ -1,0 +1,5325 @@
+{
+  "meta": {
+    "schema_version": "2.1.0",
+    "status": "draft",
+    "nombre_recettes": 25,
+    "avertissement": "Lot de travail non publié. Les valeurs nutritionnelles et les coûts sont estimés; chaque recette doit être testée et relue avant intégration.",
+    "licence": "CC BY-SA 4.0",
+    "medical_notice": "Ces recettes s'inscrivent dans un modèle alimentaire varié et ne revendiquent aucun effet thérapeutique."
+  },
+  "categories": [
+    {
+      "id": "petit-dejeuner",
+      "nom": "Petits-déjeuners",
+      "description": "Recettes matinales sucrées ou salées."
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r076",
+      "slug": "tartine-petits-pois-menthe-radis",
+      "titre": "Tartine de petits pois, menthe et radis",
+      "categorie": "petit-dejeuner",
+      "description": "Une tartine printanière garnie d'un écrasé de petits pois citronné, de radis croquants et de menthe fraîche.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 6,
+        "repos": 0,
+        "total": 21
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pain-levain-complet",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "tranches de pain au levain complet",
+          "note": "Environ 160 g",
+          "categorie_courses": "bakery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "petits-pois",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petits pois",
+          "note": "Frais ou surgelés",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "radis-rose",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "radis roses",
+          "note": "Finement émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 10,
+          "unite": "g",
+          "quantite_normalisee": 10,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "Feuilles seulement",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les petits pois 5 à 6 minutes dans une petite casserole d'eau frémissante, puis les égoutter.",
+        "Écraser les petits pois avec l'huile, le jus et le zeste de citron, puis incorporer la menthe ciselée.",
+        "Griller les tranches de pain jusqu'à ce qu'elles soient fermes et légèrement dorées.",
+        "Répartir l'écrasé sur le pain, ajouter les radis et servir aussitôt."
+      ],
+      "conseils": [
+        "Garder quelques petits pois entiers pour une texture moins uniforme."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pain au levain complet",
+          "par": "Pain complet sans gluten certifié",
+          "note": "À utiliser si nécessaire; vérifier les autres allergènes"
+        }
+      ],
+      "conservation": "Écrasé de petits pois : 2 jours au réfrigérateur. Griller et garnir le pain au moment de servir.",
+      "nutrition_par_portion": {
+        "calories": 390,
+        "proteines_g": 17,
+        "glucides_g": 60,
+        "sucres_g": 8,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 14,
+        "sodium_mg": 420,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r076-tartine-petits-pois-menthe-radis.jpg",
+        "alt": "Tartine de petits pois, menthe et radis"
+      },
+      "seo": {
+        "titre": "Tartine de petits pois, menthe et radis",
+        "meta_description": "Tartine de petits pois, menthe et radis, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "tartine de petits pois",
+          "menthe et radis"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Tartine de petits pois, menthe et radis",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : gluten. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.8,
+          "active_minutes": 18,
+          "equipment": [
+            "hob",
+            "toaster"
+          ],
+          "allergens": [
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r077",
+      "slug": "pancakes-quinoa-banane-noix",
+      "titre": "Pancakes de quinoa à la banane et aux noix",
+      "categorie": "petit-dejeuner",
+      "description": "De petits pancakes moelleux à la farine de quinoa, banane et cannelle, servis avec des noix concassées.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 16,
+        "repos": 5,
+        "total": 33
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-quinoa",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de quinoa",
+          "note": "Certifiée sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "banane",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bananes mûres",
+          "note": "Environ 220 g de chair",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oeuf-poule",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "Calibre moyen",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "boisson-soja-non-sucree",
+          "quantite": 120,
+          "unite": "ml",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson de soja non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "noix-grenoble",
+          "quantite": 35,
+          "unite": "g",
+          "quantite_normalisee": 35,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c_cafe",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "Pour la poêle",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Écraser les bananes dans un saladier, puis fouetter avec les œufs et la boisson de soja.",
+        "Incorporer la farine de quinoa et la cannelle; laisser la pâte reposer 5 minutes.",
+        "Chauffer une poêle légèrement huilée et déposer huit petits tas de pâte.",
+        "Cuire environ 2 minutes sur la première face et 1 à 2 minutes après retournement; servir avec les noix."
+      ],
+      "conseils": [
+        "Former de petits pancakes, plus faciles à retourner avec cette pâte sans gluten."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de courge",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur dans un contenant fermé. Réchauffer à la poêle ou au grille-pain.",
+      "nutrition_par_portion": {
+        "calories": 515,
+        "proteines_g": 20,
+        "glucides_g": 68,
+        "sucres_g": 20,
+        "lipides_g": 20,
+        "acides_gras_satures_g": 3,
+        "fibres_g": 9,
+        "sodium_mg": 165,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r077-pancakes-quinoa-banane-noix.jpg",
+        "alt": "Pancakes de quinoa à la banane et aux noix"
+      },
+      "seo": {
+        "titre": "Pancakes de quinoa à la banane et aux noix",
+        "meta_description": "Pancakes de quinoa à la banane et aux noix, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "pancakes de quinoa à la banane et aux noix"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Pancakes de quinoa à la banane et aux noix",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, oeuf, soja. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.15,
+          "active_minutes": 20,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "oeuf",
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r078",
+      "slug": "bol-seigle-prunes-kefir-pavot",
+      "titre": "Bol de seigle aux prunes, kéfir et graines de pavot",
+      "categorie": "petit-dejeuner",
+      "description": "Un bol de flocons de seigle cuits, complété de prunes fraîches, de kéfir nature et de graines de pavot.",
+      "temps": {
+        "preparation": 8,
+        "cuisson": 12,
+        "repos": 5,
+        "total": 25
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "flocons-seigle",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons de seigle",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 250,
+          "unite": "ml",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "kefir-lait-nature",
+          "quantite": 250,
+          "unite": "ml",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "kéfir de lait nature",
+          "note": "À conserver au froid",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "prune",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "prunes",
+          "note": "Environ 260 g, dénoyautées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-pavot",
+          "quantite": 2,
+          "unite": "c_cafe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "graines de pavot",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c_cafe",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les flocons de seigle avec l'eau et la cannelle pendant 10 à 12 minutes en remuant.",
+        "Retirer du feu et laisser tiédir 5 minutes pour éviter de chauffer fortement le kéfir.",
+        "Couper les prunes en quartiers et en réserver quelques-uns pour le dessus.",
+        "Répartir le seigle, le kéfir et les prunes dans deux bols, puis parsemer de pavot."
+      ],
+      "conseils": [
+        "Ne pas laisser le kéfir à température ambiante plus longtemps que nécessaire."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Kéfir de lait",
+          "par": "Yaourt nature",
+          "note": "Texture moins fluide; contient également du lait"
+        }
+      ],
+      "conservation": "Seigle cuit : 2 jours au réfrigérateur. Ajouter kéfir, prunes et pavot juste avant le repas.",
+      "nutrition_par_portion": {
+        "calories": 345,
+        "proteines_g": 14,
+        "glucides_g": 58,
+        "sucres_g": 17,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 2.5,
+        "fibres_g": 10,
+        "sodium_mg": 105,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r078-bol-seigle-prunes-kefir-pavot.jpg",
+        "alt": "Bol de seigle aux prunes, kéfir et graines de pavot"
+      },
+      "seo": {
+        "titre": "Bol de seigle aux prunes, kéfir et graines de pavot",
+        "meta_description": "Bol de seigle aux prunes, kéfir et graines de pavot, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "bol de seigle aux prunes",
+          "kéfir et graines de pavot"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Bol de seigle aux prunes, kéfir et graines de pavot",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : gluten, lait. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.75,
+          "active_minutes": 12,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "gluten",
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r079",
+      "slug": "polenta-matinale-champignons-epinards-oeuf",
+      "titre": "Polenta matinale aux champignons, épinards et œuf",
+      "categorie": "petit-dejeuner",
+      "description": "Une polenta complète crémeuse servie avec des champignons, des épinards et un œuf cuit à cœur.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 22,
+        "repos": 0,
+        "total": 34
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "polenta-complete",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "polenta complète",
+          "note": "Certifiée sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 500,
+          "unite": "ml",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "champignon-paris",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "champignons de Paris",
+          "note": "Émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "epinard-frais",
+          "quantite": 160,
+          "unite": "g",
+          "quantite_normalisee": 160,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épinards frais",
+          "note": "Lavés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oeuf-poule",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "Calibre moyen",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "persil-frais",
+          "quantite": 10,
+          "unite": "g",
+          "quantite_normalisee": 10,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Porter l'eau à frémissement et verser la polenta en pluie; cuire selon l'emballage, environ 15 minutes, en remuant.",
+        "Pendant ce temps, poêler les champignons dans la moitié de l'huile pendant 7 minutes, puis ajouter les épinards 2 minutes.",
+        "Cuire les œufs 9 minutes dans l'eau frémissante, les refroidir puis les écaler.",
+        "Répartir la polenta et les légumes; ajouter un œuf coupé en deux et le persil."
+      ],
+      "conseils": [
+        "Ajouter un peu d'eau à la polenta si elle devient trop ferme avant le service."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Œufs",
+          "par": "Tofu ferme poêlé",
+          "note": "La recette devient végétalienne et contient alors du soja"
+        }
+      ],
+      "conservation": "Polenta et légumes : 2 jours au réfrigérateur. Conserver les œufs cuits au froid et réchauffer le reste séparément.",
+      "nutrition_par_portion": {
+        "calories": 430,
+        "proteines_g": 18,
+        "glucides_g": 57,
+        "sucres_g": 4,
+        "lipides_g": 16,
+        "acides_gras_satures_g": 3.5,
+        "fibres_g": 8,
+        "sodium_mg": 190,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r079-polenta-matinale-champignons-epinards-oeuf.jpg",
+        "alt": "Polenta matinale aux champignons, épinards et œuf"
+      },
+      "seo": {
+        "titre": "Polenta matinale aux champignons, épinards et œuf",
+        "meta_description": "Polenta matinale aux champignons, épinards et œuf, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "polenta matinale aux champignons",
+          "épinards et œuf"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Polenta matinale aux champignons, épinards et œuf",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : oeuf. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.9,
+          "active_minutes": 25,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r080",
+      "slug": "socca-roulee-courgette-basilic",
+      "titre": "Socca roulée à la courgette et au basilic",
+      "categorie": "petit-dejeuner",
+      "description": "Une socca fine cuite au four puis roulée autour d'une garniture de courgette, tomate et basilic.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 27,
+        "repos": 10,
+        "total": 55
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-pois-chiches",
+          "quantite": 130,
+          "unite": "g",
+          "quantite_normalisee": 130,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de pois chiches",
+          "note": "Certifiée sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 260,
+          "unite": "ml",
+          "quantite_normalisee": 260,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "courgette",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "courgette",
+          "note": "Environ 250 g, râpée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tomate",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "tomates",
+          "note": "Épépinées et coupées en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "Cuisson comprise",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Fouetter la farine et l'eau avec une cuillère d'huile, puis laisser reposer 10 minutes.",
+        "Étaler la pâte sur une plaque chemisée de 30 × 25 cm et cuire 12 minutes à 210 °C.",
+        "Poêler la courgette dans l'huile restante 7 minutes; ajouter la tomate 3 minutes puis le basilic hors du feu.",
+        "Laisser la socca tiédir 5 minutes, répartir la garniture, rouler délicatement et couper en tronçons."
+      ],
+      "conseils": [
+        "Ne pas trop cuire la socca : elle doit rester souple pour pouvoir être roulée."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Basilic",
+          "par": "Persil plat",
+          "note": "Profil aromatique différent mais même usage"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Réchauffer doucement au four pour limiter le dessèchement.",
+      "nutrition_par_portion": {
+        "calories": 410,
+        "proteines_g": 16,
+        "glucides_g": 47,
+        "sucres_g": 9,
+        "lipides_g": 19,
+        "acides_gras_satures_g": 2.5,
+        "fibres_g": 11,
+        "sodium_mg": 140,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r080-socca-roulee-courgette-basilic.jpg",
+        "alt": "Socca roulée à la courgette et au basilic"
+      },
+      "seo": {
+        "titre": "Socca roulée à la courgette et au basilic",
+        "meta_description": "Socca roulée à la courgette et au basilic, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "socca roulée à la courgette et au basilic"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Socca roulée à la courgette et au basilic",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Vérifier les étiquettes, les contaminations croisées, les quantités et le protocole avant publication."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.65,
+          "active_minutes": 25,
+          "equipment": [
+            "oven",
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r081",
+      "slug": "amarante-soufflee-figues-sesame",
+      "titre": "Amarante soufflée aux figues et sésame",
+      "categorie": "petit-dejeuner",
+      "description": "Un bol croustillant d'amarante soufflée, figues fraîches, yaourt de soja et sésame grillé.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 3,
+        "repos": 0,
+        "total": 13
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "amarante-soufflee",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amarante soufflée nature",
+          "note": "Sans sucre ajouté",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-soja-nature",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt de soja nature",
+          "note": "Non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "figue-fraiche",
+          "quantite": 6,
+          "unite": "piece",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "figues fraîches",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-sesame",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de sésame",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c_cafe",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire griller le sésame 2 à 3 minutes dans une poêle sèche en remuant, puis le laisser refroidir.",
+        "Couper les figues en quartiers.",
+        "Répartir le yaourt et l'amarante dans deux bols.",
+        "Ajouter les figues, le sésame et la cannelle juste avant de servir."
+      ],
+      "conseils": [
+        "Ajouter l'amarante au dernier moment pour préserver son croustillant."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Figues fraîches",
+          "par": "Poires mûres",
+          "note": "Couper en petits dés; adapter à la saison"
+        }
+      ],
+      "conservation": "Yaourt et fruits préparés : 24 heures au réfrigérateur. Conserver l'amarante et le sésame séparément au sec.",
+      "nutrition_par_portion": {
+        "calories": 365,
+        "proteines_g": 15,
+        "glucides_g": 53,
+        "sucres_g": 23,
+        "lipides_g": 12,
+        "acides_gras_satures_g": 1.8,
+        "fibres_g": 8,
+        "sodium_mg": 80,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r081-amarante-soufflee-figues-sesame.jpg",
+        "alt": "Amarante soufflée aux figues et sésame"
+      },
+      "seo": {
+        "titre": "Amarante soufflée aux figues et sésame",
+        "meta_description": "Amarante soufflée aux figues et sésame, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "amarante soufflée aux figues et sésame"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Amarante soufflée aux figues et sésame",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : sesame, soja. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.3,
+          "active_minutes": 10,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "sesame",
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r082",
+      "slug": "muesli-sarrasin-raisin-noix-orange",
+      "titre": "Muesli de sarrasin au raisin, noix et zeste d'orange",
+      "categorie": "petit-dejeuner",
+      "description": "Un muesli de sarrasin entier torréfié, raisin, noix, graines de tournesol et zeste d'orange.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 18,
+        "repos": 20,
+        "total": 48
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "sarrasin-decortique",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sarrasin décortiqué",
+          "note": "Rincé puis bien égoutté",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "raisin-noir",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "raisin noir",
+          "note": "Grains coupés en deux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix-grenoble",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "graines-tournesol",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de tournesol",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste finement râpé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-soja-nature",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt de soja nature",
+          "note": "Pour servir",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "soja"
+          ]
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 175 °C et sécher soigneusement le sarrasin rincé.",
+        "Mélanger sarrasin, noix et graines puis torréfier 18 minutes en remuant à mi-cuisson.",
+        "Laisser refroidir complètement 20 minutes avant d'incorporer le zeste d'orange.",
+        "Servir avec le yaourt de soja et les grains de raisin."
+      ],
+      "conseils": [
+        "Le sarrasin doit être parfaitement sec avant cuisson pour devenir croquant."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de courge",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "Mélange torréfié : 7 jours dans un bocal hermétique au sec. Ajouter yaourt et raisin au service.",
+      "nutrition_par_portion": {
+        "calories": 405,
+        "proteines_g": 15,
+        "glucides_g": 54,
+        "sucres_g": 16,
+        "lipides_g": 16,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 8,
+        "sodium_mg": 55,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 4; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r082-muesli-sarrasin-raisin-noix-orange.jpg",
+        "alt": "Muesli de sarrasin au raisin, noix et zeste d'orange"
+      },
+      "seo": {
+        "titre": "Muesli de sarrasin au raisin, noix et zeste d'orange",
+        "meta_description": "Muesli de sarrasin au raisin, noix et zeste d'orange, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "muesli de sarrasin au raisin",
+          "noix et zeste d",
+          "orange"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Muesli de sarrasin au raisin, noix et zeste d'orange",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, soja. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.45,
+          "active_minutes": 15,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r083",
+      "slug": "muffins-oeuf-brocoli-aneth-courge",
+      "titre": "Muffins d'œuf au brocoli, aneth et graines de courge",
+      "categorie": "petit-dejeuner",
+      "description": "Des portions individuelles d'œuf au brocoli, oignon rouge, aneth et graines de courge.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 22,
+        "repos": 5,
+        "total": 42
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "oeuf-poule",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "Calibre moyen",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "brocoli",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "brocoli",
+          "note": "En petites fleurettes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oignon-rouge",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oignon rouge",
+          "note": "Finement haché",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-courge",
+          "quantite": 35,
+          "unite": "g",
+          "quantite_normalisee": 35,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de courge",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "Pour le moule",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 180 °C et huiler huit alvéoles d'un moule à muffins.",
+        "Cuire le brocoli à la vapeur 5 minutes, puis le hacher grossièrement.",
+        "Fouetter les œufs, incorporer brocoli, oignon et aneth, puis répartir dans les alvéoles.",
+        "Parsemer de graines et cuire 16 à 18 minutes, jusqu'à ce que le centre soit pris; reposer 5 minutes."
+      ],
+      "conseils": [
+        "Vérifier que le centre est complètement pris avant de sortir les muffins du four."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Brocoli",
+          "par": "Chou-fleur",
+          "note": "Même poids, pré-cuit à la vapeur"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur dans un contenant fermé. Réchauffer une seule fois jusqu'à cœur.",
+      "nutrition_par_portion": {
+        "calories": 235,
+        "proteines_g": 17,
+        "glucides_g": 8,
+        "sucres_g": 3,
+        "lipides_g": 16,
+        "acides_gras_satures_g": 4,
+        "fibres_g": 3,
+        "sodium_mg": 190,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 4; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r083-muffins-oeuf-brocoli-aneth-courge.jpg",
+        "alt": "Muffins d'œuf au brocoli, aneth et graines de courge"
+      },
+      "seo": {
+        "titre": "Muffins d'œuf au brocoli, aneth et graines de courge",
+        "meta_description": "Muffins d'œuf au brocoli, aneth et graines de courge, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "muffins d",
+          "œuf au brocoli",
+          "aneth et graines de courge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Muffins d'œuf au brocoli, aneth et graines de courge",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : oeuf. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.25,
+          "active_minutes": 18,
+          "equipment": [
+            "oven",
+            "steamer"
+          ],
+          "allergens": [
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r084",
+      "slug": "seigle-creme-haricots-pomme-sauge",
+      "titre": "Seigle à la crème de haricots, pomme et sauge",
+      "categorie": "petit-dejeuner",
+      "description": "Des tartines de seigle garnies d'une crème de haricots blancs, de pomme poêlée, de sauge et de noix.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 10,
+        "repos": 0,
+        "total": 25
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pain-seigle-complet",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "tranches de pain de seigle",
+          "note": "Environ 160 g",
+          "categorie_courses": "bakery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés et égouttés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "pomme",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pomme",
+          "note": "En fines lamelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 6,
+          "unite": "piece",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge",
+          "note": "Finement ciselées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix-grenoble",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mixer les haricots avec le citron, la moitié de l'huile et deux cuillères d'eau jusqu'à texture crémeuse.",
+        "Poêler les lamelles de pomme dans l'huile restante 5 minutes; ajouter la sauge pendant la dernière minute.",
+        "Griller le pain puis étaler la crème de haricots.",
+        "Répartir la pomme à la sauge, ajouter les noix et servir chaud."
+      ],
+      "conseils": [
+        "Rincer soigneusement les haricots en conserve pour réduire le sel de couverture."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de tournesol",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "Crème de haricots : 2 jours au réfrigérateur. Préparer pommes et tartines au moment de servir.",
+      "nutrition_par_portion": {
+        "calories": 445,
+        "proteines_g": 17,
+        "glucides_g": 65,
+        "sucres_g": 11,
+        "lipides_g": 15,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 15,
+        "sodium_mg": 470,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r084-seigle-creme-haricots-pomme-sauge.jpg",
+        "alt": "Seigle à la crème de haricots, pomme et sauge"
+      },
+      "seo": {
+        "titre": "Seigle à la crème de haricots, pomme et sauge",
+        "meta_description": "Seigle à la crème de haricots, pomme et sauge, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "seigle à la crème de haricots",
+          "pomme et sauge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Seigle à la crème de haricots, pomme et sauge",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, gluten. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.85,
+          "active_minutes": 20,
+          "equipment": [
+            "hob",
+            "blender",
+            "toaster"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r085",
+      "slug": "clafoutis-avoine-mures-amandes",
+      "titre": "Clafoutis d'avoine aux mûres et amandes",
+      "categorie": "petit-dejeuner",
+      "description": "Un clafoutis matinal dense en avoine, mûres et amandes, sans sucre ajouté.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 30,
+        "repos": 10,
+        "total": 52
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 160,
+          "unite": "g",
+          "quantite_normalisee": 160,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "mure",
+          "quantite": 280,
+          "unite": "g",
+          "quantite_normalisee": 280,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "mûres",
+          "note": "Fraîches ou surgelées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oeuf-poule",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "Calibre moyen",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "boisson-amande-non-sucree",
+          "quantite": 350,
+          "unite": "ml",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'amande non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "amande",
+          "quantite": 45,
+          "unite": "g",
+          "quantite_normalisee": 45,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Grossièrement hachées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "extrait-vanille",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "extrait de vanille",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 180 °C et chemiser un plat de 22 cm.",
+        "Mixer les flocons 20 secondes, puis ajouter œufs, boisson d'amande et vanille; mixer jusqu'à homogénéité.",
+        "Disposer les mûres dans le plat, verser l'appareil et parsemer d'amandes.",
+        "Cuire 28 à 30 minutes, jusqu'à ce que le centre soit pris, puis laisser reposer 10 minutes."
+      ],
+      "conseils": [
+        "Pour des mûres surgelées, ne pas les décongeler et prévoir jusqu'à 5 minutes de cuisson supplémentaires."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Boisson d'amande et amandes",
+          "par": "Boisson de soja et graines de courge",
+          "note": "Change les allergènes : contient alors du soja"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur. Servir froid ou réchauffer doucement une portion.",
+      "nutrition_par_portion": {
+        "calories": 315,
+        "proteines_g": 13,
+        "glucides_g": 35,
+        "sucres_g": 8,
+        "lipides_g": 15,
+        "acides_gras_satures_g": 2.5,
+        "fibres_g": 8,
+        "sodium_mg": 110,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 4; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r085-clafoutis-avoine-mures-amandes.jpg",
+        "alt": "Clafoutis d'avoine aux mûres et amandes"
+      },
+      "seo": {
+        "titre": "Clafoutis d'avoine aux mûres et amandes",
+        "meta_description": "Clafoutis d'avoine aux mûres et amandes, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "clafoutis d",
+          "avoine aux mûres et amandes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Clafoutis d'avoine aux mûres et amandes",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, gluten, oeuf. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.55,
+          "active_minutes": 15,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten",
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r086",
+      "slug": "porridge-millet-coing-cardamome",
+      "titre": "Porridge de millet au coing et à la cardamome",
+      "categorie": "petit-dejeuner",
+      "description": "Un porridge de millet crémeux accompagné de coing poché, de cardamome et d'amandes.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 38,
+        "repos": 5,
+        "total": 58
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "millet-decortique",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "millet décortiqué",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-soja-non-sucree",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson de soja non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "coing",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "coings",
+          "note": "Environ 500 g avant épluchage",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 300,
+          "unite": "ml",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "Pour pocher les coings",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "cardamome-moulue",
+          "quantite": 0.5,
+          "unite": "c_cafe",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cardamome moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Éplucher les coings, retirer cœur et pépins, puis couper la chair en petits dés et l'arroser de citron.",
+        "Pocher les dés de coing dans l'eau à couvert pendant 25 minutes, jusqu'à tendreté.",
+        "Cuire le millet avec la boisson de soja et la cardamome 20 à 22 minutes en remuant régulièrement.",
+        "Laisser reposer 5 minutes, répartir en quatre bols et ajouter coing et amandes."
+      ],
+      "conseils": [
+        "Le coing cru est très ferme : utiliser un couteau stable et une planche antidérapante."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Coing",
+          "par": "Poire ferme",
+          "note": "Réduire le pochage à environ 8 minutes"
+        }
+      ],
+      "conservation": "Porridge et coing : 3 jours au réfrigérateur, séparément de préférence. Réchauffer avec un peu de boisson de soja.",
+      "nutrition_par_portion": {
+        "calories": 350,
+        "proteines_g": 13,
+        "glucides_g": 56,
+        "sucres_g": 14,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.4,
+        "fibres_g": 8,
+        "sodium_mg": 85,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 4; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r086-porridge-millet-coing-cardamome.jpg",
+        "alt": "Porridge de millet au coing et à la cardamome"
+      },
+      "seo": {
+        "titre": "Porridge de millet au coing et à la cardamome",
+        "meta_description": "Porridge de millet au coing et à la cardamome, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "porridge de millet au coing et à la cardamome"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Porridge de millet au coing et à la cardamome",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, soja. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.65,
+          "active_minutes": 22,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r087",
+      "slug": "tartine-truite-concombre-aneth",
+      "titre": "Tartine de truite, concombre et aneth",
+      "categorie": "petit-dejeuner",
+      "description": "Une tartine fraîche de truite cuite, concombre, yaourt citronné et aneth.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 12,
+        "repos": 10,
+        "total": 37
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pain-complet",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "tranches de pain complet",
+          "note": "Environ 160 g",
+          "categorie_courses": "bakery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "truite-filet",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de truite",
+          "note": "Sans arêtes",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "concombre",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombre",
+          "note": "En fines rondelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-nature",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 12,
+          "unite": "g",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire la truite dans une poêle avec l'huile, 4 à 6 minutes par face selon l'épaisseur, jusqu'à cuisson complète.",
+        "Laisser tiédir 10 minutes, vérifier l'absence d'arêtes puis effeuiller le poisson.",
+        "Mélanger le yaourt, l'aneth, le zeste et quelques gouttes de jus de citron.",
+        "Griller le pain, étaler la sauce, puis ajouter concombre et truite."
+      ],
+      "conseils": [
+        "La truite doit être opaque et se détacher facilement; adapter le temps à l'épaisseur réelle."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Truite",
+          "par": "Saumon frais",
+          "note": "Cuire complètement et conserver l'allergène poisson"
+        }
+      ],
+      "conservation": "Truite cuite : 24 heures au réfrigérateur. Assembler les tartines au dernier moment.",
+      "nutrition_par_portion": {
+        "calories": 485,
+        "proteines_g": 36,
+        "glucides_g": 43,
+        "sucres_g": 6,
+        "lipides_g": 19,
+        "acides_gras_satures_g": 4,
+        "fibres_g": 7,
+        "sodium_mg": 520,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r087-tartine-truite-concombre-aneth.jpg",
+        "alt": "Tartine de truite, concombre et aneth"
+      },
+      "seo": {
+        "titre": "Tartine de truite, concombre et aneth",
+        "meta_description": "Tartine de truite, concombre et aneth, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "tartine de truite",
+          "concombre et aneth"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Tartine de truite, concombre et aneth",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : gluten, lait, poisson. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.65,
+          "active_minutes": 18,
+          "equipment": [
+            "hob",
+            "toaster"
+          ],
+          "allergens": [
+            "gluten",
+            "lait",
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r088",
+      "slug": "tofu-brouille-carotte-coriandre-cumin",
+      "titre": "Tofu brouillé à la carotte, coriandre et cumin",
+      "categorie": "petit-dejeuner",
+      "description": "Un brouillé de tofu ferme à la carotte, oignon, cumin et coriandre fraîche.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 13,
+        "repos": 0,
+        "total": 25
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "tofu-ferme",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tofu ferme",
+          "note": "Égoutté",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "carotte",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "carottes",
+          "note": "Râpées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oignon-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oignon",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "Ciselée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cumin-moulu",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cumin moulu",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir l'oignon et la carotte dans l'huile 6 minutes à feu moyen.",
+        "Émietter le tofu dans la poêle et ajouter le cumin.",
+        "Cuire 6 à 7 minutes en remuant, jusqu'à ce que le tofu soit chaud et légèrement doré.",
+        "Hors du feu, ajouter coriandre et jus de citron puis servir."
+      ],
+      "conseils": [
+        "Presser brièvement le tofu s'il est très humide afin qu'il dore mieux."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Coriandre fraîche",
+          "par": "Persil plat",
+          "note": "Le goût sera plus doux"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Réchauffer à cœur à la poêle.",
+      "nutrition_par_portion": {
+        "calories": 330,
+        "proteines_g": 25,
+        "glucides_g": 21,
+        "sucres_g": 9,
+        "lipides_g": 18,
+        "acides_gras_satures_g": 2.5,
+        "fibres_g": 7,
+        "sodium_mg": 85,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r088-tofu-brouille-carotte-coriandre-cumin.jpg",
+        "alt": "Tofu brouillé à la carotte, coriandre et cumin"
+      },
+      "seo": {
+        "titre": "Tofu brouillé à la carotte, coriandre et cumin",
+        "meta_description": "Tofu brouillé à la carotte, coriandre et cumin, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "tofu brouillé à la carotte",
+          "coriandre et cumin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Tofu brouillé à la carotte, coriandre et cumin",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : soja. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.7,
+          "active_minutes": 20,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r089",
+      "slug": "yaourt-rhubarbe-rotie-fraise-avoine",
+      "titre": "Yaourt à la rhubarbe rôtie, fraise et avoine",
+      "categorie": "petit-dejeuner",
+      "description": "Un bol de yaourt nature garni de rhubarbe et fraises rôties, d'avoine et d'amandes.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 20,
+        "repos": 15,
+        "total": 47
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "yaourt-nature",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "Sans sucre ajouté",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "rhubarbe",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tiges de rhubarbe",
+          "note": "Parées et coupées en tronçons",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "fraise",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fraises",
+          "note": "Équeutées et coupées en deux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "amande",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "extrait-vanille",
+          "quantite": 0.5,
+          "unite": "c_cafe",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "extrait de vanille",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 190 °C.",
+        "Disposer rhubarbe et vanille dans un plat et cuire 12 minutes; ajouter les fraises et poursuivre 8 minutes.",
+        "Étaler les flocons et les amandes sur une petite plaque et les torréfier 8 minutes pendant la cuisson des fruits.",
+        "Laisser les fruits tiédir 15 minutes, puis répartir yaourt, fruits et mélange d'avoine dans deux bols."
+      ],
+      "conseils": [
+        "Choisir des fraises mûres; le brouillon ne prévoit pas de sucre ajouté pour compenser une rhubarbe très acide."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Graines de courge",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "Fruits rôtis : 2 jours au réfrigérateur. Conserver l'avoine torréfiée au sec et assembler au service.",
+      "nutrition_par_portion": {
+        "calories": 390,
+        "proteines_g": 19,
+        "glucides_g": 48,
+        "sucres_g": 24,
+        "lipides_g": 15,
+        "acides_gras_satures_g": 4.5,
+        "fibres_g": 9,
+        "sodium_mg": 150,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r089-yaourt-rhubarbe-rotie-fraise-avoine.jpg",
+        "alt": "Yaourt à la rhubarbe rôtie, fraise et avoine"
+      },
+      "seo": {
+        "titre": "Yaourt à la rhubarbe rôtie, fraise et avoine",
+        "meta_description": "Yaourt à la rhubarbe rôtie, fraise et avoine, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "yaourt à la rhubarbe rôtie",
+          "fraise et avoine"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Yaourt à la rhubarbe rôtie, fraise et avoine",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, gluten, lait. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.15,
+          "active_minutes": 12,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten",
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r090",
+      "slug": "omelette-pois-chiches-blettes-poireau",
+      "titre": "Omelette de pois chiches aux blettes et poireau",
+      "categorie": "petit-dejeuner",
+      "description": "Une omelette végétale à la farine de pois chiches, garnie de blettes, poireau et persil.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 20,
+        "repos": 10,
+        "total": 45
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-pois-chiches",
+          "quantite": 130,
+          "unite": "g",
+          "quantite_normalisee": 130,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de pois chiches",
+          "note": "Certifiée sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 260,
+          "unite": "ml",
+          "quantite_normalisee": 260,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "blette",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "blettes",
+          "note": "Côtes et feuilles finement émincées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Environ 180 g, émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "persil-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "Cuisson comprise",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Fouetter farine et eau avec une pincée de poivre, puis laisser reposer 10 minutes.",
+        "Faire revenir poireau et côtes de blettes dans une cuillère d'huile pendant 8 minutes; ajouter les feuilles 3 minutes.",
+        "Verser la pâte dans une poêle huilée de 24 cm, répartir les légumes et cuire à couvert 7 minutes.",
+        "Retourner à l'aide d'une assiette, cuire encore 2 minutes puis ajouter le persil."
+      ],
+      "conseils": [
+        "Utiliser une poêle bien antiadhésive et attendre que les bords soient pris avant de retourner."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Blettes",
+          "par": "Épinards",
+          "note": "Réduire la cuisson préalable à 2 minutes"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Réchauffer à la poêle jusqu'à cœur.",
+      "nutrition_par_portion": {
+        "calories": 410,
+        "proteines_g": 18,
+        "glucides_g": 49,
+        "sucres_g": 8,
+        "lipides_g": 17,
+        "acides_gras_satures_g": 2.3,
+        "fibres_g": 12,
+        "sodium_mg": 125,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r090-omelette-pois-chiches-blettes-poireau.jpg",
+        "alt": "Omelette de pois chiches aux blettes et poireau"
+      },
+      "seo": {
+        "titre": "Omelette de pois chiches aux blettes et poireau",
+        "meta_description": "Omelette de pois chiches aux blettes et poireau, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "omelette de pois chiches aux blettes et poireau"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Omelette de pois chiches aux blettes et poireau",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Vérifier les étiquettes, les contaminations croisées, les quantités et le protocole avant publication."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.45,
+          "active_minutes": 24,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r091",
+      "slug": "avoine-four-peche-thym-amandes",
+      "titre": "Avoine au four à la pêche, thym et amandes",
+      "categorie": "petit-dejeuner",
+      "description": "Une préparation d'avoine à découper, garnie de pêches, d'amandes et d'une touche de thym frais.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 30,
+        "repos": 10,
+        "total": 52
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "peche",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pêches",
+          "note": "Environ 450 g, en quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-soja-non-sucree",
+          "quantite": 500,
+          "unite": "ml",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson de soja non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "amande",
+          "quantite": 55,
+          "unite": "g",
+          "quantite_normalisee": 55,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "Dosage léger",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-lin-moulues",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de lin moulues",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 180 °C et chemiser un plat carré de 20 cm.",
+        "Mélanger flocons, lin et thym, puis verser la boisson de soja.",
+        "Incorporer la moitié des pêches, lisser et disposer le reste sur le dessus avec les amandes.",
+        "Cuire 30 minutes et laisser reposer 10 minutes avant de couper en quatre parts."
+      ],
+      "conseils": [
+        "Le thym doit rester discret; réduire la quantité si les feuilles sont très aromatiques."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pêches",
+          "par": "Nectarines",
+          "note": "Même quantité et même temps de cuisson"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur. Réchauffer une part au four doux ou au micro-ondes.",
+      "nutrition_par_portion": {
+        "calories": 350,
+        "proteines_g": 14,
+        "glucides_g": 47,
+        "sucres_g": 16,
+        "lipides_g": 14,
+        "acides_gras_satures_g": 1.7,
+        "fibres_g": 9,
+        "sodium_mg": 90,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 4; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r091-avoine-four-peche-thym-amandes.jpg",
+        "alt": "Avoine au four à la pêche, thym et amandes"
+      },
+      "seo": {
+        "titre": "Avoine au four à la pêche, thym et amandes",
+        "meta_description": "Avoine au four à la pêche, thym et amandes, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "avoine au four à la pêche",
+          "thym et amandes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Avoine au four à la pêche, thym et amandes",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, gluten, soja. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.5,
+          "active_minutes": 15,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten",
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r092",
+      "slug": "quinoa-pudding-poire-grue-cacao",
+      "titre": "Quinoa façon pudding à la poire et grué de cacao",
+      "categorie": "petit-dejeuner",
+      "description": "Un quinoa cuit lentement avec poire, boisson d'avoine, noisettes et grué de cacao non sucré.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 40
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "quinoa",
+          "quantite": 110,
+          "unite": "g",
+          "quantite_normalisee": 110,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "quinoa",
+          "note": "Rincé soigneusement",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-avoine-non-sucree",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'avoine non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "Environ 300 g, en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "grue-cacao",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "grué de cacao",
+          "note": "Non sucré",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "noisette",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "Torréfiées et concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c_cafe",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rincer le quinoa jusqu'à ce que l'eau soit claire.",
+        "Réunir quinoa, boisson d'avoine, cannelle et la moitié des dés de poire; cuire à petit frémissement 22 à 25 minutes en remuant.",
+        "Laisser épaissir 5 minutes hors du feu.",
+        "Répartir dans deux bols avec le reste de poire, le grué et les noisettes."
+      ],
+      "conseils": [
+        "Le grué est amer; ne pas augmenter la quantité avant un essai gustatif."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de courge",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Réchauffer avec un peu de boisson végétale et ajouter le grué au service.",
+      "nutrition_par_portion": {
+        "calories": 480,
+        "proteines_g": 15,
+        "glucides_g": 73,
+        "sucres_g": 22,
+        "lipides_g": 16,
+        "acides_gras_satures_g": 2.2,
+        "fibres_g": 10,
+        "sodium_mg": 90,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r092-quinoa-pudding-poire-grue-cacao.jpg",
+        "alt": "Quinoa façon pudding à la poire et grué de cacao"
+      },
+      "seo": {
+        "titre": "Quinoa façon pudding à la poire et grué de cacao",
+        "meta_description": "Quinoa façon pudding à la poire et grué de cacao, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "quinoa façon pudding à la poire et grué de cacao"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Quinoa façon pudding à la poire et grué de cacao",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, gluten. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.25,
+          "active_minutes": 15,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r093",
+      "slug": "tartine-courge-houmous-blanc-sauge",
+      "titre": "Tartine de courge, houmous blanc et sauge",
+      "categorie": "petit-dejeuner",
+      "description": "Une tartine de pain complet, crème citronnée de haricots blancs, courge rôtie et sauge.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 50
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pain-complet",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "tranches de pain complet",
+          "note": "Environ 160 g",
+          "categorie_courses": "bakery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "courge-butternut",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "courge butternut",
+          "note": "Pelée et coupée en tranches",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés et égouttés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C.",
+        "Mélanger la courge avec une cuillère d'huile et la sauge; rôtir 25 à 30 minutes en retournant à mi-cuisson.",
+        "Mixer les haricots avec le citron, l'huile restante et deux cuillères d'eau.",
+        "Griller le pain, étaler la crème de haricots, ajouter la courge et laisser reposer 5 minutes avant de servir."
+      ],
+      "conseils": [
+        "Couper des tranches de courge d'épaisseur régulière pour une cuisson homogène."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Courge butternut",
+          "par": "Potimarron",
+          "note": "Le temps de cuisson peut varier"
+        }
+      ],
+      "conservation": "Courge et crème de haricots : 2 jours au réfrigérateur. Monter les tartines au dernier moment.",
+      "nutrition_par_portion": {
+        "calories": 470,
+        "proteines_g": 17,
+        "glucides_g": 74,
+        "sucres_g": 11,
+        "lipides_g": 14,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 16,
+        "sodium_mg": 455,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r093-tartine-courge-houmous-blanc-sauge.jpg",
+        "alt": "Tartine de courge, houmous blanc et sauge"
+      },
+      "seo": {
+        "titre": "Tartine de courge, houmous blanc et sauge",
+        "meta_description": "Tartine de courge, houmous blanc et sauge, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "tartine de courge",
+          "houmous blanc et sauge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Tartine de courge, houmous blanc et sauge",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : gluten. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.8,
+          "active_minutes": 20,
+          "equipment": [
+            "oven",
+            "blender",
+            "toaster"
+          ],
+          "allergens": [
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r094",
+      "slug": "polenta-framboises-citron-chanvre",
+      "titre": "Polenta douce aux framboises, citron et chanvre",
+      "categorie": "petit-dejeuner",
+      "description": "Une polenta complète citronnée servie avec des framboises et des graines de chanvre décortiquées.",
+      "temps": {
+        "preparation": 8,
+        "cuisson": 15,
+        "repos": 5,
+        "total": 28
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "polenta-complete",
+          "quantite": 110,
+          "unite": "g",
+          "quantite_normalisee": 110,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "polenta complète",
+          "note": "Certifiée sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-amande-non-sucree",
+          "quantite": 450,
+          "unite": "ml",
+          "quantite_normalisee": 450,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'amande non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "framboise",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "framboises",
+          "note": "Fraîches ou décongelées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et une cuillère de jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-chanvre-decortiquees",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de chanvre décortiquées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Chauffer la boisson d'amande avec la moitié du zeste jusqu'au frémissement.",
+        "Verser la polenta en pluie et cuire 12 à 15 minutes en remuant, selon les indications du paquet.",
+        "Hors du feu, incorporer le jus de citron et laisser reposer 5 minutes.",
+        "Répartir dans deux bols, ajouter les framboises, le chanvre et le reste du zeste."
+      ],
+      "conseils": [
+        "Ajouter le jus de citron hors du feu afin de mieux contrôler l'acidité et la texture."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Boisson d'amande",
+          "par": "Boisson de soja",
+          "note": "Change l'allergène principal pour le soja"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Réchauffer la polenta avec un peu de boisson végétale; ajouter les fruits après.",
+      "nutrition_par_portion": {
+        "calories": 410,
+        "proteines_g": 13,
+        "glucides_g": 61,
+        "sucres_g": 12,
+        "lipides_g": 14,
+        "acides_gras_satures_g": 1.4,
+        "fibres_g": 11,
+        "sodium_mg": 75,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r094-polenta-framboises-citron-chanvre.jpg",
+        "alt": "Polenta douce aux framboises, citron et chanvre"
+      },
+      "seo": {
+        "titre": "Polenta douce aux framboises, citron et chanvre",
+        "meta_description": "Polenta douce aux framboises, citron et chanvre, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "polenta douce aux framboises",
+          "citron et chanvre"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Polenta douce aux framboises, citron et chanvre",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.05,
+          "active_minutes": 12,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r095",
+      "slug": "chakchouka-verte-epinards-petits-pois-aneth",
+      "titre": "Chakchouka verte aux épinards, petits pois et aneth",
+      "categorie": "petit-dejeuner",
+      "description": "Une poêlée de poireau, épinards et petits pois dans laquelle les œufs cuisent doucement à couvert.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 22,
+        "repos": 0,
+        "total": 37
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "epinard-frais",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épinards frais",
+          "note": "Lavés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "petits-pois",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petits pois",
+          "note": "Frais ou surgelés",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "oeuf-poule",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "Calibre moyen",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire fondre le poireau dans l'huile 7 minutes à feu moyen.",
+        "Ajouter les petits pois avec deux cuillères d'eau et cuire 5 minutes, puis incorporer les épinards jusqu'à ce qu'ils tombent.",
+        "Former quatre creux, casser un œuf dans chacun et cuire à couvert 7 à 9 minutes, jusqu'à cuisson complète souhaitée.",
+        "Ajouter aneth et jus de citron juste avant de servir."
+      ],
+      "conseils": [
+        "Pour les publics fragiles, prolonger la cuisson jusqu'à ce que blancs et jaunes soient fermes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Aneth",
+          "par": "Persil plat",
+          "note": "Saveur plus douce"
+        }
+      ],
+      "conservation": "La base verte se conserve 2 jours au réfrigérateur. Cuire les œufs au moment du repas.",
+      "nutrition_par_portion": {
+        "calories": 355,
+        "proteines_g": 25,
+        "glucides_g": 27,
+        "sucres_g": 8,
+        "lipides_g": 17,
+        "acides_gras_satures_g": 4,
+        "fibres_g": 10,
+        "sodium_mg": 245,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r095-chakchouka-verte-epinards-petits-pois-aneth.jpg",
+        "alt": "Chakchouka verte aux épinards, petits pois et aneth"
+      },
+      "seo": {
+        "titre": "Chakchouka verte aux épinards, petits pois et aneth",
+        "meta_description": "Chakchouka verte aux épinards, petits pois et aneth, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "chakchouka verte aux épinards",
+          "petits pois et aneth"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Chakchouka verte aux épinards, petits pois et aneth",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : oeuf. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.95,
+          "active_minutes": 25,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r096",
+      "slug": "freekeh-matinal-pomme-dattes-pistaches",
+      "titre": "Freekeh matinal à la pomme, dattes et pistaches",
+      "categorie": "petit-dejeuner",
+      "description": "Un bol de freekeh au goût fumé, pomme, dattes, pistaches et cardamome.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 28,
+        "repos": 5,
+        "total": 43
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "freekeh",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "freekeh",
+          "note": "Blé vert concassé, rincé",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 650,
+          "unite": "ml",
+          "quantite_normalisee": 650,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "pomme",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pommes",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "datte-sechee",
+          "quantite": 6,
+          "unite": "piece",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "dattes",
+          "note": "Dénoyautées et hachées, environ 90 g",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "pistache",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "cardamome-moulue",
+          "quantite": 0.5,
+          "unite": "c_cafe",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cardamome moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rincer le freekeh puis le réunir avec l'eau et la cardamome.",
+        "Cuire à petit frémissement 20 minutes, puis ajouter les pommes et les dattes.",
+        "Poursuivre la cuisson 8 minutes, jusqu'à ce que le grain soit tendre et l'eau absorbée.",
+        "Laisser reposer 5 minutes et servir avec les pistaches."
+      ],
+      "conseils": [
+        "Les dattes apportent déjà une saveur très sucrée; ne pas ajouter de sucrant au stade brouillon."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pistaches",
+          "par": "Graines de courge",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur. Réchauffer avec un peu d'eau et ajouter les pistaches au service.",
+      "nutrition_par_portion": {
+        "calories": 345,
+        "proteines_g": 11,
+        "glucides_g": 65,
+        "sucres_g": 20,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.1,
+        "fibres_g": 9,
+        "sodium_mg": 35,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 4; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r096-freekeh-matinal-pomme-dattes-pistaches.jpg",
+        "alt": "Freekeh matinal à la pomme, dattes et pistaches"
+      },
+      "seo": {
+        "titre": "Freekeh matinal à la pomme, dattes et pistaches",
+        "meta_description": "Freekeh matinal à la pomme, dattes et pistaches, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "freekeh matinal à la pomme",
+          "dattes et pistaches"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Freekeh matinal à la pomme, dattes et pistaches",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, gluten. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.55,
+          "active_minutes": 15,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r097",
+      "slug": "pancakes-sarrasin-betterave-framboise",
+      "titre": "Pancakes de sarrasin à la betterave et framboise",
+      "categorie": "petit-dejeuner",
+      "description": "Des pancakes colorés par la betterave, servis avec des framboises et un yaourt nature.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 18,
+        "repos": 10,
+        "total": 43
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-sarrasin",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de sarrasin",
+          "note": "Certifiée sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "betterave-cuite",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "betterave cuite",
+          "note": "Sans vinaigre, en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oeuf-poule",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "Calibre moyen",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "lait-demi-ecreme",
+          "quantite": 140,
+          "unite": "ml",
+          "quantite_normalisee": 140,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "lait demi-écrémé",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "framboise",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "framboises",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-nature",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "Pour la poêle",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mixer la betterave avec les œufs et le lait jusqu'à texture lisse.",
+        "Verser sur la farine de sarrasin, fouetter et laisser reposer 10 minutes.",
+        "Cuire huit petits pancakes dans une poêle légèrement huilée, environ 2 minutes par face.",
+        "Servir quatre pancakes par personne avec le yaourt et les framboises."
+      ],
+      "conseils": [
+        "Utiliser une betterave nature : une betterave au vinaigre modifierait l'acidité et le sodium."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Framboises",
+          "par": "Mûres",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "Pancakes : 2 jours au réfrigérateur. Conserver yaourt et fruits séparément.",
+      "nutrition_par_portion": {
+        "calories": 470,
+        "proteines_g": 23,
+        "glucides_g": 66,
+        "sucres_g": 17,
+        "lipides_g": 14,
+        "acides_gras_satures_g": 4.5,
+        "fibres_g": 10,
+        "sodium_mg": 230,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r097-pancakes-sarrasin-betterave-framboise.jpg",
+        "alt": "Pancakes de sarrasin à la betterave et framboise"
+      },
+      "seo": {
+        "titre": "Pancakes de sarrasin à la betterave et framboise",
+        "meta_description": "Pancakes de sarrasin à la betterave et framboise, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "pancakes de sarrasin à la betterave et framboise"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Pancakes de sarrasin à la betterave et framboise",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : lait, oeuf. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.2,
+          "active_minutes": 22,
+          "equipment": [
+            "blender",
+            "hob"
+          ],
+          "allergens": [
+            "lait",
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r098",
+      "slug": "chia-papaye-citron-vert-courge",
+      "titre": "Chia à la papaye, citron vert et graines de courge",
+      "categorie": "petit-dejeuner",
+      "description": "Un pudding de chia à la boisson de soja, papaye, citron vert et graines de courge.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 0,
+        "repos": 240,
+        "total": 252
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "graines-chia",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de chia",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-soja-non-sucree",
+          "quantite": 320,
+          "unite": "ml",
+          "quantite_normalisee": 320,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson de soja non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "papaye",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "petite papaye",
+          "note": "Environ 300 g de chair",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron vert",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-courge",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de courge",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Fouetter les graines de chia avec la boisson de soja et la moitié du zeste.",
+        "Après 10 minutes, mélanger de nouveau puis réfrigérer au moins 4 heures.",
+        "Mixer la moitié de la papaye avec le jus de citron vert et couper le reste en dés.",
+        "Répartir pudding, coulis et dés de papaye; ajouter graines de courge et zeste restant."
+      ],
+      "conseils": [
+        "Remuer une seconde fois avant le repos long évite la formation d'amas de chia."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Papaye",
+          "par": "Pêche mûre",
+          "note": "Adapter à la saison"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur dans des contenants fermés.",
+      "nutrition_par_portion": {
+        "calories": 360,
+        "proteines_g": 15,
+        "glucides_g": 32,
+        "sucres_g": 16,
+        "lipides_g": 20,
+        "acides_gras_satures_g": 2.6,
+        "fibres_g": 13,
+        "sodium_mg": 75,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r098-chia-papaye-citron-vert-courge.jpg",
+        "alt": "Chia à la papaye, citron vert et graines de courge"
+      },
+      "seo": {
+        "titre": "Chia à la papaye, citron vert et graines de courge",
+        "meta_description": "Chia à la papaye, citron vert et graines de courge, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "chia à la papaye",
+          "citron vert et graines de courge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Chia à la papaye, citron vert et graines de courge",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : soja. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.45,
+          "active_minutes": 12,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r099",
+      "slug": "avoine-salee-courge-miso-sesame",
+      "titre": "Avoine salée à la courge, miso et sésame",
+      "categorie": "petit-dejeuner",
+      "description": "Un bol d'avoine salée à la courge rôtie, miso, sésame et ciboule.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 30,
+        "repos": 0,
+        "total": 42
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-fruits-a-coque"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 110,
+          "unite": "g",
+          "quantite_normalisee": 110,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "courge-butternut",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "courge butternut",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "miso-soja",
+          "quantite": 1,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "miso de soja",
+          "note": "Environ 18 g; teneur en sel variable",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "graines-sesame",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de sésame",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "ciboule",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "ciboules",
+          "note": "Émincées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C, mélanger la courge avec l'huile et rôtir 25 à 30 minutes.",
+        "Cuire les flocons dans l'eau 8 à 10 minutes en remuant.",
+        "Prélever deux cuillères d'avoine chaude, y délayer le miso hors du feu puis reverser dans la casserole.",
+        "Répartir l'avoine dans deux bols et ajouter courge, sésame et ciboule."
+      ],
+      "conseils": [
+        "Ne pas ajouter de sel avant d'avoir goûté : le miso est déjà salé et varie selon la marque."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Miso de soja",
+          "par": "Miso de pois chiches",
+          "note": "Vérifier l'étiquette; les allergènes et le sodium peuvent changer"
+        }
+      ],
+      "conservation": "Avoine et courge : 2 jours au réfrigérateur. Ajouter sésame et ciboule après réchauffage.",
+      "nutrition_par_portion": {
+        "calories": 430,
+        "proteines_g": 15,
+        "glucides_g": 62,
+        "sucres_g": 8,
+        "lipides_g": 15,
+        "acides_gras_satures_g": 2.2,
+        "fibres_g": 11,
+        "sodium_mg": 570,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r099-avoine-salee-courge-miso-sesame.jpg",
+        "alt": "Avoine salée à la courge, miso et sésame"
+      },
+      "seo": {
+        "titre": "Avoine salée à la courge, miso et sésame",
+        "meta_description": "Avoine salée à la courge, miso et sésame, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "avoine salée à la courge",
+          "miso et sésame"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Avoine salée à la courge, miso et sésame",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : gluten, sesame, soja. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.9,
+          "active_minutes": 18,
+          "equipment": [
+            "oven",
+            "hob"
+          ],
+          "allergens": [
+            "gluten",
+            "sesame",
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r100",
+      "slug": "yaourt-kaki-noix-cannelle",
+      "titre": "Yaourt au kaki, noix et cannelle",
+      "categorie": "petit-dejeuner",
+      "description": "Un bol de yaourt nature avec un coulis de kaki mûr, noix, cannelle et graines de lin moulues.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 0,
+        "repos": 0,
+        "total": 10
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "yaourt-nature",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "Sans sucre ajouté",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "kaki",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "kakis très mûrs",
+          "note": "Environ 300 g de chair",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix-grenoble",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "graines-lin-moulues",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de lin moulues",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c_cafe",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Prélever la chair des kakis et la mixer avec la cannelle jusqu'à obtenir un coulis.",
+        "Répartir le yaourt dans deux bols.",
+        "Ajouter le coulis de kaki sans le mélanger complètement.",
+        "Terminer avec les noix et le lin moulu, puis servir immédiatement."
+      ],
+      "conseils": [
+        "Utiliser des kakis parfaitement mûrs et souples pour éviter une sensation astringente."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de courge",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "Le coulis se conserve 24 heures au réfrigérateur. Assembler les bols juste avant de servir.",
+      "nutrition_par_portion": {
+        "calories": 370,
+        "proteines_g": 18,
+        "glucides_g": 45,
+        "sucres_g": 32,
+        "lipides_g": 15,
+        "acides_gras_satures_g": 3.5,
+        "fibres_g": 8,
+        "sodium_mg": 145,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme de valeurs génériques pour les ingrédients, divisée par 2; rendement et références commerciales non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; aucun calcul relié à des codes aliments n'a encore été validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r100-yaourt-kaki-noix-cannelle.jpg",
+        "alt": "Yaourt au kaki, noix et cannelle"
+      },
+      "seo": {
+        "titre": "Yaourt au kaki, noix et cannelle",
+        "meta_description": "Yaourt au kaki, noix et cannelle, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "yaourt au kaki",
+          "noix et cannelle"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Yaourt au kaki, noix et cannelle",
+            "version": "lot-r076-r100",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes de la formulation : fruits-a-coque, lait. Vérifier aussi chaque étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.75,
+          "active_minutes": 10,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "lait"
+          ]
+        }
+      }
+    }
+  ]
+}

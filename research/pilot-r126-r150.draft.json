@@ -1,0 +1,5231 @@
+{
+  "meta": {
+    "schema_version": "2.1.0",
+    "status": "draft",
+    "nombre_recettes": 25,
+    "nutrition_notice": "Toutes les valeurs nutritionnelles et tous les coûts sont des estimations éditoriales non validées et doivent être recalculés avant publication.",
+    "medical_notice": "Ces recettes s'inscrivent dans un modèle alimentaire varié, sans promesse d'effet thérapeutique."
+  },
+  "recipes": [
+    {
+      "id": "r126",
+      "slug": "soupe-de-haricots-blancs-au-fenouil-et-romarin",
+      "titre": "Soupe de haricots blancs au fenouil et romarin",
+      "categorie": "soupe",
+      "description": "Une soupe toscane souple aux haricots blancs, fenouil fondant, carotte, tomate et romarin.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 32,
+        "repos": 0,
+        "total": 47
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "mijotage",
+        "haricots-blancs",
+        "fenouil",
+        "romarin"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 480,
+          "unite": "g",
+          "quantite_normalisee": 480,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés et égouttés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bulbe de fenouil",
+          "note": "Environ 300 g, émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "carotte",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "carottes",
+          "note": "Environ 180 g, en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tomates-concassees-sans-sel",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates concassées sans sel ajouté",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "romarin frais haché",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 850,
+          "unite": "ml",
+          "quantite_normalisee": 850,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire suer le fenouil et les carottes dans l'huile 6 minutes.",
+        "Ajouter les tomates, l'eau et le romarin; laisser frémir 18 minutes.",
+        "Incorporer les haricots et poursuivre 8 minutes.",
+        "Écraser une petite louche contre la paroi pour épaissir, puis servir."
+      ],
+      "conseils": [
+        "Goûter avant de saler si les haricots sont en conserve."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Fenouil",
+          "par": "Deux branches de céleri",
+          "note": "Ajoute l'allergène céleri"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; réchauffer à cœur une seule fois.",
+      "nutrition_par_portion": {
+        "calories": 265,
+        "proteines_g": 13,
+        "glucides_g": 44,
+        "sucres_g": 8,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 0.9,
+        "fibres_g": 13,
+        "sodium_mg": 170,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r126-soupe-de-haricots-blancs-au-fenouil-et-romarin.jpg",
+        "alt": "Soupe de haricots blancs au fenouil et romarin"
+      },
+      "seo": {
+        "titre": "Soupe de haricots blancs au fenouil et romarin",
+        "meta_description": "Une soupe toscane souple aux haricots blancs, fenouil fondant, carotte, tomate et romarin.",
+        "mots_cles": [
+          "haricots blancs",
+          "fenouil",
+          "romarin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une soupe de légumineuses anisée où le fenouil est le légume principal. Formulation à tester avant publication.",
+          "caution": "Le sodium dépend fortement des tomates et haricots utilisés; données et coût à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.55,
+          "active_minutes": 20,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r127",
+      "slug": "creme-de-celeri-rave-a-la-pomme-et-aux-noix",
+      "titre": "Crème de céleri-rave à la pomme et aux noix",
+      "categorie": "soupe",
+      "description": "Une crème douce de céleri-rave et pomme, liée sans crème et terminée par des noix et du thym.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 53
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-douce-puis-mixage",
+        "celeri-rave",
+        "pomme",
+        "noix"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "celeri-rave",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "céleri-rave",
+          "note": "Pelé et coupé en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "pomme",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pomme",
+          "note": "Pelée et épépinée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Partie blanche émincée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 900,
+          "unite": "ml",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire fondre le poireau dans l'huile 5 minutes sans coloration.",
+        "Ajouter céleri-rave, pomme, thym et eau; cuire à couvert 25 minutes.",
+        "Mixer longuement jusqu'à texture lisse, en ajoutant un peu d'eau si nécessaire.",
+        "Servir avec les noix concassées."
+      ],
+      "conseils": [
+        "Couper le céleri en dés réguliers pour une cuisson homogène."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de courge",
+          "note": "Retire les fruits à coque si tous les autres produits conviennent"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; conserver les noix séparément.",
+      "nutrition_par_portion": {
+        "calories": 240,
+        "proteines_g": 7,
+        "glucides_g": 31,
+        "sucres_g": 10,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 1.3,
+        "fibres_g": 8,
+        "sodium_mg": 150,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r127-creme-de-celeri-rave-a-la-pomme-et-aux-noix.jpg",
+        "alt": "Crème de céleri-rave à la pomme et aux noix"
+      },
+      "seo": {
+        "titre": "Crème de céleri-rave à la pomme et aux noix",
+        "meta_description": "Une crème douce de céleri-rave et pomme, liée sans crème et terminée par des noix et du thym.",
+        "mots_cles": [
+          "céleri-rave",
+          "pomme",
+          "noix"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le duo céleri-pomme est enrichi de noix plutôt que de crème. Formulation à tester avant publication.",
+          "caution": "Contient céleri et fruits à coque; texture, nutrition et coût non validés."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.85,
+          "active_minutes": 22,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "celeri",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r128",
+      "slug": "veloute-de-panais-pois-chiches-et-cumin",
+      "titre": "Velouté de panais, pois chiches et cumin",
+      "categorie": "soupe",
+      "description": "Un velouté de panais rôti et pois chiches, parfumé au cumin, à l'ail et au citron.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 35,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "rôtissage-puis-mixage",
+        "panais",
+        "pois-chiches",
+        "cumin"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "panais",
+          "quantite": 650,
+          "unite": "g",
+          "quantite_normalisee": 650,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "panais",
+          "note": "Pelés et coupés en cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pois-chiches-cuits",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois chiches cuits",
+          "note": "Rincés et égouttés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "cumin-moulu",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cumin moulu",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "ail",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "gousses d'ail",
+          "note": "Pelées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 850,
+          "unite": "ml",
+          "quantite_normalisee": 850,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Chauffer le four à 200 °C.",
+        "Mélanger panais, ail, cumin et huile puis rôtir 28 minutes.",
+        "Verser les légumes rôtis, les pois chiches et l'eau chaude dans un blender; mixer par impulsions prudentes.",
+        "Réchauffer si nécessaire et incorporer zeste et jus de citron hors du feu."
+      ],
+      "conseils": [
+        "Laisser la vapeur s'échapper selon les consignes du blender."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Panais",
+          "par": "Carottes",
+          "note": "La soupe sera plus douce et moins terreuse"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur ou 2 mois au congélateur.",
+      "nutrition_par_portion": {
+        "calories": 295,
+        "proteines_g": 10,
+        "glucides_g": 48,
+        "sucres_g": 9,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.1,
+        "fibres_g": 12,
+        "sodium_mg": 125,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r128-veloute-de-panais-pois-chiches-et-cumin.jpg",
+        "alt": "Velouté de panais, pois chiches et cumin"
+      },
+      "seo": {
+        "titre": "Velouté de panais, pois chiches et cumin",
+        "meta_description": "Un velouté de panais rôti et pois chiches, parfumé au cumin, à l'ail et au citron.",
+        "mots_cles": [
+          "panais",
+          "pois chiches",
+          "cumin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les pois chiches donnent du corps à un velouté centré sur le panais. Formulation à tester avant publication.",
+          "caution": "Le rendement du rôtissage et l'absorption d'huile doivent être mesurés."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.65,
+          "active_minutes": 20,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r129",
+      "slug": "soupe-de-petits-pois-menthe-et-amandes",
+      "titre": "Soupe de petits pois, menthe et amandes",
+      "categorie": "soupe",
+      "description": "Une soupe verte de petits pois à cuisson courte, adoucie par l'amande et réveillée par menthe et citron.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 15,
+        "repos": 3,
+        "total": 30
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-courte-puis-mixage",
+        "petits-pois",
+        "menthe",
+        "amandes"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "petits-pois",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petits pois",
+          "note": "Frais écossés ou surgelés",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "Feuilles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Trempées 2 heures si possible",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 800,
+          "unite": "ml",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire suer le poireau dans l'huile 5 minutes.",
+        "Ajouter petits pois et eau; cuire à frémissement 7 minutes seulement.",
+        "Ajouter les amandes et mixer jusqu'à consistance veloutée.",
+        "Incorporer menthe et citron, mixer brièvement puis laisser reposer 3 minutes."
+      ],
+      "conseils": [
+        "Ne pas prolonger la cuisson afin de préserver la couleur et le goût frais."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Haricots blancs cuits",
+          "note": "Option sans fruits à coque, à recalculer"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur; refroidir rapidement après cuisson.",
+      "nutrition_par_portion": {
+        "calories": 250,
+        "proteines_g": 13,
+        "glucides_g": 29,
+        "sucres_g": 8,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 10,
+        "sodium_mg": 105,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r129-soupe-de-petits-pois-menthe-et-amandes.jpg",
+        "alt": "Soupe de petits pois, menthe et amandes"
+      },
+      "seo": {
+        "titre": "Soupe de petits pois, menthe et amandes",
+        "meta_description": "Une soupe verte de petits pois à cuisson courte, adoucie par l'amande et réveillée par menthe et citron.",
+        "mots_cles": [
+          "petits pois",
+          "menthe",
+          "amandes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L’amande remplace la crème et soutient une soupe verte très courte en cuisson. Formulation à tester avant publication.",
+          "caution": "Contient des fruits à coque; couleur, texture et valeurs restent à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.75,
+          "active_minutes": 16,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r130",
+      "slug": "soupe-de-betterave-aux-framboises-et-a-l-aneth",
+      "titre": "Soupe de betterave aux framboises et à l’aneth",
+      "categorie": "soupe",
+      "description": "Une soupe froide de betterave, framboise et concombre, servie avec du yaourt et beaucoup d'aneth.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 35,
+        "repos": 120,
+        "total": 173
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-puis-service-froid",
+        "betterave",
+        "framboises",
+        "aneth"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "betterave-crue",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "betteraves crues",
+          "note": "Pelées et coupées en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "framboise",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "framboises",
+          "note": "Fraîches ou surgelées",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "concombre",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombre",
+          "note": "Environ 300 g, épépiné",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-nature",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "Non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-cidre",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de cidre",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les betteraves dans l'eau à couvert 30 à 35 minutes, jusqu'à tendreté.",
+        "Laisser tiédir, ajouter framboises, moitié du concombre et vinaigre, puis mixer.",
+        "Réfrigérer au moins 2 heures dans un contenant fermé.",
+        "Servir avec le yaourt, le reste du concombre et l'aneth."
+      ],
+      "conseils": [
+        "Porter des gants si l'on souhaite éviter de tacher les mains."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Yaourt nature",
+          "par": "Yaourt de soja nature",
+          "note": "Ajoute l'allergène soja et retire le lait selon le produit"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur à 4 °C maximum.",
+      "nutrition_par_portion": {
+        "calories": 175,
+        "proteines_g": 7,
+        "glucides_g": 30,
+        "sucres_g": 20,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 1.8,
+        "fibres_g": 8,
+        "sodium_mg": 115,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r130-soupe-de-betterave-aux-framboises-et-a-l-aneth.jpg",
+        "alt": "Soupe de betterave aux framboises et à l’aneth"
+      },
+      "seo": {
+        "titre": "Soupe de betterave aux framboises et à l’aneth",
+        "meta_description": "Une soupe froide de betterave, framboise et concombre, servie avec du yaourt et beaucoup d'aneth.",
+        "mots_cles": [
+          "betterave",
+          "framboises",
+          "aneth"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La framboise apporte une acidité fruitée à une soupe froide de betterave. Formulation à tester avant publication.",
+          "caution": "Contient du lait; chaîne du froid, acidité, portions et données à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.05,
+          "active_minutes": 20,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r131",
+      "slug": "veloute-de-courgette-haricots-blancs-et-basilic",
+      "titre": "Velouté de courgette, haricots blancs et basilic",
+      "categorie": "soupe",
+      "description": "Un velouté estival de courgette et haricots blancs, parfumé au basilic, à l'ail et au citron.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 20,
+        "repos": 3,
+        "total": 35
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-douce-puis-mixage",
+        "courgette",
+        "haricots-blancs",
+        "basilic"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "courgette",
+          "quantite": 750,
+          "unite": "g",
+          "quantite_normalisee": 750,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "courgettes",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 320,
+          "unite": "g",
+          "quantite_normalisee": 320,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "Feuilles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "ail",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "gousse d'ail",
+          "note": "Hachée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 650,
+          "unite": "ml",
+          "quantite_normalisee": 650,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir courgettes et ail dans l'huile 5 minutes.",
+        "Ajouter eau et haricots; cuire à couvert 12 minutes.",
+        "Mixer avec le zeste jusqu'à texture lisse.",
+        "Ajouter basilic et jus de citron puis mixer quelques secondes seulement."
+      ],
+      "conseils": [
+        "Ajouter le basilic hors du feu pour conserver son parfum."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Basilic",
+          "par": "Persil plat",
+          "note": "Profil aromatique différent mais même quantité"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur ou 2 mois au congélateur sans basilic de finition.",
+      "nutrition_par_portion": {
+        "calories": 205,
+        "proteines_g": 10,
+        "glucides_g": 31,
+        "sucres_g": 7,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.8,
+        "fibres_g": 10,
+        "sodium_mg": 135,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r131-veloute-de-courgette-haricots-blancs-et-basilic.jpg",
+        "alt": "Velouté de courgette, haricots blancs et basilic"
+      },
+      "seo": {
+        "titre": "Velouté de courgette, haricots blancs et basilic",
+        "meta_description": "Un velouté estival de courgette et haricots blancs, parfumé au basilic, à l'ail et au citron.",
+        "mots_cles": [
+          "courgette",
+          "haricots blancs",
+          "basilic"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les haricots blancs épaississent la courgette sans pomme de terre. Formulation à tester avant publication.",
+          "caution": "Le sodium dépend des haricots; rendement et coût doivent être vérifiés."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.45,
+          "active_minutes": 15,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r132",
+      "slug": "salmorejo-de-tomate-et-poivron-aux-amandes",
+      "titre": "Salmorejo de tomate et poivron aux amandes",
+      "categorie": "soupe",
+      "description": "Une soupe froide andalouse de tomates et poivrons rôtis, épaissie par des amandes plutôt que par du pain.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 30,
+        "repos": 60,
+        "total": 105
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "soupe",
+        "rôtissage-puis-mixage-à-froid",
+        "tomate",
+        "poivron-rouge",
+        "amandes"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "tomate",
+          "quantite": 900,
+          "unite": "g",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates mûres",
+          "note": "Coupées en deux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poivron-rouge",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poivrons rouges",
+          "note": "Épépinés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Non salées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "ail",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "gousse d'ail",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 3,
+          "unite": "c. à s.",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-xeres",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de Xérès",
+          "note": "Vérifier l'étiquette",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sulfites"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 150,
+          "unite": "ml",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir tomates, poivrons et ail 28 à 30 minutes à 210 °C.",
+        "Laisser tiédir 10 minutes puis retirer les peaux détachées des poivrons.",
+        "Mixer légumes, amandes, huile, vinaigre et eau jusqu'à texture crémeuse.",
+        "Réfrigérer une heure et remuer avant de servir."
+      ],
+      "conseils": [
+        "Ajuster l'eau après refroidissement, car les amandes épaississent la soupe."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Haricots blancs cuits",
+          "note": "Option sans fruits à coque, texture différente"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur dans un récipient fermé.",
+      "nutrition_par_portion": {
+        "calories": 245,
+        "proteines_g": 7,
+        "glucides_g": 20,
+        "sucres_g": 12,
+        "lipides_g": 17,
+        "acides_gras_satures_g": 1.8,
+        "fibres_g": 7,
+        "sodium_mg": 65,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r132-salmorejo-de-tomate-et-poivron-aux-amandes.jpg",
+        "alt": "Salmorejo de tomate et poivron aux amandes"
+      },
+      "seo": {
+        "titre": "Salmorejo de tomate et poivron aux amandes",
+        "meta_description": "Une soupe froide andalouse de tomates et poivrons rôtis, épaissie par des amandes plutôt que par du pain.",
+        "mots_cles": [
+          "tomate",
+          "poivron rouge",
+          "amandes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les amandes remplacent le pain dans une soupe froide de tomates rôties. Formulation à tester avant publication.",
+          "caution": "Contient des fruits à coque et le vinaigre retenu est déclaré avec sulfites; vérifier l'étiquette commerciale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.15,
+          "active_minutes": 20,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "sulfites"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r133",
+      "slug": "soupe-de-blettes-a-l-orge-et-au-citron",
+      "titre": "Soupe de blettes à l’orge et au citron",
+      "categorie": "soupe",
+      "description": "Une soupe citronnée de blettes et orge mondé, avec poireau et persil, servie non mixée.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 48,
+        "repos": 0,
+        "total": 66
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver",
+        "printemps"
+      ],
+      "tags": [
+        "soupe",
+        "mijotage",
+        "blettes",
+        "orge-monde",
+        "citron"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "blettes",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "blettes",
+          "note": "Côtes et feuilles séparées, émincées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "orge-monde",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "orge mondé",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 1200,
+          "unite": "ml",
+          "quantite_normalisee": 1200,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire suer le poireau et les côtes de blettes dans l'huile 6 minutes.",
+        "Ajouter l'orge et l'eau; mijoter 35 minutes à couvert.",
+        "Ajouter les feuilles de blettes et poursuivre 7 minutes.",
+        "Incorporer zeste, jus de citron et persil juste avant de servir."
+      ],
+      "conseils": [
+        "Le temps de cuisson varie selon l'orge; vérifier le grain avant d'ajouter les feuilles."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Orge mondé",
+          "par": "Riz complet",
+          "note": "À tester; retire le gluten si le riz et les autres produits conviennent"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; ajouter un peu d'eau au réchauffage.",
+      "nutrition_par_portion": {
+        "calories": 270,
+        "proteines_g": 8,
+        "glucides_g": 48,
+        "sucres_g": 5,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 0.9,
+        "fibres_g": 10,
+        "sodium_mg": 95,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r133-soupe-de-blettes-a-l-orge-et-au-citron.jpg",
+        "alt": "Soupe de blettes à l’orge et au citron"
+      },
+      "seo": {
+        "titre": "Soupe de blettes à l’orge et au citron",
+        "meta_description": "Une soupe citronnée de blettes et orge mondé, avec poireau et persil, servie non mixée.",
+        "mots_cles": [
+          "blettes",
+          "orge mondé",
+          "citron"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une soupe feuillue et citronnée où l’orge reste entière. Formulation à tester avant publication.",
+          "caution": "Contient du gluten; cuisson de l'orge, nutrition et coût à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.35,
+          "active_minutes": 22,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r134",
+      "slug": "veloute-de-champignons-chataignes-et-thym",
+      "titre": "Velouté de champignons, châtaignes et thym",
+      "categorie": "soupe",
+      "description": "Un velouté forestier de champignons et châtaignes, lié sans crème et parfumé au thym et à l'huile de noix.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 45
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "poêlée-puis-mixage",
+        "champignons",
+        "chataignes",
+        "thym"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "champignons-paris",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "champignons de Paris",
+          "note": "Brossés et émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "chataignes-cuites",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "châtaignes cuites",
+          "note": "Sous vide, nature",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-noix",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile de noix",
+          "note": "Pour la finition",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 850,
+          "unite": "ml",
+          "quantite_normalisee": 850,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Saisir les champignons dans l'huile d'olive 8 minutes jusqu'à évaporation de leur eau.",
+        "Ajouter poireau et thym; cuire 4 minutes.",
+        "Verser eau et châtaignes puis frémir 12 minutes.",
+        "Mixer, laisser reposer 5 minutes et ajouter l'huile de noix au service."
+      ],
+      "conseils": [
+        "Réserver quelques lamelles de champignon bien cuites pour la garniture."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Huile de noix",
+          "par": "Huile d'olive",
+          "note": "Retire les fruits à coque si les autres produits conviennent"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; ajouter l'huile de noix après réchauffage.",
+      "nutrition_par_portion": {
+        "calories": 290,
+        "proteines_g": 7,
+        "glucides_g": 42,
+        "sucres_g": 9,
+        "lipides_g": 12,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 8,
+        "sodium_mg": 80,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r134-veloute-de-champignons-chataignes-et-thym.jpg",
+        "alt": "Velouté de champignons, châtaignes et thym"
+      },
+      "seo": {
+        "titre": "Velouté de champignons, châtaignes et thym",
+        "meta_description": "Un velouté forestier de champignons et châtaignes, lié sans crème et parfumé au thym et à l'huile de noix.",
+        "mots_cles": [
+          "champignons",
+          "châtaignes",
+          "thym"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La châtaigne apporte la texture à une soupe forestière sans crème. Formulation à tester avant publication.",
+          "caution": "Contient des fruits à coque; poids égoutté des châtaignes et coût à confirmer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.35,
+          "active_minutes": 22,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r135",
+      "slug": "soupe-d-asperges-petits-pois-et-estragon",
+      "titre": "Soupe d’asperges, petits pois et estragon",
+      "categorie": "soupe",
+      "description": "Une soupe printanière d'asperges et petits pois, partiellement mixée et relevée d'estragon et de citron.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 18,
+        "repos": 2,
+        "total": 38
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-courte-puis-mixage-partiel",
+        "asperges",
+        "petits-pois",
+        "estragon"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "asperges-vertes",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "asperges vertes",
+          "note": "Extrémités dures retirées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "petits-pois",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petits pois",
+          "note": "Frais ou surgelés",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "estragon-frais",
+          "quantite": 12,
+          "unite": "g",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "estragon frais",
+          "note": "Feuilles ciselées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 850,
+          "unite": "ml",
+          "quantite_normalisee": 850,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire suer le poireau dans l'huile 5 minutes.",
+        "Ajouter asperges et eau; cuire 7 minutes.",
+        "Ajouter les petits pois et poursuivre 4 minutes.",
+        "Réserver deux louches, mixer le reste avec estragon et citron, puis réunir les deux textures."
+      ],
+      "conseils": [
+        "Garder les pointes d'asperges entières pour contrôler la cuisson."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Estragon",
+          "par": "Menthe fraîche",
+          "note": "Donne un profil plus classique"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur; refroidir rapidement.",
+      "nutrition_par_portion": {
+        "calories": 170,
+        "proteines_g": 10,
+        "glucides_g": 25,
+        "sucres_g": 9,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.8,
+        "fibres_g": 10,
+        "sodium_mg": 95,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r135-soupe-d-asperges-petits-pois-et-estragon.jpg",
+        "alt": "Soupe d’asperges, petits pois et estragon"
+      },
+      "seo": {
+        "titre": "Soupe d’asperges, petits pois et estragon",
+        "meta_description": "Une soupe printanière d'asperges et petits pois, partiellement mixée et relevée d'estragon et de citron.",
+        "mots_cles": [
+          "asperges",
+          "petits pois",
+          "estragon"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L’estragon distingue ce duo de légumes verts des recettes à la menthe. Formulation à tester avant publication.",
+          "caution": "Prix très saisonnier; temps de cuisson, portions et valeurs à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.45,
+          "active_minutes": 22,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r136",
+      "slug": "creme-de-brocoli-aux-haricots-cannellini-et-citron",
+      "titre": "Crème de brocoli aux haricots cannellini et citron",
+      "categorie": "soupe",
+      "description": "Une crème verte de brocoli vapeur et haricots cannellini, citronnée et sans produit laitier.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 18,
+        "repos": 2,
+        "total": 35
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-vapeur-puis-mixage",
+        "brocoli",
+        "haricots-cannellini",
+        "citron"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "brocoli",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "brocoli",
+          "note": "En fleurettes, tiges pelées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 320,
+          "unite": "g",
+          "quantite_normalisee": 320,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots cannellini cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "ail",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "petite gousse d'ail",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 650,
+          "unite": "ml",
+          "quantite_normalisee": 650,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le brocoli à la vapeur 10 à 12 minutes jusqu'à tendreté.",
+        "Réchauffer les haricots 5 minutes avec l'eau.",
+        "Mixer brocoli, haricots, ail, zeste et eau de cuisson.",
+        "Incorporer huile et jus de citron, puis laisser reposer 2 minutes."
+      ],
+      "conseils": [
+        "Commencer avec 500 ml d'eau et ajuster progressivement la texture."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Brocoli",
+          "par": "Chou-fleur",
+          "note": "Couleur et saveur différentes, protocole identique"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur ou 2 mois au congélateur.",
+      "nutrition_par_portion": {
+        "calories": 230,
+        "proteines_g": 12,
+        "glucides_g": 32,
+        "sucres_g": 6,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.1,
+        "fibres_g": 12,
+        "sodium_mg": 145,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r136-creme-de-brocoli-aux-haricots-cannellini-et-citron.jpg",
+        "alt": "Crème de brocoli aux haricots cannellini et citron"
+      },
+      "seo": {
+        "titre": "Crème de brocoli aux haricots cannellini et citron",
+        "meta_description": "Une crème verte de brocoli vapeur et haricots cannellini, citronnée et sans produit laitier.",
+        "mots_cles": [
+          "brocoli",
+          "haricots cannellini",
+          "citron"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une crème verte épaissie par des cannellini et relevée au citron. Formulation à tester avant publication.",
+          "caution": "Le sodium dépend des haricots; rendement vapeur et valeurs à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.65,
+          "active_minutes": 18,
+          "equipment": [
+            "steamer",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r137",
+      "slug": "soupe-de-patate-douce-a-l-arachide-et-au-citron-vert",
+      "titre": "Soupe de patate douce à l’arachide et au citron vert",
+      "categorie": "soupe",
+      "description": "Une soupe de patate douce et tomate liée à la purée d'arachide, avec citron vert et coriandre.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 30,
+        "repos": 2,
+        "total": 50
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "mijotage-puis-mixage-partiel",
+        "patate-douce",
+        "arachides",
+        "tomate"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "patate-douce",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "patates douces",
+          "note": "Pelées et en cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "puree-arachide",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "purée d'arachide",
+          "note": "100 % arachides, non sucrée",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "arachides"
+          ]
+        },
+        {
+          "id": "tomates-concassees-sans-sel",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates concassées sans sel ajouté",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron vert",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "Ciselée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 750,
+          "unite": "ml",
+          "quantite_normalisee": 750,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir les cubes de patate douce dans l'huile 4 minutes.",
+        "Ajouter tomate et eau; mijoter 22 minutes.",
+        "Prélever deux louches, les mixer avec la purée d'arachide puis reverser.",
+        "Ajouter citron vert et coriandre hors du feu."
+      ],
+      "conseils": [
+        "Délayer la purée d'arachide dans du liquide chaud avant de la verser."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Purée d'arachide",
+          "par": "Tahini",
+          "note": "Remplace l'allergène arachides par sésame"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur ou 2 mois au congélateur.",
+      "nutrition_par_portion": {
+        "calories": 330,
+        "proteines_g": 10,
+        "glucides_g": 49,
+        "sucres_g": 12,
+        "lipides_g": 12,
+        "acides_gras_satures_g": 1.9,
+        "fibres_g": 10,
+        "sodium_mg": 120,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r137-soupe-de-patate-douce-a-l-arachide-et-au-citron-vert.jpg",
+        "alt": "Soupe de patate douce à l’arachide et au citron vert"
+      },
+      "seo": {
+        "titre": "Soupe de patate douce à l’arachide et au citron vert",
+        "meta_description": "Une soupe de patate douce et tomate liée à la purée d'arachide, avec citron vert et coriandre.",
+        "mots_cles": [
+          "patate douce",
+          "arachides",
+          "tomate"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L’arachide est utilisée comme liant dans une soupe acidulée, sans lait de coco. Formulation à tester avant publication.",
+          "caution": "Contient des arachides; allergène majeur et épaisseur à contrôler avant publication."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.8,
+          "active_minutes": 22,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "arachides"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r138",
+      "slug": "soupe-de-navets-lentilles-vertes-et-poireau",
+      "titre": "Soupe de navets, lentilles vertes et poireau",
+      "categorie": "soupe",
+      "description": "Une soupe rustique non mixée de navets, lentilles vertes et poireau, au thym et au persil.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 42,
+        "repos": 0,
+        "total": 60
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "mijotage",
+        "navets",
+        "lentilles-vertes",
+        "poireau"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "navet",
+          "quantite": 550,
+          "unite": "g",
+          "quantite_normalisee": 550,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "navets",
+          "note": "Pelés et en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "lentilles-vertes-seches",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "lentilles vertes sèches",
+          "note": "Rincées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 1300,
+          "unite": "ml",
+          "quantite_normalisee": 1300,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire suer poireau et navets dans l'huile 7 minutes.",
+        "Ajouter lentilles, thym et eau; porter à frémissement.",
+        "Cuire 32 à 35 minutes, jusqu'à ce que les lentilles soient tendres.",
+        "Ajouter le persil au dernier moment et ajuster la quantité d'eau."
+      ],
+      "conseils": [
+        "Ne pas saler avant que les lentilles soient presque tendres."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Navets",
+          "par": "Rutabaga",
+          "note": "Couper en plus petits dés et vérifier la cuisson"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; la soupe épaissit au repos.",
+      "nutrition_par_portion": {
+        "calories": 285,
+        "proteines_g": 16,
+        "glucides_g": 48,
+        "sucres_g": 7,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 14,
+        "sodium_mg": 75,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r138-soupe-de-navets-lentilles-vertes-et-poireau.jpg",
+        "alt": "Soupe de navets, lentilles vertes et poireau"
+      },
+      "seo": {
+        "titre": "Soupe de navets, lentilles vertes et poireau",
+        "meta_description": "Une soupe rustique non mixée de navets, lentilles vertes et poireau, au thym et au persil.",
+        "mots_cles": [
+          "navets",
+          "lentilles vertes",
+          "poireau"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le navet devient le légume central d’une soupe rustique aux lentilles entières. Formulation à tester avant publication.",
+          "caution": "La cuisson varie selon les lentilles; nutrition, temps et coût non vérifiés."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.2,
+          "active_minutes": 22,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r139",
+      "slug": "veloute-d-artichaut-pomme-de-terre-et-persil",
+      "titre": "Velouté d’artichaut, pomme de terre et persil",
+      "categorie": "soupe",
+      "description": "Un velouté clair de fonds d'artichaut et pomme de terre, avec poireau, persil et citron.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 28,
+        "repos": 3,
+        "total": 49
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "automne"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-douce-puis-mixage",
+        "fonds-d-artichaut",
+        "pomme-de-terre",
+        "persil"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "fonds-artichaut",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fonds d'artichaut",
+          "note": "Frais ou surgelés, nature",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "pomme-terre",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pommes de terre",
+          "note": "Pelées et en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 950,
+          "unite": "ml",
+          "quantite_normalisee": 950,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire suer le poireau dans l'huile 5 minutes.",
+        "Ajouter artichauts, pommes de terre et eau; mijoter 22 minutes.",
+        "Mixer jusqu'à texture lisse et laisser reposer 3 minutes.",
+        "Ajouter persil et citron juste avant de servir."
+      ],
+      "conseils": [
+        "Vérifier que les fonds d'artichaut surgelés ne contiennent ni sel ni sauce ajoutée."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Fonds d'artichaut",
+          "par": "Cœurs d'artichaut nature",
+          "note": "Égoutter et ajuster le sodium"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; décongélation non recommandée pour la texture.",
+      "nutrition_par_portion": {
+        "calories": 205,
+        "proteines_g": 7,
+        "glucides_g": 36,
+        "sucres_g": 4,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 10,
+        "sodium_mg": 105,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r139-veloute-d-artichaut-pomme-de-terre-et-persil.jpg",
+        "alt": "Velouté d’artichaut, pomme de terre et persil"
+      },
+      "seo": {
+        "titre": "Velouté d’artichaut, pomme de terre et persil",
+        "meta_description": "Un velouté clair de fonds d'artichaut et pomme de terre, avec poireau, persil et citron.",
+        "mots_cles": [
+          "fonds d’artichaut",
+          "pomme de terre",
+          "persil"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une soupe claire mettant l’artichaut au premier plan. Formulation à tester avant publication.",
+          "caution": "Le sodium et le coût dépendent fortement du produit d'artichaut choisi."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.15,
+          "active_minutes": 21,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r140",
+      "slug": "soupe-de-potimarron-a-la-pomme-et-a-la-sauge",
+      "titre": "Soupe de potimarron à la pomme et à la sauge",
+      "categorie": "soupe",
+      "description": "Un velouté de potimarron rôti, pomme et sauge, terminé par des graines de courge croquantes.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 38,
+        "repos": 5,
+        "total": 58
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "rôtissage-puis-mixage",
+        "potimarron",
+        "pomme",
+        "sauge"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "potimarron",
+          "quantite": 900,
+          "unite": "g",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "potimarron",
+          "note": "Épépiné et coupé en cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pomme",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pomme",
+          "note": "Épépinée et en quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oignon-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oignon jaune",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-courge",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de courge",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 800,
+          "unite": "ml",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir potimarron, pomme, oignon, sauge et huile 32 minutes à 200 °C.",
+        "Retirer les feuilles de sauge très foncées.",
+        "Mixer les légumes avec l'eau chaude jusqu'à texture veloutée.",
+        "Laisser reposer 5 minutes et servir avec les graines de courge."
+      ],
+      "conseils": [
+        "La peau fine du potimarron peut être conservée si elle est saine et bien lavée."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Potimarron",
+          "par": "Courge butternut",
+          "note": "Peler la butternut avant rôtissage"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur ou 2 mois au congélateur.",
+      "nutrition_par_portion": {
+        "calories": 235,
+        "proteines_g": 6,
+        "glucides_g": 38,
+        "sucres_g": 13,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 9,
+        "sodium_mg": 70,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r140-soupe-de-potimarron-a-la-pomme-et-a-la-sauge.jpg",
+        "alt": "Soupe de potimarron à la pomme et à la sauge"
+      },
+      "seo": {
+        "titre": "Soupe de potimarron à la pomme et à la sauge",
+        "meta_description": "Un velouté de potimarron rôti, pomme et sauge, terminé par des graines de courge croquantes.",
+        "mots_cles": [
+          "potimarron",
+          "pomme",
+          "sauge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La pomme et la sauge remplacent les épices chaudes classiques du potimarron. Formulation à tester avant publication.",
+          "caution": "Le calibre de la courge et le rendement après rôtissage doivent être mesurés."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.5,
+          "active_minutes": 20,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r141",
+      "slug": "chaudree-de-mais-aux-haricots-noirs-et-poivron",
+      "titre": "Chaudrée de maïs aux haricots noirs et poivron",
+      "categorie": "soupe",
+      "description": "Une chaudrée végétale de maïs, haricots noirs et poivron, partiellement mixée pour garder de la mâche.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 28,
+        "repos": 0,
+        "total": 46
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "soupe",
+        "mijotage-et-mixage-partiel",
+        "mais",
+        "haricots-noirs",
+        "poivron"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "mais-grains",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "grains de maïs",
+          "note": "Frais ou surgelés",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-noirs-cuits",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots noirs cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poivron-rouge",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poivron rouge",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tomates-concassees-sans-sel",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates concassées sans sel ajouté",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "Ciselée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 750,
+          "unite": "ml",
+          "quantite_normalisee": 750,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir le poivron dans l'huile 6 minutes.",
+        "Ajouter maïs, tomate et eau; mijoter 14 minutes.",
+        "Mixer environ un tiers de la soupe puis reverser dans la casserole.",
+        "Ajouter les haricots, chauffer 6 minutes et terminer avec la coriandre."
+      ],
+      "conseils": [
+        "Rincer les haricots en conserve pour réduire le liquide de couverture."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Haricots noirs",
+          "par": "Haricots rouges",
+          "note": "Même poids égoutté; profil différent"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur ou 2 mois au congélateur.",
+      "nutrition_par_portion": {
+        "calories": 300,
+        "proteines_g": 14,
+        "glucides_g": 52,
+        "sucres_g": 11,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.8,
+        "fibres_g": 14,
+        "sodium_mg": 160,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r141-chaudree-de-mais-aux-haricots-noirs-et-poivron.jpg",
+        "alt": "Chaudrée de maïs aux haricots noirs et poivron"
+      },
+      "seo": {
+        "titre": "Chaudrée de maïs aux haricots noirs et poivron",
+        "meta_description": "Une chaudrée végétale de maïs, haricots noirs et poivron, partiellement mixée pour garder de la mâche.",
+        "mots_cles": [
+          "maïs",
+          "haricots noirs",
+          "poivron"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une chaudrée végétale sans crème qui conserve des grains et haricots entiers. Formulation à tester avant publication.",
+          "caution": "Sodium des conserves, épaisseur et valeurs nutritionnelles à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.65,
+          "active_minutes": 22,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r142",
+      "slug": "soupe-de-chou-vert-haricots-blancs-et-carvi",
+      "titre": "Soupe de chou vert, haricots blancs et carvi",
+      "categorie": "soupe",
+      "description": "Une soupe de chou vert et haricots blancs au carvi, avec carotte et oignon, longuement mijotée.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 38,
+        "repos": 0,
+        "total": 58
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "mijotage",
+        "chou-vert",
+        "haricots-blancs",
+        "carvi"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "chou-vert",
+          "quantite": 650,
+          "unite": "g",
+          "quantite_normalisee": 650,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chou vert",
+          "note": "Émincé finement",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 420,
+          "unite": "g",
+          "quantite_normalisee": 420,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "carvi-graines",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "graines de carvi",
+          "note": "Légèrement écrasées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "carotte",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "carottes",
+          "note": "En demi-rondelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oignon-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oignon jaune",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 1100,
+          "unite": "ml",
+          "quantite_normalisee": 1100,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir oignon, carottes et carvi dans l'huile 6 minutes.",
+        "Ajouter le chou et remuer 3 minutes pour le faire tomber.",
+        "Verser l'eau et mijoter 22 minutes.",
+        "Ajouter les haricots et poursuivre 7 minutes."
+      ],
+      "conseils": [
+        "Émincer le chou régulièrement pour éviter les morceaux encore fermes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Carvi",
+          "par": "Graines de fenouil",
+          "note": "Utiliser une demi-cuillère à café et tester l'intensité"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; réchauffer doucement.",
+      "nutrition_par_portion": {
+        "calories": 220,
+        "proteines_g": 11,
+        "glucides_g": 38,
+        "sucres_g": 8,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 0.6,
+        "fibres_g": 12,
+        "sodium_mg": 145,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r142-soupe-de-chou-vert-haricots-blancs-et-carvi.jpg",
+        "alt": "Soupe de chou vert, haricots blancs et carvi"
+      },
+      "seo": {
+        "titre": "Soupe de chou vert, haricots blancs et carvi",
+        "meta_description": "Une soupe de chou vert et haricots blancs au carvi, avec carotte et oignon, longuement mijotée.",
+        "mots_cles": [
+          "chou vert",
+          "haricots blancs",
+          "carvi"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le carvi parfume une soupe de chou et légumineuses sans viande. Formulation à tester avant publication.",
+          "caution": "Le chou et les légumineuses peuvent être mal tolérés; sodium et portions à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.25,
+          "active_minutes": 24,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r143",
+      "slug": "veloute-de-cresson-pomme-de-terre-et-noix",
+      "titre": "Velouté de cresson, pomme de terre et noix",
+      "categorie": "soupe",
+      "description": "Un velouté poivré de cresson et pomme de terre, adouci par des noix et une pointe de muscade.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 24,
+        "repos": 3,
+        "total": 42
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver",
+        "printemps"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-courte-puis-mixage",
+        "cresson",
+        "pomme-de-terre",
+        "noix"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "cresson",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cresson",
+          "note": "Lavé, grosses tiges retirées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pomme-terre",
+          "quantite": 450,
+          "unite": "g",
+          "quantite_normalisee": 450,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pommes de terre",
+          "note": "Pelées et en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "muscade-moulue",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "muscade moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 900,
+          "unite": "ml",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire suer le poireau dans l'huile 5 minutes.",
+        "Ajouter pommes de terre et eau; cuire 16 minutes.",
+        "Ajouter le cresson et cuire encore 2 minutes.",
+        "Mixer avec les noix et la muscade, puis laisser reposer 3 minutes."
+      ],
+      "conseils": [
+        "Ajouter le cresson en fin de cuisson pour limiter son amertume."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de tournesol",
+          "note": "Option sans fruits à coque à tester"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur; couleur optimale le jour même.",
+      "nutrition_par_portion": {
+        "calories": 245,
+        "proteines_g": 8,
+        "glucides_g": 34,
+        "sucres_g": 4,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 7,
+        "sodium_mg": 105,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r143-veloute-de-cresson-pomme-de-terre-et-noix.jpg",
+        "alt": "Velouté de cresson, pomme de terre et noix"
+      },
+      "seo": {
+        "titre": "Velouté de cresson, pomme de terre et noix",
+        "meta_description": "Un velouté poivré de cresson et pomme de terre, adouci par des noix et une pointe de muscade.",
+        "mots_cles": [
+          "cresson",
+          "pomme de terre",
+          "noix"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les noix adoucissent le cresson poivré dans un velouté sans lait. Formulation à tester avant publication.",
+          "caution": "Contient des fruits à coque; amertume, texture et nutrition à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.9,
+          "active_minutes": 18,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r144",
+      "slug": "soupe-de-tomates-roties-au-fenouil-et-a-l-orange",
+      "titre": "Soupe de tomates rôties au fenouil et à l’orange",
+      "categorie": "soupe",
+      "description": "Une soupe de tomates et fenouil rôtis, parfumée à l'orange et à l'ail.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 35,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "soupe",
+        "rôtissage-puis-mixage",
+        "tomate",
+        "fenouil",
+        "orange"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "tomate",
+          "quantite": 1000,
+          "unite": "g",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates mûres",
+          "note": "Coupées en deux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bulbe de fenouil",
+          "note": "En quartiers fins",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste et 80 ml de jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "ail",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "gousses d'ail",
+          "note": "En chemise",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 350,
+          "unite": "ml",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir tomates, fenouil et ail avec l'huile 32 à 35 minutes à 205 °C.",
+        "Presser l'ail hors de sa peau.",
+        "Mixer les légumes avec l'eau chaude et le zeste d'orange.",
+        "Ajouter progressivement le jus d'orange, laisser reposer 5 minutes et goûter."
+      ],
+      "conseils": [
+        "Ajouter le jus par étapes pour éviter que l'orange domine la tomate."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Orange",
+          "par": "Citron",
+          "note": "Commencer par la moitié du jus"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur ou 2 mois au congélateur.",
+      "nutrition_par_portion": {
+        "calories": 160,
+        "proteines_g": 4,
+        "glucides_g": 24,
+        "sucres_g": 16,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 6,
+        "sodium_mg": 55,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r144-soupe-de-tomates-roties-au-fenouil-et-a-l-orange.jpg",
+        "alt": "Soupe de tomates rôties au fenouil et à l’orange"
+      },
+      "seo": {
+        "titre": "Soupe de tomates rôties au fenouil et à l’orange",
+        "meta_description": "Une soupe de tomates et fenouil rôtis, parfumée à l'orange et à l'ail.",
+        "mots_cles": [
+          "tomate",
+          "fenouil",
+          "orange"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L’orange souligne le fenouil dans une soupe de tomates rôties. Formulation à tester avant publication.",
+          "caution": "Acidité et quantité de jus à tester selon les tomates; coût saisonnier non vérifié."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.75,
+          "active_minutes": 18,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r145",
+      "slug": "soupe-de-lentilles-aux-chataignes-et-romarin",
+      "titre": "Soupe de lentilles aux châtaignes et romarin",
+      "categorie": "soupe",
+      "description": "Une soupe boisée de lentilles vertes et châtaignes au romarin, avec carotte et céleri.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 42,
+        "repos": 0,
+        "total": 60
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "mijotage",
+        "lentilles-vertes",
+        "chataignes",
+        "romarin"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "lentilles-vertes-seches",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "lentilles vertes sèches",
+          "note": "Rincées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "chataignes-cuites",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "châtaignes cuites",
+          "note": "Nature, coupées en deux",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "romarin frais haché",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "carotte",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "carottes",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "celeri-branche",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "branches de céleri",
+          "note": "Émincées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 1250,
+          "unite": "ml",
+          "quantite_normalisee": 1250,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir carotte et céleri dans l'huile 6 minutes.",
+        "Ajouter lentilles, romarin et eau; mijoter 30 minutes.",
+        "Ajouter les châtaignes et poursuivre 8 à 10 minutes.",
+        "Écraser quelques châtaignes pour lier légèrement le bouillon."
+      ],
+      "conseils": [
+        "Vérifier les lentilles à partir de 28 minutes selon leur ancienneté."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Châtaignes",
+          "par": "Pommes de terre",
+          "note": "Texture moins douce; ajuster le temps"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur ou 2 mois au congélateur.",
+      "nutrition_par_portion": {
+        "calories": 310,
+        "proteines_g": 14,
+        "glucides_g": 57,
+        "sucres_g": 8,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 0.6,
+        "fibres_g": 13,
+        "sodium_mg": 90,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r145-soupe-de-lentilles-aux-chataignes-et-romarin.jpg",
+        "alt": "Soupe de lentilles aux châtaignes et romarin"
+      },
+      "seo": {
+        "titre": "Soupe de lentilles aux châtaignes et romarin",
+        "meta_description": "Une soupe boisée de lentilles vertes et châtaignes au romarin, avec carotte et céleri.",
+        "mots_cles": [
+          "lentilles vertes",
+          "châtaignes",
+          "romarin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les châtaignes remplacent les pommes de terre dans une soupe de lentilles boisée. Formulation à tester avant publication.",
+          "caution": "Contient du céleri; cuisson, poids égoutté des châtaignes et coût à confirmer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.6,
+          "active_minutes": 22,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "celeri"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r146",
+      "slug": "veloute-de-carotte-a-l-abricot-et-au-cumin",
+      "titre": "Velouté de carotte à l’abricot et au cumin",
+      "categorie": "soupe",
+      "description": "Un velouté de carotte et abricot frais au cumin, équilibré par l'oignon et le citron.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 28,
+        "repos": 3,
+        "total": 46
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-puis-mixage",
+        "carotte",
+        "abricots",
+        "cumin"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "carotte",
+          "quantite": 750,
+          "unite": "g",
+          "quantite_normalisee": 750,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "carottes",
+          "note": "En rondelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "abricot",
+          "quantite": 6,
+          "unite": "piece",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "abricots frais",
+          "note": "Dénoyautés et coupés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cumin-moulu",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cumin moulu",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "oignon-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oignon jaune",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 850,
+          "unite": "ml",
+          "quantite_normalisee": 850,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire suer l'oignon et le cumin dans l'huile 5 minutes.",
+        "Ajouter carottes et eau; cuire 18 minutes.",
+        "Ajouter les abricots et poursuivre 5 minutes.",
+        "Mixer, incorporer le citron et laisser reposer 3 minutes."
+      ],
+      "conseils": [
+        "Goûter les abricots avant cuisson et réduire le citron s'ils sont très acides."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Abricots frais",
+          "par": "Pêche",
+          "note": "Même poids dénoyauté, saveur plus douce"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur; congélation à tester.",
+      "nutrition_par_portion": {
+        "calories": 175,
+        "proteines_g": 4,
+        "glucides_g": 32,
+        "sucres_g": 18,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 8,
+        "sodium_mg": 75,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r146-veloute-de-carotte-a-l-abricot-et-au-cumin.jpg",
+        "alt": "Velouté de carotte à l’abricot et au cumin"
+      },
+      "seo": {
+        "titre": "Velouté de carotte à l’abricot et au cumin",
+        "meta_description": "Un velouté de carotte et abricot frais au cumin, équilibré par l'oignon et le citron.",
+        "mots_cles": [
+          "carotte",
+          "abricots",
+          "cumin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L’abricot frais remplace le lait de coco dans une soupe de carotte fruitée. Formulation à tester avant publication.",
+          "caution": "Recette très saisonnière; acidité, rendement des fruits et coût à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.55,
+          "active_minutes": 18,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r147",
+      "slug": "creme-de-celeri-rave-aux-noisettes-et-a-l-aneth",
+      "titre": "Crème de céleri-rave aux noisettes et à l’aneth",
+      "categorie": "soupe",
+      "description": "Une crème de céleri-rave rôti aux noisettes, citron et aneth, sans produit laitier.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 38,
+        "repos": 5,
+        "total": 61
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "rôtissage-puis-mixage",
+        "celeri-rave",
+        "noisettes",
+        "aneth"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "celeri-rave",
+          "quantite": 750,
+          "unite": "g",
+          "quantite_normalisee": 750,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "céleri-rave",
+          "note": "Pelé et en cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "noisette",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "Non salées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "En tronçons",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 850,
+          "unite": "ml",
+          "quantite_normalisee": 850,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir céleri-rave et poireau avec l'huile 32 minutes à 200 °C.",
+        "Griller les noisettes sur une zone séparée du plat durant les 6 dernières minutes.",
+        "Mixer les légumes avec l'eau et la moitié des noisettes.",
+        "Ajouter citron et aneth, laisser reposer 5 minutes puis garnir du reste des noisettes."
+      ],
+      "conseils": [
+        "Surveiller les noisettes, qui peuvent colorer avant les légumes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque si tous les produits conviennent"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; conserver la garniture séparément.",
+      "nutrition_par_portion": {
+        "calories": 275,
+        "proteines_g": 7,
+        "glucides_g": 30,
+        "sucres_g": 8,
+        "lipides_g": 15,
+        "acides_gras_satures_g": 1.6,
+        "fibres_g": 8,
+        "sodium_mg": 120,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r147-creme-de-celeri-rave-aux-noisettes-et-a-l-aneth.jpg",
+        "alt": "Crème de céleri-rave aux noisettes et à l’aneth"
+      },
+      "seo": {
+        "titre": "Crème de céleri-rave aux noisettes et à l’aneth",
+        "meta_description": "Une crème de céleri-rave rôti aux noisettes, citron et aneth, sans produit laitier.",
+        "mots_cles": [
+          "céleri-rave",
+          "noisettes",
+          "aneth"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L’aneth et le citron donnent une direction nordique au céleri-rave rôti. Formulation à tester avant publication.",
+          "caution": "Contient céleri et fruits à coque; rôtissage, allergènes commerciaux et coût à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2,
+          "active_minutes": 22,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "celeri",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r148",
+      "slug": "veloute-de-chou-fleur-au-tahini-et-sumac",
+      "titre": "Velouté de chou-fleur au tahini et sumac",
+      "categorie": "soupe",
+      "description": "Un velouté de chou-fleur rôti lié au tahini, avec sumac, ail et citron.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 35,
+        "repos": 3,
+        "total": 53
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "rôtissage-puis-mixage",
+        "chou-fleur",
+        "tahini",
+        "sumac"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "chou-fleur",
+          "quantite": 900,
+          "unite": "g",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chou-fleur",
+          "note": "En fleurettes, tige en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tahini",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tahini",
+          "note": "Purée de sésame",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "sumac-moulu",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "sumac moulu",
+          "note": "Sans sel ajouté",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "ail",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "gousses d'ail",
+          "note": "En chemise",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 800,
+          "unite": "ml",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir chou-fleur et ail avec l'huile 30 à 35 minutes à 205 °C.",
+        "Presser l'ail hors de sa peau.",
+        "Mixer chou-fleur, ail, tahini et eau chaude.",
+        "Ajouter citron et sumac, mixer brièvement puis laisser reposer 3 minutes."
+      ],
+      "conseils": [
+        "Délayer le tahini avec une louche de liquide avant le mixage."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Tahini",
+          "par": "Purée de graines de tournesol",
+          "note": "À tester; peut retirer le sésame selon le produit"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur ou 2 mois au congélateur.",
+      "nutrition_par_portion": {
+        "calories": 240,
+        "proteines_g": 9,
+        "glucides_g": 23,
+        "sucres_g": 6,
+        "lipides_g": 14,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 8,
+        "sodium_mg": 100,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r148-veloute-de-chou-fleur-au-tahini-et-sumac.jpg",
+        "alt": "Velouté de chou-fleur au tahini et sumac"
+      },
+      "seo": {
+        "titre": "Velouté de chou-fleur au tahini et sumac",
+        "meta_description": "Un velouté de chou-fleur rôti lié au tahini, avec sumac, ail et citron.",
+        "mots_cles": [
+          "chou-fleur",
+          "tahini",
+          "sumac"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le sumac acidulé et le tahini remplacent muscade et crème. Formulation à tester avant publication.",
+          "caution": "Contient du sésame; intensité du sumac et texture après refroidissement à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.7,
+          "active_minutes": 20,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r149",
+      "slug": "soupe-de-petits-pois-laitue-et-menthe",
+      "titre": "Soupe de petits pois, laitue et menthe",
+      "categorie": "soupe",
+      "description": "Une soupe verte légère de petits pois et laitue, à la menthe et au citron, mixée après une cuisson très courte.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 15,
+        "repos": 2,
+        "total": 32
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "soupe",
+        "cuisson-courte-puis-mixage",
+        "petits-pois",
+        "laitue",
+        "menthe"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "petits-pois",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petits pois",
+          "note": "Frais ou surgelés",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "laitue",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "laitue",
+          "note": "Environ 300 g, lavée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "Feuilles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 800,
+          "unite": "ml",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire suer le poireau dans l'huile 5 minutes.",
+        "Ajouter petits pois et eau; cuire 6 minutes.",
+        "Ajouter la laitue et cuire seulement 2 minutes.",
+        "Mixer avec menthe et citron puis laisser reposer 2 minutes."
+      ],
+      "conseils": [
+        "Ajouter la laitue à la toute fin pour éviter une saveur trop cuite."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Laitue",
+          "par": "Jeunes épinards",
+          "note": "Même poids; goût plus végétal"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur; refroidir rapidement.",
+      "nutrition_par_portion": {
+        "calories": 165,
+        "proteines_g": 9,
+        "glucides_g": 26,
+        "sucres_g": 8,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 0.6,
+        "fibres_g": 9,
+        "sodium_mg": 85,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r149-soupe-de-petits-pois-laitue-et-menthe.jpg",
+        "alt": "Soupe de petits pois, laitue et menthe"
+      },
+      "seo": {
+        "titre": "Soupe de petits pois, laitue et menthe",
+        "meta_description": "Une soupe verte légère de petits pois et laitue, à la menthe et au citron, mixée après une cuisson très courte.",
+        "mots_cles": [
+          "petits pois",
+          "laitue",
+          "menthe"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La laitue cuite apporte une texture douce sans amandes ni produits laitiers. Formulation à tester avant publication.",
+          "caution": "Texture et couleur évoluent vite; temps réel et valeurs à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.3,
+          "active_minutes": 18,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r150",
+      "slug": "soupe-de-pomme-de-terre-poireau-et-haricots-blancs",
+      "titre": "Soupe de pomme de terre, poireau et haricots blancs",
+      "categorie": "soupe",
+      "description": "Une soupe rustique de pommes de terre, poireau et haricots blancs, partiellement mixée au thym et persil.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 35,
+        "repos": 0,
+        "total": 53
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "mijotage-et-mixage-partiel",
+        "pomme-de-terre",
+        "poireau",
+        "haricots-blancs"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pomme-terre",
+          "quantite": 650,
+          "unite": "g",
+          "quantite_normalisee": 650,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pommes de terre",
+          "note": "Pelées et en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireaux",
+          "note": "Émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 1100,
+          "unite": "ml",
+          "quantite_normalisee": 1100,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire fondre les poireaux dans l'huile 7 minutes.",
+        "Ajouter pommes de terre, thym et eau; mijoter 20 minutes.",
+        "Ajouter les haricots et poursuivre 6 minutes.",
+        "Mixer deux louches, reverser dans la casserole et ajouter le persil."
+      ],
+      "conseils": [
+        "Conserver une partie des morceaux pour distinguer cette soupe d'un velouté."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Haricots blancs",
+          "par": "Pois chiches cuits",
+          "note": "Même poids égoutté, texture plus ferme"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; ajouter de l'eau au réchauffage.",
+      "nutrition_par_portion": {
+        "calories": 285,
+        "proteines_g": 12,
+        "glucides_g": 52,
+        "sucres_g": 6,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 11,
+        "sodium_mg": 145,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par somme d'ingrédients génériques divisée par 4",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r150-soupe-de-pomme-de-terre-poireau-et-haricots-blancs.jpg",
+        "alt": "Soupe de pomme de terre, poireau et haricots blancs"
+      },
+      "seo": {
+        "titre": "Soupe de pomme de terre, poireau et haricots blancs",
+        "meta_description": "Une soupe rustique de pommes de terre, poireau et haricots blancs, partiellement mixée au thym et persil.",
+        "mots_cles": [
+          "pomme de terre",
+          "poireau",
+          "haricots blancs"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les haricots blancs renforcent une soupe poireau-pomme de terre sans crème. Formulation à tester avant publication.",
+          "caution": "Sodium des haricots, rendement des pommes de terre et coût à confirmer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.15,
+          "active_minutes": 22,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    }
+  ]
+}

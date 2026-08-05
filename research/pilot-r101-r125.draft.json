@@ -1,0 +1,4855 @@
+{
+  "meta": {
+    "schema_version": "2.1.0",
+    "status": "draft",
+    "nombre_recettes": 25,
+    "avertissement": "Brouillons éditoriaux : recettes, valeurs nutritionnelles et coûts à tester et recalculer avant publication.",
+    "licence": "CC BY-SA 4.0",
+    "nutrition_notice": "Les valeurs nutritionnelles sont des estimations par portion fondées sur des ingrédients génériques. Elles ne constituent pas des données validées.",
+    "medical_notice": "Ces recettes s'inscrivent dans une alimentation variée et ne revendiquent aucun effet médical ou thérapeutique."
+  },
+  "recipes": [
+    {
+      "id": "r101",
+      "slug": "crepes-lentilles-corail-truite-epinards",
+      "titre": "Crêpes de lentilles corail à la truite et aux épinards",
+      "categorie": "petit-dejeuner",
+      "description": "Des crêpes souples de lentilles corail garnies de truite cuite, d'épinards citronnés et d'aneth.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 18,
+        "repos": 120,
+        "total": 153
+      },
+      "portions": 2,
+      "difficulte": "intermediaire",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "petit-dejeuner-sale",
+        "lentilles-corail",
+        "truite",
+        "epinards"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "lentilles-corail-seches",
+          "quantite": 140,
+          "unite": "g",
+          "quantite_normalisee": 140,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "lentilles corail sèches",
+          "note": "Rincées puis trempées 2 heures",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 180,
+          "unite": "ml",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "À ajuster de 20 ml",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "truite-cuite",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filet de truite cuit",
+          "note": "Sans peau ni arêtes, émietté",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "epinards-frais",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épinards frais",
+          "note": "Lavés et essorés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 8,
+          "unite": "g",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "Pour la cuisson",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Couvrir les lentilles rincées d'eau et les laisser tremper 2 heures, puis les égoutter.",
+        "Mixer les lentilles avec 180 ml d'eau jusqu'à obtenir une pâte lisse; laisser reposer 5 minutes.",
+        "Faire tomber les épinards avec la moitié de l'huile 3 minutes, puis ajouter citron et aneth.",
+        "Cuire quatre petites crêpes avec le reste d'huile, environ 2 minutes puis 1 minute par face.",
+        "Répartir truite et épinards sur les crêpes et servir deux crêpes par personne."
+      ],
+      "conseils": [
+        "Ajouter un peu d'eau si la pâte ne s'étale pas facilement.",
+        "Vérifier soigneusement l'absence d'arêtes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Truite cuite",
+          "par": "Saumon cuit",
+          "note": "Même quantité; l'allergène poisson reste présent"
+        }
+      ],
+      "conservation": "Composants séparés : 2 jours au réfrigérateur. Réchauffer complètement avant service.",
+      "nutrition_par_portion": {
+        "calories": 440,
+        "proteines_g": 32,
+        "glucides_g": 45,
+        "sucres_g": 4,
+        "lipides_g": 16,
+        "acides_gras_satures_g": 2.5,
+        "fibres_g": 9,
+        "sodium_mg": 150,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r101-crepes-lentilles-corail-truite-epinards.jpg",
+        "alt": "Crêpes de lentilles corail garnies de truite et d'épinards"
+      },
+      "seo": {
+        "titre": "Crêpes de lentilles corail à la truite et aux épinards",
+        "meta_description": "Des crêpes souples de lentilles corail garnies de truite cuite, d'épinards citronnés et d'aneth.",
+        "mots_cles": [
+          "petit-dejeuner-sale",
+          "lentilles-corail",
+          "truite"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Petit-déjeuner salé original à tester pour la texture et le rendement.",
+          "caution": "Contient du poisson; données nutritionnelles et protocole non validés."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.2,
+          "active_minutes": 28,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r102",
+      "slug": "gateau-vapeur-teff-orange-amandes",
+      "titre": "Gâteau vapeur de teff à l'orange et aux amandes",
+      "categorie": "petit-dejeuner",
+      "description": "Un gâteau vapeur moelleux au teff, à l'orange, aux amandes et à la cannelle, sans sucre ajouté.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 30,
+        "repos": 10,
+        "total": 55
+      },
+      "portions": 6,
+      "difficulte": "intermediaire",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "hiver",
+        "printemps"
+      ],
+      "tags": [
+        "petit-dejeuner",
+        "teff",
+        "orange",
+        "vapeur"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-teff",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de teff",
+          "note": "Certifiée sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poudre-amande",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "poudre d'amande",
+          "note": "Non sucrée",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "oeuf",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "Calibre moyen",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "orange",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges",
+          "note": "160 ml de jus et le zeste d'une orange",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "Dont un peu pour le moule",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "levure-chimique-sans-gluten",
+          "quantite": 2,
+          "unite": "c. à c.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "levure chimique sans gluten",
+          "note": "Vérifier l'étiquette",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Huiler un moule rond de 18 cm compatible avec le panier vapeur et préparer le cuit-vapeur.",
+        "Fouetter les œufs, le jus d'orange et l'huile.",
+        "Incorporer teff, amande, levure, cannelle et zeste sans trop travailler la pâte.",
+        "Verser dans le moule, protéger des gouttes avec du papier cuisson et cuire à la vapeur 30 minutes.",
+        "Vérifier avec une lame, laisser reposer 10 minutes et démouler."
+      ],
+      "conseils": [
+        "Maintenir le torchon éventuel loin de la source de chaleur."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Poudre d'amande",
+          "par": "Poudre de graines de tournesol",
+          "note": "À tester; l'allergène fruits à coque est retiré si les autres produits conviennent"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur dans une boîte fermée.",
+      "nutrition_par_portion": {
+        "calories": 260,
+        "proteines_g": 8,
+        "glucides_g": 28,
+        "sucres_g": 5,
+        "lipides_g": 14,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 4,
+        "sodium_mg": 190,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 6",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r102-gateau-vapeur-teff-orange-amandes.jpg",
+        "alt": "Part de gâteau vapeur au teff avec orange et amandes"
+      },
+      "seo": {
+        "titre": "Gâteau vapeur de teff à l'orange et aux amandes",
+        "meta_description": "Un gâteau vapeur moelleux au teff, à l'orange, aux amandes et à la cannelle, sans sucre ajouté.",
+        "mots_cles": [
+          "petit-dejeuner",
+          "teff",
+          "orange"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Formulation sans sucre ajouté à tester dans plusieurs appareils vapeur.",
+          "caution": "Contient œuf et fruits à coque; cuisson et valeurs à valider."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.35,
+          "active_minutes": 18,
+          "equipment": [
+            "steamer"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r103",
+      "slug": "rooibos-froid-peche-romarin",
+      "titre": "Rooibos froid à la pêche et au romarin",
+      "categorie": "boisson",
+      "description": "Une infusion à froid non sucrée de rooibos, pêche fraîche, romarin et citron.",
+      "temps": {
+        "preparation": 8,
+        "cuisson": 0,
+        "repos": 480,
+        "total": 488
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "boisson",
+        "rooibos",
+        "peche",
+        "infusion-froide"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau fraîche",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "rooibos-feuilles",
+          "quantite": 12,
+          "unite": "g",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "rooibos en vrac",
+          "note": "Ou 4 sachets sans arôme",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "peche",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pêches",
+          "note": "Mûres, dénoyautées et tranchées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "petite branche de romarin",
+          "note": "Environ 8 cm",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "En rondelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Placer tous les ingrédients dans un pichet propre.",
+        "Couvrir et infuser 8 heures au réfrigérateur.",
+        "Filtrer sans presser les fruits et servir frais.",
+        "Jeter les fruits utilisés."
+      ],
+      "conseils": [
+        "Ne pas dépasser 12 heures d'infusion."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pêches",
+          "par": "Nectarines",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur après filtration.",
+      "nutrition_par_portion": {
+        "calories": 18,
+        "proteines_g": 0.3,
+        "glucides_g": 4,
+        "sucres_g": 3,
+        "lipides_g": 0.1,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 0.5,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r103-rooibos-froid-peche-romarin.jpg",
+        "alt": "Pichet de rooibos froid avec pêche et romarin"
+      },
+      "seo": {
+        "titre": "Rooibos froid à la pêche et au romarin",
+        "meta_description": "Une infusion à froid non sucrée de rooibos, pêche fraîche, romarin et citron.",
+        "mots_cles": [
+          "boisson",
+          "rooibos",
+          "peche"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Infusion non sucrée simple à tester pour l'intensité.",
+          "caution": "Valeurs du liquide infusé très approximatives; respecter la conservation au froid."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.65,
+          "active_minutes": 8,
+          "equipment": [],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r104",
+      "slug": "infusion-hibiscus-pomme-cannelle",
+      "titre": "Infusion d'hibiscus à la pomme et cannelle",
+      "categorie": "boisson",
+      "description": "Une infusion rubis d'hibiscus, pomme, cannelle et zeste d'orange, servie chaude sans sucre ajouté.",
+      "temps": {
+        "preparation": 7,
+        "cuisson": 8,
+        "repos": 5,
+        "total": 20
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson",
+        "hibiscus",
+        "pomme",
+        "cannelle"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "hibiscus-seche",
+          "quantite": 12,
+          "unite": "g",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fleurs d'hibiscus séchées alimentaires",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "pomme",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pomme",
+          "note": "Lavée, épépinée et coupée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-baton",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bâton de cannelle",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste sans le blanc",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire frémir l'eau et la pomme 8 minutes.",
+        "Retirer du feu, ajouter hibiscus, cannelle et zeste.",
+        "Couvrir 5 minutes, filtrer et servir."
+      ],
+      "conseils": [
+        "Réduire l'infusion si l'acidité est trop marquée."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pomme",
+          "par": "Poire",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur; réchauffer une fois sans bouillir.",
+      "nutrition_par_portion": {
+        "calories": 15,
+        "proteines_g": 0.1,
+        "glucides_g": 4,
+        "sucres_g": 3,
+        "lipides_g": 0,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 0.3,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r104-infusion-hibiscus-pomme-cannelle.jpg",
+        "alt": "Tasse d'infusion d'hibiscus avec pomme et cannelle"
+      },
+      "seo": {
+        "titre": "Infusion d'hibiscus à la pomme et cannelle",
+        "meta_description": "Une infusion rubis d'hibiscus, pomme, cannelle et zeste d'orange, servie chaude sans sucre ajouté.",
+        "mots_cles": [
+          "boisson",
+          "hibiscus",
+          "pomme"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Boisson non sucrée à tester pour l'équilibre acidité-fruit.",
+          "caution": "Nutrition du liquide filtré approximative; aucune allégation fonctionnelle."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 8,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r105",
+      "slug": "eau-orge-grillee-orange-sauge",
+      "titre": "Eau d'orge grillée à l'orange et à la sauge",
+      "categorie": "boisson",
+      "description": "Une boisson céréalière légère à l'orge grillée, à l'orange, à la sauge et à la cannelle.",
+      "temps": {
+        "preparation": 8,
+        "cuisson": 25,
+        "repos": 10,
+        "total": 43
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson",
+        "orge",
+        "orange",
+        "sauge"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "orge-monde-sec",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "orge mondé sec",
+          "note": "Rincé et bien égoutté",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 1100,
+          "unite": "ml",
+          "quantite_normalisee": 1100,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste sans le blanc",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-baton",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bâton de cannelle",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Griller l'orge à sec 5 minutes en remuant sans le brûler.",
+        "Ajouter l'eau prudemment et frémir 20 minutes à couvert.",
+        "Hors du feu, ajouter orange, sauge et cannelle; couvrir 10 minutes.",
+        "Filtrer et servir."
+      ],
+      "conseils": [
+        "Refroidir rapidement l'orge filtré s'il est réutilisé dans un plat."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Sauge fraîche",
+          "par": "Thym frais",
+          "note": "Deux petites branches"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur après refroidissement rapide.",
+      "nutrition_par_portion": {
+        "calories": 12,
+        "proteines_g": 0.4,
+        "glucides_g": 2.5,
+        "sucres_g": 0.3,
+        "lipides_g": 0.1,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 0.3,
+        "sodium_mg": 4,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r105-eau-orge-grillee-orange-sauge.jpg",
+        "alt": "Tasse d'eau d'orge grillée avec orange et sauge"
+      },
+      "seo": {
+        "titre": "Eau d'orge grillée à l'orange et à la sauge",
+        "meta_description": "Une boisson céréalière légère à l'orge grillée, à l'orange, à la sauge et à la cannelle.",
+        "mots_cles": [
+          "boisson",
+          "orge",
+          "orange"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Boisson céréalière originale dont l'extraction doit être mesurée.",
+          "caution": "Contient du gluten; valeurs du liquide filtré particulièrement incertaines."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.3,
+          "active_minutes": 12,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r106",
+      "slug": "kefir-poire-cardamome-lin",
+      "titre": "Kéfir mixé à la poire et cardamome",
+      "categorie": "boisson",
+      "description": "Une boisson fraîche au kéfir, à la poire entière, à la cardamome et aux graines de lin moulues.",
+      "temps": {
+        "preparation": 8,
+        "cuisson": 0,
+        "repos": 0,
+        "total": 8
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson",
+        "kefir",
+        "poire",
+        "lin"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "kefir-lait-nature",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "kéfir de lait nature",
+          "note": "Du commerce, non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "poire",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poire",
+          "note": "Mûre et épépinée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-lin-moulues",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "graines de lin moulues",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "cardamome-moulue",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cardamome moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Placer tous les ingrédients dans le blender.",
+        "Mixer 30 à 45 secondes jusqu'à homogénéité.",
+        "Servir immédiatement en deux verres."
+      ],
+      "conseils": [
+        "Respecter la date limite et la chaîne du froid du kéfir."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Poire",
+          "par": "Pomme douce",
+          "note": "Éplucher si nécessaire"
+        }
+      ],
+      "conservation": "À consommer immédiatement après mixage.",
+      "nutrition_par_portion": {
+        "calories": 180,
+        "proteines_g": 8,
+        "glucides_g": 25,
+        "sucres_g": 20,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 2.5,
+        "fibres_g": 5,
+        "sodium_mg": 95,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r106-kefir-poire-cardamome-lin.jpg",
+        "alt": "Verre de kéfir mixé à la poire et cardamome"
+      },
+      "seo": {
+        "titre": "Kéfir mixé à la poire et cardamome",
+        "meta_description": "Une boisson fraîche au kéfir, à la poire entière, à la cardamome et aux graines de lin moulues.",
+        "mots_cles": [
+          "boisson",
+          "kefir",
+          "poire"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Boisson consistante dont la composition dépend du kéfir.",
+          "caution": "Contient du lait; respecter la chaîne du froid et recalculer selon le produit."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.05,
+          "active_minutes": 8,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r107",
+      "slug": "smoothie-betterave-mures-avoine",
+      "titre": "Smoothie betterave, mûres et avoine",
+      "categorie": "boisson",
+      "description": "Un smoothie épais de betterave cuite, mûres, avoine, boisson de soja et citron.",
+      "temps": {
+        "preparation": 8,
+        "cuisson": 0,
+        "repos": 5,
+        "total": 13
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "boisson",
+        "smoothie",
+        "betterave",
+        "mures"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "betterave-cuite",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "betterave cuite",
+          "note": "Refroidie, sans vinaigre",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "mures",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "mûres",
+          "note": "Fraîches ou surgelées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "boisson-soja-non-sucree",
+          "quantite": 350,
+          "unite": "ml",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson de soja non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mélanger avoine et boisson de soja; reposer 5 minutes.",
+        "Ajouter betterave, mûres et citron.",
+        "Mixer jusqu'à homogénéité et répartir en deux verres."
+      ],
+      "conseils": [
+        "Ajouter jusqu'à 50 ml d'eau si le mélange est trop épais."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Mûres",
+          "par": "Myrtilles",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "À boire immédiatement; au plus 12 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 205,
+        "proteines_g": 9,
+        "glucides_g": 33,
+        "sucres_g": 14,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.8,
+        "fibres_g": 8,
+        "sodium_mg": 90,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r107-smoothie-betterave-mures-avoine.jpg",
+        "alt": "Smoothie violet à la betterave, mûres et avoine"
+      },
+      "seo": {
+        "titre": "Smoothie betterave, mûres et avoine",
+        "meta_description": "Un smoothie épais de betterave cuite, mûres, avoine, boisson de soja et citron.",
+        "mots_cles": [
+          "boisson",
+          "smoothie",
+          "betterave"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Smoothie avec pulpe et céréale complète à tester pour sa texture.",
+          "caution": "Contient gluten et soja; données variables selon les produits."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.65,
+          "active_minutes": 8,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "gluten",
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r108",
+      "slug": "boisson-amande-cacao-sesame-cannelle",
+      "titre": "Boisson d'amande au cacao, sésame et cannelle",
+      "categorie": "boisson",
+      "description": "Une boisson chaude non sucrée au cacao, à l'amande, au tahini et à la cannelle.",
+      "temps": {
+        "preparation": 5,
+        "cuisson": 6,
+        "repos": 0,
+        "total": 11
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson-chaude",
+        "cacao",
+        "amande",
+        "sesame"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "boisson-amande-non-sucree",
+          "quantite": 500,
+          "unite": "ml",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'amande non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "cacao-poudre-non-sucre",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "cacao en poudre non sucré",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "tahini",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "tahini",
+          "note": "Purée de sésame",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Délayer cacao et tahini avec 50 ml de boisson d'amande.",
+        "Ajouter le reste et la cannelle en fouettant.",
+        "Chauffer 6 minutes sans bouillir et servir."
+      ],
+      "conseils": [
+        "Fouetter continuellement pour éviter les amas."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Boisson d'amande",
+          "par": "Boisson de soja non sucrée",
+          "note": "Retire fruits à coque et ajoute soja"
+        }
+      ],
+      "conservation": "À consommer immédiatement.",
+      "nutrition_par_portion": {
+        "calories": 120,
+        "proteines_g": 4,
+        "glucides_g": 8,
+        "sucres_g": 2,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 3,
+        "sodium_mg": 120,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r108-boisson-amande-cacao-sesame-cannelle.jpg",
+        "alt": "Tasse de boisson au cacao avec sésame et cannelle"
+      },
+      "seo": {
+        "titre": "Boisson d'amande au cacao, sésame et cannelle",
+        "meta_description": "Une boisson chaude non sucrée au cacao, à l'amande, au tahini et à la cannelle.",
+        "mots_cles": [
+          "boisson-chaude",
+          "cacao",
+          "amande"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Boisson non sucrée à tester pour l'émulsion et l'amertume.",
+          "caution": "Contient fruits à coque et sésame; vérifier les étiquettes."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.85,
+          "active_minutes": 6,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r109",
+      "slug": "infusion-fenouil-orange-thym",
+      "titre": "Infusion de fenouil, orange et thym",
+      "categorie": "boisson",
+      "description": "Une infusion anisée et herbacée de graines de fenouil, orange, thym et citron.",
+      "temps": {
+        "preparation": 5,
+        "cuisson": 4,
+        "repos": 7,
+        "total": 16
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson",
+        "infusion",
+        "fenouil",
+        "thym"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "graines-fenouil",
+          "quantite": 2,
+          "unite": "c. à c.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "graines de fenouil",
+          "note": "Légèrement écrasées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste sans le blanc",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "petites branches de thym",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Frémir l'eau avec le fenouil 4 minutes.",
+        "Hors du feu, ajouter orange et thym; couvrir 7 minutes.",
+        "Filtrer, ajouter le citron et servir."
+      ],
+      "conseils": [
+        "Écraser seulement légèrement les graines."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Thym frais",
+          "par": "Thym séché",
+          "note": "Utiliser 1 c. à café"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur; réchauffer sans bouillir.",
+      "nutrition_par_portion": {
+        "calories": 6,
+        "proteines_g": 0.1,
+        "glucides_g": 1.5,
+        "sucres_g": 0.5,
+        "lipides_g": 0.1,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 0.2,
+        "sodium_mg": 3,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r109-infusion-fenouil-orange-thym.jpg",
+        "alt": "Tasse d'infusion au fenouil, orange et thym"
+      },
+      "seo": {
+        "titre": "Infusion de fenouil, orange et thym",
+        "meta_description": "Une infusion anisée et herbacée de graines de fenouil, orange, thym et citron.",
+        "mots_cles": [
+          "boisson",
+          "infusion",
+          "fenouil"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Infusion culinaire à tester pour son équilibre anisé.",
+          "caution": "Ne constitue pas un remède; données du liquide filtré approximatives."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.3,
+          "active_minutes": 6,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r110",
+      "slug": "lassi-leger-mangue-cardamome",
+      "titre": "Lassi léger à la mangue et cardamome",
+      "categorie": "boisson",
+      "description": "Une boisson fraîche au yaourt, à la mangue entière, à la cardamome et au citron vert, sans sirop.",
+      "temps": {
+        "preparation": 8,
+        "cuisson": 0,
+        "repos": 0,
+        "total": 8
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "boisson",
+        "lassi",
+        "mangue",
+        "yaourt"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "yaourt-nature",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "Non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "mangue-fraiche",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chair de mangue",
+          "note": "Bien mûre",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 150,
+          "unite": "ml",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau fraîche",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "cardamome-moulue",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cardamome moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron vert",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Placer tous les ingrédients dans le blender.",
+        "Mixer 30 secondes jusqu'à une texture lisse.",
+        "Ajuster avec un peu d'eau et servir."
+      ],
+      "conseils": [
+        "Ne pas ajouter de sirop; choisir une mangue mûre."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Yaourt nature",
+          "par": "Yaourt de soja nature",
+          "note": "Retire lait et ajoute soja"
+        }
+      ],
+      "conservation": "À consommer immédiatement; au plus 12 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 150,
+        "proteines_g": 6,
+        "glucides_g": 25,
+        "sucres_g": 22,
+        "lipides_g": 3.5,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 2,
+        "sodium_mg": 65,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r110-lassi-leger-mangue-cardamome.jpg",
+        "alt": "Verre de lassi léger à la mangue et cardamome"
+      },
+      "seo": {
+        "titre": "Lassi léger à la mangue et cardamome",
+        "meta_description": "Une boisson fraîche au yaourt, à la mangue entière, à la cardamome et au citron vert, sans sirop.",
+        "mots_cles": [
+          "boisson",
+          "lassi",
+          "mangue"
+        ]
+      },
+      "provenance": {
+        "type": "adapted",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Lassi indien, technique culinaire traditionnelle",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Adaptation légère sans sirop à tester selon la maturité du fruit.",
+          "caution": "Contient du lait; sucres naturellement présents à recalculer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.25,
+          "active_minutes": 8,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r111",
+      "slug": "eau-concombre-framboise-romarin",
+      "titre": "Eau fraîche concombre, framboise et romarin",
+      "categorie": "boisson",
+      "description": "Une eau fraîche non sucrée, macérée avec concombre, framboises, romarin et citron.",
+      "temps": {
+        "preparation": 7,
+        "cuisson": 0,
+        "repos": 120,
+        "total": 127
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "boisson",
+        "concombre",
+        "framboise",
+        "eau-aromatisee"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau fraîche",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "concombre",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombre",
+          "note": "Lavé et tranché",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "framboises",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "framboises",
+          "note": "Entières",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "petite branche de romarin",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "En rondelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Réunir tous les ingrédients dans un pichet propre.",
+        "Écraser légèrement deux framboises.",
+        "Couvrir et macérer 2 heures au froid.",
+        "Filtrer; jeter les fruits."
+      ],
+      "conseils": [
+        "Préparer seulement la quantité consommée dans la journée."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Framboises",
+          "par": "Fraises",
+          "note": "Utiliser 120 g en quartiers"
+        }
+      ],
+      "conservation": "12 heures au réfrigérateur après filtration.",
+      "nutrition_par_portion": {
+        "calories": 5,
+        "proteines_g": 0.1,
+        "glucides_g": 1,
+        "sucres_g": 0.5,
+        "lipides_g": 0,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 0.2,
+        "sodium_mg": 3,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r111-eau-concombre-framboise-romarin.jpg",
+        "alt": "Pichet d'eau fraîche au concombre et framboises"
+      },
+      "seo": {
+        "titre": "Eau fraîche concombre, framboise et romarin",
+        "meta_description": "Une eau fraîche non sucrée, macérée avec concombre, framboises, romarin et citron.",
+        "mots_cles": [
+          "boisson",
+          "concombre",
+          "framboise"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Eau aromatisée simple avec conservation courte.",
+          "caution": "Maintenir au froid et jeter les fruits; nutrition du liquide approximative."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.65,
+          "active_minutes": 7,
+          "equipment": [],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r112",
+      "slug": "chicoree-latte-avoine-cannelle",
+      "titre": "Chicorée latte à l'avoine et à la cannelle",
+      "categorie": "boisson",
+      "description": "Une boisson chaude à la chicorée torréfiée, boisson d'avoine, cannelle et vanille.",
+      "temps": {
+        "preparation": 4,
+        "cuisson": 7,
+        "repos": 0,
+        "total": 11
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson-chaude",
+        "chicoree",
+        "avoine",
+        "cannelle"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "boisson-avoine-non-sucree",
+          "quantite": 450,
+          "unite": "ml",
+          "quantite_normalisee": 450,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'avoine non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "chicoree-soluble-nature",
+          "quantite": 2,
+          "unite": "c. à c.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "chicorée soluble nature",
+          "note": "Sans sucre ajouté",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "extrait-vanille",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "extrait de vanille",
+          "note": "Sans sucre ajouté",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Délayer la chicorée dans 50 ml de boisson.",
+        "Ajouter le reste, la cannelle et la vanille.",
+        "Chauffer 7 minutes en fouettant, sans bouillir."
+      ],
+      "conseils": [
+        "Vérifier que la chicorée n'est pas un mélange sucré."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Boisson d'avoine",
+          "par": "Boisson de soja non sucrée",
+          "note": "Retire gluten selon le produit et ajoute soja"
+        }
+      ],
+      "conservation": "À consommer immédiatement.",
+      "nutrition_par_portion": {
+        "calories": 105,
+        "proteines_g": 2.5,
+        "glucides_g": 16,
+        "sucres_g": 7,
+        "lipides_g": 3.5,
+        "acides_gras_satures_g": 0.5,
+        "fibres_g": 2,
+        "sodium_mg": 110,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r112-chicoree-latte-avoine-cannelle.jpg",
+        "alt": "Tasse de chicorée latte à l'avoine et cannelle"
+      },
+      "seo": {
+        "titre": "Chicorée latte à l'avoine et à la cannelle",
+        "meta_description": "Une boisson chaude à la chicorée torréfiée, boisson d'avoine, cannelle et vanille.",
+        "mots_cles": [
+          "boisson-chaude",
+          "chicoree",
+          "avoine"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Alternative torréfiée à tester selon la marque de chicorée.",
+          "caution": "Contient du gluten via la boisson d'avoine; vérifier les étiquettes."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.6,
+          "active_minutes": 5,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r113",
+      "slug": "the-noir-glace-poire-badiane",
+      "titre": "Thé noir glacé à la poire et badiane",
+      "categorie": "boisson",
+      "description": "Un thé noir refroidi avec poire fraîche, badiane et citron, sans sucre ajouté.",
+      "temps": {
+        "preparation": 8,
+        "cuisson": 5,
+        "repos": 120,
+        "total": 133
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "boisson",
+        "the-noir",
+        "poire",
+        "badiane"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "the-noir-feuilles",
+          "quantite": 8,
+          "unite": "g",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "thé noir en feuilles",
+          "note": "Ou 4 sachets",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "poire",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poire",
+          "note": "Mûre, épépinée et tranchée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "badiane",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "étoile de badiane",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "En rondelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Porter l'eau à 90 °C et infuser le thé 4 minutes.",
+        "Filtrer, ajouter la badiane et laisser tiédir 20 minutes.",
+        "Retirer la badiane, ajouter poire et citron, puis refroidir 2 heures.",
+        "Filtrer à nouveau et servir."
+      ],
+      "conseils": [
+        "Ne pas prolonger l'infusion du thé pour limiter l'amertume."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Poire",
+          "par": "Pomme",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur après filtration.",
+      "nutrition_par_portion": {
+        "calories": 10,
+        "proteines_g": 0.1,
+        "glucides_g": 2.5,
+        "sucres_g": 2,
+        "lipides_g": 0,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 0.2,
+        "sodium_mg": 3,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r113-the-noir-glace-poire-badiane.jpg",
+        "alt": "Verre de thé noir glacé à la poire et badiane"
+      },
+      "seo": {
+        "titre": "Thé noir glacé à la poire et badiane",
+        "meta_description": "Un thé noir refroidi avec poire fraîche, badiane et citron, sans sucre ajouté.",
+        "mots_cles": [
+          "boisson",
+          "the-noir",
+          "poire"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Thé glacé non sucré à tester pour l'équilibre poire-badiane.",
+          "caution": "Contient de la caféine; nutrition du liquide infusé approximative."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 8,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r114",
+      "slug": "smoothie-carotte-mandarine-gingembre",
+      "titre": "Smoothie carotte, mandarine et gingembre",
+      "categorie": "boisson",
+      "description": "Un smoothie épais de carotte, mandarine entière, gingembre et yaourt de soja nature.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 0,
+        "repos": 0,
+        "total": 10
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson",
+        "smoothie",
+        "carotte",
+        "mandarine"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "carotte",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "carotte",
+          "note": "Épluchée et râpée finement",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "mandarine",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "mandarines",
+          "note": "Pelées et épépinées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-soja-nature",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt de soja nature",
+          "note": "Non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "gingembre-frais",
+          "quantite": 5,
+          "unite": "g",
+          "quantite_normalisee": 5,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "gingembre frais",
+          "note": "Râpé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 100,
+          "unite": "ml",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau fraîche",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préparer la carotte et vérifier les quartiers de mandarine.",
+        "Mixer tous les ingrédients 60 secondes.",
+        "Racler le bol, mixer à nouveau et servir."
+      ],
+      "conseils": [
+        "Un blender puissant est nécessaire pour une texture vraiment lisse."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Mandarines",
+          "par": "Orange",
+          "note": "Utiliser deux oranges pelées"
+        }
+      ],
+      "conservation": "À consommer immédiatement; au plus 12 heures au froid.",
+      "nutrition_par_portion": {
+        "calories": 160,
+        "proteines_g": 7,
+        "glucides_g": 28,
+        "sucres_g": 21,
+        "lipides_g": 3,
+        "acides_gras_satures_g": 0.5,
+        "fibres_g": 6,
+        "sodium_mg": 70,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r114-smoothie-carotte-mandarine-gingembre.jpg",
+        "alt": "Smoothie orange à la carotte, mandarine et gingembre"
+      },
+      "seo": {
+        "titre": "Smoothie carotte, mandarine et gingembre",
+        "meta_description": "Un smoothie épais de carotte, mandarine entière, gingembre et yaourt de soja nature.",
+        "mots_cles": [
+          "boisson",
+          "smoothie",
+          "carotte"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Smoothie avec fruit entier à tester pour la finesse de texture.",
+          "caution": "Contient du soja; teneur en sucres naturellement présents à recalculer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.15,
+          "active_minutes": 10,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r115",
+      "slug": "boisson-sarrasin-cacao-noisette",
+      "titre": "Boisson de sarrasin au cacao et à la noisette",
+      "categorie": "boisson",
+      "description": "Une boisson maison au sarrasin grillé, cacao non sucré, noisettes et cannelle.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 12,
+        "repos": 240,
+        "total": 262
+      },
+      "portions": 4,
+      "difficulte": "intermediaire",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson",
+        "sarrasin",
+        "cacao",
+        "noisette"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "sarrasin-decortique",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sarrasin décortiqué",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "noisettes",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "Plus pour le trempage",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "cacao-poudre-non-sucre",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "cacao non sucré",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Griller le sarrasin à sec 4 minutes, puis le laisser refroidir.",
+        "Faire tremper sarrasin et noisettes 4 heures au réfrigérateur; égoutter et rincer.",
+        "Mixer avec 1 litre d'eau pendant 90 secondes.",
+        "Filtrer dans une étamine propre, ajouter cacao et cannelle, puis chauffer 8 minutes en fouettant."
+      ],
+      "conseils": [
+        "Cette boisson maison n'est pas enrichie comme certaines boissons du commerce."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de tournesol",
+          "note": "À tester; retire l'allergène fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur, remuer avant service; ne réchauffer qu'une fois.",
+      "nutrition_par_portion": {
+        "calories": 105,
+        "proteines_g": 3,
+        "glucides_g": 14,
+        "sucres_g": 1,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 2,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r115-boisson-sarrasin-cacao-noisette.jpg",
+        "alt": "Tasse de boisson au sarrasin, cacao et noisette"
+      },
+      "seo": {
+        "titre": "Boisson de sarrasin au cacao et à la noisette",
+        "meta_description": "Une boisson maison au sarrasin grillé, cacao non sucré, noisettes et cannelle.",
+        "mots_cles": [
+          "boisson",
+          "sarrasin",
+          "cacao"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Boisson maison à tester pour rendement, filtration et stabilité.",
+          "caution": "Contient fruits à coque; la boisson maison n'est pas stérilisée ni enrichie."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.75,
+          "active_minutes": 22,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r116",
+      "slug": "infusion-sauge-mure-citron",
+      "titre": "Infusion de sauge, mûre et zeste de citron",
+      "categorie": "boisson",
+      "description": "Une infusion culinaire de sauge fraîche, mûres, citron et cannelle, sans sucre ajouté.",
+      "temps": {
+        "preparation": 6,
+        "cuisson": 3,
+        "repos": 6,
+        "total": 15
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "boisson",
+        "infusion",
+        "sauge",
+        "mures"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 6,
+          "unite": "piece",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "mures",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "mûres",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste sans le blanc",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-baton",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bâton de cannelle",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Porter l'eau à frémissement 3 minutes avec la moitié des mûres.",
+        "Hors du feu, ajouter sauge, citron, cannelle et mûres restantes.",
+        "Couvrir 6 minutes, filtrer sans presser et servir."
+      ],
+      "conseils": [
+        "Respecter le faible dosage de sauge; cette recette est une boisson culinaire."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Mûres",
+          "par": "Myrtilles",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 10,
+        "proteines_g": 0.2,
+        "glucides_g": 2,
+        "sucres_g": 1.5,
+        "lipides_g": 0.1,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 0.4,
+        "sodium_mg": 3,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r116-infusion-sauge-mure-citron.jpg",
+        "alt": "Tasse d'infusion violette à la sauge et aux mûres"
+      },
+      "seo": {
+        "titre": "Infusion de sauge, mûre et zeste de citron",
+        "meta_description": "Une infusion culinaire de sauge fraîche, mûres, citron et cannelle, sans sucre ajouté.",
+        "mots_cles": [
+          "boisson",
+          "infusion",
+          "sauge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Infusion fruitée et herbacée sans allégation fonctionnelle.",
+          "caution": "Dosage de sauge volontairement modéré; nutrition du liquide approximative."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.7,
+          "active_minutes": 7,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r117",
+      "slug": "ayran-concombre-aneth-citron",
+      "titre": "Ayran au concombre, aneth et citron",
+      "categorie": "boisson",
+      "description": "Une boisson salée légère au yaourt, concombre, aneth, citron et eau fraîche.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 0,
+        "repos": 15,
+        "total": 25
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "boisson",
+        "ayran",
+        "concombre",
+        "aneth"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "yaourt-nature",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "Non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau fraîche",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "concombre",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombre",
+          "note": "Épépiné et râpé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 10,
+          "unite": "g",
+          "quantite_normalisee": 10,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sel-fin",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "sel fin",
+          "note": "Dosage maximal",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Râper le concombre et le presser légèrement.",
+        "Mixer brièvement yaourt, eau, citron et sel.",
+        "Incorporer concombre et aneth sans mixer finement.",
+        "Réfrigérer 15 minutes, remuer et servir."
+      ],
+      "conseils": [
+        "Goûter avant d'ajouter tout sel supplémentaire."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Aneth",
+          "par": "Menthe fraîche",
+          "note": "Utiliser 8 g"
+        }
+      ],
+      "conservation": "12 heures au réfrigérateur dans un récipient fermé.",
+      "nutrition_par_portion": {
+        "calories": 75,
+        "proteines_g": 5,
+        "glucides_g": 7,
+        "sucres_g": 6,
+        "lipides_g": 3,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 0.5,
+        "sodium_mg": 180,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r117-ayran-concombre-aneth-citron.jpg",
+        "alt": "Verre d'ayran au concombre, aneth et citron"
+      },
+      "seo": {
+        "titre": "Ayran au concombre, aneth et citron",
+        "meta_description": "Une boisson salée légère au yaourt, concombre, aneth, citron et eau fraîche.",
+        "mots_cles": [
+          "boisson",
+          "ayran",
+          "concombre"
+        ]
+      },
+      "provenance": {
+        "type": "adapted",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Ayran anatolien, boisson au yaourt et à l'eau",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Adaptation d'ayran aromatisé à tester pour la dilution et le sodium.",
+          "caution": "Contient du lait; sodium à vérifier selon le yaourt et le sel."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.6,
+          "active_minutes": 10,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r118",
+      "slug": "smoothie-poire-epinards-chanvre",
+      "titre": "Smoothie poire, épinards et chanvre",
+      "categorie": "boisson",
+      "description": "Un smoothie vert à la poire entière, épinards, graines de chanvre, boisson de soja et citron.",
+      "temps": {
+        "preparation": 8,
+        "cuisson": 0,
+        "repos": 0,
+        "total": 8
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson",
+        "smoothie",
+        "poire",
+        "chanvre"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "Épépinées et coupées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "epinards-frais",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "jeunes épinards",
+          "note": "Lavés et essorés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-chanvre-decortiquees",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de chanvre décortiquées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-soja-non-sucree",
+          "quantite": 350,
+          "unite": "ml",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson de soja non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Laver et préparer les fruits et les épinards.",
+        "Mixer tous les ingrédients 60 secondes.",
+        "Racler le bol, mixer une seconde fois et servir."
+      ],
+      "conseils": [
+        "Ajouter 50 ml d'eau si les poires sont peu juteuses."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Épinards",
+          "par": "Mâche",
+          "note": "Utiliser 60 g"
+        }
+      ],
+      "conservation": "À consommer immédiatement; au plus 12 heures au froid.",
+      "nutrition_par_portion": {
+        "calories": 240,
+        "proteines_g": 11,
+        "glucides_g": 34,
+        "sucres_g": 23,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 7,
+        "sodium_mg": 95,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r118-smoothie-poire-epinards-chanvre.jpg",
+        "alt": "Smoothie vert à la poire, épinards et chanvre"
+      },
+      "seo": {
+        "titre": "Smoothie poire, épinards et chanvre",
+        "meta_description": "Un smoothie vert à la poire entière, épinards, graines de chanvre, boisson de soja et citron.",
+        "mots_cles": [
+          "boisson",
+          "smoothie",
+          "poire"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Smoothie dense à tester pour la texture et le format de portion.",
+          "caution": "Contient du soja; valeurs variables selon la boisson végétale."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.55,
+          "active_minutes": 8,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r119",
+      "slug": "infusion-sarrasin-grille-mandarine",
+      "titre": "Infusion de sarrasin grillé à la mandarine",
+      "categorie": "boisson",
+      "description": "Une infusion chaude de sarrasin torréfié, mandarine, cannelle et vanille.",
+      "temps": {
+        "preparation": 6,
+        "cuisson": 8,
+        "repos": 8,
+        "total": 22
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson",
+        "sarrasin",
+        "mandarine",
+        "sobacha"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "sarrasin-decortique",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sarrasin décortiqué",
+          "note": "Rincé et séché",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "mandarine",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "mandarine",
+          "note": "Zeste sans le blanc",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-baton",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bâton de cannelle",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "gousse-vanille",
+          "quantite": 0.25,
+          "unite": "piece",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "gousse de vanille",
+          "note": "Fendue",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Griller le sarrasin à sec 6 à 8 minutes en remuant.",
+        "Ajouter l'eau et frémir 2 minutes.",
+        "Hors du feu, ajouter mandarine, cannelle et vanille; couvrir 8 minutes.",
+        "Filtrer et servir."
+      ],
+      "conseils": [
+        "Arrêter la torréfaction dès que les grains brunissent légèrement."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Mandarine",
+          "par": "Orange",
+          "note": "Utiliser le zeste d'une demi-orange"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 10,
+        "proteines_g": 0.3,
+        "glucides_g": 2,
+        "sucres_g": 0.2,
+        "lipides_g": 0.1,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 0.2,
+        "sodium_mg": 3,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r119-infusion-sarrasin-grille-mandarine.jpg",
+        "alt": "Tasse d'infusion de sarrasin grillé à la mandarine"
+      },
+      "seo": {
+        "titre": "Infusion de sarrasin grillé à la mandarine",
+        "meta_description": "Une infusion chaude de sarrasin torréfié, mandarine, cannelle et vanille.",
+        "mots_cles": [
+          "boisson",
+          "sarrasin",
+          "mandarine"
+        ]
+      },
+      "provenance": {
+        "type": "adapted",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Sobacha japonais, infusion de sarrasin grillé",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Lecture agrumée du sobacha à tester pour la torréfaction.",
+          "caution": "Nutrition du liquide filtré approximative; éviter de brûler les grains."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.35,
+          "active_minutes": 10,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r120",
+      "slug": "jus-epais-pomme-betterave-celeri",
+      "titre": "Jus épais de pomme, betterave et céleri",
+      "categorie": "boisson",
+      "description": "Une boisson mixée avec toute sa pulpe, à la pomme, betterave, céleri, citron et gingembre.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 0,
+        "repos": 0,
+        "total": 12
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson",
+        "pomme",
+        "betterave",
+        "celeri"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pomme",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pommes",
+          "note": "Épépinées et coupées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "betterave-cuite",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "betterave cuite",
+          "note": "Sans vinaigre",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "celeri-branche",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "branche de céleri",
+          "note": "Lavée et émincée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "gingembre-frais",
+          "quantite": 5,
+          "unite": "g",
+          "quantite_normalisee": 5,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "gingembre frais",
+          "note": "Râpé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 200,
+          "unite": "ml",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau fraîche",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Laver, parer et couper tous les végétaux.",
+        "Mixer avec l'eau pendant 90 secondes sans filtrer.",
+        "Ajouter un peu d'eau si nécessaire et servir en deux portions."
+      ],
+      "conseils": [
+        "La recette conserve la pulpe; ce n'est pas un jus extrait."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Céleri branche",
+          "par": "Concombre",
+          "note": "Retire l'allergène céleri si tous les ingrédients conviennent"
+        }
+      ],
+      "conservation": "À consommer immédiatement; au plus 8 heures au froid.",
+      "nutrition_par_portion": {
+        "calories": 145,
+        "proteines_g": 2.5,
+        "glucides_g": 34,
+        "sucres_g": 26,
+        "lipides_g": 0.7,
+        "acides_gras_satures_g": 0.1,
+        "fibres_g": 7,
+        "sodium_mg": 95,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r120-jus-epais-pomme-betterave-celeri.jpg",
+        "alt": "Boisson épaisse rouge à la pomme, betterave et céleri"
+      },
+      "seo": {
+        "titre": "Jus épais de pomme, betterave et céleri",
+        "meta_description": "Une boisson mixée avec toute sa pulpe, à la pomme, betterave, céleri, citron et gingembre.",
+        "mots_cles": [
+          "boisson",
+          "pomme",
+          "betterave"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Boisson avec pulpe à tester pour la texture et la taille de portion.",
+          "caution": "Contient du céleri; sucres naturellement présents à recalculer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.15,
+          "active_minutes": 12,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "celeri"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r121",
+      "slug": "boisson-avoine-dattes-cardamome-sesame",
+      "titre": "Boisson d'avoine aux dattes et à la cardamome",
+      "categorie": "boisson",
+      "description": "Une boisson chaude à l'avoine, aux dattes entières, à la cardamome et au sésame.",
+      "temps": {
+        "preparation": 7,
+        "cuisson": 7,
+        "repos": 10,
+        "total": 24
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "boisson-chaude",
+        "avoine",
+        "dattes",
+        "sesame"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "boisson-avoine-non-sucree",
+          "quantite": 800,
+          "unite": "ml",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'avoine non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "datte-sechee-denoyautee",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "dattes séchées dénoyautées",
+          "note": "Environ 60 g",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "tahini",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "tahini",
+          "note": "Purée de sésame",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "cardamome-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cardamome moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Hacher les dattes et les couvrir de 100 ml de boisson chaude pendant 10 minutes.",
+        "Mixer dattes, liquide de trempage et tahini.",
+        "Verser en casserole avec le reste et la cardamome.",
+        "Chauffer 7 minutes sans bouillir et servir en petites portions."
+      ],
+      "conseils": [
+        "La recette est naturellement douce; ne pas ajouter de sirop."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Tahini",
+          "par": "Purée d'amande",
+          "note": "Retire sésame et ajoute fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur; réchauffer une seule fois.",
+      "nutrition_par_portion": {
+        "calories": 150,
+        "proteines_g": 3,
+        "glucides_g": 26,
+        "sucres_g": 15,
+        "lipides_g": 4.5,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 2.5,
+        "sodium_mg": 85,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r121-boisson-avoine-dattes-cardamome-sesame.jpg",
+        "alt": "Tasse de boisson d'avoine aux dattes et à la cardamome"
+      },
+      "seo": {
+        "titre": "Boisson d'avoine aux dattes et à la cardamome",
+        "meta_description": "Une boisson chaude à l'avoine, aux dattes entières, à la cardamome et au sésame.",
+        "mots_cles": [
+          "boisson-chaude",
+          "avoine",
+          "dattes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Boisson douce en petite portion à tester pour sa concentration.",
+          "caution": "Contient gluten et sésame; dattes concentrées en sucres naturellement présents."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.65,
+          "active_minutes": 10,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "gluten",
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r122",
+      "slug": "kefir-fraise-rhubarbe-basilic",
+      "titre": "Kéfir à la fraise, rhubarbe et basilic",
+      "categorie": "boisson",
+      "description": "Une boisson fraîche au kéfir, à la fraise, à une compotée courte de rhubarbe et au basilic.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 8,
+        "repos": 30,
+        "total": 48
+      },
+      "portions": 2,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "boisson",
+        "kefir",
+        "fraise",
+        "rhubarbe"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "kefir-lait-nature",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "kéfir de lait nature",
+          "note": "Du commerce, non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "fraises",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fraises",
+          "note": "Lavées et équeutées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "rhubarbe",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "rhubarbe",
+          "note": "Épluchée et coupée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 50,
+          "unite": "ml",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "Pour la compotée",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 4,
+          "unite": "g",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "Environ 8 petites feuilles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire la rhubarbe avec l'eau 8 minutes à couvert.",
+        "Refroidir rapidement 30 minutes au réfrigérateur.",
+        "Mixer kéfir, fraises, rhubarbe froide et basilic 30 secondes.",
+        "Servir immédiatement."
+      ],
+      "conseils": [
+        "Ne jamais mixer la compotée chaude avec le kéfir."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Fraises",
+          "par": "Framboises",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "À consommer immédiatement après mixage.",
+      "nutrition_par_portion": {
+        "calories": 145,
+        "proteines_g": 8,
+        "glucides_g": 21,
+        "sucres_g": 18,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 2.5,
+        "fibres_g": 4,
+        "sodium_mg": 90,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 2",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r122-kefir-fraise-rhubarbe-basilic.jpg",
+        "alt": "Verre de kéfir rose à la fraise, rhubarbe et basilic"
+      },
+      "seo": {
+        "titre": "Kéfir à la fraise, rhubarbe et basilic",
+        "meta_description": "Une boisson fraîche au kéfir, à la fraise, à une compotée courte de rhubarbe et au basilic.",
+        "mots_cles": [
+          "boisson",
+          "kefir",
+          "fraise"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Association printanière à tester pour l'acidité et la chaîne du froid.",
+          "caution": "Contient du lait; refroidir la rhubarbe avant mélange et consommer aussitôt."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.55,
+          "active_minutes": 12,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r123",
+      "slug": "rooibos-chaud-prune-gingembre",
+      "titre": "Rooibos chaud à la prune et au gingembre",
+      "categorie": "boisson",
+      "description": "Une infusion chaude de rooibos, prune fraîche, gingembre et zeste d'orange.",
+      "temps": {
+        "preparation": 7,
+        "cuisson": 6,
+        "repos": 6,
+        "total": 19
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "boisson",
+        "rooibos",
+        "prune",
+        "gingembre"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "rooibos-feuilles",
+          "quantite": 12,
+          "unite": "g",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "rooibos en vrac",
+          "note": "Ou 4 sachets",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "prune",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "prunes",
+          "note": "Dénoyautées et coupées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "gingembre-frais",
+          "quantite": 6,
+          "unite": "g",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "gingembre frais",
+          "note": "En fines tranches",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste sans le blanc",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire frémir l'eau, les prunes et le gingembre 6 minutes.",
+        "Retirer du feu, ajouter rooibos et zeste.",
+        "Couvrir 6 minutes, filtrer et servir."
+      ],
+      "conseils": [
+        "Réduire le gingembre de moitié pour une saveur plus douce."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Prunes",
+          "par": "Poire",
+          "note": "Utiliser une petite poire"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur; réchauffer une seule fois.",
+      "nutrition_par_portion": {
+        "calories": 12,
+        "proteines_g": 0.2,
+        "glucides_g": 3,
+        "sucres_g": 2.5,
+        "lipides_g": 0.1,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 0.3,
+        "sodium_mg": 3,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r123-rooibos-chaud-prune-gingembre.jpg",
+        "alt": "Tasse de rooibos chaud à la prune et au gingembre"
+      },
+      "seo": {
+        "titre": "Rooibos chaud à la prune et au gingembre",
+        "meta_description": "Une infusion chaude de rooibos, prune fraîche, gingembre et zeste d'orange.",
+        "mots_cles": [
+          "boisson",
+          "rooibos",
+          "prune"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Infusion ronde à tester selon la maturité des prunes.",
+          "caution": "Aucune allégation médicale; valeurs du liquide filtré approximatives."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.55,
+          "active_minutes": 8,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r124",
+      "slug": "veloute-chou-fleur-poire-noisettes",
+      "titre": "Velouté de chou-fleur à la poire et aux noisettes",
+      "categorie": "soupe",
+      "description": "Un velouté de chou-fleur et poire rôtis, lié avec du poireau et garni de noisettes.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 35,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "intermediaire",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "chou-fleur",
+        "poire",
+        "noisette"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "chou-fleur",
+          "quantite": 800,
+          "unite": "g",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chou-fleur",
+          "note": "En fleurettes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "Fermes, épépinées et coupées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireau",
+          "note": "Environ 180 g, émincé et lavé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noisettes",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 800,
+          "unite": "ml",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau chaude",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "muscade-moulue",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "muscade moulue",
+          "note": "Ne pas surdoser",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C.",
+        "Mélanger chou-fleur et poires avec une cuillère d'huile; rôtir 25 minutes.",
+        "Faire fondre le poireau avec l'huile restante 8 minutes.",
+        "Ajouter chou-fleur, poire et eau; frémir 10 minutes.",
+        "Mixer avec la muscade, ajuster la texture et servir avec les noisettes."
+      ],
+      "conseils": [
+        "Ajouter les noisettes au dernier moment pour conserver leur croquant."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de courge",
+          "note": "Retire l'allergène fruits à coque si tous les produits conviennent"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; refroidir en moins de 2 heures et réchauffer complètement.",
+      "nutrition_par_portion": {
+        "calories": 255,
+        "proteines_g": 7,
+        "glucides_g": 28,
+        "sucres_g": 13,
+        "lipides_g": 15,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 8,
+        "sodium_mg": 85,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r124-veloute-chou-fleur-poire-noisettes.jpg",
+        "alt": "Bol de velouté de chou-fleur à la poire et noisettes"
+      },
+      "seo": {
+        "titre": "Velouté de chou-fleur à la poire et aux noisettes",
+        "meta_description": "Un velouté de chou-fleur et poire rôtis, lié avec du poireau et garni de noisettes.",
+        "mots_cles": [
+          "soupe",
+          "chou-fleur",
+          "poire"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Velouté original à tester pour l'équilibre fruit-légume et la texture.",
+          "caution": "Contient fruits à coque; assaisonnement et rendement à valider."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.8,
+          "active_minutes": 20,
+          "equipment": [
+            "oven",
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r125",
+      "slug": "soupe-courge-lentilles-corail-sauge",
+      "titre": "Soupe de courge, lentilles corail et sauge",
+      "categorie": "soupe",
+      "description": "Une soupe complète de courge, lentilles corail, oignon et sauge, finie à l'huile d'olive.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 50
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "soupe",
+        "courge",
+        "lentilles-corail",
+        "sauge"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "courge-butternut",
+          "quantite": 800,
+          "unite": "g",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "courge butternut",
+          "note": "Poids épluché, en cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "lentilles-corail-seches",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "lentilles corail sèches",
+          "note": "Rincées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "oignon-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oignon jaune",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 6,
+          "unite": "piece",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge fraîche",
+          "note": "Ciselées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 1000,
+          "unite": "ml",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau chaude",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "poivre-noir-moulu",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "poivre noir moulu",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir l'oignon dans une cuillère d'huile 5 minutes.",
+        "Ajouter courge, lentilles, quatre feuilles de sauge et eau.",
+        "Porter à frémissement et cuire 25 minutes à couvert, jusqu'à tendreté.",
+        "Mixer partiellement pour conserver un peu de texture.",
+        "Laisser reposer 5 minutes et servir avec l'huile restante, le poivre et la sauge restante."
+      ],
+      "conseils": [
+        "Rincer les lentilles jusqu'à ce que l'eau soit claire."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Courge butternut",
+          "par": "Potimarron",
+          "note": "Même poids épluché"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur ou 2 mois au congélateur; refroidir rapidement avant stockage.",
+      "nutrition_par_portion": {
+        "calories": 330,
+        "proteines_g": 13,
+        "glucides_g": 48,
+        "sucres_g": 9,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 13,
+        "sodium_mg": 55,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Somme approximative de valeurs génériques divisée par 4",
+          "provenance": "Références exactes, rendement et pertes de préparation non mesurés; recalcul requis avant publication"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r125-soupe-courge-lentilles-corail-sauge.jpg",
+        "alt": "Bol de soupe de courge aux lentilles corail et à la sauge"
+      },
+      "seo": {
+        "titre": "Soupe de courge, lentilles corail et sauge",
+        "meta_description": "Une soupe complète de courge, lentilles corail, oignon et sauge, finie à l'huile d'olive.",
+        "mots_cles": [
+          "soupe",
+          "courge",
+          "lentilles-corail"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale InflammMenu",
+            "version": "brouillon 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Soupe végétale complète à tester pour le rendement et la texture.",
+          "caution": "Valeurs nutritionnelles, coût et portion finale restent à mesurer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.25,
+          "active_minutes": 18,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    }
+  ]
+}
