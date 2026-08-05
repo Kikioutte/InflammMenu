@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" role="img" aria-label="Visuel de recette en préparation">
+  <defs>
+    <linearGradient id="background" x1="110" y1="40" x2="790" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5EBDD"/>
+      <stop offset="0.52" stop-color="#E8D5C1"/>
+      <stop offset="1" stop-color="#C8B69C"/>
+    </linearGradient>
+    <radialGradient id="bowl" cx="0" cy="0" r="1" gradientTransform="translate(420 405) rotate(54) scale(352 372)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFDF8"/>
+      <stop offset="0.72" stop-color="#EEE1CF"/>
+      <stop offset="1" stop-color="#BBA98F"/>
+    </radialGradient>
+    <radialGradient id="food" cx="0" cy="0" r="1" gradientTransform="translate(445 430) rotate(90) scale(222 260)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D79B60"/>
+      <stop offset="0.55" stop-color="#B76E45"/>
+      <stop offset="1" stop-color="#784D35"/>
+    </radialGradient>
+    <filter id="shadow" x="90" y="170" width="720" height="650" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="30" stdDeviation="26" flood-color="#5E4938" flood-opacity="0.25"/>
+    </filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+  </defs>
+  <rect width="900" height="900" fill="url(#background)"/>
+  <path d="M-40 665C128 545 255 608 382 730C477 820 607 869 940 758V940H-40V665Z" fill="#66765B" opacity="0.58"/>
+  <path d="M-22 718C149 603 274 670 390 776C488 865 625 888 933 809" fill="none" stroke="#A5AE92" stroke-width="34" opacity="0.38"/>
+  <ellipse cx="450" cy="490" rx="323" ry="288" fill="url(#bowl)" filter="url(#shadow)"/>
+  <ellipse cx="450" cy="458" rx="267" ry="231" fill="#E7D5BC"/>
+  <ellipse cx="450" cy="451" rx="248" ry="212" fill="url(#food)"/>
+  <path d="M307 434C348 356 397 338 455 357C512 376 546 350 592 319" fill="none" stroke="#D8A46C" stroke-width="22" stroke-linecap="round" opacity="0.58"/>
+  <path d="M331 520C373 473 414 471 455 493C504 519 546 504 579 465" fill="none" stroke="#6D7E5A" stroke-width="18" stroke-linecap="round" opacity="0.86"/>
+  <g fill="#899A6A">
+    <ellipse cx="365" cy="392" rx="31" ry="14" transform="rotate(-28 365 392)"/>
+    <ellipse cx="403" cy="552" rx="30" ry="13" transform="rotate(24 403 552)"/>
+    <ellipse cx="536" cy="395" rx="29" ry="13" transform="rotate(-20 536 395)"/>
+    <ellipse cx="551" cy="523" rx="27" ry="12" transform="rotate(37 551 523)"/>
+  </g>
+  <g fill="#D4B25A">
+    <circle cx="400" cy="422" r="12"/>
+    <circle cx="481" cy="382" r="10"/>
+    <circle cx="508" cy="481" r="13"/>
+    <circle cx="373" cy="493" r="9"/>
+    <circle cx="463" cy="548" r="11"/>
+  </g>
+  <path d="M674 212C722 243 750 294 756 353" fill="none" stroke="#5E714C" stroke-width="9" stroke-linecap="round"/>
+  <g fill="#7F9469">
+    <ellipse cx="700" cy="251" rx="42" ry="17" transform="rotate(40 700 251)"/>
+    <ellipse cx="727" cy="294" rx="41" ry="17" transform="rotate(56 727 294)"/>
+    <ellipse cx="679" cy="303" rx="38" ry="16" transform="rotate(-8 679 303)"/>
+    <ellipse cx="744" cy="339" rx="35" ry="15" transform="rotate(69 744 339)"/>
+  </g>
+  <circle cx="206" cy="183" r="82" fill="#FFF8EC" opacity="0.2" filter="url(#soft)"/>
+</svg>
