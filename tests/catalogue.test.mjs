@@ -11,7 +11,11 @@ const catalogueSource = await readFile(sourceUrl, "utf8");
 const prototypeSource = await readFile(prototypeUrl, "utf8");
 
 test("the imported catalogue is versioned, complete and internally consistent", () => {
-  assert.equal(catalogue.meta.schema_version, "2.0.0");
+  assert.equal(
+    catalogue.meta.schema_version,
+    catalogue.recipes.length > 50 ? "2.1.0" : "2.0.0",
+    "la fusion complète doit activer le schéma strict v2.1",
+  );
   assert.ok(catalogue.recipes.length >= 50);
   assert.equal(catalogue.meta.nombre_recettes, catalogue.recipes.length);
   assert.equal(new Set(catalogue.recipes.map((recipe) => recipe.id)).size, catalogue.recipes.length);

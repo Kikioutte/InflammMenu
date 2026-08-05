@@ -48,9 +48,11 @@ function v21Fixture() {
 }
 
 test("the validator remains backward-compatible with the published v2 catalogue", () => {
-  const result = validateCatalogue(clone(catalogue));
+  const fixture = clone(catalogue);
+  fixture.meta.schema_version = "2.0.0";
+  const result = validateCatalogue(fixture);
   assert.equal(result.schemaVersion, "2.0.0");
-  assert.equal(result.recipeCount, 50);
+  assert.equal(result.recipeCount, catalogue.recipes.length);
 });
 
 test("schema v2.1 accepts normalized ingredients, full equipment and provenance", () => {

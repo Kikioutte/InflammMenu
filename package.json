@@ -15,6 +15,7 @@
     "test:runtime": "playwright test",
     "test:engine": "node --test tests/engine.test.mjs",
     "test:catalogue": "npm run validate:catalogue && node --test tests/catalogue.test.mjs tests/catalogue-schema-v21.test.mjs",
+    "test:merge": "node --test tests/merge-final-batches.test.mjs",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "status:production": "node scripts/report-production-status.mjs",
     "predev": "npm run check:runtime",
