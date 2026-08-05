@@ -110,6 +110,7 @@ const ALLERGEN_OPTIONS = [
   { id: "lupin", label: "Lupin" },
   { id: "mollusques", label: "Mollusques" },
 ] as const;
+const ALLERGEN_LABELS = Object.fromEntries(ALLERGEN_OPTIONS.map((item) => [item.id, item.label]));
 const CATEGORY_LABELS: Record<IngredientCategory, string> = {
   "fruit-vegetable": "Fruits et légumes",
   grocery: "Épicerie",
@@ -435,6 +436,11 @@ function InformationView() {
   </main></MobileScroll>;
 }
 
+function AllergenNotice({ allergens }: { allergens: readonly string[] }) {
+  if (!allergens.length) return <aside className="allergen-notice allergen-notice--clear"><strong>Allergènes déclarés</strong><p>Aucun des 14 allergènes réglementaires dans la formulation. Vérifiez toutefois les étiquettes et les traces éventuelles.</p></aside>;
+  return <aside className="allergen-notice"><strong>Allergènes à vérifier</strong><div>{allergens.map((allergen) => <span key={allergen}>{ALLERGEN_LABELS[allergen] ?? allergen.replaceAll("-", " ")}</span>)}</div><p>Contrôlez les étiquettes et les traces éventuelles, surtout en cas d’allergie sévère.</p></aside>;
+}
+
 function GenerateView({ profile, onCreate, onComplete }: { profile: UserProfile; onCreate: () => WeeklyPlan; onComplete: () => void }) {
   const [phase, setPhase] = useState<"ready" | "loading" | "success" | "error">("ready");
   const [result, setResult] = useState<WeeklyPlan | null>(null);
@@ -459,6 +465,7 @@ function RecipeView({ recipe, planned, favorite, onFavorite, onReplace }: { reci
   const catalogueReview = catalogueRecipe ? reviewFor(catalogueRecipe) : undefined;
   const toggle = () => { setIsFavorite((value) => !value); onFavorite(); };
   return <MobileScroll className="app-screen"><main className="recipe-page pushed-page"><img className="recipe-hero" src={recipe.image} alt={recipe.title} /><div className="recipe-content"><span className="eyebrow">{planned ? MEAL_LABELS[planned.mealType] : recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</span><h1>{recipe.title}</h1><div className="recipe-meta"><span><ClockIcon /> {recipe.prepMinutes} min</span><span><PersonIcon /> {portions} portions</span><span>{recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</span></div><p className="recipe-intro">{recipe.description}</p><div className={`recipe-actions ${onReplace ? "" : "recipe-actions--single"}`}>{onReplace ? <button className="secondary-button" onClick={onReplace}><ReloadIcon /> Remplacer</button> : null}<button className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} onClick={toggle}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter"}</button></div>
+    <AllergenNotice allergens={recipe.allergens} />
     {catalogueReview?.caution ? <aside className="catalogue-caution"><strong>Repère important</strong><p>{catalogueReview.caution}</p></aside> : null}
     <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" onClick={() => setPortions((value) => Math.max(1, value - 1))}><MinusIcon /></button><b>{portions}</b><button type="button" onClick={() => setPortions((value) => Math.min(8, value + 1))}><PlusIcon /></button></div></div><ul className="ingredient-list">{ingredients.map((item) => <li key={`${item.id}-${item.unit}`}><CheckCircledIcon /><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}</span></li>)}</ul></section>
     <section className="recipe-section nutrition-section"><h2>Repères par portion</h2><div><span><strong>{recipe.nutrition.calories}</strong> kcal</span><span><strong>{recipe.nutrition.protein}</strong> g protéines</span><span><strong>{recipe.nutrition.fiber}</strong> g fibres</span></div><small>{recipe.nutrition.note}</small></section>
@@ -475,6 +482,7 @@ function CatalogueRecipeView({ recipe }: { recipe: CatalogueRecipe }) {
     <div className="recipe-content">
       <div className={`catalogue-verdict is-${review.status}`}><span>{review.status === "validated" ? "Profil cohérent" : "Validée avec repères"}</span><p>{review.summary}</p></div>
       {review.caution ? <aside className="catalogue-caution"><strong>À savoir</strong><p>{review.caution}</p></aside> : null}
+      <AllergenNotice allergens={recipe.app.planner.allergens} />
       <p className="catalogue-disclaimer">Cette appréciation concerne la composition globale de la recette. Elle ne prouve pas qu'un ingrédient isolé prévient ou traite une inflammation.</p>
       <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => Math.max(1, value - 1))}><MinusIcon /></button><b>{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => Math.min(8, value + 1))}><PlusIcon /></button></div></div><ul className="ingredient-list">{recipe.ingredients.map((item) => <li key={`${item.nom}-${item.unite}`}><CheckCircledIcon /><span><strong>{displayCatalogueQuantity(item.quantite * ratio, item.unite)}</strong> {item.nom}{item.note ? <small>{item.note}</small> : null}</span></li>)}</ul></section>
       <section className="recipe-section nutrition-section"><h2>Estimations par portion</h2><div><span><strong>{recipe.nutrition_par_portion.calories}</strong> kcal</span><span><strong>{recipe.nutrition_par_portion.proteines_g}</strong> g protéines</span><span><strong>{recipe.nutrition_par_portion.fibres_g}</strong> g fibres</span></div><small>Valeurs estimatives à titre indicatif; elles varient selon les produits et la préparation.</small></section>

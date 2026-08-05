@@ -224,6 +224,12 @@ button { -webkit-tap-highlight-color: transparent; }
 .catalogue-caution strong { font-size: 11px; }
 .catalogue-caution p { margin: 4px 0 0; font-size: 10px; line-height: 1.5; }
 .catalogue-disclaimer { margin: 12px 0 0; color: var(--muted); font-size: 9px; line-height: 1.5; }
+.allergen-notice { margin: 14px 0 0; padding: 14px; border: 1px solid #e5c9a9; border-radius: 14px; background: #fbf0df; color: #68472f; }
+.allergen-notice--clear { border-color: #d9dfca; background: var(--sage-soft); color: var(--sage-dark); }
+.allergen-notice > strong { display: block; margin-bottom: 7px; font-size: 11px; }
+.allergen-notice > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.allergen-notice > div span { padding: 4px 8px; border-radius: 999px; background: rgba(134, 91, 57, .1); font-size: 9px; font-weight: 600; }
+.allergen-notice p { margin: 7px 0 0; font-size: 9px; line-height: 1.45; }
 .ingredient-list small { display: block; margin-top: 3px; color: var(--muted); font-size: 8px; font-weight: 400; }
 .compound-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .compound-list > span { min-height: 58px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--white); display: flex; flex-direction: column; gap: 4px; }
