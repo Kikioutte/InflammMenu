@@ -105,6 +105,20 @@ test("allergies, exclusions, diet, time, and equipment are strict filters", () =
   }
 });
 
+test("common French allergy aliases map to the canonical regulated families", () => {
+  const aliasCatalogue = Array.from({ length: 17 }, (_, index) => recipe(index + 200, {
+    allergens: index === 0 ? ["fruits-a-coque"] : index === 1 ? ["lait"] : index === 2 ? ["oeuf"] : [],
+  }));
+  const plan = engine.generateWeeklyPlan(aliasCatalogue, {
+    ...profile,
+    allergies: ["noix", "lactose", "œufs"],
+  }, { seed: "allergen-aliases" });
+  const ids = new Set(plan.meals.map((meal) => meal.recipeId));
+  assert.equal(ids.has("recipe-200"), false);
+  assert.equal(ids.has("recipe-201"), false);
+  assert.equal(ids.has("recipe-202"), false);
+});
+
 test("budget is best-effort and chooses a feasible inexpensive menu", () => {
   const mixedPrices = catalogue.map((item, index) => ({
     ...item,

@@ -1,0 +1,4737 @@
+{
+  "meta": {
+    "schema_version": "2.1.0",
+    "status": "draft",
+    "nombre_recettes": 25,
+    "nutrition_notice": "Nutrition et coûts estimés; validation requise avant publication.",
+    "medical_notice": "Aucune promesse médicale ou thérapeutique."
+  },
+  "recipes": [
+    {
+      "id": "r451",
+      "slug": "broccolini-vapeur-gremolata-de-pistache-et-orange",
+      "titre": "Broccolini vapeur, gremolata de pistache et orange",
+      "categorie": "accompagnement",
+      "description": "Du broccolini vapeur avec gremolata de pistache, orange et persil.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 10,
+        "repos": 3,
+        "total": 28
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "hiver"
+      ],
+      "tags": [
+        "accompagnement",
+        "cuisson-vapeur"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "broccolini",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "broccolini",
+          "note": "Extrémités retirées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pistaches-non-salees",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "Hachées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "orange",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le broccolini vapeur 7 à 10 minutes.",
+        "Mélanger pistaches, persil et zeste.",
+        "Ajouter huile et jus d'orange progressivement.",
+        "Napper le broccolini et reposer 3 minutes."
+      ],
+      "conseils": [
+        "Garder les tiges légèrement fermes et vérifier les pistaches."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pistaches",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur, gremolata séparée.",
+      "nutrition_par_portion": {
+        "calories": 180,
+        "proteines_g": 7,
+        "glucides_g": 16,
+        "sucres_g": 6,
+        "lipides_g": 12,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 6,
+        "sodium_mg": 40,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r451-broccolini-vapeur-gremolata-de-pistache-et-orange.jpg",
+        "alt": "Broccolini vapeur, gremolata de pistache et orange"
+      },
+      "seo": {
+        "titre": "Broccolini vapeur, gremolata de pistache et orange",
+        "meta_description": "Du broccolini vapeur avec gremolata de pistache, orange et persil.",
+        "mots_cles": [
+          "broccolini",
+          "pistaches",
+          "orange"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Broccolini, pistache et orange se distinguent du brocoli rôti aux amandes déjà présent. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; cuisson vapeur, orange et coût à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.25,
+          "active_minutes": 17,
+          "equipment": [
+            "steamer"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r452",
+      "slug": "chou-pointu-braise-aux-pommes-et-cumin",
+      "titre": "Chou pointu braisé aux pommes et cumin",
+      "categorie": "accompagnement",
+      "description": "Du chou pointu braisé avec pomme, cumin et graines de tournesol.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 45
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "automne"
+      ],
+      "tags": [
+        "accompagnement",
+        "braisage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "chou-pointu",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chou pointu",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pomme",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pommes",
+          "note": "En quartiers fins",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cumin-moulu",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cumin moulu",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "graines-tournesol",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de tournesol",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 150,
+          "unite": "ml",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir le chou 5 minutes dans l'huile.",
+        "Ajouter pommes, cumin et eau.",
+        "Braiser à couvert 18 à 20 minutes.",
+        "Reposer 5 minutes et ajouter les graines."
+      ],
+      "conseils": [
+        "Goûter le cumin avant d'en ajouter davantage."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pomme",
+          "par": "Poire",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 150,
+        "proteines_g": 5,
+        "glucides_g": 22,
+        "sucres_g": 12,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 7,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r452-chou-pointu-braise-aux-pommes-et-cumin.jpg",
+        "alt": "Chou pointu braisé aux pommes et cumin"
+      },
+      "seo": {
+        "titre": "Chou pointu braisé aux pommes et cumin",
+        "meta_description": "Du chou pointu braisé avec pomme, cumin et graines de tournesol.",
+        "mots_cles": [
+          "chou pointu",
+          "pomme",
+          "cumin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le chou pointu et la pomme offrent un accompagnement doux-acidulé absent du catalogue. Formulation à tester avant publication.",
+          "caution": "Temps de braisage et calibre des pommes à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.7,
+          "active_minutes": 18,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r453",
+      "slug": "petits-pois-ecrases-a-la-menthe-et-au-citron",
+      "titre": "Petits pois écrasés à la menthe et au citron",
+      "categorie": "accompagnement",
+      "description": "Un écrasé grossier de petits pois à la menthe, citron et huile d'olive.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 8,
+        "repos": 2,
+        "total": 20
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "accompagnement",
+        "ecrase-grossier"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "petits-pois",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petits pois",
+          "note": "Frais ou surgelés",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les petits pois 6 à 8 minutes.",
+        "Égoutter en gardant un peu d'eau.",
+        "Écraser grossièrement avec citron et huile.",
+        "Ajouter la menthe et reposer 2 minutes."
+      ],
+      "conseils": [
+        "Ne pas mixer complètement afin de garder de la texture."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Menthe",
+          "par": "Basilic",
+          "note": "Profil différent"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 170,
+        "proteines_g": 8,
+        "glucides_g": 21,
+        "sucres_g": 7,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 8,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r453-petits-pois-ecrases-a-la-menthe-et-au-citron.jpg",
+        "alt": "Petits pois écrasés à la menthe et au citron"
+      },
+      "seo": {
+        "titre": "Petits pois écrasés à la menthe et au citron",
+        "meta_description": "Un écrasé grossier de petits pois à la menthe, citron et huile d'olive.",
+        "mots_cles": [
+          "petits pois",
+          "menthe",
+          "citron"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Un écrasé de petits pois simple mais non représenté parmi les accompagnements actuels. Formulation à tester avant publication.",
+          "caution": "Cuisson et texture de l'écrasé à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.8,
+          "active_minutes": 12,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r454",
+      "slug": "artichauts-braises-au-safran-et-feves",
+      "titre": "Artichauts braisés au safran et fèves",
+      "categorie": "accompagnement",
+      "description": "Des artichauts braisés avec fèves, safran, aneth et citron.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "accompagnement",
+        "braisage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "fonds-artichaut",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fonds d'artichaut",
+          "note": "Nature",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "feves-cuites",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fèves cuites",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": []
+        },
+        {
+          "id": "safran-filaments",
+          "quantite": 0.1,
+          "unite": "g",
+          "quantite_normalisee": 0.1,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filaments de safran",
+          "note": "À peser",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 350,
+          "unite": "ml",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir les artichauts 5 minutes.",
+        "Ajouter eau et safran; braiser 18 minutes.",
+        "Ajouter les fèves pour 5 minutes.",
+        "Ajouter aneth et citron puis reposer 5 minutes."
+      ],
+      "conseils": [
+        "Peser 0,1 g de safran et vérifier le sodium des artichauts."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Fèves",
+          "par": "Petits pois",
+          "note": "Cuisson plus courte"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 190,
+        "proteines_g": 9,
+        "glucides_g": 28,
+        "sucres_g": 5,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 10,
+        "sodium_mg": 170,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r454-artichauts-braises-au-safran-et-feves.jpg",
+        "alt": "Artichauts braisés au safran et fèves"
+      },
+      "seo": {
+        "titre": "Artichauts braisés au safran et fèves",
+        "meta_description": "Des artichauts braisés avec fèves, safran, aneth et citron.",
+        "mots_cles": [
+          "artichauts",
+          "fèves",
+          "safran"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Artichaut, fève et safran constituent un accompagnement printanier nouveau. Formulation à tester avant publication.",
+          "caution": "Safran, sodium et cuisson des artichauts à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2,
+          "active_minutes": 24,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r455",
+      "slug": "polenta-de-pois-chiches-au-romarin",
+      "titre": "Polenta de pois chiches au romarin",
+      "categorie": "accompagnement",
+      "description": "Une polenta crémeuse de farine de pois chiches au romarin et citron.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 15,
+        "repos": 5,
+        "total": 30
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "accompagnement",
+        "cuisson-cremeuse"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-pois-chiches",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de pois chiches",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "romarin frais haché",
+          "note": "Dosage léger",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 900,
+          "unite": "ml",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Délayer la farine dans 300 ml d'eau froide.",
+        "Porter le reste d'eau à frémissement.",
+        "Verser en fouettant et cuire 12 à 15 minutes.",
+        "Ajouter romarin, huile et citron puis reposer 5 minutes."
+      ],
+      "conseils": [
+        "Fouetter constamment au début pour éviter les grumeaux."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Romarin",
+          "par": "Thym",
+          "note": "Même dosage"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 250,
+        "proteines_g": 12,
+        "glucides_g": 38,
+        "sucres_g": 3,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 7,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r455-polenta-de-pois-chiches-au-romarin.jpg",
+        "alt": "Polenta de pois chiches au romarin"
+      },
+      "seo": {
+        "titre": "Polenta de pois chiches au romarin",
+        "meta_description": "Une polenta crémeuse de farine de pois chiches au romarin et citron.",
+        "mots_cles": [
+          "farine de pois chiches",
+          "romarin",
+          "huile d'olive"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La farine de pois chiches transforme la polenta classique en accompagnement original. Formulation à tester avant publication.",
+          "caution": "Temps de cuisson, épaisseur et tolérance digestive à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.55,
+          "active_minutes": 18,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r456",
+      "slug": "sarrasin-pilaf-aux-poires-epinards-et-noix",
+      "titre": "Sarrasin pilaf aux poires, épinards et noix",
+      "categorie": "accompagnement",
+      "description": "Un pilaf de sarrasin aux poires, épinards, noix et thym.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 22,
+        "repos": 5,
+        "total": 42
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "accompagnement",
+        "cuisson-pilaf"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "sarrasin-decortique-cru",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sarrasin décortiqué cru",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "epinards-frais",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épinards frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 500,
+          "unite": "ml",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir le sarrasin dans l'huile 2 minutes.",
+        "Ajouter eau et thym; cuire 15 minutes.",
+        "Ajouter poires et épinards pour 5 minutes.",
+        "Reposer 5 minutes et servir avec noix."
+      ],
+      "conseils": [
+        "Ajouter la poire tard pour qu'elle garde sa forme."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 285,
+        "proteines_g": 8,
+        "glucides_g": 46,
+        "sucres_g": 10,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 8,
+        "sodium_mg": 35,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r456-sarrasin-pilaf-aux-poires-epinards-et-noix.jpg",
+        "alt": "Sarrasin pilaf aux poires, épinards et noix"
+      },
+      "seo": {
+        "titre": "Sarrasin pilaf aux poires, épinards et noix",
+        "meta_description": "Un pilaf de sarrasin aux poires, épinards, noix et thym.",
+        "mots_cles": [
+          "sarrasin",
+          "poires",
+          "épinards"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le pilaf de sarrasin fruité ne reprend aucun risotto ou porridge existant. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; cuisson du sarrasin et maturité des poires à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.1,
+          "active_minutes": 18,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r457",
+      "slug": "quinoa-rouge-aux-cerises-concombre-et-menthe",
+      "titre": "Quinoa rouge aux cerises, concombre et menthe",
+      "categorie": "accompagnement",
+      "description": "Du quinoa rouge froid aux cerises, concombre, menthe et citron.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 22,
+        "repos": 20,
+        "total": 57
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "accompagnement",
+        "assemblage-froid"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "quinoa-rouge",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "quinoa rouge",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "cerise",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cerises",
+          "note": "Dénoyautées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "concombre",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombre",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le quinoa 20 à 22 minutes.",
+        "L'étaler et le refroidir rapidement 20 minutes.",
+        "Couper cerises et concombre.",
+        "Assembler avec menthe, citron et huile."
+      ],
+      "conseils": [
+        "Refroidir rapidement le quinoa avant d'ajouter les fruits."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Cerises",
+          "par": "Prunes",
+          "note": "En petits dés"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 270,
+        "proteines_g": 8,
+        "glucides_g": 45,
+        "sucres_g": 13,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 6,
+        "sodium_mg": 30,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r457-quinoa-rouge-aux-cerises-concombre-et-menthe.jpg",
+        "alt": "Quinoa rouge aux cerises, concombre et menthe"
+      },
+      "seo": {
+        "titre": "Quinoa rouge aux cerises, concombre et menthe",
+        "meta_description": "Du quinoa rouge froid aux cerises, concombre, menthe et citron.",
+        "mots_cles": [
+          "quinoa rouge",
+          "cerises",
+          "concombre"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Cerise, concombre et quinoa rouge proposent une salade d'accompagnement différente des taboulés existants. Formulation à tester avant publication.",
+          "caution": "Refroidissement, dénoyautage et portion fruitée à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.3,
+          "active_minutes": 16,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r458",
+      "slug": "millet-citronne-aux-asperges-et-noisettes",
+      "titre": "Millet citronné aux asperges et noisettes",
+      "categorie": "accompagnement",
+      "description": "Du millet citronné aux asperges, noisettes et estragon.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 48
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "accompagnement",
+        "cuisson-pilaf"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "millet-decortique",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "millet décortiqué",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "asperges-vertes",
+          "quantite": 450,
+          "unite": "g",
+          "quantite_normalisee": 450,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "asperges vertes",
+          "note": "En tronçons",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noisette",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "estragon-frais",
+          "quantite": 12,
+          "unite": "g",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "estragon frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 550,
+          "unite": "ml",
+          "quantite_normalisee": 550,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir le millet 2 minutes.",
+        "Ajouter l'eau et cuire 15 minutes.",
+        "Ajouter les asperges pour 7 minutes.",
+        "Reposer 5 minutes, puis ajouter citron, estragon et noisettes."
+      ],
+      "conseils": [
+        "Vérifier la cuisson des tiges d'asperges séparément des pointes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de tournesol",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 295,
+        "proteines_g": 9,
+        "glucides_g": 47,
+        "sucres_g": 4,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 7,
+        "sodium_mg": 35,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r458-millet-citronne-aux-asperges-et-noisettes.jpg",
+        "alt": "Millet citronné aux asperges et noisettes"
+      },
+      "seo": {
+        "titre": "Millet citronné aux asperges et noisettes",
+        "meta_description": "Du millet citronné aux asperges, noisettes et estragon.",
+        "mots_cles": [
+          "millet",
+          "asperges",
+          "noisettes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le millet aux asperges et estragon apporte une base céréalière nouvelle. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; prix des asperges et cuisson du millet à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.45,
+          "active_minutes": 20,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r459",
+      "slug": "riz-noir-aux-champignons-poireaux-et-thym",
+      "titre": "Riz noir aux champignons, poireaux et thym",
+      "categorie": "accompagnement",
+      "description": "Du riz noir aux champignons, poireaux et thym, cuit par absorption.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 42,
+        "repos": 5,
+        "total": 62
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "accompagnement",
+        "cuisson-absorbee"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "riz-noir-sec",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "riz noir sec",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "champignons-paris",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "champignons cultivés",
+          "note": "Émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireaux",
+          "note": "Émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire revenir poireaux et champignons 8 minutes.",
+        "Ajouter riz, thym et eau.",
+        "Cuire à couvert 32 à 38 minutes.",
+        "Vérifier l'absorption et reposer 5 minutes."
+      ],
+      "conseils": [
+        "Utiliser uniquement des champignons identifiés et commercialisés."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Riz noir",
+          "par": "Riz rouge",
+          "note": "Cuisson à adapter"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur, refroidi rapidement.",
+      "nutrition_par_portion": {
+        "calories": 245,
+        "proteines_g": 7,
+        "glucides_g": 45,
+        "sucres_g": 5,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 6,
+        "sodium_mg": 40,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r459-riz-noir-aux-champignons-poireaux-et-thym.jpg",
+        "alt": "Riz noir aux champignons, poireaux et thym"
+      },
+      "seo": {
+        "titre": "Riz noir aux champignons, poireaux et thym",
+        "meta_description": "Du riz noir aux champignons, poireaux et thym, cuit par absorption.",
+        "mots_cles": [
+          "riz noir",
+          "champignons",
+          "poireaux"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le riz noir distingue cet accompagnement des risottos d'orge et salades de riz complet. Formulation à tester avant publication.",
+          "caution": "Identification des champignons, absorption et refroidissement du riz à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.15,
+          "active_minutes": 19,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r460",
+      "slug": "lentilles-blondes-a-l-orange-fenouil-et-aneth",
+      "titre": "Lentilles blondes à l'orange, fenouil et aneth",
+      "categorie": "accompagnement",
+      "description": "Des lentilles blondes marinées à l'orange avec fenouil et aneth.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 30,
+        "repos": 20,
+        "total": 65
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "hiver",
+        "printemps"
+      ],
+      "tags": [
+        "accompagnement",
+        "cuisson-puis-marinade"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "lentilles-blondes-seches",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "lentilles blondes sèches",
+          "note": "Rincées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges",
+          "note": "Jus, zeste et segments",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bulbe de fenouil",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les lentilles 25 à 30 minutes et égoutter.",
+        "Mélanger jus, zeste et huile.",
+        "Ajouter fenouil et lentilles chaudes.",
+        "Laisser mariner 20 minutes puis ajouter segments et aneth."
+      ],
+      "conseils": [
+        "Ajouter les segments après refroidissement partiel."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Orange",
+          "par": "Mandarine",
+          "note": "Utiliser trois fruits"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 245,
+        "proteines_g": 13,
+        "glucides_g": 41,
+        "sucres_g": 9,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 12,
+        "sodium_mg": 30,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r460-lentilles-blondes-a-l-orange-fenouil-et-aneth.jpg",
+        "alt": "Lentilles blondes à l'orange, fenouil et aneth"
+      },
+      "seo": {
+        "titre": "Lentilles blondes à l'orange, fenouil et aneth",
+        "meta_description": "Des lentilles blondes marinées à l'orange avec fenouil et aneth.",
+        "mots_cles": [
+          "lentilles blondes",
+          "orange",
+          "fenouil"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Lentilles blondes et orange donnent une garniture différente des salades de lentilles existantes. Formulation à tester avant publication.",
+          "caution": "Cuisson des lentilles et quantité de jus à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.9,
+          "active_minutes": 17,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r461",
+      "slug": "pois-casses-ecrases-au-citron-confit-et-coriandre",
+      "titre": "Pois cassés écrasés au citron confit et coriandre",
+      "categorie": "accompagnement",
+      "description": "Un écrasé de pois cassés au citron confit, coriandre et cumin.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 45,
+        "repos": 5,
+        "total": 62
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "accompagnement",
+        "ecrase"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pois-casses-secs",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois cassés secs",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-confit",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "citron confit",
+          "note": "Écorce rincée",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cumin-moulu",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cumin moulu",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les pois 40 à 45 minutes.",
+        "Égoutter en gardant de l'eau.",
+        "Écraser avec citron confit, cumin et huile.",
+        "Ajouter coriandre et reposer 5 minutes."
+      ],
+      "conseils": [
+        "Rincer le citron confit et goûter avant de saler."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Citron confit",
+          "par": "Zeste de citron",
+          "note": "Réduit le sodium"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 250,
+        "proteines_g": 14,
+        "glucides_g": 41,
+        "sucres_g": 3,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 13,
+        "sodium_mg": 190,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r461-pois-casses-ecrases-au-citron-confit-et-coriandre.jpg",
+        "alt": "Pois cassés écrasés au citron confit et coriandre"
+      },
+      "seo": {
+        "titre": "Pois cassés écrasés au citron confit et coriandre",
+        "meta_description": "Un écrasé de pois cassés au citron confit, coriandre et cumin.",
+        "mots_cles": [
+          "pois cassés",
+          "citron confit",
+          "coriandre"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L'écrasé de pois cassés offre une base inédite sans reproduire le houmous. Formulation à tester avant publication.",
+          "caution": "Citron confit salé, cuisson des pois et texture à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.65,
+          "active_minutes": 16,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r462",
+      "slug": "epeautre-tiede-aux-prunes-roquette-et-amandes",
+      "titre": "Épeautre tiède aux prunes, roquette et amandes",
+      "categorie": "accompagnement",
+      "description": "De l'épeautre tiède aux prunes, roquette, amandes et vinaigre de cidre.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 45,
+        "repos": 5,
+        "total": 65
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "accompagnement",
+        "assemblage-tiede"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "epeautre-sec",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épeautre sec",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "prune",
+          "quantite": 5,
+          "unite": "piece",
+          "quantite_normalisee": 5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "prunes",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "roquette",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "roquette",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "vinaigre-cidre",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de cidre",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire l'épeautre 40 à 45 minutes et égoutter.",
+        "Mélanger vinaigre et huile.",
+        "Ajouter les prunes à l'épeautre tiède.",
+        "Reposer 5 minutes puis ajouter roquette et amandes."
+      ],
+      "conseils": [
+        "Choisir des prunes fermes pour préserver les morceaux."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 310,
+        "proteines_g": 10,
+        "glucides_g": 51,
+        "sucres_g": 10,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 8,
+        "sodium_mg": 30,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r462-epeautre-tiede-aux-prunes-roquette-et-amandes.jpg",
+        "alt": "Épeautre tiède aux prunes, roquette et amandes"
+      },
+      "seo": {
+        "titre": "Épeautre tiède aux prunes, roquette et amandes",
+        "meta_description": "De l'épeautre tiède aux prunes, roquette, amandes et vinaigre de cidre.",
+        "mots_cles": [
+          "épeautre",
+          "prunes",
+          "roquette"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les prunes et l'épeautre forment un accompagnement fruité absent des bases existantes. Formulation à tester avant publication.",
+          "caution": "Contient gluten et fruits à coque; cuisson et maturité des prunes à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.25,
+          "active_minutes": 18,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "gluten",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r463",
+      "slug": "patate-douce-blanche-ecrasee-au-tahini-et-citron-vert",
+      "titre": "Patate douce blanche écrasée au tahini et citron vert",
+      "categorie": "accompagnement",
+      "description": "Une patate douce blanche écrasée au tahini, citron vert et coriandre.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 28,
+        "repos": 5,
+        "total": 45
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "accompagnement",
+        "ecrase"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "patate-douce-blanche",
+          "quantite": 800,
+          "unite": "g",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "patates douces blanches",
+          "note": "En cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tahini",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tahini",
+          "note": "Purée de sésame",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron vert",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les patates 22 à 28 minutes.",
+        "Égoutter et écraser.",
+        "Délayer le tahini avec citron vert.",
+        "Incorporer sauce, huile et coriandre puis reposer 5 minutes."
+      ],
+      "conseils": [
+        "Ajouter le tahini progressivement pour contrôler l'épaisseur."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Tahini",
+          "par": "Purée de tournesol",
+          "note": "Retire le sésame selon le produit"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 255,
+        "proteines_g": 6,
+        "glucides_g": 43,
+        "sucres_g": 9,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 1.4,
+        "fibres_g": 7,
+        "sodium_mg": 35,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r463-patate-douce-blanche-ecrasee-au-tahini-et-citron-vert.jpg",
+        "alt": "Patate douce blanche écrasée au tahini et citron vert"
+      },
+      "seo": {
+        "titre": "Patate douce blanche écrasée au tahini et citron vert",
+        "meta_description": "Une patate douce blanche écrasée au tahini, citron vert et coriandre.",
+        "mots_cles": [
+          "patate douce blanche",
+          "tahini",
+          "citron vert"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La variété blanche et le citron vert différencient cet écrasé des patates douces rôties existantes. Formulation à tester avant publication.",
+          "caution": "Contient sésame; cuisson et variété de patate à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.85,
+          "active_minutes": 15,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r464",
+      "slug": "courgettes-grillees-aux-groseilles-et-graines-de-courge",
+      "titre": "Courgettes grillées aux groseilles et graines de courge",
+      "categorie": "accompagnement",
+      "description": "Des courgettes grillées aux groseilles, graines de courge et basilic.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 16,
+        "repos": 5,
+        "total": 36
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "accompagnement",
+        "grillade"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "courgette",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "courgettes",
+          "note": "En tranches",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "groseille",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "groseilles",
+          "note": "Égrappées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-courge",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de courge",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Griller les courgettes 3 minutes par face.",
+        "Écraser légèrement un tiers des groseilles.",
+        "Mélanger avec huile et basilic.",
+        "Napper les courgettes, ajouter graines et reposer 5 minutes."
+      ],
+      "conseils": [
+        "Ajouter les groseilles hors du feu pour garder leur acidité."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Groseilles",
+          "par": "Framboises",
+          "note": "Profil plus doux"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 140,
+        "proteines_g": 5,
+        "glucides_g": 15,
+        "sucres_g": 8,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 5,
+        "sodium_mg": 25,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r464-courgettes-grillees-aux-groseilles-et-graines-de-courge.jpg",
+        "alt": "Courgettes grillées aux groseilles et graines de courge"
+      },
+      "seo": {
+        "titre": "Courgettes grillées aux groseilles et graines de courge",
+        "meta_description": "Des courgettes grillées aux groseilles, graines de courge et basilic.",
+        "mots_cles": [
+          "courgettes",
+          "groseilles",
+          "graines de courge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L'acidité des groseilles et les graines de courge donnent aux courgettes une combinaison originale. Formulation à tester avant publication.",
+          "caution": "Acidité, saison et tenue des courgettes à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1,
+          "active_minutes": 20,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r465",
+      "slug": "endives-braisees-a-la-poire-et-aux-noix",
+      "titre": "Endives braisées à la poire et aux noix",
+      "categorie": "accompagnement",
+      "description": "Des endives braisées à la poire, noix et thym.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 28,
+        "repos": 5,
+        "total": 48
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "accompagnement",
+        "braisage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "endive",
+          "quantite": 6,
+          "unite": "piece",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "endives",
+          "note": "Coupées en deux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 150,
+          "unite": "ml",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Dorer les endives dans l'huile 5 minutes.",
+        "Ajouter poire, thym et eau.",
+        "Braiser à couvert 18 à 22 minutes.",
+        "Reposer 5 minutes et ajouter les noix."
+      ],
+      "conseils": [
+        "Retirer le cœur dur des endives très amères."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de tournesol",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 165,
+        "proteines_g": 4,
+        "glucides_g": 20,
+        "sucres_g": 11,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 5,
+        "sodium_mg": 40,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r465-endives-braisees-a-la-poire-et-aux-noix.jpg",
+        "alt": "Endives braisées à la poire et aux noix"
+      },
+      "seo": {
+        "titre": "Endives braisées à la poire et aux noix",
+        "meta_description": "Des endives braisées à la poire, noix et thym.",
+        "mots_cles": [
+          "endives",
+          "poire",
+          "noix"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Poire et noix atténuent l'amertume des endives dans un accompagnement inédit. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; amertume et maturité des poires à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.1,
+          "active_minutes": 18,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r466",
+      "slug": "pois-gourmands-sautes-au-gingembre-et-sarrasin-souffle",
+      "titre": "Pois gourmands sautés au gingembre et sarrasin soufflé",
+      "categorie": "accompagnement",
+      "description": "Des pois gourmands sautés au gingembre avec sarrasin soufflé et sésame.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 8,
+        "repos": 2,
+        "total": 22
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "accompagnement",
+        "saute-minute"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pois-gourmands",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois gourmands",
+          "note": "Équeutés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "gingembre-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "gingembre frais",
+          "note": "Râpé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sarrasin-souffle",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sarrasin soufflé",
+          "note": "Nature",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "graines-sesame",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "graines de sésame",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Chauffer fortement la poêle.",
+        "Sauter les pois avec huile et gingembre 5 à 7 minutes.",
+        "Ajouter le sésame 30 secondes.",
+        "Servir immédiatement avec sarrasin soufflé."
+      ],
+      "conseils": [
+        "Ajouter le sarrasin au dernier moment pour garder le croquant."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Sésame",
+          "par": "Graines de pavot",
+          "note": "Retire le sésame selon le produit"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur, sarrasin séparé.",
+      "nutrition_par_portion": {
+        "calories": 150,
+        "proteines_g": 6,
+        "glucides_g": 20,
+        "sucres_g": 7,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 6,
+        "sodium_mg": 35,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r466-pois-gourmands-sautes-au-gingembre-et-sarrasin-souffle.jpg",
+        "alt": "Pois gourmands sautés au gingembre et sarrasin soufflé"
+      },
+      "seo": {
+        "titre": "Pois gourmands sautés au gingembre et sarrasin soufflé",
+        "meta_description": "Des pois gourmands sautés au gingembre avec sarrasin soufflé et sésame.",
+        "mots_cles": [
+          "pois gourmands",
+          "gingembre",
+          "sarrasin soufflé"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le sarrasin soufflé apporte un contraste non utilisé dans les accompagnements existants. Formulation à tester avant publication.",
+          "caution": "Contient sésame; cuisson minute et croustillant à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1,
+          "active_minutes": 14,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r467",
+      "slug": "topinambours-rotis-pomme-verte-et-sauge",
+      "titre": "Topinambours rôtis, pomme verte et sauge",
+      "categorie": "accompagnement",
+      "description": "Des topinambours rôtis avec pomme verte, sauge et graines de tournesol.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 35,
+        "repos": 5,
+        "total": 58
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "accompagnement",
+        "rotissage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "topinambour",
+          "quantite": 800,
+          "unite": "g",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "topinambours",
+          "note": "Brossés, en morceaux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pomme-verte",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pommes vertes",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-tournesol",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de tournesol",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir les topinambours huilés 25 minutes à 200 °C.",
+        "Ajouter pommes et sauge.",
+        "Poursuivre 10 minutes.",
+        "Reposer 5 minutes et ajouter les graines."
+      ],
+      "conseils": [
+        "Introduire une portion modérée, le topinambour pouvant être mal toléré par certaines personnes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Topinambours",
+          "par": "Panais",
+          "note": "Même poids"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 210,
+        "proteines_g": 5,
+        "glucides_g": 35,
+        "sucres_g": 12,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.1,
+        "fibres_g": 8,
+        "sodium_mg": 25,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r467-topinambours-rotis-pomme-verte-et-sauge.jpg",
+        "alt": "Topinambours rôtis, pomme verte et sauge"
+      },
+      "seo": {
+        "titre": "Topinambours rôtis, pomme verte et sauge",
+        "meta_description": "Des topinambours rôtis avec pomme verte, sauge et graines de tournesol.",
+        "mots_cles": [
+          "topinambours",
+          "pomme verte",
+          "sauge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Topinambour et pomme verte créent un accompagnement saisonnier sans équivalent dans le catalogue. Formulation à tester avant publication.",
+          "caution": "Digestibilité, lavage et temps de rôtissage des topinambours à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1,
+          "active_minutes": 20,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r468",
+      "slug": "crackers-de-pois-chiches-au-romarin-et-graines",
+      "titre": "Crackers de pois chiches au romarin et graines",
+      "categorie": "snack",
+      "description": "Des crackers de pois chiches au romarin, tournesol et huile d'olive.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 28,
+        "repos": 15,
+        "total": 61
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "snack",
+        "cuisson-au-four"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-pois-chiches",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de pois chiches",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "romarin frais haché",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-tournesol",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de tournesol",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 160,
+          "unite": "ml",
+          "quantite_normalisee": 160,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mélanger farine, romarin, graines, huile et eau.",
+        "Reposer 10 minutes puis étaler sur 3 mm.",
+        "Prédécouper 24 crackers et cuire 25 à 28 minutes à 170 °C.",
+        "Refroidir 15 minutes avant de séparer."
+      ],
+      "conseils": [
+        "Retirer les bords secs avant le centre si nécessaire."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Tournesol",
+          "par": "Graines de courge",
+          "note": "Même poids"
+        }
+      ],
+      "conservation": "3 jours en boîte hermétique.",
+      "nutrition_par_portion": {
+        "calories": 90,
+        "proteines_g": 4,
+        "glucides_g": 11,
+        "sucres_g": 1,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 2,
+        "sodium_mg": 25,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r468-crackers-de-pois-chiches-au-romarin-et-graines.jpg",
+        "alt": "Crackers de pois chiches au romarin et graines"
+      },
+      "seo": {
+        "titre": "Crackers de pois chiches au romarin et graines",
+        "meta_description": "Des crackers de pois chiches au romarin, tournesol et huile d'olive.",
+        "mots_cles": [
+          "farine de pois chiches",
+          "romarin",
+          "graines de tournesol"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Format cracker salé absent des snacks existants, avec une base de pois chiches non frite. Formulation à tester avant publication.",
+          "caution": "Hydratation, croustillance et rendement de 24 crackers à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 22,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r469",
+      "slug": "bouchees-de-sarrasin-poire-et-noisette",
+      "titre": "Bouchées de sarrasin, poire et noisette",
+      "categorie": "snack",
+      "description": "Des bouchées cuites de sarrasin, poire, noisette et cannelle.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 24,
+        "repos": 10,
+        "total": 52
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "snack",
+        "cuisson-au-four"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-sarrasin",
+          "quantite": 160,
+          "unite": "g",
+          "quantite_normalisee": 160,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de sarrasin",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "Râpées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noisette",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "Moulues",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 100,
+          "unite": "ml",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mélanger poire, farine, noisettes et cannelle.",
+        "Ajouter l'eau progressivement.",
+        "Former 16 bouchées et huiler légèrement.",
+        "Cuire 22 à 24 minutes à 180 °C puis reposer 10 minutes."
+      ],
+      "conseils": [
+        "La poire fournit l'humidité; ajuster l'eau selon son calibre."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de courge moulues",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 105,
+        "proteines_g": 3,
+        "glucides_g": 14,
+        "sucres_g": 4,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 3,
+        "sodium_mg": 10,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r469-bouchees-de-sarrasin-poire-et-noisette.jpg",
+        "alt": "Bouchées de sarrasin, poire et noisette"
+      },
+      "seo": {
+        "titre": "Bouchées de sarrasin, poire et noisette",
+        "meta_description": "Des bouchées cuites de sarrasin, poire, noisette et cannelle.",
+        "mots_cles": [
+          "sarrasin",
+          "poire",
+          "noisettes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Bouchées cuites au sarrasin et à la poire, distinctes des energy balls aux dattes. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; humidité et rendement à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.65,
+          "active_minutes": 22,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r470",
+      "slug": "pois-casses-grilles-au-paprika-et-citron",
+      "titre": "Pois cassés grillés au paprika et citron",
+      "categorie": "snack",
+      "description": "Des pois cassés cuits puis grillés au paprika fumé et citron.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 45,
+        "repos": 10,
+        "total": 67
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "snack",
+        "grillade-au-four"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pois-casses-secs",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois cassés secs",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "paprika-fume",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "paprika fumé",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1.5,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les pois 30 à 35 minutes sans les défaire.",
+        "Égoutter et sécher 10 minutes.",
+        "Mélanger avec huile et paprika puis griller 15 minutes à 200 °C.",
+        "Ajouter le citron et refroidir 10 minutes."
+      ],
+      "conseils": [
+        "La texture restera plus tendre que celle de pois chiches rôtis."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Paprika fumé",
+          "par": "Paprika doux",
+          "note": "Profil moins fumé"
+        }
+      ],
+      "conservation": "À consommer le jour même.",
+      "nutrition_par_portion": {
+        "calories": 120,
+        "proteines_g": 7,
+        "glucides_g": 20,
+        "sucres_g": 2,
+        "lipides_g": 3,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 6,
+        "sodium_mg": 20,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r470-pois-casses-grilles-au-paprika-et-citron.jpg",
+        "alt": "Pois cassés grillés au paprika et citron"
+      },
+      "seo": {
+        "titre": "Pois cassés grillés au paprika et citron",
+        "meta_description": "Des pois cassés cuits puis grillés au paprika fumé et citron.",
+        "mots_cles": [
+          "pois cassés cuits",
+          "paprika fumé",
+          "citron"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le pois cassé remplace les pois chiches croustillants déjà présents et apporte une texture différente. Formulation à tester avant publication.",
+          "caution": "Cuisson délicate, séchage et portion à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 18,
+          "equipment": [
+            "hob",
+            "oven"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r471",
+      "slug": "roules-de-concombre-au-haricot-blanc-et-aneth",
+      "titre": "Roulés de concombre au haricot blanc et aneth",
+      "categorie": "snack",
+      "description": "Des rubans de concombre roulés autour d'une crème de haricots blancs, aneth, citron et courge.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 0,
+        "repos": 15,
+        "total": 35
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "snack",
+        "assemblage-sans-cuisson"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "concombre",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombres",
+          "note": "En longs rubans",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-courge",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de courge",
+          "note": "Hachées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mixer haricots, citron et huile.",
+        "Ajouter aneth et graines.",
+        "Éponger les rubans de concombre et garnir.",
+        "Rouler et réfrigérer 15 minutes."
+      ],
+      "conseils": [
+        "Éponger le concombre pour éviter que les roulés glissent."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Aneth",
+          "par": "Ciboulette",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "À consommer dans les 12 heures au froid.",
+      "nutrition_par_portion": {
+        "calories": 95,
+        "proteines_g": 5,
+        "glucides_g": 12,
+        "sucres_g": 3,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 4,
+        "sodium_mg": 85,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r471-roules-de-concombre-au-haricot-blanc-et-aneth.jpg",
+        "alt": "Roulés de concombre au haricot blanc et aneth"
+      },
+      "seo": {
+        "titre": "Roulés de concombre au haricot blanc et aneth",
+        "meta_description": "Des rubans de concombre roulés autour d'une crème de haricots blancs, aneth, citron et courge.",
+        "mots_cles": [
+          "concombre",
+          "haricots blancs",
+          "aneth"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Snack frais roulé sans pain, absent des préparations à tartiner du catalogue. Formulation à tester avant publication.",
+          "caution": "Sodium des haricots, chaîne du froid et tenue des roulés à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.65,
+          "active_minutes": 20,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r472",
+      "slug": "mini-galettes-de-quinoa-rouge-et-courgette",
+      "titre": "Mini-galettes de quinoa rouge et courgette",
+      "categorie": "snack",
+      "description": "Des mini-galettes de quinoa rouge et courgette à l'œuf, persil et citron.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 25,
+        "repos": 10,
+        "total": 55
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "snack",
+        "cuisson-a-la-poele"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "quinoa-rouge",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "quinoa rouge",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "courgette",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "courgette",
+          "note": "Râpée et essorée",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oeuf",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le quinoa 20 minutes et refroidir légèrement.",
+        "Mélanger avec courgette, œufs, persil et citron.",
+        "Former 16 mini-galettes.",
+        "Poêler 3 minutes par face puis reposer 10 minutes."
+      ],
+      "conseils": [
+        "Cuire les galettes à cœur et les refroidir rapidement si elles sont transportées."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Œufs",
+          "par": "Gel de lin",
+          "note": "Retire l'œuf mais tenue à retester"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 105,
+        "proteines_g": 4,
+        "glucides_g": 14,
+        "sucres_g": 2,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 2,
+        "sodium_mg": 35,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r472-mini-galettes-de-quinoa-rouge-et-courgette.jpg",
+        "alt": "Mini-galettes de quinoa rouge et courgette"
+      },
+      "seo": {
+        "titre": "Mini-galettes de quinoa rouge et courgette",
+        "meta_description": "Des mini-galettes de quinoa rouge et courgette à l'œuf, persil et citron.",
+        "mots_cles": [
+          "quinoa rouge",
+          "courgette",
+          "œuf"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Petites galettes nomades au quinoa rouge, sans reprendre la socca ni les omelettes existantes. Formulation à tester avant publication.",
+          "caution": "Contient œuf; cuisson à cœur, tenue et refroidissement à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.8,
+          "active_minutes": 28,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r473",
+      "slug": "pommes-roties-au-tahini-et-sesame-noir",
+      "titre": "Pommes rôties au tahini et sésame noir",
+      "categorie": "snack",
+      "description": "Des quartiers de pomme rôtis au tahini, sésame noir et cannelle.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 22,
+        "repos": 5,
+        "total": 39
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "snack",
+        "rotissage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pomme",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pommes",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tahini",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tahini",
+          "note": "Purée de sésame",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "graines-sesame-noir",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "graines de sésame noir",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 40,
+          "unite": "ml",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir les pommes 18 à 22 minutes à 190 °C.",
+        "Délayer le tahini avec l'eau.",
+        "Napper les pommes chaudes.",
+        "Ajouter cannelle et sésame puis reposer 5 minutes."
+      ],
+      "conseils": [
+        "Ajouter le tahini après cuisson pour éviter qu'il ne sèche."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Tahini",
+          "par": "Purée de tournesol",
+          "note": "Retire le sésame selon le produit"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 145,
+        "proteines_g": 3,
+        "glucides_g": 22,
+        "sucres_g": 15,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 4,
+        "sodium_mg": 15,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r473-pommes-roties-au-tahini-et-sesame-noir.jpg",
+        "alt": "Pommes rôties au tahini et sésame noir"
+      },
+      "seo": {
+        "titre": "Pommes rôties au tahini et sésame noir",
+        "meta_description": "Des quartiers de pomme rôtis au tahini, sésame noir et cannelle.",
+        "mots_cles": [
+          "pommes",
+          "tahini",
+          "sésame noir"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Snack chaud pomme-sésame distinct des compotes, crumbles et puddings existants. Formulation à tester avant publication.",
+          "caution": "Contient sésame; maturité des pommes et portion à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.6,
+          "active_minutes": 14,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r474",
+      "slug": "carres-d-avoine-sales-aux-epinards-et-noix",
+      "titre": "Carrés d'avoine salés aux épinards et noix",
+      "categorie": "snack",
+      "description": "Des carrés salés d'avoine aux épinards, noix, œufs et thym.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 30,
+        "repos": 15,
+        "total": 63
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "snack",
+        "cuisson-au-four"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "epinards-frais",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épinards frais",
+          "note": "Hachés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "oeuf",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 250,
+          "unite": "ml",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Faire tomber les épinards et bien les essorer.",
+        "Mélanger avoine, œufs, eau, thym, épinards et noix.",
+        "Verser dans un moule et cuire 28 à 30 minutes à 180 °C.",
+        "Vérifier la prise, reposer 15 minutes et couper 12 carrés."
+      ],
+      "conseils": [
+        "Le centre doit être pris avant découpe."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de tournesol",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 130,
+        "proteines_g": 5,
+        "glucides_g": 13,
+        "sucres_g": 1,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 3,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r474-carres-d-avoine-sales-aux-epinards-et-noix.jpg",
+        "alt": "Carrés d'avoine salés aux épinards et noix"
+      },
+      "seo": {
+        "titre": "Carrés d'avoine salés aux épinards et noix",
+        "meta_description": "Des carrés salés d'avoine aux épinards, noix, œufs et thym.",
+        "mots_cles": [
+          "flocons d'avoine",
+          "épinards",
+          "noix"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le carré d'avoine salé apporte un format différent du granola et des porridges. Formulation à tester avant publication.",
+          "caution": "Contient gluten, œuf et fruits à coque; cuisson à cœur et rendement à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.7,
+          "active_minutes": 22,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "gluten",
+            "fruits-a-coque",
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r475",
+      "slug": "brochettes-de-raisin-chevre-frais-et-pistache",
+      "titre": "Brochettes de raisin, chèvre frais et pistache",
+      "categorie": "snack",
+      "description": "Des brochettes froides de raisin, chèvre frais, pistache et roquette.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 0,
+        "repos": 15,
+        "total": 33
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne"
+      ],
+      "tags": [
+        "snack",
+        "assemblage-sans-cuisson"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "raisin-blanc",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "raisins blancs",
+          "note": "Lavés et séchés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "chevre-frais",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fromage de chèvre frais",
+          "note": "En cubes fermes",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "pistaches-non-salees",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "Hachées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "roquette",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "roquette",
+          "note": "Petites feuilles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Sécher soigneusement les raisins.",
+        "Rouler les cubes de chèvre dans les pistaches.",
+        "Monter 16 petites brochettes avec raisin, chèvre et roquette.",
+        "Réfrigérer 15 minutes avant de servir."
+      ],
+      "conseils": [
+        "Maintenir le fromage au froid et utiliser des pics adaptés au service."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pistaches",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "À consommer le jour même, conservé au froid.",
+      "nutrition_par_portion": {
+        "calories": 115,
+        "proteines_g": 5,
+        "glucides_g": 9,
+        "sucres_g": 7,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 3,
+        "fibres_g": 1,
+        "sodium_mg": 95,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r475-brochettes-de-raisin-chevre-frais-et-pistache.jpg",
+        "alt": "Brochettes de raisin, chèvre frais et pistache"
+      },
+      "seo": {
+        "titre": "Brochettes de raisin, chèvre frais et pistache",
+        "meta_description": "Des brochettes froides de raisin, chèvre frais, pistache et roquette.",
+        "mots_cles": [
+          "raisin",
+          "fromage de chèvre frais",
+          "pistaches"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Format brochette sucré-salé absent du catalogue, sans dupliquer les bols de skyr ou salades au chèvre. Formulation à tester avant publication.",
+          "caution": "Contient lait et fruits à coque; chaîne du froid, pics et portion à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.1,
+          "active_minutes": 18,
+          "equipment": [],
+          "allergens": [
+            "lait",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    }
+  ]
+}

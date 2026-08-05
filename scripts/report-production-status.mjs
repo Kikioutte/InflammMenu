@@ -21,15 +21,15 @@ const finals = await countRecipes(/^pilot-r\d{3}-r\d{3}\.final\.json$/);
 const images = imageNames.filter((name) => /^r\d{3}-.+\.jpg$/.test(name)).length;
 
 console.log(JSON.stringify({
-  target: 450,
+  target: 500,
   drafts,
   nutrition,
   finals,
   images: { files: images },
   remaining: {
-    drafting: Math.max(0, 450 - drafts.recipes),
-    nutrition: Math.max(0, 450 - nutrition.recipes),
-    editorial: Math.max(0, 450 - finals.recipes),
-    images: Math.max(0, 450 - images),
+    drafting: Math.max(0, 500 - drafts.recipes),
+    nutrition: Math.max(0, 500 - nutrition.recipes),
+    editorial: Math.max(0, 500 - finals.recipes),
+    images: Math.max(0, 500 - images),
   },
 }, null, 2));

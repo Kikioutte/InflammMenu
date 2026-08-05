@@ -1,0 +1,5194 @@
+{
+  "meta": {
+    "schema_version": "2.1.0",
+    "status": "draft",
+    "nombre_recettes": 25,
+    "nutrition_notice": "Nutrition et coûts estimés; recalcul requis avant publication.",
+    "medical_notice": "Aucune promesse médicale ou thérapeutique."
+  },
+  "recipes": [
+    {
+      "id": "r351",
+      "slug": "saumon-en-croute-de-pistache-poireaux-et-sarrasin",
+      "titre": "Saumon en croûte de pistache, poireaux et sarrasin",
+      "categorie": "plat",
+      "description": "Du saumon en croûte de pistache avec poireaux fondants et sarrasin.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "cuisson-au-four"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "saumon-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de saumon",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "pistaches-non-salees",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "Hachées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "poireau",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireaux",
+          "note": "Émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sarrasin-decortique-cru",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sarrasin décortiqué cru",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 500,
+          "unite": "ml",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le sarrasin 18 minutes.",
+        "Faire fondre les poireaux 12 minutes avec une cuillère d'huile.",
+        "Presser pistaches et zeste sur le saumon huilé puis cuire 14 à 16 minutes à 190 °C.",
+        "Vérifier la cuisson et servir avec sarrasin et poireaux."
+      ],
+      "conseils": [
+        "Contrôler l'absence d'arêtes avant et après cuisson."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pistaches",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 560,
+        "proteines_g": 37,
+        "glucides_g": 48,
+        "sucres_g": 7,
+        "lipides_g": 25,
+        "acides_gras_satures_g": 4,
+        "fibres_g": 8,
+        "sodium_mg": 150,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r351-saumon-en-croute-de-pistache-poireaux-et-sarrasin.jpg",
+        "alt": "Saumon en croûte de pistache, poireaux et sarrasin"
+      },
+      "seo": {
+        "titre": "Saumon en croûte de pistache, poireaux et sarrasin",
+        "meta_description": "Du saumon en croûte de pistache avec poireaux fondants et sarrasin.",
+        "mots_cles": [
+          "saumon",
+          "pistaches",
+          "poireaux"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Croûte de pistache et sarrasin servis avec des poireaux fondants, combinaison absente du catalogue existant. Formulation à tester avant publication.",
+          "caution": "Contient poisson et fruits à coque; cuisson, arêtes, coût et portion à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.6,
+          "active_minutes": 25,
+          "equipment": [
+            "oven",
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r352",
+      "slug": "truite-en-papillote-au-raisin-fenouil-et-thym",
+      "titre": "Truite en papillote au raisin, fenouil et thym",
+      "categorie": "plat",
+      "description": "Une papillote de truite au raisin blanc, fenouil, thym et citron.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 22,
+        "repos": 5,
+        "total": 47
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "papillote"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "truite-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de truite",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "raisin-blanc",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "raisins blancs",
+          "note": "Coupés en deux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bulbe de fenouil",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Répartir le fenouil sur quatre feuilles de papier cuisson.",
+        "Ajouter truite, raisins, thym, citron et huile.",
+        "Fermer les papillotes et cuire 18 à 22 minutes à 190 °C.",
+        "Ouvrir prudemment, vérifier les arêtes et reposer 5 minutes."
+      ],
+      "conseils": [
+        "Ouvrir les papillotes loin du visage à cause de la vapeur."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Raisin blanc",
+          "par": "Poire",
+          "note": "En fines lamelles"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 370,
+        "proteines_g": 33,
+        "glucides_g": 20,
+        "sucres_g": 16,
+        "lipides_g": 18,
+        "acides_gras_satures_g": 3.2,
+        "fibres_g": 4,
+        "sodium_mg": 105,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r352-truite-en-papillote-au-raisin-fenouil-et-thym.jpg",
+        "alt": "Truite en papillote au raisin, fenouil et thym"
+      },
+      "seo": {
+        "titre": "Truite en papillote au raisin, fenouil et thym",
+        "meta_description": "Une papillote de truite au raisin blanc, fenouil, thym et citron.",
+        "mots_cles": [
+          "truite",
+          "raisin blanc",
+          "fenouil"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Accord aigre-doux raisin-fenouil conçu autour d'une papillote de truite, sans reprendre les garnitures existantes. Formulation à tester avant publication.",
+          "caution": "Contient poisson; cuisson en papillote, arêtes et concentration du raisin à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.2,
+          "active_minutes": 23,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r353",
+      "slug": "maquereau-laque-au-miso-soba-et-chou-rouge",
+      "titre": "Maquereau laqué au miso, soba et chou rouge",
+      "categorie": "plat",
+      "description": "Du maquereau grillé et laqué au miso blanc avec soba et chou rouge.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 22,
+        "repos": 5,
+        "total": 49
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "gril-puis-laquage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "maquereau-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de maquereau",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "miso-blanc",
+          "quantite": 45,
+          "unite": "g",
+          "quantite_normalisee": 45,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "miso blanc",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "nouilles-soba-ble-sarrasin",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "nouilles soba blé-sarrasin",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "chou-rouge",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chou rouge",
+          "note": "Émincé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "ciboule",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "cébettes",
+          "note": "Émincées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 80,
+          "unite": "ml",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les soba, rincer et égoutter.",
+        "Faire tomber le chou 6 minutes avec l'huile.",
+        "Délayer le miso avec l'eau, badigeonner le maquereau et griller 8 à 10 minutes.",
+        "Vérifier la cuisson et servir avec soba, chou et cébettes."
+      ],
+      "conseils": [
+        "Le miso et le maquereau peuvent être salés; ne pas ajouter de sel."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Soba",
+          "par": "Nouilles de riz",
+          "note": "Retire le gluten selon le produit"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 590,
+        "proteines_g": 35,
+        "glucides_g": 53,
+        "sucres_g": 7,
+        "lipides_g": 29,
+        "acides_gras_satures_g": 5,
+        "fibres_g": 7,
+        "sodium_mg": 520,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r353-maquereau-laque-au-miso-soba-et-chou-rouge.jpg",
+        "alt": "Maquereau laqué au miso, soba et chou rouge"
+      },
+      "seo": {
+        "titre": "Maquereau laqué au miso, soba et chou rouge",
+        "meta_description": "Du maquereau grillé et laqué au miso blanc avec soba et chou rouge.",
+        "mots_cles": [
+          "maquereau",
+          "miso",
+          "nouilles soba"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le laquage au miso et les soba créent un plat complet distinct des préparations de maquereau déjà présentes. Formulation à tester avant publication.",
+          "caution": "Contient poisson, soja et gluten; miso salé, arêtes et cuisson au gril à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.9,
+          "active_minutes": 27,
+          "equipment": [
+            "oven",
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "soja",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r354",
+      "slug": "sardines-roties-sur-polenta-aux-blettes",
+      "titre": "Sardines rôties sur polenta aux blettes",
+      "categorie": "plat",
+      "description": "Des sardines rôties sur polenta crémeuse aux blettes et tomates séchées.",
+      "temps": {
+        "preparation": 25,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "automne"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "rotissage-et-cuisson-cremeuse"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "sardines-fraiches",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sardines fraîches vidées",
+          "note": "Arêtes centrales retirées si possible",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "polenta-complete",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "polenta complète",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "blettes",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "blettes",
+          "note": "Émincées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tomates-sechees",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates séchées",
+          "note": "Produit déclaré avec sulfites, rincé",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sulfites"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 900,
+          "unite": "ml",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire la polenta dans l'eau 10 minutes.",
+        "Braiser les blettes et tomates 10 minutes puis incorporer à la polenta.",
+        "Huiler et rôtir les sardines 10 à 12 minutes à 200 °C.",
+        "Vérifier cuisson et arêtes, puis servir avec citron."
+      ],
+      "conseils": [
+        "Informer clairement de la présence possible de petites arêtes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Tomates séchées",
+          "par": "Tomates cerises",
+          "note": "Retire les sulfites selon le produit"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 510,
+        "proteines_g": 34,
+        "glucides_g": 44,
+        "sucres_g": 7,
+        "lipides_g": 23,
+        "acides_gras_satures_g": 4,
+        "fibres_g": 7,
+        "sodium_mg": 340,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r354-sardines-roties-sur-polenta-aux-blettes.jpg",
+        "alt": "Sardines rôties sur polenta aux blettes"
+      },
+      "seo": {
+        "titre": "Sardines rôties sur polenta aux blettes",
+        "meta_description": "Des sardines rôties sur polenta crémeuse aux blettes et tomates séchées.",
+        "mots_cles": [
+          "sardines",
+          "polenta",
+          "blettes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Association sardines-polenta-blettes inédite, avec une construction différente des salades et grillades existantes. Formulation à tester avant publication.",
+          "caution": "Contient poisson et sulfites; petites arêtes, sodium et cuisson à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.4,
+          "active_minutes": 30,
+          "equipment": [
+            "oven",
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "sulfites"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r355",
+      "slug": "saumon-a-l-orange-et-cardamome-lentilles-beluga",
+      "titre": "Saumon à l'orange et cardamome, lentilles beluga",
+      "categorie": "plat",
+      "description": "Du saumon poêlé avec réduction orange-cardamome, lentilles beluga et épinards.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "poelage-et-reduction"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "saumon-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de saumon",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "orange",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges",
+          "note": "Jus et zeste",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cardamome-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cardamome moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "lentilles-beluga-seches",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "lentilles beluga sèches",
+          "note": "Rincées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "epinards-frais",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épinards frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les lentilles 25 minutes et égoutter.",
+        "Poêler le saumon 4 à 5 minutes par face selon épaisseur.",
+        "Réduire le jus d'orange avec cardamome 5 minutes.",
+        "Faire tomber les épinards, vérifier le poisson et napper de réduction."
+      ],
+      "conseils": [
+        "Ajouter la cardamome progressivement pour ne pas masquer le poisson."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Orange",
+          "par": "Mandarine",
+          "note": "Utiliser trois fruits"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 540,
+        "proteines_g": 39,
+        "glucides_g": 44,
+        "sucres_g": 13,
+        "lipides_g": 23,
+        "acides_gras_satures_g": 4,
+        "fibres_g": 13,
+        "sodium_mg": 120,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r355-saumon-a-l-orange-et-cardamome-lentilles-beluga.jpg",
+        "alt": "Saumon à l'orange et cardamome, lentilles beluga"
+      },
+      "seo": {
+        "titre": "Saumon à l'orange et cardamome, lentilles beluga",
+        "meta_description": "Du saumon poêlé avec réduction orange-cardamome, lentilles beluga et épinards.",
+        "mots_cles": [
+          "saumon",
+          "orange",
+          "cardamome"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une réduction orange-cardamome accompagne des lentilles beluga, sans reproduire les bowls au riz ou à l'avocat. Formulation à tester avant publication.",
+          "caution": "Contient poisson; réduction fruitée, cuisson et rendement des lentilles à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.5,
+          "active_minutes": 28,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r356",
+      "slug": "hareng-doux-pommes-roties-et-seigle-croustillant",
+      "titre": "Hareng doux, pommes rôties et seigle croustillant",
+      "categorie": "plat",
+      "description": "Du hareng doux avec pommes rôties, endives, aneth et seigle croustillant.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 50
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "rotissage-et-assemblage-tiede"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "hareng-doux-filet",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de hareng doux",
+          "note": "Égouttés, vérifier le sodium",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "pomme",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pommes",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pain-seigle-complet",
+          "quantite": 160,
+          "unite": "g",
+          "quantite_normalisee": 160,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pain de seigle complet",
+          "note": "En cubes",
+          "categorie_courses": "bakery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "endive",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "endives",
+          "note": "Émincées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir pommes et pain huilé 18 minutes à 190 °C.",
+        "Ajouter le hareng sur une zone séparée pour les 5 dernières minutes.",
+        "Mélanger endives, aneth et citron.",
+        "Vérifier les arêtes puis assembler tiède."
+      ],
+      "conseils": [
+        "Goûter le hareng avant tout assaisonnement."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pain de seigle",
+          "par": "Pain complet sans gluten",
+          "note": "Vérifier certification"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 440,
+        "proteines_g": 27,
+        "glucides_g": 43,
+        "sucres_g": 15,
+        "lipides_g": 20,
+        "acides_gras_satures_g": 3.3,
+        "fibres_g": 7,
+        "sodium_mg": 590,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r356-hareng-doux-pommes-roties-et-seigle-croustillant.jpg",
+        "alt": "Hareng doux, pommes rôties et seigle croustillant"
+      },
+      "seo": {
+        "titre": "Hareng doux, pommes rôties et seigle croustillant",
+        "meta_description": "Du hareng doux avec pommes rôties, endives, aneth et seigle croustillant.",
+        "mots_cles": [
+          "hareng doux",
+          "pommes",
+          "pain de seigle"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le contraste hareng-pomme-endive et le seigle croustillant apporte un profil nordique absent des bases comparées. Formulation à tester avant publication.",
+          "caution": "Contient poisson et gluten; hareng très salé, arêtes et pain à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.7,
+          "active_minutes": 24,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "poisson",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r357",
+      "slug": "truite-poelee-puree-de-panais-et-noisettes",
+      "titre": "Truite poêlée, purée de panais et noisettes",
+      "categorie": "plat",
+      "description": "De la truite poêlée avec purée de panais, cresson, noisettes et citron.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 28,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "poelage-et-ecrase"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "truite-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de truite",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "panais",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "panais",
+          "note": "En cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noisette",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "cresson",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cresson",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les panais 20 minutes puis mixer avec une cuillère d'huile.",
+        "Poêler la truite 4 à 5 minutes par face.",
+        "Assaisonner le cresson avec citron et reste d'huile.",
+        "Vérifier cuisson et arêtes puis servir avec noisettes."
+      ],
+      "conseils": [
+        "Ajouter l'eau de cuisson peu à peu dans la purée."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 505,
+        "proteines_g": 36,
+        "glucides_g": 39,
+        "sucres_g": 10,
+        "lipides_g": 24,
+        "acides_gras_satures_g": 4,
+        "fibres_g": 9,
+        "sodium_mg": 115,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r357-truite-poelee-puree-de-panais-et-noisettes.jpg",
+        "alt": "Truite poêlée, purée de panais et noisettes"
+      },
+      "seo": {
+        "titre": "Truite poêlée, purée de panais et noisettes",
+        "meta_description": "De la truite poêlée avec purée de panais, cresson, noisettes et citron.",
+        "mots_cles": [
+          "truite",
+          "panais",
+          "noisettes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Purée de panais, cresson et noisettes composent une assiette différente de la truite au quinoa existante. Formulation à tester avant publication.",
+          "caution": "Contient poisson et fruits à coque; cuisson, arêtes et texture de purée à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.25,
+          "active_minutes": 28,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "poisson",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r358",
+      "slug": "saumon-poche-au-the-vert-riz-sauvage-et-bok-choy",
+      "titre": "Saumon poché au thé vert, riz sauvage et bok choy",
+      "categorie": "plat",
+      "description": "Du saumon poché au thé vert avec riz sauvage, bok choy et gingembre.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 42,
+        "repos": 5,
+        "total": 65
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "pochage-aromatique"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "saumon-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de saumon",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "the-vert",
+          "quantite": 8,
+          "unite": "g",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "thé vert",
+          "note": "En vrac",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "riz-sauvage-sec",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "riz sauvage sec",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "pak-choi",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "bok choy",
+          "note": "Coupé en deux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "gingembre-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "gingembre frais",
+          "note": "En lamelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 1400,
+          "unite": "ml",
+          "quantite_normalisee": 1400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le riz sauvage 38 à 42 minutes.",
+        "Infuser le thé et le gingembre 3 minutes dans 700 ml d'eau puis filtrer.",
+        "Pocher le saumon 8 à 10 minutes dans l'infusion frémissante.",
+        "Saisir le bok choy 5 minutes, vérifier le poisson et servir."
+      ],
+      "conseils": [
+        "Ne pas surinfuser le thé pour éviter l'amertume."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Thé vert",
+          "par": "Rooibos nature",
+          "note": "Profil différent sans théine"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 500,
+        "proteines_g": 38,
+        "glucides_g": 49,
+        "sucres_g": 4,
+        "lipides_g": 20,
+        "acides_gras_satures_g": 3.5,
+        "fibres_g": 6,
+        "sodium_mg": 105,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r358-saumon-poche-au-the-vert-riz-sauvage-et-bok-choy.jpg",
+        "alt": "Saumon poché au thé vert, riz sauvage et bok choy"
+      },
+      "seo": {
+        "titre": "Saumon poché au thé vert, riz sauvage et bok choy",
+        "meta_description": "Du saumon poché au thé vert avec riz sauvage, bok choy et gingembre.",
+        "mots_cles": [
+          "saumon",
+          "thé vert",
+          "riz sauvage"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le pochage au thé vert et le riz sauvage forment une technique et une garniture inédites dans le catalogue. Formulation à tester avant publication.",
+          "caution": "Contient poisson; température de pochage, arêtes et cuisson du riz à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.45,
+          "active_minutes": 24,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r359",
+      "slug": "maquereau-vapeur-patate-douce-violette-et-concombre",
+      "titre": "Maquereau vapeur, patate douce violette et concombre",
+      "categorie": "plat",
+      "description": "Du maquereau vapeur avec patate douce violette, concombre, citron vert et coriandre.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "cuisson-vapeur"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "maquereau-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de maquereau",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "patate-douce-violette",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "patates douces violettes",
+          "note": "En cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "concombre",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombre",
+          "note": "En rubans",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citrons verts",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les patates vapeur 18 à 22 minutes.",
+        "Ajouter le maquereau sur un étage séparé pour 10 à 12 minutes.",
+        "Mélanger concombre, citron vert, coriandre et huile.",
+        "Vérifier cuisson et arêtes puis servir avec la garniture fraîche."
+      ],
+      "conseils": [
+        "Éviter que les jus de poisson ne coulent sur le concombre cru."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Patate douce violette",
+          "par": "Patate douce orange",
+          "note": "Même poids"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 530,
+        "proteines_g": 34,
+        "glucides_g": 44,
+        "sucres_g": 10,
+        "lipides_g": 26,
+        "acides_gras_satures_g": 5,
+        "fibres_g": 8,
+        "sodium_mg": 130,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r359-maquereau-vapeur-patate-douce-violette-et-concombre.jpg",
+        "alt": "Maquereau vapeur, patate douce violette et concombre"
+      },
+      "seo": {
+        "titre": "Maquereau vapeur, patate douce violette et concombre",
+        "meta_description": "Du maquereau vapeur avec patate douce violette, concombre, citron vert et coriandre.",
+        "mots_cles": [
+          "maquereau",
+          "patate douce violette",
+          "concombre"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une cuisson vapeur et une garniture fraîche distinguent ce plat des versions rôties ou en salade déjà recensées. Formulation à tester avant publication.",
+          "caution": "Contient poisson; hygiène vapeur, arêtes et calibre des patates à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.8,
+          "active_minutes": 23,
+          "equipment": [
+            "steamer"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r360",
+      "slug": "sardines-farcies-aux-herbes-boulgour-de-chou-fleur",
+      "titre": "Sardines farcies aux herbes, boulgour de chou-fleur",
+      "categorie": "plat",
+      "description": "Des sardines farcies aux herbes et citron confit avec chou-fleur façon boulgour.",
+      "temps": {
+        "preparation": 30,
+        "cuisson": 22,
+        "repos": 5,
+        "total": 57
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "automne"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "cuisson-au-four"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "sardines-fraiches",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sardines fraîches vidées",
+          "note": "Ouvertes en portefeuille",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "chou-fleur",
+          "quantite": 800,
+          "unite": "g",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chou-fleur",
+          "note": "En fleurettes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 25,
+          "unite": "g",
+          "quantite_normalisee": 25,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-confit",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "citron confit",
+          "note": "Écorce rincée et hachée",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mixer brièvement le chou-fleur en semoule et le cuire 6 minutes à la poêle.",
+        "Mélanger herbes, citron confit et une cuillère d'huile.",
+        "Farcir les sardines, fermer et cuire 12 à 15 minutes à 195 °C.",
+        "Vérifier cuisson et arêtes puis servir sur le chou-fleur."
+      ],
+      "conseils": [
+        "Rincer le citron confit et ne pas ajouter de sel avant dégustation."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Citron confit",
+          "par": "Zeste de citron frais",
+          "note": "Réduit fortement le sodium"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 430,
+        "proteines_g": 35,
+        "glucides_g": 17,
+        "sucres_g": 8,
+        "lipides_g": 24,
+        "acides_gras_satures_g": 4.5,
+        "fibres_g": 7,
+        "sodium_mg": 410,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r360-sardines-farcies-aux-herbes-boulgour-de-chou-fleur.jpg",
+        "alt": "Sardines farcies aux herbes, boulgour de chou-fleur"
+      },
+      "seo": {
+        "titre": "Sardines farcies aux herbes, boulgour de chou-fleur",
+        "meta_description": "Des sardines farcies aux herbes et citron confit avec chou-fleur façon boulgour.",
+        "mots_cles": [
+          "sardines",
+          "chou-fleur",
+          "persil"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Sardines farcies et chou-fleur façon boulgour donnent une composition distincte des recettes de sardines existantes. Formulation à tester avant publication.",
+          "caution": "Contient poisson; petites arêtes, citron confit salé et farce à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.5,
+          "active_minutes": 35,
+          "equipment": [
+            "oven",
+            "blender",
+            "hob"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r361",
+      "slug": "omble-chevalier-roti-betteraves-jaunes-et-aneth",
+      "titre": "Omble chevalier rôti, betteraves jaunes et aneth",
+      "categorie": "plat",
+      "description": "De l'omble chevalier rôti avec betteraves jaunes, orge, aneth et citron.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 45,
+        "repos": 5,
+        "total": 72
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "rotissage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "omble-chevalier-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets d'omble chevalier",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "betterave-jaune",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "betteraves jaunes",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "orge-monde",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "orge mondé",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire l'orge 40 à 45 minutes et égoutter.",
+        "Rôtir les betteraves huilées 30 minutes à 195 °C.",
+        "Ajouter l'omble sur une plaque séparée pour 12 à 15 minutes.",
+        "Vérifier cuisson et arêtes, puis servir avec aneth et citron."
+      ],
+      "conseils": [
+        "Le temps du poisson dépend fortement de l'épaisseur des filets."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Omble chevalier",
+          "par": "Truite",
+          "note": "Même poids"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 525,
+        "proteines_g": 37,
+        "glucides_g": 54,
+        "sucres_g": 10,
+        "lipides_g": 20,
+        "acides_gras_satures_g": 3.5,
+        "fibres_g": 10,
+        "sodium_mg": 120,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r361-omble-chevalier-roti-betteraves-jaunes-et-aneth.jpg",
+        "alt": "Omble chevalier rôti, betteraves jaunes et aneth"
+      },
+      "seo": {
+        "titre": "Omble chevalier rôti, betteraves jaunes et aneth",
+        "meta_description": "De l'omble chevalier rôti avec betteraves jaunes, orge, aneth et citron.",
+        "mots_cles": [
+          "omble chevalier",
+          "betteraves jaunes",
+          "aneth"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L'omble et les betteraves jaunes introduisent une protéine et une palette différentes du catalogue actuel. Formulation à tester avant publication.",
+          "caution": "Contient poisson et gluten; coût, disponibilité, arêtes et cuisson de l'orge à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.8,
+          "active_minutes": 26,
+          "equipment": [
+            "oven",
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r362",
+      "slug": "saumon-grille-peches-et-freekeh-aux-herbes",
+      "titre": "Saumon grillé, pêches et freekeh aux herbes",
+      "categorie": "plat",
+      "description": "Du saumon et des pêches grillés avec freekeh, roquette et basilic.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 57
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "grillade"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "saumon-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de saumon",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "peche",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pêches",
+          "note": "Fermes, en quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "freekeh-sec",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "freekeh sec",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "roquette",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "roquette",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 600,
+          "unite": "ml",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le freekeh 25 à 30 minutes et égoutter.",
+        "Griller les pêches 2 minutes par face.",
+        "Griller le saumon 4 à 5 minutes par face.",
+        "Vérifier cuisson et arêtes puis servir avec freekeh, roquette, basilic et citron."
+      ],
+      "conseils": [
+        "Utiliser des pêches fermes pour éviter qu'elles se délitent."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pêches",
+          "par": "Nectarines",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 550,
+        "proteines_g": 39,
+        "glucides_g": 58,
+        "sucres_g": 14,
+        "lipides_g": 21,
+        "acides_gras_satures_g": 3.7,
+        "fibres_g": 9,
+        "sodium_mg": 130,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r362-saumon-grille-peches-et-freekeh-aux-herbes.jpg",
+        "alt": "Saumon grillé, pêches et freekeh aux herbes"
+      },
+      "seo": {
+        "titre": "Saumon grillé, pêches et freekeh aux herbes",
+        "meta_description": "Du saumon et des pêches grillés avec freekeh, roquette et basilic.",
+        "mots_cles": [
+          "saumon",
+          "pêches",
+          "freekeh"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Pêche grillée et freekeh donnent au saumon un accompagnement inédit, loin des associations riz-brocoli existantes. Formulation à tester avant publication.",
+          "caution": "Contient poisson et gluten; maturité des pêches, cuisson et coût saisonnier à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.6,
+          "active_minutes": 27,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r363",
+      "slug": "truite-en-croute-de-sesame-nouilles-de-riz-et-pois-gourmands",
+      "titre": "Truite en croûte de sésame, nouilles de riz et pois gourmands",
+      "categorie": "plat",
+      "description": "De la truite en croûte de sésame avec nouilles de riz, pois gourmands et gingembre.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 18,
+        "repos": 5,
+        "total": 43
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "saisie-en-croute"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "truite-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de truite",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "graines-sesame",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de sésame",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "nouilles-riz",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "nouilles de riz",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "pois-gourmands",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois gourmands",
+          "note": "Équeutés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "gingembre-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "gingembre frais",
+          "note": "Râpé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron vert",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les nouilles, égoutter et réserver.",
+        "Blanchir les pois gourmands 4 minutes.",
+        "Presser le sésame sur la truite et saisir 4 minutes par face avec l'huile.",
+        "Vérifier cuisson et arêtes puis servir avec gingembre et citron vert."
+      ],
+      "conseils": [
+        "Presser doucement le sésame pour qu'il adhère sans épaisseur excessive."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Sésame",
+          "par": "Graines de pavot",
+          "note": "Retire le sésame selon le produit"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 545,
+        "proteines_g": 37,
+        "glucides_g": 56,
+        "sucres_g": 5,
+        "lipides_g": 22,
+        "acides_gras_satures_g": 3.5,
+        "fibres_g": 6,
+        "sodium_mg": 140,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r363-truite-en-croute-de-sesame-nouilles-de-riz-et-pois-gourmands.jpg",
+        "alt": "Truite en croûte de sésame, nouilles de riz et pois gourmands"
+      },
+      "seo": {
+        "titre": "Truite en croûte de sésame, nouilles de riz et pois gourmands",
+        "meta_description": "De la truite en croûte de sésame avec nouilles de riz, pois gourmands et gingembre.",
+        "mots_cles": [
+          "truite",
+          "sésame",
+          "nouilles de riz"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Croûte de sésame et nouilles de riz créent une structure distincte des plats de truite déjà intégrés. Formulation à tester avant publication.",
+          "caution": "Contient poisson et sésame; adhérence de croûte, arêtes et cuisson à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.1,
+          "active_minutes": 25,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r364",
+      "slug": "hareng-grille-betterave-chioggia-et-pommes-de-terre-ecrasees",
+      "titre": "Hareng grillé, betterave chioggia et pommes de terre écrasées",
+      "categorie": "plat",
+      "description": "Du hareng grillé avec betterave chioggia, pommes de terre écrasées, raifort et aneth.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 57
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "grillade-et-ecrase"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "hareng-filet",
+          "quantite": 550,
+          "unite": "g",
+          "quantite_normalisee": 550,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de hareng",
+          "note": "Frais ou dessalés selon produit",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "betterave-chioggia",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "betteraves chioggia",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pomme-terre",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pommes de terre",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "raifort-rape",
+          "quantite": 2,
+          "unite": "c. à c.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "raifort râpé",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire pommes de terre et betteraves séparément jusqu'à tendreté.",
+        "Écraser les pommes de terre avec une cuillère d'huile.",
+        "Griller le hareng 3 à 4 minutes par face.",
+        "Vérifier cuisson et arêtes puis servir avec betteraves, raifort, aneth et citron."
+      ],
+      "conseils": [
+        "Ajouter le raifort progressivement et vérifier le sel du hareng."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Hareng",
+          "par": "Maquereau",
+          "note": "Même poids, cuisson à adapter"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 510,
+        "proteines_g": 33,
+        "glucides_g": 52,
+        "sucres_g": 8,
+        "lipides_g": 21,
+        "acides_gras_satures_g": 3.8,
+        "fibres_g": 9,
+        "sodium_mg": 450,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r364-hareng-grille-betterave-chioggia-et-pommes-de-terre-ecrasees.jpg",
+        "alt": "Hareng grillé, betterave chioggia et pommes de terre écrasées"
+      },
+      "seo": {
+        "titre": "Hareng grillé, betterave chioggia et pommes de terre écrasées",
+        "meta_description": "Du hareng grillé avec betterave chioggia, pommes de terre écrasées, raifort et aneth.",
+        "mots_cles": [
+          "hareng",
+          "betterave chioggia",
+          "pommes de terre"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le hareng grillé, la betterave chioggia et le raifort composent un ensemble absent des recettes comparées. Formulation à tester avant publication.",
+          "caution": "Contient poisson; hareng salé, arêtes et puissance du raifort à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.8,
+          "active_minutes": 27,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r365",
+      "slug": "saumon-roti-au-sumac-pois-casses-et-carottes",
+      "titre": "Saumon rôti au sumac, pois cassés et carottes",
+      "categorie": "plat",
+      "description": "Du saumon rôti au sumac avec purée de pois cassés, carottes et coriandre.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 45,
+        "repos": 5,
+        "total": 70
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "rotissage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "saumon-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de saumon",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "sumac-moulu",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "sumac moulu",
+          "note": "Sans sel ajouté",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "pois-casses-secs",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois cassés secs",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "carotte",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "carottes",
+          "note": "En bâtonnets",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les pois cassés 40 minutes et mixer grossièrement.",
+        "Rôtir les carottes huilées 25 minutes à 195 °C.",
+        "Ajouter le saumon poudré de sumac pour 12 à 15 minutes.",
+        "Vérifier cuisson et arêtes puis servir avec coriandre et citron."
+      ],
+      "conseils": [
+        "Choisir un sumac sans sel ajouté et goûter avant assaisonnement."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pois cassés",
+          "par": "Lentilles corail",
+          "note": "Cuisson plus courte"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 555,
+        "proteines_g": 40,
+        "glucides_g": 50,
+        "sucres_g": 10,
+        "lipides_g": 23,
+        "acides_gras_satures_g": 4,
+        "fibres_g": 15,
+        "sodium_mg": 125,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r365-saumon-roti-au-sumac-pois-casses-et-carottes.jpg",
+        "alt": "Saumon rôti au sumac, pois cassés et carottes"
+      },
+      "seo": {
+        "titre": "Saumon rôti au sumac, pois cassés et carottes",
+        "meta_description": "Du saumon rôti au sumac avec purée de pois cassés, carottes et coriandre.",
+        "mots_cles": [
+          "saumon",
+          "sumac",
+          "pois cassés"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le sumac et la purée de pois cassés évitent les garnitures déjà utilisées avec le saumon. Formulation à tester avant publication.",
+          "caution": "Contient poisson; cuisson des pois et du saumon, arêtes et sumac à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.3,
+          "active_minutes": 25,
+          "equipment": [
+            "oven",
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r366",
+      "slug": "maquereau-fume-millet-tiede-et-poire-croquante",
+      "titre": "Maquereau fumé, millet tiède et poire croquante",
+      "categorie": "plat",
+      "description": "Du maquereau fumé avec millet tiède, poire, céleri-rave et persil.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 52
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "assemblage-tiede"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "maquereau-fume",
+          "quantite": 450,
+          "unite": "g",
+          "quantite_normalisee": 450,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "maquereau fumé",
+          "note": "Peau et arêtes retirées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "millet-decortique",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "millet décortiqué",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "celeri-rave",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "céleri-rave",
+          "note": "Râpé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le millet 20 à 25 minutes puis tiédir.",
+        "Râper le céleri et le citronner.",
+        "Retirer soigneusement peau et arêtes du maquereau.",
+        "Assembler millet, poire, céleri, persil et poisson avec l'huile."
+      ],
+      "conseils": [
+        "Le maquereau fumé est salé; goûter avant tout assaisonnement."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Maquereau fumé",
+          "par": "Truite fumée",
+          "note": "Conserve l'allergène poisson"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 485,
+        "proteines_g": 29,
+        "glucides_g": 49,
+        "sucres_g": 11,
+        "lipides_g": 23,
+        "acides_gras_satures_g": 4.2,
+        "fibres_g": 9,
+        "sodium_mg": 620,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r366-maquereau-fume-millet-tiede-et-poire-croquante.jpg",
+        "alt": "Maquereau fumé, millet tiède et poire croquante"
+      },
+      "seo": {
+        "titre": "Maquereau fumé, millet tiède et poire croquante",
+        "meta_description": "Du maquereau fumé avec millet tiède, poire, céleri-rave et persil.",
+        "mots_cles": [
+          "maquereau fumé",
+          "millet",
+          "poire"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Millet, poire et céleri-rave apportent une combinaison originale sans dupliquer la salade de maquereau existante. Formulation à tester avant publication.",
+          "caution": "Contient poisson et céleri; produit fumé très salé, arêtes et chaîne du froid à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.75,
+          "active_minutes": 24,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "celeri"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r367",
+      "slug": "sardines-au-four-fenouil-braise-et-pois-blancs-citronnes",
+      "titre": "Sardines au four, fenouil braisé et pois blancs citronnés",
+      "categorie": "plat",
+      "description": "Des sardines au four avec fenouil braisé et haricots blancs citronnés à la sauge.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 57
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "cuisson-au-four-et-braisage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "sardines-fraiches",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sardines fraîches vidées",
+          "note": "Arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bulbes de fenouil",
+          "note": "Émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 150,
+          "unite": "ml",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Braiser le fenouil avec eau et une cuillère d'huile 18 minutes.",
+        "Ajouter haricots, citron et sauge pour 5 minutes.",
+        "Rôtir les sardines huilées 10 à 12 minutes à 200 °C.",
+        "Vérifier cuisson et arêtes puis servir ensemble."
+      ],
+      "conseils": [
+        "Prévenir de la présence possible de petites arêtes malgré la vérification."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Sardines",
+          "par": "Petits maquereaux",
+          "note": "Cuisson à adapter"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 470,
+        "proteines_g": 34,
+        "glucides_g": 31,
+        "sucres_g": 6,
+        "lipides_g": 24,
+        "acides_gras_satures_g": 4.3,
+        "fibres_g": 10,
+        "sodium_mg": 280,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r367-sardines-au-four-fenouil-braise-et-pois-blancs-citronnes.jpg",
+        "alt": "Sardines au four, fenouil braisé et pois blancs citronnés"
+      },
+      "seo": {
+        "titre": "Sardines au four, fenouil braisé et pois blancs citronnés",
+        "meta_description": "Des sardines au four avec fenouil braisé et haricots blancs citronnés à la sauge.",
+        "mots_cles": [
+          "sardines",
+          "fenouil",
+          "haricots blancs"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le duo fenouil braisé-haricots blancs crée un plat complet différent des sardines avec pommes de terre. Formulation à tester avant publication.",
+          "caution": "Contient poisson; petites arêtes, sodium des haricots et cuisson à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.4,
+          "active_minutes": 28,
+          "equipment": [
+            "oven",
+            "hob"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r368",
+      "slug": "truite-rotie-courge-spaghetti-et-pesto-de-sauge",
+      "titre": "Truite rôtie, courge spaghetti et pesto de sauge",
+      "categorie": "plat",
+      "description": "De la truite rôtie avec courge spaghetti et pesto de sauge aux graines de courge.",
+      "temps": {
+        "preparation": 25,
+        "cuisson": 38,
+        "repos": 5,
+        "total": 68
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "rotissage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "truite-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de truite",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "courge-spaghetti",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "courge spaghetti",
+          "note": "Environ 1,2 kg",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 12,
+          "unite": "piece",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-courge",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de courge",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir les moitiés de courge 30 à 35 minutes à 195 °C.",
+        "Ajouter la truite sur une plaque séparée pour 12 à 15 minutes.",
+        "Mixer sauge, graines, citron et huile.",
+        "Gratter la courge, vérifier cuisson et arêtes puis servir avec le pesto."
+      ],
+      "conseils": [
+        "Doser la sauge progressivement, car sa puissance varie."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Graines de courge",
+          "par": "Graines de tournesol",
+          "note": "Même poids"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 500,
+        "proteines_g": 37,
+        "glucides_g": 28,
+        "sucres_g": 7,
+        "lipides_g": 28,
+        "acides_gras_satures_g": 4.5,
+        "fibres_g": 8,
+        "sodium_mg": 110,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r368-truite-rotie-courge-spaghetti-et-pesto-de-sauge.jpg",
+        "alt": "Truite rôtie, courge spaghetti et pesto de sauge"
+      },
+      "seo": {
+        "titre": "Truite rôtie, courge spaghetti et pesto de sauge",
+        "meta_description": "De la truite rôtie avec courge spaghetti et pesto de sauge aux graines de courge.",
+        "mots_cles": [
+          "truite",
+          "courge spaghetti",
+          "sauge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La courge spaghetti et le pesto de sauge forment une garniture non rencontrée dans les recettes existantes. Formulation à tester avant publication.",
+          "caution": "Contient poisson; calibre de courge, dosage de sauge, cuisson et arêtes à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3,
+          "active_minutes": 28,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r369",
+      "slug": "saumon-vapeur-au-yuzu-quinoa-rouge-et-radis",
+      "titre": "Saumon vapeur au yuzu, quinoa rouge et radis",
+      "categorie": "plat",
+      "description": "Du saumon vapeur au yuzu avec quinoa rouge, radis et épinards.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 50
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "cuisson-vapeur"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "saumon-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de saumon",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "jus-yuzu",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "jus de yuzu",
+          "note": "Pur jus, vérifier l'étiquette",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "quinoa-rouge",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "quinoa rouge",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "radis-rose",
+          "quantite": 10,
+          "unite": "piece",
+          "quantite_normalisee": 10,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "radis roses",
+          "note": "Émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "epinards-frais",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épinards frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 500,
+          "unite": "ml",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le quinoa 20 à 25 minutes.",
+        "Cuire le saumon vapeur 10 à 12 minutes.",
+        "Faire tomber les épinards 3 minutes et préparer les radis.",
+        "Vérifier cuisson et arêtes, puis ajouter yuzu et huile hors du feu."
+      ],
+      "conseils": [
+        "Ajouter le yuzu après cuisson pour doser son acidité."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Yuzu",
+          "par": "Citron vert",
+          "note": "Même quantité de jus"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 520,
+        "proteines_g": 38,
+        "glucides_g": 45,
+        "sucres_g": 5,
+        "lipides_g": 22,
+        "acides_gras_satures_g": 3.8,
+        "fibres_g": 8,
+        "sodium_mg": 120,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r369-saumon-vapeur-au-yuzu-quinoa-rouge-et-radis.jpg",
+        "alt": "Saumon vapeur au yuzu, quinoa rouge et radis"
+      },
+      "seo": {
+        "titre": "Saumon vapeur au yuzu, quinoa rouge et radis",
+        "meta_description": "Du saumon vapeur au yuzu avec quinoa rouge, radis et épinards.",
+        "mots_cles": [
+          "saumon",
+          "yuzu",
+          "quinoa rouge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Yuzu, quinoa rouge et radis différencient ce plat des bowls de saumon déjà présents. Formulation à tester avant publication.",
+          "caution": "Contient poisson; étiquette du yuzu, vapeur, arêtes et cuisson du quinoa à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.65,
+          "active_minutes": 22,
+          "equipment": [
+            "steamer",
+            "hob"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r370",
+      "slug": "anchois-frais-rotis-pois-chiches-et-poivrons-doux",
+      "titre": "Anchois frais rôtis, pois chiches et poivrons doux",
+      "categorie": "plat",
+      "description": "Des anchois frais rôtis sur plaque avec pois chiches, poivrons doux, tomates et origan.",
+      "temps": {
+        "preparation": 30,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 60
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "rotissage-sur-plaque"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "anchois-frais",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "anchois frais vidés",
+          "note": "Têtes et arêtes centrales retirées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "pois-chiches-cuits",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois chiches cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poivron-doux",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poivrons doux",
+          "note": "Épépinés, en lanières",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tomate",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "origan-seche",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "origan séché",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir poivrons, tomates et pois chiches 18 minutes à 200 °C.",
+        "Ajouter les anchois huilés et l'origan.",
+        "Poursuivre 7 à 9 minutes seulement.",
+        "Vérifier cuisson et petites arêtes puis servir avec citron."
+      ],
+      "conseils": [
+        "Le nettoyage des anchois doit être particulièrement soigneux."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Anchois frais",
+          "par": "Sardines fraîches",
+          "note": "Temps de cuisson à adapter"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 445,
+        "proteines_g": 36,
+        "glucides_g": 34,
+        "sucres_g": 10,
+        "lipides_g": 19,
+        "acides_gras_satures_g": 3.2,
+        "fibres_g": 10,
+        "sodium_mg": 240,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r370-anchois-frais-rotis-pois-chiches-et-poivrons-doux.jpg",
+        "alt": "Anchois frais rôtis, pois chiches et poivrons doux"
+      },
+      "seo": {
+        "titre": "Anchois frais rôtis, pois chiches et poivrons doux",
+        "meta_description": "Des anchois frais rôtis sur plaque avec pois chiches, poivrons doux, tomates et origan.",
+        "mots_cles": [
+          "anchois frais",
+          "pois chiches",
+          "poivrons doux"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les anchois frais sont traités comme pièce principale avec pois chiches, et non comme condiment de pâtes. Formulation à tester avant publication.",
+          "caution": "Contient poisson; nombreuses petites arêtes, fraîcheur et sodium des pois chiches à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.6,
+          "active_minutes": 35,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r371",
+      "slug": "lieu-noir-poche-au-safran-poireaux-et-orge",
+      "titre": "Lieu noir poché au safran, poireaux et orge",
+      "categorie": "plat",
+      "description": "Du lieu noir poché au safran avec poireaux, orge mondé et persil.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 42,
+        "repos": 5,
+        "total": 69
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "pochage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "lieu-noir-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de lieu noir",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "safran-filaments",
+          "quantite": 0.1,
+          "unite": "g",
+          "quantite_normalisee": 0.1,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filaments de safran",
+          "note": "À peser",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poireau",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireaux",
+          "note": "Émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "orge-monde",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "orge mondé",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 1200,
+          "unite": "ml",
+          "quantite_normalisee": 1200,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire l'orge 35 à 40 minutes et égoutter.",
+        "Faire fondre les poireaux 10 minutes avec l'huile.",
+        "Infuser le safran dans l'eau frémissante puis pocher le lieu 8 à 10 minutes.",
+        "Vérifier cuisson et arêtes, puis servir avec persil."
+      ],
+      "conseils": [
+        "Peser les 0,1 g de safran et tester l'intensité."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Orge mondé",
+          "par": "Riz complet",
+          "note": "Retire le gluten si les autres produits conviennent"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 430,
+        "proteines_g": 36,
+        "glucides_g": 52,
+        "sucres_g": 5,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.7,
+        "fibres_g": 9,
+        "sodium_mg": 115,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r371-lieu-noir-poche-au-safran-poireaux-et-orge.jpg",
+        "alt": "Lieu noir poché au safran, poireaux et orge"
+      },
+      "seo": {
+        "titre": "Lieu noir poché au safran, poireaux et orge",
+        "meta_description": "Du lieu noir poché au safran avec poireaux, orge mondé et persil.",
+        "mots_cles": [
+          "lieu noir",
+          "safran",
+          "poireaux"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le pochage safrané et l'orge aux poireaux distinguent ce plat des soupes et papillotes de poisson blanc. Formulation à tester avant publication.",
+          "caution": "Contient poisson et gluten; safran, pochage, arêtes et cuisson de l'orge à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.9,
+          "active_minutes": 26,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r372",
+      "slug": "merlu-a-la-plancha-ecrase-de-feves-et-citron-confit",
+      "titre": "Merlu à la plancha, écrasé de fèves et citron confit",
+      "categorie": "plat",
+      "description": "Du merlu à la plancha avec écrasé de fèves, citron confit, menthe et semoule complète.",
+      "temps": {
+        "preparation": 25,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 55
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "plancha"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "merlu-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de merlu",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "feves-cuites",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fèves cuites",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": []
+        },
+        {
+          "id": "citron-confit",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "citron confit",
+          "note": "Écorce rincée",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "semoule-ble-complete",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "semoule complète de blé",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 300,
+          "unite": "ml",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Réhydrater la semoule selon l'emballage.",
+        "Écraser les fèves chaudes avec citron confit, menthe et une cuillère d'huile.",
+        "Cuire le merlu sur plancha ou poêle 4 à 5 minutes par face.",
+        "Vérifier cuisson et arêtes puis servir avec l'écrasé."
+      ],
+      "conseils": [
+        "Rincer le citron confit et goûter avant de saler."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Semoule complète",
+          "par": "Quinoa",
+          "note": "Retire le gluten si les autres produits conviennent"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 465,
+        "proteines_g": 38,
+        "glucides_g": 58,
+        "sucres_g": 5,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 1.8,
+        "fibres_g": 12,
+        "sodium_mg": 280,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r372-merlu-a-la-plancha-ecrase-de-feves-et-citron-confit.jpg",
+        "alt": "Merlu à la plancha, écrasé de fèves et citron confit"
+      },
+      "seo": {
+        "titre": "Merlu à la plancha, écrasé de fèves et citron confit",
+        "meta_description": "Du merlu à la plancha avec écrasé de fèves, citron confit, menthe et semoule complète.",
+        "mots_cles": [
+          "merlu",
+          "fèves",
+          "citron confit"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Écrasé de fèves et citron confit donnent au merlu une identité propre, absente des recettes recensées. Formulation à tester avant publication.",
+          "caution": "Contient poisson et gluten; citron confit salé, cuisson plancha et arêtes à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3,
+          "active_minutes": 30,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r373",
+      "slug": "haddock-poche-au-lait-d-avoine-epinards-et-millet",
+      "titre": "Haddock poché au lait d'avoine, épinards et millet",
+      "categorie": "plat",
+      "description": "Du haddock poché dans une boisson d'avoine avec épinards, millet et muscade.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 28,
+        "repos": 5,
+        "total": 53
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "pochage-doux"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "haddock-fume",
+          "quantite": 550,
+          "unite": "g",
+          "quantite_normalisee": 550,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de haddock fumé",
+          "note": "Dessalage selon l'étiquette",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "boisson-avoine-non-sucree",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'avoine non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "epinards-frais",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épinards frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "millet-decortique",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "millet décortiqué",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "muscade-moulue",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "muscade moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 450,
+          "unite": "ml",
+          "quantite_normalisee": 450,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le millet 20 à 25 minutes.",
+        "Pocher le haddock 8 à 10 minutes dans la boisson d'avoine frémissante.",
+        "Faire tomber les épinards avec l'huile et la muscade.",
+        "Vérifier cuisson et arêtes, puis servir sans ajouter de sel."
+      ],
+      "conseils": [
+        "Suivre l'étiquette pour le dessalage éventuel du haddock."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Boisson d'avoine",
+          "par": "Boisson de soja",
+          "note": "Remplace gluten par soja"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 445,
+        "proteines_g": 37,
+        "glucides_g": 52,
+        "sucres_g": 6,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.7,
+        "fibres_g": 8,
+        "sodium_mg": 720,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r373-haddock-poche-au-lait-d-avoine-epinards-et-millet.jpg",
+        "alt": "Haddock poché au lait d'avoine, épinards et millet"
+      },
+      "seo": {
+        "titre": "Haddock poché au lait d'avoine, épinards et millet",
+        "meta_description": "Du haddock poché dans une boisson d'avoine avec épinards, millet et muscade.",
+        "mots_cles": [
+          "haddock",
+          "boisson d'avoine",
+          "épinards"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le haddock et le millet remplacent les associations classiques de pommes de terre ou crème. Formulation à tester avant publication.",
+          "caution": "Contient poisson et gluten; haddock fumé très salé, dessalage, arêtes et étiquette à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.1,
+          "active_minutes": 24,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "poisson",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r374",
+      "slug": "dorade-rotie-aux-agrumes-fenouil-et-pois-chiches",
+      "titre": "Dorade rôtie aux agrumes, fenouil et pois chiches",
+      "categorie": "plat",
+      "description": "De la dorade entière rôtie aux agrumes avec fenouil, pois chiches et coriandre.",
+      "temps": {
+        "preparation": 30,
+        "cuisson": 35,
+        "repos": 10,
+        "total": 75
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "hiver",
+        "printemps"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "rotissage-entier"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "dorade-entiere",
+          "quantite": 1200,
+          "unite": "g",
+          "quantite_normalisee": 1200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "dorades entières vidées",
+          "note": "Deux poissons, écaillés",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "orange",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges",
+          "note": "En rondelles et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bulbes de fenouil",
+          "note": "En quartiers",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pois-chiches-cuits",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois chiches cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir fenouil et pois chiches huilés 18 minutes à 200 °C.",
+        "Poser les dorades, garnir d'agrumes et poursuivre 20 à 25 minutes.",
+        "Vérifier la cuisson près de l'arête centrale.",
+        "Lever les filets avec soin, retirer les arêtes et reposer 10 minutes."
+      ],
+      "conseils": [
+        "Le service d'un poisson entier exige une vérification minutieuse des arêtes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Dorade entière",
+          "par": "Filets de dorade",
+          "note": "Réduire le temps de cuisson"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur après avoir levé les filets.",
+      "nutrition_par_portion": {
+        "calories": 470,
+        "proteines_g": 39,
+        "glucides_g": 35,
+        "sucres_g": 11,
+        "lipides_g": 19,
+        "acides_gras_satures_g": 3.2,
+        "fibres_g": 9,
+        "sodium_mg": 165,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r374-dorade-rotie-aux-agrumes-fenouil-et-pois-chiches.jpg",
+        "alt": "Dorade rôtie aux agrumes, fenouil et pois chiches"
+      },
+      "seo": {
+        "titre": "Dorade rôtie aux agrumes, fenouil et pois chiches",
+        "meta_description": "De la dorade entière rôtie aux agrumes avec fenouil, pois chiches et coriandre.",
+        "mots_cles": [
+          "dorade",
+          "orange",
+          "fenouil"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les agrumes et pois chiches forment une garniture différente des poissons au fenouil déjà catalogués. Formulation à tester avant publication.",
+          "caution": "Contient poisson; nombreuses arêtes, calibre des poissons, cuisson et coût à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 3.7,
+          "active_minutes": 35,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "poisson"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r375",
+      "slug": "colin-en-croute-d-avoine-puree-de-celeri-et-cresson",
+      "titre": "Colin en croûte d'avoine, purée de céleri et cresson",
+      "categorie": "plat",
+      "description": "Du colin en croûte d'avoine avec purée de céleri-rave et cresson citronné.",
+      "temps": {
+        "preparation": 25,
+        "cuisson": 30,
+        "repos": 5,
+        "total": 60
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "pescetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "plat",
+        "poisson",
+        "cuisson-au-four"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "colin-filet",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filets de colin",
+          "note": "Sans arêtes vérifiées",
+          "categorie_courses": "meat-fish",
+          "allergenes": [
+            "poisson"
+          ]
+        },
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "Mixés grossièrement",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "celeri-rave",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "céleri-rave",
+          "note": "En cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "cresson",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cresson",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le céleri 22 minutes puis mixer avec une cuillère d'huile.",
+        "Presser l'avoine et le zeste sur les filets huilés.",
+        "Cuire 14 à 16 minutes à 190 °C.",
+        "Vérifier cuisson et arêtes puis servir avec cresson citronné."
+      ],
+      "conseils": [
+        "Vérifier la certification de l'avoine si le niveau de contamination croisée est important."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Avoine",
+          "par": "Flocons de sarrasin",
+          "note": "Retire le gluten selon le produit"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 440,
+        "proteines_g": 37,
+        "glucides_g": 45,
+        "sucres_g": 7,
+        "lipides_g": 12,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 9,
+        "sodium_mg": 125,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par ingrédients génériques divisée par quatre",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r375-colin-en-croute-d-avoine-puree-de-celeri-et-cresson.jpg",
+        "alt": "Colin en croûte d'avoine, purée de céleri et cresson"
+      },
+      "seo": {
+        "titre": "Colin en croûte d'avoine, purée de céleri et cresson",
+        "meta_description": "Du colin en croûte d'avoine avec purée de céleri-rave et cresson citronné.",
+        "mots_cles": [
+          "colin",
+          "flocons d'avoine",
+          "céleri-rave"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Croûte d'avoine et purée de céleri proposent une texture et une base inédites pour un poisson blanc. Formulation à tester avant publication.",
+          "caution": "Contient poisson, gluten et céleri; croûte, arêtes et purée à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.8,
+          "active_minutes": 30,
+          "equipment": [
+            "oven",
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "poisson",
+            "gluten",
+            "celeri"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -93,6 +93,22 @@ const EQUIPMENT_OPTIONS: Array<{ id: Equipment; label: string }> = [
   { id: "toaster", label: "Grille-pain" },
   { id: "steamer", label: "Vapeur" },
 ];
+const ALLERGEN_OPTIONS = [
+  { id: "gluten", label: "Gluten" },
+  { id: "crustaces", label: "Crustacés" },
+  { id: "oeuf", label: "Œuf" },
+  { id: "poisson", label: "Poisson" },
+  { id: "arachides", label: "Arachides" },
+  { id: "soja", label: "Soja" },
+  { id: "lait", label: "Lait" },
+  { id: "fruits-a-coque", label: "Fruits à coque" },
+  { id: "celeri", label: "Céleri" },
+  { id: "moutarde", label: "Moutarde" },
+  { id: "sesame", label: "Sésame" },
+  { id: "sulfites", label: "Sulfites" },
+  { id: "lupin", label: "Lupin" },
+  { id: "mollusques", label: "Mollusques" },
+] as const;
 const CATEGORY_LABELS: Record<IngredientCategory, string> = {
   "fruit-vegetable": "Fruits et légumes",
   grocery: "Épicerie",
@@ -150,7 +166,7 @@ function currentDayIndex(startsOn: string): number {
 }
 
 function normalizeText(value: string): string {
-  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/œ/g, "oe").replace(/æ/g, "ae").trim().toLowerCase();
 }
 
 function parseList(value: string): string[] {
@@ -367,6 +383,12 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
   const [allergies, setAllergies] = useState(initial.allergies.join(", "));
   const [excluded, setExcluded] = useState(initial.excludedIngredientIds.map((id) => ingredientNameById.get(id) ?? id).join(", "));
   const toggleEquipment = (item: Equipment) => setProfile((current) => ({ ...current, equipment: current.equipment.includes(item) ? current.equipment.filter((entry) => entry !== item) : [...current.equipment, item] }));
+  const selectedAllergies = new Set(parseList(allergies).map((item) => item.replace(/\s+/g, "-")));
+  const toggleAllergy = (id: string) => setAllergies((current) => {
+    const values = new Set(parseList(current).map((item) => item.replace(/\s+/g, "-")));
+    if (values.has(id)) values.delete(id); else values.add(id);
+    return [...values].join(", ");
+  });
   const commit = () => {
     keyboard.hide();
     onSave({ ...profile, weeklyBudget: Math.max(20, Number(budget) || DEFAULT_PROFILE.weeklyBudget), maxPrepMinutes: Math.max(5, Number(maxPrep) || DEFAULT_PROFILE.maxPrepMinutes), allergies: parseList(allergies), excludedIngredientIds: resolveExcludedIngredients(excluded) });
@@ -381,7 +403,8 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
     <section className="form-section"><h2>Mes préférences</h2><div className="choice-grid">{(Object.keys(DIET_LABELS) as DietMode[]).map((item) => <button type="button" className={profile.diet === item ? "is-selected" : ""} key={item} onClick={() => setProfile((current) => ({ ...current, diet: item }))}>{DIET_LABELS[item]}</button>)}</div>
       <label className="text-field"><span>Budget hebdomadaire (€)</span><KeyboardInput inputMode="numeric" value={budget} onChange={(event) => setBudget(event.target.value)} onBlur={keyboard.hide} /></label>
       <label className="text-field"><span>Temps maximum en cuisine (min)</span><KeyboardInput inputMode="numeric" value={maxPrep} onChange={(event) => setMaxPrep(event.target.value)} onBlur={keyboard.hide} /></label>
-      <label className="text-field"><span>Allergies</span><KeyboardInput value={allergies} placeholder="Ex. gluten, lait, soja" onChange={(event) => setAllergies(event.target.value)} onBlur={keyboard.hide} /><small>Séparez les éléments par une virgule.</small></label>
+      <fieldset className="allergen-field"><legend>Allergies et intolérances à exclure</legend><div className="allergen-grid">{ALLERGEN_OPTIONS.map((item) => <button type="button" className={selectedAllergies.has(item.id) ? "is-selected" : ""} aria-pressed={selectedAllergies.has(item.id)} key={item.id} onClick={() => toggleAllergy(item.id)}>{selectedAllergies.has(item.id) ? <CheckIcon /> : null}{item.label}</button>)}</div></fieldset>
+      <label className="text-field"><span>Autre allergie ou ingrédient à exclure</span><KeyboardInput value={allergies} placeholder="Sélectionnez ci-dessus ou saisissez un terme" onChange={(event) => setAllergies(event.target.value)} onBlur={keyboard.hide} /><small>Les 14 allergènes réglementaires sont normalisés automatiquement.</small></label>
       <label className="text-field"><span>Aliments refusés</span><KeyboardInput value={excluded} placeholder="Ex. brocoli, saumon" onChange={(event) => setExcluded(event.target.value)} onBlur={keyboard.hide} /></label>
     </section>
     <section className="form-section"><h2>Équipements</h2><div className="choice-grid">{EQUIPMENT_OPTIONS.map((item) => <button type="button" className={profile.equipment.includes(item.id) ? "is-selected" : ""} key={item.id} onClick={() => toggleEquipment(item.id)}>{profile.equipment.includes(item.id) ? <CheckIcon /> : null}{item.label}</button>)}</div></section>

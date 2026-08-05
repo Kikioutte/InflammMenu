@@ -45,6 +45,7 @@ Répartition alimentaire cible : 240 concepts végétaliens, 80 végétariens, 9
 - sucres ajoutés, sodium, graisses saturées et produits très transformés limités ;
 - techniques, bases et familles aromatiques suffisamment différentes pour éviter les variantes superficielles ;
 - titres, textes et étapes rédigés de façon originale, sans copie de recettes publiées ;
+- inspirations culinaires du monde variées — Méditerranée, Maghreb, Levant, Afrique, Inde, Asie, Amérique latine et Europe du Nord — adaptées de façon originale aux critères du catalogue, sans présenter une adaptation comme une version traditionnelle authentique ;
 - aucune promesse thérapeutique ni causalité attribuée à un ingrédient isolé.
 
 ## Contrôle d'unicité
@@ -62,3 +63,7 @@ Chaque candidat est comparé aux 50 entrées du catalogue et aux 36 recettes his
 7. Tests du catalogue, du générateur, des filtres et de la liste de courses avant chaque intégration.
 
 Les fichiers `recipes-r051-r200.json`, `recipes-r201-r350.json` et `recipes-r351-r500.json` constituent le répertoire de recherche. Ils ne doivent pas être importés directement par l'application tant que les étapes ci-dessus ne sont pas terminées.
+
+## Extension inspirée de l’Ayurveda
+
+Une collection séparée de 50 recettes, `r501` à `r550`, est cadrée dans `ayurveda-brief.md`. Elle reste strictement culinaire : aucun diagnostic de dosha, complément, extrait concentré, métal, plante médicinale ou promesse thérapeutique. Elle doit satisfaire les mêmes contrôles d’unicité, de nutrition, d’allergènes, de provenance, d’images et de générateur que la collection principale.

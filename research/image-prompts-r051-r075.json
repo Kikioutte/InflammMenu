@@ -25,153 +25,153 @@
     "titre": "Tartine de seigle aux haricots blancs, radis et aneth",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Tartine de seigle aux haricots blancs, radis et aneth\"\nSubject: one substantial slice of rustic rye bread topped with roughly mashed white beans, thin crisp radish slices, fresh dill, and a restrained squeeze of lemon; keep some whole white beans visible in the mash so the topping is identifiable\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close three-quarter view on a small cream ceramic plate, toast large and clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm and calm atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, dark rye, ivory beans, pink-red radish, fresh dill green\nConstraints: the only edible ingredients visible are rye bread, white beans, radish, dill, and lemon; realistic savory breakfast portion; no misleading garnish\nAvoid: avocado, cheese, eggs, sprouts, pepper flakes, extra leaves, seeds, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r054-tartine-seigle-haricots-blancs-radis-aneth.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r055",
     "titre": "Crêpes de pois chiches au poireau et cerfeuil",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Crêpes de pois chiches au poireau et cerfeuil\"\nSubject: two thin savory chickpea-flour crepes, softly folded on a cream plate, with tender sautéed leek visible inside and on the folds, fresh chervil leaves, a light olive-oil sheen, and a small lemon wedge; the crepes should be golden with delicate pan-browned spots\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view, crepes clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, golden chickpea crepes, pale green leek, vivid chervil\nConstraints: the only edible ingredients visible are chickpea crepes, leek, chervil, olive oil, and lemon; realistic thin-crepe texture and portion; no misleading garnish\nAvoid: cheese, eggs, yogurt sauce, salad leaves, tomatoes, seeds, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r055-crepes-pois-chiches-poireau-cerfeuil.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r056",
     "titre": "Amarante crémeuse aux cerises et amandes",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Amarante crémeuse aux cerises et amandes\"\nSubject: a cream ceramic breakfast bowl of softly cooked amaranth porridge made with almond drink and vanilla, topped with ripe halved cherries and toasted almond pieces; the tiny pearled amaranth grains remain visible in a creamy but natural texture\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead view, bowl centered and readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, pale amaranth, deep cherry red, warm toasted almond\nConstraints: the only edible ingredients visible are amaranth, cherries, almonds, vanilla, and the almond-drink porridge; realistic breakfast portion; no misleading garnish\nAvoid: berries other than cherries, granola, seeds, coconut, syrup, honey, mint, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, clutter",
     "slug_fichier": "r056-amarante-cremeuse-cerises-amandes.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r057",
     "titre": "Sarrasin trempé aux prunes, sésame et vanille",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Sarrasin trempé aux prunes, sésame et vanille\"\nSubject: a cream ceramic bowl of soaked buckwheat blended only coarsely with soy drink and vanilla, retaining a visibly grainy texture, topped with fresh plum wedges and a restrained scatter of sesame seeds\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead view, bowl clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, earthy buckwheat beige, plum purple and rose, pale sesame\nConstraints: show only buckwheat, plums, sesame, vanilla, and the soy-drink mixture as edible elements; the buckwheat must not look like oatmeal; realistic portion; no misleading garnish\nAvoid: berries, nuts, granola, coconut, mint, syrup, honey, flowers, text, logo, watermark, hands, people, utensils, plastic-looking fruit, excessive gloss, clutter",
     "slug_fichier": "r057-sarrasin-trempe-prunes-sesame-vanille.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r058",
     "titre": "Avoine salée à la courgette, basilic et œuf mollet",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Avoine salée à la courgette, basilic et œuf mollet\"\nSubject: a shallow cream ceramic bowl of creamy savory oats with tender sautéed courgette pieces, topped by one halved soft-boiled egg with a naturally jammy yolk, fresh basil leaves, and a light olive-oil sheen\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view, egg and courgette clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, fresh warm atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, warm beige oats, fresh courgette and basil greens, natural golden yolk\nConstraints: the only edible ingredients visible are oats, courgette, basil, egg, and olive oil; exactly one realistic soft-boiled egg; realistic savory breakfast portion; no misleading garnish\nAvoid: cheese, tomato, mushrooms, chili, seeds, toast, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r058-avoine-salee-courgette-basilic-oeuf-mollet.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r059",
     "titre": "Chia au mango, citron vert et graines de chanvre",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Chia au mango, citron vert et graines de chanvre\"\nSubject: a small cream ceramic bowl of chilled chia pudding made with soy drink, topped with ripe mango cubes, hemp seeds, and a small lime wedge; the pudding should show a natural hydrated chia texture and a modest breakfast portion\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead view, bowl clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, fresh calm atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, pale chia pudding, vivid mango yellow-orange, natural lime green\nConstraints: the only edible ingredients visible are chia seeds, mango, lime, hemp seeds, and the soy-drink pudding; realistic chilled texture; no misleading garnish\nAvoid: coconut, berries, granola, mint, syrup, honey, flowers, text, logo, watermark, hands, people, utensils, plastic-looking fruit, excessive gloss, clutter",
     "slug_fichier": "r059-chia-mangue-citron-vert-graines-chanvre.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r060",
     "titre": "Orge crémeuse à la poire, noix et muscade",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Orge crémeuse à la poire, noix et muscade\"\nSubject: a cream ceramic bowl of slowly cooked whole barley in oat drink, with recognizable plump barley grains, tender pear slices, walnut pieces, and a very light dusting of nutmeg; the result resembles a rustic breakfast rice pudding but clearly uses barley\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view, bowl clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm autumn atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, pale barley, soft pear gold, warm walnut brown\nConstraints: show only barley, pear, walnuts, nutmeg, and the oat-drink mixture as edible elements; realistic portion and slow-cooked texture; no misleading garnish\nAvoid: cinnamon sticks, berries, raisins, syrup, honey, cream, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r060-orge-cremeuse-poire-noix-muscade.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r061",
     "titre": "Crêpes de teff aux mûres et yaourt nature",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Crêpes de teff aux mûres et yaourt nature\"\nSubject: a small stack of thin dark teff crepes with naturally malted brown surfaces, topped with fresh blackberries and a restrained spoonful of plain yogurt, with a small lemon wedge alongside; the crepes should look tender and pan-cooked, not like thick American pancakes\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close three-quarter view on a cream ceramic plate, crepes clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, earthy teff brown, deep blackberry purple, ivory yogurt\nConstraints: the only edible ingredients visible are teff crepes, blackberries, plain yogurt, egg within the crepes, and lemon; realistic breakfast portion; no misleading garnish\nAvoid: syrup, honey, powdered sugar, mint, extra berries, nuts, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r061-crepes-teff-mures-yaourt-nature.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r062",
     "titre": "Tofu brouillé au fenouil, tomate et olives",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Tofu brouillé au fenouil, tomate et olives\"\nSubject: a shallow cream ceramic bowl of softly scrambled tofu with thin sautéed fennel slices, juicy cooked tomato pieces, whole and halved olives, and oregano; retain a crumbly moist tofu texture and lightly cooked vegetables\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view, ingredients clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm Mediterranean morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, pale tofu, red tomato, green fennel, dark olives\nConstraints: show only tofu, fennel, tomato, olives, and oregano as edible elements; realistic savory breakfast portion and pan-cooked result; no misleading garnish\nAvoid: eggs, turmeric, bread, avocado, cheese, peppers, salad leaves, seeds, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r062-tofu-brouille-fenouil-tomate-olives.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r063",
     "titre": "Seigle grillé à la ricotta, poire et noix",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Seigle grillé à la ricotta, poire et noix\"\nSubject: one thick slice of toasted rustic rye bread spread with ricotta, topped with fresh pear slices, walnut pieces, and a few small thyme leaves; the toast should show a crisp edge while the ricotta remains naturally soft\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close three-quarter view on a small cream ceramic plate, toast large and readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm autumn atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, dark rye, ivory ricotta, pale green-gold pear, walnut brown\nConstraints: the only edible ingredients visible are rye bread, ricotta, pear, walnuts, and thyme; realistic portion; simple sweet-savory presentation; no misleading garnish\nAvoid: honey, syrup, berries, cinnamon, seeds, extra leaves, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r063-seigle-grille-ricotta-poire-noix.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r064",
     "titre": "Quinoa matinal à la carotte, orange et gingembre",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Quinoa matinal à la carotte, orange et gingembre\"\nSubject: a cream ceramic breakfast bowl of softly cooked quinoa mixed with fine grated carrot and ginger, topped with fresh orange segments and toasted sunflower seeds; individual quinoa grains and carrot strands remain visible, creating a warm carrot-cake-inspired bowl without frosting\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead view, bowl clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm bright morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, ivory quinoa, vivid carrot and orange, natural sunflower-seed beige\nConstraints: show only quinoa, carrot, orange, ginger, and sunflower seeds as edible elements; realistic breakfast portion; no misleading garnish\nAvoid: cream, yogurt, frosting, raisins, nuts, cinnamon, coconut, syrup, honey, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, clutter",
     "slug_fichier": "r064-quinoa-matinal-carotte-orange-gingembre.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r065",
     "titre": "Carrés de millet à la pomme et au sésame",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Carrés de millet à la pomme et au sésame\"\nSubject: three neat but handmade baked squares of pressed cooked millet, soy drink, apple pieces, sesame, and cinnamon; the surfaces are lightly golden, with visible millet grains, small apple pieces, and sesame seeds, showing a firm portable texture rather than cake crumb\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close three-quarter view on a cream ceramic plate, squares clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, pale golden millet, soft apple tones, toasted sesame\nConstraints: the only edible ingredients visible are millet, apple, sesame, cinnamon, and the baked soy-drink mixture; realistic portion and baked texture; no misleading garnish\nAvoid: icing, syrup, honey, powdered sugar, berries, nuts, cream, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, perfect factory geometry, clutter",
     "slug_fichier": "r065-carres-millet-pomme-sesame.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r066",
     "titre": "Gaufres de pois chiches aux épinards et tomate",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Gaufres de pois chiches aux épinards et tomate\"\nSubject: two savory chickpea-flour waffles with crisp golden grid edges, visibly containing chopped spinach and small tomato pieces, seasoned with cumin and a light olive-oil sheen; the waffles should look freshly cooked and naturally handmade\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view on a cream ceramic plate, waffle pattern clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm fresh atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, golden chickpea batter, spinach green, natural tomato red\nConstraints: the only edible ingredients visible are chickpea-flour waffles, spinach, tomato, cumin, and olive oil; realistic savory breakfast portion; no misleading garnish\nAvoid: eggs, cheese, yogurt, avocado, salad leaves, extra herbs, syrup, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, impossible waffle geometry, clutter",
     "slug_fichier": "r066-gaufres-pois-chiches-epinards-tomate.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r067",
     "titre": "Riz complet au lait de soja, poire et safran",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Riz complet au lait de soja, poire et safran\"\nSubject: a cream ceramic bowl of slowly cooked brown rice pudding made with soy drink, naturally tinted pale gold with saffron, topped with tender pear slices and pistachio pieces; brown rice grains remain visible in a creamy texture\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead view, bowl clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, pale saffron gold, pear cream, pistachio green\nConstraints: show only brown rice, soy drink, pear, saffron, and pistachios as edible elements; realistic breakfast portion and slow-cooked texture; no misleading garnish\nAvoid: rose petals, cinnamon, cardamom, berries, syrup, honey, cream, mint, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, clutter",
     "slug_fichier": "r067-riz-complet-lait-soja-poire-safran.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r068",
     "titre": "Bircher à l’abricot, carotte et graines de tournesol",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Bircher à l’abricot, carotte et graines de tournesol\"\nSubject: a cream ceramic bowl of chilled bircher oats bound with plain yogurt, mixed with visible finely grated carrot, topped with ripe apricot pieces and toasted sunflower seeds; the texture should be moist and rested, with oat flakes still recognizable\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead view, bowl clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, fresh calm morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, pale oats and yogurt, warm apricot orange, bright carrot, toasted sunflower seeds\nConstraints: the only edible ingredients visible are oats, apricot, carrot, sunflower seeds, and plain yogurt; realistic chilled breakfast portion; no misleading garnish\nAvoid: apple, raisins, nuts, berries, coconut, syrup, honey, mint, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, clutter",
     "slug_fichier": "r068-bircher-abricot-carotte-graines-tournesol.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r069",
     "titre": "Galettes de sarrasin à la pomme et aux noix",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Galettes de sarrasin à la pomme et aux noix\"\nSubject: three small thick buckwheat galettes, pan-cooked with rustic browned surfaces, with visible apple pieces integrated into the batter and walnut pieces on and within the galettes, lightly marked by cinnamon; the texture should be substantial and handmade rather than thin crepes\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close three-quarter view on a cream ceramic plate, galettes clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm autumn morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, earthy buckwheat brown, pale apple, toasted walnut\nConstraints: the only edible ingredients visible are buckwheat galettes, apple, walnuts, egg within the batter, and cinnamon; realistic breakfast portion and pan-cooked texture; no misleading garnish\nAvoid: syrup, honey, powdered sugar, cream, yogurt, extra fruit, mint, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, perfect factory geometry, clutter",
     "slug_fichier": "r069-galettes-sarrasin-pomme-noix.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r070",
     "titre": "Patate douce rôtie au yaourt, grenade et cumin",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Patate douce rôtie au yaourt, grenade et cumin\"\nSubject: one roasted sweet potato split lengthwise on a cream ceramic plate, its orange flesh caramelized at the edges and topped with plain yogurt, pomegranate arils, pumpkin seeds, and a restrained dusting of cumin\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view, whole stuffed sweet potato clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, rich sweet-potato orange, ivory yogurt, ruby pomegranate, deep green pumpkin seeds\nConstraints: show only sweet potato, plain yogurt, pomegranate, cumin, and pumpkin seeds as edible elements; realistic savory breakfast portion and roasted texture; no misleading garnish\nAvoid: herbs, salad leaves, chickpeas, tahini, cheese, chili, extra seeds, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r070-patate-douce-rotie-yaourt-grenade-cumin.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r071",
     "titre": "Salade matinale d’agrumes, fenouil et pistaches",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Salade matinale d’agrumes, fenouil et pistaches\"\nSubject: a shallow cream ceramic bowl of neatly cut orange and grapefruit segments with very thin fresh fennel slices, pistachio pieces, and mint leaves, lightly settled as after a short marinade; preserve the natural juicy texture without excess liquid\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead view, citrus and fennel pattern clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, fresh bright winter-morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, orange, grapefruit coral, fennel white-green, pistachio and mint green\nConstraints: the only edible ingredients visible are orange, grapefruit, fennel, pistachios, and mint; realistic breakfast portion; simple Sicilian-inspired presentation; no misleading garnish\nAvoid: yogurt, honey, syrup, berries, pomegranate, olives, flowers, text, logo, watermark, hands, people, utensils, plastic-looking fruit, excessive gloss, clutter",
     "slug_fichier": "r071-salade-matinale-agrumes-fenouil-pistaches.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r072",
     "titre": "Chia au cacao, cerises et noisettes",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Chia au cacao, cerises et noisettes\"\nSubject: a small cream ceramic bowl of chilled cocoa chia pudding made with oat drink, topped with fresh halved cherries and toasted hazelnut pieces; the pudding should have a naturally hydrated chia texture and a sober dark chocolate color\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view, bowl clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, deep cocoa brown, cherry red, warm hazelnut\nConstraints: show only chia seeds, cherries, unsweetened cocoa, hazelnuts, and the oat-drink pudding as edible elements; realistic breakfast portion; no misleading garnish\nAvoid: chocolate chips, cream, coconut, granola, berries other than cherries, mint, syrup, honey, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r072-chia-cacao-cerises-noisettes.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r073",
     "titre": "Arepa de maïs aux haricots noirs et avocat",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Arepa de maïs aux haricots noirs et avocat\"\nSubject: one golden pan-cooked corn arepa split open and generously filled with whole black beans, avocado slices, diced tomato, and fresh coriander; the thick corn cake should show a crisp exterior and soft interior while holding the filling naturally\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close three-quarter view on a cream ceramic plate, open filling clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm fresh atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, golden corn, black beans, avocado green, tomato red\nConstraints: the only edible ingredients visible are corn arepa, black beans, avocado, tomato, and coriander; realistic complete breakfast portion; no misleading garnish\nAvoid: cheese, egg, onion, lime, chili, sour cream, salad leaves, extra sauce, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, impossible geometry, clutter",
     "slug_fichier": "r073-arepa-mais-haricots-noirs-avocat.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r074",
     "titre": "Avoine salée aux champignons, chou kale et thym",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Avoine salée aux champignons, chou kale et thym\"\nSubject: a shallow cream ceramic bowl of creamy savory oats topped with browned sautéed mushroom slices, tender dark-green kale pieces, and small thyme leaves, finished with a restrained olive-oil sheen; keep the oats creamy and the mushroom sear natural\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view, mushroom and kale topping clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm woodland-inspired atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, beige oats, earthy mushroom brown, deep kale green\nConstraints: show only oats, mushrooms, kale, thyme, and olive oil as edible elements; realistic savory breakfast portion and cooked textures; no misleading garnish\nAvoid: egg, cheese, garlic, onion, toast, seeds, chili, extra herbs, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, clutter",
     "slug_fichier": "r074-avoine-salee-champignons-chou-kale-thym.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r075",
     "titre": "Yaourt à la nectarine, lin et amandes grillées",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Yaourt à la nectarine, lin et amandes grillées\"\nSubject: a cream ceramic breakfast bowl of plain yogurt topped with ripe nectarine wedges, ground and whole flax seeds, toasted almond pieces, and a few small fresh basil leaves; keep the yogurt natural and the fruit juicy but not glossy\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead view, bowl clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, fresh calm summer-morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, ivory yogurt, warm coral-yellow nectarine, toasted almond, basil green\nConstraints: the only edible ingredients visible are plain yogurt, nectarine, flax seeds, almonds, and basil; realistic breakfast portion; simple appetizing presentation; no misleading garnish\nAvoid: granola, honey, syrup, berries, coconut, mint, flowers, text, logo, watermark, hands, people, utensils, plastic-looking fruit, excessive gloss, clutter",
     "slug_fichier": "r075-yaourt-nectarine-lin-amandes-grillees.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   }
 ]

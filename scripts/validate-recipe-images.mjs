@@ -14,11 +14,24 @@ for (const name of names.filter((entry) => /^pilot-r\d{3}-r\d{3}\.draft\.json$/.
   for (const recipe of catalogue.recipes) recipes.set(recipe.id, recipe);
 }
 
-let validated = 0;
+const requiredIds = new Set();
+for (const name of names.filter((entry) => /^pilot-r\d{3}-r\d{3}\.final\.json$/.test(entry))) {
+  const catalogue = JSON.parse(await readFile(new URL(name, researchUrl), "utf8"));
+  for (const recipe of catalogue.recipes) {
+    recipes.set(recipe.id, recipe);
+    requiredIds.add(recipe.id);
+  }
+}
+
 for (const name of names.filter((entry) => /^image-prompts-r\d{3}-r\d{3}\.json$/.test(entry))) {
   const document = JSON.parse(await readFile(new URL(name, researchUrl), "utf8"));
   const prompts = document.prompts ?? document;
-  for (const prompt of prompts.filter((entry) => entry.status === "generated_inspected_optimized")) {
+  for (const prompt of prompts.filter((entry) => entry.status === "generated_inspected_optimized")) requiredIds.add(prompt.id);
+}
+
+let validated = 0;
+for (const id of [...requiredIds].sort()) {
+    const prompt = { id };
     const recipe = recipes.get(prompt.id);
     assert.ok(recipe, `${prompt.id}: recette introuvable`);
     const imageUrl = new URL(recipe.image.nom_fichier, publicUrl);
@@ -28,7 +41,6 @@ for (const name of names.filter((entry) => /^image-prompts-r\d{3}-r\d{3}\.json$/
     assert.match(stdout, /pixelWidth: 900/, `${prompt.id}: largeur différente de 900 px`);
     assert.match(stdout, /pixelHeight: 900/, `${prompt.id}: hauteur différente de 900 px`);
     validated += 1;
-  }
 }
 
-console.log(`${validated} images de recettes inspectées, optimisées et valides.`);
+console.log(`${validated} images requises par les lots finaux ou marquées inspectées sont optimisées et valides.`);

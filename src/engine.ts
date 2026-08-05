@@ -50,9 +50,31 @@ function normalize(value: string): string {
   return value
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/æ/g, "ae")
     .trim()
     .toLowerCase()
     .replace(/[ _]+/g, "-");
+}
+
+const ALLERGEN_ALIASES: Readonly<Record<string, string>> = {
+  cacahuete: "arachides",
+  cacahuetes: "arachides",
+  crustace: "crustaces",
+  crustaces: "crustaces",
+  lactose: "lait",
+  laitages: "lait",
+  noix: "fruits-a-coque",
+  noisette: "fruits-a-coque",
+  noisettes: "fruits-a-coque",
+  amande: "fruits-a-coque",
+  amandes: "fruits-a-coque",
+  oeufs: "oeuf",
+};
+
+function canonicalAllergen(value: string): string {
+  const normalized = normalize(value);
+  return ALLERGEN_ALIASES[normalized] ?? normalized;
 }
 
 function hasTag(recipe: Recipe, candidates: readonly string[]): boolean {
@@ -96,7 +118,7 @@ function requiredMealTypes(mealsPerDay: UserProfile["mealsPerDay"]): readonly Me
 }
 
 function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
-  const allergies = new Set(profile.allergies.map(normalize));
+  const allergies = new Set(profile.allergies.map(canonicalAllergen));
   const excluded = new Set(profile.excludedIngredientIds.map(normalize));
   const recipeAllergens = [
     ...recipe.allergens,
@@ -107,7 +129,7 @@ function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
     recipe.diet.includes(profile.diet) &&
     recipe.prepMinutes <= profile.maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
-    !recipeAllergens.some((allergen) => allergies.has(normalize(allergen))) &&
+    !recipeAllergens.some((allergen) => allergies.has(canonicalAllergen(allergen))) &&
     !recipe.ingredients.some((ingredient) => excluded.has(normalize(ingredient.id)))
   );
 }

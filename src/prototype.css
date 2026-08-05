@@ -252,6 +252,12 @@ button { -webkit-tap-highlight-color: transparent; }
 .choice-row, .choice-grid { display: flex; flex-wrap: wrap; gap: 8px; }
 .choice-row button, .choice-grid button, .reason-chip { min-height: 37px; border: 1px solid var(--line); border-radius: 20px; background: var(--white); color: var(--ink); padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; }
 .choice-row button.is-selected, .choice-grid button.is-selected, .reason-chip.is-selected { background: var(--sage); color: #fff; border-color: var(--sage); }
+.allergen-field { margin: 13px 0 0; padding: 0 0 13px; border: 0; border-bottom: 1px solid var(--line); }
+.allergen-field legend { margin-bottom: 9px; color: var(--ink); font-size: 12px; font-weight: 500; }
+.allergen-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+.allergen-grid button { min-height: 35px; padding: 0 11px; border: 1px solid var(--line); border-radius: 18px; background: var(--white); color: var(--ink); display: inline-flex; align-items: center; gap: 5px; font-size: 10px; }
+.allergen-grid button.is-selected { border-color: var(--terracotta); background: #f6e6dd; color: #75442f; }
+.allergen-grid button svg { width: 13px; height: 13px; }
 .field-summary { min-height: 50px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--line); font-size: 12px; }
 .field-summary strong { color: var(--sage); font-size: 11px; }
 .text-field { display: flex; flex-direction: column; gap: 7px; padding: 13px 0; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 12px; font-weight: 500; }
