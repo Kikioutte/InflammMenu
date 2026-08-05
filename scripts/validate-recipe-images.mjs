@@ -4,6 +4,7 @@ import { readdir, readFile, stat } from "node:fs/promises";
 const presentOnly = process.argv.includes("--present-only");
 const researchUrl = new URL("../research/", import.meta.url);
 const publicUrl = new URL("../public/assets/recipes/generated/", import.meta.url);
+const manifestUrl = new URL("../src/data/generated-recipe-images.json", import.meta.url);
 const names = await readdir(researchUrl);
 
 const recipes = new Map();
@@ -32,6 +33,8 @@ const expectedByFilename = new Map(
 );
 const imageNames = (await readdir(publicUrl)).filter((name) => /^r\d{3}-.+\.jpg$/.test(name));
 const presentNames = new Set(imageNames);
+const manifestNames = JSON.parse(await readFile(manifestUrl, "utf8"));
+assert.deepEqual(manifestNames, [...imageNames].sort(), "Le manifeste des images disponibles doit être régénéré");
 
 for (const recipe of recipes.values()) {
   const expectedStatus = presentNames.has(recipe.image.nom_fichier)

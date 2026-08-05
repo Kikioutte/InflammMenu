@@ -1,4 +1,5 @@
 import catalogueSource from "./data/recettes-anti-inflammatoires.json";
+import generatedRecipeImages from "./data/generated-recipe-images.json";
 import type {
   DietMode,
   Equipment,
@@ -118,6 +119,8 @@ export const DUPLICATE_CATALOGUE_RECIPES: Readonly<Record<string, string>> = Obj
 export const CATALOGUE_RECIPES = CATALOGUE.recipes.filter(
   (recipe) => !recipe.app.duplicate_of,
 );
+const GENERATED_RECIPE_IMAGES = new Set<string>(generatedRecipeImages);
+const RECIPE_IMAGE_PLACEHOLDER = "/assets/recipe-placeholder.svg";
 
 export function reviewFor(recipe: CatalogueRecipe): CatalogueRecipeReview {
   return recipe.app.review;
@@ -159,7 +162,9 @@ function seasonsFor(recipe: CatalogueRecipe): readonly Season[] {
 export function catalogueImageFor(recipe: CatalogueRecipe): string {
   const numericId = Number.parseInt(recipe.id.slice(1), 10);
   if (numericId >= 51 && recipe.image.nom_fichier) {
-    return `/assets/recipes/generated/${recipe.image.nom_fichier}`;
+    return GENERATED_RECIPE_IMAGES.has(recipe.image.nom_fichier)
+      ? `/assets/recipes/generated/${recipe.image.nom_fichier}`
+      : RECIPE_IMAGE_PLACEHOLDER;
   }
   const title = normalize(recipe.titre);
   if (title.includes("crevette")) return "/assets/inflamm-hero-bowl.png";
