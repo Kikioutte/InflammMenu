@@ -7,6 +7,12 @@
 - The published InflammMenu experience is a responsive web/PWA surface. Do not wrap the production app in `PhoneFrame`, show a device picker, render an iPhone/Pixel bezel, or display simulated status-bar, home-indicator, cursor, or keyboard chrome.
 - Keep the phone runtime available only for its dedicated runtime fixtures and tests. Production must remain full-width on mobile and use a centered responsive web canvas on larger screens.
 
+### Reviewed recipe catalogue
+
+- The imported 42-recipe catalogue must retain one explicit editorial review per recipe in `src/catalog.ts`. Do not present the source `score_anti_inflammatoire` as a scientific or medical measurement.
+- Describe compatibility at the level of the overall Mediterranean-style dietary pattern. Do not render the source mechanism text as proof that an isolated ingredient prevents or treats inflammation.
+- Keep visible cautions for concentrated turmeric/piperine preparations, seaweed/iodine, fermentation safety, high-sodium ingredients, coconut-rich recipes, and concentrated sweet snacks. Preserve the medical disclaimer and the official source links in the information screen.
+
 In ChatGPT Work Mode, run `sites-preview start "$PWD"`, open `http://terminal.local:4173/` in the cloud browser, and verify the rendered app and its primary interactions. Keep that preview open and tell the user to inspect it in the cloud browser; do not present the local URL as a user-facing chat link. In Codex Desktop, run the local server yourself, open the preview in the in-app browser, and provide the clickable local URL. Do not deploy to Sites unless the user explicitly asks to share, publish, or deploy. Do not give the user server-start instructions when you can run it.
 
 Before planning or implementing any mobile-app change, read this `AGENTS.md` in full. It is the source of truth for the template's runtime and component guidance.

@@ -11,6 +11,7 @@ import {
   HeartFilledIcon,
   HeartIcon,
   HomeIcon,
+  MagnifyingGlassIcon,
   MinusIcon,
   PersonIcon,
   PlusIcon,
@@ -48,6 +49,14 @@ import {
   type WeeklyPlan,
 } from "./domain";
 import { RECIPES } from "./recipes";
+import {
+  CATALOGUE,
+  CATALOGUE_CATEGORIES,
+  CATALOGUE_RECIPES,
+  catalogueCategoryName,
+  reviewFor,
+  type CatalogueRecipe,
+} from "./catalog";
 import {
   DEFAULT_APP_STATE,
   loadAppState,
@@ -167,6 +176,13 @@ function displayQuantity(quantity: number, unit: IngredientUnit): string {
     c_cafe: "c. à café",
   };
   return `${rounded} ${units[unit]}`;
+}
+
+function displayCatalogueQuantity(quantity: number, unit: string): string {
+  const rounded = Number.isInteger(quantity)
+    ? String(quantity)
+    : quantity.toFixed(1).replace(".0", "").replace(".", ",");
+  return `${rounded} ${unit}`.trim();
 }
 
 function makePlan(profile: UserProfile, seed: string | number = Date.now()): WeeklyPlan {
@@ -311,14 +327,29 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, onToggleChecked, on
   );
 }
 
-function FavoritesView({ favoriteIds, history, onOpenRecipe }: { favoriteIds: string[]; history: WeeklyPlan[]; onOpenRecipe: (recipe: Recipe) => void }) {
-  const [mode, setMode] = useState<"favorites" | "history">("favorites");
+function FavoritesView({ favoriteIds, history, onOpenRecipe, onOpenCatalogue }: { favoriteIds: string[]; history: WeeklyPlan[]; onOpenRecipe: (recipe: Recipe) => void; onOpenCatalogue: (recipe: CatalogueRecipe) => void }) {
+  const [mode, setMode] = useState<"favorites" | "catalogue" | "history">("favorites");
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("all");
   const favoriteRecipes = favoriteIds.map((id) => recipeById.get(id)).filter((item): item is Recipe => Boolean(item));
+  const normalizedQuery = normalizeText(query);
+  const catalogueRecipes = CATALOGUE_RECIPES.filter((recipe) => {
+    if (category !== "all" && recipe.categorie !== category) return false;
+    if (!normalizedQuery) return true;
+    const searchable = normalizeText(`${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")} ${recipe.tags.join(" ")}`);
+    return searchable.includes(normalizedQuery);
+  });
   return (
     <main className="page-content favorites-page" data-testid="favorites-view">
-      <div className="page-heading"><span className="eyebrow">Ma bibliothèque</span><h1>Recettes</h1></div>
-      <div className="segmented-control" role="tablist" aria-label="Favoris et historique"><button role="tab" aria-selected={mode === "favorites"} className={mode === "favorites" ? "is-selected" : ""} onClick={() => setMode("favorites")}>Favoris</button><button role="tab" aria-selected={mode === "history"} className={mode === "history" ? "is-selected" : ""} onClick={() => setMode("history")}>Historique</button></div>
-      {mode === "favorites" ? <div className="favorite-list">{favoriteRecipes.length ? favoriteRecipes.map((recipe) => <button type="button" className="favorite-card" key={recipe.id} onClick={() => onOpenRecipe(recipe)}><img src={recipe.image} alt="" /><span><small>{recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</small><strong>{recipe.title}</strong><em>{recipe.prepMinutes} min · {recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</em></span><HeartFilledIcon /></button>) : <div className="empty-day"><HeartIcon /><h3>Aucun favori</h3><p>Ajoutez une recette depuis sa fiche pour la retrouver ici.</p></div>}</div> : <div className="history-list">{history.length ? history.map((plan) => <article className="history-card" key={plan.id}><span><small>Générée le {new Date(plan.generatedAt).toLocaleDateString("fr-FR")}</small><strong>{formatWeekRange(plan.startsOn)}</strong></span><em>{plan.meals.length} repas · {plan.estimatedCost.toFixed(0)} € estimés</em></article>) : <div className="empty-day"><ArchiveIcon /><h3>Aucun historique</h3><p>Vos anciennes semaines seront conservées sur cet appareil.</p></div>}</div>}
+      <div className="page-heading"><span className="eyebrow">Ma bibliothèque</span><h1>Recettes</h1><p>Un catalogue culinaire relu recette par recette, en complément de vos favoris.</p></div>
+      <div className="segmented-control segmented-control--three" role="tablist" aria-label="Catalogue, favoris et historique"><button role="tab" aria-selected={mode === "favorites"} className={mode === "favorites" ? "is-selected" : ""} onClick={() => setMode("favorites")}>Favoris</button><button role="tab" aria-selected={mode === "catalogue"} className={mode === "catalogue" ? "is-selected" : ""} onClick={() => setMode("catalogue")}>Catalogue</button><button role="tab" aria-selected={mode === "history"} className={mode === "history" ? "is-selected" : ""} onClick={() => setMode("history")}>Historique</button></div>
+      {mode === "favorites" ? <div className="favorite-list">{favoriteRecipes.length ? favoriteRecipes.map((recipe) => <button type="button" className="favorite-card" key={recipe.id} onClick={() => onOpenRecipe(recipe)}><img src={recipe.image} alt="" /><span><small>{recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</small><strong>{recipe.title}</strong><em>{recipe.prepMinutes} min · {recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</em></span><HeartFilledIcon /></button>) : <div className="empty-day"><HeartIcon /><h3>Aucun favori</h3><p>Ajoutez une recette depuis sa fiche pour la retrouver ici.</p></div>}</div> : mode === "catalogue" ? <section className="catalogue-browser" aria-label="Catalogue vérifié">
+        <div className="catalogue-method"><strong>{CATALOGUE_RECIPES.length} recettes vérifiées</strong><p>La cohérence est évaluée sur le profil global de la recette. Aucun aliment isolé n'est présenté comme un traitement.</p></div>
+        <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher une recette</span><KeyboardInput value={query} placeholder="Recette ou ingrédient" onChange={(event) => setQuery(event.target.value)} /></label>
+        <Carousel ariaLabel="Filtrer les catégories" className="catalogue-filters" contentClassName="catalogue-filters__track"><button className={category === "all" ? "is-selected" : ""} onClick={() => setCategory("all")}>Toutes</button>{CATALOGUE_CATEGORIES.map((item) => <button key={item.id} className={category === item.id ? "is-selected" : ""} onClick={() => setCategory(item.id)}>{item.nom}</button>)}</Carousel>
+        <p className="catalogue-count">{catalogueRecipes.length} résultat{catalogueRecipes.length > 1 ? "s" : ""}</p>
+        <div className="catalogue-list">{catalogueRecipes.map((recipe) => { const review = reviewFor(recipe); return <button type="button" className="catalogue-card" key={recipe.id} onClick={() => onOpenCatalogue(recipe)}><span className={`catalogue-card__status is-${review.status}`}>{review.status === "validated" ? "Profil cohérent" : "Avec repères"}</span><small>{catalogueCategoryName(recipe.categorie)} · {recipe.temps.total} min</small><strong>{recipe.titre}</strong><p>{review.summary}</p><span className="catalogue-card__meta">{recipe.regimes.slice(0, 2).map((item) => item.replaceAll("-", " ")).join(" · ")}<ChevronRightIcon /></span></button>; })}</div>
+      </section> : <div className="history-list">{history.length ? history.map((plan) => <article className="history-card" key={plan.id}><span><small>Générée le {new Date(plan.generatedAt).toLocaleDateString("fr-FR")}</small><strong>{formatWeekRange(plan.startsOn)}</strong></span><em>{plan.meals.length} repas · {plan.estimatedCost.toFixed(0)} € estimés</em></article>) : <div className="empty-day"><ArchiveIcon /><h3>Aucun historique</h3><p>Vos anciennes semaines seront conservées sur cet appareil.</p></div>}</div>}
     </main>
   );
 }
@@ -365,12 +396,17 @@ function InformationView() {
     <section className="information-card"><h2>Génération locale</h2><p>Les semaines sont composées directement sur votre appareil à partir de règles déterministes, de filtres et d’une base de recettes intégrée.</p></section>
     <section className="information-card"><h2>Confidentialité</h2><p>Votre prénom, vos préférences, vos menus, vos favoris et votre liste de courses sont enregistrés localement sur cet appareil. Cette V1 ne crée pas de compte et ne transmet pas ces données à un serveur.</p><p>La suppression des données du site dans les réglages du navigateur efface ces informations locales.</p></section>
     <section className="information-card information-card--warning"><h2>Avertissement santé</h2><p>Inflamm’Menu est un outil d’organisation alimentaire et ne remplace pas l’avis d’un médecin, d’un diététicien ou d’un autre professionnel de santé. En cas d’allergie sévère, de pathologie, de grossesse ou de régime prescrit, demandez un avis professionnel.</p></section>
+    <section className="information-card"><h2>42 recettes relues individuellement</h2><p>Chaque recette importée a été contrôlée selon son profil alimentaire global : place des végétaux, fibres, céréales complètes, légumineuses, poissons, graisses insaturées, sucres ajoutés, sodium et graisses saturées.</p><p>Les recettes contenant notamment beaucoup de coco, des préparations concentrées au curcuma, des algues ou davantage de sucre sont conservées avec des repères explicites. L'indice numérique du fichier source reste éditorial et n'est pas présenté comme une mesure médicale.</p></section>
     <section className="information-card"><h2>Estimations</h2><p>Les prix, calories, protéines, fibres et quantités sont des estimations indicatives. Ils peuvent varier selon les produits, les marques, les saisons, les magasins et la préparation réelle.</p></section>
     <section className="information-card official-sources"><h2>Sources officielles de référence</h2><p>Ces liens permettent de consulter les repères publics qui orientent le contenu éditorial de l’application.</p>
       <a href="https://ciqual.anses.fr/cms/fr/la-table-ciqual-2025" target="_blank" rel="noreferrer"><span><strong>Table Ciqual 2025 — ANSES</strong><small>Composition nutritionnelle des aliments</small></span><ChevronRightIcon /></a>
       <a href="https://www.santepubliquefrance.fr/nutrition-et-activite-physique/rapportsynthese/recommandations-relatives-a-lalimentation-a-lactivite-physique-et-a-la-sedentarite-pour-les-adultes" target="_blank" rel="noreferrer"><span><strong>Santé publique France</strong><small>Recommandations pour les adultes</small></span><ChevronRightIcon /></a>
+      <a href="https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/anti-inflammatory-diet/" target="_blank" rel="noreferrer"><span><strong>Harvard — The Nutrition Source</strong><small>Alimentation anti-inflammatoire et limites des preuves</small></span><ChevronRightIcon /></a>
+      <a href="https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet" target="_blank" rel="noreferrer"><span><strong>American Heart Association</strong><small>Repères du modèle méditerranéen</small></span><ChevronRightIcon /></a>
+      <a href="https://www.anses.fr/fr/content/des-effets-indesirables-lies-la-consommation-de-complements-alimentaires-contenant-du" target="_blank" rel="noreferrer"><span><strong>ANSES — Curcuma</strong><small>Précautions et interactions</small></span><ChevronRightIcon /></a>
+      <a href="https://www.anses.fr/fr/content/consommation-dalgues-rester-vigilant-sur-le-risque-dexces-dapport-en-iode" target="_blank" rel="noreferrer"><span><strong>ANSES — Algues et iode</strong><small>Populations à risque et consommation régulière</small></span><ChevronRightIcon /></a>
     </section>
-    <p className="information-footer">Inflamm’Menu · Prototype local V1</p>
+    <p className="information-footer">Catalogue culinaire sous {CATALOGUE.meta.licence}</p>
   </main></MobileScroll>;
 }
 
@@ -394,12 +430,36 @@ function RecipeView({ recipe, planned, favorite, onFavorite, onReplace }: { reci
   const [portions, setPortions] = useState(planned?.portions ?? 2);
   const [isFavorite, setIsFavorite] = useState(favorite);
   const ingredients = scaleIngredients(recipe, portions);
+  const catalogueRecipe = recipe.id.startsWith("catalog-") ? CATALOGUE_RECIPES.find((item) => item.id === recipe.id.slice("catalog-".length)) : undefined;
+  const catalogueReview = catalogueRecipe ? reviewFor(catalogueRecipe) : undefined;
   const toggle = () => { setIsFavorite((value) => !value); onFavorite(); };
   return <MobileScroll className="app-screen"><main className="recipe-page pushed-page"><img className="recipe-hero" src={recipe.image} alt={recipe.title} /><div className="recipe-content"><span className="eyebrow">{planned ? MEAL_LABELS[planned.mealType] : recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</span><h1>{recipe.title}</h1><div className="recipe-meta"><span><ClockIcon /> {recipe.prepMinutes} min</span><span><PersonIcon /> {portions} portions</span><span>{recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</span></div><p className="recipe-intro">{recipe.description}</p><div className={`recipe-actions ${onReplace ? "" : "recipe-actions--single"}`}>{onReplace ? <button className="secondary-button" onClick={onReplace}><ReloadIcon /> Remplacer</button> : null}<button className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} onClick={toggle}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter"}</button></div>
+    {catalogueReview?.caution ? <aside className="catalogue-caution"><strong>Repère important</strong><p>{catalogueReview.caution}</p></aside> : null}
     <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" onClick={() => setPortions((value) => Math.max(1, value - 1))}><MinusIcon /></button><b>{portions}</b><button type="button" onClick={() => setPortions((value) => Math.min(8, value + 1))}><PlusIcon /></button></div></div><ul className="ingredient-list">{ingredients.map((item) => <li key={`${item.id}-${item.unit}`}><CheckCircledIcon /><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}</span></li>)}</ul></section>
     <section className="recipe-section nutrition-section"><h2>Repères par portion</h2><div><span><strong>{recipe.nutrition.calories}</strong> kcal</span><span><strong>{recipe.nutrition.protein}</strong> g protéines</span><span><strong>{recipe.nutrition.fiber}</strong> g fibres</span></div><small>{recipe.nutrition.note}</small></section>
     <section className="recipe-section"><h2>Préparation</h2><ol className="steps">{recipe.steps.map((step, index) => <li key={step}><b>{index + 1}</b><span>{step}</span></li>)}</ol></section><aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
   </div></main></MobileScroll>;
+}
+
+function CatalogueRecipeView({ recipe }: { recipe: CatalogueRecipe }) {
+  const [portions, setPortions] = useState(recipe.portions);
+  const review = reviewFor(recipe);
+  const ratio = portions / Math.max(1, recipe.portions);
+  return <MobileScroll className="app-screen"><main className="catalogue-detail pushed-page">
+    <div className="catalogue-detail__hero"><span>{catalogueCategoryName(recipe.categorie)}</span><h1>{recipe.titre}</h1><small>{recipe.temps.total} min · {recipe.difficulte} · {recipe.cout}</small></div>
+    <div className="recipe-content">
+      <div className={`catalogue-verdict is-${review.status}`}><span>{review.status === "validated" ? "Profil cohérent" : "Validée avec repères"}</span><p>{review.summary}</p></div>
+      {review.caution ? <aside className="catalogue-caution"><strong>À savoir</strong><p>{review.caution}</p></aside> : null}
+      <p className="catalogue-disclaimer">Cette appréciation concerne la composition globale de la recette. Elle ne prouve pas qu'un ingrédient isolé prévient ou traite une inflammation.</p>
+      <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => Math.max(1, value - 1))}><MinusIcon /></button><b>{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => Math.min(8, value + 1))}><PlusIcon /></button></div></div><ul className="ingredient-list">{recipe.ingredients.map((item) => <li key={`${item.nom}-${item.unite}`}><CheckCircledIcon /><span><strong>{displayCatalogueQuantity(item.quantite * ratio, item.unite)}</strong> {item.nom}{item.note ? <small>{item.note}</small> : null}</span></li>)}</ul></section>
+      <section className="recipe-section nutrition-section"><h2>Estimations par portion</h2><div><span><strong>{recipe.nutrition_par_portion.calories}</strong> kcal</span><span><strong>{recipe.nutrition_par_portion.proteines_g}</strong> g protéines</span><span><strong>{recipe.nutrition_par_portion.fibres_g}</strong> g fibres</span></div><small>Valeurs estimatives à titre indicatif; elles varient selon les produits et la préparation.</small></section>
+      <section className="recipe-section"><h2>Repères présents</h2><div className="compound-list">{recipe.composes_actifs.map((item) => <span key={`${item.aliment}-${item.compose}`}><strong>{item.aliment}</strong><small>{item.compose}</small></span>)}</div><p className="catalogue-disclaimer">Ces composés sont documentés dans les aliments, mais leur présence ne garantit pas un bénéfice clinique individuel.</p></section>
+      <section className="recipe-section"><h2>Préparation</h2><ol className="steps">{recipe.etapes.map((step, index) => <li key={step}><b>{index + 1}</b><span>{step}</span></li>)}</ol></section>
+      {recipe.substitutions.length ? <section className="recipe-section"><h2>Substitutions</h2><div className="substitution-list">{recipe.substitutions.map((item) => <p key={`${item.remplacer}-${item.par}`}><strong>{item.remplacer}</strong><ChevronRightIcon /><span>{item.par}<small>{item.note}</small></span></p>)}</div></section> : null}
+      <aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
+      <p className="catalogue-legal">{CATALOGUE.meta.avertissement}</p>
+    </div>
+  </main></MobileScroll>;
 }
 
 function ReplaceView({ plan, current, profile, onConfirm }: { plan: WeeklyPlan; current: PlannedMeal; profile: UserProfile; onConfirm: (recipe: Recipe) => void }) {
@@ -455,6 +515,10 @@ function AppShell({ flow }: { flow: FlowControls }) {
     return { id: `recipe-${planned?.id ?? recipe.id}`, title: recipe.title, headerHeight: 56, header: (route) => <Header title="Recette" onBack={route.pop} />, render: (route) => <RecipeView recipe={recipe} planned={planned} favorite={appState.favoriteRecipeIds.includes(recipe.id)} onFavorite={() => toggleFavorite(recipe.id)} onReplace={planned && routePlan ? () => route.replace(replacementScreen(planned, routePlan)) : undefined} /> };
   }
 
+  function catalogueRecipeScreen(recipe: CatalogueRecipe): FlowScreen {
+    return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: () => <CatalogueRecipeView recipe={recipe} /> };
+  }
+
   const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <InformationView /> });
   const openProfile = () => flow.push({ id: "profile", title: "Profil alimentaire", headerHeight: 56, header: (route) => <Header title="Mon profil" onBack={route.pop} />, render: (route) => <ProfileView initial={appState.profile} onOpenInformation={() => route.push(informationScreen())} onSave={(profile) => { setAppState((current) => ({ ...current, profile })); route.pop(); }} /> });
   const openGenerate = () => flow.push({ id: "generate", title: "Générer ma semaine", headerHeight: 56, header: (route) => <Header title="Nouvelle semaine" onBack={route.pop} />, render: (route) => <GenerateView profile={appState.profile} onCreate={createPlan} onComplete={() => { setTab("week"); route.pop(); }} /> });
@@ -463,7 +527,7 @@ function AppShell({ flow }: { flow: FlowControls }) {
   const currentView = useMemo(() => {
     if (tab === "week") return <WeekView plan={appState.currentPlan} onOpenMeal={openMeal} onReplace={openReplace} />;
     if (tab === "courses") return <CoursesView plan={appState.currentPlan} profile={appState.profile} checkedIds={appState.checkedShoppingItemIds} pantryIds={appState.pantryIngredientIds} onToggleChecked={toggleChecked} onTogglePantry={togglePantry} />;
-    if (tab === "favorites") return <FavoritesView favoriteIds={appState.favoriteRecipeIds} history={appState.history} onOpenRecipe={(recipe) => flow.push(recipeScreen(recipe))} />;
+    if (tab === "favorites") return <FavoritesView favoriteIds={appState.favoriteRecipeIds} history={appState.history} onOpenRecipe={(recipe) => flow.push(recipeScreen(recipe))} onOpenCatalogue={(recipe) => flow.push(catalogueRecipeScreen(recipe))} />;
     return <HomeView profile={appState.profile} plan={appState.currentPlan} onGenerate={openGenerate} onProfile={openProfile} onOpenMeal={openMeal} onOpenWeek={() => setTab("week")} />;
   }, [tab, appState]);
 

@@ -5,6 +5,7 @@ import type {
   Nutrition,
   Recipe,
 } from "./domain";
+import { IMPORTED_PLAN_RECIPES } from "./catalog";
 
 type IngredientReference = {
   name: string;
@@ -126,7 +127,7 @@ const ALL_YEAR = ["all-year"] as const;
 const VEGETARIAN = ["classic", "vegetarian", "no-pork"] as const;
 const NO_PORK = ["classic", "no-pork"] as const;
 
-export const RECIPES: readonly Recipe[] = [
+const BASE_RECIPES: readonly Recipe[] = [
   {
     id: "overnight-oats-myrtilles-noix",
     title: "Overnight oats aux myrtilles et noix",
@@ -489,5 +490,8 @@ export const RECIPES: readonly Recipe[] = [
     conservation: "À consommer le jour même; ne pas conserver les moules non ouvertes.", image: "/assets/recipes/moules-tomate-semoule-complete.png",
   },
 ];
+
+/** Existing V1 recipes plus the independently reviewed catalogue entries. */
+export const RECIPES: readonly Recipe[] = [...BASE_RECIPES, ...IMPORTED_PLAN_RECIPES];
 
 export { DEFAULT_PROFILE } from "./domain";

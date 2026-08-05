@@ -105,12 +105,30 @@ test("la semaine permet d’ouvrir une recette et le remplacement d’un repas",
 test("les favoris et l’historique restent accessibles depuis la navigation principale", async ({ page }) => {
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await expect(page.getByTestId("favorites-view")).toBeVisible();
-  await expect(page.getByRole("tablist", { name: "Favoris et historique" })).toBeVisible();
+  await expect(page.getByRole("tablist", { name: "Catalogue, favoris et historique" })).toBeVisible();
   await expect(page.getByRole("tab", { name: "Favoris", selected: true })).toBeVisible();
   await expect(page.locator(".favorite-card").first()).toBeVisible();
 
   await page.getByRole("tab", { name: "Historique" }).click();
   await expect(page.getByRole("tab", { name: "Historique", selected: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Aucun historique" })).toBeVisible();
+  await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
+});
+
+test("le catalogue expose les 42 recettes relues et leurs précautions", async ({ page }) => {
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("tab", { name: "Catalogue" }).click();
+
+  await expect(page.getByText("42 recettes vérifiées")).toBeVisible();
+  await expect(page.getByText("42 résultats")).toBeVisible();
+
+  await page.getByPlaceholder("Recette ou ingrédient").fill("miso");
+  await expect(page.getByText("1 résultat", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
+
+  await expect(page.getByRole("heading", { name: "Soupe miso au wakame, shiitakés et tofu" })).toBeVisible();
+  await expect(page.getByText("Validée avec repères")).toBeVisible();
+  await expect(page.getByText(/sodium et d'iode/)).toBeVisible();
+  await expect(page.getByText(/ne garantit pas un bénéfice clinique individuel/)).toBeVisible();
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
