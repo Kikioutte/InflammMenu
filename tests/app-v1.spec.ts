@@ -115,12 +115,12 @@ test("les favoris et l’historique restent accessibles depuis la navigation pri
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
-test("le catalogue expose les 42 recettes relues et leurs précautions", async ({ page }) => {
+test("le catalogue expose uniquement les nouvelles recettes relues et leurs précautions", async ({ page }) => {
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
 
-  await expect(page.getByText("42 recettes vérifiées")).toBeVisible();
-  await expect(page.getByText("42 résultats")).toBeVisible();
+  await expect(page.getByText("36 nouvelles recettes")).toBeVisible();
+  await expect(page.getByText("36 résultats")).toBeVisible();
 
   await page.getByPlaceholder("Recette ou ingrédient").fill("miso");
   await expect(page.getByText("1 résultat", { exact: true })).toBeVisible();

@@ -10,6 +10,7 @@
 ### Reviewed recipe catalogue
 
 - The imported 42-recipe catalogue must retain one explicit editorial review per recipe in `src/catalog.ts`. Do not present the source `score_anti_inflammatoire` as a scientific or medical measurement.
+- Integrate only source recipes that are not materially duplicated by the V1 catalogue. Keep the six reviewed duplicate mappings explicit in `DUPLICATE_CATALOGUE_RECIPES` so they remain auditable and excluded from both the visible catalogue and weekly generator.
 - Describe compatibility at the level of the overall Mediterranean-style dietary pattern. Do not render the source mechanism text as proof that an isolated ingredient prevents or treats inflammation.
 - Keep visible cautions for concentrated turmeric/piperine preparations, seaweed/iodine, fermentation safety, high-sodium ingredients, coconut-rich recipes, and concentrated sweet snacks. Preserve the medical disclaimer and the official source links in the information screen.
 

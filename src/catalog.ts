@@ -65,8 +65,21 @@ interface CatalogueData {
 }
 
 export const CATALOGUE = catalogueSource as unknown as CatalogueData;
-export const CATALOGUE_RECIPES = CATALOGUE.recipes;
 export const CATALOGUE_CATEGORIES = CATALOGUE.categories;
+
+/** Source entries already covered by a materially equivalent V1 recipe. */
+export const DUPLICATE_CATALOGUE_RECIPES = {
+  r001: "overnight-oats-myrtilles-noix",
+  r009: "bowl-quinoa-legumes-houmous",
+  r017: "bowl-tofu-brocoli-sesame",
+  r018: "cabillaud-tomate-olives",
+  r019: "risotto-orge-champignons-epinards",
+  r039: "salade-betterave-chevre-lentilles",
+} as const;
+
+export const CATALOGUE_RECIPES = CATALOGUE.recipes.filter(
+  (recipe) => !(recipe.id in DUPLICATE_CATALOGUE_RECIPES),
+);
 
 /**
  * Relecture éditoriale recette par recette. Une validation décrit la cohérence

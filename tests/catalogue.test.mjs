@@ -34,6 +34,15 @@ test("every recipe has an explicit editorial review", () => {
   assert.deepEqual(new Set(reviewedIds), new Set(catalogue.recipes.map((recipe) => recipe.id)));
 });
 
+test("material duplicates are explicitly excluded from integration", () => {
+  const expectedDuplicates = ["r001", "r009", "r017", "r018", "r019", "r039"];
+  for (const id of expectedDuplicates) {
+    assert.match(catalogueSource, new RegExp(`^\\s{2}${id}: "[^"]+",$`, "m"));
+  }
+  assert.equal((catalogueSource.match(/^\s{2}r\d{3}: "[^"]+",$/gm) ?? []).length, 6);
+  assert.match(catalogueSource, /CATALOGUE\.recipes\.filter/);
+});
+
 test("higher-risk culinary entries retain visible cautions", () => {
   for (const id of ["r004", "r006", "r011", "r023", "r032", "r036", "r040", "r042"]) {
     assert.match(catalogueSource, new RegExp(`${id}: \\{ status: "caution"`));
@@ -47,4 +56,3 @@ test("unverified mechanism claims are not rendered as clinical effects", () => {
   assert.match(prototypeSource, /ne garantit pas un bénéfice clinique individuel/);
   assert.match(prototypeSource, /ne prouve pas qu'un ingrédient isolé/);
 });
-
