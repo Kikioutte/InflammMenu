@@ -1,5 +1,7 @@
 # Recherche des 450 recettes — InflammMenu
 
+Le cadrage des influences proposées par le porteur du projet, notamment Jean Seignalet et Yuval Noah Harari, est documenté dans [`editorial-influences.md`](./editorial-influences.md). Ces influences restent historiques et culturelles; les validations médicales, allergènes et nutritionnelles reposent sur les sources actuelles décrites ci-dessous.
+
 ## Objectif
 
 Constituer 450 concepts culinaires originaux (`r051` à `r500`) avant leur rédaction complète et leur intégration dans le catalogue. Un concept n'est pas encore une recette validée : les quantités, la nutrition, les allergènes, le coût et les étapes doivent être calculés et relus avant publication.
