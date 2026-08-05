@@ -54,6 +54,7 @@ import {
   CATALOGUE_CATEGORIES,
   CATALOGUE_RECIPES,
   DUPLICATE_CATALOGUE_RECIPES,
+  catalogueImageFor,
   catalogueCategoryName,
   reviewFor,
   type CatalogueRecipe,
@@ -365,7 +366,7 @@ function FavoritesView({ favoriteIds, history, onOpenRecipe, onOpenCatalogue }: 
         <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher une recette</span><KeyboardInput value={query} placeholder="Recette ou ingrédient" onChange={(event) => setQuery(event.target.value)} /></label>
         <Carousel ariaLabel="Filtrer les catégories" className="catalogue-filters" contentClassName="catalogue-filters__track"><button className={category === "all" ? "is-selected" : ""} onClick={() => setCategory("all")}>Toutes</button>{CATALOGUE_CATEGORIES.map((item) => <button key={item.id} className={category === item.id ? "is-selected" : ""} onClick={() => setCategory(item.id)}>{item.nom}</button>)}</Carousel>
         <p className="catalogue-count">{catalogueRecipes.length} résultat{catalogueRecipes.length > 1 ? "s" : ""}</p>
-        <div className="catalogue-list">{catalogueRecipes.map((recipe) => { const review = reviewFor(recipe); return <button type="button" className="catalogue-card" key={recipe.id} onClick={() => onOpenCatalogue(recipe)}><span className={`catalogue-card__status is-${review.status}`}>{review.status === "validated" ? "Profil cohérent" : "Avec repères"}</span><small>{catalogueCategoryName(recipe.categorie)} · {recipe.temps.total} min</small><strong>{recipe.titre}</strong><p>{review.summary}</p><span className="catalogue-card__meta">{recipe.regimes.slice(0, 2).map((item) => item.replaceAll("-", " ")).join(" · ")}<ChevronRightIcon /></span></button>; })}</div>
+        <div className="catalogue-list">{catalogueRecipes.map((recipe) => { const review = reviewFor(recipe); return <button type="button" className="catalogue-card" key={recipe.id} onClick={() => onOpenCatalogue(recipe)}><img className="catalogue-card__image" src={catalogueImageFor(recipe)} alt="" loading="lazy" decoding="async" /><span className={`catalogue-card__status is-${review.status}`}>{review.status === "validated" ? "Profil cohérent" : "Avec repères"}</span><small>{catalogueCategoryName(recipe.categorie)} · {recipe.temps.total} min</small><strong>{recipe.titre}</strong><p>{review.summary}</p><span className="catalogue-card__meta">{recipe.regimes.slice(0, 2).map((item) => item.replaceAll("-", " ")).join(" · ")}<ChevronRightIcon /></span></button>; })}</div>
       </section> : <div className="history-list">{history.length ? history.map((plan) => <article className="history-card" key={plan.id}><span><small>Générée le {new Date(plan.generatedAt).toLocaleDateString("fr-FR")}</small><strong>{formatWeekRange(plan.startsOn)}</strong></span><em>{plan.meals.length} repas · {plan.estimatedCost.toFixed(0)} € estimés</em></article>) : <div className="empty-day"><ArchiveIcon /><h3>Aucun historique</h3><p>Vos anciennes semaines seront conservées sur cet appareil.</p></div>}</div>}
     </main>
   );
@@ -470,7 +471,7 @@ function CatalogueRecipeView({ recipe }: { recipe: CatalogueRecipe }) {
   const review = reviewFor(recipe);
   const ratio = portions / Math.max(1, recipe.portions);
   return <MobileScroll className="app-screen"><main className="catalogue-detail pushed-page">
-    <div className="catalogue-detail__hero"><span>{catalogueCategoryName(recipe.categorie)}</span><h1>{recipe.titre}</h1><small>{recipe.temps.total} min · {recipe.difficulte} · {recipe.cout}</small></div>
+    <div className="catalogue-detail__hero"><img src={catalogueImageFor(recipe)} alt={recipe.image.alt || recipe.titre} /><div className="catalogue-detail__hero-copy"><span>{catalogueCategoryName(recipe.categorie)}</span><h1>{recipe.titre}</h1><small>{recipe.temps.total} min · {recipe.difficulte} · {recipe.cout}</small></div></div>
     <div className="recipe-content">
       <div className={`catalogue-verdict is-${review.status}`}><span>{review.status === "validated" ? "Profil cohérent" : "Validée avec repères"}</span><p>{review.summary}</p></div>
       {review.caution ? <aside className="catalogue-caution"><strong>À savoir</strong><p>{review.caution}</p></aside> : null}

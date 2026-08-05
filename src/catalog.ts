@@ -156,7 +156,11 @@ function seasonsFor(recipe: CatalogueRecipe): readonly Season[] {
   return [...new Set(recipe.saisons.map((season) => mapping[season]).filter(Boolean))];
 }
 
-function imageFor(recipe: CatalogueRecipe): string {
+export function catalogueImageFor(recipe: CatalogueRecipe): string {
+  const numericId = Number.parseInt(recipe.id.slice(1), 10);
+  if (numericId >= 51 && recipe.image.nom_fichier) {
+    return `/assets/recipes/generated/${recipe.image.nom_fichier}`;
+  }
   const title = normalize(recipe.titre);
   if (title.includes("crevette")) return "/assets/inflamm-hero-bowl.png";
   if (title.includes("saumon")) return "/assets/recipes/saumon-brocoli-riz-complet.png";
@@ -210,7 +214,7 @@ export const IMPORTED_PLAN_RECIPES: readonly Recipe[] = CATALOGUE_RECIPES
     description: reviewFor(recipe).summary,
     steps: recipe.etapes,
     conservation: recipe.conservation,
-    image: imageFor(recipe),
+    image: catalogueImageFor(recipe),
   }));
 
 export function catalogueCategoryName(id: string): string {
