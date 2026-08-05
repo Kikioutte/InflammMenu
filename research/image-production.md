@@ -25,6 +25,7 @@ Les sorties brutes de génération ne sont pas versées directement dans le site
 - arrière-plan minéral clair, palette chaleureuse et végétale ;
 - aliments fidèles aux ingrédients et à la technique de la recette ;
 - portions réalistes, textures naturelles, dressage simple et appétissant ;
+- rendu ultra-photoréaliste : petites irrégularités naturelles, humidité et cuisson crédibles, profondeur de champ optique, aucun aspect plastique ou artificiellement parfait ;
 - aucun texte, logo, filigrane, main, couvert déformé ou ingrédient absent de la recette.
 
 ## Gabarit de prompt
@@ -54,5 +55,8 @@ Le champ `description_visuelle_fidele_aux_ingredients_et_a_la_technique` est ré
 6. Le fichier est enregistré avec le slug stable de la recette.
 7. L'image est chargée localement et inspectée avant d'être référencée dans le JSON.
 8. La version optimisée respecte 900 × 900 px et le budget de 350 Ko, sans dégradation visuelle gênante.
+9. La texture correspond à la technique réelle : rôti, mijoté, mixé, cru, vapeur ou grillé ne doivent pas être confondus.
+10. Les quantités, découpes et proportions restent plausibles; aucun ingrédient ne se répète avec une géométrie artificielle.
+11. Le rendu doit pouvoir être pris pour une vraie photographie culinaire : imperfections discrètes, lumière optique crédible et profondeur de champ naturelle.
 
 Une image rejetée est régénérée avec une seule correction ciblée. Les images finales restent dans le dépôt afin que le site et la PWA ne dépendent pas d'un service externe.
