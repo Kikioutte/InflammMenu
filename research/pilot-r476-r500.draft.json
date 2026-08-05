@@ -1,0 +1,4568 @@
+{
+  "meta": {
+    "schema_version": "2.1.0",
+    "status": "draft",
+    "nombre_recettes": 25,
+    "nutrition_notice": "Nutrition et coûts estimés; validation requise avant publication.",
+    "medical_notice": "Aucune promesse médicale ou thérapeutique."
+  },
+  "recipes": [
+    {
+      "id": "r476",
+      "slug": "poires-pochees-au-the-rooibos-et-cardamome",
+      "titre": "Poires pochées au thé rooibos et cardamome",
+      "categorie": "dessert",
+      "description": "Des poires pochées dans une infusion de rooibos, cardamome et orange.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 28,
+        "repos": 20,
+        "total": 63
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "dessert",
+        "pochage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "poire",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "Fermes, pelées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "rooibos-feuilles",
+          "quantite": 10,
+          "unite": "g",
+          "quantite_normalisee": 10,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "rooibos en vrac",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "cardamome-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cardamome moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 900,
+          "unite": "ml",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Infuser rooibos, cardamome et orange 5 minutes puis filtrer.",
+        "Ajouter les poires et pocher 20 à 25 minutes.",
+        "Vérifier la tendreté en conservant leur forme.",
+        "Laisser tiédir 20 minutes dans le liquide."
+      ],
+      "conseils": [
+        "Choisir des poires de même calibre."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Cardamome",
+          "par": "Cannelle",
+          "note": "Profil différent"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur dans le liquide.",
+      "nutrition_par_portion": {
+        "calories": 110,
+        "proteines_g": 1,
+        "glucides_g": 28,
+        "sucres_g": 19,
+        "lipides_g": 0,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 5,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r476-poires-pochees-au-the-rooibos-et-cardamome.jpg",
+        "alt": "Poires pochées au thé rooibos et cardamome"
+      },
+      "seo": {
+        "titre": "Poires pochées au thé rooibos et cardamome",
+        "meta_description": "Des poires pochées dans une infusion de rooibos, cardamome et orange.",
+        "mots_cles": [
+          "poires",
+          "rooibos",
+          "cardamome"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le pochage au rooibos distingue ce dessert des compotes et fruits rôtis existants. Formulation à tester avant publication.",
+          "caution": "Calibre, temps de pochage et transfert nutritionnel à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.8,
+          "active_minutes": 18,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r477",
+      "slug": "creme-de-millet-au-citron-et-framboises",
+      "titre": "Crème de millet au citron et framboises",
+      "categorie": "dessert",
+      "description": "Une crème mixée de millet au citron, framboises et boisson d'amande.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 30,
+        "repos": 60,
+        "total": 102
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-douce-et-mixage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "millet-decortique",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "millet décortiqué",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "framboise",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "framboises",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-amande-non-sucree",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'amande non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        }
+      ],
+      "etapes": [
+        "Cuire le millet dans la boisson 25 à 30 minutes.",
+        "Mixer chaud avec le zeste et la moitié des framboises.",
+        "Répartir dans six coupes.",
+        "Réfrigérer une heure et ajouter le reste des fruits."
+      ],
+      "conseils": [
+        "Laisser échapper la vapeur selon les consignes du blender."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Boisson d'amande",
+          "par": "Boisson de soja",
+          "note": "Remplace fruits à coque par soja"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 175,
+        "proteines_g": 5,
+        "glucides_g": 31,
+        "sucres_g": 7,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 4,
+        "sodium_mg": 25,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r477-creme-de-millet-au-citron-et-framboises.jpg",
+        "alt": "Crème de millet au citron et framboises"
+      },
+      "seo": {
+        "titre": "Crème de millet au citron et framboises",
+        "meta_description": "Une crème mixée de millet au citron, framboises et boisson d'amande.",
+        "mots_cles": [
+          "millet",
+          "citron",
+          "framboises"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le millet sert de base crémeuse, sans reprendre mousse d'avocat ou pudding de chia. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; texture, mixage chaud et refroidissement à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.85,
+          "active_minutes": 16,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r478",
+      "slug": "abricots-rotis-au-thym-et-pistaches",
+      "titre": "Abricots rôtis au thym et pistaches",
+      "categorie": "dessert",
+      "description": "Des abricots rôtis au thym, servis avec pistaches et yaourt de brebis.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 18,
+        "repos": 5,
+        "total": 35
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "dessert",
+        "rotissage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "abricot",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "abricots",
+          "note": "Coupés en deux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pistaches-non-salees",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "yaourt-brebis",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt de brebis nature",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        }
+      ],
+      "etapes": [
+        "Placer les abricots dans un plat.",
+        "Ajouter le thym et rôtir 15 à 18 minutes à 190 °C.",
+        "Reposer 5 minutes.",
+        "Servir deux demi-abricots avec yaourt et pistaches."
+      ],
+      "conseils": [
+        "Réduire la cuisson des fruits très mûrs."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Yaourt de brebis",
+          "par": "Yaourt de soja",
+          "note": "Remplace lait par soja"
+        }
+      ],
+      "conservation": "Fruits 2 jours au frais; yaourt séparé.",
+      "nutrition_par_portion": {
+        "calories": 145,
+        "proteines_g": 6,
+        "glucides_g": 15,
+        "sucres_g": 11,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 3,
+        "sodium_mg": 50,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r478-abricots-rotis-au-thym-et-pistaches.jpg",
+        "alt": "Abricots rôtis au thym et pistaches"
+      },
+      "seo": {
+        "titre": "Abricots rôtis au thym et pistaches",
+        "meta_description": "Des abricots rôtis au thym, servis avec pistaches et yaourt de brebis.",
+        "mots_cles": [
+          "abricots",
+          "thym",
+          "pistaches"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Abricot rôti et thym donnent un dessert saisonnier distinct des recettes aux fruits rouges ou aux pommes. Formulation à tester avant publication.",
+          "caution": "Contient lait et fruits à coque; maturité et coût saisonnier à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1,
+          "active_minutes": 14,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r479",
+      "slug": "flan-de-sarrasin-a-la-poire-et-vanille",
+      "titre": "Flan de sarrasin à la poire et vanille",
+      "categorie": "dessert",
+      "description": "Un flan de sarrasin à la poire, œufs, vanille et boisson d'avoine.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 38,
+        "repos": 20,
+        "total": 76
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-au-four"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-sarrasin",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de sarrasin",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poire",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "En lamelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "oeuf",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "boisson-avoine-non-sucree",
+          "quantite": 500,
+          "unite": "ml",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'avoine non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "extrait-vanille",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "extrait de vanille",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Huiler un plat et disposer les poires.",
+        "Fouetter œufs, boisson, farine et vanille.",
+        "Verser et cuire 35 à 38 minutes à 180 °C.",
+        "Vérifier la prise et reposer 20 minutes."
+      ],
+      "conseils": [
+        "Le centre doit être pris avant refroidissement."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Boisson d'avoine",
+          "par": "Lait",
+          "note": "Remplace gluten par lait selon les produits"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 155,
+        "proteines_g": 6,
+        "glucides_g": 25,
+        "sucres_g": 10,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 3,
+        "sodium_mg": 55,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r479-flan-de-sarrasin-a-la-poire-et-vanille.jpg",
+        "alt": "Flan de sarrasin à la poire et vanille"
+      },
+      "seo": {
+        "titre": "Flan de sarrasin à la poire et vanille",
+        "meta_description": "Un flan de sarrasin à la poire, œufs, vanille et boisson d'avoine.",
+        "mots_cles": [
+          "farine de sarrasin",
+          "poires",
+          "œufs"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Base de sarrasin et poire pour un flan sans équivalent dans le catalogue existant. Formulation à tester avant publication.",
+          "caution": "Contient œuf et gluten; cuisson à cœur et certification du sarrasin à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.65,
+          "active_minutes": 22,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "oeuf",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r480",
+      "slug": "granite-pasteque-hibiscus-et-citron-vert",
+      "titre": "Granité pastèque, hibiscus et citron vert",
+      "categorie": "dessert",
+      "description": "Un granité de pastèque, hibiscus, citron vert et menthe.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 5,
+        "repos": 240,
+        "total": 260
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "dessert",
+        "congelation-et-grattage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "pasteque",
+          "quantite": 1000,
+          "unite": "g",
+          "quantite_normalisee": 1000,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pastèque",
+          "note": "Chair sans pépins",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "hibiscus-seche",
+          "quantite": 10,
+          "unite": "g",
+          "quantite_normalisee": 10,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "hibiscus séché alimentaire",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citrons verts",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 150,
+          "unite": "ml",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Infuser l'hibiscus 5 minutes et filtrer.",
+        "Mixer avec pastèque et citron vert.",
+        "Congeler dans un plat peu profond.",
+        "Gratter toutes les 45 minutes pendant 4 heures et ajouter la menthe."
+      ],
+      "conseils": [
+        "Ne pas laisser décongeler puis recongeler le granité."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pastèque",
+          "par": "Melon",
+          "note": "Profil différent"
+        }
+      ],
+      "conservation": "3 jours au congélateur, couvert.",
+      "nutrition_par_portion": {
+        "calories": 55,
+        "proteines_g": 1,
+        "glucides_g": 13,
+        "sucres_g": 11,
+        "lipides_g": 0,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 1,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r480-granite-pasteque-hibiscus-et-citron-vert.jpg",
+        "alt": "Granité pastèque, hibiscus et citron vert"
+      },
+      "seo": {
+        "titre": "Granité pastèque, hibiscus et citron vert",
+        "meta_description": "Un granité de pastèque, hibiscus, citron vert et menthe.",
+        "mots_cles": [
+          "pastèque",
+          "hibiscus",
+          "citron vert"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Technique de granité et parfum d'hibiscus absents du gaspacho pastèque et des boissons existantes. Formulation à tester avant publication.",
+          "caution": "Chaîne du froid, texture et portion de fruit à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 20,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r481",
+      "slug": "figues-roties-au-romarin-et-creme-de-noix",
+      "titre": "Figues rôties au romarin et crème de noix",
+      "categorie": "dessert",
+      "description": "Des figues rôties au romarin avec crème de noix et yaourt nature.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 18,
+        "repos": 5,
+        "total": 38
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "dessert",
+        "rotissage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "figue-fraiche",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "figues fraîches",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "romarin frais haché",
+          "note": "Dosage léger",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "yaourt-nature",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 60,
+          "unite": "ml",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir les figues au romarin 15 à 18 minutes.",
+        "Mixer les noix avec l'eau en crème grossière.",
+        "Reposer les figues 5 minutes.",
+        "Servir avec yaourt et crème de noix."
+      ],
+      "conseils": [
+        "Le romarin doit rester très discret."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de tournesol",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 210,
+        "proteines_g": 7,
+        "glucides_g": 24,
+        "sucres_g": 19,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 5,
+        "sodium_mg": 55,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r481-figues-roties-au-romarin-et-creme-de-noix.jpg",
+        "alt": "Figues rôties au romarin et crème de noix"
+      },
+      "seo": {
+        "titre": "Figues rôties au romarin et crème de noix",
+        "meta_description": "Des figues rôties au romarin avec crème de noix et yaourt nature.",
+        "mots_cles": [
+          "figues",
+          "romarin",
+          "noix"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Figues rôties au romarin et crème de noix, distinctes du skyr aux figues fraîches. Formulation à tester avant publication.",
+          "caution": "Contient lait et fruits à coque; fruits concentrés et dosage du romarin à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.1,
+          "active_minutes": 17,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r482",
+      "slug": "gelee-d-agrumes-au-safran-et-grenade",
+      "titre": "Gelée d'agrumes au safran et grenade",
+      "categorie": "dessert",
+      "description": "Une gelée d'orange et pamplemousse au safran, agar-agar et grenade.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 8,
+        "repos": 180,
+        "total": 208
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "hiver"
+      ],
+      "tags": [
+        "dessert",
+        "gelification"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "orange",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges",
+          "note": "Environ 400 ml de jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pamplemousse-rose",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pamplemousse rose",
+          "note": "Environ 150 ml de jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "safran-filaments",
+          "quantite": 0.1,
+          "unite": "g",
+          "quantite_normalisee": 0.1,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filaments de safran",
+          "note": "À peser",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "graines-grenade",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de grenade",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "agar-agar",
+          "quantite": 2,
+          "unite": "g",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "agar-agar",
+          "note": "Pesé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Presser et filtrer les agrumes.",
+        "Porter le jus, l'agar et le safran à ébullition 1 minute.",
+        "Verser dans six coupes et laisser tiédir.",
+        "Réfrigérer 3 heures puis ajouter la grenade."
+      ],
+      "conseils": [
+        "Le pamplemousse peut interagir avec certains médicaments; demander conseil si un traitement est concerné."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pamplemousse",
+          "par": "Orange sanguine",
+          "note": "Évite le pamplemousse"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 85,
+        "proteines_g": 1,
+        "glucides_g": 20,
+        "sucres_g": 16,
+        "lipides_g": 0,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 2,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r482-gelee-d-agrumes-au-safran-et-grenade.jpg",
+        "alt": "Gelée d'agrumes au safran et grenade"
+      },
+      "seo": {
+        "titre": "Gelée d'agrumes au safran et grenade",
+        "meta_description": "Une gelée d'orange et pamplemousse au safran, agar-agar et grenade.",
+        "mots_cles": [
+          "orange",
+          "pamplemousse",
+          "safran"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La gélification d'agrumes au safran introduit une texture non représentée dans les desserts actuels. Formulation à tester avant publication.",
+          "caution": "Interaction possible du pamplemousse, dosage du safran et prise de l'agar à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1,
+          "active_minutes": 22,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r483",
+      "slug": "clafoutis-de-cerises-au-lait-d-amande-et-avoine",
+      "titre": "Clafoutis de cerises au lait d'amande et avoine",
+      "categorie": "dessert",
+      "description": "Un clafoutis de cerises à la boisson d'amande, farine d'avoine, œufs et vanille.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 35,
+        "repos": 20,
+        "total": 73
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-au-four"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "cerise",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cerises",
+          "note": "Dénoyautées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-amande-non-sucree",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'amande non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "farine-avoine",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine d'avoine",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "oeuf",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "extrait-vanille",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "extrait de vanille",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Huiler un plat et répartir les cerises.",
+        "Fouetter œufs, boisson, farine et vanille.",
+        "Verser et cuire 32 à 35 minutes à 180 °C.",
+        "Vérifier la prise et reposer 20 minutes."
+      ],
+      "conseils": [
+        "Dénoyauter soigneusement toutes les cerises."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Cerises",
+          "par": "Prunes",
+          "note": "En quartiers"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 145,
+        "proteines_g": 6,
+        "glucides_g": 22,
+        "sucres_g": 10,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 3,
+        "sodium_mg": 50,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r483-clafoutis-de-cerises-au-lait-d-amande-et-avoine.jpg",
+        "alt": "Clafoutis de cerises au lait d'amande et avoine"
+      },
+      "seo": {
+        "titre": "Clafoutis de cerises au lait d'amande et avoine",
+        "meta_description": "Un clafoutis de cerises à la boisson d'amande, farine d'avoine, œufs et vanille.",
+        "mots_cles": [
+          "cerises",
+          "boisson d'amande",
+          "farine d'avoine"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le clafoutis cerise-avoine complète le lot sans reprendre le crumble aux fruits rouges. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque, gluten et œuf; noyaux et cuisson à cœur à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.8,
+          "active_minutes": 22,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten",
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r484",
+      "slug": "sauce-verte-au-cresson-pomme-et-noix",
+      "titre": "Sauce verte au cresson, pomme et noix",
+      "categorie": "sauce",
+      "description": "Une sauce verte crue au cresson, pomme, noix, citron et huile d'olive.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 0,
+        "repos": 10,
+        "total": 22
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver",
+        "printemps"
+      ],
+      "tags": [
+        "sauce",
+        "mixage-a-froid"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "cresson",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cresson",
+          "note": "Lavé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pomme-verte",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pomme verte",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 3,
+          "unite": "c. à s.",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 50,
+          "unite": "ml",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Laver et essorer le cresson.",
+        "Mixer avec pomme, noix et citron.",
+        "Ajouter huile et eau progressivement.",
+        "Réfrigérer 10 minutes avant service."
+      ],
+      "conseils": [
+        "Conserver au froid et utiliser un cresson commercial propre."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 85,
+        "proteines_g": 2,
+        "glucides_g": 4,
+        "sucres_g": 3,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 1,
+        "sodium_mg": 10,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r484-sauce-verte-au-cresson-pomme-et-noix.jpg",
+        "alt": "Sauce verte au cresson, pomme et noix"
+      },
+      "seo": {
+        "titre": "Sauce verte au cresson, pomme et noix",
+        "meta_description": "Une sauce verte crue au cresson, pomme, noix, citron et huile d'olive.",
+        "mots_cles": [
+          "cresson",
+          "pomme verte",
+          "noix"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Cresson et pomme créent une sauce verte distincte du pesto roquette-basilic existant. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; hygiène du cru et oxydation à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.35,
+          "active_minutes": 12,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r485",
+      "slug": "creme-de-haricots-blancs-au-citron-confit",
+      "titre": "Crème de haricots blancs au citron confit",
+      "categorie": "sauce",
+      "description": "Une crème de haricots blancs au citron confit, romarin et huile d'olive.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 0,
+        "repos": 10,
+        "total": 20
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "sauce",
+        "mixage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-confit",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "citron confit",
+          "note": "Écorce rincée",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "romarin frais haché",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 100,
+          "unite": "ml",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rincer les haricots et le citron confit.",
+        "Mixer avec romarin et huile.",
+        "Ajouter l'eau progressivement.",
+        "Reposer 10 minutes et goûter avant de saler."
+      ],
+      "conseils": [
+        "Le citron confit est très salé; commencer par une petite quantité."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Citron confit",
+          "par": "Zeste frais",
+          "note": "Réduit le sodium"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 95,
+        "proteines_g": 5,
+        "glucides_g": 13,
+        "sucres_g": 1,
+        "lipides_g": 3,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 4,
+        "sodium_mg": 120,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r485-creme-de-haricots-blancs-au-citron-confit.jpg",
+        "alt": "Crème de haricots blancs au citron confit"
+      },
+      "seo": {
+        "titre": "Crème de haricots blancs au citron confit",
+        "meta_description": "Une crème de haricots blancs au citron confit, romarin et huile d'olive.",
+        "mots_cles": [
+          "haricots blancs",
+          "citron confit",
+          "romarin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Base de haricots blancs différente du houmous de betterave et des sauces au tahini. Formulation à tester avant publication.",
+          "caution": "Sodium du citron et des haricots, texture et portion à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.3,
+          "active_minutes": 10,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r486",
+      "slug": "salsa-de-kiwi-concombre-et-menthe",
+      "titre": "Salsa de kiwi, concombre et menthe",
+      "categorie": "sauce",
+      "description": "Une salsa crue de kiwi, concombre, menthe et citron vert.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 0,
+        "repos": 10,
+        "total": 25
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "sauce",
+        "hachage-a-cru"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "kiwi",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "kiwis",
+          "note": "Pelés, en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "concombre",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombre",
+          "note": "Épépiné, en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron vert",
+          "note": "Jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Couper kiwi et concombre en dés réguliers.",
+        "Ciseler la menthe.",
+        "Mélanger avec le citron vert.",
+        "Réfrigérer 10 minutes et servir frais."
+      ],
+      "conseils": [
+        "Préparer au dernier moment pour limiter l'eau rendue."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Kiwi",
+          "par": "Pêche",
+          "note": "Profil moins acide"
+        }
+      ],
+      "conservation": "À consommer dans les 12 heures.",
+      "nutrition_par_portion": {
+        "calories": 35,
+        "proteines_g": 1,
+        "glucides_g": 8,
+        "sucres_g": 6,
+        "lipides_g": 0,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 2,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r486-salsa-de-kiwi-concombre-et-menthe.jpg",
+        "alt": "Salsa de kiwi, concombre et menthe"
+      },
+      "seo": {
+        "titre": "Salsa de kiwi, concombre et menthe",
+        "meta_description": "Une salsa crue de kiwi, concombre, menthe et citron vert.",
+        "mots_cles": [
+          "kiwi",
+          "concombre",
+          "menthe"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le kiwi donne une salsa fruitée inédite, sans reprendre tomate ou grenade. Formulation à tester avant publication.",
+          "caution": "Hygiène du cru, eau du concombre et acidité à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.35,
+          "active_minutes": 15,
+          "equipment": [],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r487",
+      "slug": "sauce-de-poivron-jaune-roti-et-amande",
+      "titre": "Sauce de poivron jaune rôti et amande",
+      "categorie": "sauce",
+      "description": "Une sauce de poivron jaune rôti, amandes, ail et vinaigre de cidre.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 28,
+        "repos": 10,
+        "total": 53
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "sauce",
+        "rotissage-puis-mixage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "poivron-jaune",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poivrons jaunes",
+          "note": "Épépinés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "ail",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "gousse d'ail",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-cidre",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de cidre",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir poivrons et ail 25 à 28 minutes.",
+        "Couvrir 10 minutes puis peler.",
+        "Mixer avec amandes et vinaigre.",
+        "Ajouter l'huile progressivement."
+      ],
+      "conseils": [
+        "Laisser la vapeur s'échapper avant mixage."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Haricots blancs",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 90,
+        "proteines_g": 2,
+        "glucides_g": 6,
+        "sucres_g": 4,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 2,
+        "sodium_mg": 10,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r487-sauce-de-poivron-jaune-roti-et-amande.jpg",
+        "alt": "Sauce de poivron jaune rôti et amande"
+      },
+      "seo": {
+        "titre": "Sauce de poivron jaune rôti et amande",
+        "meta_description": "Une sauce de poivron jaune rôti, amandes, ail et vinaigre de cidre.",
+        "mots_cles": [
+          "poivron jaune",
+          "amandes",
+          "ail"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Poivron jaune et amande forment une sauce différente des pestos et vinaigrettes actuels. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; mixage chaud et rendement à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.5,
+          "active_minutes": 18,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r488",
+      "slug": "condiment-de-fenouil-orange-et-olive-verte",
+      "titre": "Condiment de fenouil, orange et olive verte",
+      "categorie": "sauce",
+      "description": "Un condiment croquant de fenouil, orange, olives vertes et persil.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 0,
+        "repos": 20,
+        "total": 35
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "hiver",
+        "printemps"
+      ],
+      "tags": [
+        "sauce",
+        "hachage-et-maceration"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bulbe de fenouil",
+          "note": "Très finement haché",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Segments et zeste",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "olives-vertes",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "olives vertes",
+          "note": "Rincées, hachées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Hacher finement fenouil et olives.",
+        "Prélever les segments d'orange.",
+        "Mélanger avec persil et huile.",
+        "Laisser macérer 20 minutes au frais."
+      ],
+      "conseils": [
+        "Rincer les olives et goûter avant de saler."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Olives vertes",
+          "par": "Câpres",
+          "note": "Sodium à recalculer"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 55,
+        "proteines_g": 1,
+        "glucides_g": 5,
+        "sucres_g": 3,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 2,
+        "sodium_mg": 150,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r488-condiment-de-fenouil-orange-et-olive-verte.jpg",
+        "alt": "Condiment de fenouil, orange et olive verte"
+      },
+      "seo": {
+        "titre": "Condiment de fenouil, orange et olive verte",
+        "meta_description": "Un condiment croquant de fenouil, orange, olives vertes et persil.",
+        "mots_cles": [
+          "fenouil",
+          "orange",
+          "olives vertes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Condiment croquant agrume-fenouil, non représenté parmi les sauces existantes. Formulation à tester avant publication.",
+          "caution": "Sodium des olives, découpe et conservation à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.4,
+          "active_minutes": 15,
+          "equipment": [],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r489",
+      "slug": "sauce-yaourt-betterave-jaune-et-aneth",
+      "titre": "Sauce yaourt, betterave jaune et aneth",
+      "categorie": "sauce",
+      "description": "Une sauce froide de betterave jaune, yaourt, aneth et citron.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 0,
+        "repos": 20,
+        "total": 32
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "sauce",
+        "mixage-a-froid"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "betterave-jaune-cuite",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "betterave jaune cuite",
+          "note": "Refroidie",
+          "categorie_courses": "fresh",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-nature",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Refroidir complètement la betterave cuite.",
+        "Mixer avec le yaourt et le citron.",
+        "Ajouter l'aneth.",
+        "Réfrigérer 20 minutes."
+      ],
+      "conseils": [
+        "Ne pas mixer la betterave chaude avec le yaourt."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Yaourt nature",
+          "par": "Yaourt de soja",
+          "note": "Remplace lait par soja"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 55,
+        "proteines_g": 3,
+        "glucides_g": 6,
+        "sucres_g": 5,
+        "lipides_g": 2,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 1,
+        "sodium_mg": 40,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r489-sauce-yaourt-betterave-jaune-et-aneth.jpg",
+        "alt": "Sauce yaourt, betterave jaune et aneth"
+      },
+      "seo": {
+        "titre": "Sauce yaourt, betterave jaune et aneth",
+        "meta_description": "Une sauce froide de betterave jaune, yaourt, aneth et citron.",
+        "mots_cles": [
+          "betterave jaune",
+          "yaourt nature",
+          "aneth"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La betterave jaune apporte une sauce distincte du houmous de betterave rouge et de la soupe au yaourt. Formulation à tester avant publication.",
+          "caution": "Contient lait; chaîne du froid et texture à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.35,
+          "active_minutes": 12,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r490",
+      "slug": "pesto-de-brocoli-pistache-et-citron",
+      "titre": "Pesto de brocoli, pistache et citron",
+      "categorie": "sauce",
+      "description": "Un pesto de brocoli, pistache, citron, basilic et huile d'olive.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 8,
+        "repos": 10,
+        "total": 30
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "sauce",
+        "mixage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "brocoli",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "brocoli",
+          "note": "En fleurettes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pistaches-non-salees",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 3,
+          "unite": "c. à s.",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Blanchir le brocoli 6 à 8 minutes et refroidir.",
+        "Mixer avec pistaches et citron.",
+        "Ajouter basilic et huile.",
+        "Réfrigérer 10 minutes."
+      ],
+      "conseils": [
+        "Refroidir le brocoli avant le basilic."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pistaches",
+          "par": "Graines de tournesol",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 105,
+        "proteines_g": 3,
+        "glucides_g": 5,
+        "sucres_g": 2,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 2,
+        "sodium_mg": 20,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r490-pesto-de-brocoli-pistache-et-citron.jpg",
+        "alt": "Pesto de brocoli, pistache et citron"
+      },
+      "seo": {
+        "titre": "Pesto de brocoli, pistache et citron",
+        "meta_description": "Un pesto de brocoli, pistache, citron, basilic et huile d'olive.",
+        "mots_cles": [
+          "brocoli",
+          "pistaches",
+          "citron"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le brocoli et la pistache distinguent ce pesto de la version roquette-noix existante. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; refroidissement et texture à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.55,
+          "active_minutes": 15,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r491",
+      "slug": "sauce-aux-prunes-gingembre-et-sesame",
+      "titre": "Sauce aux prunes, gingembre et sésame",
+      "categorie": "sauce",
+      "description": "Une sauce compotée de prunes, gingembre, sésame et vinaigre de riz.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 12,
+        "repos": 10,
+        "total": 34
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "sauce",
+        "compotage-court"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "prune",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "prunes",
+          "note": "Dénoyautées, en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "gingembre-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "gingembre frais",
+          "note": "Râpé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-sesame",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "graines de sésame",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "vinaigre-riz",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de riz",
+          "note": "Non assaisonné",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les prunes et gingembre 10 à 12 minutes.",
+        "Écraser grossièrement.",
+        "Ajouter vinaigre et sésame.",
+        "Refroidir 10 minutes avant service."
+      ],
+      "conseils": [
+        "Ajuster le vinaigre selon l'acidité des prunes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Sésame",
+          "par": "Graines de pavot",
+          "note": "Retire le sésame"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 45,
+        "proteines_g": 1,
+        "glucides_g": 9,
+        "sucres_g": 7,
+        "lipides_g": 1,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 1,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r491-sauce-aux-prunes-gingembre-et-sesame.jpg",
+        "alt": "Sauce aux prunes, gingembre et sésame"
+      },
+      "seo": {
+        "titre": "Sauce aux prunes, gingembre et sésame",
+        "meta_description": "Une sauce compotée de prunes, gingembre, sésame et vinaigre de riz.",
+        "mots_cles": [
+          "prunes",
+          "gingembre",
+          "sésame"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Sauce fruitée aux prunes sans équivalent dans le catalogue actuel. Formulation à tester avant publication.",
+          "caution": "Contient sésame; acidité et concentration du fruit à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.35,
+          "active_minutes": 15,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r492",
+      "slug": "creme-de-petits-pois-menthe-et-noix-de-cajou",
+      "titre": "Crème de petits pois, menthe et noix de cajou",
+      "categorie": "sauce",
+      "description": "Une crème de petits pois, menthe, noix de cajou et citron.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 8,
+        "repos": 10,
+        "total": 30
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "sauce",
+        "mixage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "petits-pois",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petits pois",
+          "note": "",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix-cajou",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix de cajou",
+          "note": "Trempées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 80,
+          "unite": "ml",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les petits pois 6 à 8 minutes et refroidir.",
+        "Mixer avec cajou et citron.",
+        "Ajouter eau et menthe.",
+        "Réfrigérer 10 minutes."
+      ],
+      "conseils": [
+        "Refroidir avant d'ajouter la menthe."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix de cajou",
+          "par": "Haricots blancs",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 95,
+        "proteines_g": 5,
+        "glucides_g": 10,
+        "sucres_g": 3,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 4,
+        "sodium_mg": 20,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r492-creme-de-petits-pois-menthe-et-noix-de-cajou.jpg",
+        "alt": "Crème de petits pois, menthe et noix de cajou"
+      },
+      "seo": {
+        "titre": "Crème de petits pois, menthe et noix de cajou",
+        "meta_description": "Une crème de petits pois, menthe, noix de cajou et citron.",
+        "mots_cles": [
+          "petits pois",
+          "menthe",
+          "noix de cajou"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les petits pois servent de base à une sauce crémeuse distincte des houmous et pestos existants. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; trempage, froid et texture à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.5,
+          "active_minutes": 15,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r493",
+      "slug": "salsa-de-grenade-persil-et-sumac",
+      "titre": "Salsa de grenade, persil et sumac",
+      "categorie": "sauce",
+      "description": "Une salsa crue de grenade, persil, sumac, oignon rouge et citron.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 0,
+        "repos": 15,
+        "total": 30
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "sauce",
+        "hachage-a-cru"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "graines-grenade",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de grenade",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 25,
+          "unite": "g",
+          "quantite_normalisee": 25,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "sumac-moulu",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "sumac moulu",
+          "note": "Sans sel ajouté",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "oignon-rouge",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oignon rouge",
+          "note": "Haché",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Hacher persil et oignon.",
+        "Mélanger avec grenade et sumac.",
+        "Ajouter citron et huile.",
+        "Laisser reposer 15 minutes au frais."
+      ],
+      "conseils": [
+        "Choisir un sumac sans sel ajouté."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Grenade",
+          "par": "Orange en dés",
+          "note": "Profil différent"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 55,
+        "proteines_g": 1,
+        "glucides_g": 8,
+        "sucres_g": 6,
+        "lipides_g": 2,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 1,
+        "sodium_mg": 10,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r493-salsa-de-grenade-persil-et-sumac.jpg",
+        "alt": "Salsa de grenade, persil et sumac"
+      },
+      "seo": {
+        "titre": "Salsa de grenade, persil et sumac",
+        "meta_description": "Une salsa crue de grenade, persil, sumac, oignon rouge et citron.",
+        "mots_cles": [
+          "grenade",
+          "persil",
+          "sumac"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La grenade reste entière dans une salsa herbacée, et non dans une sauce au tahini ou une salade. Formulation à tester avant publication.",
+          "caution": "Hygiène du cru, sumac et conservation à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 15,
+          "equipment": [],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r494",
+      "slug": "sauce-chaude-de-carotte-safran-et-orange",
+      "titre": "Sauce chaude de carotte, safran et orange",
+      "categorie": "sauce",
+      "description": "Une sauce chaude de carotte, safran, orange et gingembre.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 25,
+        "repos": 5,
+        "total": 42
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "sauce",
+        "cuisson-puis-mixage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "carotte",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "carottes",
+          "note": "En rondelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "safran-filaments",
+          "quantite": 0.1,
+          "unite": "g",
+          "quantite_normalisee": 0.1,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "filaments de safran",
+          "note": "À peser",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Jus et zeste",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "gingembre-frais",
+          "quantite": 10,
+          "unite": "g",
+          "quantite_normalisee": 10,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "gingembre frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 450,
+          "unite": "ml",
+          "quantite_normalisee": 450,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire carottes et gingembre 20 à 25 minutes.",
+        "Infuser le safran dans deux cuillères de liquide.",
+        "Mixer avec orange et infusion.",
+        "Ajouter huile et reposer 5 minutes."
+      ],
+      "conseils": [
+        "Peser le safran et mixer chaud avec précaution."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Orange",
+          "par": "Mandarine",
+          "note": "Utiliser deux fruits"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 55,
+        "proteines_g": 1,
+        "glucides_g": 9,
+        "sucres_g": 6,
+        "lipides_g": 2,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 3,
+        "sodium_mg": 20,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r494-sauce-chaude-de-carotte-safran-et-orange.jpg",
+        "alt": "Sauce chaude de carotte, safran et orange"
+      },
+      "seo": {
+        "titre": "Sauce chaude de carotte, safran et orange",
+        "meta_description": "Une sauce chaude de carotte, safran, orange et gingembre.",
+        "mots_cles": [
+          "carottes",
+          "safran",
+          "orange"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Sauce chaude carotte-safran conçue comme condiment, différente du velouté de carotte existant. Formulation à tester avant publication.",
+          "caution": "Safran, mixage chaud et équilibre orange-carotte à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.4,
+          "active_minutes": 16,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r495",
+      "slug": "chutney-frais-de-poire-celeri-et-noix",
+      "titre": "Chutney frais de poire, céleri et noix",
+      "categorie": "sauce",
+      "description": "Un chutney frais de poire, céleri, noix et vinaigre de cidre.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 0,
+        "repos": 20,
+        "total": 35
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "sauce",
+        "hachage-et-maceration"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "En petits dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "celeri-branche",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "branches de céleri",
+          "note": "Hachées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "noix",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Hachées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "vinaigre-cidre",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de cidre",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Couper poire et céleri en petits dés.",
+        "Hacher les noix.",
+        "Mélanger avec le vinaigre.",
+        "Macérer 20 minutes au frais."
+      ],
+      "conseils": [
+        "Préparer avec des ustensiles propres et servir rapidement."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 60,
+        "proteines_g": 1,
+        "glucides_g": 7,
+        "sucres_g": 5,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 1,
+        "sodium_mg": 20,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r495-chutney-frais-de-poire-celeri-et-noix.jpg",
+        "alt": "Chutney frais de poire, céleri et noix"
+      },
+      "seo": {
+        "titre": "Chutney frais de poire, céleri et noix",
+        "meta_description": "Un chutney frais de poire, céleri, noix et vinaigre de cidre.",
+        "mots_cles": [
+          "poire",
+          "céleri branche",
+          "noix"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Chutney non cuit poire-céleri, absent des condiments déjà catalogués. Formulation à tester avant publication.",
+          "caution": "Contient céleri et fruits à coque; cru, oxydation et froid à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.4,
+          "active_minutes": 15,
+          "equipment": [],
+          "allergens": [
+            "celeri",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r496",
+      "slug": "sauce-de-courge-rotie-au-miso-et-sauge",
+      "titre": "Sauce de courge rôtie au miso et sauge",
+      "categorie": "sauce",
+      "description": "Une sauce de courge rôtie au miso blanc, sauge et citron.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 32,
+        "repos": 5,
+        "total": 52
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "sauce",
+        "rotissage-puis-mixage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "courge-butternut",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "courge",
+          "note": "En cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "miso-blanc",
+          "quantite": 45,
+          "unite": "g",
+          "quantite_normalisee": 45,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "miso blanc",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rôtir courge et sauge 28 à 32 minutes.",
+        "Laisser tiédir 5 minutes.",
+        "Mixer avec miso et citron.",
+        "Ajouter un peu d'eau si nécessaire."
+      ],
+      "conseils": [
+        "Le miso est salé; ne pas saler avant dégustation."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Miso blanc",
+          "par": "Purée de haricots blancs",
+          "note": "Retire le soja, texture différente"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 70,
+        "proteines_g": 2,
+        "glucides_g": 10,
+        "sucres_g": 3,
+        "lipides_g": 3,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 2,
+        "sodium_mg": 170,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r496-sauce-de-courge-rotie-au-miso-et-sauge.jpg",
+        "alt": "Sauce de courge rôtie au miso et sauge"
+      },
+      "seo": {
+        "titre": "Sauce de courge rôtie au miso et sauge",
+        "meta_description": "Une sauce de courge rôtie au miso blanc, sauge et citron.",
+        "mots_cles": [
+          "courge",
+          "miso blanc",
+          "sauge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Courge, miso et sauge créent une sauce automnale sans équivalent dans les recettes existantes. Formulation à tester avant publication.",
+          "caution": "Contient soja; miso fermenté salé et mixage chaud à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 18,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r497",
+      "slug": "vinaigrette-framboise-basilic-et-graines-de-chanvre",
+      "titre": "Vinaigrette framboise, basilic et graines de chanvre",
+      "categorie": "sauce",
+      "description": "Une vinaigrette de framboise, basilic, chanvre et balsamique.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 0,
+        "repos": 10,
+        "total": 20
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "sauce",
+        "emulsion-a-froid"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "framboise",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "framboises",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-chanvre-decortiquees",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de chanvre décortiquées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-balsamique",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre balsamique",
+          "note": "Produit déclaré avec sulfites",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sulfites"
+          ]
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 3,
+          "unite": "c. à s.",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mixer les framboises et le balsamique.",
+        "Ajouter huile et graines de chanvre.",
+        "Mixer brièvement avec le basilic.",
+        "Réfrigérer 10 minutes."
+      ],
+      "conseils": [
+        "Vérifier l'étiquette du vinaigre pour les sulfites."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Balsamique",
+          "par": "Vinaigre de cidre",
+          "note": "Peut retirer les sulfites selon le produit"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 70,
+        "proteines_g": 1,
+        "glucides_g": 3,
+        "sucres_g": 2,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 1,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r497-vinaigrette-framboise-basilic-et-graines-de-chanvre.jpg",
+        "alt": "Vinaigrette framboise, basilic et graines de chanvre"
+      },
+      "seo": {
+        "titre": "Vinaigrette framboise, basilic et graines de chanvre",
+        "meta_description": "Une vinaigrette de framboise, basilic, chanvre et balsamique.",
+        "mots_cles": [
+          "framboises",
+          "basilic",
+          "graines de chanvre"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Émulsion fruitée framboise-chanvre distincte de la vinaigrette curcuma-tahini existante. Formulation à tester avant publication.",
+          "caution": "Contient sulfites selon le vinaigre; étiquette, acidité et froid à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 10,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "sulfites"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r498",
+      "slug": "sauce-aux-herbes-capres-et-amandes",
+      "titre": "Sauce aux herbes, câpres et amandes",
+      "categorie": "sauce",
+      "description": "Une sauce hachée de persil, aneth, câpres, amandes et citron.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 0,
+        "repos": 10,
+        "total": 25
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "sauce",
+        "hachage-au-couteau"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "persil-plat",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "capres",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "câpres",
+          "note": "Rincées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Hachées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 3,
+          "unite": "c. à s.",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rincer les câpres.",
+        "Hacher herbes et amandes au couteau.",
+        "Mélanger avec citron et huile.",
+        "Reposer 10 minutes au frais."
+      ],
+      "conseils": [
+        "Goûter avant de saler à cause des câpres."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Graines de tournesol",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 95,
+        "proteines_g": 2,
+        "glucides_g": 3,
+        "sucres_g": 1,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 2,
+        "sodium_mg": 180,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r498-sauce-aux-herbes-capres-et-amandes.jpg",
+        "alt": "Sauce aux herbes, câpres et amandes"
+      },
+      "seo": {
+        "titre": "Sauce aux herbes, câpres et amandes",
+        "meta_description": "Une sauce hachée de persil, aneth, câpres, amandes et citron.",
+        "mots_cles": [
+          "persil",
+          "aneth",
+          "câpres"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Sauce hachée câpres-amandes, différente des gremolatas de recettes et du pesto actuel. Formulation à tester avant publication.",
+          "caution": "Contient fruits à coque; sodium des câpres et hygiène des herbes à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 15,
+          "equipment": [],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r499",
+      "slug": "creme-de-panais-au-raifort-et-pomme",
+      "titre": "Crème de panais au raifort et pomme",
+      "categorie": "sauce",
+      "description": "Une crème de panais au raifort, pomme et yaourt nature.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 25,
+        "repos": 10,
+        "total": 47
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "sauce",
+        "cuisson-puis-mixage"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "panais",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "panais",
+          "note": "En cubes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "raifort-rape",
+          "quantite": 2,
+          "unite": "c. à c.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "raifort râpé",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "pomme",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pomme",
+          "note": "En dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-nature",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "eau",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire panais et pomme 20 à 25 minutes.",
+        "Égoutter et laisser tiédir.",
+        "Mixer avec yaourt et une cuillère de raifort.",
+        "Ajuster le raifort puis refroidir 10 minutes."
+      ],
+      "conseils": [
+        "Ajouter le raifort progressivement."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Yaourt nature",
+          "par": "Yaourt de soja",
+          "note": "Remplace lait par soja"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 60,
+        "proteines_g": 3,
+        "glucides_g": 10,
+        "sucres_g": 5,
+        "lipides_g": 1,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 2,
+        "sodium_mg": 35,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r499-creme-de-panais-au-raifort-et-pomme.jpg",
+        "alt": "Crème de panais au raifort et pomme"
+      },
+      "seo": {
+        "titre": "Crème de panais au raifort et pomme",
+        "meta_description": "Une crème de panais au raifort, pomme et yaourt nature.",
+        "mots_cles": [
+          "panais",
+          "raifort",
+          "pomme"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Panais, raifort et pomme composent une sauce crémeuse absente du catalogue. Formulation à tester avant publication.",
+          "caution": "Contient lait; mixage tiède, raifort et chaîne du froid à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.4,
+          "active_minutes": 16,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r500",
+      "slug": "sauce-tomate-crue-aux-cerises-et-au-basilic",
+      "titre": "Sauce tomate crue aux cerises et au basilic",
+      "categorie": "sauce",
+      "description": "Une sauce tomate crue aux cerises, basilic, cidre et huile d'olive.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 0,
+        "repos": 15,
+        "total": 30
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "sauce",
+        "mixage-a-froid"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "tomate",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates mûres",
+          "note": "En morceaux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cerise",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cerises",
+          "note": "Dénoyautées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-cidre",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de cidre",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Dénoyauter soigneusement les cerises.",
+        "Mixer tomates, cerises et vinaigre par impulsions.",
+        "Ajouter basilic et huile.",
+        "Réfrigérer 15 minutes et servir le jour même."
+      ],
+      "conseils": [
+        "Utiliser des fruits intacts et des ustensiles très propres."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Cerises",
+          "par": "Prunes",
+          "note": "En petits dés"
+        }
+      ],
+      "conservation": "À consommer dans les 12 heures.",
+      "nutrition_par_portion": {
+        "calories": 45,
+        "proteines_g": 1,
+        "glucides_g": 7,
+        "sucres_g": 5,
+        "lipides_g": 2,
+        "acides_gras_satures_g": 0,
+        "fibres_g": 1,
+        "sodium_mg": 10,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale selon la portion annoncée",
+          "provenance": "Aucune table reliée ni rendement mesuré; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r500-sauce-tomate-crue-aux-cerises-et-au-basilic.jpg",
+        "alt": "Sauce tomate crue aux cerises et au basilic"
+      },
+      "seo": {
+        "titre": "Sauce tomate crue aux cerises et au basilic",
+        "meta_description": "Une sauce tomate crue aux cerises, basilic, cidre et huile d'olive.",
+        "mots_cles": [
+          "tomates",
+          "cerises",
+          "basilic"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r351-r500",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La cerise fraîche apporte une note fruitée originale à une sauce tomate non cuite. Formulation à tester avant publication.",
+          "caution": "Sauce crue, noyaux, hygiène et conservation très courte à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.4,
+          "active_minutes": 15,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    }
+  ]
+}
