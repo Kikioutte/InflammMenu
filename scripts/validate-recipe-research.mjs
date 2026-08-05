@@ -47,7 +47,15 @@ assert(concepts.length === 450, `450 concepts attendus, ${concepts.length} trouv
 
 const catalogue = JSON.parse(await readFile(new URL("src/data/recettes-anti-inflammatoires.json", root), "utf8"));
 const recipesSource = await readFile(new URL("src/recipes.ts", root), "utf8");
-const existingTitles = new Set(catalogue.recipes.map((recipe) => normalize(recipe.titre)));
+const conceptIds = new Set(concepts.map((concept) => concept.id));
+// Once a validated research batch is merged, its own title is expected in the
+// production catalogue. Keep comparing it with every pre-existing recipe and
+// with the other concepts, while excluding that exact integrated entry.
+const existingTitles = new Set(
+  catalogue.recipes
+    .filter((recipe) => !conceptIds.has(recipe.id))
+    .map((recipe) => normalize(recipe.titre)),
+);
 for (const match of recipesSource.matchAll(/^\s+title: "([^"]+)",$/gm)) existingTitles.add(normalize(match[1]));
 
 const ids = new Set();
