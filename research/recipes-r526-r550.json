@@ -1,0 +1,474 @@
+[
+  {
+    "id": "r526",
+    "titre": "Khichdi de quinoa, haricots mungo et courgette",
+    "categorie": "plat",
+    "technique": "cuisson douce par absorption",
+    "ingredients_principaux": [
+      "quinoa",
+      "haricots mungo",
+      "courgette",
+      "cumin"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "printemps",
+      "été"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le quinoa et la courgette composent une interprétation culinaire originale du khichdi."
+  },
+  {
+    "id": "r527",
+    "titre": "Aubergines farcies aux lentilles corail et amarante",
+    "categorie": "plat",
+    "technique": "rôtissage puis gratinage",
+    "ingredients_principaux": [
+      "aubergine",
+      "lentilles corail",
+      "amarante",
+      "coriandre"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "été",
+      "automne"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "La farce lentilles-amarante distingue ce plat des aubergines farcies déjà étudiées."
+  },
+  {
+    "id": "r528",
+    "titre": "Pilaf de millet au gombo, petits pois et noix de coco",
+    "categorie": "plat",
+    "technique": "pilaf en cocotte",
+    "ingredients_principaux": [
+      "millet",
+      "gombo",
+      "petits pois",
+      "noix de coco"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "été",
+      "automne"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le gombo et une quantité mesurée de coco donnent un pilaf végétal distinct."
+  },
+  {
+    "id": "r529",
+    "titre": "Haricots rouges à la courge et riz rouge façon rajma",
+    "categorie": "plat",
+    "technique": "mijotage et cuisson séparée",
+    "ingredients_principaux": [
+      "haricots rouges",
+      "courge",
+      "riz rouge",
+      "tomate"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "La courge rôtie et le riz rouge renouvellent l'association culinaire inspirée du rajma."
+  },
+  {
+    "id": "r530",
+    "titre": "Tofu tikka au chou-fleur et orge citronnée",
+    "categorie": "plat",
+    "technique": "marinade puis cuisson au four",
+    "ingredients_principaux": [
+      "tofu",
+      "chou-fleur",
+      "orge",
+      "paprika"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le tofu et le chou-fleur rôtissent ensemble avant d'être servis sur une orge citronnée."
+  },
+  {
+    "id": "r531",
+    "titre": "Paneer poêlé aux épinards et sarrasin à la cardamome",
+    "categorie": "plat",
+    "technique": "poêlage et cuisson par absorption",
+    "ingredients_principaux": [
+      "paneer",
+      "épinards",
+      "sarrasin",
+      "cardamome"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "automne",
+      "hiver",
+      "printemps"
+    ],
+    "famille_regime": "vegetarien",
+    "note_originalite": "Le sarrasin à la cardamome accompagne un paneer aux épinards sans sauce crémeuse."
+  },
+  {
+    "id": "r532",
+    "titre": "Pois chiches mijotés à la courgette, tomate et aneth",
+    "categorie": "plat",
+    "technique": "mijotage en cocotte",
+    "ingredients_principaux": [
+      "pois chiches",
+      "courgette",
+      "tomate",
+      "aneth"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "été",
+      "automne"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "L'aneth frais et la courgette construisent un mijoté léger distinct des currys existants."
+  },
+  {
+    "id": "r533",
+    "titre": "Tempeh braisé au fenouil, petits pois et cumin",
+    "categorie": "plat",
+    "technique": "braisage court",
+    "ingredients_principaux": [
+      "tempeh",
+      "fenouil",
+      "petits pois",
+      "cumin"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "printemps",
+      "été"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le fenouil braisé apporte une base aromatique originale au tempeh."
+  },
+  {
+    "id": "r534",
+    "titre": "Lentilles noires, betterave et riz basmati en cocotte",
+    "categorie": "plat",
+    "technique": "cuisson séparée puis assemblage",
+    "ingredients_principaux": [
+      "lentilles noires",
+      "betterave",
+      "riz basmati",
+      "coriandre"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "La betterave rôtie est assemblée avec lentilles noires et riz plutôt que mixée."
+  },
+  {
+    "id": "r535",
+    "titre": "Haricots adzuki à la patate douce et feuilles de curry",
+    "categorie": "plat",
+    "technique": "mijotage",
+    "ingredients_principaux": [
+      "haricots adzuki",
+      "patate douce",
+      "feuilles de curry",
+      "tomate"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Les adzuki et la patate douce composent une base différente des dhals de lentilles."
+  },
+  {
+    "id": "r536",
+    "titre": "Palets vapeur de riz et urad aux légumes",
+    "categorie": "plat",
+    "technique": "trempage réfrigéré puis cuisson vapeur",
+    "ingredients_principaux": [
+      "riz",
+      "haricots urad",
+      "carotte",
+      "petits pois"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "toute_annee"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Des palets vapeur non fermentés combinent riz, urad et légumes dans une forme originale."
+  },
+  {
+    "id": "r537",
+    "titre": "Poivrons farcis au mungo, riz complet et coriandre",
+    "categorie": "plat",
+    "technique": "cuisson puis rôtissage",
+    "ingredients_principaux": [
+      "poivron",
+      "haricots mungo",
+      "riz complet",
+      "coriandre"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "été",
+      "automne"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "La farce de mungo entier et riz complet évite les bases de viande ou de fromage."
+  },
+  {
+    "id": "r538",
+    "titre": "Galettes de pois chiches aux poireaux et carottes",
+    "categorie": "plat",
+    "technique": "cuisson à la poêle",
+    "ingredients_principaux": [
+      "farine de pois chiches",
+      "poireau",
+      "carotte",
+      "coriandre"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "automne",
+      "hiver",
+      "printemps"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Des galettes épaisses garnies de poireau et carotte servent de plat complet."
+  },
+  {
+    "id": "r539",
+    "titre": "Chou pointu braisé à la pomme et graines d'ajowan",
+    "categorie": "accompagnement",
+    "technique": "braisage doux",
+    "ingredients_principaux": [
+      "chou pointu",
+      "pomme",
+      "ajowan",
+      "cumin"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "printemps",
+      "automne"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "L'ajowan est utilisé en quantité culinaire mesurée dans un braisage pomme-chou."
+  },
+  {
+    "id": "r540",
+    "titre": "Radis rôtis au cumin et sésame noir",
+    "categorie": "accompagnement",
+    "technique": "rôtissage",
+    "ingredients_principaux": [
+      "radis",
+      "cumin",
+      "sésame noir",
+      "citron"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "printemps",
+      "été"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le radis devient fondant au four et reçoit le sésame seulement au service."
+  },
+  {
+    "id": "r541",
+    "titre": "Orge aux petits pois, fenouil et cardamome",
+    "categorie": "accompagnement",
+    "technique": "cuisson par absorption",
+    "ingredients_principaux": [
+      "orge",
+      "petits pois",
+      "fenouil",
+      "cardamome"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "printemps",
+      "été"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Ce pilaf d'orge associe fenouil frais et cardamome sans produits laitiers."
+  },
+  {
+    "id": "r542",
+    "titre": "Écrasé de courge aux graines de moutarde et citron vert",
+    "categorie": "accompagnement",
+    "technique": "rôtissage puis écrasement",
+    "ingredients_principaux": [
+      "courge",
+      "graines de moutarde",
+      "citron vert",
+      "coriandre"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "La moutarde toastée et le citron vert assaisonnent une courge simplement écrasée."
+  },
+  {
+    "id": "r543",
+    "titre": "Makhana grillé au paprika doux et cumin",
+    "categorie": "snack",
+    "technique": "grillage à la poêle",
+    "ingredients_principaux": [
+      "graines de lotus soufflées",
+      "paprika",
+      "cumin",
+      "huile d'olive"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "toute_annee"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Les graines de lotus soufflées sont grillées sans friture ni enrobage sucré."
+  },
+  {
+    "id": "r544",
+    "titre": "Bouchées de pois chiches, épinards et sésame",
+    "categorie": "snack",
+    "technique": "façonnage puis cuisson au four",
+    "ingredients_principaux": [
+      "pois chiches",
+      "épinards",
+      "sésame",
+      "coriandre"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "toute_annee"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Des bouchées cuites combinent pois chiches entiers écrasés et épinards."
+  },
+  {
+    "id": "r545",
+    "titre": "Carrés d'avoine, datte, amande et cardamome",
+    "categorie": "snack",
+    "technique": "cuisson au four",
+    "ingredients_principaux": [
+      "avoine",
+      "datte",
+      "amande",
+      "cardamome"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "toute_annee"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Les dattes lient des carrés cuits sans sirop ni sucre ajouté."
+  },
+  {
+    "id": "r546",
+    "titre": "Crackers de riz et lentilles corail au cumin",
+    "categorie": "snack",
+    "technique": "cuisson au four",
+    "ingredients_principaux": [
+      "farine de riz",
+      "lentilles corail",
+      "cumin",
+      "coriandre"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "toute_annee"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Une purée de lentilles cuites et farine de riz forme des crackers fins."
+  },
+  {
+    "id": "r547",
+    "titre": "Halva léger de semoule complète à la poire",
+    "categorie": "dessert",
+    "technique": "torréfaction puis cuisson",
+    "ingredients_principaux": [
+      "semoule complète",
+      "poire",
+      "cardamome",
+      "pistache"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "La poire apporte l'essentiel de la douceur à une semoule servie en petite portion."
+  },
+  {
+    "id": "r548",
+    "titre": "Yaourt à la mangue rôtie, chia et cardamome",
+    "categorie": "dessert",
+    "technique": "rôtissage puis assemblage froid",
+    "ingredients_principaux": [
+      "mangue",
+      "yaourt",
+      "chia",
+      "cardamome"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "printemps",
+      "été"
+    ],
+    "famille_regime": "vegetarien",
+    "note_originalite": "La mangue rôtie remplace les coulis sucrés dans ce dessert lacté."
+  },
+  {
+    "id": "r549",
+    "titre": "Riz au four à la pomme, safran et boisson de riz",
+    "categorie": "dessert",
+    "technique": "cuisson lente au four",
+    "ingredients_principaux": [
+      "riz rond",
+      "pomme",
+      "safran",
+      "boisson de riz"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le riz cuit lentement avec pomme et safran sans crème ni sucre ajouté."
+  },
+  {
+    "id": "r550",
+    "titre": "Chutney frais coriandre, menthe et haricots blancs",
+    "categorie": "sauce",
+    "technique": "mixage à froid",
+    "ingredients_principaux": [
+      "coriandre",
+      "menthe",
+      "haricots blancs",
+      "citron vert"
+    ],
+    "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
+    "saisons": [
+      "printemps",
+      "été"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Les haricots blancs donnent de l'onctuosité à un chutney sans coco ni yaourt."
+  }
+]

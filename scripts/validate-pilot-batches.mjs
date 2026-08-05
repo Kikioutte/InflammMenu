@@ -4,18 +4,17 @@ import { readdir, readFile } from "node:fs/promises";
 import { validateCatalogue } from "./validate-catalogue.mjs";
 
 const researchUrl = new URL("../research/", import.meta.url);
+const researchNames = await readdir(researchUrl);
 const requestedNames = process.argv.slice(2).map((name) => name.replace(/^research\//, ""));
-const names = (requestedNames.length > 0 ? requestedNames : await readdir(researchUrl))
+const names = (requestedNames.length > 0 ? requestedNames : researchNames)
   .filter((name) => /^pilot-r\d{3}-r\d{3}\.draft\.json$/.test(name))
   .sort();
 
 assert.ok(names.length > 0, "Aucun lot pilote trouvé");
 
-const conceptFiles = [
-  "recipes-r051-r200.json",
-  "recipes-r201-r350.json",
-  "recipes-r351-r500.json",
-];
+const conceptFiles = researchNames
+  .filter((name) => /^recipes-r\d{3}-r\d{3}\.json$/.test(name))
+  .sort();
 const concepts = new Map();
 for (const name of conceptFiles) {
   const entries = JSON.parse(await readFile(new URL(name, researchUrl), "utf8"));

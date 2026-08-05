@@ -1,0 +1,492 @@
+[
+  {
+    "id": "r501",
+    "titre": "Riz rouge crémeux à la poire, cardamome et pistaches",
+    "categorie": "petit-dejeuner",
+    "technique": "cuisson douce puis assemblage",
+    "ingredients_principaux": [
+      "riz rouge",
+      "poire",
+      "cardamome",
+      "pistache",
+      "boisson de soja"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le riz rouge et la poire cuite forment un bol matinal distinct des porridges du catalogue."
+  },
+  {
+    "id": "r502",
+    "titre": "Crêpes de lentilles corail à la carotte et coriandre",
+    "categorie": "petit-dejeuner",
+    "technique": "trempage court, mixage et poêlage",
+    "ingredients_principaux": [
+      "lentilles corail",
+      "carotte",
+      "coriandre",
+      "cumin",
+      "citron"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "toute-annee"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Une pâte de lentilles corail non fermentée compose un petit-déjeuner salé inédit."
+  },
+  {
+    "id": "r503",
+    "titre": "Millet salé à la courge, cumin et épinards",
+    "categorie": "petit-dejeuner",
+    "technique": "cuisson crémeuse et poêlée courte",
+    "ingredients_principaux": [
+      "millet",
+      "courge",
+      "épinard",
+      "cumin",
+      "graines de courge"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le millet salé et la courge composent un bol matinal différent des préparations sucrées existantes."
+  },
+  {
+    "id": "r504",
+    "titre": "Sarrasin chaud à la pomme, fenouil et noix",
+    "categorie": "petit-dejeuner",
+    "technique": "torréfaction puis cuisson douce",
+    "ingredients_principaux": [
+      "sarrasin",
+      "pomme",
+      "fenouil",
+      "noix",
+      "boisson de soja"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le fenouil doux rapproche un grain de sarrasin entier et la pomme sans reproduire un granola."
+  },
+  {
+    "id": "r505",
+    "titre": "Galettes de pois cassés aux épinards et ajwain",
+    "categorie": "petit-dejeuner",
+    "technique": "trempage, mixage et cuisson à la poêle",
+    "ingredients_principaux": [
+      "pois cassés",
+      "épinard",
+      "ajwain",
+      "ciboule",
+      "citron"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver",
+      "printemps"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "L'ajwain en quantité culinaire parfume une galette de pois cassés distincte des crêpes de pois chiches."
+  },
+  {
+    "id": "r506",
+    "titre": "Quinoa chaud au coing, safran et amandes",
+    "categorie": "petit-dejeuner",
+    "technique": "pochage du coing et cuisson lente",
+    "ingredients_principaux": [
+      "quinoa",
+      "coing",
+      "safran",
+      "amande",
+      "boisson de soja"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le coing poché et le safran mesuré donnent au quinoa matinal une combinaison absente des concepts précédents."
+  },
+  {
+    "id": "r507",
+    "titre": "Yaourt au raisin rôti, cardamome et graines de courge",
+    "categorie": "petit-dejeuner",
+    "technique": "rôtissage bref puis assemblage",
+    "ingredients_principaux": [
+      "yaourt nature",
+      "raisin",
+      "cardamome",
+      "graines de courge",
+      "millet soufflé"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne"
+    ],
+    "famille_regime": "vegetarien",
+    "note_originalite": "Le raisin rôti et le millet soufflé créent un bol végétarien distinct des yaourts aux fruits crus."
+  },
+  {
+    "id": "r508",
+    "titre": "Gâteaux vapeur de riz complet et lentilles à la courgette",
+    "categorie": "petit-dejeuner",
+    "technique": "trempage, mixage et cuisson vapeur sans fermentation",
+    "ingredients_principaux": [
+      "riz complet",
+      "lentilles jaunes",
+      "courgette",
+      "coriandre",
+      "cumin"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "printemps",
+      "ete"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Une pâte non fermentée cuite en portions vapeur introduit une technique matinale distincte."
+  },
+  {
+    "id": "r509",
+    "titre": "Infusion de pomme, fenouil et cardamome",
+    "categorie": "boisson",
+    "technique": "infusion culinaire puis filtration",
+    "ingredients_principaux": [
+      "pomme",
+      "graines de fenouil",
+      "cardamome",
+      "citron"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Une boisson alimentaire fruitée et filtrée, sans extrait ni positionnement de cure."
+  },
+  {
+    "id": "r510",
+    "titre": "Boisson de soja à l'abricot, rose et cardamome",
+    "categorie": "boisson",
+    "technique": "mixage à froid",
+    "ingredients_principaux": [
+      "boisson de soja",
+      "abricot",
+      "eau de rose culinaire",
+      "cardamome"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "ete"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "L'abricot et une eau de rose alimentaire mesurée composent une boisson sans yaourt ni sucre ajouté."
+  },
+  {
+    "id": "r511",
+    "titre": "Boisson torréfiée d'orge, cacao et cannelle",
+    "categorie": "boisson",
+    "technique": "infusion chaude et filtration",
+    "ingredients_principaux": [
+      "orge torréfiée",
+      "cacao non sucré",
+      "cannelle",
+      "boisson de soja"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "toute-annee"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "L'orge torréfiée infusée donne une boisson distincte des cafés et smoothies du catalogue."
+  },
+  {
+    "id": "r512",
+    "titre": "Boisson chaude de poire, gingembre et avoine",
+    "categorie": "boisson",
+    "technique": "cuisson courte puis mixage",
+    "ingredients_principaux": [
+      "poire",
+      "gingembre",
+      "boisson d'avoine",
+      "vanille"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "La poire cuite mixée produit une boisson alimentaire douce sans concentré ni sucrant."
+  },
+  {
+    "id": "r513",
+    "titre": "Velouté de carotte, lentilles corail et cardamome",
+    "categorie": "soupe",
+    "technique": "mijotage puis mixage",
+    "ingredients_principaux": [
+      "carotte",
+      "lentilles corail",
+      "cardamome",
+      "coriandre",
+      "citron"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "toute-annee"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "La cardamome culinaire distingue ce velouté des soupes de carotte au gingembre."
+  },
+  {
+    "id": "r514",
+    "titre": "Soupe de fenouil, haricots mungo et coriandre",
+    "categorie": "soupe",
+    "technique": "mijotage et mixage partiel",
+    "ingredients_principaux": [
+      "fenouil",
+      "haricots mungo",
+      "coriandre",
+      "cumin",
+      "citron"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le mungo entier et le fenouil produisent une soupe distincte des veloutés de fenouil aux fruits."
+  },
+  {
+    "id": "r515",
+    "titre": "Soupe de betterave, pomme et graines de cumin",
+    "categorie": "soupe",
+    "technique": "rôtissage puis mixage partiel",
+    "ingredients_principaux": [
+      "betterave",
+      "pomme",
+      "cumin",
+      "pois chiches",
+      "aneth"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Betterave rôtie, pomme et cumin créent une soupe non lactée différente des variantes au raifort."
+  },
+  {
+    "id": "r516",
+    "titre": "Crème de chou-fleur, haricots blancs et safran",
+    "categorie": "soupe",
+    "technique": "cuisson vapeur puis mixage",
+    "ingredients_principaux": [
+      "chou-fleur",
+      "haricots blancs",
+      "safran",
+      "poireau",
+      "citron"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le safran mesuré et le haricot blanc donnent une crème distincte de la version aux amandes."
+  },
+  {
+    "id": "r517",
+    "titre": "Velouté de courgette, pois chiches et menthe douce",
+    "categorie": "soupe",
+    "technique": "cuisson courte puis mixage",
+    "ingredients_principaux": [
+      "courgette",
+      "pois chiches",
+      "menthe",
+      "coriandre",
+      "citron"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "printemps",
+      "ete"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Une soupe verte liée au pois chiche, distincte des versions aux petits pois ou pistaches."
+  },
+  {
+    "id": "r518",
+    "titre": "Soupe de potiron, riz rouge et fenugrec doux",
+    "categorie": "soupe",
+    "technique": "mijotage sans mixage complet",
+    "ingredients_principaux": [
+      "potiron",
+      "riz rouge",
+      "fenugrec",
+      "épinard",
+      "citron"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le riz rouge entier et une dose modérée de fenugrec structurent une soupe plutôt qu'un velouté."
+  },
+  {
+    "id": "r519",
+    "titre": "Bol de riz complet, raisin rôti et pois chiches au cumin",
+    "categorie": "salade",
+    "technique": "rôtissage et assemblage tiède",
+    "ingredients_principaux": [
+      "riz complet",
+      "raisin",
+      "pois chiches",
+      "cumin",
+      "coriandre"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le raisin rôti et le cumin donnent au bol de riz un profil distinct des salades existantes."
+  },
+  {
+    "id": "r520",
+    "titre": "Bol de sorgho, concombre et grenade à la menthe",
+    "categorie": "salade",
+    "technique": "cuisson du grain et assemblage froid",
+    "ingredients_principaux": [
+      "sorgho",
+      "concombre",
+      "grenade",
+      "menthe",
+      "citron"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "ete",
+      "automne"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Sorgho, grenade et concombre forment un bol frais sans reprendre le quinoa ni le millet."
+  },
+  {
+    "id": "r521",
+    "titre": "Lentilles corail fermes, carotte et pomme verte à la coriandre",
+    "categorie": "salade",
+    "technique": "cuisson courte et refroidissement rapide",
+    "ingredients_principaux": [
+      "lentilles corail",
+      "carotte",
+      "pomme verte",
+      "coriandre",
+      "cumin"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "toute-annee"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Les lentilles corail sont volontairement gardées fermes dans une salade croquante inédite."
+  },
+  {
+    "id": "r522",
+    "titre": "Millet, chou-fleur rôti et abricot au curcuma doux",
+    "categorie": "salade",
+    "technique": "rôtissage et assemblage tiède",
+    "ingredients_principaux": [
+      "millet",
+      "chou-fleur",
+      "abricot",
+      "curcuma",
+      "persil"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "printemps",
+      "ete"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Le curcuma reste une épice culinaire mesurée dans une salade de millet et chou-fleur, sans dispositif d'absorption."
+  },
+  {
+    "id": "r523",
+    "titre": "Orge, betterave et yaourt à la cardamome salée",
+    "categorie": "salade",
+    "technique": "rôtissage, cuisson du grain et assemblage",
+    "ingredients_principaux": [
+      "orge",
+      "betterave",
+      "yaourt",
+      "cardamome",
+      "aneth"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "automne",
+      "hiver"
+    ],
+    "famille_regime": "vegetarien",
+    "note_originalite": "Une sauce salée au yaourt et à la cardamome distingue ce bol des salades de betterave au chèvre."
+  },
+  {
+    "id": "r524",
+    "titre": "Bol de mungo, chou pointu et orange au sésame",
+    "categorie": "salade",
+    "technique": "cuisson du mungo et assemblage croquant",
+    "ingredients_principaux": [
+      "haricots mungo",
+      "chou pointu",
+      "orange",
+      "sésame",
+      "coriandre"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "hiver",
+      "printemps"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Mungo, chou pointu et orange forment un bol différent des salades au pak-choï et clémentine."
+  },
+  {
+    "id": "r525",
+    "titre": "Ragoût de mungo, aubergine et blettes au curcuma doux",
+    "categorie": "plat",
+    "technique": "mijotage couvert",
+    "ingredients_principaux": [
+      "haricots mungo",
+      "aubergine",
+      "blette",
+      "curcuma",
+      "tomate"
+    ],
+    "inspiration_culinaire": "Adaptation originale InflammMenu inspirée de traditions culinaires indiennes associées à l'Ayurveda, sans revendication d'authenticité traditionnelle ni finalité thérapeutique.",
+    "saisons": [
+      "ete",
+      "automne"
+    ],
+    "famille_regime": "vegetalien",
+    "note_originalite": "Un ragoût complet de mungo, aubergine et blettes distinct des dals, avec curcuma strictement culinaire."
+  }
+]
