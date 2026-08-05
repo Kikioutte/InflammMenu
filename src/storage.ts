@@ -293,8 +293,8 @@ export async function registerOfflineSupport(): Promise<ServiceWorkerRegistratio
     if (document.readyState === "loading") {
       await new Promise<void>((resolve) => window.addEventListener("load", () => resolve(), { once: true }));
     }
-    return await navigator.serviceWorker.register("/sw.js", {
-      scope: "/",
+    return await navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`, {
+      scope: import.meta.env.BASE_URL,
       updateViaCache: "none",
     });
   } catch {
