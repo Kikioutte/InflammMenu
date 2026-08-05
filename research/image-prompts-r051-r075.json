@@ -4,21 +4,21 @@
     "titre": "Avoine au four, poire, romarin et noisettes",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Avoine au four, poire, romarin et noisettes\"\nSubject: a round cream ceramic baking dish filled with golden baked oat porridge made with oat drink, with baked pear wedges set into the surface, scattered toasted hazelnut halves, and a few small rosemary sprigs; the oats must look softly set inside with lightly browned edges, exactly like an oven-baked breakfast\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view, the whole baking dish clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, warm beige oats, pale pear, toasted hazelnut tones\nConstraints: the only edible ingredients visible are oats, pear, hazelnuts, rosemary, and the baked oat-drink mixture; realistic portion and cooking result; simple appetizing presentation; no misleading garnish\nAvoid: any extra fruit, syrup, honey, sugar dusting, cinnamon, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, impossible geometry, repeated garnish, clutter",
     "slug_fichier": "r051-avoine-au-four-poire-romarin-noisettes.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r052",
     "titre": "Porridge de quinoa à l’abricot, tahini et cardamome",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Porridge de quinoa à l’abricot, tahini et cardamome\"\nSubject: a cream ceramic breakfast bowl of softly cooked quinoa porridge made with soy drink, topped with ripe apricot slices, a restrained tahini ribbon, and a light visible dusting of cardamom; the individual quinoa grains remain recognizable within a creamy texture\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead three-quarter view, bowl centered and clearly readable at mobile thumbnail size\nLighting/mood: soft natural window light, warm calm atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, ivory quinoa, golden-orange apricot, beige tahini\nConstraints: the only edible ingredients visible are quinoa, apricot, tahini, cardamom, and the soy-drink porridge; realistic breakfast portion; no misleading garnish\nAvoid: nuts, seeds, berries, mint, syrup, honey, flowers, text, logo, watermark, hands, people, utensils, plastic-looking food, excessive gloss, impossible geometry, repeated garnish, clutter",
     "slug_fichier": "r052-porridge-quinoa-abricot-tahini-cardamome.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r053",
     "titre": "Bol de millet au kiwi, graines de courge et citron vert",
     "prompt": "Use case: photorealistic-natural\nAsset type: square recipe card image for the InflammMenu web app\nPrimary request: photograph the finished dish \"Bol de millet au kiwi, graines de courge et citron vert\"\nSubject: a cream ceramic bowl of cooked millet with soy yogurt, arranged with fresh kiwi slices, pumpkin seeds, and small pieces of lime; the millet grains should remain visible and the bowl should look fresh, creamy, and lightly acidic rather than dessert-like\nStyle/medium: premium natural editorial food photography, realistic food texture, visually consistent with the existing InflammMenu pilot images\nComposition/framing: square image, close slightly overhead view, clean bowl composition readable at mobile thumbnail size\nLighting/mood: soft natural window light, fresh calm morning atmosphere, subtle realistic shadows\nColor palette: cream ceramic, light mineral background, muted sage linen, pale millet and yogurt, vivid natural kiwi green, deep green pumpkin seeds\nConstraints: show only millet, kiwi, pumpkin seeds, lime, and soy yogurt as edible elements; realistic portion; simple appetizing arrangement; no misleading garnish\nAvoid: berries, granola, coconut, mint, honey, syrup, flowers, text, logo, watermark, hands, people, utensils, plastic-looking fruit, excessive gloss, impossible geometry, clutter",
     "slug_fichier": "r053-bol-millet-kiwi-graines-courge-citron-vert.jpg",
-    "status": "waiting_recipe_validation"
+    "status": "generated_inspected_optimized"
   },
   {
     "id": "r054",

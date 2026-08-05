@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "generated_at": "2026-08-05T18:12:50.092Z",
+    "recipe_file": "pilot-r251-r275.draft.json",
+    "count": 25,
+    "target": "JPEG 900x900, qualité 82-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r251",
+      "title": "Œufs mollets, asperges et lentilles blondes à l'oseille",
+      "output_file": "public/assets/recipes/generated/r251-oeufs-asperges-lentilles-oseille.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Œufs mollets, asperges et lentilles blondes à l'oseille ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : œufs très frais, asperges vertes, lentilles blondes sèches, oseille fraîche, radis roses, huile de noix, citron. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r252",
+      "title": "Halloumi grillé, abricots et épeautre à la menthe",
+      "output_file": "public/assets/recipes/generated/r252-halloumi-abricots-epeautre-menthe.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Halloumi grillé, abricots et épeautre à la menthe ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : halloumi, abricots frais, épeautre en grains, courgettes, menthe fraîche, citron, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r253",
+      "title": "Labneh, concombre rôti et pois cassés à la menthe",
+      "output_file": "public/assets/recipes/generated/r253-labneh-concombre-roti-pois-casses.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Labneh, concombre rôti et pois cassés à la menthe ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : labneh nature, concombres, pois cassés secs, menthe fraîche, sumac moulu, tranches de pain complet, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r254",
+      "title": "Mozzarella, poires, haricots verts et noisettes au basilic",
+      "output_file": "public/assets/recipes/generated/r254-mozzarella-poires-haricots-verts-noisettes.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Mozzarella, poires, haricots verts et noisettes au basilic ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : mozzarella, poires fermes, haricots verts, noisettes, basilic frais, citron, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r255",
+      "title": "Frittata froide aux blettes, tomates et haricots borlotti",
+      "output_file": "public/assets/recipes/generated/r255-frittata-blettes-tomates-borlotti.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Frittata froide aux blettes, tomates et haricots borlotti ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : œufs, blettes, tomates, haricots borlotti cuits, basilic frais, oignon, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r256",
+      "title": "Paneer grillé, chou-fleur cru et pois verts à la coriandre",
+      "output_file": "public/assets/recipes/generated/r256-paneer-chou-fleur-pois-coriandre.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Paneer grillé, chou-fleur cru et pois verts à la coriandre ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : paneer, chou-fleur très frais, petits pois, coriandre fraîche, citron, cumin moulu, huile de colza. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r257",
+      "title": "Burrata, fraises rôties et fèves au basilic",
+      "output_file": "public/assets/recipes/generated/r257-burrata-fraises-roties-feves.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Burrata, fraises rôties et fèves au basilic ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : burrata, fraises fermes, fèves décortiquées, roquette, basilic frais, pistaches non salées, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r258",
+      "title": "Fromage de brebis, melon rôti et pois chiches au fenouil",
+      "output_file": "public/assets/recipes/generated/r258-brebis-melon-roti-pois-chiches-fenouil.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Fromage de brebis, melon rôti et pois chiches au fenouil ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : fromage de brebis, melon charentais, pois chiches cuits, bulbe de fenouil, menthe fraîche, citron, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r259",
+      "title": "Œuf poché, polenta grillée et épinards à la tomate séchée",
+      "output_file": "public/assets/recipes/generated/r259-oeuf-polenta-grillee-epinards-tomate-sechee.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Œuf poché, polenta grillée et épinards à la tomate séchée ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : œufs très frais, polenta complète, eau, jeunes pousses d'épinard, tomates séchées sans sulfites, roquette, basilic frais. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r260",
+      "title": "Chèvre frais, raisin rôti et sarrasin au thym",
+      "output_file": "public/assets/recipes/generated/r260-chevre-raisin-roti-sarrasin-thym.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Chèvre frais, raisin rôti et sarrasin au thym ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : fromage de chèvre frais, raisin noir, sarrasin décortiqué, mâche, noix, feuilles de thym, huile de colza. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r261",
+      "title": "Haricots adzuki, chou chinois et potiron au gingembre",
+      "output_file": "public/assets/recipes/generated/r261-adzuki-chou-chinois-potiron-gingembre.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Haricots adzuki, chou chinois et potiron au gingembre ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : haricots adzuki cuits, potiron, chou chinois, gingembre frais, ciboules, graines de sésame noir, citron. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r262",
+      "title": "Pois bambara, tomate fumée et gombo grillé",
+      "output_file": "public/assets/recipes/generated/r262-pois-bambara-tomate-fumee-gombo.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Pois bambara, tomate fumée et gombo grillé ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : pois bambara secs, gombos, tomates concassées au paprika fumé, oignon rouge, coriandre fraîche, citrons verts, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r263",
+      "title": "Lentilles brunes, chou-fleur grillé et salsa de dattes",
+      "output_file": "public/assets/recipes/generated/r263-lentilles-chou-fleur-salsa-dattes.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Lentilles brunes, chou-fleur grillé et salsa de dattes ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : lentilles brunes sèches, chou-fleur, dattes, persil plat, amandes, citron, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r264",
+      "title": "Pois chiches germés, carotte rôtie et dukka de graines",
+      "output_file": "public/assets/recipes/generated/r264-pois-chiches-germes-carotte-dukka-graines.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Pois chiches germés, carotte rôtie et dukka de graines ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : pois chiches germés, carottes, graines de courge, graines de tournesol, coriandre fraîche, citron, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r265",
+      "title": "Haricots mungo, pak-choï grillé et clémentine",
+      "output_file": "public/assets/recipes/generated/r265-haricots-mungo-pak-choi-clementine.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Haricots mungo, pak-choï grillé et clémentine ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : haricots mungo secs, pak-choï, clémentines, ciboules, cacahuètes non salées, citron vert, huile de colza. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r266",
+      "title": "Lentilles vertes, artichauts grillés et salsa d'olives",
+      "output_file": "public/assets/recipes/generated/r266-lentilles-artichauts-salsa-olives.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Lentilles vertes, artichauts grillés et salsa d'olives ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : lentilles vertes sèches, fonds d'artichaut, olives vertes, tomates séchées sans sulfites, persil plat, citron, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r267",
+      "title": "Pois cassés, courgette marinée et aneth aux graines de moutarde",
+      "output_file": "public/assets/recipes/generated/r267-pois-casses-courgette-aneth-moutarde.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Pois cassés, courgette marinée et aneth aux graines de moutarde ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : pois cassés secs, courgettes, aneth frais, graines de moutarde, radis roses, citron, huile de colza. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r268",
+      "title": "Haricots rouges, maïs violet et cactus au citron vert",
+      "output_file": "public/assets/recipes/generated/r268-haricots-rouges-mais-violet-nopal.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Haricots rouges, maïs violet et cactus au citron vert ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : haricots rouges cuits, grains de maïs violet cuits, raquettes de nopal préparées, tomates, coriandre fraîche, citrons verts, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r269",
+      "title": "Fèves, artichauts poivrade et pommes de terre au citron confit",
+      "output_file": "public/assets/recipes/generated/r269-feves-artichauts-pommes-terre-citron-confit.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Fèves, artichauts poivrade et pommes de terre au citron confit ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : fèves décortiquées, artichauts poivrade, pommes de terre, citron confit au sel, aneth frais, olives vertes, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r270",
+      "title": "Lupins, aubergine confite et poivron jaune au basilic",
+      "output_file": "public/assets/recipes/generated/r270-lupins-aubergine-poivron-basilic.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Lupins, aubergine confite et poivron jaune au basilic ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : graines de lupin cuites, aubergines, poivrons jaunes, basilic frais, tomates cerises, vinaigre balsamique, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r271",
+      "title": "Mâche, topinambours rôtis et lentilles beluga à la noisette",
+      "output_file": "public/assets/recipes/generated/r271-mache-topinambours-lentilles-noisette.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Mâche, topinambours rôtis et lentilles beluga à la noisette ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : topinambours, lentilles beluga sèches, mâche, noisettes, persil plat, vinaigre de cidre, huile de colza. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r272",
+      "title": "Laitue grillée, petits pois et fèves à la crème de cajou",
+      "output_file": "public/assets/recipes/generated/r272-laitue-grillee-petits-pois-feves-cajou.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Laitue grillée, petits pois et fèves à la crème de cajou ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : laitues romaines, petits pois, fèves décortiquées, noix de cajou, menthe fraîche, citron, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r273",
+      "title": "Cresson, asperges blanches et pommes de terre au raifort",
+      "output_file": "public/assets/recipes/generated/r273-cresson-asperges-blanches-pommes-terre-raifort.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Cresson, asperges blanches et pommes de terre au raifort ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : cresson, asperges blanches, pommes de terre, yaourt nature, racine de raifort fraîche, aneth frais, citron. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r274",
+      "title": "Tomates anciennes, nectarines et lentilles blondes au basilic citron",
+      "output_file": "public/assets/recipes/generated/r274-tomates-nectarines-lentilles-basilic-citron.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Tomates anciennes, nectarines et lentilles blondes au basilic citron ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : tomates anciennes, nectarines fermes, lentilles blondes sèches, basilic citron, amandes, vinaigre de cidre, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r275",
+      "title": "Haricots coco frais, courgette jaune et estragon",
+      "output_file": "public/assets/recipes/generated/r275-haricots-coco-courgette-jaune-estragon.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Haricots coco frais, courgette jaune et estragon ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : haricots coco frais écossés, courgettes jaunes, tomates, estragon frais, échalotes, citron, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    }
+  ]
+}

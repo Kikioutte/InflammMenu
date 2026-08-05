@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "generated_at": "2026-08-05T18:06:26.574Z",
+    "recipe_file": "pilot-r176-r200.draft.json",
+    "count": 25,
+    "target": "JPEG 900x900, qualité 82-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r176",
+      "title": "Haricots blancs rôtis au paprika et à l’origan",
+      "output_file": "public/assets/recipes/generated/r176-haricots-blancs-rotis-au-paprika-et-a-l-origan.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Haricots blancs rôtis au paprika et à l’origan ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : haricots blancs cuits, paprika doux, origan séché, huile d'olive vierge extra, citron. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r177",
+      "title": "Bouchées d’avoine à l’abricot et aux pistaches",
+      "output_file": "public/assets/recipes/generated/r177-bouchees-d-avoine-a-l-abricot-et-aux-pistaches.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Bouchées d’avoine à l’abricot et aux pistaches ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : flocons d'avoine complets, abricots secs non sulfurés, pistaches non salées, graines de lin moulues, orange. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r178",
+      "title": "Chips de chou kale aux graines de courge",
+      "output_file": "public/assets/recipes/generated/r178-chips-de-chou-kale-aux-graines-de-courge.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Chips de chou kale aux graines de courge ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : chou kale, graines de courge, huile d'olive vierge extra, paprika doux, citron. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r179",
+      "title": "Galettes de riz à l’avocat, radis et aneth",
+      "output_file": "public/assets/recipes/generated/r179-galettes-de-riz-a-l-avocat-radis-et-aneth.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Galettes de riz à l’avocat, radis et aneth ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : galettes de riz complet, avocat, radis roses, aneth frais, citron. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r180",
+      "title": "Bouchées de poire, noix et grué de cacao",
+      "output_file": "public/assets/recipes/generated/r180-bouchees-de-poire-noix-et-grue-de-cacao.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Bouchées de poire, noix et grué de cacao ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : poires, noix, grué de cacao, flocons d'avoine complets, cannelle moulue. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r181",
+      "title": "Tartinade de lentilles aux noix et à la sauge",
+      "output_file": "public/assets/recipes/generated/r181-tartinade-de-lentilles-aux-noix-et-a-la-sauge.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Tartinade de lentilles aux noix et à la sauge ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : lentilles vertes sèches, noix, feuilles de sauge fraîche, citron, huile d'olive vierge extra, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r182",
+      "title": "Bâtonnets de socca au fenouil et cumin",
+      "output_file": "public/assets/recipes/generated/r182-batonnets-de-socca-au-fenouil-et-cumin.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Bâtonnets de socca au fenouil et cumin ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : farine de pois chiches, demi-bulbe de fenouil, cumin moulu, huile d'olive vierge extra, persil plat, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r183",
+      "title": "Fèves rôties au zaatar et au citron",
+      "output_file": "public/assets/recipes/generated/r183-feves-roties-au-zaatar-et-au-citron.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Fèves rôties au zaatar et au citron ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : fèves cuites, zaatar avec sésame, citron, huile d'olive vierge extra, graines de sésame. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r184",
+      "title": "Dip de yaourt à la betterave et à l’aneth",
+      "output_file": "public/assets/recipes/generated/r184-dip-de-yaourt-a-la-betterave-et-a-l-aneth.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Dip de yaourt à la betterave et à l’aneth ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : yaourt nature, betterave cuite, aneth frais, citron, noix. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r185",
+      "title": "Crackers d’avoine aux graines et tomate séchée",
+      "output_file": "public/assets/recipes/generated/r185-crackers-d-avoine-aux-graines-et-tomate-sechee.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Crackers d’avoine aux graines et tomate séchée ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : flocons d'avoine complets, graines de tournesol, tomates séchées, origan séché, huile d'olive vierge extra, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r186",
+      "title": "Coupes de prune au chia et aux amandes",
+      "output_file": "public/assets/recipes/generated/r186-coupes-de-prune-au-chia-et-aux-amandes.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Coupes de prune au chia et aux amandes ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : prunes, graines de chia, amandes, citron, cannelle moulue. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r187",
+      "title": "Poire pochée à l’hibiscus et aux pistaches",
+      "output_file": "public/assets/recipes/generated/r187-poire-pochee-a-l-hibiscus-et-aux-pistaches.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Poire pochée à l’hibiscus et aux pistaches ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : poires, fleurs d'hibiscus séchées alimentaires, pistaches non salées, orange, bâton de cannelle, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r188",
+      "title": "Pêche rôtie aux amandes et au thym",
+      "output_file": "public/assets/recipes/generated/r188-peche-rotie-aux-amandes-et-au-thym.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Pêche rôtie aux amandes et au thym ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : pêches, amandes, feuilles de thym frais, citron, yaourt nature. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r189",
+      "title": "Gâteau de polenta à l’orange et à l’huile d’olive",
+      "output_file": "public/assets/recipes/generated/r189-gateau-de-polenta-a-l-orange-et-a-l-huile-d-olive.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Gâteau de polenta à l’orange et à l’huile d’olive ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : polenta fine, oranges, huile d'olive vierge extra, poudre d'amande, œufs, levure chimique sans gluten. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r190",
+      "title": "Riz complet au lait aux mûres et cardamome",
+      "output_file": "public/assets/recipes/generated/r190-riz-complet-au-lait-aux-mures-et-cardamome.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Riz complet au lait aux mûres et cardamome ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : riz rond complet, boisson d'amande non sucrée, mûres, cardamome moulue, pistaches non salées. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r191",
+      "title": "Yaourt aux raisins rôtis, noix et romarin",
+      "output_file": "public/assets/recipes/generated/r191-yaourt-aux-raisins-rotis-noix-et-romarin.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Yaourt aux raisins rôtis, noix et romarin ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : yaourt nature, raisins noirs, noix, romarin frais haché, citron. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r192",
+      "title": "Crème de tofu soyeux au chocolat et framboise",
+      "output_file": "public/assets/recipes/generated/r192-creme-de-tofu-soyeux-au-chocolat-et-framboise.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Crème de tofu soyeux au chocolat et framboise ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : tofu soyeux, cacao non sucré, framboises, noisettes, extrait de vanille. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r193",
+      "title": "Figues rôties aux noix et au zeste d’orange",
+      "output_file": "public/assets/recipes/generated/r193-figues-roties-aux-noix-et-au-zeste-d-orange.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Figues rôties aux noix et au zeste d’orange ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : figues fraîches, noix, orange, cannelle moulue, yaourt nature. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r194",
+      "title": "Quinoa au lait de coco léger, mangue et citron vert",
+      "output_file": "public/assets/recipes/generated/r194-quinoa-au-lait-de-coco-leger-mangue-et-citron-vert.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Quinoa au lait de coco léger, mangue et citron vert ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : quinoa, lait de coco léger, eau, mangue, citron vert, graines de sésame. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r195",
+      "title": "Crumble d’abricots à l’avoine et aux pistaches",
+      "output_file": "public/assets/recipes/generated/r195-crumble-d-abricots-a-l-avoine-et-aux-pistaches.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Crumble d’abricots à l’avoine et aux pistaches ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : abricots frais, flocons d'avoine complets, pistaches non salées, huile d'olive vierge extra, cardamome moulue. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r196",
+      "title": "Gâteau de carotte, orange et amandes",
+      "output_file": "public/assets/recipes/generated/r196-gateau-de-carotte-orange-et-amandes.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Gâteau de carotte, orange et amandes ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : carottes, oranges, poudre d'amande, farine de blé complète, œufs, huile d'olive vierge extra, levure chimique. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r197",
+      "title": "Clafoutis de poire au sarrasin et à la muscade",
+      "output_file": "public/assets/recipes/generated/r197-clafoutis-de-poire-au-sarrasin-et-a-la-muscade.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Clafoutis de poire au sarrasin et à la muscade ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : poires, farine de sarrasin, œufs, boisson d'amande non sucrée, muscade moulue, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r198",
+      "title": "Glace minute banane, cacao et sésame",
+      "output_file": "public/assets/recipes/generated/r198-glace-minute-banane-cacao-et-sesame.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Glace minute banane, cacao et sésame ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : bananes, cacao non sucré, tahini, graines de sésame, boisson de soja non sucrée. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r199",
+      "title": "Tarte fine aux prunes, romarin et amandes",
+      "output_file": "public/assets/recipes/generated/r199-tarte-fine-aux-prunes-romarin-et-amandes.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Tarte fine aux prunes, romarin et amandes ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : prunes, farine de blé complète, amandes, romarin frais haché, huile d'olive vierge extra, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r200",
+      "title": "Flan de millet au coing et à la vanille",
+      "output_file": "public/assets/recipes/generated/r200-flan-de-millet-au-coing-et-a-la-vanille.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Flan de millet au coing et à la vanille ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : millet décortiqué, coing, boisson de soja non sucrée, extrait de vanille, amandes, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    }
+  ]
+}

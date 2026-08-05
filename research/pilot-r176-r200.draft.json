@@ -1,0 +1,4822 @@
+{
+  "meta": {
+    "schema_version": "2.1.0",
+    "status": "draft",
+    "nombre_recettes": 25,
+    "nutrition_notice": "Valeurs nutritionnelles et coûts entièrement estimés; recalcul et test obligatoires avant publication.",
+    "medical_notice": "Ces recettes relèvent d'un modèle alimentaire varié et ne revendiquent aucun effet médical ou thérapeutique."
+  },
+  "recipes": [
+    {
+      "id": "r176",
+      "slug": "haricots-blancs-rotis-au-paprika-et-a-l-origan",
+      "titre": "Haricots blancs rôtis au paprika et à l’origan",
+      "categorie": "snack",
+      "description": "Des haricots blancs rôtis jusqu'à légère croustillance, assaisonnés de paprika, origan et citron.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 32,
+        "repos": 5,
+        "total": 47
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "snack",
+        "rotissage-au-four",
+        "haricots-blancs",
+        "paprika",
+        "origan"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 480,
+          "unite": "g",
+          "quantite_normalisee": 480,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés, égouttés et très bien séchés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "paprika-doux",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "paprika doux",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "origan-seche",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "origan séché",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1.5,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus selon la recette",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Chauffer le four à 200 °C et tapisser une plaque.",
+        "Mélanger les haricots parfaitement secs avec huile, paprika et origan.",
+        "Rôtir 28 à 32 minutes en remuant deux fois.",
+        "Laisser sécher 5 minutes hors du four puis ajouter le citron."
+      ],
+      "conseils": [
+        "La texture reste plus tendre que celle de pois chiches rôtis; ne pas prolonger jusqu'au dessèchement."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Haricots blancs",
+          "par": "Pois chiches cuits",
+          "note": "Même poids égoutté, temps à adapter"
+        }
+      ],
+      "conservation": "À consommer le jour même; ne pas conserver à température ambiante plus de 2 heures.",
+      "nutrition_par_portion": {
+        "calories": 135,
+        "proteines_g": 6,
+        "glucides_g": 20,
+        "sucres_g": 2,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 0.6,
+        "fibres_g": 6,
+        "sodium_mg": 120,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r176-haricots-blancs-rotis-au-paprika-et-a-l-origan.jpg",
+        "alt": "Haricots blancs rôtis au paprika et à l’origan"
+      },
+      "seo": {
+        "titre": "Haricots blancs rôtis au paprika et à l’origan",
+        "meta_description": "Des haricots blancs rôtis jusqu'à légère croustillance, assaisonnés de paprika, origan et citron.",
+        "mots_cles": [
+          "haricots blancs",
+          "paprika",
+          "origan"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les haricots blancs remplacent les pois chiches dans un snack croustillant. Formulation à tester avant publication.",
+          "caution": "Sodium des haricots et croustillance à vérifier; portion de collation à confirmer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.75,
+          "active_minutes": 14,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r177",
+      "slug": "bouchees-d-avoine-a-l-abricot-et-aux-pistaches",
+      "titre": "Bouchées d’avoine à l’abricot et aux pistaches",
+      "categorie": "snack",
+      "description": "Des bouchées sans cuisson à l'avoine, aux abricots secs non sulfurés, pistaches, lin et orange.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 0,
+        "repos": 30,
+        "total": 48
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "snack",
+        "mixage-et-faconnage",
+        "flocons-d-avoine",
+        "abricots-secs",
+        "pistaches"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "abricots-secs-non-sulfures",
+          "quantite": 160,
+          "unite": "g",
+          "quantite_normalisee": 160,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "abricots secs non sulfurés",
+          "note": "Sans sucre ajouté",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "pistaches-non-salees",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "Décortiquées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "graines-lin-moulues",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de lin moulues",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste et 2 c. à soupe de jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mixer les flocons et les pistaches en texture sableuse.",
+        "Ajouter abricots, lin, zeste et jus puis mixer par impulsions.",
+        "Former 16 petites bouchées avec les mains légèrement humides.",
+        "Réfrigérer 30 minutes avant de servir une à deux bouchées par personne."
+      ],
+      "conseils": [
+        "Ajouter le jus progressivement pour éviter une pâte collante."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pistaches",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque à tester"
+        }
+      ],
+      "conservation": "4 jours au réfrigérateur dans une boîte fermée.",
+      "nutrition_par_portion": {
+        "calories": 115,
+        "proteines_g": 3,
+        "glucides_g": 16,
+        "sucres_g": 7,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.6,
+        "fibres_g": 3,
+        "sodium_mg": 10,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r177-bouchees-d-avoine-a-l-abricot-et-aux-pistaches.jpg",
+        "alt": "Bouchées d’avoine à l’abricot et aux pistaches"
+      },
+      "seo": {
+        "titre": "Bouchées d’avoine à l’abricot et aux pistaches",
+        "meta_description": "Des bouchées sans cuisson à l'avoine, aux abricots secs non sulfurés, pistaches, lin et orange.",
+        "mots_cles": [
+          "flocons d’avoine",
+          "abricots secs",
+          "pistaches"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L’abricot et la pistache évitent le trio datte-cacao-noix déjà présent. Formulation à tester avant publication.",
+          "caution": "Contient gluten et fruits à coque; collation concentrée en fruits secs, portion et nutrition à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.9,
+          "active_minutes": 18,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "gluten",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r178",
+      "slug": "chips-de-chou-kale-aux-graines-de-courge",
+      "titre": "Chips de chou kale aux graines de courge",
+      "categorie": "snack",
+      "description": "Des feuilles de kale séchées doucement avec une poudre de graines de courge, paprika et citron.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 22,
+        "repos": 5,
+        "total": 42
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "snack",
+        "deshydratation-au-four",
+        "chou-kale",
+        "graines-de-courge",
+        "huile-d-olive"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "chou-kale",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chou kale",
+          "note": "Tiges retirées, feuilles très sèches",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-courge",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de courge",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "paprika-doux",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "paprika doux",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus selon la recette",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mixer les graines de courge en poudre grossière.",
+        "Masser les feuilles avec l'huile, le paprika et le zeste.",
+        "Étaler sans chevauchement et cuire 18 à 22 minutes à 140 °C en surveillant.",
+        "Refroidir 5 minutes puis poudrer de graines et ajouter quelques gouttes de citron."
+      ],
+      "conseils": [
+        "Retirer les petites feuilles dès qu'elles sont sèches pour éviter l'amertume."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Graines de courge",
+          "par": "Graines de tournesol",
+          "note": "Même poids"
+        }
+      ],
+      "conservation": "À consommer dans les 6 heures; l'humidité ramollit rapidement les chips.",
+      "nutrition_par_portion": {
+        "calories": 90,
+        "proteines_g": 4,
+        "glucides_g": 7,
+        "sucres_g": 1,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 0.8,
+        "fibres_g": 4,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r178-chips-de-chou-kale-aux-graines-de-courge.jpg",
+        "alt": "Chips de chou kale aux graines de courge"
+      },
+      "seo": {
+        "titre": "Chips de chou kale aux graines de courge",
+        "meta_description": "Des feuilles de kale séchées doucement avec une poudre de graines de courge, paprika et citron.",
+        "mots_cles": [
+          "chou kale",
+          "graines de courge",
+          "huile d’olive"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une poudre de graines de courge adhère aux feuilles avant cuisson lente. Formulation à tester avant publication.",
+          "caution": "Temps de séchage très dépendant du four; rendement et portions à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.65,
+          "active_minutes": 18,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r179",
+      "slug": "galettes-de-riz-a-l-avocat-radis-et-aneth",
+      "titre": "Galettes de riz à l’avocat, radis et aneth",
+      "categorie": "snack",
+      "description": "Des galettes de riz complet garnies d'avocat citronné, radis croquants et aneth.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 0,
+        "repos": 0,
+        "total": 12
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "snack",
+        "assemblage",
+        "galettes-de-riz-complet",
+        "avocat",
+        "radis"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "galettes-riz-complet",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "galettes de riz complet",
+          "note": "Certifiées sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "avocat",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "avocat",
+          "note": "Mûr",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "radis-rose",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "radis roses",
+          "note": "Émincés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 10,
+          "unite": "g",
+          "quantite_normalisee": 10,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus selon la recette",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Écraser l'avocat avec le jus et le zeste de citron.",
+        "Émincer les radis et ciseler l'aneth.",
+        "Répartir l'avocat sur les galettes juste avant le service.",
+        "Ajouter radis et aneth, puis servir deux galettes par personne."
+      ],
+      "conseils": [
+        "Assembler au dernier moment pour garder les galettes croustillantes."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Aneth",
+          "par": "Ciboulette",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "Garniture 12 heures au réfrigérateur au contact d'un film; galettes séparées.",
+      "nutrition_par_portion": {
+        "calories": 155,
+        "proteines_g": 3,
+        "glucides_g": 19,
+        "sucres_g": 2,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.1,
+        "fibres_g": 5,
+        "sodium_mg": 70,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r179-galettes-de-riz-a-l-avocat-radis-et-aneth.jpg",
+        "alt": "Galettes de riz à l’avocat, radis et aneth"
+      },
+      "seo": {
+        "titre": "Galettes de riz à l’avocat, radis et aneth",
+        "meta_description": "Des galettes de riz complet garnies d'avocat citronné, radis croquants et aneth.",
+        "mots_cles": [
+          "galettes de riz complet",
+          "avocat",
+          "radis"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Un snack frais et croquant servi sur galette de riz plutôt que sur pain. Formulation à tester avant publication.",
+          "caution": "Vérifier la certification des galettes et le calibre de l'avocat; ne pas stocker assemblé."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.95,
+          "active_minutes": 12,
+          "equipment": [],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r180",
+      "slug": "bouchees-de-poire-noix-et-grue-de-cacao",
+      "titre": "Bouchées de poire, noix et grué de cacao",
+      "categorie": "snack",
+      "description": "Des bouchées de poire doucement séchée, avoine, noix, grué de cacao et cannelle.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 45,
+        "repos": 20,
+        "total": 83
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "snack",
+        "sechage-doux-et-assemblage",
+        "poire",
+        "noix",
+        "grues-de-cacao"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "Mûres mais fermes",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "grue-cacao",
+          "quantite": 25,
+          "unite": "g",
+          "quantite_normalisee": 25,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "grué de cacao",
+          "note": "Non sucré",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Râper les poires et les étaler sur une plaque.",
+        "Sécher 40 à 45 minutes à 130 °C en remuant une fois, puis laisser tiédir.",
+        "Mixer avoine et noix, ajouter poire et cannelle puis façonner 16 bouchées.",
+        "Rouler dans le grué et laisser prendre 20 minutes au frais."
+      ],
+      "conseils": [
+        "La poire doit rester souple mais ne plus rendre de jus avant le mixage."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Noisettes",
+          "note": "Conserve l'allergène fruits à coque"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 105,
+        "proteines_g": 3,
+        "glucides_g": 13,
+        "sucres_g": 4,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 0.8,
+        "fibres_g": 3,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r180-bouchees-de-poire-noix-et-grue-de-cacao.jpg",
+        "alt": "Bouchées de poire, noix et grué de cacao"
+      },
+      "seo": {
+        "titre": "Bouchées de poire, noix et grué de cacao",
+        "meta_description": "Des bouchées de poire doucement séchée, avoine, noix, grué de cacao et cannelle.",
+        "mots_cles": [
+          "poire",
+          "noix",
+          "grués de cacao"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La poire légèrement séchée remplace les dattes comme liant fruité. Formulation à tester avant publication.",
+          "caution": "Contient gluten et fruits à coque; humidité de la poire et teneur en cacao à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.85,
+          "active_minutes": 22,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r181",
+      "slug": "tartinade-de-lentilles-aux-noix-et-a-la-sauge",
+      "titre": "Tartinade de lentilles aux noix et à la sauge",
+      "categorie": "snack",
+      "description": "Une tartinade rustique de lentilles vertes aux noix, sauge, citron et huile d'olive.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 28,
+        "repos": 10,
+        "total": 53
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "snack",
+        "mixage",
+        "lentilles-vertes",
+        "noix",
+        "sauge"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "lentilles-vertes-seches",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "lentilles vertes sèches",
+          "note": "Rincées",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "sauge-fraiche",
+          "quantite": 6,
+          "unite": "piece",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de sauge fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus selon la recette",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 500,
+          "unite": "ml",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les lentilles dans l'eau 25 à 28 minutes puis bien égoutter.",
+        "Faire infuser la sauge dans l'huile tiède 3 minutes puis retirer deux feuilles.",
+        "Mixer lentilles, noix, huile parfumée, zeste et jus par impulsions.",
+        "Laisser reposer 10 minutes avant de servir 50 g par personne."
+      ],
+      "conseils": [
+        "Garder une texture légèrement granuleuse plutôt qu'une purée lisse."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de tournesol",
+          "note": "Option sans fruits à coque à tester"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur dans un contenant fermé.",
+      "nutrition_par_portion": {
+        "calories": 175,
+        "proteines_g": 7,
+        "glucides_g": 18,
+        "sucres_g": 2,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 1.1,
+        "fibres_g": 6,
+        "sodium_mg": 20,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r181-tartinade-de-lentilles-aux-noix-et-a-la-sauge.jpg",
+        "alt": "Tartinade de lentilles aux noix et à la sauge"
+      },
+      "seo": {
+        "titre": "Tartinade de lentilles aux noix et à la sauge",
+        "meta_description": "Une tartinade rustique de lentilles vertes aux noix, sauge, citron et huile d'olive.",
+        "mots_cles": [
+          "lentilles vertes",
+          "noix",
+          "sauge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une tartinade rustique de lentilles et noix sans pois chiches. Formulation à tester avant publication.",
+          "caution": "Contient des fruits à coque; rendement des lentilles et portion de tartinade à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.7,
+          "active_minutes": 18,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r182",
+      "slug": "batonnets-de-socca-au-fenouil-et-cumin",
+      "titre": "Bâtonnets de socca au fenouil et cumin",
+      "categorie": "snack",
+      "description": "Une socca épaisse au fenouil, cumin et persil, cuite au four puis découpée en bâtonnets.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 22,
+        "repos": 20,
+        "total": 57
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "snack",
+        "cuisson-au-four-et-decoupe",
+        "farine-de-pois-chiches",
+        "fenouil",
+        "cumin"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "farine-pois-chiches",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de pois chiches",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "demi-bulbe de fenouil",
+          "note": "Râpé finement",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cumin-moulu",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cumin moulu",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "persil-plat",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "Ciselé",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 320,
+          "unite": "ml",
+          "quantite_normalisee": 320,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Fouetter farine, eau, cumin et huile puis incorporer le fenouil.",
+        "Laisser la pâte reposer 20 minutes pendant le préchauffage du four à 220 °C.",
+        "Verser sur une plaque huilée en couche de 1 cm et cuire 20 à 22 minutes.",
+        "Parsemer de persil et découper en 16 bâtonnets."
+      ],
+      "conseils": [
+        "La pâte doit être bien hydratée avant cuisson; ne pas ajouter plus de farine."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Fenouil",
+          "par": "Courgette râpée et essorée",
+          "note": "Texture à retester"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur; réchauffer au four.",
+      "nutrition_par_portion": {
+        "calories": 120,
+        "proteines_g": 5,
+        "glucides_g": 16,
+        "sucres_g": 2,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 0.6,
+        "fibres_g": 3,
+        "sodium_mg": 55,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r182-batonnets-de-socca-au-fenouil-et-cumin.jpg",
+        "alt": "Bâtonnets de socca au fenouil et cumin"
+      },
+      "seo": {
+        "titre": "Bâtonnets de socca au fenouil et cumin",
+        "meta_description": "Une socca épaisse au fenouil, cumin et persil, cuite au four puis découpée en bâtonnets.",
+        "mots_cles": [
+          "farine de pois chiches",
+          "fenouil",
+          "cumin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La socca est cuite épaisse puis découpée comme snack à tremper. Formulation à tester avant publication.",
+          "caution": "Certification sans gluten éventuelle, texture et absorption d'huile à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.55,
+          "active_minutes": 20,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r183",
+      "slug": "feves-roties-au-zaatar-et-au-citron",
+      "titre": "Fèves rôties au zaatar et au citron",
+      "categorie": "snack",
+      "description": "Des fèves rôties au zaatar, sésame, citron et huile d'olive, servies tièdes.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 28,
+        "repos": 5,
+        "total": 45
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "snack",
+        "rotissage-au-four",
+        "feves",
+        "zaatar",
+        "citron"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "feves-cuites",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fèves cuites",
+          "note": "Pelées si la peau est épaisse, bien séchées",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "zaatar-sesame",
+          "quantite": 2,
+          "unite": "c. à c.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "zaatar avec sésame",
+          "note": "Sans sel ajouté",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus selon la recette",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1.5,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "graines-sesame",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "graines de sésame",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        }
+      ],
+      "etapes": [
+        "Chauffer le four à 200 °C.",
+        "Mélanger fèves sèches, huile et zaatar.",
+        "Rôtir 25 à 28 minutes en remuant à mi-cuisson.",
+        "Ajouter sésame, zeste et jus de citron puis laisser tiédir 5 minutes."
+      ],
+      "conseils": [
+        "Les fèves fraîches restent plus moelleuses que des légumineuses sèches rôties."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Fèves",
+          "par": "Edamame décortiqué",
+          "note": "Ajoute l'allergène soja"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur; servir à température ambiante, sans conserver à l'air libre.",
+      "nutrition_par_portion": {
+        "calories": 145,
+        "proteines_g": 8,
+        "glucides_g": 17,
+        "sucres_g": 2,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 0.8,
+        "fibres_g": 6,
+        "sodium_mg": 85,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r183-feves-roties-au-zaatar-et-au-citron.jpg",
+        "alt": "Fèves rôties au zaatar et au citron"
+      },
+      "seo": {
+        "titre": "Fèves rôties au zaatar et au citron",
+        "meta_description": "Des fèves rôties au zaatar, sésame, citron et huile d'olive, servies tièdes.",
+        "mots_cles": [
+          "fèves",
+          "zaatar",
+          "citron"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les fèves entières offrent une alternative saisonnière aux pois chiches rôtis. Formulation à tester avant publication.",
+          "caution": "Contient du sésame; texture, sodium du zaatar et taille de portion à valider."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.8,
+          "active_minutes": 16,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r184",
+      "slug": "dip-de-yaourt-a-la-betterave-et-a-l-aneth",
+      "titre": "Dip de yaourt à la betterave et à l’aneth",
+      "categorie": "snack",
+      "description": "Un dip frais de yaourt et betterave à l'aneth, au citron et aux noix.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 0,
+        "repos": 30,
+        "total": 42
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "snack",
+        "mixage-a-froid",
+        "yaourt-nature",
+        "betterave",
+        "aneth"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "yaourt-nature",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "Non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "betterave-cuite",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "betterave cuite",
+          "note": "Nature, égouttée",
+          "categorie_courses": "fresh",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus selon la recette",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        }
+      ],
+      "etapes": [
+        "Mixer la betterave avec la moitié du yaourt et le citron.",
+        "Incorporer le reste du yaourt à la spatule.",
+        "Ajouter aneth et moitié des noix.",
+        "Réfrigérer 30 minutes et garnir du reste des noix."
+      ],
+      "conseils": [
+        "Égoutter la betterave pour éviter un dip trop liquide."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Yaourt nature",
+          "par": "Yaourt de soja",
+          "note": "Remplace le lait par l'allergène soja selon le produit"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur à 4 °C maximum.",
+      "nutrition_par_portion": {
+        "calories": 120,
+        "proteines_g": 6,
+        "glucides_g": 10,
+        "sucres_g": 8,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 1.4,
+        "fibres_g": 2,
+        "sodium_mg": 95,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r184-dip-de-yaourt-a-la-betterave-et-a-l-aneth.jpg",
+        "alt": "Dip de yaourt à la betterave et à l’aneth"
+      },
+      "seo": {
+        "titre": "Dip de yaourt à la betterave et à l’aneth",
+        "meta_description": "Un dip frais de yaourt et betterave à l'aneth, au citron et aux noix.",
+        "mots_cles": [
+          "yaourt nature",
+          "betterave",
+          "aneth"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Un dip frais plus léger et plus herbacé qu’un houmous de betterave. Formulation à tester avant publication.",
+          "caution": "Contient lait et fruits à coque; chaîne du froid, poids égoutté et nutrition à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.75,
+          "active_minutes": 12,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "lait",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r185",
+      "slug": "crackers-d-avoine-aux-graines-et-tomate-sechee",
+      "titre": "Crackers d’avoine aux graines et tomate séchée",
+      "categorie": "snack",
+      "description": "Des crackers fins d'avoine et tournesol, parfumés à la tomate séchée et à l'origan.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 28,
+        "repos": 15,
+        "total": 61
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "snack",
+        "cuisson-au-four",
+        "flocons-d-avoine",
+        "graines-de-tournesol",
+        "tomate-sechee"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 160,
+          "unite": "g",
+          "quantite_normalisee": 160,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "graines-tournesol",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de tournesol",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "tomates-sechees",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates séchées",
+          "note": "Produit déclaré avec sulfites, rincé et haché",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sulfites"
+          ]
+        },
+        {
+          "id": "origan-seche",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "origan séché",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 160,
+          "unite": "ml",
+          "quantite_normalisee": 160,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mixer la moitié de l'avoine et des graines en farine grossière.",
+        "Mélanger avec le reste, tomate, origan, huile et eau puis reposer 10 minutes.",
+        "Étaler entre deux feuilles sur 3 mm et prédécouper 24 crackers.",
+        "Cuire 25 à 28 minutes à 170 °C, puis refroidir 15 minutes."
+      ],
+      "conseils": [
+        "Tourner la plaque à mi-cuisson et retirer les bords déjà secs."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Tomates séchées",
+          "par": "Poivron rouge rôti très bien égoutté",
+          "note": "Retire les sulfites selon le produit mais modifie la conservation"
+        }
+      ],
+      "conservation": "3 jours dans une boîte hermétique après refroidissement complet.",
+      "nutrition_par_portion": {
+        "calories": 85,
+        "proteines_g": 3,
+        "glucides_g": 9,
+        "sucres_g": 1,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 2,
+        "sodium_mg": 70,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r185-crackers-d-avoine-aux-graines-et-tomate-sechee.jpg",
+        "alt": "Crackers d’avoine aux graines et tomate séchée"
+      },
+      "seo": {
+        "titre": "Crackers d’avoine aux graines et tomate séchée",
+        "meta_description": "Des crackers fins d'avoine et tournesol, parfumés à la tomate séchée et à l'origan.",
+        "mots_cles": [
+          "flocons d’avoine",
+          "graines de tournesol",
+          "tomate séchée"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La tomate séchée est intégrée à une pâte d’avoine riche en graines. Formulation à tester avant publication.",
+          "caution": "Contient gluten et sulfites; humidité, sodium et croustillance à contrôler."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.45,
+          "active_minutes": 22,
+          "equipment": [
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "gluten",
+            "sulfites"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r186",
+      "slug": "coupes-de-prune-au-chia-et-aux-amandes",
+      "titre": "Coupes de prune au chia et aux amandes",
+      "categorie": "snack",
+      "description": "Une compotée courte de prunes prise au chia, servie en petites coupes avec citron, cannelle et amandes.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 10,
+        "repos": 120,
+        "total": 142
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "snack",
+        "compotee-courte-et-repos-a-froid",
+        "prunes",
+        "graines-de-chia",
+        "amandes"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "prune",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "prunes",
+          "note": "Dénoyautées et coupées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-chia",
+          "quantite": 45,
+          "unite": "g",
+          "quantite_normalisee": 45,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de chia",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus selon la recette",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les prunes avec deux cuillères d'eau et la cannelle 8 à 10 minutes.",
+        "Écraser grossièrement et ajouter le citron.",
+        "Hors du feu, incorporer le chia et répartir dans six petites coupes.",
+        "Réfrigérer 2 heures puis ajouter les amandes."
+      ],
+      "conseils": [
+        "La compotée doit rester souple; ajouter une cuillère d'eau si elle épaissit trop."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 110,
+        "proteines_g": 3,
+        "glucides_g": 14,
+        "sucres_g": 9,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 5,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r186-coupes-de-prune-au-chia-et-aux-amandes.jpg",
+        "alt": "Coupes de prune au chia et aux amandes"
+      },
+      "seo": {
+        "titre": "Coupes de prune au chia et aux amandes",
+        "meta_description": "Une compotée courte de prunes prise au chia, servie en petites coupes avec citron, cannelle et amandes.",
+        "mots_cles": [
+          "prunes",
+          "graines de chia",
+          "amandes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Une petite compotée prise au chia, pensée en portion de collation. Formulation à tester avant publication.",
+          "caution": "Contient des fruits à coque; pouvoir gélifiant du chia et portion à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "breakfast"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.75,
+          "active_minutes": 15,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r187",
+      "slug": "poire-pochee-a-l-hibiscus-et-aux-pistaches",
+      "titre": "Poire pochée à l’hibiscus et aux pistaches",
+      "categorie": "dessert",
+      "description": "Une poire pochée dans une infusion d'hibiscus, orange et cannelle, servie avec des pistaches.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 28,
+        "repos": 20,
+        "total": 63
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "dessert",
+        "pochage",
+        "poire",
+        "hibiscus",
+        "pistaches"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "poire",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "Fermes, pelées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "hibiscus-seche",
+          "quantite": 12,
+          "unite": "g",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fleurs d'hibiscus séchées alimentaires",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "pistaches-non-salees",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "orange",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-baton",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bâton de cannelle",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 900,
+          "unite": "ml",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Porter eau, hibiscus, orange et cannelle à frémissement 5 minutes.",
+        "Ajouter les poires et pocher 20 à 23 minutes en les retournant.",
+        "Égoutter les poires et laisser tiédir 20 minutes.",
+        "Servir une poire par personne avec les pistaches."
+      ],
+      "conseils": [
+        "Choisir des poires de même calibre pour une cuisson régulière."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pistaches",
+          "par": "Amandes effilées",
+          "note": "Conserve l'allergène fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur dans le liquide filtré.",
+      "nutrition_par_portion": {
+        "calories": 155,
+        "proteines_g": 3,
+        "glucides_g": 31,
+        "sucres_g": 20,
+        "lipides_g": 4,
+        "acides_gras_satures_g": 0.5,
+        "fibres_g": 6,
+        "sodium_mg": 5,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r187-poire-pochee-a-l-hibiscus-et-aux-pistaches.jpg",
+        "alt": "Poire pochée à l’hibiscus et aux pistaches"
+      },
+      "seo": {
+        "titre": "Poire pochée à l’hibiscus et aux pistaches",
+        "meta_description": "Une poire pochée dans une infusion d'hibiscus, orange et cannelle, servie avec des pistaches.",
+        "mots_cles": [
+          "poire",
+          "hibiscus",
+          "pistaches"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L’hibiscus colore le pochage sans vin et la pistache apporte le contraste. Formulation à tester avant publication.",
+          "caution": "Contient des fruits à coque; calibre, transfert du liquide et valeur nutritionnelle à mesurer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.05,
+          "active_minutes": 18,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r188",
+      "slug": "peche-rotie-aux-amandes-et-au-thym",
+      "titre": "Pêche rôtie aux amandes et au thym",
+      "categorie": "dessert",
+      "description": "Des demi-pêches rôties au thym et citron, servies avec yaourt nature et amandes.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 18,
+        "repos": 5,
+        "total": 35
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "dessert",
+        "rotissage-au-four",
+        "peche",
+        "amandes",
+        "thym"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "peche",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pêches",
+          "note": "Mûres mais fermes, coupées en deux",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus selon la recette",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-nature",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "Non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        }
+      ],
+      "etapes": [
+        "Placer les pêches face coupée vers le haut dans un plat.",
+        "Ajouter thym, zeste et quelques gouttes de citron.",
+        "Rôtir 15 à 18 minutes à 190 °C, puis laisser reposer 5 minutes.",
+        "Servir deux moitiés avec yaourt et amandes."
+      ],
+      "conseils": [
+        "Réduire la cuisson si les pêches sont très mûres."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pêches",
+          "par": "Nectarines",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "Pêches rôties 2 jours au réfrigérateur; yaourt séparé.",
+      "nutrition_par_portion": {
+        "calories": 180,
+        "proteines_g": 7,
+        "glucides_g": 20,
+        "sucres_g": 16,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 4,
+        "sodium_mg": 65,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r188-peche-rotie-aux-amandes-et-au-thym.jpg",
+        "alt": "Pêche rôtie aux amandes et au thym"
+      },
+      "seo": {
+        "titre": "Pêche rôtie aux amandes et au thym",
+        "meta_description": "Des demi-pêches rôties au thym et citron, servies avec yaourt nature et amandes.",
+        "mots_cles": [
+          "pêche",
+          "amandes",
+          "thym"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Un dessert de fruit rôti aux notes herbacées, servi avec yaourt nature. Formulation à tester avant publication.",
+          "caution": "Contient lait et fruits à coque; maturité du fruit et coût saisonnier à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.1,
+          "active_minutes": 14,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r189",
+      "slug": "gateau-de-polenta-a-l-orange-et-a-l-huile-d-olive",
+      "titre": "Gâteau de polenta à l’orange et à l’huile d’olive",
+      "categorie": "dessert",
+      "description": "Un gâteau moelleux de polenta, orange, amandes, œufs et huile d'olive, sans beurre.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 35,
+        "repos": 15,
+        "total": 68
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "hiver",
+        "printemps"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-au-four",
+        "polenta",
+        "orange",
+        "huile-d-olive"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "polenta-fine",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "polenta fine",
+          "note": "Certifiée sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges",
+          "note": "Zeste et 180 ml de jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 3,
+          "unite": "c. à s.",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poudre-amande",
+          "quantite": 90,
+          "unite": "g",
+          "quantite_normalisee": 90,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "poudre d'amande",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "oeuf",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "Calibre moyen",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "levure-chimique-sans-gluten",
+          "quantite": 2,
+          "unite": "c. à c.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "levure chimique sans gluten",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 175 °C et chemiser un moule de 20 cm.",
+        "Fouetter œufs, jus, zeste et huile.",
+        "Incorporer polenta, amande et levure puis verser dans le moule.",
+        "Cuire 32 à 35 minutes et laisser reposer 15 minutes avant de couper 8 parts."
+      ],
+      "conseils": [
+        "Laisser la polenta s'hydrater 5 minutes dans la pâte avant d'enfourner."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Poudre d'amande",
+          "par": "Poudre de tournesol",
+          "note": "Option sans fruits à coque à tester"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur dans une boîte fermée.",
+      "nutrition_par_portion": {
+        "calories": 230,
+        "proteines_g": 6,
+        "glucides_g": 27,
+        "sucres_g": 6,
+        "lipides_g": 12,
+        "acides_gras_satures_g": 1.8,
+        "fibres_g": 3,
+        "sodium_mg": 105,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r189-gateau-de-polenta-a-l-orange-et-a-l-huile-d-olive.jpg",
+        "alt": "Gâteau de polenta à l’orange et à l’huile d’olive"
+      },
+      "seo": {
+        "titre": "Gâteau de polenta à l’orange et à l’huile d’olive",
+        "meta_description": "Un gâteau moelleux de polenta, orange, amandes, œufs et huile d'olive, sans beurre.",
+        "mots_cles": [
+          "polenta",
+          "orange",
+          "huile d’olive"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "La polenta et l’huile d’olive composent un gâteau d’agrumes sans beurre. Formulation à tester avant publication.",
+          "caution": "Contient œuf et fruits à coque; texture, jus d'orange et levure à valider."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.8,
+          "active_minutes": 22,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r190",
+      "slug": "riz-complet-au-lait-aux-mures-et-cardamome",
+      "titre": "Riz complet au lait aux mûres et cardamome",
+      "categorie": "dessert",
+      "description": "Un riz complet crémeux à la boisson d'amande, cardamome et mûres, terminé par des pistaches.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 52,
+        "repos": 10,
+        "total": 72
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-lente",
+        "riz-complet",
+        "boisson-d-amande",
+        "mures"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "riz-rond-complet",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "riz rond complet",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-amande-non-sucree",
+          "quantite": 850,
+          "unite": "ml",
+          "quantite_normalisee": 850,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'amande non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "mure",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "mûres",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cardamome-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cardamome moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "pistaches-non-salees",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        }
+      ],
+      "etapes": [
+        "Cuire riz, boisson d'amande et cardamome à très petit frémissement 42 minutes en remuant.",
+        "Ajouter la moitié des mûres et poursuivre 8 à 10 minutes.",
+        "Laisser reposer 10 minutes hors du feu.",
+        "Répartir en six portions et garnir de mûres fraîches et pistaches."
+      ],
+      "conseils": [
+        "Ajouter un peu d'eau si le riz absorbe tout le liquide avant d'être tendre."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Mûres",
+          "par": "Myrtilles",
+          "note": "Même poids"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur; détendre au réchauffage.",
+      "nutrition_par_portion": {
+        "calories": 210,
+        "proteines_g": 5,
+        "glucides_g": 36,
+        "sucres_g": 9,
+        "lipides_g": 6,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 4,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r190-riz-complet-au-lait-aux-mures-et-cardamome.jpg",
+        "alt": "Riz complet au lait aux mûres et cardamome"
+      },
+      "seo": {
+        "titre": "Riz complet au lait aux mûres et cardamome",
+        "meta_description": "Un riz complet crémeux à la boisson d'amande, cardamome et mûres, terminé par des pistaches.",
+        "mots_cles": [
+          "riz complet",
+          "boisson d’amande",
+          "mûres"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les mûres et la cardamome donnent une version sombre au riz au lait complet. Formulation à tester avant publication.",
+          "caution": "Contient des fruits à coque; cuisson du riz et composition de la boisson à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.15,
+          "active_minutes": 24,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r191",
+      "slug": "yaourt-aux-raisins-rotis-noix-et-romarin",
+      "titre": "Yaourt aux raisins rôtis, noix et romarin",
+      "categorie": "dessert",
+      "description": "Un yaourt nature garni de raisins rôtis au romarin, noix et zeste de citron.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 18,
+        "repos": 5,
+        "total": 33
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "dessert",
+        "rotissage-puis-assemblage",
+        "yaourt-nature",
+        "raisins",
+        "noix"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "yaourt-nature",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "Non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "raisin-noir",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "raisins noirs",
+          "note": "Égrenés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "romarin frais haché",
+          "note": "Dosage léger",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus selon la recette",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mélanger les raisins avec le romarin et le zeste.",
+        "Rôtir 15 à 18 minutes à 190 °C jusqu'à ce que quelques grains éclatent.",
+        "Laisser tiédir 5 minutes.",
+        "Servir sur le yaourt avec les noix."
+      ],
+      "conseils": [
+        "Utiliser très peu de romarin pour ne pas masquer le fruit."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "Raisins rôtis 2 jours au réfrigérateur; yaourt séparé.",
+      "nutrition_par_portion": {
+        "calories": 205,
+        "proteines_g": 8,
+        "glucides_g": 26,
+        "sucres_g": 20,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 1.9,
+        "fibres_g": 3,
+        "sodium_mg": 75,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r191-yaourt-aux-raisins-rotis-noix-et-romarin.jpg",
+        "alt": "Yaourt aux raisins rôtis, noix et romarin"
+      },
+      "seo": {
+        "titre": "Yaourt aux raisins rôtis, noix et romarin",
+        "meta_description": "Un yaourt nature garni de raisins rôtis au romarin, noix et zeste de citron.",
+        "mots_cles": [
+          "yaourt nature",
+          "raisins",
+          "noix"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les raisins éclatés au four forment un coulis chaud parfumé au romarin. Formulation à tester avant publication.",
+          "caution": "Contient lait et fruits à coque; sucres concentrés par rôtissage et portions à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.95,
+          "active_minutes": 12,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "lait",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r192",
+      "slug": "creme-de-tofu-soyeux-au-chocolat-et-framboise",
+      "titre": "Crème de tofu soyeux au chocolat et framboise",
+      "categorie": "dessert",
+      "description": "Une crème froide de tofu soyeux au cacao et à la vanille, avec framboises et noisettes.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 0,
+        "repos": 120,
+        "total": 132
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "dessert",
+        "mixage-et-repos-a-froid",
+        "tofu-soyeux",
+        "cacao-non-sucre",
+        "framboises"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "tofu-soyeux",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tofu soyeux",
+          "note": "Égoutté",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "cacao-non-sucre",
+          "quantite": 35,
+          "unite": "g",
+          "quantite_normalisee": 35,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cacao non sucré",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "framboise",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "framboises",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noisette",
+          "quantite": 50,
+          "unite": "g",
+          "quantite_normalisee": 50,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "Grillées et concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "extrait-vanille",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "extrait de vanille",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mixer tofu, cacao, vanille et la moitié des framboises jusqu'à texture lisse.",
+        "Répartir en six petits pots.",
+        "Réfrigérer au moins 2 heures.",
+        "Ajouter le reste des framboises et les noisettes au service."
+      ],
+      "conseils": [
+        "Égoutter le tofu sans le presser afin de conserver une texture crémeuse."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque à tester"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 145,
+        "proteines_g": 8,
+        "glucides_g": 11,
+        "sucres_g": 5,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.3,
+        "fibres_g": 4,
+        "sodium_mg": 20,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r192-creme-de-tofu-soyeux-au-chocolat-et-framboise.jpg",
+        "alt": "Crème de tofu soyeux au chocolat et framboise"
+      },
+      "seo": {
+        "titre": "Crème de tofu soyeux au chocolat et framboise",
+        "meta_description": "Une crème froide de tofu soyeux au cacao et à la vanille, avec framboises et noisettes.",
+        "mots_cles": [
+          "tofu soyeux",
+          "cacao non sucré",
+          "framboises"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le tofu soyeux remplace l’avocat de la mousse déjà présente. Formulation à tester avant publication.",
+          "caution": "Contient soja et fruits à coque; amertume du cacao et texture selon le tofu à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.9,
+          "active_minutes": 12,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "soja",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r193",
+      "slug": "figues-roties-aux-noix-et-au-zeste-d-orange",
+      "titre": "Figues rôties aux noix et au zeste d’orange",
+      "categorie": "dessert",
+      "description": "Des figues farcies de noix, rôties avec orange et cannelle puis servies avec du yaourt.",
+      "temps": {
+        "preparation": 12,
+        "cuisson": 16,
+        "repos": 5,
+        "total": 33
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "dessert",
+        "rotissage-au-four",
+        "figues",
+        "noix",
+        "orange"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "figue-fraiche",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "figues fraîches",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix",
+          "note": "Hachées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "orange",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "orange",
+          "note": "Zeste et 60 ml de jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cannelle-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cannelle moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-nature",
+          "quantite": 240,
+          "unite": "g",
+          "quantite_normalisee": 240,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "Non sucré",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        }
+      ],
+      "etapes": [
+        "Inciser les figues en croix sans séparer la base.",
+        "Garnir de noix et cannelle puis ajouter zeste et jus d'orange.",
+        "Rôtir 14 à 16 minutes à 185 °C.",
+        "Laisser reposer 5 minutes et servir deux figues avec du yaourt."
+      ],
+      "conseils": [
+        "Utiliser un plat ajusté pour que les figues restent droites."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix",
+          "par": "Pistaches",
+          "note": "Conserve l'allergène fruits à coque"
+        }
+      ],
+      "conservation": "Figues rôties 2 jours au réfrigérateur; yaourt séparé.",
+      "nutrition_par_portion": {
+        "calories": 215,
+        "proteines_g": 7,
+        "glucides_g": 27,
+        "sucres_g": 21,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.8,
+        "fibres_g": 5,
+        "sodium_mg": 65,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r193-figues-roties-aux-noix-et-au-zeste-d-orange.jpg",
+        "alt": "Figues rôties aux noix et au zeste d’orange"
+      },
+      "seo": {
+        "titre": "Figues rôties aux noix et au zeste d’orange",
+        "meta_description": "Des figues farcies de noix, rôties avec orange et cannelle puis servies avec du yaourt.",
+        "mots_cles": [
+          "figues",
+          "noix",
+          "orange"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Les figues sont farcies de noix puis rôties sans pâte. Formulation à tester avant publication.",
+          "caution": "Contient lait et fruits à coque; fruits concentrés et coût très saisonnier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.15,
+          "active_minutes": 14,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r194",
+      "slug": "quinoa-au-lait-de-coco-leger-mangue-et-citron-vert",
+      "titre": "Quinoa au lait de coco léger, mangue et citron vert",
+      "categorie": "dessert",
+      "description": "Un quinoa doux au lait de coco léger, mangue, citron vert et sésame, servi en petite portion.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 25,
+        "repos": 10,
+        "total": 45
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-douce",
+        "quinoa",
+        "lait-de-coco-leger",
+        "mangue"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "quinoa",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "quinoa",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "lait-coco-leger",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "lait de coco léger",
+          "note": "Sans sucre ajouté",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 300,
+          "unite": "ml",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "mangue",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "mangue",
+          "note": "Environ 300 g de chair",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron vert",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-sesame",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "graines de sésame",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        }
+      ],
+      "etapes": [
+        "Cuire le quinoa avec lait de coco et eau 20 à 25 minutes à petit feu.",
+        "Laisser reposer 10 minutes.",
+        "Incorporer zeste et jus de citron vert.",
+        "Répartir en six portions et ajouter mangue et sésame."
+      ],
+      "conseils": [
+        "Rincer soigneusement le quinoa pour limiter son amertume."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Lait de coco léger",
+          "par": "Boisson de soja",
+          "note": "Ajoute l'allergène soja et réduit généralement les graisses saturées"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur; mangue séparée.",
+      "nutrition_par_portion": {
+        "calories": 220,
+        "proteines_g": 6,
+        "glucides_g": 35,
+        "sucres_g": 8,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 3.2,
+        "fibres_g": 4,
+        "sodium_mg": 25,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r194-quinoa-au-lait-de-coco-leger-mangue-et-citron-vert.jpg",
+        "alt": "Quinoa au lait de coco léger, mangue et citron vert"
+      },
+      "seo": {
+        "titre": "Quinoa au lait de coco léger, mangue et citron vert",
+        "meta_description": "Un quinoa doux au lait de coco léger, mangue, citron vert et sésame, servi en petite portion.",
+        "mots_cles": [
+          "quinoa",
+          "lait de coco léger",
+          "mangue"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le quinoa remplace le riz gluant dans un dessert tropical en portion modérée. Formulation à tester avant publication.",
+          "caution": "Contient sésame; recette au coco à portion modérée, graisses saturées et nutrition à recalculer."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1,
+          "active_minutes": 14,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r195",
+      "slug": "crumble-d-abricots-a-l-avoine-et-aux-pistaches",
+      "titre": "Crumble d’abricots à l’avoine et aux pistaches",
+      "categorie": "dessert",
+      "description": "Un crumble d'abricots à l'avoine, pistaches, huile d'olive et cardamome.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 28,
+        "repos": 10,
+        "total": 53
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-au-four",
+        "abricots",
+        "flocons-d-avoine",
+        "pistaches"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "abricot",
+          "quantite": 800,
+          "unite": "g",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "abricots frais",
+          "note": "Dénoyautés et coupés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "flocons-avoine-complets",
+          "quantite": 140,
+          "unite": "g",
+          "quantite_normalisee": 140,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "flocons d'avoine complets",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "pistaches-non-salees",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "Concassées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 3,
+          "unite": "c. à s.",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "cardamome-moulue",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cardamome moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Répartir les abricots dans un plat de 24 cm.",
+        "Mélanger avoine, pistaches, cardamome et huile jusqu'à obtenir des miettes.",
+        "Couvrir les fruits et cuire 25 à 28 minutes à 185 °C.",
+        "Laisser reposer 10 minutes et servir en huit portions."
+      ],
+      "conseils": [
+        "Si les abricots sont très acides, les mélanger à une pomme râpée plutôt qu'ajouter du sucre."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pistaches",
+          "par": "Graines de courge",
+          "note": "Option sans fruits à coque"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur; réchauffer au four.",
+      "nutrition_par_portion": {
+        "calories": 175,
+        "proteines_g": 4,
+        "glucides_g": 24,
+        "sucres_g": 10,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 5,
+        "sodium_mg": 10,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r195-crumble-d-abricots-a-l-avoine-et-aux-pistaches.jpg",
+        "alt": "Crumble d’abricots à l’avoine et aux pistaches"
+      },
+      "seo": {
+        "titre": "Crumble d’abricots à l’avoine et aux pistaches",
+        "meta_description": "Un crumble d'abricots à l'avoine, pistaches, huile d'olive et cardamome.",
+        "mots_cles": [
+          "abricots",
+          "flocons d’avoine",
+          "pistaches"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "L’abricot, la pistache et la cardamome évitent le profil fruits rouges-noix existant. Formulation à tester avant publication.",
+          "caution": "Contient gluten et fruits à coque; acidité du fruit et absorption d'huile à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.9,
+          "active_minutes": 18,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "gluten",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r196",
+      "slug": "gateau-de-carotte-orange-et-amandes",
+      "titre": "Gâteau de carotte, orange et amandes",
+      "categorie": "dessert",
+      "description": "Un gâteau de carotte et orange aux amandes et farine complète, sans glaçage.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 38,
+        "repos": 15,
+        "total": 73
+      },
+      "portions": 10,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-au-four",
+        "carotte",
+        "orange",
+        "amandes"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "carotte",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "carottes",
+          "note": "Râpées finement",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges",
+          "note": "Zeste et 140 ml de jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poudre-amande",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "poudre d'amande",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "farine-ble-complete",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de blé complète",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "oeuf",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c. à s.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "levure-chimique",
+          "quantite": 2,
+          "unite": "c. à c.",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "levure chimique",
+          "note": "Vérifier l'étiquette",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 175 °C et chemiser un moule de 20 cm.",
+        "Fouetter œufs, jus, zeste et huile puis ajouter les carottes.",
+        "Incorporer farine, amande et levure sans trop mélanger.",
+        "Cuire 35 à 38 minutes, reposer 15 minutes et couper en dix parts."
+      ],
+      "conseils": [
+        "Presser très légèrement les carottes seulement si elles rendent beaucoup d'eau."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Poudre d'amande",
+          "par": "Poudre de graines de tournesol",
+          "note": "Option sans fruits à coque à tester"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 190,
+        "proteines_g": 6,
+        "glucides_g": 24,
+        "sucres_g": 6,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.3,
+        "fibres_g": 4,
+        "sodium_mg": 110,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r196-gateau-de-carotte-orange-et-amandes.jpg",
+        "alt": "Gâteau de carotte, orange et amandes"
+      },
+      "seo": {
+        "titre": "Gâteau de carotte, orange et amandes",
+        "meta_description": "Un gâteau de carotte et orange aux amandes et farine complète, sans glaçage.",
+        "mots_cles": [
+          "carotte",
+          "orange",
+          "amandes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Un gâteau sans glaçage où l’orange fraîche parfume la carotte. Formulation à tester avant publication.",
+          "caution": "Contient gluten, œuf et fruits à coque; levure, humidité et rendement à valider."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.7,
+          "active_minutes": 25,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten",
+            "oeuf"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r197",
+      "slug": "clafoutis-de-poire-au-sarrasin-et-a-la-muscade",
+      "titre": "Clafoutis de poire au sarrasin et à la muscade",
+      "categorie": "dessert",
+      "description": "Un clafoutis de poire au sarrasin, boisson d'amande, œufs et muscade.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 35,
+        "repos": 15,
+        "total": 65
+      },
+      "portions": 8,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetarien",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-au-four",
+        "poire",
+        "farine-de-sarrasin",
+        "ufs"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "poire",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires",
+          "note": "En lamelles",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "farine-sarrasin",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de sarrasin",
+          "note": "Certifiée sans gluten si nécessaire",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "oeuf",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "œufs",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "oeuf"
+          ]
+        },
+        {
+          "id": "boisson-amande-non-sucree",
+          "quantite": 400,
+          "unite": "ml",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson d'amande non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "muscade-moulue",
+          "quantite": 0.25,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "muscade moulue",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Huiler un plat de 24 cm et disposer les poires.",
+        "Fouetter œufs, boisson d'amande, farine et muscade.",
+        "Verser sur les fruits et cuire 32 à 35 minutes à 180 °C.",
+        "Laisser reposer 15 minutes avant de servir huit parts."
+      ],
+      "conseils": [
+        "La pâte est liquide avant cuisson; laisser le clafoutis prendre au repos."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Boisson d'amande",
+          "par": "Lait demi-écrémé",
+          "note": "Remplace fruits à coque par lait si la farine convient"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 145,
+        "proteines_g": 5,
+        "glucides_g": 22,
+        "sucres_g": 9,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 3,
+        "sodium_mg": 55,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r197-clafoutis-de-poire-au-sarrasin-et-a-la-muscade.jpg",
+        "alt": "Clafoutis de poire au sarrasin et à la muscade"
+      },
+      "seo": {
+        "titre": "Clafoutis de poire au sarrasin et à la muscade",
+        "meta_description": "Un clafoutis de poire au sarrasin, boisson d'amande, œufs et muscade.",
+        "mots_cles": [
+          "poire",
+          "farine de sarrasin",
+          "œufs"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le sarrasin et la muscade donnent une lecture rustique du clafoutis de poire. Formulation à tester avant publication.",
+          "caution": "Contient œuf et fruits à coque; certification du sarrasin et prise à cœur à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.75,
+          "active_minutes": 18,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "oeuf",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r198",
+      "slug": "glace-minute-banane-cacao-et-sesame",
+      "titre": "Glace minute banane, cacao et sésame",
+      "categorie": "dessert",
+      "description": "Une glace minute de banane congelée au cacao, tahini, sésame et boisson de soja.",
+      "temps": {
+        "preparation": 10,
+        "cuisson": 0,
+        "repos": 720,
+        "total": 730
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "toute-annee"
+      ],
+      "tags": [
+        "dessert",
+        "mixage-congele",
+        "banane",
+        "cacao-non-sucre",
+        "tahini"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "banane",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bananes",
+          "note": "Mûres, tranchées et congelées 12 heures",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "cacao-non-sucre",
+          "quantite": 25,
+          "unite": "g",
+          "quantite_normalisee": 25,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cacao non sucré",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "tahini",
+          "quantite": 45,
+          "unite": "g",
+          "quantite_normalisee": 45,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tahini",
+          "note": "Purée de sésame",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "graines-sesame",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "graines de sésame",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "boisson-soja-non-sucree",
+          "quantite": 100,
+          "unite": "ml",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson de soja non sucrée",
+          "note": "Très froide",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "soja"
+          ]
+        }
+      ],
+      "etapes": [
+        "Congeler les rondelles de banane à plat pendant 12 heures.",
+        "Mixer banane, cacao et tahini par impulsions.",
+        "Ajouter progressivement la boisson de soja jusqu'à texture souple.",
+        "Servir immédiatement en six petites portions avec le sésame."
+      ],
+      "conseils": [
+        "Faire des pauses pour racler les parois sans surchauffer le blender."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Boisson de soja",
+          "par": "Boisson d'avoine",
+          "note": "Remplace soja par gluten selon le produit"
+        }
+      ],
+      "conservation": "Service immédiat recommandé; recongélation déconseillée pour la texture.",
+      "nutrition_par_portion": {
+        "calories": 150,
+        "proteines_g": 4,
+        "glucides_g": 25,
+        "sucres_g": 13,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.8,
+        "fibres_g": 4,
+        "sodium_mg": 25,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r198-glace-minute-banane-cacao-et-sesame.jpg",
+        "alt": "Glace minute banane, cacao et sésame"
+      },
+      "seo": {
+        "titre": "Glace minute banane, cacao et sésame",
+        "meta_description": "Une glace minute de banane congelée au cacao, tahini, sésame et boisson de soja.",
+        "mots_cles": [
+          "banane",
+          "cacao non sucré",
+          "tahini"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le tahini remplace avocat et noix dans une crème glacée minute sans sirop. Formulation à tester avant publication.",
+          "caution": "Contient soja et sésame; portion de fruit concentré, puissance du blender et texture à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.55,
+          "active_minutes": 10,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "sesame",
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r199",
+      "slug": "tarte-fine-aux-prunes-romarin-et-amandes",
+      "titre": "Tarte fine aux prunes, romarin et amandes",
+      "categorie": "dessert",
+      "description": "Une tarte très fine aux prunes, romarin, amandes et huile d'olive sur pâte complète.",
+      "temps": {
+        "preparation": 25,
+        "cuisson": 32,
+        "repos": 20,
+        "total": 77
+      },
+      "portions": 10,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-au-four",
+        "prunes",
+        "farine-complete",
+        "amandes"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "prune",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "prunes",
+          "note": "Dénoyautées et tranchées",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "farine-ble-complete",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "farine de blé complète",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "amande",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Moulues",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 0.5,
+          "unite": "c. à c.",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "romarin frais haché",
+          "note": "Dosage léger",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 3,
+          "unite": "c. à s.",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 70,
+          "unite": "ml",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Mélanger farine, huile et eau pour former une pâte souple puis reposer 20 minutes.",
+        "Étaler très finement sur une plaque et poudrer d'amandes.",
+        "Disposer les prunes serrées et ajouter le romarin.",
+        "Cuire 30 à 32 minutes à 190 °C puis couper en dix parts."
+      ],
+      "conseils": [
+        "Égoutter brièvement les prunes très juteuses avant de garnir."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Poudre de graines de tournesol",
+          "note": "Option sans fruits à coque à tester"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur; réchauffer au four.",
+      "nutrition_par_portion": {
+        "calories": 165,
+        "proteines_g": 4,
+        "glucides_g": 21,
+        "sucres_g": 7,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 4,
+        "sodium_mg": 35,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r199-tarte-fine-aux-prunes-romarin-et-amandes.jpg",
+        "alt": "Tarte fine aux prunes, romarin et amandes"
+      },
+      "seo": {
+        "titre": "Tarte fine aux prunes, romarin et amandes",
+        "meta_description": "Une tarte très fine aux prunes, romarin, amandes et huile d'olive sur pâte complète.",
+        "mots_cles": [
+          "prunes",
+          "farine complète",
+          "amandes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le romarin parfume une tarte très fine où la prune reste dominante. Formulation à tester avant publication.",
+          "caution": "Contient gluten et fruits à coque; hydratation de pâte et jus des prunes à tester."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.65,
+          "active_minutes": 30,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "gluten",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r200",
+      "slug": "flan-de-millet-au-coing-et-a-la-vanille",
+      "titre": "Flan de millet au coing et à la vanille",
+      "categorie": "dessert",
+      "description": "Un flan végétal de millet au coing, boisson de soja, vanille et amandes.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 55,
+        "repos": 30,
+        "total": 105
+      },
+      "portions": 6,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose",
+        "sans-gluten"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "dessert",
+        "cuisson-douce-puis-au-four",
+        "millet",
+        "coing",
+        "boisson-de-soja"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "millet-decortique",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "millet décortiqué",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "coing",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coing",
+          "note": "Pelé, épépiné et en dés",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "boisson-soja-non-sucree",
+          "quantite": 700,
+          "unite": "ml",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "boisson de soja non sucrée",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "extrait-vanille",
+          "quantite": 1,
+          "unite": "c. à c.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "extrait de vanille",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "Moulues",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1,
+          "unite": "c. à s.",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive vierge extra",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Pocher le coing dans 250 ml de boisson de soja 20 minutes.",
+        "Cuire le millet avec le reste de boisson 25 minutes en remuant.",
+        "Mixer millet, moitié du coing, vanille et amandes puis verser dans un moule huilé.",
+        "Ajouter le coing restant, cuire 25 minutes à 180 °C et laisser reposer 30 minutes."
+      ],
+      "conseils": [
+        "Le coing doit être très tendre avant le mixage; prolonger son pochage si nécessaire."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Graines de tournesol moulues",
+          "note": "Option sans fruits à coque à tester"
+        }
+      ],
+      "conservation": "3 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 185,
+        "proteines_g": 6,
+        "glucides_g": 31,
+        "sucres_g": 8,
+        "lipides_g": 5,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 4,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale à partir d'ingrédients génériques et de la portion annoncée",
+          "provenance": "Aucune table de composition reliée ingrédient par ingrédient; recalcul requis"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Non évalué au stade brouillon",
+      "image": {
+        "nom_fichier": "r200-flan-de-millet-au-coing-et-a-la-vanille.jpg",
+        "alt": "Flan de millet au coing et à la vanille"
+      },
+      "seo": {
+        "titre": "Flan de millet au coing et à la vanille",
+        "meta_description": "Un flan végétal de millet au coing, boisson de soja, vanille et amandes.",
+        "mots_cles": [
+          "millet",
+          "coing",
+          "boisson de soja"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "inspiration",
+            "title": "Recherche éditoriale InflammMenu — concepts r051-r200",
+            "version": "lot 2026-08-05",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Le millet mixé forme un flan végétal associé à un fruit rarement utilisé. Formulation à tester avant publication.",
+          "caution": "Contient soja et fruits à coque; cuisson du coing, prise du flan et coût à vérifier."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 0.75,
+          "active_minutes": 28,
+          "equipment": [
+            "hob",
+            "oven",
+            "blender"
+          ],
+          "allergens": [
+            "soja",
+            "fruits-a-coque"
+          ]
+        }
+      }
+    }
+  ]
+}

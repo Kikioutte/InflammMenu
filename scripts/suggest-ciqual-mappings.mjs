@@ -95,7 +95,8 @@ const result = {
       notes: [...ingredient.notes],
       recipes: [...ingredient.recipes],
       selected_ciqual_code: null,
-      grams_per_normalized_unit: ingredient.units.length === 1 && ingredient.units.has("g") ? 1 : null,
+      grams_per_unit: Object.fromEntries([...ingredient.units].map((unit) => [unit, unit === "g" ? 1 : null])),
+      occurrence_overrides: {},
       review_status: "pending",
       candidates,
     };

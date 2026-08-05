@@ -1,0 +1,5503 @@
+{
+  "meta": {
+    "schema_version": "2.1.0",
+    "status": "draft",
+    "nombre_recettes": 25,
+    "avertissement": "Lot de travail non publié. Nutrition et coûts estimés; validation complète requise.",
+    "licence": "CC BY-SA 4.0",
+    "medical_notice": "Ces recettes s'inscrivent dans un modèle alimentaire varié et ne revendiquent aucun effet thérapeutique."
+  },
+  "categories": [
+    {
+      "id": "salade",
+      "nom": "Salades",
+      "description": "Salades complètes et accompagnements froids ou tièdes."
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r201",
+      "slug": "salade-freekeh-artichauts-feves-citron",
+      "titre": "Salade tiède de freekeh, artichauts et fèves au citron",
+      "categorie": "salade",
+      "description": "Une salade tiède de freekeh fumé, fonds d'artichaut, fèves, céleri, citron et aneth.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 30,
+        "repos": 10,
+        "total": 58
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "freekeh",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "freekeh",
+          "note": "Rincé",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "fonds-artichaut",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fonds d'artichaut",
+          "note": "Au naturel, égouttés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "feves-decortiquees",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fèves décortiquées",
+          "note": "",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "celeri-branche",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "branches de céleri",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "Zeste et jus",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "aneth-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "aneth frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le freekeh dans trois fois son volume d'eau 25 à 30 minutes, puis égoutter.",
+        "Blanchir les fèves 4 minutes et retirer leur peau si elle est épaisse.",
+        "Couper artichauts et céleri, puis mélanger avec le freekeh encore tiède et les fèves.",
+        "Ajouter huile, citron et aneth, puis laisser reposer 10 minutes avant de servir."
+      ],
+      "conseils": [
+        "Vérifier le temps du freekeh sur l'emballage, car le calibre varie."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Fèves",
+          "par": "Petits pois",
+          "note": "Même poids, texture plus douce"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Servir frais ou légèrement tiédi.",
+      "nutrition_par_portion": {
+        "calories": 385,
+        "proteines_g": 16,
+        "glucides_g": 65,
+        "sucres_g": 7,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 14,
+        "sodium_mg": 350,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r201-salade-freekeh-artichauts-feves-citron.jpg",
+        "alt": "Salade tiède de freekeh, artichauts et fèves au citron"
+      },
+      "seo": {
+        "titre": "Salade tiède de freekeh, artichauts et fèves au citron",
+        "meta_description": "Salade tiède de freekeh, artichauts et fèves au citron, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "salade tiède de freekeh",
+          "artichauts et fèves au citron"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Salade tiède de freekeh, artichauts et fèves au citron",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : celeri, gluten. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.15,
+          "active_minutes": 28,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "celeri",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r202",
+      "slug": "salade-millet-asperges-petits-pois-estragon",
+      "titre": "Salade de millet, asperges et petits pois à l'estragon",
+      "categorie": "salade",
+      "description": "Une salade printanière de millet refroidi, asperges, petits pois, radis, estragon et citron.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 22,
+        "repos": 20,
+        "total": 62
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "millet-decortique",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "millet décortiqué",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "asperge-verte",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "asperges vertes",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "petits-pois",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petits pois",
+          "note": "",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "radis-rose",
+          "quantite": 10,
+          "unite": "piece",
+          "quantite_normalisee": 10,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "radis roses",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "estragon-frais",
+          "quantite": 15,
+          "unite": "g",
+          "quantite_normalisee": 15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "estragon frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rincer le millet, le cuire dans 550 ml d'eau 18 minutes puis l'étaler pour le refroidir 20 minutes.",
+        "Cuire les asperges à la vapeur 6 à 8 minutes et blanchir les petits pois 3 minutes.",
+        "Émincer les radis et couper les asperges en tronçons.",
+        "Mélanger millet, légumes, estragon, huile, zeste et jus de citron."
+      ],
+      "conseils": [
+        "Refroidir le millet en couche mince évite qu'il ne forme un bloc."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Estragon",
+          "par": "Cerfeuil",
+          "note": "Profil aromatique plus doux"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur dans un contenant fermé.",
+      "nutrition_par_portion": {
+        "calories": 335,
+        "proteines_g": 11,
+        "glucides_g": 57,
+        "sucres_g": 7,
+        "lipides_g": 9,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 9,
+        "sodium_mg": 70,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r202-salade-millet-asperges-petits-pois-estragon.jpg",
+        "alt": "Salade de millet, asperges et petits pois à l'estragon"
+      },
+      "seo": {
+        "titre": "Salade de millet, asperges et petits pois à l'estragon",
+        "meta_description": "Salade de millet, asperges et petits pois à l'estragon, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "salade de millet",
+          "asperges et petits pois à l",
+          "estragon"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Salade de millet, asperges et petits pois à l'estragon",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Contrôler étiquettes, contaminations croisées, rendement et protocole."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.05,
+          "active_minutes": 28,
+          "equipment": [
+            "hob",
+            "steamer"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r203",
+      "slug": "orge-citron-courgettes-pois-casses",
+      "titre": "Orge citronnée, courgettes crues et pois cassés aux herbes",
+      "categorie": "salade",
+      "description": "Une salade d'orge mondé et pois cassés refroidis, courgette crue, cerfeuil, citron et huile d'olive.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 55,
+        "repos": 25,
+        "total": 100
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "orge-monde",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "orge mondé",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "pois-casses-secs",
+          "quantite": 180,
+          "unite": "g",
+          "quantite_normalisee": 180,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois cassés secs",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "courgette",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "courgettes",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cerfeuil-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cerfeuil frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire séparément l'orge 45 à 50 minutes et les pois cassés 30 à 35 minutes, puis égoutter.",
+        "Étaler les deux préparations et laisser refroidir 25 minutes.",
+        "Tailler les courgettes en très fins rubans et ciseler le cerfeuil.",
+        "Mélanger céréale, légumineuse, courgette, huile, zeste et jus de citron."
+      ],
+      "conseils": [
+        "Arrêter la cuisson des pois cassés dès qu'ils sont tendres mais encore entiers."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Cerfeuil",
+          "par": "Persil plat",
+          "note": "Même quantité"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Les rubans de courgette sont meilleurs le premier jour.",
+      "nutrition_par_portion": {
+        "calories": 395,
+        "proteines_g": 17,
+        "glucides_g": 70,
+        "sucres_g": 6,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.1,
+        "fibres_g": 16,
+        "sodium_mg": 65,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r203-orge-citron-courgettes-pois-casses.jpg",
+        "alt": "Orge citronnée, courgettes crues et pois cassés aux herbes"
+      },
+      "seo": {
+        "titre": "Orge citronnée, courgettes crues et pois cassés aux herbes",
+        "meta_description": "Orge citronnée, courgettes crues et pois cassés aux herbes, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "orge citronnée",
+          "courgettes crues et pois cassés aux herbes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Orge citronnée, courgettes crues et pois cassés aux herbes",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : gluten. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.45,
+          "active_minutes": 35,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r204",
+      "slug": "epeautre-poireaux-pruneaux-noisettes",
+      "titre": "Épeautre aux poireaux grillés, pruneaux et noisettes",
+      "categorie": "salade",
+      "description": "Une salade d'épeautre, poireaux grillés, pruneaux, noisettes, persil et vinaigre de cidre.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 45,
+        "repos": 20,
+        "total": 83
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "epeautre-grain",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "épeautre en grains",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "poireau",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poireaux",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pruneau-seche",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pruneaux dénoyautés",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "noisette",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "persil-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-cidre",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de cidre",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire l'épeautre 40 à 45 minutes dans l'eau frémissante puis l'égoutter.",
+        "Couper les poireaux en tronçons, les huiler et les griller au four à 210 °C pendant 22 minutes.",
+        "Laisser tiédir 20 minutes; couper les pruneaux et concasser les noisettes.",
+        "Assembler avec persil et vinaigre, puis mélanger délicatement."
+      ],
+      "conseils": [
+        "Retourner les poireaux à mi-cuisson pour limiter les bords brûlés."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de courge",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Conserver les noisettes séparément pour leur croquant.",
+      "nutrition_par_portion": {
+        "calories": 410,
+        "proteines_g": 13,
+        "glucides_g": 68,
+        "sucres_g": 15,
+        "lipides_g": 12,
+        "acides_gras_satures_g": 1.4,
+        "fibres_g": 12,
+        "sodium_mg": 80,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r204-epeautre-poireaux-pruneaux-noisettes.jpg",
+        "alt": "Épeautre aux poireaux grillés, pruneaux et noisettes"
+      },
+      "seo": {
+        "titre": "Épeautre aux poireaux grillés, pruneaux et noisettes",
+        "meta_description": "Épeautre aux poireaux grillés, pruneaux et noisettes, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "épeautre aux poireaux grillés",
+          "pruneaux et noisettes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Épeautre aux poireaux grillés, pruneaux et noisettes",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : fruits-a-coque, gluten. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2,
+          "active_minutes": 30,
+          "equipment": [
+            "hob",
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r205",
+      "slug": "sarrasin-champignons-crus-celeri-chanvre",
+      "titre": "Sarrasin aux champignons crus, céleri et graines de chanvre",
+      "categorie": "salade",
+      "description": "Une salade de sarrasin en grains, champignons crus, céleri, épinards, chanvre et citron.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 20,
+        "repos": 20,
+        "total": 60
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver",
+        "printemps"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "sarrasin-decortique",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sarrasin décortiqué",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "champignon-paris",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "champignons de Paris très frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "celeri-branche",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "branches de céleri",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "epinard-frais",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "jeunes pousses d'épinard",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-chanvre-decortiquees",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de chanvre décortiquées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Torréfier le sarrasin 3 minutes à sec, puis le cuire 15 à 17 minutes et l'égoutter.",
+        "Étaler les grains et laisser refroidir 20 minutes.",
+        "Essuyer puis émincer finement les champignons et le céleri.",
+        "Mélanger avec épinards, chanvre, huile et citron juste avant de servir."
+      ],
+      "conseils": [
+        "Utiliser des champignons fermes et intacts, les nettoyer soigneusement et consommer rapidement."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Champignons crus",
+          "par": "Champignons poêlés",
+          "note": "Poêler 6 minutes et laisser refroidir avant assemblage"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur en raison des champignons crus.",
+      "nutrition_par_portion": {
+        "calories": 365,
+        "proteines_g": 14,
+        "glucides_g": 54,
+        "sucres_g": 5,
+        "lipides_g": 13,
+        "acides_gras_satures_g": 1.4,
+        "fibres_g": 10,
+        "sodium_mg": 100,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r205-sarrasin-champignons-crus-celeri-chanvre.jpg",
+        "alt": "Sarrasin aux champignons crus, céleri et graines de chanvre"
+      },
+      "seo": {
+        "titre": "Sarrasin aux champignons crus, céleri et graines de chanvre",
+        "meta_description": "Sarrasin aux champignons crus, céleri et graines de chanvre, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "sarrasin aux champignons crus",
+          "céleri et graines de chanvre"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Sarrasin aux champignons crus, céleri et graines de chanvre",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : celeri. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.95,
+          "active_minutes": 28,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "celeri"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r206",
+      "slug": "boulgour-petit-epeautre-fenouil-abricots",
+      "titre": "Boulgour de petit épeautre, fenouil cru et abricots",
+      "categorie": "salade",
+      "description": "Une salade estivale de petit épeautre concassé, fenouil cru, abricots, amandes, menthe et citron.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 25,
+        "repos": 20,
+        "total": 65
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "petit-epeautre-concasse",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petit épeautre concassé",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bulbes de fenouil",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "abricot-frais",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "abricots frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "amande",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "menthe-fraiche",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "menthe fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le petit épeautre concassé selon l'emballage, environ 20 à 25 minutes, puis égoutter.",
+        "Étaler et laisser refroidir 20 minutes.",
+        "Émincer très finement le fenouil, couper les abricots en quartiers et concasser les amandes.",
+        "Mélanger avec menthe, huile, zeste et jus de citron; laisser macérer 10 minutes."
+      ],
+      "conseils": [
+        "Choisir des abricots fermes pour qu'ils gardent leur forme au mélange."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes",
+          "par": "Graines de tournesol",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur; ajouter les amandes au service.",
+      "nutrition_par_portion": {
+        "calories": 405,
+        "proteines_g": 13,
+        "glucides_g": 64,
+        "sucres_g": 14,
+        "lipides_g": 13,
+        "acides_gras_satures_g": 1.3,
+        "fibres_g": 11,
+        "sodium_mg": 65,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r206-boulgour-petit-epeautre-fenouil-abricots.jpg",
+        "alt": "Boulgour de petit épeautre, fenouil cru et abricots"
+      },
+      "seo": {
+        "titre": "Boulgour de petit épeautre, fenouil cru et abricots",
+        "meta_description": "Boulgour de petit épeautre, fenouil cru et abricots, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "boulgour de petit épeautre",
+          "fenouil cru et abricots"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Boulgour de petit épeautre, fenouil cru et abricots",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : fruits-a-coque, gluten. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.25,
+          "active_minutes": 28,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "fruits-a-coque",
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r207",
+      "slug": "riz-noir-mangue-verte-concombre-basilic-thai",
+      "titre": "Riz noir, mangue verte et concombre au basilic thaï",
+      "categorie": "salade",
+      "description": "Une salade de riz noir refroidi, mangue verte, concombre, basilic thaï, cacahuètes et citron vert.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 35,
+        "repos": 25,
+        "total": 80
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "riz-noir",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "riz noir",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "mangue-verte",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "mangue verte",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "concombre",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombre",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-thai",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic thaï",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cacahuete",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cacahuètes non salées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "arachides"
+          ]
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citrons verts",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-colza",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile de colza",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Rincer le riz noir et le cuire selon l'emballage, environ 30 à 35 minutes.",
+        "Égoutter, étaler et refroidir rapidement 25 minutes.",
+        "Tailler mangue et concombre en fins bâtonnets et ciseler le basilic.",
+        "Mélanger avec riz, huile et citron vert; ajouter les cacahuètes au dernier moment."
+      ],
+      "conseils": [
+        "Refroidir le riz rapidement et le placer au réfrigérateur sans attendre s'il n'est pas servi aussitôt."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Cacahuètes",
+          "par": "Graines de courge",
+          "note": "Alternative sans arachides"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur. Ne pas laisser le riz cuit à température ambiante.",
+      "nutrition_par_portion": {
+        "calories": 415,
+        "proteines_g": 10,
+        "glucides_g": 67,
+        "sucres_g": 11,
+        "lipides_g": 13,
+        "acides_gras_satures_g": 1.6,
+        "fibres_g": 7,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r207-riz-noir-mangue-verte-concombre-basilic-thai.jpg",
+        "alt": "Riz noir, mangue verte et concombre au basilic thaï"
+      },
+      "seo": {
+        "titre": "Riz noir, mangue verte et concombre au basilic thaï",
+        "meta_description": "Riz noir, mangue verte et concombre au basilic thaï, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "riz noir",
+          "mangue verte et concombre au basilic thaï"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Riz noir, mangue verte et concombre au basilic thaï",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : arachides. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.35,
+          "active_minutes": 28,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "arachides"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r208",
+      "slug": "polenta-grillee-tomates-haricots-borlotti",
+      "titre": "Polenta grillée, tomates anciennes et haricots borlotti",
+      "categorie": "salade",
+      "description": "Des cubes de polenta complète grillés avec tomates anciennes, borlotti, roquette, basilic et balsamique.",
+      "temps": {
+        "preparation": 25,
+        "cuisson": 35,
+        "repos": 45,
+        "total": 105
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "polenta-complete",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "polenta complète",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 800,
+          "unite": "ml",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        },
+        {
+          "id": "tomate-ancienne",
+          "quantite": 600,
+          "unite": "g",
+          "quantite_normalisee": 600,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates anciennes",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-borlotti-cuits",
+          "quantite": 400,
+          "unite": "g",
+          "quantite_normalisee": 400,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots borlotti cuits",
+          "note": "Rincés et égouttés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "roquette",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "roquette",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-balsamique-avec-sulfites",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre balsamique",
+          "note": "Référence portant la mention sulfites",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sulfites"
+          ]
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire la polenta dans l'eau selon l'emballage, l'étaler sur 1,5 cm et laisser prendre 45 minutes.",
+        "Couper en cubes, badigeonner d'une cuillère d'huile et griller 15 minutes au four à 220 °C.",
+        "Couper les tomates et mélanger avec borlotti, roquette et basilic.",
+        "Ajouter polenta, huile restante et balsamique juste avant de servir."
+      ],
+      "conseils": [
+        "La polenta doit être complètement prise avant la découpe; elle peut être préparée la veille."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Vinaigre balsamique",
+          "par": "Jus de citron",
+          "note": "Option sans sulfites si les autres ingrédients conviennent"
+        }
+      ],
+      "conservation": "Polenta grillée et salade séparées : 2 jours au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 380,
+        "proteines_g": 12,
+        "glucides_g": 60,
+        "sucres_g": 9,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 11,
+        "sodium_mg": 260,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r208-polenta-grillee-tomates-haricots-borlotti.jpg",
+        "alt": "Polenta grillée, tomates anciennes et haricots borlotti"
+      },
+      "seo": {
+        "titre": "Polenta grillée, tomates anciennes et haricots borlotti",
+        "meta_description": "Polenta grillée, tomates anciennes et haricots borlotti, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "polenta grillée",
+          "tomates anciennes et haricots borlotti"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Polenta grillée, tomates anciennes et haricots borlotti",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : sulfites. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.9,
+          "active_minutes": 32,
+          "equipment": [
+            "hob",
+            "oven"
+          ],
+          "allergens": [
+            "sulfites"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r209",
+      "slug": "sorgho-courge-canneberges-romarin",
+      "titre": "Sorgho, courge rôtie et canneberges au romarin",
+      "categorie": "salade",
+      "description": "Une salade de sorgho, courge musquée rôtie, canneberges, graines de tournesol, romarin et citron.",
+      "temps": {
+        "preparation": 18,
+        "cuisson": 55,
+        "repos": 20,
+        "total": 93
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "sorgho-grain",
+          "quantite": 220,
+          "unite": "g",
+          "quantite_normalisee": 220,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "sorgho en grains",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "courge-musquee",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "courge musquée",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "canneberges-sechees-sans-sulfites",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "canneberges séchées sans sulfites",
+          "note": "Sans sucre ajouté si disponible",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "graines-tournesol",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de tournesol",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "romarin-frais",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "romarin frais haché",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire le sorgho selon l'emballage, environ 45 à 55 minutes, puis égoutter.",
+        "Rôtir la courge avec une cuillère d'huile et le romarin 30 minutes à 200 °C.",
+        "Laisser sorgho et courge tiédir 20 minutes.",
+        "Mélanger avec canneberges, tournesol, huile restante et citron."
+      ],
+      "conseils": [
+        "Vérifier les ingrédients des canneberges : beaucoup de références sont sucrées ou contiennent des additifs."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Canneberges séchées",
+          "par": "Dés de pomme fraîche",
+          "note": "Ajouter au dernier moment"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Ajouter les graines au service.",
+      "nutrition_par_portion": {
+        "calories": 405,
+        "proteines_g": 11,
+        "glucides_g": 70,
+        "sucres_g": 15,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 1.4,
+        "fibres_g": 10,
+        "sodium_mg": 60,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r209-sorgho-courge-canneberges-romarin.jpg",
+        "alt": "Sorgho, courge rôtie et canneberges au romarin"
+      },
+      "seo": {
+        "titre": "Sorgho, courge rôtie et canneberges au romarin",
+        "meta_description": "Sorgho, courge rôtie et canneberges au romarin, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "sorgho",
+          "courge rôtie et canneberges au romarin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Sorgho, courge rôtie et canneberges au romarin",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Contrôler étiquettes, contaminations croisées, rendement et protocole."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.85,
+          "active_minutes": 30,
+          "equipment": [
+            "hob",
+            "oven"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r210",
+      "slug": "amarante-poivrons-confits-lupins-persil",
+      "titre": "Amarante, poivrons confits et lupins au persil",
+      "categorie": "salade",
+      "description": "Une salade d'amarante, poivrons confits au four, graines de lupin, olives noires, persil et citron.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 35,
+        "repos": 20,
+        "total": 75
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "amarante-grain",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amarante en grains",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poivron-rouge",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poivrons rouges",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-lupin-cuites",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de lupin cuites",
+          "note": "Rincées et égouttées",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "lupin"
+          ]
+        },
+        {
+          "id": "olive-noire",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "olives noires",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "persil-frais",
+          "quantite": 25,
+          "unite": "g",
+          "quantite_normalisee": 25,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire l'amarante dans 600 ml d'eau 20 à 25 minutes, puis l'étaler et la refroidir.",
+        "Rôtir les poivrons en quartiers 25 minutes à 220 °C, les couvrir 5 minutes puis les peler.",
+        "Rincer soigneusement lupins et olives; couper les poivrons en lanières.",
+        "Mélanger tous les éléments avec persil, huile et citron."
+      ],
+      "conseils": [
+        "Le lupin est un allergène majeur et peut présenter une allergie croisée avec l'arachide."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Graines de lupin",
+          "par": "Haricots blancs cuits",
+          "note": "Même poids égoutté; retire l'allergène lupin si les autres ingrédients conviennent"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Maintenir les produits en saumure au froid après ouverture.",
+      "nutrition_par_portion": {
+        "calories": 365,
+        "proteines_g": 17,
+        "glucides_g": 50,
+        "sucres_g": 8,
+        "lipides_g": 13,
+        "acides_gras_satures_g": 1.7,
+        "fibres_g": 12,
+        "sodium_mg": 460,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r210-amarante-poivrons-confits-lupins-persil.jpg",
+        "alt": "Amarante, poivrons confits et lupins au persil"
+      },
+      "seo": {
+        "titre": "Amarante, poivrons confits et lupins au persil",
+        "meta_description": "Amarante, poivrons confits et lupins au persil, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "amarante",
+          "poivrons confits et lupins au persil"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Amarante, poivrons confits et lupins au persil",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : lupin. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.1,
+          "active_minutes": 30,
+          "equipment": [
+            "hob",
+            "oven"
+          ],
+          "allergens": [
+            "lupin"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r211",
+      "slug": "rubans-chou-rave-pomme-pavot",
+      "titre": "Rubans de chou-rave, pomme verte et graines de pavot",
+      "categorie": "salade",
+      "description": "Une salade croquante de chou-rave, pomme verte, mâche, pavot, citron et huile de colza.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 0,
+        "repos": 15,
+        "total": 35
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "chou-rave",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "choux-raves",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pomme-verte",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pommes vertes",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "mache",
+          "quantite": 150,
+          "unite": "g",
+          "quantite_normalisee": 150,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "mâche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-pavot",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de pavot",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-colza",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile de colza",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Éplucher les choux-raves et laver soigneusement la mâche.",
+        "Tailler choux-raves et pommes en rubans fins avec un économe ou une mandoline munie d'un protège-main.",
+        "Mélanger immédiatement avec le jus de citron et l'huile.",
+        "Ajouter mâche et pavot, puis laisser reposer 15 minutes au frais."
+      ],
+      "conseils": [
+        "Utiliser le protège-main de la mandoline et terminer les petits morceaux au couteau."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Chou-rave",
+          "par": "Radis blanc",
+          "note": "Goût plus piquant; même technique"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur; la pomme perd progressivement son croquant.",
+      "nutrition_par_portion": {
+        "calories": 165,
+        "proteines_g": 4,
+        "glucides_g": 25,
+        "sucres_g": 17,
+        "lipides_g": 7,
+        "acides_gras_satures_g": 0.7,
+        "fibres_g": 7,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r211-rubans-chou-rave-pomme-pavot.jpg",
+        "alt": "Rubans de chou-rave, pomme verte et graines de pavot"
+      },
+      "seo": {
+        "titre": "Rubans de chou-rave, pomme verte et graines de pavot",
+        "meta_description": "Rubans de chou-rave, pomme verte et graines de pavot, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "rubans de chou-rave",
+          "pomme verte et graines de pavot"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Rubans de chou-rave, pomme verte et graines de pavot",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Contrôler étiquettes, contaminations croisées, rendement et protocole."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.4,
+          "active_minutes": 20,
+          "equipment": [],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r212",
+      "slug": "endives-poire-rotie-bleu-courge",
+      "titre": "Endives, poire rôtie et bleu doux aux graines de courge",
+      "categorie": "salade",
+      "description": "Une salade d'endives et mâche, poire rôtie, bleu doux, graines de courge et vinaigre de cidre.",
+      "temps": {
+        "preparation": 15,
+        "cuisson": 18,
+        "repos": 10,
+        "total": 43
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "vegetarien"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "endive",
+          "quantite": 6,
+          "unite": "piece",
+          "quantite_normalisee": 6,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "endives",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "poire",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires fermes",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "fromage-bleu-doux",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fromage bleu doux",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "graines-courge",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de courge",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "mache",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "mâche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-cidre",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de cidre",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C et couper les poires en quartiers.",
+        "Badigeonner avec une demi-cuillère d'huile et rôtir 15 à 18 minutes, puis laisser tiédir 10 minutes.",
+        "Émincer les endives, laver la mâche et émietter le bleu.",
+        "Assembler avec graines, huile restante et vinaigre."
+      ],
+      "conseils": [
+        "Le fromage bleu est déjà salé; goûter avant tout assaisonnement supplémentaire."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Fromage bleu doux",
+          "par": "Tofu ferme nature",
+          "note": "La recette devient végétalienne et contient alors du soja"
+        }
+      ],
+      "conservation": "Conserver les éléments séparément 24 heures au réfrigérateur et assembler au service.",
+      "nutrition_par_portion": {
+        "calories": 295,
+        "proteines_g": 10,
+        "glucides_g": 28,
+        "sucres_g": 17,
+        "lipides_g": 18,
+        "acides_gras_satures_g": 5,
+        "fibres_g": 7,
+        "sodium_mg": 380,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r212-endives-poire-rotie-bleu-courge.jpg",
+        "alt": "Endives, poire rôtie et bleu doux aux graines de courge"
+      },
+      "seo": {
+        "titre": "Endives, poire rôtie et bleu doux aux graines de courge",
+        "meta_description": "Endives, poire rôtie et bleu doux aux graines de courge, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "endives",
+          "poire rôtie et bleu doux aux graines de courge"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Endives, poire rôtie et bleu doux aux graines de courge",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : lait. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.25,
+          "active_minutes": 18,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "lait"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r213",
+      "slug": "chou-pointu-peche-cajou-coriandre",
+      "titre": "Chou pointu, pêche et noix de cajou à la coriandre",
+      "categorie": "salade",
+      "description": "Une salade de chou pointu massé, pêche, noix de cajou, coriandre, citron vert et gingembre.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 0,
+        "repos": 20,
+        "total": 40
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "chou-pointu",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chou pointu",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "peche",
+          "quantite": 4,
+          "unite": "piece",
+          "quantite_normalisee": 4,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pêches fermes",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noix-cajou",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix de cajou non salées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-vert",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citrons verts",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "gingembre-frais",
+          "quantite": 8,
+          "unite": "g",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "gingembre frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-colza",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile de colza",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Émincer très finement le chou pointu.",
+        "Le masser 2 minutes avec l'huile et le jus de citron vert, puis laisser reposer 20 minutes.",
+        "Couper les pêches en quartiers, hacher la coriandre et râper le gingembre.",
+        "Assembler et ajouter les noix de cajou juste avant de servir."
+      ],
+      "conseils": [
+        "Employer des pêches fermes afin qu'elles ne s'écrasent pas au mélange."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noix de cajou",
+          "par": "Graines de tournesol",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur; ajouter les noix au dernier moment.",
+      "nutrition_par_portion": {
+        "calories": 250,
+        "proteines_g": 7,
+        "glucides_g": 29,
+        "sucres_g": 18,
+        "lipides_g": 14,
+        "acides_gras_satures_g": 2,
+        "fibres_g": 7,
+        "sodium_mg": 40,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r213-chou-pointu-peche-cajou-coriandre.jpg",
+        "alt": "Chou pointu, pêche et noix de cajou à la coriandre"
+      },
+      "seo": {
+        "titre": "Chou pointu, pêche et noix de cajou à la coriandre",
+        "meta_description": "Chou pointu, pêche et noix de cajou à la coriandre, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "chou pointu",
+          "pêche et noix de cajou à la coriandre"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Chou pointu, pêche et noix de cajou à la coriandre",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : fruits-a-coque. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.05,
+          "active_minutes": 20,
+          "equipment": [],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r214",
+      "slug": "carottes-orange-sanguine-pistaches-cumin",
+      "titre": "Carottes multicolores, orange sanguine et pistaches au cumin",
+      "categorie": "salade",
+      "description": "Des rubans de carottes crues marinés au citron et cumin, avec orange sanguine, pistaches et coriandre.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 0,
+        "repos": 30,
+        "total": 52
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "carotte-multicolore",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "carottes multicolores",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "orange-sanguine",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges sanguines",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pistache",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pistaches non salées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cumin-moulu",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "cumin moulu",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Éplucher les carottes et les tailler en longs rubans.",
+        "Mélanger avec huile, citron et cumin et laisser mariner 30 minutes au frais.",
+        "Peler les oranges à vif et prélever les segments au-dessus d'un bol pour récupérer le jus.",
+        "Assembler carottes, oranges, jus, coriandre et pistaches."
+      ],
+      "conseils": [
+        "Utiliser un économe stable et arrêter lorsque le cœur de la carotte devient trop étroit."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Pistaches",
+          "par": "Graines de courge",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur; ajouter les pistaches au service.",
+      "nutrition_par_portion": {
+        "calories": 230,
+        "proteines_g": 6,
+        "glucides_g": 30,
+        "sucres_g": 20,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 8,
+        "sodium_mg": 45,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r214-carottes-orange-sanguine-pistaches-cumin.jpg",
+        "alt": "Carottes multicolores, orange sanguine et pistaches au cumin"
+      },
+      "seo": {
+        "titre": "Carottes multicolores, orange sanguine et pistaches au cumin",
+        "meta_description": "Carottes multicolores, orange sanguine et pistaches au cumin, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "carottes multicolores",
+          "orange sanguine et pistaches au cumin"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Carottes multicolores, orange sanguine et pistaches au cumin",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : fruits-a-coque. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.85,
+          "active_minutes": 22,
+          "equipment": [],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r215",
+      "slug": "concombre-radis-noir-tofu-soyeux-shiso",
+      "titre": "Concombre écrasé, radis noir et tofu soyeux au shiso",
+      "categorie": "salade",
+      "description": "Une salade froide de concombre écrasé, radis noir, sauce au tofu soyeux et shiso, garnie de riz soufflé.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 0,
+        "repos": 20,
+        "total": 40
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "printemps",
+        "ete"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "concombre",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombres",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "radis-noir",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "radis noir",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tofu-soyeux",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tofu soyeux",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "shiso-frais",
+          "quantite": 12,
+          "unite": "piece",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de shiso",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "riz-souffle-nature",
+          "quantite": 40,
+          "unite": "g",
+          "quantite_normalisee": 40,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "riz soufflé nature",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-riz",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de riz",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-colza",
+          "quantite": 1,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile de colza",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Fendre les concombres, les écraser légèrement avec le plat d'un couteau puis les couper en morceaux.",
+        "Tailler le radis noir en très fines rondelles, mélanger avec le concombre et laisser égoutter 15 minutes.",
+        "Mixer tofu, vinaigre, huile et huit feuilles de shiso.",
+        "Napper les légumes, ajouter shiso restant et riz soufflé juste avant de servir."
+      ],
+      "conseils": [
+        "Le radis noir peut être puissant; réduire sa quantité après dégustation d'une fine tranche."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Shiso",
+          "par": "Basilic thaï",
+          "note": "Profil différent mais même usage"
+        }
+      ],
+      "conservation": "Légumes et sauce séparés : 24 heures au réfrigérateur. Ajouter le riz au service.",
+      "nutrition_par_portion": {
+        "calories": 180,
+        "proteines_g": 10,
+        "glucides_g": 20,
+        "sucres_g": 7,
+        "lipides_g": 8,
+        "acides_gras_satures_g": 1.1,
+        "fibres_g": 5,
+        "sodium_mg": 95,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r215-concombre-radis-noir-tofu-soyeux-shiso.jpg",
+        "alt": "Concombre écrasé, radis noir et tofu soyeux au shiso"
+      },
+      "seo": {
+        "titre": "Concombre écrasé, radis noir et tofu soyeux au shiso",
+        "meta_description": "Concombre écrasé, radis noir et tofu soyeux au shiso, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "concombre écrasé",
+          "radis noir et tofu soyeux au shiso"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Concombre écrasé, radis noir et tofu soyeux au shiso",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : soja. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.95,
+          "active_minutes": 20,
+          "equipment": [
+            "blender"
+          ],
+          "allergens": [
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r216",
+      "slug": "celeri-rave-remoulade-pomme-noix",
+      "titre": "Céleri-rave rémoulade légère, pomme et noix de Grenoble",
+      "categorie": "salade",
+      "description": "Une rémoulade légère de céleri-rave et pomme, sauce au yaourt et moutarde, noix et ciboulette.",
+      "temps": {
+        "preparation": 25,
+        "cuisson": 0,
+        "repos": 20,
+        "total": 45
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetarien"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "celeri-rave",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "céleri-rave",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "pomme",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "pommes",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "yaourt-nature",
+          "quantite": 250,
+          "unite": "g",
+          "quantite_normalisee": 250,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "yaourt nature",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "noix-grenoble",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noix de Grenoble",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "moutarde-dijon",
+          "quantite": 1,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "moutarde de Dijon",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "moutarde"
+          ]
+        },
+        {
+          "id": "ciboulette-fraiche",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "ciboulette fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Éplucher puis râper le céleri-rave et les pommes.",
+        "Mélanger immédiatement avec le jus de citron.",
+        "Fouetter yaourt et moutarde, incorporer au mélange et laisser reposer 20 minutes au frais.",
+        "Ajouter ciboulette et noix juste avant de servir."
+      ],
+      "conseils": [
+        "Le céleri-rave est un allergène majeur même après préparation ou cuisson."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Yaourt nature",
+          "par": "Yaourt de soja nature",
+          "note": "La recette contient alors du soja et plus de lait"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur. Ajouter les noix au service.",
+      "nutrition_par_portion": {
+        "calories": 245,
+        "proteines_g": 8,
+        "glucides_g": 24,
+        "sucres_g": 13,
+        "lipides_g": 15,
+        "acides_gras_satures_g": 2.2,
+        "fibres_g": 7,
+        "sodium_mg": 260,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r216-celeri-rave-remoulade-pomme-noix.jpg",
+        "alt": "Céleri-rave rémoulade légère, pomme et noix de Grenoble"
+      },
+      "seo": {
+        "titre": "Céleri-rave rémoulade légère, pomme et noix de Grenoble",
+        "meta_description": "Céleri-rave rémoulade légère, pomme et noix de Grenoble, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "céleri-rave rémoulade légère",
+          "pomme et noix de grenoble"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Céleri-rave rémoulade légère, pomme et noix de Grenoble",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : celeri, fruits-a-coque, lait, moutarde. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.75,
+          "active_minutes": 25,
+          "equipment": [],
+          "allergens": [
+            "celeri",
+            "fruits-a-coque",
+            "lait",
+            "moutarde"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r217",
+      "slug": "radis-fraises-petits-pois-creme-amande",
+      "titre": "Radis, fraises et petits pois à la crème d'amande salée",
+      "categorie": "salade",
+      "description": "Une salade printanière de radis, fraises et petits pois, nappée d'une crème d'amande au basilic et citron.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 4,
+        "repos": 15,
+        "total": 39
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "radis-rose",
+          "quantite": 12,
+          "unite": "piece",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "radis roses",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "fraise",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fraises",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "petits-pois",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "petits pois",
+          "note": "",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "puree-amande-blanche",
+          "quantite": 70,
+          "unite": "g",
+          "quantite_normalisee": 70,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "purée d'amande blanche",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "basilic-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "basilic frais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "eau",
+          "quantite": 80,
+          "unite": "ml",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "ml",
+          "facultatif": false,
+          "nom": "eau",
+          "note": "",
+          "categorie_courses": "beverage",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Blanchir les petits pois 3 à 4 minutes, les refroidir dans l'eau froide puis égoutter.",
+        "Émincer les radis et couper les fraises en quartiers.",
+        "Mixer purée d'amande, eau, basilic et citron jusqu'à texture nappante.",
+        "Assembler les végétaux, ajouter la sauce et laisser reposer 15 minutes au frais."
+      ],
+      "conseils": [
+        "Choisir des fraises fermes et ajouter la sauce peu avant le service."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Purée d'amande",
+          "par": "Purée de graines de tournesol",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur, sauce séparée de préférence.",
+      "nutrition_par_portion": {
+        "calories": 220,
+        "proteines_g": 8,
+        "glucides_g": 26,
+        "sucres_g": 14,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 1.1,
+        "fibres_g": 8,
+        "sodium_mg": 50,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r217-radis-fraises-petits-pois-creme-amande.jpg",
+        "alt": "Radis, fraises et petits pois à la crème d'amande salée"
+      },
+      "seo": {
+        "titre": "Radis, fraises et petits pois à la crème d'amande salée",
+        "meta_description": "Radis, fraises et petits pois à la crème d'amande salée, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "radis",
+          "fraises et petits pois à la crème d",
+          "amande salée"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Radis, fraises et petits pois à la crème d'amande salée",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : fruits-a-coque. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.3,
+          "active_minutes": 22,
+          "equipment": [
+            "hob",
+            "blender"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r218",
+      "slug": "fenouil-raisin-haricots-blancs-safran",
+      "titre": "Fenouil, raisin muscat et haricots blancs au safran",
+      "categorie": "salade",
+      "description": "Une salade de fenouil cru mariné, raisin muscat, haricots blancs, persil, citron et safran.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 5,
+        "repos": 25,
+        "total": 52
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "fenouil-bulbe",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "bulbes de fenouil",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "raisin-muscat",
+          "quantite": 300,
+          "unite": "g",
+          "quantite_normalisee": 300,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "raisin muscat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-blancs-cuits",
+          "quantite": 450,
+          "unite": "g",
+          "quantite_normalisee": 450,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots blancs cuits",
+          "note": "Rincés et égouttés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "safran-filaments",
+          "quantite": 0.15,
+          "unite": "g",
+          "quantite_normalisee": 0.15,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "safran en filaments",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "persil-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Infuser le safran 5 minutes dans deux cuillères d'eau chaude puis laisser tiédir.",
+        "Émincer très finement le fenouil et couper les grains de raisin en deux en retirant les pépins accessibles.",
+        "Fouetter infusion, huile et citron.",
+        "Mélanger avec haricots et persil puis laisser mariner 25 minutes au frais."
+      ],
+      "conseils": [
+        "Respecter la petite quantité de safran; ne pas la concentrer avant validation gustative."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Raisin muscat",
+          "par": "Poire ferme",
+          "note": "Couper en petits dés"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 315,
+        "proteines_g": 12,
+        "glucides_g": 48,
+        "sucres_g": 17,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.3,
+        "fibres_g": 12,
+        "sodium_mg": 190,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r218-fenouil-raisin-haricots-blancs-safran.jpg",
+        "alt": "Fenouil, raisin muscat et haricots blancs au safran"
+      },
+      "seo": {
+        "titre": "Fenouil, raisin muscat et haricots blancs au safran",
+        "meta_description": "Fenouil, raisin muscat et haricots blancs au safran, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "fenouil",
+          "raisin muscat et haricots blancs au safran"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Fenouil, raisin muscat et haricots blancs au safran",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Contrôler étiquettes, contaminations croisées, rendement et protocole."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2,
+          "active_minutes": 24,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": []
+        }
+      }
+    },
+    {
+      "id": "r219",
+      "slug": "navets-feves-laitue-miso-blanc",
+      "titre": "Navets nouveaux, fèves et laitue au miso blanc",
+      "categorie": "salade",
+      "description": "Une salade de navets nouveaux crus, fèves blanchies, romaine, miso blanc, sésame noir et citron.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 5,
+        "repos": 15,
+        "total": 40
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "printemps"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "navet-nouveau",
+          "quantite": 8,
+          "unite": "piece",
+          "quantite_normalisee": 8,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "navets nouveaux",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "feves-decortiquees",
+          "quantite": 350,
+          "unite": "g",
+          "quantite_normalisee": 350,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "fèves décortiquées",
+          "note": "",
+          "categorie_courses": "frozen",
+          "allergenes": []
+        },
+        {
+          "id": "laitue-romaine",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "laitue romaine",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "miso-blanc-soja-riz",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "miso blanc de soja et riz",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "soja"
+          ]
+        },
+        {
+          "id": "sesame-noir",
+          "quantite": 25,
+          "unite": "g",
+          "quantite_normalisee": 25,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de sésame noir",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-colza",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile de colza",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Blanchir les fèves 4 minutes, les refroidir puis retirer les peaux épaisses.",
+        "Émincer finement les navets et la romaine.",
+        "Délayer le miso avec citron, huile et deux cuillères d'eau.",
+        "Assembler légumes et fèves, ajouter la sauce et le sésame, puis reposer 15 minutes."
+      ],
+      "conseils": [
+        "Le miso est salé; ne pas ajouter de sel avant dégustation."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Miso blanc",
+          "par": "Purée de graines de tournesol",
+          "note": "Le profil et les allergènes changent; ajuster le citron"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur. Conserver la romaine séparément si possible.",
+      "nutrition_par_portion": {
+        "calories": 235,
+        "proteines_g": 12,
+        "glucides_g": 29,
+        "sucres_g": 9,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.2,
+        "fibres_g": 10,
+        "sodium_mg": 390,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r219-navets-feves-laitue-miso-blanc.jpg",
+        "alt": "Navets nouveaux, fèves et laitue au miso blanc"
+      },
+      "seo": {
+        "titre": "Navets nouveaux, fèves et laitue au miso blanc",
+        "meta_description": "Navets nouveaux, fèves et laitue au miso blanc, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "navets nouveaux",
+          "fèves et laitue au miso blanc"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Navets nouveaux, fèves et laitue au miso blanc",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : sesame, soja. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.9,
+          "active_minutes": 23,
+          "equipment": [
+            "hob"
+          ],
+          "allergens": [
+            "sesame",
+            "soja"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r220",
+      "slug": "tomates-vertes-melon-amandes-verveine",
+      "titre": "Tomates vertes, melon et amandes fraîches à la verveine",
+      "categorie": "salade",
+      "description": "Une salade froide de tomates vertes, melon, concombre, amandes fraîches, verveine et citron.",
+      "temps": {
+        "preparation": 25,
+        "cuisson": 0,
+        "repos": 25,
+        "total": 50
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "tomate-verte",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates vertes mûres de variété verte",
+          "note": "Pas de tomates immatures",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "melon-charentais",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "demi-melon charentais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "amande-fraiche",
+          "quantite": 100,
+          "unite": "g",
+          "quantite_normalisee": 100,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "amandes fraîches décortiquées",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "verveine-citronnee",
+          "quantite": 12,
+          "unite": "piece",
+          "quantite_normalisee": 12,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "feuilles de verveine citronnée",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "concombre",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "concombre",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Vérifier qu'il s'agit de tomates mûres de variété verte, fermes mais non immatures.",
+        "Couper tomates, melon et concombre en morceaux de taille voisine.",
+        "Ciseler finement la verveine et fouetter citron et huile.",
+        "Mélanger, ajouter les amandes et laisser mariner 25 minutes au frais."
+      ],
+      "conseils": [
+        "Ne pas utiliser de tomates vertes immatures; leur profil et leur tolérance ne sont pas équivalents."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Amandes fraîches",
+          "par": "Amandes blanchies",
+          "note": "Faire tremper 2 heures au froid puis égoutter"
+        }
+      ],
+      "conservation": "24 heures au réfrigérateur.",
+      "nutrition_par_portion": {
+        "calories": 205,
+        "proteines_g": 6,
+        "glucides_g": 26,
+        "sucres_g": 18,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1,
+        "fibres_g": 5,
+        "sodium_mg": 35,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r220-tomates-vertes-melon-amandes-verveine.jpg",
+        "alt": "Tomates vertes, melon et amandes fraîches à la verveine"
+      },
+      "seo": {
+        "titre": "Tomates vertes, melon et amandes fraîches à la verveine",
+        "meta_description": "Tomates vertes, melon et amandes fraîches à la verveine, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "tomates vertes",
+          "melon et amandes fraîches à la verveine"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Tomates vertes, melon et amandes fraîches à la verveine",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : fruits-a-coque. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.4,
+          "active_minutes": 25,
+          "equipment": [],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r221",
+      "slug": "choux-bruxelles-poire-lentilles-beluga",
+      "titre": "Choux de Bruxelles rôtis, poire et lentilles beluga",
+      "categorie": "salade",
+      "description": "Une salade de choux de Bruxelles rôtis, lentilles beluga, poire, noisettes, thym et vinaigre de cidre.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 35,
+        "repos": 20,
+        "total": 75
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "choux-bruxelles",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "choux de Bruxelles",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "lentilles-beluga-seches",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "lentilles beluga sèches",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "poire",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "poires fermes",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "noisette",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "noisettes",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "fruits-a-coque"
+          ]
+        },
+        {
+          "id": "thym-frais",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "feuilles de thym",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "vinaigre-cidre",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "vinaigre de cidre",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les lentilles 20 à 25 minutes, égoutter et laisser tiédir.",
+        "Couper les choux en deux, mélanger avec une cuillère d'huile et le thym, puis rôtir 25 minutes à 205 °C.",
+        "Couper les poires en fins quartiers et concasser les noisettes.",
+        "Assembler avec huile restante et vinaigre; laisser reposer 20 minutes."
+      ],
+      "conseils": [
+        "Ne pas trop cuire les lentilles : elles doivent rester entières dans la salade."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Noisettes",
+          "par": "Graines de courge",
+          "note": "Alternative sans fruits à coque"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Ajouter noisettes et poire au service si préparé en avance.",
+      "nutrition_par_portion": {
+        "calories": 365,
+        "proteines_g": 16,
+        "glucides_g": 52,
+        "sucres_g": 13,
+        "lipides_g": 12,
+        "acides_gras_satures_g": 1.4,
+        "fibres_g": 16,
+        "sodium_mg": 70,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r221-choux-bruxelles-poire-lentilles-beluga.jpg",
+        "alt": "Choux de Bruxelles rôtis, poire et lentilles beluga"
+      },
+      "seo": {
+        "titre": "Choux de Bruxelles rôtis, poire et lentilles beluga",
+        "meta_description": "Choux de Bruxelles rôtis, poire et lentilles beluga, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "choux de bruxelles rôtis",
+          "poire et lentilles beluga"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Choux de Bruxelles rôtis, poire et lentilles beluga",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : fruits-a-coque. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.95,
+          "active_minutes": 30,
+          "equipment": [
+            "hob",
+            "oven"
+          ],
+          "allergens": [
+            "fruits-a-coque"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r222",
+      "slug": "panais-roti-pois-jaunes-salsa-persil",
+      "titre": "Panais rôti, pois jaunes et salsa de persil",
+      "categorie": "salade",
+      "description": "Une salade de panais rôti et pois jaunes, salsa de persil, cornichon, graines de courge et citron.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 45,
+        "repos": 20,
+        "total": 87
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "economique",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "panais",
+          "quantite": 700,
+          "unite": "g",
+          "quantite_normalisee": 700,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "panais",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "pois-jaunes-secs",
+          "quantite": 200,
+          "unite": "g",
+          "quantite_normalisee": 200,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "pois jaunes secs",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "persil-frais",
+          "quantite": 30,
+          "unite": "g",
+          "quantite_normalisee": 30,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "cornichons-moutarde-sulfites",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "cornichons au vinaigre avec graines de moutarde",
+          "note": "Référence portant les mentions moutarde et sulfites",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "moutarde",
+            "sulfites"
+          ]
+        },
+        {
+          "id": "graines-courge",
+          "quantite": 60,
+          "unite": "g",
+          "quantite_normalisee": 60,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "graines de courge",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 1,
+          "unite": "piece",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Cuire les pois jaunes 35 à 40 minutes, jusqu'à tendreté sans désagrégation, puis égoutter.",
+        "Couper le panais en bâtonnets, mélanger avec une cuillère d'huile et rôtir 30 minutes à 200 °C.",
+        "Hacher persil et cornichons et mélanger avec citron et huile restante.",
+        "Assembler panais et pois tièdes, ajouter salsa et graines, puis reposer 20 minutes."
+      ],
+      "conseils": [
+        "Le sodium et les allergènes des cornichons varient; lire l'étiquette de la référence utilisée."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Cornichons préparés",
+          "par": "Concombre frais et jus de citron",
+          "note": "Réduit le sodium et retire moutarde/sulfites si les autres produits conviennent"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Conserver la salsa séparément si possible.",
+      "nutrition_par_portion": {
+        "calories": 390,
+        "proteines_g": 15,
+        "glucides_g": 64,
+        "sucres_g": 13,
+        "lipides_g": 11,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 17,
+        "sodium_mg": 310,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r222-panais-roti-pois-jaunes-salsa-persil.jpg",
+        "alt": "Panais rôti, pois jaunes et salsa de persil"
+      },
+      "seo": {
+        "titre": "Panais rôti, pois jaunes et salsa de persil",
+        "meta_description": "Panais rôti, pois jaunes et salsa de persil, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "panais rôti",
+          "pois jaunes et salsa de persil"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Panais rôti, pois jaunes et salsa de persil",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : moutarde, sulfites. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.55,
+          "active_minutes": 32,
+          "equipment": [
+            "hob",
+            "oven"
+          ],
+          "allergens": [
+            "moutarde",
+            "sulfites"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r223",
+      "slug": "celeri-rave-roti-azuki-sesame-orange",
+      "titre": "Céleri-rave rôti, haricots azuki et sauce sésame-orange",
+      "categorie": "salade",
+      "description": "Une salade de céleri-rave rôti, haricots azuki, orange, tahini, ciboule et coriandre.",
+      "temps": {
+        "preparation": 22,
+        "cuisson": 40,
+        "repos": 15,
+        "total": 77
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "celeri-rave",
+          "quantite": 800,
+          "unite": "g",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "céleri-rave",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": [
+            "celeri"
+          ]
+        },
+        {
+          "id": "haricots-azuki-cuits",
+          "quantite": 450,
+          "unite": "g",
+          "quantite_normalisee": 450,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots azuki cuits",
+          "note": "Rincés et égouttés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "tahini",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "tahini",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "sesame"
+          ]
+        },
+        {
+          "id": "ciboule",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "ciboules",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "coriandre-fraiche",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "coriandre fraîche",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 1.5,
+          "unite": "c_soupe",
+          "quantite_normalisee": 1.5,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Éplucher le céleri-rave et le couper en cubes de 2 cm.",
+        "Mélanger avec l'huile et rôtir 35 à 40 minutes à 200 °C, en retournant à mi-cuisson.",
+        "Fouetter tahini avec jus d'une orange et deux cuillères d'eau; prélever les segments de l'autre.",
+        "Assembler céleri tiédi, azuki, orange, sauce, ciboule et coriandre; reposer 15 minutes."
+      ],
+      "conseils": [
+        "Le céleri-rave reste un allergène après cuisson; éviter toute contamination croisée."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Tahini",
+          "par": "Purée de graines de tournesol",
+          "note": "Alternative sans sésame"
+        }
+      ],
+      "conservation": "2 jours au réfrigérateur. Ajouter les segments d'orange au service.",
+      "nutrition_par_portion": {
+        "calories": 360,
+        "proteines_g": 14,
+        "glucides_g": 53,
+        "sucres_g": 15,
+        "lipides_g": 12,
+        "acides_gras_satures_g": 1.4,
+        "fibres_g": 15,
+        "sodium_mg": 180,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r223-celeri-rave-roti-azuki-sesame-orange.jpg",
+        "alt": "Céleri-rave rôti, haricots azuki et sauce sésame-orange"
+      },
+      "seo": {
+        "titre": "Céleri-rave rôti, haricots azuki et sauce sésame-orange",
+        "meta_description": "Céleri-rave rôti, haricots azuki et sauce sésame-orange, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "céleri-rave rôti",
+          "haricots azuki et sauce sésame-orange"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Céleri-rave rôti, haricots azuki et sauce sésame-orange",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : celeri, sesame. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.85,
+          "active_minutes": 30,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "celeri",
+            "sesame"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r224",
+      "slug": "tomates-roties-haricots-geants-chapelure-herbes",
+      "titre": "Tomates rôties, haricots géants et chapelure d'herbes",
+      "categorie": "salade",
+      "description": "Une salade tiède de tomates rôties et haricots géants, avec chapelure complète à l'origan, persil et ail.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 45,
+        "repos": 10,
+        "total": 75
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "moyen",
+      "regimes": [
+        "vegetalien",
+        "vegetarien",
+        "sans-lactose"
+      ],
+      "saisons": [
+        "ete",
+        "automne"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetal"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "tomate",
+          "quantite": 900,
+          "unite": "g",
+          "quantite_normalisee": 900,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "tomates",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "haricots-geants-cuits",
+          "quantite": 500,
+          "unite": "g",
+          "quantite_normalisee": 500,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "haricots géants cuits",
+          "note": "Rincés et égouttés",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "chapelure-complete",
+          "quantite": 80,
+          "unite": "g",
+          "quantite_normalisee": 80,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "chapelure complète",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": [
+            "gluten"
+          ]
+        },
+        {
+          "id": "origan-seche",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "origan séché",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "persil-frais",
+          "quantite": 20,
+          "unite": "g",
+          "quantite_normalisee": 20,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "persil plat",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "ail",
+          "quantite": 2,
+          "unite": "piece",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "gousses d'ail",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Couper les tomates en quartiers, ajouter ail, origan et une cuillère d'huile puis rôtir 40 minutes à 180 °C.",
+        "Faire dorer la chapelure dans une poêle avec l'huile restante 4 à 5 minutes.",
+        "Ajouter le persil hors du feu et laisser les deux préparations tiédir 10 minutes.",
+        "Mélanger tomates et haricots, puis parsemer de chapelure au service."
+      ],
+      "conseils": [
+        "Ajouter la chapelure au dernier moment pour éviter qu'elle n'absorbe tout le jus."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Chapelure complète",
+          "par": "Chapelure sans gluten certifiée",
+          "note": "Vérifier ses allergènes"
+        }
+      ],
+      "conservation": "Tomates et haricots : 2 jours au réfrigérateur. Chapelure : 3 jours au sec.",
+      "nutrition_par_portion": {
+        "calories": 320,
+        "proteines_g": 15,
+        "glucides_g": 48,
+        "sucres_g": 11,
+        "lipides_g": 10,
+        "acides_gras_satures_g": 1.5,
+        "fibres_g": 14,
+        "sodium_mg": 260,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r224-tomates-roties-haricots-geants-chapelure-herbes.jpg",
+        "alt": "Tomates rôties, haricots géants et chapelure d'herbes"
+      },
+      "seo": {
+        "titre": "Tomates rôties, haricots géants et chapelure d'herbes",
+        "meta_description": "Tomates rôties, haricots géants et chapelure d'herbes, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "tomates rôties",
+          "haricots géants et chapelure d",
+          "herbes"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Tomates rôties, haricots géants et chapelure d'herbes",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : gluten. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 1.75,
+          "active_minutes": 30,
+          "equipment": [
+            "oven",
+            "hob"
+          ],
+          "allergens": [
+            "gluten"
+          ]
+        }
+      }
+    },
+    {
+      "id": "r225",
+      "slug": "betteraves-jaunes-orange-ricotta-salee",
+      "titre": "Betteraves jaunes rôties, orange et ricotta salée",
+      "categorie": "salade",
+      "description": "Une salade de betteraves jaunes rôties, orange, ricotta salée, roquette, graines de fenouil et huile d'olive.",
+      "temps": {
+        "preparation": 20,
+        "cuisson": 50,
+        "repos": 15,
+        "total": 85
+      },
+      "portions": 4,
+      "difficulte": "facile",
+      "cout": "eleve",
+      "regimes": [
+        "vegetarien"
+      ],
+      "saisons": [
+        "automne",
+        "hiver"
+      ],
+      "tags": [
+        "salade",
+        "brouillon",
+        "vegetarien"
+      ],
+      "composes_actifs": [],
+      "ingredients": [
+        {
+          "id": "betterave-jaune",
+          "quantite": 800,
+          "unite": "g",
+          "quantite_normalisee": 800,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "betteraves jaunes",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "orange",
+          "quantite": 3,
+          "unite": "piece",
+          "quantite_normalisee": 3,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "oranges",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "ricotta-salee",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "ricotta salée",
+          "note": "",
+          "categorie_courses": "fresh",
+          "allergenes": [
+            "lait"
+          ]
+        },
+        {
+          "id": "roquette",
+          "quantite": 120,
+          "unite": "g",
+          "quantite_normalisee": 120,
+          "unite_normalisee": "g",
+          "facultatif": false,
+          "nom": "roquette",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        },
+        {
+          "id": "graines-fenouil",
+          "quantite": 1,
+          "unite": "c_cafe",
+          "quantite_normalisee": 1,
+          "unite_normalisee": "c_cafe",
+          "facultatif": false,
+          "nom": "graines de fenouil",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "huile-olive-vierge-extra",
+          "quantite": 2,
+          "unite": "c_soupe",
+          "quantite_normalisee": 2,
+          "unite_normalisee": "c_soupe",
+          "facultatif": false,
+          "nom": "huile d'olive",
+          "note": "",
+          "categorie_courses": "grocery",
+          "allergenes": []
+        },
+        {
+          "id": "citron-jaune",
+          "quantite": 0.5,
+          "unite": "piece",
+          "quantite_normalisee": 0.5,
+          "unite_normalisee": "piece",
+          "facultatif": false,
+          "nom": "citron",
+          "note": "",
+          "categorie_courses": "fruit-vegetable",
+          "allergenes": []
+        }
+      ],
+      "etapes": [
+        "Préchauffer le four à 200 °C, éplucher les betteraves et les couper en quartiers réguliers.",
+        "Mélanger avec une cuillère d'huile et les graines de fenouil, puis rôtir 45 à 50 minutes.",
+        "Laisser tiédir 15 minutes et peler les oranges à vif.",
+        "Assembler avec roquette, ricotta émiettée, huile restante et citron."
+      ],
+      "conseils": [
+        "La ricotta salée apporte déjà beaucoup de sel; ne pas saler avant dégustation."
+      ],
+      "substitutions": [
+        {
+          "remplacer": "Ricotta salée",
+          "par": "Tofu ferme émietté",
+          "note": "La recette devient végétalienne et contient alors du soja"
+        }
+      ],
+      "conservation": "Betteraves rôties : 3 jours au réfrigérateur. Assembler le reste au service.",
+      "nutrition_par_portion": {
+        "calories": 285,
+        "proteines_g": 9,
+        "glucides_g": 35,
+        "sucres_g": 20,
+        "lipides_g": 13,
+        "acides_gras_satures_g": 4,
+        "fibres_g": 8,
+        "sodium_mg": 360,
+        "estimation": {
+          "statut": "estimated",
+          "methode": "Estimation éditoriale par valeurs génériques divisée par 4; rendement et pertes non mesurés",
+          "provenance": "Table Ciqual 2025 utilisée comme repère général; calcul par codes aliments non validé"
+        }
+      },
+      "score_anti_inflammatoire": 0,
+      "score_note": "Indice éditorial non évalué au stade brouillon; aucune promesse d'effet médical",
+      "image": {
+        "nom_fichier": "r225-betteraves-jaunes-orange-ricotta-salee.jpg",
+        "alt": "Betteraves jaunes rôties, orange et ricotta salée"
+      },
+      "seo": {
+        "titre": "Betteraves jaunes rôties, orange et ricotta salée",
+        "meta_description": "Betteraves jaunes rôties, orange et ricotta salée, recette originale InflammMenu en brouillon.",
+        "mots_cles": [
+          "betteraves jaunes rôties",
+          "orange et ricotta salée"
+        ]
+      },
+      "provenance": {
+        "type": "original",
+        "author": "InflammMenu",
+        "license": "CC BY-SA 4.0",
+        "created_at": "2026-08-05",
+        "sources": [
+          {
+            "kind": "nutrition",
+            "title": "Table Ciqual 2025",
+            "url": "https://ciqual.anses.fr/",
+            "version": "2025",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "cost",
+            "title": "Estimation éditoriale interne InflammMenu",
+            "version": "brouillon-2026-08",
+            "accessed_at": "2026-08-05"
+          },
+          {
+            "kind": "inspiration",
+            "title": "Concept culinaire original InflammMenu — Betteraves jaunes rôties, orange et ricotta salée",
+            "version": "lot-r201-r225",
+            "accessed_at": "2026-08-05"
+          }
+        ]
+      },
+      "app": {
+        "review": {
+          "status": "caution",
+          "stage": "draft",
+          "summary": "Recette originale structurée, mais nutrition, coût, rendement et protocole restent à tester et valider.",
+          "caution": "Brouillon non validé. Allergènes formulés : lait. Contrôler étiquettes, traces et substitutions."
+        },
+        "planner": {
+          "eligible": false,
+          "meal_types": [
+            "lunch",
+            "dinner"
+          ],
+          "diets": [
+            "classic",
+            "vegetarian",
+            "no-pork"
+          ],
+          "cost_per_portion_eur": 2.25,
+          "active_minutes": 28,
+          "equipment": [
+            "oven"
+          ],
+          "allergens": [
+            "lait"
+          ]
+        }
+      }
+    }
+  ]
+}

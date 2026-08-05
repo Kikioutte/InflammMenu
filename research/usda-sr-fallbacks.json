@@ -1,0 +1,308 @@
+{
+  "meta": {
+    "source": "USDA FoodData Central, SR Legacy, final release April 2018",
+    "url": "https://fdc.nal.usda.gov/download-datasets/",
+    "archive": "FoodData_Central_sr_legacy_food_json_2018-04.zip",
+    "extracted_at": "2026-08-05",
+    "notice": "Repli limité aux aliments absents de Ciqual; valeurs pour 100 g."
+  },
+  "foods": [
+    {
+      "fdc_id": "169747",
+      "ndb_number": "20142",
+      "name": "Teff, uncooked",
+      "group": "Cereal Grains and Pasta",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 367,
+          "qualifier": "NC"
+        },
+        "protein_g": {
+          "value": 13.3,
+          "qualifier": "A"
+        },
+        "carbohydrate_g": {
+          "value": 73.1,
+          "qualifier": "NC"
+        },
+        "fat_g": {
+          "value": 2.38,
+          "qualifier": "BFSN"
+        },
+        "sugars_g": {
+          "value": 1.84,
+          "qualifier": "A"
+        },
+        "fiber_g": {
+          "value": 8,
+          "qualifier": "A"
+        },
+        "saturated_fat_g": {
+          "value": 0.449,
+          "qualifier": "NC"
+        },
+        "sodium_mg": {
+          "value": 12,
+          "qualifier": "A"
+        }
+      },
+      "portions": [
+        {
+          "amount": 1,
+          "modifier": "cup",
+          "grams": 193
+        }
+      ]
+    },
+    {
+      "fdc_id": "170554",
+      "ndb_number": "12006",
+      "name": "Seeds, chia seeds, dried",
+      "group": "Nut and Seed Products",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 486,
+          "qualifier": "NC"
+        },
+        "protein_g": {
+          "value": 16.5,
+          "qualifier": "A"
+        },
+        "carbohydrate_g": {
+          "value": 42.1,
+          "qualifier": "NC"
+        },
+        "fat_g": {
+          "value": 30.7,
+          "qualifier": "A"
+        },
+        "sugars_g": {
+          "value": null,
+          "qualifier": "unknown"
+        },
+        "fiber_g": {
+          "value": 34.4,
+          "qualifier": "AI"
+        },
+        "saturated_fat_g": {
+          "value": 3.33,
+          "qualifier": "NC"
+        },
+        "sodium_mg": {
+          "value": 16,
+          "qualifier": "JA"
+        }
+      },
+      "portions": [
+        {
+          "amount": 1,
+          "modifier": "oz",
+          "grams": 28.35
+        }
+      ]
+    },
+    {
+      "fdc_id": "170851",
+      "ndb_number": "1036",
+      "name": "Cheese, ricotta, whole milk",
+      "group": "Dairy and Egg Products",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 150,
+          "qualifier": "NC"
+        },
+        "protein_g": {
+          "value": 7.54,
+          "qualifier": "A"
+        },
+        "carbohydrate_g": {
+          "value": 7.27,
+          "qualifier": "NC"
+        },
+        "fat_g": {
+          "value": 10.2,
+          "qualifier": "A"
+        },
+        "sugars_g": {
+          "value": 0.27,
+          "qualifier": "BFNN"
+        },
+        "fiber_g": {
+          "value": 0,
+          "qualifier": "unknown"
+        },
+        "saturated_fat_g": {
+          "value": 6.42,
+          "qualifier": "NC"
+        },
+        "sodium_mg": {
+          "value": 110,
+          "qualifier": "A"
+        }
+      },
+      "portions": [
+        {
+          "amount": 0.5,
+          "modifier": "cup",
+          "grams": 124
+        },
+        {
+          "amount": 1,
+          "modifier": "cup",
+          "grams": 246
+        }
+      ]
+    },
+    {
+      "fdc_id": "170919",
+      "ndb_number": "2006",
+      "name": "Spices, cardamom",
+      "group": "Spices and Herbs",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 311,
+          "qualifier": "NC"
+        },
+        "protein_g": {
+          "value": 10.8,
+          "qualifier": "unknown"
+        },
+        "carbohydrate_g": {
+          "value": 68.5,
+          "qualifier": "NC"
+        },
+        "fat_g": {
+          "value": 6.7,
+          "qualifier": "unknown"
+        },
+        "sugars_g": {
+          "value": null,
+          "qualifier": "unknown"
+        },
+        "fiber_g": {
+          "value": 28,
+          "qualifier": "unknown"
+        },
+        "saturated_fat_g": {
+          "value": 0.68,
+          "qualifier": "unknown"
+        },
+        "sodium_mg": {
+          "value": 18,
+          "qualifier": "unknown"
+        }
+      },
+      "portions": [
+        {
+          "amount": 1,
+          "modifier": "tsp, ground",
+          "grams": 2
+        },
+        {
+          "amount": 1,
+          "modifier": "tbsp, ground",
+          "grams": 5.8
+        }
+      ]
+    },
+    {
+      "fdc_id": "173473",
+      "ndb_number": "2063",
+      "name": "Rosemary, fresh",
+      "group": "Spices and Herbs",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 131,
+          "qualifier": "NC"
+        },
+        "protein_g": {
+          "value": 3.31,
+          "qualifier": "A"
+        },
+        "carbohydrate_g": {
+          "value": 20.7,
+          "qualifier": "NC"
+        },
+        "fat_g": {
+          "value": 5.86,
+          "qualifier": "A"
+        },
+        "sugars_g": {
+          "value": null,
+          "qualifier": "unknown"
+        },
+        "fiber_g": {
+          "value": 14.1,
+          "qualifier": "A"
+        },
+        "saturated_fat_g": {
+          "value": 2.84,
+          "qualifier": "BFFN"
+        },
+        "sodium_mg": {
+          "value": 26,
+          "qualifier": "A"
+        }
+      },
+      "portions": [
+        {
+          "amount": 1,
+          "modifier": "tbsp",
+          "grams": 1.7
+        },
+        {
+          "amount": 1,
+          "modifier": "tsp",
+          "grams": 0.7
+        }
+      ]
+    },
+    {
+      "fdc_id": "173735",
+      "ndb_number": "16015",
+      "name": "Beans, black, mature seeds, cooked, boiled, without salt",
+      "group": "Legumes and Legume Products",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 132,
+          "qualifier": "NC"
+        },
+        "protein_g": {
+          "value": 8.86,
+          "qualifier": "unknown"
+        },
+        "carbohydrate_g": {
+          "value": 23.7,
+          "qualifier": "NC"
+        },
+        "fat_g": {
+          "value": 0.54,
+          "qualifier": "unknown"
+        },
+        "sugars_g": {
+          "value": 0.32,
+          "qualifier": "BFSN"
+        },
+        "fiber_g": {
+          "value": 8.7,
+          "qualifier": "unknown"
+        },
+        "saturated_fat_g": {
+          "value": 0.139,
+          "qualifier": "unknown"
+        },
+        "sodium_mg": {
+          "value": 1,
+          "qualifier": "unknown"
+        }
+      },
+      "portions": [
+        {
+          "amount": 1,
+          "modifier": "cup",
+          "grams": 172
+        }
+      ]
+    }
+  ]
+}
