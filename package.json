@@ -20,6 +20,8 @@
     "test:catalogue": "npm run validate:catalogue && node --test tests/catalogue.test.mjs tests/catalogue-schema-v21.test.mjs",
     "test:merge": "node --test tests/merge-final-batches.test.mjs",
     "test:sites": "node --test tests/sites-worker.test.mjs",
+    "test:preview": "npm run check:runtime && npm run validate:research && npm run validate:pilots && npm run validate:final && npm run validate:image-prompts && npm run validate:images:present && npm run test:catalogue && npm run test:engine && npm run test:merge",
+    "test:release": "npm run test:preview && npm run validate:images",
     "status:production": "node scripts/report-production-status.mjs",
     "predev": "npm run check:runtime",
     "dev": "vite",

@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate menu engine
-        run: npm run test:engine
+      - name: Validate recipes, prompts, images and menu engine
+        run: npm run test:preview
 
       - name: Build for GitHub Pages
         run: npm run build:pages
