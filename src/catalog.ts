@@ -19,12 +19,35 @@ export interface CatalogueRecipeReview {
 }
 
 export interface CatalogueIngredient {
+  /** Canonical shopping-list identifier introduced by catalogue schema v2.1. */
+  id?: string;
   quantite: number;
   unite: string;
+  /** Normalized quantity/unit pair introduced by schema v2.1. */
+  quantite_normalisee?: number;
+  unite_normalisee?: IngredientUnit;
+  facultatif?: boolean;
   nom: string;
   note: string;
   categorie_courses: IngredientCategory;
   allergenes: string[];
+}
+
+export interface CatalogueProvenanceSource {
+  kind: "nutrition" | "cost" | "inspiration" | "safety";
+  title: string;
+  url?: string;
+  version?: string;
+  accessed_at: string;
+}
+
+export interface CatalogueProvenance {
+  type: "original" | "adapted";
+  author: string;
+  license: string;
+  created_at: string;
+  reviewed_at?: string;
+  sources: CatalogueProvenanceSource[];
 }
 
 export interface CatalogueRecipe {
@@ -58,6 +81,8 @@ export interface CatalogueRecipe {
   };
   score_anti_inflammatoire: number;
   image: { nom_fichier: string; alt: string };
+  /** Required for schema v2.1 recipes; optional while reading the v2 catalogue. */
+  provenance?: CatalogueProvenance;
   app: {
     review: CatalogueRecipeReview;
     duplicate_of?: string;
@@ -68,12 +93,14 @@ export interface CatalogueRecipe {
       cost_per_portion_eur: number;
       equipment: Equipment[];
       allergens: string[];
+      /** Hands-on preparation time; required by schema v2.1. */
+      active_minutes?: number;
     };
   };
 }
 
 interface CatalogueData {
-  meta: { schema_version: "2.0.0"; avertissement: string; licence: string; nombre_recettes: number };
+  meta: { schema_version: "2.0.0" | "2.1.0"; avertissement: string; licence: string; nombre_recettes: number };
   categories: Array<{ id: string; nom: string; description: string }>;
   recipes: CatalogueRecipe[];
 }
@@ -106,6 +133,9 @@ function normalize(value: string): string {
 }
 
 function normalizedUnit(ingredient: CatalogueIngredient): { quantity: number; unit: IngredientUnit } {
+  if (ingredient.quantite_normalisee !== undefined && ingredient.unite_normalisee !== undefined) {
+    return { quantity: ingredient.quantite_normalisee, unit: ingredient.unite_normalisee };
+  }
   if (ingredient.unite === "kg") return { quantity: ingredient.quantite * 1000, unit: "g" };
   if (ingredient.unite === "l") return { quantity: ingredient.quantite * 1000, unit: "ml" };
   if (ingredient.unite === "g" || ingredient.unite === "ml") return { quantity: ingredient.quantite, unit: ingredient.unite };
@@ -147,7 +177,7 @@ function imageFor(recipe: CatalogueRecipe): string {
 function plannerIngredient(raw: CatalogueIngredient, portions: number): Ingredient {
   const normalized = normalizedUnit(raw);
   return {
-    id: `catalog-${normalize(raw.nom)}`,
+    id: raw.id ?? `catalog-${normalize(raw.nom)}`,
     name: raw.nom,
     quantity: Math.max(0.01, normalized.quantity / Math.max(1, portions)),
     unit: normalized.unit,
@@ -163,7 +193,7 @@ export const IMPORTED_PLAN_RECIPES: readonly Recipe[] = CATALOGUE_RECIPES
     title: recipe.titre,
     mealTypes: recipe.app.planner.meal_types,
     diet: recipe.app.planner.diets,
-    prepMinutes: recipe.temps.total,
+    prepMinutes: recipe.app.planner.active_minutes ?? recipe.temps.total,
     costPerPortion: recipe.app.planner.cost_per_portion_eur,
     seasons: seasonsFor(recipe),
     equipment: recipe.app.planner.equipment,

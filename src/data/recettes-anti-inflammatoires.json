@@ -305,7 +305,6 @@
           "note": "",
           "categorie_courses": "grocery",
           "allergenes": [
-            "gluten",
             "fruits-a-coque"
           ]
         },
@@ -315,9 +314,7 @@
           "nom": "sirop d'érable",
           "note": "Facultatif, à ajouter hors du feu",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 1,
@@ -2287,9 +2284,7 @@
           "nom": "sirop d'érable",
           "note": "",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         }
       ],
       "etapes": [
@@ -3925,9 +3920,7 @@
           "nom": "sirop d'érable",
           "note": "",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 2,
@@ -4097,7 +4090,6 @@
             "hob"
           ],
           "allergens": [
-            "gluten",
             "soja",
             "sesame"
           ]
@@ -4403,9 +4395,7 @@
           "nom": "champignons de Paris et pleurotes",
           "note": "Mélange, émincés",
           "categorie_courses": "fruit-vegetable",
-          "allergenes": [
-            "fruits-a-coque"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 20,
@@ -6212,9 +6202,7 @@
           "nom": "sirop d'érable",
           "note": "Facultatif, selon la douceur des dattes",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 80,
@@ -6608,9 +6596,7 @@
           "nom": "sirop d'érable",
           "note": "Pour les fruits",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 120,
@@ -6656,9 +6642,7 @@
           "nom": "sirop d'érable",
           "note": "Pour la pâte à crumble",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 1,
@@ -6890,9 +6874,7 @@
           "nom": "sirop d'érable",
           "note": "Pour équilibrer l'amertume",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 60,
@@ -7953,9 +7935,7 @@
           "nom": "sirop d'érable",
           "note": "",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 2,
@@ -8947,9 +8927,7 @@
           "nom": "sirop d'érable",
           "note": "",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 80,
@@ -9400,9 +9378,7 @@
           "nom": "champignons mélangés",
           "note": "Paris, pleurotes, shiitakés",
           "categorie_courses": "fruit-vegetable",
-          "allergenes": [
-            "fruits-a-coque"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 4,
@@ -11194,9 +11170,7 @@
           "nom": "sirop d'érable",
           "note": "Facultatif",
           "categorie_courses": "grocery",
-          "allergenes": [
-            "gluten"
-          ]
+          "allergenes": []
         },
         {
           "quantite": 1,

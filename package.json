@@ -11,7 +11,7 @@
     "build:pages": "npm run check:runtime && tsc && vite build --base=/InflammMenu/ --outDir dist/pages && node scripts/prepare-github-pages.mjs",
     "test:runtime": "playwright test",
     "test:engine": "node --test tests/engine.test.mjs",
-    "test:catalogue": "npm run validate:catalogue && node --test tests/catalogue.test.mjs",
+    "test:catalogue": "npm run validate:catalogue && node --test tests/catalogue.test.mjs tests/catalogue-schema-v21.test.mjs",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "predev": "npm run check:runtime",
     "dev": "vite",
