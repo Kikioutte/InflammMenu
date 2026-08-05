@@ -10,11 +10,12 @@ const catalogue = JSON.parse(await readFile(dataUrl, "utf8"));
 const catalogueSource = await readFile(sourceUrl, "utf8");
 const prototypeSource = await readFile(prototypeUrl, "utf8");
 
-test("the imported catalogue contains 50 complete and internally consistent recipes", () => {
-  assert.equal(catalogue.recipes.length, 50);
-  assert.equal(catalogue.meta.nombre_recettes, 50);
-  assert.equal(new Set(catalogue.recipes.map((recipe) => recipe.id)).size, 50);
-  assert.equal(new Set(catalogue.recipes.map((recipe) => recipe.slug)).size, 50);
+test("the imported catalogue is versioned, complete and internally consistent", () => {
+  assert.equal(catalogue.meta.schema_version, "2.0.0");
+  assert.ok(catalogue.recipes.length >= 50);
+  assert.equal(catalogue.meta.nombre_recettes, catalogue.recipes.length);
+  assert.equal(new Set(catalogue.recipes.map((recipe) => recipe.id)).size, catalogue.recipes.length);
+  assert.equal(new Set(catalogue.recipes.map((recipe) => recipe.slug)).size, catalogue.recipes.length);
 
   for (const recipe of catalogue.recipes) {
     assert.equal(
@@ -28,27 +29,52 @@ test("the imported catalogue contains 50 complete and internally consistent reci
   }
 });
 
-test("every recipe has an explicit editorial review", () => {
-  const reviewedIds = [...catalogueSource.matchAll(/^\s{2}(r\d{3}): \{/gm)].map((match) => match[1]);
-  assert.equal(reviewedIds.length, 50);
-  assert.deepEqual(new Set(reviewedIds), new Set(catalogue.recipes.map((recipe) => recipe.id)));
+test("every recipe carries its editorial review in the JSON source", () => {
+  for (const recipe of catalogue.recipes) {
+    assert.match(recipe.app.review.status, /^(validated|caution)$/);
+    assert.ok(recipe.app.review.summary.length > 0, `${recipe.id}: review missing`);
+    if (recipe.app.review.status === "caution") {
+      assert.ok(recipe.app.review.caution?.length > 0, `${recipe.id}: caution missing`);
+    }
+  }
+  assert.doesNotMatch(catalogueSource, /CATALOGUE_REVIEWS/);
+  assert.match(catalogueSource, /return recipe\.app\.review/);
 });
 
 test("material duplicates are explicitly excluded from integration", () => {
   const expectedDuplicates = ["r001", "r009", "r017", "r018", "r019", "r039"];
   for (const id of expectedDuplicates) {
-    assert.match(catalogueSource, new RegExp(`^\\s{2}${id}: "[^"]+",$`, "m"));
+    assert.ok(catalogue.recipes.find((recipe) => recipe.id === id)?.app.duplicate_of, `${id}: duplicate marker missing`);
   }
-  assert.equal((catalogueSource.match(/^\s{2}r\d{3}: "[^"]+",$/gm) ?? []).length, 6);
-  assert.match(catalogueSource, /CATALOGUE\.recipes\.filter/);
+  assert.equal(catalogue.recipes.filter((recipe) => recipe.app.duplicate_of).length, 6);
+  assert.match(catalogueSource, /!recipe\.app\.duplicate_of/);
 });
 
 test("higher-risk culinary entries retain visible cautions", () => {
   for (const id of ["r004", "r006", "r011", "r023", "r032", "r036", "r040", "r042"]) {
-    assert.match(catalogueSource, new RegExp(`${id}: \\{ status: "caution"`));
+    const recipe = catalogue.recipes.find((item) => item.id === id);
+    assert.equal(recipe?.app.review.status, "caution");
+    assert.ok(recipe?.app.review.caution?.length > 0);
   }
   assert.match(prototypeSource, /catalogueReview\?\.caution/);
   assert.match(prototypeSource, /review\.caution/);
+});
+
+test("planner metadata is explicit and no longer inferred from recipe prose", () => {
+  for (const recipe of catalogue.recipes) {
+    assert.equal(typeof recipe.app.planner.eligible, "boolean");
+    assert.ok(recipe.app.planner.meal_types.length > 0);
+    assert.ok(recipe.app.planner.diets.length > 0);
+    assert.ok(recipe.app.planner.cost_per_portion_eur > 0);
+    assert.ok(Array.isArray(recipe.app.planner.equipment));
+    assert.ok(Array.isArray(recipe.app.planner.allergens));
+    for (const ingredient of recipe.ingredients) {
+      assert.ok(ingredient.categorie_courses);
+      assert.ok(Array.isArray(ingredient.allergenes));
+    }
+  }
+  assert.doesNotMatch(catalogueSource, /function (allergensFor|equipmentFor|mealTypesFor|dietFor|categoryForIngredient)/);
+  assert.match(catalogueSource, /recipe\.app\.planner\.eligible/);
 });
 
 test("unverified mechanism claims are not rendered as clinical effects", () => {

@@ -23,6 +23,8 @@ export interface CatalogueIngredient {
   unite: string;
   nom: string;
   note: string;
+  categorie_courses: IngredientCategory;
+  allergenes: string[];
 }
 
 export interface CatalogueRecipe {
@@ -56,10 +58,22 @@ export interface CatalogueRecipe {
   };
   score_anti_inflammatoire: number;
   image: { nom_fichier: string; alt: string };
+  app: {
+    review: CatalogueRecipeReview;
+    duplicate_of?: string;
+    planner: {
+      eligible: boolean;
+      meal_types: MealType[];
+      diets: DietMode[];
+      cost_per_portion_eur: number;
+      equipment: Equipment[];
+      allergens: string[];
+    };
+  };
 }
 
 interface CatalogueData {
-  meta: { avertissement: string; licence: string; nombre_recettes: number };
+  meta: { schema_version: "2.0.0"; avertissement: string; licence: string; nombre_recettes: number };
   categories: Array<{ id: string; nom: string; description: string }>;
   recipes: CatalogueRecipe[];
 }
@@ -68,79 +82,18 @@ export const CATALOGUE = catalogueSource as unknown as CatalogueData;
 export const CATALOGUE_CATEGORIES = CATALOGUE.categories;
 
 /** Source entries already covered by a materially equivalent V1 recipe. */
-export const DUPLICATE_CATALOGUE_RECIPES = {
-  r001: "overnight-oats-myrtilles-noix",
-  r009: "bowl-quinoa-legumes-houmous",
-  r017: "bowl-tofu-brocoli-sesame",
-  r018: "cabillaud-tomate-olives",
-  r019: "risotto-orge-champignons-epinards",
-  r039: "salade-betterave-chevre-lentilles",
-} as const;
-
-export const CATALOGUE_RECIPES = CATALOGUE.recipes.filter(
-  (recipe) => !(recipe.id in DUPLICATE_CATALOGUE_RECIPES),
+export const DUPLICATE_CATALOGUE_RECIPES: Readonly<Record<string, string>> = Object.fromEntries(
+  CATALOGUE.recipes.flatMap((recipe) => recipe.app.duplicate_of
+    ? [[recipe.id, recipe.app.duplicate_of] as const]
+    : []),
 );
 
-/**
- * Relecture éditoriale recette par recette. Une validation décrit la cohérence
- * avec un modèle méditerranéen riche en végétaux; elle ne promet aucun effet
- * thérapeutique d'un aliment isolé.
- */
-export const CATALOGUE_REVIEWS = {
-  r001: { status: "validated", summary: "Avoine complète, myrtilles, lin et noix : un profil riche en fibres, fruits et graisses insaturées. Le sirop reste facultatif." },
-  r002: { status: "caution", summary: "Chia, grenade et pistaches apportent fibres et graisses insaturées.", caution: "Privilégier un lait de coco léger et garder le miel ou le sirop comme ajout facultatif." },
-  r003: { status: "validated", summary: "Épinards, fruit entier, avocat, gingembre et graines composent une boisson riche en végétaux, sans sucre ajouté." },
-  r004: { status: "caution", summary: "Boisson épicée intéressante lorsqu'elle reste occasionnelle et peu sucrée.", caution: "Employer peu de lait de coco entier et de miel. Le mélange curcuma-poivre n'est pas un traitement et demande de la prudence avec certains médicaments." },
-  r005: { status: "validated", summary: "Infusion non sucrée à base de thé, menthe et citron, cohérente avec un modèle alimentaire peu transformé." },
-  r006: { status: "caution", summary: "Velouté majoritairement végétal, avec carotte, aromates, épices et graines.", caution: "Choisir un bouillon peu salé et limiter le lait de coco entier, riche en graisses saturées." },
-  r007: { status: "validated", summary: "Lentilles, légumes, épinards et huile d'olive en font un plat riche en fibres et en protéines végétales." },
-  r008: { status: "validated", summary: "Poisson gras, légumes, avocat, graines et huile d'olive : profil méditerranéen très cohérent." },
-  r009: { status: "validated", summary: "Bol complet réunissant céréale, légumineuse, crucifère, légumes variés et tahini." },
-  r010: { status: "validated", summary: "Kale, grenade, pomme, noix, graines et huile d'olive offrent une forte densité végétale. Le sirop est utilisé en petite quantité.", caution: "Le kale est riche en vitamine K : avec un traitement anticoagulant AVK, maintenir des apports stables et suivre l'avis du professionnel de santé." },
-  r011: { status: "caution", summary: "Lentilles, épinards, tomate et épices forment une bonne base végétale.", caution: "Préférer le lait de coco léger et l'huile d'olive afin de réduire les graisses saturées." },
-  r012: { status: "validated", summary: "Maquereau, herbes, légumes et huile d'olive correspondent à un repas méditerranéen riche en poisson gras." },
-  r013: { status: "validated", summary: "Sardines, persil, ail, citron et huile d'olive donnent une préparation simple et peu transformée." },
-  r014: { status: "validated", summary: "Poulet accompagné d'une grande quantité de légumes racines, d'aromates et d'huile d'olive. Retirer la peau au service reste pertinent." },
-  r015: { status: "validated", summary: "Pâtes complètes, brocoli, ail, pignons et anchois associent céréale complète, légume et poisson." },
-  r016: { status: "validated", summary: "Haricots noirs, patate douce, légumes et cacao non sucré composent un plat végétal riche en fibres." },
-  r017: { status: "caution", summary: "Tofu et légumes variés composent une assiette végétale équilibrée.", caution: "Utiliser un tamari réduit en sel et très peu de sirop; l'huile de sésame s'emploie en finition." },
-  r018: { status: "validated", summary: "Cabillaud, fenouil, tomate, olives et huile d'olive forment un plat méditerranéen peu transformé. Le vin peut être remplacé par du bouillon.", caution: "Les olives apportent du sodium : les rincer et ne pas ajouter de sel si le bouillon est déjà salé." },
-  r019: { status: "validated", summary: "Orge, champignons, aromates, noisettes et huile d'olive apportent céréale complète, végétaux et graisses insaturées." },
-  r020: { status: "validated", summary: "Aubergine, tahini, grenade, herbes et graines donnent un plat végétal dense et peu transformé." },
-  r021: { status: "validated", summary: "Brocoli, ail, amandes, citron et huile d'olive constituent un accompagnement végétal simple." },
-  r022: { status: "validated", summary: "Patate douce, épices, huile d'olive et herbes composent un accompagnement riche en végétaux." },
-  r023: { status: "caution", summary: "Le chou fermenté apporte variété végétale et acidité sans sucre ajouté.", caution: "Respecter strictement l'hygiène de fermentation et de conservation; la recette reste salée et se consomme en petite portion." },
-  r024: { status: "validated", summary: "Betterave, pois chiches, tahini, citron et huile d'olive offrent fibres et protéines végétales." },
-  r025: { status: "caution", summary: "Noix, amandes, lin et cacao non sucré ont un profil intéressant.", caution: "Les dattes et les fruits à coque rendent l'encas très énergétique : conserver la portion proposée d'une à deux bouchées." },
-  r026: { status: "validated", summary: "Pois chiches, huile d'olive et épices donnent une collation riche en fibres, sans friture." },
-  r027: { status: "caution", summary: "Avocat, cacao non sucré, framboises et pistaches remplacent crème et beurre.", caution: "Dattes et sirop s'additionnent : supprimer le sirop ou réduire les dattes pour limiter les sucres." },
-  r028: { status: "validated", summary: "Dessert de fruits entiers sans sucre ajouté, parfumé d'épices et de citron." },
-  r029: { status: "caution", summary: "Fruits rouges, avoine, noix et lin apportent fruits, fibres et graisses insaturées.", caution: "Réduire le sirop ajouté et remplacer de préférence l'huile de coco par une huile riche en graisses insaturées." },
-  r030: { status: "validated", summary: "Sauce à base de tahini, citron, huile d'olive, ail et épices; le sucrant reste minoritaire." },
-  r031: { status: "validated", summary: "Roquette, basilic, noix et huile d'olive donnent une sauce riche en végétaux et graisses insaturées." },
-  r032: { status: "caution", summary: "Condiment culinaire concentré, à utiliser en petite quantité dans un plat.", caution: "Ne pas suivre la suggestion de prise quotidienne comme un complément. Curcuma concentré et pipérine peuvent interagir avec des traitements; demander un avis professionnel en cas de traitement ou de pathologie biliaire." },
-  r033: { status: "validated", summary: "Œufs, épinards, avocat, herbes et huile d'olive forment un petit-déjeuner complet et peu transformé." },
-  r034: { status: "validated", summary: "Pain complet au levain, sardines, avocat et aromates associent céréale complète, poisson gras et végétaux.", caution: "Sardines et câpres sont déjà salées : égoutter les conserves et omettre la fleur de sel." },
-  r035: { status: "caution", summary: "Avoine, noix et graines constituent une base riche en fibres et graisses insaturées.", caution: "Respecter une petite portion, réduire le sirop et choisir l'huile d'olive plutôt que l'huile de coco." },
-  r036: { status: "caution", summary: "Tofu, champignons et légumes donnent une soupe variée et légère.", caution: "Miso et algues peuvent apporter beaucoup de sodium et d'iode. À éviter ou adapter en cas de trouble thyroïdien, maladie rénale ou traitement concerné." },
-  r037: { status: "validated", summary: "Tomate, pastèque, concombre, poivron, basilic et huile d'olive composent une soupe froide riche en végétaux." },
-  r038: { status: "validated", summary: "Quinoa, grande quantité d'herbes, tomate, concombre, grenade et huile d'olive offrent un profil végétal complet." },
-  r039: { status: "validated", summary: "Lentilles, betterave, noix, roquette et huile d'olive forment une salade riche en fibres; la feta reste optionnelle." },
-  r040: { status: "caution", summary: "Poisson, haricots verts, aromates et épices composent une base intéressante.", caution: "Choisir du lait de coco léger, limiter l'huile de coco et doser la sauce de poisson pour contenir graisses saturées et sodium." },
-  r041: { status: "validated", summary: "Haricots blancs, champignons, verdure, noisettes et huile d'olive forment un plat végétal riche en fibres." },
-  r042: { status: "caution", summary: "Petite boisson concentrée en gingembre et agrumes, à considérer comme une préparation culinaire ponctuelle.", caution: "Elle ne traite pas l'inflammation. Prudence en cas de reflux, calculs biliaires ou traitement; l'acidité impose aussi de protéger l'émail dentaire." },
-  r043: { status: "validated", summary: "Skyr, figues fraîches et pistaches offrent un petit-déjeuner riche en protéines, fibres et graisses insaturées; le miel reste facultatif et minoritaire." },
-  r044: { status: "validated", summary: "Farine de pois chiches, tomates et huile d'olive composent une base végétale sans gluten et peu transformée." },
-  r045: { status: "validated", summary: "Concombre, yaourt nature et aneth forment une soupe froide fraîche et peu transformée." },
-  r046: { status: "caution", summary: "Poisson blanc, fenouil, tomate et safran forment une soupe méditerranéenne riche en protéines maigres.", caution: "Le bouillon et le poisson apportent du sodium: choisir un bouillon peu salé et ne pas resaler en fin de cuisson." },
-  r047: { status: "caution", summary: "Pois chiches rôtis, concombre, grenade et feta offrent fibres et protéines végétales.", caution: "La feta est salée: en utiliser une quantité modérée et ne pas resaler la salade." },
-  r048: { status: "caution", summary: "Riz complet, edamame, carotte et sésame apportent céréale complète, protéines végétales et graisses insaturées.", caution: "Choisir un tamari réduit en sel et doser la sauce progressivement." },
-  r049: { status: "validated", summary: "Crevettes, ail, persil, huile d'olive et quinoa complet forment une assiette légère en graisses saturées, riche en protéines marines." },
-  r050: { status: "validated", summary: "Sarrasin, potiron, cannelle et noix de pécan composent un porridge sans gluten riche en fibres." },
-} as const satisfies Record<string, CatalogueRecipeReview>;
+export const CATALOGUE_RECIPES = CATALOGUE.recipes.filter(
+  (recipe) => !recipe.app.duplicate_of,
+);
 
 export function reviewFor(recipe: CatalogueRecipe): CatalogueRecipeReview {
-  return CATALOGUE_REVIEWS[recipe.id as keyof typeof CATALOGUE_REVIEWS];
+  return recipe.app.review;
 }
 
 function normalize(value: string): string {
@@ -152,16 +105,6 @@ function normalize(value: string): string {
     .replace(/^-|-$/g, "");
 }
 
-function categoryForIngredient(name: string): IngredientCategory {
-  const normalized = normalize(name);
-  if (/(saumon|maquereau|sardine|anchois|cabillaud|poisson|poulet|crevette|gambas|langoustine)/.test(normalized)) return "meat-fish";
-  if (/(pain|levain)/.test(normalized)) return "bakery";
-  if (/(boisson-vegetale|eau-de-coco|the-vert)/.test(normalized)) return "beverage";
-  if (/(oeuf|tofu|feta|fromage|yaourt|skyr)/.test(normalized)) return "fresh";
-  if (/(carotte|epinard|myrtille|grenade|ananas|avocat|citron|menthe|oignon|ail|gingembre|brocoli|patate|chou|roquette|tomate|fenouil|persil|aneth|poivron|aubergine|betterave|pomme|champignon|coriandre|basilic|haricot-vert|pois-gourmand|panais|celeri|concombre|figue|potiron)/.test(normalized)) return "fruit-vegetable";
-  return "grocery";
-}
-
 function normalizedUnit(ingredient: CatalogueIngredient): { quantity: number; unit: IngredientUnit } {
   if (ingredient.unite === "kg") return { quantity: ingredient.quantite * 1000, unit: "g" };
   if (ingredient.unite === "l") return { quantity: ingredient.quantite * 1000, unit: "ml" };
@@ -170,41 +113,6 @@ function normalizedUnit(ingredient: CatalogueIngredient): { quantity: number; un
   if (ingredient.unite === "c. à c.") return { quantity: ingredient.quantite, unit: "c_cafe" };
   if (ingredient.unite === "cm") return { quantity: ingredient.quantite * 5, unit: "g" };
   return { quantity: ingredient.quantite, unit: "piece" };
-}
-
-function allergensFor(recipe: CatalogueRecipe): string[] {
-  const names = normalize(recipe.ingredients.map((item) => item.nom).join(" "));
-  const allergens = new Set<string>();
-  if (!recipe.regimes.includes("sans-gluten") && /(avoine|orge|pates|pain|ble|seigle)/.test(names)) allergens.add("gluten");
-  if (/(oeuf)/.test(names)) allergens.add("oeuf");
-  if (/(tofu|soja|tamari|miso)/.test(names)) allergens.add("soja");
-  if (/(tahini|sesame)/.test(names)) allergens.add("sesame");
-  if (/(moutarde)/.test(names)) allergens.add("moutarde");
-  if (/(celeri)/.test(names)) allergens.add("celeri");
-  if (/(saumon|maquereau|sardine|anchois|cabillaud|poisson)/.test(names)) allergens.add("poisson");
-  if (/(crevette|gambas|langoustine|crabe|homard)/.test(names)) allergens.add("crustaces");
-  if (/(amande|noix(?!-de-coco)|pistache|noisette|pignon)/.test(names)) allergens.add("fruits-a-coque");
-  if (/(feta|fromage|yaourt|skyr|lait(?!-de-coco)|beurre)/.test(names)) allergens.add("lait");
-  return [...allergens];
-}
-
-function equipmentFor(recipe: CatalogueRecipe): Equipment[] {
-  const instructions = normalize(recipe.etapes.join(" "));
-  const equipment = new Set<Equipment>();
-  if (/(four|rotir|gril)/.test(instructions)) equipment.add("oven");
-  if (/(casserole|poele|wok|cuire|fremissement|ebullition|mijoter)/.test(instructions)) equipment.add("hob");
-  if (/(mixer|mixeur|blender)/.test(instructions)) equipment.add("blender");
-  return [...equipment];
-}
-
-function mealTypesFor(recipe: CatalogueRecipe): readonly MealType[] {
-  return recipe.categorie === "petit-dejeuner" ? ["breakfast"] : ["lunch", "dinner"];
-}
-
-function dietFor(recipe: CatalogueRecipe): readonly DietMode[] {
-  return recipe.regimes.includes("vegetarien") || recipe.regimes.includes("vegetalien")
-    ? ["classic", "vegetarian", "no-pork"]
-    : ["classic", "no-pork"];
 }
 
 function seasonsFor(recipe: CatalogueRecipe): readonly Season[] {
@@ -238,35 +146,28 @@ function imageFor(recipe: CatalogueRecipe): string {
 
 function plannerIngredient(raw: CatalogueIngredient, portions: number): Ingredient {
   const normalized = normalizedUnit(raw);
-  const allergens = allergensFor({
-    ...CATALOGUE_RECIPES[0],
-    ingredients: [raw],
-    regimes: [],
-  });
   return {
     id: `catalog-${normalize(raw.nom)}`,
     name: raw.nom,
     quantity: Math.max(0.01, normalized.quantity / Math.max(1, portions)),
     unit: normalized.unit,
-    category: categoryForIngredient(raw.nom),
-    ...(allergens.length ? { allergens } : {}),
+    category: raw.categorie_courses,
+    ...(raw.allergenes.length ? { allergens: raw.allergenes } : {}),
   };
 }
 
-const PLANNER_CATEGORIES = new Set(["petit-dejeuner", "soupe", "salade", "plat"]);
-
 export const IMPORTED_PLAN_RECIPES: readonly Recipe[] = CATALOGUE_RECIPES
-  .filter((recipe) => PLANNER_CATEGORIES.has(recipe.categorie))
+  .filter((recipe) => recipe.app.planner.eligible)
   .map((recipe) => ({
     id: `catalog-${recipe.id}`,
     title: recipe.titre,
-    mealTypes: mealTypesFor(recipe),
-    diet: dietFor(recipe),
+    mealTypes: recipe.app.planner.meal_types,
+    diet: recipe.app.planner.diets,
     prepMinutes: recipe.temps.total,
-    costPerPortion: recipe.cout === "economique" ? 2.1 : recipe.cout === "moyen" ? 3.4 : 5.2,
+    costPerPortion: recipe.app.planner.cost_per_portion_eur,
     seasons: seasonsFor(recipe),
-    equipment: equipmentFor(recipe),
-    allergens: allergensFor(recipe),
+    equipment: recipe.app.planner.equipment,
+    allergens: recipe.app.planner.allergens,
     tags: [...recipe.tags, recipe.categorie, ...recipe.ingredients.map((item) => normalize(item.nom))],
     ingredients: recipe.ingredients.map((ingredient) => plannerIngredient(ingredient, recipe.portions)),
     nutrition: {
