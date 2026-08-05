@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "generated_at": "2026-08-05T18:42:38.846Z",
+    "recipe_file": "pilot-r476-r500.draft.json",
+    "count": 25,
+    "target": "JPEG 900x900, qualité 82-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r476",
+      "title": "Poires pochées au thé rooibos et cardamome",
+      "output_file": "public/assets/recipes/generated/r476-poires-pochees-au-the-rooibos-et-cardamome.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Poires pochées au thé rooibos et cardamome ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : poires, rooibos en vrac, cardamome moulue, orange, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r477",
+      "title": "Crème de millet au citron et framboises",
+      "output_file": "public/assets/recipes/generated/r477-creme-de-millet-au-citron-et-framboises.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Crème de millet au citron et framboises ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : millet décortiqué, citron, framboises, boisson d'amande non sucrée. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r478",
+      "title": "Abricots rôtis au thym et pistaches",
+      "output_file": "public/assets/recipes/generated/r478-abricots-rotis-au-thym-et-pistaches.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Abricots rôtis au thym et pistaches ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : abricots, feuilles de thym frais, pistaches non salées, yaourt de brebis nature. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r479",
+      "title": "Flan de sarrasin à la poire et vanille",
+      "output_file": "public/assets/recipes/generated/r479-flan-de-sarrasin-a-la-poire-et-vanille.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Flan de sarrasin à la poire et vanille ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : farine de sarrasin, poires, œufs, boisson d'avoine non sucrée, extrait de vanille, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r480",
+      "title": "Granité pastèque, hibiscus et citron vert",
+      "output_file": "public/assets/recipes/generated/r480-granite-pasteque-hibiscus-et-citron-vert.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Granité pastèque, hibiscus et citron vert ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : pastèque, hibiscus séché alimentaire, citrons verts, menthe fraîche, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r481",
+      "title": "Figues rôties au romarin et crème de noix",
+      "output_file": "public/assets/recipes/generated/r481-figues-roties-au-romarin-et-creme-de-noix.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Figues rôties au romarin et crème de noix ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : figues fraîches, romarin frais haché, noix, yaourt nature, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r482",
+      "title": "Gelée d'agrumes au safran et grenade",
+      "output_file": "public/assets/recipes/generated/r482-gelee-d-agrumes-au-safran-et-grenade.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Gelée d'agrumes au safran et grenade ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : oranges, pamplemousse rose, filaments de safran, graines de grenade, agar-agar. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r483",
+      "title": "Clafoutis de cerises au lait d'amande et avoine",
+      "output_file": "public/assets/recipes/generated/r483-clafoutis-de-cerises-au-lait-d-amande-et-avoine.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Clafoutis de cerises au lait d'amande et avoine ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : cerises, boisson d'amande non sucrée, farine d'avoine, œufs, extrait de vanille, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r484",
+      "title": "Sauce verte au cresson, pomme et noix",
+      "output_file": "public/assets/recipes/generated/r484-sauce-verte-au-cresson-pomme-et-noix.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Sauce verte au cresson, pomme et noix ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : cresson, pomme verte, noix, citron, huile d'olive vierge extra, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r485",
+      "title": "Crème de haricots blancs au citron confit",
+      "output_file": "public/assets/recipes/generated/r485-creme-de-haricots-blancs-au-citron-confit.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Crème de haricots blancs au citron confit ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : haricots blancs cuits, citron confit, romarin frais haché, huile d'olive vierge extra, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r486",
+      "title": "Salsa de kiwi, concombre et menthe",
+      "output_file": "public/assets/recipes/generated/r486-salsa-de-kiwi-concombre-et-menthe.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Salsa de kiwi, concombre et menthe ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : kiwis, concombre, menthe fraîche, citron vert. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r487",
+      "title": "Sauce de poivron jaune rôti et amande",
+      "output_file": "public/assets/recipes/generated/r487-sauce-de-poivron-jaune-roti-et-amande.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Sauce de poivron jaune rôti et amande ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : poivrons jaunes, amandes, gousse d'ail, vinaigre de cidre, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r488",
+      "title": "Condiment de fenouil, orange et olive verte",
+      "output_file": "public/assets/recipes/generated/r488-condiment-de-fenouil-orange-et-olive-verte.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Condiment de fenouil, orange et olive verte ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : bulbe de fenouil, orange, olives vertes, persil plat, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r489",
+      "title": "Sauce yaourt, betterave jaune et aneth",
+      "output_file": "public/assets/recipes/generated/r489-sauce-yaourt-betterave-jaune-et-aneth.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Sauce yaourt, betterave jaune et aneth ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : betterave jaune cuite, yaourt nature, aneth frais, citron. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r490",
+      "title": "Pesto de brocoli, pistache et citron",
+      "output_file": "public/assets/recipes/generated/r490-pesto-de-brocoli-pistache-et-citron.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Pesto de brocoli, pistache et citron ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : brocoli, pistaches non salées, citron, basilic frais, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r491",
+      "title": "Sauce aux prunes, gingembre et sésame",
+      "output_file": "public/assets/recipes/generated/r491-sauce-aux-prunes-gingembre-et-sesame.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Sauce aux prunes, gingembre et sésame ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : prunes, gingembre frais, graines de sésame, vinaigre de riz. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r492",
+      "title": "Crème de petits pois, menthe et noix de cajou",
+      "output_file": "public/assets/recipes/generated/r492-creme-de-petits-pois-menthe-et-noix-de-cajou.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Crème de petits pois, menthe et noix de cajou ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : petits pois, menthe fraîche, noix de cajou, citron, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r493",
+      "title": "Salsa de grenade, persil et sumac",
+      "output_file": "public/assets/recipes/generated/r493-salsa-de-grenade-persil-et-sumac.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Salsa de grenade, persil et sumac ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : graines de grenade, persil plat, sumac moulu, oignon rouge, citron, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r494",
+      "title": "Sauce chaude de carotte, safran et orange",
+      "output_file": "public/assets/recipes/generated/r494-sauce-chaude-de-carotte-safran-et-orange.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Sauce chaude de carotte, safran et orange ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : carottes, filaments de safran, orange, gingembre frais, eau, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r495",
+      "title": "Chutney frais de poire, céleri et noix",
+      "output_file": "public/assets/recipes/generated/r495-chutney-frais-de-poire-celeri-et-noix.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Chutney frais de poire, céleri et noix ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : poires, branches de céleri, noix, vinaigre de cidre. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r496",
+      "title": "Sauce de courge rôtie au miso et sauge",
+      "output_file": "public/assets/recipes/generated/r496-sauce-de-courge-rotie-au-miso-et-sauge.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Sauce de courge rôtie au miso et sauge ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : courge, miso blanc, feuilles de sauge fraîche, citron, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r497",
+      "title": "Vinaigrette framboise, basilic et graines de chanvre",
+      "output_file": "public/assets/recipes/generated/r497-vinaigrette-framboise-basilic-et-graines-de-chanvre.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Vinaigrette framboise, basilic et graines de chanvre ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : framboises, basilic frais, graines de chanvre décortiquées, vinaigre balsamique, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r498",
+      "title": "Sauce aux herbes, câpres et amandes",
+      "output_file": "public/assets/recipes/generated/r498-sauce-aux-herbes-capres-et-amandes.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Sauce aux herbes, câpres et amandes ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : persil plat, aneth frais, câpres, amandes, citron, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r499",
+      "title": "Crème de panais au raifort et pomme",
+      "output_file": "public/assets/recipes/generated/r499-creme-de-panais-au-raifort-et-pomme.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Crème de panais au raifort et pomme ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : panais, raifort râpé, pomme, yaourt nature, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    },
+    {
+      "id": "r500",
+      "title": "Sauce tomate crue aux cerises et au basilic",
+      "output_file": "public/assets/recipes/generated/r500-sauce-tomate-crue-aux-cerises-et-au-basilic.jpg",
+      "status": "waiting_recipe_validation",
+      "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Sauce tomate crue aux cerises et au basilic ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : tomates mûres, cerises, basilic frais, vinaigre de cidre, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone."
+    }
+  ]
+}
