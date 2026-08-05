@@ -1,0 +1,2311 @@
+{
+  "meta": {
+    "schema_version": "1.0.0",
+    "lot": "r426-r450",
+    "status": "reviewed-with-cautions",
+    "ingredient_count": 82,
+    "ciqual_source": "Anses, Table de composition nutritionnelle des aliments Ciqual 2025",
+    "ciqual_version": "2025-11-03",
+    "ciqual_doi": "https://doi.org/10.57745/RDMHWY",
+    "review_note": "Chaque code, proxy et conversion a été relu; les approximations sont marquées caution."
+  },
+  "ingredients": [
+    {
+      "ingredient_id": "abricot-frais",
+      "selected_ciqual_code": "13000",
+      "source_dataset": "ciqual",
+      "selected_source_code": "13000",
+      "grams_per_unit": {
+        "piece": 45
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Abricot cru dénoyauté; 45 g par fruit.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r440",
+          "label": "abricots",
+          "quantity": 8,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 45,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "amande",
+      "selected_ciqual_code": "15000",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Amande avec peau non salée; quantité déjà exprimée en grammes.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r440",
+          "label": "amandes",
+          "quantity": 60,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r447",
+          "label": "amandes",
+          "quantity": 60,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "aneth-frais",
+      "selected_ciqual_code": "11093",
+      "grams_per_normalized_unit": 20,
+      "review_status": "validated",
+      "rationale": "Aneth frais; une unité 'piece' représente ici une botte d'environ 20 g, donc la demi-botte du brouillon vaut 10 g.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r441",
+          "label": "aneth frais",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "aubergine",
+      "selected_ciqual_code": "20053",
+      "grams_per_normalized_unit": 300,
+      "review_status": "validated",
+      "rationale": "Aubergine crue; 300 g de partie comestible par pièce moyenne avant rôtissage.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; correspondance et conversion contrôlées manuellement pour ce lot.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r449",
+          "label": "aubergines",
+          "quantity": 3,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "avocat",
+      "selected_ciqual_code": "13004",
+      "grams_per_normalized_unit": 150,
+      "review_status": "validated",
+      "rationale": "Chair d'avocat crue; 150 g de chair pour un avocat moyen.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r431",
+          "label": "avocats",
+          "quantity": 2,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "basilic-frais",
+      "selected_ciqual_code": "11033",
+      "grams_per_normalized_unit": 1,
+      "grams_per_unit": {
+        "piece": 1,
+        "g": 1
+      },
+      "occurrence_overrides": {
+        "r058": {
+          "grams_total": 10,
+          "source_note": "Demi-botte estimée à 10 g."
+        },
+        "r075": {
+          "grams_total": 3,
+          "source_note": "Six feuilles estimées à 0,5 g chacune."
+        }
+      },
+      "review_status": "validated",
+      "rationale": "Basilic frais; conversions contextualisées par recette car r058 emploie une demi-botte et r075 six feuilles.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r434",
+          "label": "basilic frais",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "betterave-crue",
+      "selected_ciqual_code": "20091",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20091",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Betterave rouge crue, pesée épluchée.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r450",
+          "label": "betteraves",
+          "quantity": 900,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "blanc-poulet",
+      "selected_ciqual_code": "36017",
+      "source_dataset": "ciqual",
+      "selected_source_code": "36017",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Filet de poulet sans peau cru, pesé avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r427",
+          "label": "blancs de poulet",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r429",
+          "label": "blancs de poulet",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r432",
+          "label": "blancs de poulet",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r434",
+          "label": "blancs de poulet",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r437",
+          "label": "blancs de poulet",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r439",
+          "label": "blancs de poulet",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1
+    },
+    {
+      "ingredient_id": "blette",
+      "selected_ciqual_code": "20301",
+      "grams_per_normalized_unit": 0.8,
+      "review_status": "caution",
+      "rationale": "Blette, côtes et feuilles, cuite à l'eau; conversion prudente de 250 g crus en environ 200 g cuits pour tenir compte de l'égouttage.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r435",
+          "label": "blettes",
+          "quantity": 500,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "cafe-orge-soluble",
+      "selected_ciqual_code": "18005",
+      "source_dataset": "ciqual",
+      "selected_source_code": "18005",
+      "grams_per_unit": {
+        "c_cafe": 2
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "caution",
+      "rationale": "Café soluble Ciqual; proxy documenté du café d'orge soluble, 2 g par cuillère à café.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r450",
+          "label": "café d'orge soluble",
+          "quantity": 2,
+          "unit": "c_cafe",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 2
+    },
+    {
+      "ingredient_id": "caille-entiere",
+      "selected_ciqual_code": "36100",
+      "source_dataset": "ciqual",
+      "selected_source_code": "36100",
+      "grams_per_unit": {
+        "piece": 100
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "caution",
+      "rationale": "Caille crue avec peau; 100 g de partie comestible par petite caille.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r426",
+          "label": "cailles entières",
+          "quantity": 4,
+          "unit": "piece",
+          "note": ""
+        },
+        {
+          "recipe_id": "r433",
+          "label": "cailles entières",
+          "quantity": 4,
+          "unit": "piece",
+          "note": ""
+        },
+        {
+          "recipe_id": "r440",
+          "label": "cailles entières",
+          "quantity": 4,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 100
+    },
+    {
+      "ingredient_id": "cannelle-moulue",
+      "selected_ciqual_code": "11025",
+      "grams_per_normalized_unit": 2.6,
+      "review_status": "validated",
+      "rationale": "Cannelle en poudre; 2,6 g par cuillère à café rase.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r428",
+          "label": "cannelle moulue",
+          "quantity": 0.5,
+          "unit": "c_cafe",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "carotte",
+      "selected_ciqual_code": "20009",
+      "grams_per_normalized_unit": 120,
+      "review_status": "validated",
+      "rationale": "Carotte crue; le brouillon indique environ 120 g pour une pièce.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r428",
+          "label": "carottes",
+          "quantity": 4,
+          "unit": "piece",
+          "note": ""
+        },
+        {
+          "recipe_id": "r443",
+          "label": "carottes",
+          "quantity": 800,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "cebette",
+      "selected_ciqual_code": "20323",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20323",
+      "grams_per_unit": {
+        "piece": 15
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "caution",
+      "rationale": "Cébette cuite Ciqual; 15 g par petite cébette.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r446",
+          "label": "cébettes",
+          "quantity": 3,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 15
+    },
+    {
+      "ingredient_id": "celeri-rave",
+      "selected_ciqual_code": "20055",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20055",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Céleri-rave cru, pesé épluché.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r438",
+          "label": "céleri-rave",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r448",
+          "label": "céleri-rave",
+          "quantity": 800,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "cerise",
+      "selected_ciqual_code": "13008",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Cerise crue dénoyautée; quantité déjà exprimée en grammes de chair.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r434",
+          "label": "cerises dénoyautées",
+          "quantity": 300,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "champignon-paris",
+      "selected_ciqual_code": "20056",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Champignon de Paris cru, pesé avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r432",
+          "label": "champignons de Paris",
+          "quantity": 500,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "chou-fleur",
+      "selected_ciqual_code": "20016",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Chou-fleur cru pesé avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; correspondance et conversion contrôlées manuellement pour ce lot.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r433",
+          "label": "chou-fleur",
+          "quantity": 800,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r442",
+          "label": "chou-fleur",
+          "quantity": 900,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "ciboulette-fraiche",
+      "selected_ciqual_code": "11003",
+      "source_dataset": "ciqual",
+      "selected_source_code": "11003",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Ciboule ou ciboulette fraîche.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r448",
+          "label": "ciboulette fraîche",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "citron-confit-sel",
+      "selected_ciqual_code": "13009",
+      "grams_per_normalized_unit": 45,
+      "review_status": "caution",
+      "rationale": "Citron cru utilisé comme approximation de la chair et de l'écorce; le sodium du citron confit au sel n'est pas représenté.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; correspondance et conversion contrôlées manuellement pour ce lot.",
+      "occurrence_overrides": {
+        "r154": {
+          "grams_total": 22.5,
+          "source_note": "Demi-citron estimé à 22,5 g; sodium probablement sous-estimé faute d'entrée officielle exacte."
+        }
+      },
+      "batch_occurrences": [
+        {
+          "recipe_id": "r433",
+          "label": "citron confit au sel",
+          "quantity": 0.5,
+          "unit": "piece",
+          "note": "Écorce rincée"
+        },
+        {
+          "recipe_id": "r447",
+          "label": "citron confit au sel",
+          "quantity": 0.5,
+          "unit": "piece",
+          "note": "Écorce rincée"
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "citron-jaune",
+      "selected_ciqual_code": "13009",
+      "grams_per_normalized_unit": 35,
+      "review_status": "validated",
+      "rationale": "Citron jaune cru; 35 g de fraction comestible par pièce pour le jus et, selon la recette, le zeste.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r435",
+          "label": "citron",
+          "quantity": 1,
+          "unit": "piece",
+          "note": ""
+        },
+        {
+          "recipe_id": "r436",
+          "label": "citron",
+          "quantity": 1,
+          "unit": "piece",
+          "note": ""
+        },
+        {
+          "recipe_id": "r442",
+          "label": "citron",
+          "quantity": 1,
+          "unit": "piece",
+          "note": ""
+        },
+        {
+          "recipe_id": "r444",
+          "label": "citron",
+          "quantity": 1,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "citron-vert",
+      "selected_ciqual_code": "13067",
+      "grams_per_normalized_unit": 45,
+      "review_status": "validated",
+      "rationale": "Citron vert cru; 45 g de fraction comestible par pièce pour jus et zeste.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r427",
+          "label": "citrons verts",
+          "quantity": 2,
+          "unit": "piece",
+          "note": ""
+        },
+        {
+          "recipe_id": "r431",
+          "label": "citrons verts",
+          "quantity": 2,
+          "unit": "piece",
+          "note": ""
+        },
+        {
+          "recipe_id": "r449",
+          "label": "citrons verts",
+          "quantity": 2,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "citronnelle",
+      "selected_ciqual_code": "18066",
+      "grams_per_normalized_unit": 1,
+      "review_status": "caution",
+      "rationale": "Eau utilisée comme proxy énergétique quasi nul pour la citronnelle infusée puis entièrement retirée.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "occurrence_overrides": {
+        "r292": {
+          "grams_total": 1,
+          "source_note": "Les deux tiges sont retirées; seul un transfert aromatique non quantifié est retenu."
+        }
+      },
+      "batch_occurrences": [
+        {
+          "recipe_id": "r437",
+          "label": "tiges de citronnelle",
+          "quantity": 2,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "concombre",
+      "selected_ciqual_code": "20019",
+      "grams_per_normalized_unit": 300,
+      "review_status": "validated",
+      "rationale": "Concombre cru avec peau; 300 g par pièce moyenne, donc 150 g pour le demi-concombre de r087.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r427",
+          "label": "concombre",
+          "quantity": 1,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "coriandre-fraiche",
+      "selected_ciqual_code": "11094",
+      "grams_per_normalized_unit": 20,
+      "review_status": "validated",
+      "rationale": "Coriandre fraîche; une unité représente une botte de 20 g, donc un quart vaut 5 g.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r431",
+          "label": "coriandre fraîche",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r440",
+          "label": "coriandre fraîche",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r449",
+          "label": "coriandre fraîche",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "courge-delicata",
+      "selected_ciqual_code": "20139",
+      "grams_per_normalized_unit": 400,
+      "review_status": "validated",
+      "rationale": "Courge crue générique; 400 g de chair par delicata moyenne.",
+      "source_note": "Anses Ciqual 2025, version 2025-11-03; correspondance et conversion contrôlées pour ce lot.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r444",
+          "label": "courges delicata",
+          "quantity": 900,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "courge-kabocha",
+      "selected_ciqual_code": "20139",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Courge crue générique utilisée pour la kabocha, pesée en grammes.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; correspondance et conversion contrôlées manuellement pour ce lot.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r429",
+          "label": "courge kabocha",
+          "quantity": 800,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "cresson",
+      "selected_ciqual_code": "20022",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20022",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Cresson de fontaine cru.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r438",
+          "label": "cresson",
+          "quantity": 150,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "epinard-frais",
+      "selected_ciqual_code": "20059",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Épinard cru, pesé avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r426",
+          "label": "épinards frais",
+          "quantity": 300,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r432",
+          "label": "épinards frais",
+          "quantity": 300,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r437",
+          "label": "épinards frais",
+          "quantity": 300,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "escalope-dinde",
+      "selected_ciqual_code": "36304",
+      "source_dataset": "ciqual",
+      "selected_source_code": "36304",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Escalope de dinde crue, pesée avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r428",
+          "label": "escalopes de dinde",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r431",
+          "label": "escalopes de dinde",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r435",
+          "label": "escalopes de dinde",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r438",
+          "label": "escalopes de dinde",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1
+    },
+    {
+      "ingredient_id": "estragon-frais",
+      "selected_ciqual_code": "11092",
+      "source_dataset": "ciqual",
+      "selected_source_code": "11092",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {
+        "energy_kcal": {
+          "value": 36,
+          "note": "Énergie calculée prudemment à partir des macronutriments Ciqual disponibles."
+        },
+        "fat_g": {
+          "value": 0.5,
+          "note": "Lipides absents de la fiche Ciqual; estimation éditoriale prudente pour une herbe fraîche."
+        },
+        "sodium_mg": {
+          "value": 4,
+          "note": "Sodium absent de la fiche Ciqual; valeur technique prudente pour une herbe fraîche non salée."
+        }
+      },
+      "review_status": "caution",
+      "rationale": "Estragon frais, pesé en grammes.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r432",
+          "label": "estragon frais",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "fenouil-bulbe",
+      "selected_ciqual_code": "20028",
+      "grams_per_normalized_unit": 360,
+      "review_status": "validated",
+      "rationale": "Fenouil cru; le brouillon indique 180 g pour un demi-bulbe, soit 360 g par pièce.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r441",
+          "label": "bulbes de fenouil",
+          "quantity": 3,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "fenugrec-moulu",
+      "selected_ciqual_code": "11077",
+      "source_dataset": "ciqual",
+      "selected_source_code": "11077",
+      "grams_per_unit": {
+        "c_cafe": 3
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "caution",
+      "rationale": "Fenugrec graine Ciqual; proxy de la poudre, 3 g par cuillère à café.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r435",
+          "label": "fenugrec moulu",
+          "quantity": 0.5,
+          "unit": "c_cafe",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 3
+    },
+    {
+      "ingredient_id": "filet-pintade",
+      "selected_ciqual_code": "36702",
+      "source_dataset": "ciqual",
+      "selected_source_code": "36702",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Poitrine de pintade crue, pesée avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r430",
+          "label": "filets de pintade",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r436",
+          "label": "filets de pintade",
+          "quantity": 600,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1
+    },
+    {
+      "ingredient_id": "gingembre-frais",
+      "selected_ciqual_code": "11074",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Racine de gingembre fraîche; quantité en grammes.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r427",
+          "label": "gingembre frais",
+          "quantity": 12,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r437",
+          "label": "gingembre frais",
+          "quantity": 12,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r443",
+          "label": "gingembre frais",
+          "quantity": 8,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r449",
+          "label": "gingembre frais",
+          "quantity": 10,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "graines-chanvre-decortiquees",
+      "selected_ciqual_code": "15063",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Graines de chanvre décortiquées; quantité en grammes.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r444",
+          "label": "graines de chanvre décortiquées",
+          "quantity": 50,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "graines-courge",
+      "selected_ciqual_code": "15064",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Graines de courge séchées; quantité en grammes.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r446",
+          "label": "graines de courge",
+          "quantity": 50,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "graines-sesame",
+      "selected_ciqual_code": "15010",
+      "grams_per_normalized_unit": 1,
+      "grams_per_unit": {
+        "g": 1,
+        "c_soupe": 9
+      },
+      "review_status": "validated",
+      "rationale": "Graines de sésame; 1 g/g ou 9 g par cuillère à soupe selon l'unité normalisée.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r429",
+          "label": "graines de sésame",
+          "quantity": 30,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r449",
+          "label": "graines de sésame",
+          "quantity": 30,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "grenade",
+      "selected_ciqual_code": "13018",
+      "source_dataset": "ciqual",
+      "selected_source_code": "13018",
+      "grams_per_unit": {
+        "piece": 170
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Grenade crue; 170 g d'arilles par fruit moyen.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r426",
+          "label": "grenade",
+          "quantity": 1,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 170
+    },
+    {
+      "ingredient_id": "haricots-rouges-cuits",
+      "selected_ciqual_code": "20503",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Haricots rouges bouillis, pesés cuits et égouttés.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; correspondance et conversion contrôlées manuellement pour ce lot.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r431",
+          "label": "haricots rouges cuits",
+          "quantity": 500,
+          "unit": "g",
+          "note": "Rincés"
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "haricots-verts",
+      "selected_ciqual_code": "20061",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20061",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Haricot vert cru, pesé avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r447",
+          "label": "haricots verts",
+          "quantity": 800,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "huile-colza",
+      "selected_ciqual_code": "17130",
+      "source_dataset": "ciqual",
+      "selected_source_code": "17130",
+      "grams_per_unit": {
+        "c_soupe": 13.5
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Huile de colza; 13,5 g par cuillère à soupe.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r427",
+          "label": "huile de colza",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r429",
+          "label": "huile de colza",
+          "quantity": 1,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r431",
+          "label": "huile de colza",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r437",
+          "label": "huile de colza",
+          "quantity": 1,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r443",
+          "label": "huile de colza",
+          "quantity": 1,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r445",
+          "label": "huile de colza",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r446",
+          "label": "huile de colza",
+          "quantity": 1,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r449",
+          "label": "huile de colza",
+          "quantity": 1,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r450",
+          "label": "huile de colza",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 13.5,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "huile-olive-vierge-extra",
+      "selected_ciqual_code": "17270",
+      "grams_per_normalized_unit": 13.5,
+      "review_status": "validated",
+      "rationale": "Huile d'olive vierge extra; 13,5 g par cuillère à soupe et 4,5 g par cuillère à café.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "grams_per_unit": {
+        "c_cafe": 4.5,
+        "c_soupe": 13.5
+      },
+      "batch_occurrences": [
+        {
+          "recipe_id": "r426",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r428",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r430",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r432",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r433",
+          "label": "huile d'olive",
+          "quantity": 1,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r434",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r435",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r436",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r438",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r439",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r440",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r441",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r442",
+          "label": "huile d'olive",
+          "quantity": 2,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r444",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r447",
+          "label": "huile d'olive",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r448",
+          "label": "huile d'olive",
+          "quantity": 2,
+          "unit": "c_soupe",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "lentilles-blondes-seches",
+      "selected_ciqual_code": "20586",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Lentilles blondes sèches, pesées avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; correspondance et conversion contrôlées manuellement pour ce lot.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r428",
+          "label": "lentilles blondes sèches",
+          "quantity": 240,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "lentilles-corail-seches",
+      "selected_ciqual_code": "20535",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Lentilles corail sèches, pesées avant trempage ou cuisson.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; correspondance et conversion contrôlées manuellement pour ce lot.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r436",
+          "label": "lentilles corail sèches",
+          "quantity": 240,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "lentilles-vertes-seches",
+      "selected_ciqual_code": "20585",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20585",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Lentille verte sèche, pesée avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r448",
+          "label": "lentilles vertes sèches",
+          "quantity": 180,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "mais-doux-cuit",
+      "selected_ciqual_code": "20066",
+      "grams_per_normalized_unit": 1,
+      "review_status": "caution",
+      "rationale": "Maïs doux appertisé égoutté utilisé comme référence du maïs doux cuit et égoutté; sodium dépend du produit.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r431",
+          "label": "maïs doux cuit",
+          "quantity": 300,
+          "unit": "g",
+          "note": "Égoutté"
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "menthe-fraiche",
+      "selected_ciqual_code": "11027",
+      "grams_per_normalized_unit": 20,
+      "review_status": "validated",
+      "rationale": "Menthe fraîche; une unité représente une botte de 20 g, donc un quart vaut 5 g.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r427",
+          "label": "menthe fraîche",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r439",
+          "label": "menthe fraîche",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "millet-decortique",
+      "selected_ciqual_code": "9555",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Farine de millet utilisée pour le millet décortiqué sec : même grain sans ajout, quantité pesée avant hydratation; la mouture est documentée comme limite.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r437",
+          "label": "millet décortiqué",
+          "quantity": 240,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "miso-blanc-soja-riz",
+      "selected_ciqual_code": "20916",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20916",
+      "grams_per_unit": {
+        "c_soupe": 15
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Miso Ciqual; 15 g par cuillère à soupe.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r429",
+          "label": "miso blanc de soja et riz",
+          "quantity": 2,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r446",
+          "label": "miso blanc de soja et riz",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 15,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "moutarde-dijon",
+      "selected_ciqual_code": "11013",
+      "source_dataset": "ciqual",
+      "selected_source_code": "11013",
+      "grams_per_unit": {
+        "c_soupe": 15
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Moutarde Ciqual; 15 g par cuillère à soupe.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r445",
+          "label": "moutarde de Dijon",
+          "quantity": 1,
+          "unit": "c_soupe",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 15,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "navet",
+      "selected_ciqual_code": "20064",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20064",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Navet pelé cru, pesé avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r446",
+          "label": "navets",
+          "quantity": 900,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "noisette",
+      "selected_ciqual_code": "15004",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Noisette non salée; quantité en grammes.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r430",
+          "label": "noisettes",
+          "quantity": 60,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r438",
+          "label": "noisettes",
+          "quantity": 90,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r441",
+          "label": "noisettes",
+          "quantity": 60,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r450",
+          "label": "noisettes",
+          "quantity": 60,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "noix-grenoble",
+      "selected_ciqual_code": "15005",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Noix, cerneau séché non salé; quantité exprimée en grammes.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r445",
+          "label": "noix",
+          "quantity": 60,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "orange",
+      "selected_ciqual_code": "13034",
+      "grams_per_normalized_unit": 150,
+      "review_status": "validated",
+      "rationale": "Chair d'orange crue sans peau ni pépins; 150 g de fraction comestible par fruit moyen.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r441",
+          "label": "oranges",
+          "quantity": 2,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "orge-monde",
+      "selected_ciqual_code": "9320",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Orge complète crue, correspondance à l'orge mondé pesé sec avant cuisson.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r434",
+          "label": "orge mondé",
+          "quantity": 240,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "pak-choi",
+      "selected_ciqual_code": "20340",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20340",
+      "grams_per_unit": {
+        "piece": 250
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Pak-choï cru; 250 g par pièce moyenne.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r429",
+          "label": "pak-choï",
+          "quantity": 4,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 250,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "paprika-fume",
+      "selected_ciqual_code": "11049",
+      "grams_per_normalized_unit": 2.3,
+      "review_status": "validated",
+      "rationale": "Paprika en poudre utilisé pour le paprika fumé; 2,3 g par cuillère à café.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; correspondance et conversion contrôlées manuellement pour ce lot.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r448",
+          "label": "paprika fumé",
+          "quantity": 1,
+          "unit": "c_cafe",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "patate-douce",
+      "selected_ciqual_code": "4101",
+      "grams_per_normalized_unit": 250,
+      "review_status": "validated",
+      "rationale": "Patate douce crue; le brouillon indique 250 g par pièce.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r435",
+          "label": "patates douces",
+          "quantity": 700,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "patate-douce-violette",
+      "selected_ciqual_code": "4101",
+      "grams_per_normalized_unit": 1,
+      "review_status": "caution",
+      "rationale": "Patate douce crue utilisée comme équivalent de la variété violette, non distinguée dans Ciqual.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r426",
+          "label": "patates douces violettes",
+          "quantity": 700,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "persil-frais",
+      "selected_ciqual_code": "11014",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Persil frais; quantité exprimée en grammes.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r433",
+          "label": "persil plat",
+          "quantity": 25,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r442",
+          "label": "persil plat",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        },
+        {
+          "recipe_id": "r447",
+          "label": "persil plat",
+          "quantity": 20,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "petits-pois",
+      "selected_ciqual_code": "20084",
+      "grams_per_normalized_unit": 1,
+      "review_status": "caution",
+      "rationale": "Petits pois surgelés crus, pesés avant cuisson; les recettes autorisent aussi des petits pois frais, proches mais non identiques.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r439",
+          "label": "petits pois",
+          "quantity": 400,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "poire",
+      "selected_ciqual_code": "13037",
+      "grams_per_normalized_unit": 150,
+      "review_status": "validated",
+      "rationale": "Poire crue avec peau; le brouillon indique 300 g pour deux fruits, soit 150 g par pièce.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r438",
+          "label": "poires",
+          "quantity": 2,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "poireau",
+      "selected_ciqual_code": "20039",
+      "grams_per_normalized_unit": 180,
+      "review_status": "validated",
+      "rationale": "Poireau cru; le brouillon indique environ 180 g par pièce.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r430",
+          "label": "poireaux",
+          "quantity": 3,
+          "unit": "piece",
+          "note": ""
+        },
+        {
+          "recipe_id": "r445",
+          "label": "poireaux",
+          "quantity": 6,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "pois-casses-secs",
+      "selected_ciqual_code": "20515",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20515",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Pois cassé sec.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r442",
+          "label": "pois cassés secs",
+          "quantity": 180,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "pois-chiches-cuits",
+      "selected_ciqual_code": "20507",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20507",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Pois chiche bouilli, pesé cuit et égoutté.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r433",
+          "label": "pois chiches cuits",
+          "quantity": 500,
+          "unit": "g",
+          "note": "Rincés"
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "poivron-rouge",
+      "selected_ciqual_code": "20087",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20087",
+      "grams_per_unit": {
+        "piece": 160
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Poivron rouge cru; 160 g de chair par pièce moyenne.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r436",
+          "label": "poivrons rouges",
+          "quantity": 3,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 160,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "pomme",
+      "selected_ciqual_code": "13039",
+      "grams_per_normalized_unit": 150,
+      "review_status": "validated",
+      "rationale": "Pomme crue avec peau; 150 g de fraction comestible par fruit moyen, cohérent avec la note de r069.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r445",
+          "label": "pommes",
+          "quantity": 2,
+          "unit": "piece",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "pruneau-seche",
+      "selected_ciqual_code": "13042",
+      "source_dataset": "ciqual",
+      "selected_source_code": "13042",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Pruneau sec sans noyau.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r428",
+          "label": "pruneaux dénoyautés",
+          "quantity": 100,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "quinoa",
+      "selected_ciqual_code": "9341",
+      "grams_per_normalized_unit": 3,
+      "review_status": "validated",
+      "rationale": "Quinoa cuit sans sel; conversion de 1 g sec en 3 g cuits selon un rendement domestique moyen, documentée comme estimation.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r440",
+          "label": "quinoa",
+          "quantity": 240,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "quinoa-rouge",
+      "selected_ciqual_code": "9341",
+      "grams_per_normalized_unit": 3,
+      "review_status": "caution",
+      "rationale": "Quinoa cuit sans sel utilisé comme référence du quinoa rouge; conversion estimée de 1 g sec en 3 g cuits.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r430",
+          "label": "quinoa rouge",
+          "quantity": 240,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "riz-noir",
+      "selected_ciqual_code": "9102",
+      "source_dataset": "ciqual",
+      "selected_source_code": "9102",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "caution",
+      "rationale": "Riz complet cru; proxy du riz noir cru.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r427",
+          "label": "riz noir",
+          "quantity": 240,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "riz-sauvage",
+      "selected_ciqual_code": "9108",
+      "source_dataset": "ciqual",
+      "selected_source_code": "9108",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Riz sauvage cru, pesé sec.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r439",
+          "label": "riz sauvage",
+          "quantity": 240,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1
+    },
+    {
+      "ingredient_id": "roquette",
+      "selected_ciqual_code": "20217",
+      "source_dataset": "ciqual",
+      "selected_source_code": "20217",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "validated",
+      "rationale": "Roquette crue.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r434",
+          "label": "roquette",
+          "quantity": 120,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "sarrasin-decortique",
+      "selected_ciqual_code": "9540",
+      "grams_per_normalized_unit": 1,
+      "review_status": "validated",
+      "rationale": "Farine de sarrasin utilisée comme équivalent nutritionnel complet du grain décortiqué cru; même précédent validé pour r051-r075, avec mouture documentée comme limite.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r432",
+          "label": "sarrasin décortiqué",
+          "quantity": 240,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "sauge-fraiche",
+      "selected_ciqual_code": "11069",
+      "grams_per_normalized_unit": 0.5,
+      "review_status": "validated",
+      "rationale": "Sauge fraîche; environ 0,5 g par feuille moyenne.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r444",
+          "label": "sauge fraîche",
+          "quantity": 12,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {
+        "g": 1
+      }
+    },
+    {
+      "ingredient_id": "sesame-noir",
+      "selected_ciqual_code": "15010",
+      "source_dataset": "ciqual",
+      "selected_source_code": "15010",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "caution",
+      "rationale": "Sésame graine; proxy du sésame noir.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r443",
+          "label": "graines de sésame noir",
+          "quantity": 30,
+          "unit": "g",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 1,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "sumac-moulu",
+      "selected_ciqual_code": "11056",
+      "source_dataset": "ciqual",
+      "selected_source_code": "11056",
+      "grams_per_unit": {
+        "c_cafe": 2
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {
+        "sugars_g": {
+          "value": 0,
+          "note": "Sucres du proxy quatre-épices absents de Ciqual; valeur technique à 0, incidence très faible à la dose utilisée."
+        }
+      },
+      "review_status": "caution",
+      "rationale": "Quatre-épices Ciqual utilisé comme approximation documentée pour 2 g de sumac par cuillère à café.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r426",
+          "label": "sumac moulu",
+          "quantity": 1,
+          "unit": "c_cafe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r442",
+          "label": "sumac moulu",
+          "quantity": 1,
+          "unit": "c_cafe",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 2,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "the-vert-feuilles",
+      "selected_ciqual_code": "18066",
+      "source_dataset": "ciqual",
+      "selected_source_code": "18066",
+      "grams_per_unit": {
+        "g": 1
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {},
+      "review_status": "caution",
+      "rationale": "Eau Ciqual utilisée car les feuilles de thé infusées sont entièrement retirées avant consommation.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r443",
+          "label": "thé vert en feuilles",
+          "quantity": 2,
+          "unit": "g",
+          "note": "Infusion légère, feuilles retirées"
+        }
+      ],
+      "grams_per_normalized_unit": 1
+    },
+    {
+      "ingredient_id": "thym-frais",
+      "selected_ciqual_code": "11038",
+      "grams_per_normalized_unit": 0.25,
+      "review_status": "validated",
+      "rationale": "Thym séché utilisé pour disposer d'un profil complet; 0,25 g sec représente environ 0,8 g de feuilles fraîches par cuillère à café.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; facteurs de portions ménagères à confirmer au pesage lors des essais.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r436",
+          "label": "feuilles de thym",
+          "quantity": 1,
+          "unit": "c_cafe",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    },
+    {
+      "ingredient_id": "vinaigre-cidre",
+      "selected_ciqual_code": "11090",
+      "source_dataset": "ciqual",
+      "selected_source_code": "11090",
+      "grams_per_unit": {
+        "c_soupe": 15
+      },
+      "occurrence_overrides": {},
+      "nutrient_overrides": {
+        "energy_kcal": {
+          "value": 22.5,
+          "note": "Énergie absente de la fiche Ciqual du vinaigre de cidre; valeur du vinaigre générique Ciqual utilisée."
+        }
+      },
+      "review_status": "caution",
+      "rationale": "Vinaigre de cidre; 15 g par cuillère à soupe.",
+      "source_note": "Anses, Table Ciqual 2025; conversion ménagère éditoriale à confirmer au pesage.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r430",
+          "label": "vinaigre de cidre",
+          "quantity": 1.5,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r445",
+          "label": "vinaigre de cidre",
+          "quantity": 1,
+          "unit": "c_soupe",
+          "note": ""
+        },
+        {
+          "recipe_id": "r450",
+          "label": "vinaigre de cidre",
+          "quantity": 1,
+          "unit": "c_soupe",
+          "note": ""
+        }
+      ],
+      "grams_per_normalized_unit": 15,
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot."
+    },
+    {
+      "ingredient_id": "zaatar-sesame",
+      "selected_ciqual_code": "15010",
+      "grams_per_normalized_unit": 2.5,
+      "review_status": "caution",
+      "rationale": "Sésame utilisé comme approximation prudente d'un zaatar sans sel contenant du sésame; herbes et sumac ne sont pas représentés séparément.",
+      "source_note": "Anses, Table Ciqual 2025, version 2025-11-03; conversion ménagère relue éditorialement, à confirmer au pesage lors d'un essai physique.",
+      "batch_occurrences": [
+        {
+          "recipe_id": "r439",
+          "label": "zaatar au sésame",
+          "quantity": 2,
+          "unit": "c_cafe",
+          "note": ""
+        }
+      ],
+      "batch_review_note": "Correspondance réutilisée; vérifier les nouvelles unités et formes culinaires avant validation du lot.",
+      "grams_per_unit": {}
+    }
+  ]
+}
