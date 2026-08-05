@@ -10,6 +10,7 @@
     "validate:pilots": "node scripts/validate-pilot-batches.mjs",
     "validate:images": "node scripts/validate-recipe-images.mjs",
     "validate:images:present": "node scripts/validate-recipe-images.mjs --present-only",
+    "validate:image-prompts": "node scripts/validate-image-prompts.mjs",
     "update:image-manifest": "node scripts/update-recipe-image-manifest.mjs",
     "validate:final": "node scripts/validate-final-batches.mjs",
     "update:runtime-lock": "node scripts/update-mobile-runtime-lock.mjs",

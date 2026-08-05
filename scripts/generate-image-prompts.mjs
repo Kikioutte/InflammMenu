@@ -17,7 +17,7 @@ for (const recipeFile of recipeFiles) {
       id: recipe.id,
       title: recipe.titre,
       output_file: `public/assets/recipes/generated/${recipe.image.nom_fichier}`,
-      status: "waiting_recipe_validation",
+      status: "waiting_image_generation",
       prompt: [
         `Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « ${recipe.titre} ».`,
         `Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : ${visibleIngredients.join(", ")}.`,
