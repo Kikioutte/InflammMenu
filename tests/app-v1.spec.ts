@@ -125,7 +125,9 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
 
   await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
   await expect(page.getByText("1 résultat", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
+  const misoCard = page.getByRole("button", { name: /Soupe miso au wakame/ });
+  await expect(misoCard.locator("img")).toHaveAttribute("src", /soupe-miso-wakame-shiitake\.jpg$/);
+  await misoCard.click();
 
   await expect(page.getByRole("heading", { name: "Soupe miso au wakame, shiitakés et tofu" })).toBeVisible();
   await expect(page.getByText("Validée avec repères")).toBeVisible();

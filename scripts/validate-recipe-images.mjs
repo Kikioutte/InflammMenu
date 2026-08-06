@@ -5,15 +5,14 @@ const presentOnly = process.argv.includes("--present-only");
 const researchUrl = new URL("../research/", import.meta.url);
 const publicUrl = new URL("../public/assets/recipes/generated/", import.meta.url);
 const manifestUrl = new URL("../src/data/generated-recipe-images.json", import.meta.url);
+const catalogueUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
 const names = await readdir(researchUrl);
 
+const catalogue = JSON.parse(await readFile(catalogueUrl, "utf8"));
 const recipes = new Map();
-for (const name of names.filter((entry) => /^pilot-r\d{3}-r\d{3}\.final\.json$/.test(entry))) {
-  const catalogue = JSON.parse(await readFile(new URL(name, researchUrl), "utf8"));
-  for (const recipe of catalogue.recipes) {
-    assert.ok(!recipes.has(recipe.id), `${recipe.id}: recette finale dupliquée`);
-    recipes.set(recipe.id, recipe);
-  }
+for (const recipe of catalogue.recipes) {
+  assert.ok(!recipes.has(recipe.id), `${recipe.id}: recette du catalogue dupliquée`);
+  recipes.set(recipe.id, recipe);
 }
 
 const promptStatuses = new Map();
@@ -25,13 +24,17 @@ for (const name of names.filter((entry) => /^image-prompts-r\d{3}-r\d{3}\.json$/
   }
 }
 
-assert.equal(recipes.size, 500, "500 recettes finales sont requises");
-assert.equal(promptStatuses.size, 500, "500 prompts image sont requis");
+assert.equal(recipes.size, 550, "550 recettes du catalogue sont requises");
+assert.equal(promptStatuses.size, 550, "550 prompts image sont requis");
 
 const expectedByFilename = new Map(
   [...recipes.values()].map((recipe) => [recipe.image.nom_fichier, recipe]),
 );
-const imageNames = (await readdir(publicUrl)).filter((name) => /^r\d{3}-.+\.jpg$/.test(name));
+assert.equal(expectedByFilename.size, recipes.size, "Chaque recette doit référencer un fichier image unique");
+const jpegNames = (await readdir(publicUrl)).filter((name) => /\.jpg$/i.test(name));
+const orphanNames = jpegNames.filter((name) => !expectedByFilename.has(name));
+assert.deepEqual(orphanNames, [], "Le dossier généré contient des JPEG non référencés par le catalogue");
+const imageNames = jpegNames.filter((name) => expectedByFilename.has(name));
 const presentNames = new Set(imageNames);
 const manifestNames = JSON.parse(await readFile(manifestUrl, "utf8"));
 assert.deepEqual(manifestNames, [...imageNames].sort(), "Le manifeste des images disponibles doit être régénéré");

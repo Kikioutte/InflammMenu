@@ -160,27 +160,10 @@ function seasonsFor(recipe: CatalogueRecipe): readonly Season[] {
 }
 
 export function catalogueImageFor(recipe: CatalogueRecipe): string {
-  const numericId = Number.parseInt(recipe.id.slice(1), 10);
-  if (numericId >= 51 && recipe.image.nom_fichier) {
-    return GENERATED_RECIPE_IMAGES.has(recipe.image.nom_fichier)
-      ? `/assets/recipes/generated/${recipe.image.nom_fichier}`
-      : RECIPE_IMAGE_PLACEHOLDER;
-  }
-  const title = normalize(recipe.titre);
-  if (title.includes("crevette")) return "/assets/inflamm-hero-bowl.png";
-  if (title.includes("saumon")) return "/assets/recipes/saumon-brocoli-riz-complet.png";
-  if (title.includes("maquereau")) return "/assets/recipes/salade-maquereau-betterave-pomme-terre.png";
-  if (title.includes("sardine")) return "/assets/recipes/salade-sardines-pommes-terre-haricots.png";
-  if (title.includes("cabillaud") || title.includes("poisson")) return "/assets/recipes/cabillaud-tomate-olives.png";
-  if (title.includes("tofu")) return "/assets/recipes/bowl-tofu-brocoli-sesame.png";
-  if (title.includes("orge") || title.includes("champignon")) return "/assets/recipes/risotto-orge-champignons-epinards.png";
-  if (title.includes("lentille")) return "/assets/recipes/salade-lentilles-noix.png";
-  if (title.includes("quinoa")) return "/assets/recipes/bowl-quinoa-legumes-houmous.png";
-  if (title.includes("omelette")) return "/assets/recipes/omelette-legumes-quinoa.png";
-  if (title.includes("avoine") || title.includes("chia")) return "/assets/recipes/overnight-oats-myrtilles-noix.png";
-  if (title.includes("porridge")) return "/assets/recipes/porridge-millet-pomme.png";
-  if (title.includes("skyr") || title.includes("figue")) return "/assets/recipes/yaourt-pomme-amandes.png";
-  return "/assets/inflamm-hero-bowl.png";
+  const filename = recipe.image.nom_fichier;
+  return filename && GENERATED_RECIPE_IMAGES.has(filename)
+    ? `/assets/recipes/generated/${filename}`
+    : RECIPE_IMAGE_PLACEHOLDER;
 }
 
 function plannerIngredient(raw: CatalogueIngredient, portions: number): Ingredient {

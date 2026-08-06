@@ -9,7 +9,7 @@ const recipes = new Map(
   catalogue.recipes
     .filter(({ id }) => {
       const numericId = Number.parseInt(id.slice(1), 10);
-      return numericId >= 51 && numericId <= 550;
+      return numericId >= 1 && numericId <= 550;
     })
     .map((recipe) => [recipe.id, recipe]),
 );
@@ -17,8 +17,8 @@ const files = (await readdir(researchUrl))
   .filter((name) => /^image-prompts-r\d{3}-r\d{3}\.json$/.test(name))
   .sort();
 
-assert.equal(recipes.size, 500, "500 recettes cibles sont requises");
-assert.equal(files.length, 20, "20 lots de prompts image sont requis");
+assert.equal(recipes.size, 550, "550 recettes cibles sont requises");
+assert.equal(files.length, 22, "22 lots de prompts image sont requis");
 
 const ids = new Set();
 const outputs = new Set();
@@ -72,6 +72,6 @@ for (const file of files) {
   }
 }
 
-assert.equal(ids.size, 500, "500 prompts uniques sont requis");
-assert.equal(outputs.size, 500, "500 fichiers de sortie uniques sont requis");
-console.log("Prompts image valides : 500 recettes, titres et fichiers de sortie parfaitement alignés.");
+assert.equal(ids.size, 550, "550 prompts uniques sont requis");
+assert.equal(outputs.size, 550, "550 fichiers de sortie uniques sont requis");
+console.log("Prompts image valides : 550 recettes, titres et fichiers de sortie parfaitement alignés.");
