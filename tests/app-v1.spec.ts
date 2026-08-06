@@ -48,12 +48,13 @@ test("le profil est modifiable et conserve ses libellés accessibles", async ({ 
 
   const budget = page.getByLabel("Budget hebdomadaire (€)");
   const prepTime = page.getByLabel("Temps maximum en cuisine (min)");
-  const allergies = page.getByLabel("Allergies");
+  const allergies = page.getByLabel("Autre allergie ou ingrédient à exclure");
   const excluded = page.getByLabel("Aliments refusés");
 
   await expect(budget).toHaveValue("80");
   await expect(prepTime).toHaveValue("30");
-  await expect(allergies).toHaveAttribute("placeholder", "Ex. gluten, lait, soja");
+  await expect(page.getByRole("button", { name: "Gluten", exact: true })).toHaveAttribute("aria-pressed", "false");
+  await expect(allergies).toHaveAttribute("placeholder", "Sélectionnez ci-dessus ou saisissez un terme");
   await expect(excluded).toHaveAttribute("placeholder", "Ex. brocoli, saumon");
   await expect(page.getByRole("button", { name: "Retirer une personne" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Ajouter une personne" })).toBeVisible();
@@ -115,14 +116,14 @@ test("les favoris et l’historique restent accessibles depuis la navigation pri
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
-test("le catalogue expose uniquement les nouvelles recettes relues et leurs précautions", async ({ page }) => {
+test("le catalogue expose les recettes uniques relues et leurs précautions", async ({ page }) => {
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
 
-  await expect(page.getByText("44 nouvelles recettes")).toBeVisible();
-  await expect(page.getByText("44 résultats")).toBeVisible();
+  await expect(page.getByText("544 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByText("544 résultats")).toBeVisible();
 
-  await page.getByPlaceholder("Recette ou ingrédient").fill("miso");
+  await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
   await expect(page.getByText("1 résultat", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
 
