@@ -171,14 +171,14 @@
       "id": "r399",
       "title": "Seiche grillée, pois chiches au romarin et roquette",
       "output_file": "public/assets/recipes/generated/r399-seiche-pois-chiches-romarin-roquette.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Seiche grillée, pois chiches au romarin et roquette ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : seiche nettoyée, pois chiches cuits, romarin frais haché, roquette, citron, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     },
     {
       "id": "r400",
       "title": "Crevettes en feuille de laitue, riz noir et ananas rôti",
       "output_file": "public/assets/recipes/generated/r400-crevettes-laitue-riz-noir-ananas.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Crevettes en feuille de laitue, riz noir et ananas rôti ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : crevettes crues décortiquées, laitues romaines, riz noir, ananas frais, gingembre frais, huile de colza. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     }
   ]
