@@ -171,14 +171,14 @@
       "id": "r249",
       "title": "Pastèque compressée, tomates jaunes et tofu feta",
       "output_file": "public/assets/recipes/generated/r249-pasteque-compressee-tomates-jaunes-et-tofu-feta.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Pastèque compressée, tomates jaunes et tofu feta ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : pastèque, tomates jaunes, tofu ferme nature, olives noires, menthe fraîche, citron, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     },
     {
       "id": "r250",
       "title": "Coing rôti, endives et haricots blancs à la sauge",
       "output_file": "public/assets/recipes/generated/r250-coing-roti-endives-et-haricots-blancs-a-la-sauge.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Coing rôti, endives et haricots blancs à la sauge ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : coing, endives, haricots blancs cuits, feuilles de sauge fraîche, noix de pécan, vinaigre de cidre, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     }
   ]
