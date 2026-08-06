@@ -171,14 +171,14 @@
       "id": "r474",
       "title": "Carrés d'avoine salés aux épinards et noix",
       "output_file": "public/assets/recipes/generated/r474-carres-d-avoine-sales-aux-epinards-et-noix.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Carrés d'avoine salés aux épinards et noix ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : flocons d'avoine complets, épinards frais, noix, œufs, feuilles de thym frais, eau, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     },
     {
       "id": "r475",
       "title": "Brochettes de raisin, chèvre frais et pistache",
       "output_file": "public/assets/recipes/generated/r475-brochettes-de-raisin-chevre-frais-et-pistache.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Brochettes de raisin, chèvre frais et pistache ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : raisins blancs, fromage de chèvre frais, pistaches non salées, roquette. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     }
   ]
