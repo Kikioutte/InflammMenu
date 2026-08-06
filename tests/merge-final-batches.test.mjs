@@ -71,7 +71,7 @@ test("a preview output is a strict schema v2.1 catalogue with preserved historic
   assert.ok(
     merged.recipes.slice(0, 50).every((recipe) =>
       recipe.provenance &&
-      recipe.app.planner.active_minutes === recipe.temps.total &&
+      recipe.app.planner.active_minutes <= recipe.temps.preparation + recipe.temps.cuisson &&
       recipe.ingredients.every((ingredient) =>
         ingredient.id &&
         ingredient.quantite_normalisee !== undefined &&

@@ -185,7 +185,7 @@ export const IMPORTED_PLAN_RECIPES: readonly Recipe[] = CATALOGUE_RECIPES
     title: recipe.titre,
     mealTypes: recipe.app.planner.meal_types,
     diet: recipe.app.planner.diets,
-    prepMinutes: recipe.app.planner.active_minutes ?? recipe.temps.total,
+    prepMinutes: recipe.app.planner.active_minutes ?? (recipe.temps.preparation + recipe.temps.cuisson),
     costPerPortion: recipe.app.planner.cost_per_portion_eur,
     seasons: seasonsFor(recipe),
     equipment: recipe.app.planner.equipment,

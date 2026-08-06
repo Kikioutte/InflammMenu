@@ -74,10 +74,18 @@ test("schema v2.1 rejects active time beyond total recipe time", () => {
   assert.throws(() => validateCatalogue(fixture), /temps actif supérieur au temps total/);
 });
 
+test("schema v2.1 rejects passive rest counted as active cooking time", () => {
+  const fixture = v21Fixture();
+  fixture.recipes[0].temps.repos = 60;
+  fixture.recipes[0].temps.total = fixture.recipes[0].temps.preparation + fixture.recipes[0].temps.cuisson + 60;
+  fixture.recipes[0].app.planner.active_minutes = fixture.recipes[0].temps.preparation + fixture.recipes[0].temps.cuisson + 1;
+  assert.throws(() => validateCatalogue(fixture), /temps actif inclut du repos passif/);
+});
+
 test("the planner adapter prefers v2.1 canonical values with a v2 fallback", () => {
   assert.match(catalogueSource, /raw\.id \?\? `catalog-/);
   assert.match(catalogueSource, /ingredient\.quantite_normalisee !== undefined/);
-  assert.match(catalogueSource, /active_minutes \?\? recipe\.temps\.total/);
+  assert.match(catalogueSource, /active_minutes \?\? \(recipe\.temps\.preparation \+ recipe\.temps\.cuisson\)/);
 });
 
 test("demonstrably unrelated foods do not carry gluten or tree-nut allergens", () => {

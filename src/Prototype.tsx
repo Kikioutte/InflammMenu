@@ -168,6 +168,78 @@ function formatWeekRange(startsOn: string): string {
     : `${start.getDate()} ${startMonth} – ${end.getDate()} ${endMonth}`;
 }
 
+/**
+ * Format a duration for people rather than machines.
+ * Long catalogue durations can include soaking, chilling or fermentation;
+ * displaying them as raw minutes (e.g. 10 110 min) is difficult to scan.
+ */
+export function formatRecipeDuration(minutes: number): string {
+  const value = Math.max(0, Math.round(minutes));
+  if (value < 60) return `${value} min`;
+
+  const days = Math.floor(value / 1_440);
+  const remainderAfterDays = value % 1_440;
+  const hours = Math.floor(remainderAfterDays / 60);
+  const remainderMinutes = remainderAfterDays % 60;
+
+  if (days > 0) {
+    return `${days} j${hours ? ` ${hours} h` : ""}${remainderMinutes ? ` ${remainderMinutes} min` : ""}`;
+  }
+  return `${hours} h${remainderMinutes ? ` ${remainderMinutes} min` : ""}`;
+}
+
+export type CataloguePassiveDurationLabel = "Fermentation" | "Infusion" | "Marinade" | "Repos";
+
+function positiveDuration(value: number | null | undefined): number | null {
+  return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : null;
+}
+
+/** Selects the most useful name for a catalogue recipe's passive time. */
+export function cataloguePassiveDurationLabel(recipe: CatalogueRecipe): CataloguePassiveDurationLabel {
+  const context = normalizeText(`${recipe.titre} ${recipe.tags.join(" ")} ${recipe.etapes.join(" ")}`);
+  if (context.includes("ferment")) return "Fermentation";
+  if (context.includes("infus")) return "Infusion";
+  if (context.includes("marin")) return "Marinade";
+  return "Repos";
+}
+
+function cataloguePreparationMinutes(recipe: CatalogueRecipe): number | null {
+  return positiveDuration(recipe.temps.preparation) ?? positiveDuration(recipe.app.planner.active_minutes);
+}
+
+export function formatCatalogueCardDuration(recipe: CatalogueRecipe): string {
+  const preparation = cataloguePreparationMinutes(recipe);
+  const cooking = positiveDuration(recipe.temps.cuisson);
+  const passive = positiveDuration(recipe.temps.repos);
+  const total = positiveDuration(recipe.temps.total);
+  const parts: string[] = [];
+
+  if (preparation) parts.push(`${formatRecipeDuration(preparation)} de préparation`);
+  else if (cooking) parts.push(`${formatRecipeDuration(cooking)} de cuisson`);
+
+  if (passive) {
+    const label = cataloguePassiveDurationLabel(recipe).toLocaleLowerCase("fr-FR");
+    const preposition = label === "infusion" ? "d’" : "de ";
+    parts.push(`${formatRecipeDuration(passive)} ${preposition}${label}`);
+  }
+
+  return parts.join(" · ") || (total ? `${formatRecipeDuration(total)} au total` : "Durée non renseignée");
+}
+
+export function catalogueDurationItems(recipe: CatalogueRecipe): Array<{ label: string; minutes: number }> {
+  const items: Array<{ label: string; minutes: number }> = [];
+  const preparation = cataloguePreparationMinutes(recipe);
+  const cooking = positiveDuration(recipe.temps.cuisson);
+  const passive = positiveDuration(recipe.temps.repos);
+  const total = positiveDuration(recipe.temps.total);
+
+  if (preparation) items.push({ label: "Préparation", minutes: preparation });
+  if (cooking) items.push({ label: "Cuisson", minutes: cooking });
+  if (passive) items.push({ label: cataloguePassiveDurationLabel(recipe), minutes: passive });
+  if (total) items.push({ label: "Total", minutes: total });
+  return items;
+}
+
 function currentDayIndex(startsOn: string): number {
   const start = dateAt(startsOn, 0).getTime();
   const today = new Date();
@@ -304,7 +376,7 @@ function WeekView({ plan, onOpenMeal, onReplace }: { plan: WeeklyPlan | null; on
   return (
     <main className="page-content week-page" data-testid="week-view">
       <div className="page-heading"><span className="eyebrow">{formatWeekRange(plan.startsOn)}</span><h1>Ma semaine</h1><p>Des repas variés, construits par des règles transparentes.</p></div>
-      <div className="week-summary"><div><strong>{summary.mealCount}</strong><span>repas</span></div><div><strong>{summary.estimatedCost.toFixed(0)} €</strong><span>estimés</span></div><div><strong>{summary.averagePrepMinutes.toFixed(0)} min</strong><span>en moyenne</span></div></div>
+      <div className="week-summary"><div><strong>{summary.mealCount}</strong><span>repas</span></div><div><strong>{summary.estimatedCost.toFixed(0)} €</strong><span>estimés</span></div><div><strong>{summary.averagePrepMinutes.toFixed(0)} min</strong><span>actives en moyenne</span></div></div>
       {!summary.withinBudget ? <p className="notice-banner">Budget estimé dépassé : les autres critères ont été conservés.</p> : null}
       <Carousel ariaLabel="Choisir un jour" className="day-carousel" contentClassName="day-carousel__track">
         {DAY_LABELS.map((day, index) => <button key={day} type="button" className={`day-card ${selectedDay === index ? "is-selected" : ""}`} onClick={() => setSelectedDay(index)}><span>{day}</span><strong>{dateAt(plan.startsOn, index).getDate()}</strong></button>)}
@@ -313,7 +385,7 @@ function WeekView({ plan, onOpenMeal, onReplace }: { plan: WeeklyPlan | null; on
         <div className="section-heading"><div><span className="eyebrow">Jour {selectedDay + 1}</span><h2>{selectedDate.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</h2></div><CheckCircledIcon /></div>
         {visibleMeals.map((planned) => { const recipe = recipeById.get(planned.recipeId); if (!recipe) return null; return (
           <article className="meal-card" key={planned.id}>
-            <button type="button" className="meal-card__main" onClick={() => onOpenMeal(planned, recipe)}><img src={recipe.image} alt="" onError={handleRecipeImageError} /><span><small>{MEAL_LABELS[planned.mealType]}</small><strong>{recipe.title}</strong><em><ClockIcon /> {recipe.prepMinutes} min · {planned.portions} portions</em></span></button>
+            <button type="button" className="meal-card__main" onClick={() => onOpenMeal(planned, recipe)}><img src={recipe.image} alt="" onError={handleRecipeImageError} /><span><small>{MEAL_LABELS[planned.mealType]}</small><strong>{recipe.title}</strong><em><ClockIcon /> {formatRecipeDuration(recipe.prepMinutes)} actives · {planned.portions} portions</em></span></button>
             <button className="meal-card__replace" type="button" onClick={() => onReplace(planned, recipe)}><ReloadIcon /> Remplacer</button>
           </article>
         ); })}
@@ -370,12 +442,12 @@ function FavoritesView({ favoriteIds, history, onOpenRecipe, onOpenCatalogue }: 
     <main className="page-content favorites-page" data-testid="favorites-view">
       <div className="page-heading"><span className="eyebrow">Ma bibliothèque</span><h1>Recettes</h1><p>Un catalogue culinaire relu recette par recette, en complément de vos favoris.</p></div>
       <div className="segmented-control segmented-control--three" role="tablist" aria-label="Catalogue, favoris et historique"><button role="tab" aria-selected={mode === "favorites"} className={mode === "favorites" ? "is-selected" : ""} onClick={() => setMode("favorites")}>Favoris</button><button role="tab" aria-selected={mode === "catalogue"} className={mode === "catalogue" ? "is-selected" : ""} onClick={() => setMode("catalogue")}>Catalogue</button><button role="tab" aria-selected={mode === "history"} className={mode === "history" ? "is-selected" : ""} onClick={() => setMode("history")}>Historique</button></div>
-      {mode === "favorites" ? <div className="favorite-list">{favoriteRecipes.length ? favoriteRecipes.map((recipe) => <button type="button" className="favorite-card" key={recipe.id} onClick={() => onOpenRecipe(recipe)}><img src={recipe.image} alt="" onError={handleRecipeImageError} /><span><small>{recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</small><strong>{recipe.title}</strong><em>{recipe.prepMinutes} min · {recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</em></span><HeartFilledIcon /></button>) : <div className="empty-day"><HeartIcon /><h3>Aucun favori</h3><p>Ajoutez une recette depuis sa fiche pour la retrouver ici.</p></div>}</div> : mode === "catalogue" ? <section className="catalogue-browser" aria-label="Catalogue vérifié">
+      {mode === "favorites" ? <div className="favorite-list">{favoriteRecipes.length ? favoriteRecipes.map((recipe) => <button type="button" className="favorite-card" key={recipe.id} onClick={() => onOpenRecipe(recipe)}><img src={recipe.image} alt="" onError={handleRecipeImageError} /><span><small>{recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</small><strong>{recipe.title}</strong><em>{formatRecipeDuration(recipe.prepMinutes)} actives · {recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</em></span><HeartFilledIcon /></button>) : <div className="empty-day"><HeartIcon /><h3>Aucun favori</h3><p>Ajoutez une recette depuis sa fiche pour la retrouver ici.</p></div>}</div> : mode === "catalogue" ? <section className="catalogue-browser" aria-label="Catalogue vérifié">
         <div className="catalogue-method"><strong>{CATALOGUE_RECIPES.length} recettes uniques disponibles</strong><p>Les {CATALOGUE.recipes.length} recettes ont été relues : {Object.keys(DUPLICATE_CATALOGUE_RECIPES).length} variantes trop proches ont été écartées du catalogue affiché.</p></div>
         <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher une recette</span><KeyboardInput value={query} placeholder="Recette ou ingrédient" onChange={(event) => setQuery(event.target.value)} /></label>
         <Carousel ariaLabel="Filtrer les catégories" className="catalogue-filters" contentClassName="catalogue-filters__track"><button className={category === "all" ? "is-selected" : ""} onClick={() => setCategory("all")}>Toutes</button>{CATALOGUE_CATEGORIES.map((item) => <button key={item.id} className={category === item.id ? "is-selected" : ""} onClick={() => setCategory(item.id)}>{item.nom}</button>)}</Carousel>
         <p className="catalogue-count">{catalogueRecipes.length} résultat{catalogueRecipes.length > 1 ? "s" : ""}</p>
-        <div className="catalogue-list">{catalogueRecipes.map((recipe) => { const review = reviewFor(recipe); return <button type="button" className="catalogue-card" key={recipe.id} onClick={() => onOpenCatalogue(recipe)}><img className="catalogue-card__image" src={catalogueImageFor(recipe)} alt="" loading="lazy" decoding="async" onError={handleRecipeImageError} /><span className={`catalogue-card__status is-${review.status}`}>{review.status === "validated" ? "Profil cohérent" : "Avec repères"}</span><small>{catalogueCategoryName(recipe.categorie)} · {recipe.temps.total} min</small><strong>{recipe.titre}</strong><p>{review.summary}</p><span className="catalogue-card__meta">{recipe.regimes.slice(0, 2).map((item) => item.replaceAll("-", " ")).join(" · ")}<ChevronRightIcon /></span></button>; })}</div>
+        <div className="catalogue-list">{catalogueRecipes.map((recipe) => { const review = reviewFor(recipe); return <button type="button" className="catalogue-card" key={recipe.id} onClick={() => onOpenCatalogue(recipe)}><img className="catalogue-card__image" src={catalogueImageFor(recipe)} alt="" loading="lazy" decoding="async" onError={handleRecipeImageError} /><span className={`catalogue-card__status is-${review.status}`}>{review.status === "validated" ? "Profil cohérent" : "Avec repères"}</span><small>{catalogueCategoryName(recipe.categorie)} · {formatCatalogueCardDuration(recipe)}</small><strong>{recipe.titre}</strong><p>{review.summary}</p><span className="catalogue-card__meta">{recipe.regimes.slice(0, 2).map((item) => item.replaceAll("-", " ")).join(" · ")}<ChevronRightIcon /></span></button>; })}</div>
       </section> : <div className="history-list">{history.length ? history.map((plan) => <article className="history-card" key={plan.id}><span><small>Générée le {new Date(plan.generatedAt).toLocaleDateString("fr-FR")}</small><strong>{formatWeekRange(plan.startsOn)}</strong></span><em>{plan.meals.length} repas · {plan.estimatedCost.toFixed(0)} € estimés</em></article>) : <div className="empty-day"><ArchiveIcon /><h3>Aucun historique</h3><p>Vos anciennes semaines seront conservées sur cet appareil.</p></div>}</div>}
     </main>
   );
@@ -412,7 +484,7 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
     </section>
     <section className="form-section"><h2>Mes préférences</h2><div className="choice-grid">{(Object.keys(DIET_LABELS) as DietMode[]).map((item) => <button type="button" className={profile.diet === item ? "is-selected" : ""} key={item} onClick={() => setProfile((current) => ({ ...current, diet: item }))}>{DIET_LABELS[item]}</button>)}</div>
       <label className="text-field"><span>Budget hebdomadaire (€)</span><KeyboardInput inputMode="numeric" value={budget} onChange={(event) => setBudget(event.target.value)} onBlur={keyboard.hide} /></label>
-      <label className="text-field"><span>Temps maximum en cuisine (min)</span><KeyboardInput inputMode="numeric" value={maxPrep} onChange={(event) => setMaxPrep(event.target.value)} onBlur={keyboard.hide} /></label>
+      <label className="text-field"><span>Temps actif maximum en cuisine (min)</span><KeyboardInput inputMode="numeric" value={maxPrep} onChange={(event) => setMaxPrep(event.target.value)} onBlur={keyboard.hide} /></label>
       <fieldset className="allergen-field"><legend>Allergies et intolérances à exclure</legend><div className="allergen-grid">{ALLERGEN_OPTIONS.map((item) => <button type="button" className={selectedAllergies.has(item.id) ? "is-selected" : ""} aria-pressed={selectedAllergies.has(item.id)} key={item.id} onClick={() => toggleAllergy(item.id)}>{selectedAllergies.has(item.id) ? <CheckIcon /> : null}{item.label}</button>)}</div></fieldset>
       <label className="text-field"><span>Autre allergie ou ingrédient à exclure</span><KeyboardInput value={allergies} placeholder="Sélectionnez ci-dessus ou saisissez un terme" onChange={(event) => setAllergies(event.target.value)} onBlur={keyboard.hide} /><small>Les 14 allergènes réglementaires sont normalisés automatiquement.</small></label>
       <label className="text-field"><span>Aliments refusés</span><KeyboardInput value={excluded} placeholder="Ex. brocoli, saumon" onChange={(event) => setExcluded(event.target.value)} onBlur={keyboard.hide} /></label>
@@ -462,7 +534,7 @@ function GenerateView({ profile, onCreate, onComplete }: { profile: UserProfile;
     }, 650);
   };
   return <MobileScroll className="app-screen"><main className="page-content pushed-page generate-page"><div className="generate-mark"><CalendarIcon /></div>
-    {phase === "ready" ? <><div className="page-heading page-heading--center"><span className="eyebrow">Votre prochaine semaine</span><h1>Prête en quelques secondes</h1><p>Le moteur vérifie vos préférences, la variété, le budget et la saison.</p></div><section className="generation-summary"><div><PersonIcon /><span><small>Pour</small><strong>{profile.people} personne{profile.people > 1 ? "s" : ""}</strong></span></div><div><ClockIcon /><span><small>Préparation</small><strong>{profile.maxPrepMinutes} min max.</strong></span></div><div><ArchiveIcon /><span><small>Budget</small><strong>{profile.weeklyBudget} € max.</strong></span></div></section><div className="rule-list"><p><CheckIcon /> {profile.mealsPerDay} repas par jour</p><p><CheckIcon /> Au moins 2 repas avec légumineuses</p>{profile.diet === "classic" ? <p><CheckIcon /> Au moins 2 repas avec poisson</p> : null}<p><CheckIcon /> Priorité à la saison et au réemploi</p></div><p className="privacy-note">Génération locale, sans compte. Vos données restent sur cet appareil.</p><button className="primary-button full-button" onClick={start}>Créer ma semaine</button></> : phase === "loading" ? <div className="generation-state" aria-live="polite"><ReloadIcon className="spin" /><h1>Nous composons votre semaine</h1><p>Budget, variété, saison et temps de cuisine sont vérifiés.</p><div className="loading-line"><span /></div></div> : phase === "success" && result ? <div className="generation-state success-state" aria-live="polite"><CheckCircledIcon /><h1>Votre semaine est prête</h1><p>{result.meals.length} repas uniques pour {profile.people} personne{profile.people > 1 ? "s" : ""}, estimés à {result.estimatedCost.toFixed(0)} €.</p><button className="primary-button full-button" onClick={onComplete}>Voir ma semaine</button></div> : <div className="generation-state error-state" role="alert"><Cross2Icon /><h1>Vos critères sont trop serrés</h1><p>{message}</p><button className="secondary-button full-button" onClick={() => setPhase("ready")}>Modifier et réessayer</button></div>}
+    {phase === "ready" ? <><div className="page-heading page-heading--center"><span className="eyebrow">Votre prochaine semaine</span><h1>Prête en quelques secondes</h1><p>Le moteur vérifie vos préférences, la variété, le budget et la saison.</p></div><section className="generation-summary"><div><PersonIcon /><span><small>Pour</small><strong>{profile.people} personne{profile.people > 1 ? "s" : ""}</strong></span></div><div><ClockIcon /><span><small>Temps actif</small><strong>{profile.maxPrepMinutes} min max.</strong></span></div><div><ArchiveIcon /><span><small>Budget</small><strong>{profile.weeklyBudget} € max.</strong></span></div></section><div className="rule-list"><p><CheckIcon /> {profile.mealsPerDay} repas par jour</p><p><CheckIcon /> Au moins 2 repas avec légumineuses</p>{profile.diet === "classic" ? <p><CheckIcon /> Au moins 2 repas avec poisson</p> : null}<p><CheckIcon /> Priorité à la saison et au réemploi</p></div><p className="privacy-note">Génération locale, sans compte. Vos données restent sur cet appareil.</p><button className="primary-button full-button" onClick={start}>Créer ma semaine</button></> : phase === "loading" ? <div className="generation-state" aria-live="polite"><ReloadIcon className="spin" /><h1>Nous composons votre semaine</h1><p>Budget, variété, saison et temps actif sont vérifiés.</p><div className="loading-line"><span /></div></div> : phase === "success" && result ? <div className="generation-state success-state" aria-live="polite"><CheckCircledIcon /><h1>Votre semaine est prête</h1><p>{result.meals.length} repas uniques pour {profile.people} personne{profile.people > 1 ? "s" : ""}, estimés à {result.estimatedCost.toFixed(0)} €.</p><button className="primary-button full-button" onClick={onComplete}>Voir ma semaine</button></div> : <div className="generation-state error-state" role="alert"><Cross2Icon /><h1>Vos critères sont trop serrés</h1><p>{message}</p><button className="secondary-button full-button" onClick={() => setPhase("ready")}>Modifier et réessayer</button></div>}
   </main></MobileScroll>;
 }
 
@@ -472,8 +544,9 @@ function RecipeView({ recipe, planned, favorite, onFavorite, onReplace }: { reci
   const ingredients = scaleIngredients(recipe, portions);
   const catalogueRecipe = recipe.id.startsWith("catalog-") ? CATALOGUE_RECIPES.find((item) => item.id === recipe.id.slice("catalog-".length)) : undefined;
   const catalogueReview = catalogueRecipe ? reviewFor(catalogueRecipe) : undefined;
+  const durationItems = catalogueRecipe ? catalogueDurationItems(catalogueRecipe) : [];
   const toggle = () => { setIsFavorite((value) => !value); onFavorite(); };
-  return <MobileScroll className="app-screen"><main className="recipe-page pushed-page"><img className="recipe-hero" src={recipe.image} alt={recipe.title} onError={handleRecipeImageError} /><div className="recipe-content"><span className="eyebrow">{planned ? MEAL_LABELS[planned.mealType] : recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</span><h1>{recipe.title}</h1><div className="recipe-meta"><span><ClockIcon /> {recipe.prepMinutes} min</span><span><PersonIcon /> {portions} portions</span><span>{recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</span></div><p className="recipe-intro">{recipe.description}</p><div className={`recipe-actions ${onReplace ? "" : "recipe-actions--single"}`}>{onReplace ? <button className="secondary-button" onClick={onReplace}><ReloadIcon /> Remplacer</button> : null}<button className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} onClick={toggle}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter"}</button></div>
+  return <MobileScroll className="app-screen"><main className="recipe-page pushed-page"><img className="recipe-hero" src={recipe.image} alt={recipe.title} onError={handleRecipeImageError} /><div className="recipe-content"><span className="eyebrow">{planned ? MEAL_LABELS[planned.mealType] : recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</span><h1>{recipe.title}</h1><div className="recipe-meta"><span><ClockIcon /> {formatRecipeDuration(recipe.prepMinutes)} actives</span><span><PersonIcon /> {portions} portions</span><span>{recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</span></div><p className="recipe-intro">{recipe.description}</p>{durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}<div className={`recipe-actions ${onReplace ? "" : "recipe-actions--single"}`}>{onReplace ? <button className="secondary-button" onClick={onReplace}><ReloadIcon /> Remplacer</button> : null}<button className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} onClick={toggle}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter"}</button></div>
     <AllergenNotice allergens={recipe.allergens} />
     {catalogueReview?.caution ? <aside className="catalogue-caution"><strong>Repère important</strong><p>{catalogueReview.caution}</p></aside> : null}
     <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" onClick={() => setPortions((value) => Math.max(1, value - 1))}><MinusIcon /></button><b>{portions}</b><button type="button" onClick={() => setPortions((value) => Math.min(8, value + 1))}><PlusIcon /></button></div></div><ul className="ingredient-list">{ingredients.map((item) => <li key={`${item.id}-${item.unit}`}><CheckCircledIcon /><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}</span></li>)}</ul></section>
@@ -486,10 +559,12 @@ function CatalogueRecipeView({ recipe }: { recipe: CatalogueRecipe }) {
   const [portions, setPortions] = useState(recipe.portions);
   const review = reviewFor(recipe);
   const ratio = portions / Math.max(1, recipe.portions);
+  const durationItems = catalogueDurationItems(recipe);
   return <MobileScroll className="app-screen"><main className="catalogue-detail pushed-page">
-    <div className="catalogue-detail__hero"><img src={catalogueImageFor(recipe)} alt={recipe.image.alt || recipe.titre} onError={handleRecipeImageError} /><div className="catalogue-detail__hero-copy"><span>{catalogueCategoryName(recipe.categorie)}</span><h1>{recipe.titre}</h1><small>{recipe.temps.total} min · {recipe.difficulte} · {recipe.cout}</small></div></div>
+    <div className="catalogue-detail__hero"><img src={catalogueImageFor(recipe)} alt={recipe.image.alt || recipe.titre} onError={handleRecipeImageError} /><div className="catalogue-detail__hero-copy"><span>{catalogueCategoryName(recipe.categorie)}</span><h1>{recipe.titre}</h1><small>{formatRecipeDuration(recipe.temps.total)} au total · {recipe.difficulte} · {recipe.cout}</small></div></div>
     <div className="recipe-content">
       <div className={`catalogue-verdict is-${review.status}`}><span>{review.status === "validated" ? "Profil cohérent" : "Validée avec repères"}</span><p>{review.summary}</p></div>
+      {durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}
       {review.caution ? <aside className="catalogue-caution"><strong>À savoir</strong><p>{review.caution}</p></aside> : null}
       <AllergenNotice allergens={recipe.app.planner.allergens} />
       <p className="catalogue-disclaimer">Cette appréciation concerne la composition globale de la recette. Elle ne prouve pas qu'un ingrédient isolé prévient ou traite une inflammation.</p>
@@ -511,7 +586,7 @@ function ReplaceView({ plan, current, profile, onConfirm }: { plan: WeeklyPlan; 
   useEffect(() => { setSelectedId(candidates[0]?.id ?? null); }, [reason]);
   const selected = candidates.find((recipe) => recipe.id === selectedId);
   const currentRecipe = recipeById.get(current.recipeId);
-  return <MobileScroll className="app-screen"><main className="page-content pushed-page replace-page"><div className="page-heading"><span className="eyebrow">À la place de</span><h1>{currentRecipe?.title}</h1><p>Les allergies, le régime et le temps maximum restent strictement respectés.</p></div><Carousel ariaLabel="Motif du remplacement" className="reason-carousel" contentClassName="reason-carousel__track">{["Plus rapide", "Moins cher", "Végétarien", "Autres ingrédients"].map((item) => <button className={`reason-chip ${reason === item ? "is-selected" : ""}`} key={item} onClick={() => setReason(item)}>{item}</button>)}</Carousel><div className="replacement-list">{candidates.map((recipe) => <button key={recipe.id} className={`replacement-card ${selectedId === recipe.id ? "is-selected" : ""}`} onClick={() => setSelectedId(recipe.id)}><img src={recipe.image} alt="" onError={handleRecipeImageError} /><span><small>{recipe.prepMinutes} min · {recipe.costPerPortion.toFixed(2).replace(".", ",")} €/portion</small><strong>{recipe.title}</strong><em>{recipe.description}</em></span><i>{selectedId === recipe.id ? <CheckIcon /> : null}</i></button>)}</div>{selected ? <button className="primary-button full-button" onClick={() => onConfirm(selected)}>Choisir ce repas</button> : <p className="notice-banner">Aucune alternative compatible avec ces critères.</p>}</main></MobileScroll>;
+  return <MobileScroll className="app-screen"><main className="page-content pushed-page replace-page"><div className="page-heading"><span className="eyebrow">À la place de</span><h1>{currentRecipe?.title}</h1><p>Les allergies, le régime et le temps actif maximum restent strictement respectés.</p></div><Carousel ariaLabel="Motif du remplacement" className="reason-carousel" contentClassName="reason-carousel__track">{["Plus rapide", "Moins cher", "Végétarien", "Autres ingrédients"].map((item) => <button className={`reason-chip ${reason === item ? "is-selected" : ""}`} key={item} onClick={() => setReason(item)}>{item}</button>)}</Carousel><div className="replacement-list">{candidates.map((recipe) => <button key={recipe.id} className={`replacement-card ${selectedId === recipe.id ? "is-selected" : ""}`} onClick={() => setSelectedId(recipe.id)}><img src={recipe.image} alt="" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {recipe.costPerPortion.toFixed(2).replace(".", ",")} €/portion</small><strong>{recipe.title}</strong><em>{recipe.description}</em></span><i>{selectedId === recipe.id ? <CheckIcon /> : null}</i></button>)}</div>{selected ? <button className="primary-button full-button" onClick={() => onConfirm(selected)}>Choisir ce repas</button> : <p className="notice-banner">Aucune alternative compatible avec ces critères.</p>}</main></MobileScroll>;
 }
 
 function AppShell({ flow }: { flow: FlowControls }) {

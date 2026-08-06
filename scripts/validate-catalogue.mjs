@@ -123,6 +123,10 @@ export function validateCatalogue(catalogue) {
     if (planner.active_minutes !== undefined) {
       assert(Number.isInteger(planner.active_minutes) && planner.active_minutes >= 0, `${label}: temps actif invalide`);
       assert(planner.active_minutes <= recipe.temps.total, `${label}: temps actif supérieur au temps total`);
+      assert(
+        planner.active_minutes <= recipe.temps.preparation + recipe.temps.cuisson,
+        `${label}: le temps actif inclut du repos passif`,
+      );
     }
     if (recipe.app.duplicate_of) assert(planner.eligible === false, `${label}: un doublon ne peut pas alimenter le planificateur`);
 

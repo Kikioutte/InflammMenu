@@ -47,7 +47,7 @@ test("le profil est modifiable et conserve ses libellés accessibles", async ({ 
   await expect(page.getByRole("button", { name: "Retour" })).toBeVisible();
 
   const budget = page.getByLabel("Budget hebdomadaire (€)");
-  const prepTime = page.getByLabel("Temps maximum en cuisine (min)");
+  const prepTime = page.getByLabel("Temps actif maximum en cuisine (min)");
   const allergies = page.getByLabel("Autre allergie ou ingrédient à exclure");
   const excluded = page.getByLabel("Aliments refusés");
 
@@ -99,7 +99,7 @@ test("la semaine permet d’ouvrir une recette et le remplacement d’un repas",
   await page.getByTestId("flow-current").getByRole("button", { name: "Remplacer" }).click();
 
   await expect(page.locator(".replace-page h1")).toBeVisible();
-  await expect(page.getByText(/Les allergies, le régime et le temps maximum/)).toBeVisible();
+  await expect(page.getByText(/Les allergies, le régime et le temps actif maximum/)).toBeVisible();
   await expect(page.getByRole("button", { name: "Choisir ce repas" })).toBeVisible();
 });
 
@@ -133,5 +133,33 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
   await expect(page.getByText("Validée avec repères")).toBeVisible();
   await expect(page.getByText(/sodium et d'iode/)).toBeVisible();
   await expect(page.getByText(/ne garantit pas un bénéfice clinique individuel/)).toBeVisible();
+  await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
+});
+
+test("les temps passifs sont séparés du temps de préparation", async ({ page }) => {
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("tab", { name: "Catalogue" }).click();
+
+  const search = page.getByPlaceholder("Recette ou ingrédient");
+  await search.fill("Infusion glacée thé vert");
+  const infusionCard = page.getByRole("button", { name: /Infusion glacée thé vert, menthe et citron/ });
+  await expect(infusionCard).toContainText("5 min de préparation · 8 h d’infusion");
+  await infusionCard.click();
+
+  const infusionDurations = page.getByRole("region", { name: "Durées de la recette" });
+  await expect(infusionDurations).toContainText("Préparation5 min");
+  await expect(infusionDurations).toContainText("Infusion8 h");
+  await expect(infusionDurations).toContainText("Total8 h 5 min");
+
+  await page.getByRole("button", { name: "Retour" }).click();
+  await search.fill("Chou rouge lacto-fermenté");
+  const fermentedCard = page.getByRole("button", { name: /Chou rouge lacto-fermenté au gingembre/ });
+  await expect(fermentedCard).toContainText("30 min de préparation · 7 j de fermentation");
+  await fermentedCard.click();
+
+  const fermentedDurations = page.getByRole("region", { name: "Durées de la recette" });
+  await expect(fermentedDurations).toContainText("Préparation30 min");
+  await expect(fermentedDurations).toContainText("Fermentation7 j");
+  await expect(fermentedDurations).toContainText("Total7 j 30 min");
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });

@@ -672,7 +672,7 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 250
+          "active_minutes": 10
         }
       },
       "provenance": {
@@ -1373,7 +1373,7 @@
           "cost_per_portion_eur": 2.1,
           "equipment": [],
           "allergens": [],
-          "active_minutes": 485
+          "active_minutes": 5
         }
       },
       "provenance": {
@@ -2900,7 +2900,7 @@
             "moutarde",
             "fruits-a-coque"
           ],
-          "active_minutes": 30
+          "active_minutes": 20
         }
       },
       "provenance": {
@@ -4113,7 +4113,7 @@
             "oven"
           ],
           "allergens": [],
-          "active_minutes": 115
+          "active_minutes": 100
         }
       },
       "provenance": {
@@ -5102,7 +5102,7 @@
             "soja",
             "sesame"
           ],
-          "active_minutes": 62
+          "active_minutes": 32
         }
       },
       "provenance": {
@@ -5393,7 +5393,7 @@
           "allergens": [
             "poisson"
           ],
-          "active_minutes": 36
+          "active_minutes": 33
         }
       },
       "provenance": {
@@ -5710,7 +5710,7 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 65
+          "active_minutes": 60
         }
       },
       "provenance": {
@@ -5738,8 +5738,8 @@
       "temps": {
         "preparation": 15,
         "cuisson": 45,
-        "repos": 0,
-        "total": 60
+        "repos": 5,
+        "total": 65
       },
       "portions": 4,
       "difficulte": "facile",
@@ -6273,7 +6273,7 @@
             "moutarde",
             "fruits-a-coque"
           ],
-          "active_minutes": 72
+          "active_minutes": 32
         }
       },
       "provenance": {
@@ -6773,7 +6773,7 @@
           "cost_per_portion_eur": 2.1,
           "equipment": [],
           "allergens": [],
-          "active_minutes": 10110
+          "active_minutes": 30
         }
       },
       "provenance": {
@@ -7332,7 +7332,7 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 45
+          "active_minutes": 15
         }
       },
       "provenance": {
@@ -7871,7 +7871,7 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 135
+          "active_minutes": 15
         }
       },
       "provenance": {
@@ -8429,7 +8429,7 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 55
+          "active_minutes": 45
         }
       },
       "provenance": {
@@ -9198,7 +9198,7 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 35
+          "active_minutes": 15
         }
       },
       "provenance": {
@@ -10085,7 +10085,7 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 85
+          "active_minutes": 55
         }
       },
       "provenance": {
@@ -10677,7 +10677,7 @@
             "blender"
           ],
           "allergens": [],
-          "active_minutes": 140
+          "active_minutes": 20
         }
       },
       "provenance": {
@@ -10975,7 +10975,7 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 70
+          "active_minutes": 40
         }
       },
       "provenance": {
@@ -12895,7 +12895,7 @@
             "fruits-a-coque",
             "lait"
           ],
-          "active_minutes": 27
+          "active_minutes": 12
         }
       },
       "provenance": {
@@ -73250,8 +73250,8 @@
       "temps": {
         "preparation": 22,
         "cuisson": 8,
-        "repos": 15,
-        "total": 45
+        "repos": 240,
+        "total": 270
       },
       "portions": 4,
       "difficulte": "facile",

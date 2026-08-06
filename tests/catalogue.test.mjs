@@ -81,6 +81,20 @@ test("planner metadata is explicit and no longer inferred from recipe prose", ()
   assert.match(catalogueSource, /recipe\.app\.planner\.eligible/);
 });
 
+test("passive infusion and fermentation are excluded from active kitchen time", () => {
+  const infusion = catalogue.recipes.find((recipe) => recipe.id === "r005");
+  const fermentation = catalogue.recipes.find((recipe) => recipe.id === "r023");
+
+  assert.deepEqual(
+    { active: infusion?.app.planner.active_minutes, rest: infusion?.temps.repos, total: infusion?.temps.total },
+    { active: 5, rest: 480, total: 485 },
+  );
+  assert.deepEqual(
+    { active: fermentation?.app.planner.active_minutes, rest: fermentation?.temps.repos, total: fermentation?.temps.total },
+    { active: 30, rest: 10_080, total: 10_110 },
+  );
+});
+
 test("unverified mechanism claims are not rendered as clinical effects", () => {
   assert.doesNotMatch(prototypeSource, /item\.action/);
   assert.match(prototypeSource, /ne garantit pas un bénéfice clinique individuel/);

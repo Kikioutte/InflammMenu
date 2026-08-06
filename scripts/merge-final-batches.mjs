@@ -102,7 +102,7 @@ function upgradeHistoricalRecipe(recipe, licence) {
       facultatif: false,
     };
   });
-  upgraded.app.planner.active_minutes ??= upgraded.temps.total;
+  upgraded.app.planner.active_minutes ??= upgraded.temps.preparation + upgraded.temps.cuisson;
   upgraded.provenance ??= {
     type: "original",
     author: "InflammMenu",
