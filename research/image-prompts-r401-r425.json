@@ -171,14 +171,14 @@
       "id": "r424",
       "title": "Dinde en brochettes au romarin, pêche et courgette",
       "output_file": "public/assets/recipes/generated/r424-dinde-en-brochettes-au-romarin-peche-et-courgette.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Dinde en brochettes au romarin, pêche et courgette ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : dinde en cubes, pêches, courgettes, romarin frais haché, quinoa, citron, huile d'olive vierge extra, eau. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     },
     {
       "id": "r425",
       "title": "Poulet vapeur en feuille de chou, millet aux herbes",
       "output_file": "public/assets/recipes/generated/r425-poulet-vapeur-en-feuille-de-chou-millet-aux-herbes.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Poulet vapeur en feuille de chou, millet aux herbes ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : poulet haché, grandes feuilles de chou vert, millet décortiqué, persil plat, citron, eau, huile d'olive vierge extra. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     }
   ]
