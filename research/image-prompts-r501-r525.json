@@ -171,14 +171,14 @@
       "id": "r524",
       "title": "Bol de mungo, chou pointu et orange au sésame",
       "output_file": "public/assets/recipes/generated/r524-bol-de-mungo-chou-pointu-et-orange-au-sesame.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Bol de mungo, chou pointu et orange au sésame ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : haricots mungo secs, chou pointu, oranges, graines de sésame, coriandre fraîche, huile de colza. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     },
     {
       "id": "r525",
       "title": "Ragoût de mungo, aubergine et blettes au curcuma doux",
       "output_file": "public/assets/recipes/generated/r525-ragout-de-mungo-aubergine-et-blettes-au-curcuma-doux.jpg",
-      "status": "waiting_image_generation",
+      "status": "generated_inspected_optimized",
       "prompt": "Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « Ragoût de mungo, aubergine et blettes au curcuma doux ». Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : haricots mungo secs, aubergines, blettes, curcuma moulu, tomates concassées sans sel, huile d'olive. Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite. Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette. Aucun texte, logo, emballage, ustensile tenu, main ni personne. Pas de collage, pas d'illustration, pas de cadre de téléphone. Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo. Éviter absolument l'aspect plastique, la symétrie artificielle, les aliments dupliqués, les surfaces trop lisses, les formes impossibles, le brillant excessif et toute cuisson incohérente avec la recette."
     }
   ]
