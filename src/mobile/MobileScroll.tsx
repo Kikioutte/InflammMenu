@@ -13,9 +13,10 @@ type MobileScrollProps = PropsWithChildren<{
 }>;
 
 const scrollPhysics = {
-  momentumFriction: 2.1,
-  momentumVelocityScale: 890,
-  momentumTolerance: 18,
+  momentumFriction: 4.8,
+  momentumVelocityScale: 650,
+  maxMomentumVelocity: 1400,
+  momentumTolerance: 24,
   bounceTension: 200,
   bounceFriction: 40,
   bounceTolerance: 0.5,
@@ -128,7 +129,11 @@ export function MobileScroll({ className, children }: MobileScrollProps) {
     const elapsed = Math.max(1, last.time - first.time);
     const pointerVelocity = (last.y - first.y) / elapsed;
 
-    return -pointerVelocity * scrollPhysics.momentumVelocityScale;
+    const velocity = -pointerVelocity * scrollPhysics.momentumVelocityScale;
+    return Math.max(
+      -scrollPhysics.maxMomentumVelocity,
+      Math.min(scrollPhysics.maxMomentumVelocity, velocity),
+    );
   }, []);
 
   const springBack = useCallback((initialVelocity = 0) => {
