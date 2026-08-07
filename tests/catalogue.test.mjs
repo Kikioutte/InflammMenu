@@ -4,10 +4,14 @@ import test from "node:test";
 
 const dataUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
 const sourceUrl = new URL("../src/catalog.ts", import.meta.url);
+const plannerUrl = new URL("../src/data/planner-recipes.json", import.meta.url);
+const plannerGeneratorUrl = new URL("../scripts/generate-planner-recipes.mjs", import.meta.url);
 const prototypeUrl = new URL("../src/Prototype.tsx", import.meta.url);
 
 const catalogue = JSON.parse(await readFile(dataUrl, "utf8"));
 const catalogueSource = await readFile(sourceUrl, "utf8");
+const plannerRecipes = JSON.parse(await readFile(plannerUrl, "utf8"));
+const plannerGeneratorSource = await readFile(plannerGeneratorUrl, "utf8");
 const prototypeSource = await readFile(prototypeUrl, "utf8");
 
 test("the imported catalogue is versioned, complete and internally consistent", () => {
@@ -45,13 +49,23 @@ test("every recipe carries its editorial review in the JSON source", () => {
   assert.match(catalogueSource, /return recipe\.app\.review/);
 });
 
+test("planner recipes use the editorial description rather than the internal review summary", () => {
+  for (const plannerRecipe of plannerRecipes) {
+    const sourceRecipe = catalogue.recipes.find((recipe) => `catalog-${recipe.id}` === plannerRecipe.id);
+    assert.equal(plannerRecipe.description, sourceRecipe?.description, `${plannerRecipe.id}: mauvaise description`);
+    assert.notEqual(plannerRecipe.description, sourceRecipe?.app.review.summary, `${plannerRecipe.id}: résumé interne exposé`);
+  }
+  assert.match(plannerGeneratorSource, /description:\s*recipe\.description/);
+});
+
 test("material duplicates are explicitly excluded from integration", () => {
   const expectedDuplicates = ["r001", "r009", "r017", "r018", "r019", "r039"];
   for (const id of expectedDuplicates) {
     assert.ok(catalogue.recipes.find((recipe) => recipe.id === id)?.app.duplicate_of, `${id}: duplicate marker missing`);
   }
   assert.equal(catalogue.recipes.filter((recipe) => recipe.app.duplicate_of).length, 6);
-  assert.match(catalogueSource, /!recipe\.app\.duplicate_of/);
+  assert.match(catalogueSource, /DUPLICATE_CATALOGUE_RECIPES/);
+  for (const id of expectedDuplicates) assert.equal(plannerRecipes.some((recipe) => recipe.id === `catalog-${id}`), false);
 });
 
 test("higher-risk culinary entries retain visible cautions", () => {
@@ -77,8 +91,8 @@ test("planner metadata is explicit and no longer inferred from recipe prose", ()
       assert.ok(Array.isArray(ingredient.allergenes));
     }
   }
-  assert.doesNotMatch(catalogueSource, /function (allergensFor|equipmentFor|mealTypesFor|dietFor|categoryForIngredient)/);
-  assert.match(catalogueSource, /recipe\.app\.planner\.eligible/);
+  assert.doesNotMatch(plannerGeneratorSource, /function (allergensFor|equipmentFor|mealTypesFor|dietFor|categoryForIngredient)/);
+  assert.match(plannerGeneratorSource, /recipe\.app\.planner\.eligible/);
 });
 
 test("passive infusion and fermentation are excluded from active kitchen time", () => {
@@ -99,4 +113,95 @@ test("unverified mechanism claims are not rendered as clinical effects", () => {
   assert.doesNotMatch(prototypeSource, /item\.action/);
   assert.match(prototypeSource, /ne garantit pas un bénéfice clinique individuel/);
   assert.match(prototypeSource, /ne prouve pas qu'un ingrédient isolé/);
+});
+
+test("les identifiants de favoris du catalogue correspondent à la projection du planificateur", async () => {
+  const { catalogueFavoriteId, catalogueRecipeIdOf } = await import("../src/catalog.ts");
+  const planner = JSON.parse(await readFile(new URL("../src/data/planner-recipes.json", import.meta.url), "utf8"));
+  const catalogue = JSON.parse(await readFile(new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url), "utf8"));
+  const eligible = catalogue.recipes.filter((recipe) => !recipe.app.duplicate_of && recipe.app.planner.eligible);
+  const plannerIds = new Set(planner.map((recipe) => recipe.id));
+
+  assert.equal(catalogueFavoriteId("r002"), "catalog-r002");
+  assert.equal(catalogueFavoriteId({ id: "r002" }), "catalog-r002");
+  assert.equal(catalogueFavoriteId("catalog-r002"), "catalog-r002", "l'identifiant reste stable");
+  assert.equal(catalogueRecipeIdOf("catalog-r002"), "r002");
+  assert.equal(catalogueRecipeIdOf("r002"), "r002");
+
+  for (const recipe of eligible) {
+    assert.ok(plannerIds.has(catalogueFavoriteId(recipe)), `${recipe.id} doit exister dans la projection`);
+  }
+
+  const notEligible = catalogue.recipes.filter((recipe) => !recipe.app.duplicate_of && !recipe.app.planner.eligible);
+  assert.ok(notEligible.length > 0);
+  for (const recipe of notEligible) {
+    assert.equal(plannerIds.has(catalogueFavoriteId(recipe)), false, `${recipe.id} reste hors du planificateur`);
+  }
+});
+
+test("la disponibilité au planificateur est expliquée sans lever la barrière éditoriale", async () => {
+  const { plannerAvailabilityFor } = await import("../src/catalog.ts");
+  const catalogue = JSON.parse(await readFile(new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url), "utf8"));
+  const counts = { plannable: 0, duplicate: 0, "side-dish": 0, editorial: 0 };
+
+  for (const recipe of catalogue.recipes) {
+    const availability = plannerAvailabilityFor(recipe);
+    counts[availability.plannable ? "plannable" : availability.kind] += 1;
+    assert.equal(availability.plannable, !recipe.app.duplicate_of && recipe.app.planner.eligible);
+  }
+
+  assert.equal(counts.plannable, 327, "les recettes planifiables restent inchangées");
+  assert.equal(counts.duplicate, 6);
+  assert.equal(counts["side-dish"] + counts.editorial, 217);
+  assert.ok(counts.editorial > 0, "des exclusions éditoriales subsistent");
+
+  const sodiumExcluded = catalogue.recipes.find((recipe) => recipe.id === "r084");
+  assert.deepEqual(plannerAvailabilityFor(sodiumExcluded), { plannable: false, kind: "editorial" });
+  const drink = catalogue.recipes.find((recipe) => recipe.categorie === "boisson" && !recipe.app.planner.eligible);
+  assert.deepEqual(plannerAvailabilityFor(drink), { plannable: false, kind: "side-dish" });
+});
+
+test("un échec de chargement du catalogue n'est pas mémorisé", async () => {
+  const source = await readFile(sourceUrl, "utf8");
+  const loader = source.slice(source.indexOf("export function loadCatalogue"));
+  const recovery = loader.slice(loader.indexOf(".catch("));
+
+  assert.match(recovery, /\.catch\(/, "le rejet doit être attrapé");
+  assert.match(recovery, /cataloguePromise = null/, "la promesse échouée doit être oubliée pour permettre un réessai");
+  assert.ok(
+    recovery.indexOf("cataloguePromise = null") < recovery.indexOf("throw"),
+    "la promesse est vidée avant de propager l'erreur",
+  );
+});
+
+test("les filtres et le tri du catalogue portent sur les vraies données", async () => {
+  const { filterCatalogueRecipes, EMPTY_CATALOGUE_FILTERS, catalogueActiveMinutes, visibleCatalogueRecipes } = await import("../src/catalog.ts");
+  const catalogue = JSON.parse(await readFile(dataUrl, "utf8"));
+  const visible = visibleCatalogueRecipes(catalogue);
+
+  assert.equal(filterCatalogueRecipes(visible, EMPTY_CATALOGUE_FILTERS).length, 544, "sans filtre, tout le catalogue visible");
+
+  const quick = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, maxActiveMinutes: 15 });
+  assert.ok(quick.length > 0 && quick.length < visible.length);
+  assert.ok(quick.every((recipe) => catalogueActiveMinutes(recipe) <= 15));
+
+  const cheap = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, cost: "economique" });
+  assert.ok(cheap.every((recipe) => recipe.cout === "economique"));
+
+  const glutenFree = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, withoutAllergen: "gluten" });
+  assert.ok(glutenFree.every((recipe) => !recipe.app.planner.allergens.includes("gluten")));
+
+  const plannable = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, plannableOnly: true });
+  assert.equal(plannable.length, 327, "le filtre planifiable respecte la relecture éditoriale");
+
+  const winter = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, season: "hiver" });
+  assert.ok(winter.every((recipe) => recipe.saisons.includes("hiver") || recipe.saisons.includes("toute-annee")));
+
+  const byTime = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, sort: "time" });
+  const times = byTime.map(catalogueActiveMinutes);
+  assert.deepEqual(times, [...times].sort((a, b) => a - b), "le tri par temps est croissant");
+
+  const searched = filterCatalogueRecipes(visible, EMPTY_CATALOGUE_FILTERS, "wakame");
+  assert.equal(searched.length, 1);
+  assert.equal(filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, cost: "eleve" }, "wakame").length <= 1, true);
 });

@@ -105,6 +105,11 @@ function stackedScreen(level: number): FlowScreen {
               Push level {level + 1}
             </button>
           ) : null}
+          {level === 2 ? (
+            <button type="button" onClick={() => flow.replace(stackedScreen(12))}>
+              Replace level 2
+            </button>
+          ) : null}
         </main>
       </MobileScroll>
     ),

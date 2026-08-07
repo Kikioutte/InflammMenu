@@ -1,22 +1,10 @@
-const CACHE_NAME = "inflamm-menu-shell-v2";
+const SHELL_CACHE_PREFIX = "inflamm-menu-shell-";
+const SHELL_CACHE = `${SHELL_CACHE_PREFIX}__SHELL_VERSION__`;
+const RUNTIME_CACHE = "inflamm-menu-runtime-v1";
 const APP_SHELL = [
   "/",
   "/index.html",
-  "/manifest.webmanifest",
-  "/icons/app-icon-192.png",
-  "/icons/app-icon-512.png",
-  "/og.png",
-  "/assets/inflamm-hero-bowl.png",
-  "/assets/lentil-walnut-salad.png",
-  "/assets/salmon-broccoli-rice.png",
-  "/assets/olive-sprig.png",
-  "/assets/iphone/Bezel.png",
-  "/assets/iphone/Keyboard.png",
-  "/assets/android/Pixel10.png",
-  "/assets/android/Keyboard.png",
-  "/assets/android/navigation-bar.svg",
-  "/assets/status/ios-status-icons.svg",
-  "/assets/status/status-icons.svg"
+  "/manifest.webmanifest"
 ];
 
 async function cacheResponse(cache, request) {
@@ -30,7 +18,7 @@ async function cacheResponse(cache, request) {
 }
 
 async function precacheShell() {
-  const cache = await caches.open(CACHE_NAME);
+  const cache = await caches.open(SHELL_CACHE);
   await Promise.allSettled(APP_SHELL.map((path) => cacheResponse(cache, path)));
 
   // The production HTML contains hashed Vite entry files. Discover and cache
@@ -52,22 +40,24 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))))
+      .then((keys) => Promise.all(keys
+        .filter((key) => key.startsWith(SHELL_CACHE_PREFIX) && key !== SHELL_CACHE)
+        .map((key) => caches.delete(key))))
       .then(() => self.clients.claim()),
   );
 });
 
-async function cacheFirst(request) {
-  const cached = await caches.match(request);
+async function cacheFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request);
   if (cached) return cached;
-  const cache = await caches.open(CACHE_NAME);
   const response = await fetch(request);
   if (response.ok && response.type === "basic") await cache.put(request, response.clone());
   return response;
 }
 
 async function navigationResponse(request) {
-  const cache = await caches.open(CACHE_NAME);
+  const cache = await caches.open(SHELL_CACHE);
   try {
     const response = await fetch(request);
     if (response.ok && response.type === "basic") {
@@ -96,6 +86,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (["script", "style", "image", "font"].includes(request.destination)) {
-    event.respondWith(cacheFirst(request));
+    const belongsToShell = APP_SHELL.includes(url.pathname);
+    event.respondWith(cacheFirst(request, belongsToShell || request.destination !== "image" ? SHELL_CACHE : RUNTIME_CACHE));
   }
 });

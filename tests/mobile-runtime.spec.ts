@@ -218,8 +218,11 @@ test("FlowStack pushes and pops screens while dismissing the keyboard", async ({
   await page.getByLabel("Flow message").click();
   await expect(page.getByTestId("keyboard-dock")).toHaveAttribute("data-visible", "true");
 
-  await page.getByRole("button", { name: "Push level 2" }).click();
+  const rootTrigger = page.getByRole("button", { name: "Push level 2" });
+  await rootTrigger.click();
   await expect(page.getByRole("heading", { name: "Screen stacking works" })).toBeVisible();
+  await expect(page.locator(".flow-screen").filter({ hasText: "Flow root" })).toHaveAttribute("inert", "");
+  await expect(page.getByRole("heading", { name: "Screen stacking works" })).toBeFocused();
   await expect(page.getByTestId("keyboard-dock")).toHaveAttribute("data-visible", "false");
   const safeHeaderPlacement = await page.evaluate(() => {
     const screen = document.querySelector<HTMLElement>('[data-testid="device-screen"]')!;
@@ -228,15 +231,33 @@ test("FlowStack pushes and pops screens while dismissing the keyboard", async ({
   });
   expect(safeHeaderPlacement).toBeGreaterThanOrEqual(54);
 
-  await page.getByRole("button", { name: "Push level 3" }).click();
+  const levelThreeTrigger = page.getByRole("button", { name: "Push level 3" });
+  await levelThreeTrigger.click();
   await expect(page.getByRole("heading", { name: "Nested view level 3" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Nested view level 3" })).toBeFocused();
   await page.getByRole("button", { name: "Push level 4" }).click();
   await expect(page.getByRole("heading", { name: "Nested view level 4" })).toBeVisible();
 
   await page.getByRole("button", { name: "Done" }).click();
   await expect(page.getByRole("heading", { name: "Nested view level 3" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Push level 4" })).toBeFocused();
   await page.getByRole("button", { name: "‹ Back" }).click();
   await expect(page.getByRole("heading", { name: "Screen stacking works" })).toBeVisible();
+  await expect(levelThreeTrigger).toBeFocused();
   await page.getByRole("button", { name: "Done" }).click();
   await expect(page.getByRole("heading", { name: "Flow root" })).toBeVisible();
+  await expect(rootTrigger).toBeFocused();
+});
+
+test("FlowStack replace preserves the original return focus target", async ({ page }) => {
+  await page.goto("/tests/runtime-fixture.html?fixture=flow");
+  const rootTrigger = page.getByRole("button", { name: "Push level 2" });
+  await rootTrigger.click();
+  await page.getByRole("button", { name: "Replace level 2" }).click();
+
+  await expect(page.getByRole("heading", { name: "Nested view level 12" })).toBeFocused();
+  await expect(page.locator(".flow-screen").filter({ hasText: "Screen stacking works" })).toHaveAttribute("inert", "");
+  await page.getByRole("button", { name: "Done" }).click();
+  await expect(page.getByRole("heading", { name: "Flow root" })).toBeVisible();
+  await expect(rootTrigger).toBeFocused();
 });

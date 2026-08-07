@@ -1,0 +1,19 @@
+{
+  "schema_version": "2.1.0",
+  "nombre_recettes": 550,
+  "nombre_recettes_visibles": 544,
+  "nombre_doublons_exclus": 6,
+  "licence": "CC BY-SA 4.0 — recettes originales, libres d'utilisation avec attribution",
+  "avertissement": "Ces recettes ont une visée culinaire et informative. Elles ne remplacent pas un avis médical. Toute personne suivant un traitement (anticoagulants, immunosuppresseurs), enceinte, ou souffrant d'une pathologie chronique doit consulter un professionnel de santé avant de modifier son alimentation.",
+  "categories": [
+    { "id": "petit-dejeuner", "nom": "Petits-déjeuners", "description": "Démarrer la journée sans pic glycémique." },
+    { "id": "boisson", "nom": "Boissons et infusions", "description": "Lattes dorés, infusions, smoothies." },
+    { "id": "soupe", "nom": "Soupes et veloutés", "description": "Cuissons douces, épices et légumineuses." },
+    { "id": "salade", "nom": "Salades et bols", "description": "Crudités, céréales complètes, bonnes graisses." },
+    { "id": "plat", "nom": "Plats principaux", "description": "Poissons gras, légumineuses, currys." },
+    { "id": "accompagnement", "nom": "Accompagnements", "description": "Légumes rôtis, céréales, pickles." },
+    { "id": "snack", "nom": "Encas", "description": "Collations sans sucre raffiné." },
+    { "id": "dessert", "nom": "Desserts", "description": "Sucrés naturellement, riches en polyphénols." },
+    { "id": "sauce", "nom": "Sauces et condiments", "description": "Bases à préparer d'avance." }
+  ]
+}

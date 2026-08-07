@@ -137,6 +137,9 @@ export function validateCatalogue(catalogue) {
       assert(nonEmptyString(ingredient.unite), `${label}: unité d'ingrédient requise`);
       assert(allowedShoppingCategories.has(ingredient.categorie_courses), `${label}: catégorie de courses invalide`);
       assertArrayValues(ingredient.allergenes, allowedAllergens, `${ingredientLabel}.allergenes`);
+      if (ingredient.pantry_staple !== undefined) {
+        assert(typeof ingredient.pantry_staple === "boolean", `${ingredientLabel}.pantry_staple doit être booléen`);
+      }
 
       const normalizedFields = [ingredient.id, ingredient.quantite_normalisee, ingredient.unite_normalisee, ingredient.facultatif];
       const normalizedFieldCount = normalizedFields.filter((value) => value !== undefined).length;
