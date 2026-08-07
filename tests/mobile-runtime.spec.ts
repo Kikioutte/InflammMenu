@@ -55,6 +55,19 @@ test("vertical intent over a carousel is handed to MobileScroll in both directio
   expect(await parent.evaluate((element) => element.scrollTop)).toBeLessThan(80);
 });
 
+test("MobileScroll keeps a fast vertical flick controllable", async ({ page }) => {
+  const parent = page.getByTestId("mobile-scroll");
+
+  await drag(page, parent, 0, -140, 4);
+  const afterRelease = await parent.evaluate((element) => element.scrollTop);
+  await page.waitForTimeout(500);
+  const afterMomentum = await parent.evaluate((element) => element.scrollTop);
+
+  expect(afterMomentum).toBeGreaterThan(afterRelease);
+  expect(afterMomentum - afterRelease).toBeLessThan(340);
+  expect(afterMomentum).toBeLessThan(520);
+});
+
 test("tap activates a card but a completed drag does not", async ({ page }) => {
   const firstCard = page.locator(".carousel-card").first();
   await firstCard.click();
