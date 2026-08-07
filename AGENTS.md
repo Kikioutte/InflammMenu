@@ -14,6 +14,52 @@
 - Describe compatibility at the level of the overall Mediterranean-style dietary pattern. Do not render the source mechanism text as proof that an isolated ingredient prevents or treats inflammation.
 - Keep visible cautions for concentrated turmeric/piperine preparations, seaweed/iodine, fermentation safety, high-sodium ingredients, coconut-rich recipes, and concentrated sweet snacks. Preserve the medical disclaimer and the official source links in the information screen.
 
+### Semaine : conserver, cuisiner, archiver
+
+- Un repas « conservé » (cadenas) garde son créneau, sa recette et ses portions à la génération suivante, reste hors du rééquilibrage budgétaire et n'est jamais dupliqué ailleurs dans la semaine. Un cadenas n'est jamais une raison de servir une recette qui viole une allergie, le régime, l'équipement ou le temps actif maximum : dans ce cas il est ignoré silencieusement et le créneau est régénéré (`preservableLockedMeals`).
+- Le repère « cuisiné » (`PlannedMeal.completed`) est purement déclaratif : il alimente la progression de la semaine, ne modifie pas la liste de courses, et repart de zéro quand le repas est remplacé ou quand une semaine archivée est reprise.
+- L'export de la liste de courses (partage natif, presse-papiers, fichier `.txt`) utilise `formatShoppingListText` : rayons en majuscules, quantités culinaires exactes suivies du conseil d'achat entre parenthèses, articles cochés ou en réserve résumés en pied de liste et jamais listés. La mention « quantités et prix indicatifs » reste dans le texte exporté.
+- Reprendre une semaine archivée crée un nouveau menu daté de la semaine en cours : portions issues du profil actuel, repères « cuisiné » et cadenas remis à zéro. La reprise est refusée, avec explication visible, dès qu'un repas archivé ne correspond plus au profil ou que la semaine ne couvre pas tous les créneaux demandés (`inspectPlanReplay`).
+- Chaque carte de repas affiche son coût estimé pour ses portions et ses allergènes déclarés (recette + ingrédients, normalisés sur les 14 allergènes réglementaires). L'absence d'allergène s'affiche explicitement et ne dispense pas de vérifier les étiquettes.
+- Le temps de repos (`Recipe.restMinutes`, projeté depuis `temps.repos`) ne se mélange jamais au temps actif : à partir d'une heure il est signalé comme « repos à prévoir », à partir de quatre heures comme « à lancer la veille », avec un rappel sur l'accueil pour les repas du lendemain. Il n'entre pas dans le filtre `maxPrepMinutes`.
+- Une semaine dont le lundi est antérieur de plus de six jours à la date du jour est archivée à l'ouverture, jamais affichée comme courante. L'accueil explique l'archivage.
+- Les portions se règlent repas par repas (1 à 8) depuis la fiche d'un repas planifié ; courses et coût suivent immédiatement.
+- Les restes (`PlannedMeal.leftoverOf`) rejouent un plat dans les deux jours qui suivent, sur un repas du même type. Ils ne se verrouillent pas, ne se re-cuisinent pas, suivent leur plat source en cas de remplacement, et n'allègent ni les courses ni le coût : cuisiner en double, c'est acheter en double. `PlanSummary.cookingSessions` compte les repas réellement cuisinés.
+- Le bilan de la semaine décrit des habitudes d'organisation (légumineuses, poisson, céréales complètes, noix/graines, saison) et des moyennes estimatives par portion. Il ne doit jamais être présenté comme une évaluation nutritionnelle ou un avis médical.
+
+### Catalogue, favoris et préférences durables
+
+- `app.planner.eligible: false` est une décision de relecture par recette (sodium élevé, interaction connue, brouillon, ou catégorie d'appoint). Elle se rend visible via `plannerAvailabilityFor` — recette d'appoint ou exclusion éditoriale — et ne se contourne jamais, y compris pour la planification manuelle.
+- Les favoris couvrent tout le catalogue. L'identifiant d'un favori de catalogue est `catalog-<id>`, identique à celui de la projection du planificateur, et les favoris non résolus sont conservés jusqu'au chargement du chunk catalogue.
+- `UserProfile.dislikedRecipeIds` écarte durablement une recette de la génération, des remplacements, des reprises de semaine et des repas conservés. La liste est réversible depuis le profil.
+- Le profil ne comporte pas de cible calorique : les valeurs nutritionnelles sont estimatives et un objectif chiffré suggérerait une précision que ces données n'ont pas.
+- L'export de sauvegarde (`exportAppState` / `importAppState`) passe par la même migration que les données stockées, refuse les fichiers étrangers avec un message explicite, et remplace intégralement l'état local à la restauration.
+- L'invite d'installation et le bandeau hors-ligne se contentent de refléter ce que le navigateur expose (`beforeinstallprompt`, `appinstalled`, `online`/`offline`). Ne jamais simuler un état d'installation ou de connectivité.
+- Aucun favori n'est pré-coché : un favori est un choix de l'utilisateur, et il pèse désormais sur la génération. Les favoris apportent un bonus de préférence au score, jamais une dérogation aux filtres de sécurité ni aux objectifs hebdomadaires.
+- `UserProfile.weeklyTargets` porte les fréquences visées (légumineuses, poisson), réglables de 0 à 7 dans le profil et reprises dans le bilan. Ne jamais recoder ces seuils en dur.
+- `loadCatalogue` ne doit jamais mémoriser une promesse rejetée : le chunk catalogue est chargé à la demande et une seule coupure réseau condamnerait la session. L'échec s'affiche avec un bouton « Réessayer ».
+- Les articles cochés de la liste de courses ne se vident qu'au changement de semaine (nouvelle génération, reprise, semaine périmée). Toute autre modification passe par `reconcileCheckedItems`, qui ne retire que les articles réellement disparus.
+- Les motifs de remplacement doivent correspondre à leur libellé : « Autres ingrédients » éloigne les recettes qui partagent les ingrédients actuels, « Réutiliser mes ingrédients » les rapproche.
+- Le service worker s'active immédiatement (`skipWaiting` + `clients.claim`) : `watchForAppUpdate` doit rester branché pour proposer un rechargement, sans quoi un onglet ouvert demande des chunks que le nouveau cache ne sert plus.
+- Le mode cuisine demande le Wake Lock quand le navigateur l'expose, le redemande au retour au premier plan, et reste pleinement utilisable en cas de refus.
+
+### Robustesse de l'état local
+
+- Un plan stocké est une donnée non fiable : `normalizePlan` valide date, repas, créneaux et coût avant tout rendu, et écarte ce qui est invalide plutôt que de laisser planter l'écran. Ne jamais transtyper un plan directement depuis le stockage ou une sauvegarde.
+- Les nombres du profil sont bornés à la persistance, pas seulement dans le formulaire : `typeof NaN` et `typeof Infinity` valent « number ».
+- FlowStack rend les écrans empilés depuis la fermeture où ils ont été créés, et un changement d'état d'`AppShell` ne les re-rend pas. Les gestionnaires de ces écrans lisent donc `stateRef.current` et écrivent via un `setAppState` fonctionnel. Ne jamais transporter un `WeeklyPlan` en paramètre d'écran pour le réécrire ensuite.
+- `ACTIVE_RECIPES` et `recipeById` forment le registre des recettes planifiables : catalogue relu plus recettes personnelles. `useRecipeRegistry` le rafraîchit dans `AppShell`; tout appel moteur passe par `ACTIVE_RECIPES`, jamais par `RECIPES` directement.
+
+### Semaine, courses et préférences
+
+- Un repas « hors foyer » (`skipped`) ne coûte rien, n'achète rien, ne se cuisine pas et sort de la progression. Un repas de restes ne se déplace pas sans son plat d'origine : `swapPlannedMeals` refuse et explique.
+- `upcomingPlan` prépare la semaine suivante sans toucher à la semaine en cours ; elle est promue automatiquement à l'ouverture quand son lundi est arrivé.
+- Le garde-manger accepte des quantités : elles sont déduites de la liste de courses dans la même unité seulement, sans conversion hasardeuse. Le budget réel saisi ne corrige jamais les estimations, il en mesure l'écart.
+- La notation est à quatre états exclusifs : « j'aime » (bonus), « sans avis », « bof » (malus, jamais une exclusion), « ne plus proposer » (exclusion). Un seul état à la fois par recette.
+- Les recettes personnelles portent le préfixe `perso-` et conservent les identifiants d'ingrédients canoniques, sans quoi la liste de courses cesse d'être juste.
+- Les rappels sont produits localement à l'ouverture de l'application, une fois par jour, uniquement si l'autorisation a été accordée. Ne jamais laisser entendre qu'ils sont programmés côté serveur.
+- Le catalogue complet n'est pas préchargé : il se télécharge à la demande depuis l'écran Informations. Toute formulation sur le hors-ligne doit rester exacte sur ce point.
+
 In ChatGPT Work Mode, run `sites-preview start "$PWD"`, open `http://terminal.local:4173/` in the cloud browser, and verify the rendered app and its primary interactions. Keep that preview open and tell the user to inspect it in the cloud browser; do not present the local URL as a user-facing chat link. In Codex Desktop, run the local server yourself, open the preview in the in-app browser, and provide the clickable local URL. Do not deploy to Sites unless the user explicitly asks to share, publish, or deploy. Do not give the user server-start instructions when you can run it.
 
 Before planning or implementing any mobile-app change, read this `AGENTS.md` in full. It is the source of truth for the template's runtime and component guidance.

@@ -5,11 +5,12 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useIsPresent } from "motion/react";
 import { useDrag } from "@use-gesture/react";
 import { useMobileDevice } from "./Device";
 import { useKeyboard, useKeyboardDismissDrag, useKeyboardInsets } from "./Keyboard";
@@ -26,6 +27,7 @@ export type FlowScreen = {
 
 type FlowEntry = FlowScreen & {
   key: string;
+  returnFocusTo?: HTMLElement | null;
 };
 
 export type FlowControls = {
@@ -54,6 +56,61 @@ function FlowProvider({ value, children }: PropsWithChildren<{ value: FlowContro
   return <FlowContext.Provider value={value}>{children}</FlowContext.Provider>;
 }
 
+type FlowSceneProps = {
+  entry: FlowEntry;
+  controls: FlowControls;
+  direction: number;
+  isTop: boolean;
+  isVisible: boolean;
+  parkedX: number;
+  screenWidth: number;
+  swipeX: number;
+  register: (key: string, element: HTMLDivElement | null) => void;
+};
+
+function FlowScene({ entry, controls, direction, isTop, isVisible, parkedX, screenWidth, swipeX, register }: FlowSceneProps) {
+  const isPresent = useIsPresent();
+  const isActive = isTop && isPresent;
+  const screenVariants = {
+    enter: (animationDirection: number) => ({
+      x: animationDirection > 0 ? screenWidth : parkedX,
+      scale: animationDirection > 0 ? 1 : 0.985,
+    }),
+    exit: (animationDirection: number) => ({
+      x: animationDirection < 0 ? screenWidth : parkedX,
+      scale: animationDirection < 0 ? 1 : 0.985,
+    }),
+  };
+
+  return (
+    <motion.div
+      ref={(element) => register(entry.key, element)}
+      className="flow-screen"
+      data-flow-current={isActive ? "true" : "false"}
+      data-testid={isActive ? "flow-current" : undefined}
+      inert={!isActive}
+      tabIndex={-1}
+      custom={direction}
+      variants={screenVariants}
+      initial={isTop ? "enter" : false}
+      animate={{
+        x: isTop ? swipeX : parkedX,
+        scale: isTop ? 1 : 0.985,
+      }}
+      exit="exit"
+      transition={{ type: "spring", stiffness: 360, damping: 38, mass: 0.9 }}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        pointerEvents: isActive ? "auto" : "none",
+        visibility: isVisible ? "visible" : "hidden",
+        zIndex: isTop ? 2 : 1,
+      }}
+    >
+      {entry.render(controls)}
+    </motion.div>
+  );
+}
+
 export function FlowStack({ initial }: { initial: FlowScreen }) {
   const { device } = useMobileDevice();
   const keyboard = useKeyboard();
@@ -61,19 +118,32 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
   const dismissKeyboardDrag = useKeyboardDismissDrag();
   const sequence = useRef(1);
   const gestureStartedAtEdge = useRef(false);
+  const navigationFocus = useRef<"screen" | "restore" | null>(null);
+  const restoreFocusTo = useRef<HTMLElement | null>(null);
+  const screenElements = useRef(new Map<string, HTMLDivElement>());
   const initialEntry = useRef<FlowEntry>({ ...initial, key: `${initial.id}-0` });
   const [stack, setStack] = useState<FlowEntry[]>(() => [initialEntry.current]);
+  const stackRef = useRef(stack);
+  stackRef.current = stack;
   const [direction, setDirection] = useState(1);
   const [swipeX, setSwipeX] = useState(0);
 
-  const toEntry = useCallback((screen: FlowScreen): FlowEntry => {
+  const toEntry = useCallback((screen: FlowScreen, returnFocusTo?: HTMLElement | null): FlowEntry => {
     const next = sequence.current;
     sequence.current += 1;
-    return { ...screen, key: `${screen.id}-${next}` };
+    return { ...screen, key: `${screen.id}-${next}`, returnFocusTo };
+  }, []);
+
+  const registerScreen = useCallback((key: string, element: HTMLDivElement | null) => {
+    if (element) screenElements.current.set(key, element);
+    else screenElements.current.delete(key);
   }, []);
 
   const pop = useCallback(() => {
     keyboard.hide();
+    const currentEntry = stackRef.current[stackRef.current.length - 1];
+    restoreFocusTo.current = currentEntry?.returnFocusTo ?? null;
+    navigationFocus.current = "restore";
     setDirection(-1);
     setStack((currentStack) => {
       if (currentStack.length <= 1) return currentStack;
@@ -91,23 +161,50 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
       stack,
       canGoBack: stack.length > 1,
       push: (screen) => {
+        const returnFocusTo = document.activeElement instanceof HTMLElement ? document.activeElement : null;
         keyboard.hide();
+        navigationFocus.current = "screen";
         setDirection(1);
         setSwipeX(0);
-        setStack((currentStack) => [...currentStack, toEntry(screen)]);
+        setStack((currentStack) => [...currentStack, toEntry(screen, returnFocusTo)]);
       },
       pop,
       replace: (screen) => {
         keyboard.hide();
+        navigationFocus.current = "screen";
         setDirection(1);
         setSwipeX(0);
         setStack((currentStack) => {
+          const replaced = currentStack[currentStack.length - 1];
           const next = currentStack.slice(0, -1);
-          return [...next, toEntry(screen)];
+          return [...next, toEntry(screen, replaced?.returnFocusTo)];
         });
       },
     };
   }, [keyboard, pop, stack, toEntry]);
+
+  const currentKey = stack[stack.length - 1].key;
+  useLayoutEffect(() => {
+    const focusMode = navigationFocus.current;
+    if (!focusMode) return;
+    navigationFocus.current = null;
+
+    if (focusMode === "restore") {
+      const target = restoreFocusTo.current;
+      restoreFocusTo.current = null;
+      if (target?.isConnected && !target.closest("[inert]")) {
+        target.focus({ preventScroll: true });
+        return;
+      }
+    }
+
+    const screen = screenElements.current.get(currentKey);
+    if (!screen) return;
+    const heading = screen.querySelector<HTMLElement>("[data-flow-focus], h1, [role='heading']");
+    const target = heading ?? screen;
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  }, [currentKey]);
 
   const bindEdgeSwipe = useDrag(
     (state) => {
@@ -156,17 +253,6 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
   const footer = controls.current.footer?.(controls);
   const footerHeight = controls.current.footerHeight ?? 0;
 
-  const screenVariants = {
-    enter: (animationDirection: number) => ({
-      x: animationDirection > 0 ? screenWidth : parkedX,
-      scale: animationDirection > 0 ? 1 : 0.985,
-    }),
-    exit: (animationDirection: number) => ({
-      x: animationDirection < 0 ? screenWidth : parkedX,
-      scale: animationDirection < 0 ? 1 : 0.985,
-    }),
-  };
-
   return (
     <FlowProvider value={controls}>
       <div
@@ -195,31 +281,7 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
               const isTop = index === topIndex;
               const isVisible = index >= topIndex - 1;
 
-              return (
-                <motion.div
-                  key={entry.key}
-                  className="flow-screen"
-                  data-flow-current={isTop ? "true" : "false"}
-                  data-testid={isTop ? "flow-current" : undefined}
-                  custom={direction}
-                  variants={screenVariants}
-                  initial={isTop ? "enter" : false}
-                  animate={{
-                    x: isTop ? swipeX : parkedX,
-                    scale: isTop ? 1 : 0.985,
-                  }}
-                  exit="exit"
-                  transition={{ type: "spring", stiffness: 360, damping: 38, mass: 0.9 }}
-                  style={{
-                    opacity: isVisible ? 1 : 0,
-                    pointerEvents: isTop ? "auto" : "none",
-                    visibility: isVisible ? "visible" : "hidden",
-                    zIndex: isTop ? 2 : 1,
-                  }}
-                >
-                  {entry.render(controls)}
-                </motion.div>
-              );
+              return <FlowScene key={entry.key} entry={entry} controls={controls} direction={direction} isTop={isTop} isVisible={isVisible} parkedX={parkedX} screenWidth={screenWidth} swipeX={swipeX} register={registerScreen} />;
             })}
           </AnimatePresence>
         </div>

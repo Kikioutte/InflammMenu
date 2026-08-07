@@ -1,15 +1,6 @@
-import catalogueSource from "./data/recettes-anti-inflammatoires.json";
-import generatedRecipeImages from "./data/generated-recipe-images.json";
-import type {
-  DietMode,
-  Equipment,
-  Ingredient,
-  IngredientCategory,
-  IngredientUnit,
-  MealType,
-  Recipe,
-  Season,
-} from "./domain";
+import catalogueSummarySource from "./data/catalogue-summary.json" with { type: "json" };
+import generatedRecipeImages from "./data/generated-recipe-images.json" with { type: "json" };
+import type { DietMode, Equipment, IngredientCategory, IngredientUnit, MealType } from "./domain.ts";
 
 export type CatalogueReviewStatus = "validated" | "caution";
 
@@ -32,6 +23,7 @@ export interface CatalogueIngredient {
   note: string;
   categorie_courses: IngredientCategory;
   allergenes: string[];
+  pantry_staple?: boolean;
 }
 
 export interface CatalogueProvenanceSource {
@@ -100,25 +92,47 @@ export interface CatalogueRecipe {
   };
 }
 
-interface CatalogueData {
+export interface CatalogueData {
   meta: { schema_version: "2.0.0" | "2.1.0"; avertissement: string; licence: string; nombre_recettes: number };
   categories: Array<{ id: string; nom: string; description: string }>;
   recipes: CatalogueRecipe[];
 }
 
-export const CATALOGUE = catalogueSource as unknown as CatalogueData;
-export const CATALOGUE_CATEGORIES = CATALOGUE.categories;
+export const CATALOGUE_SUMMARY = catalogueSummarySource;
+export const CATALOGUE_CATEGORIES = CATALOGUE_SUMMARY.categories;
+export const DUPLICATE_CATALOGUE_RECIPES = {
+  r001: "overnight-oats-myrtilles-noix",
+  r009: "bowl-quinoa-legumes-houmous",
+  r017: "bowl-tofu-brocoli-sesame",
+  r018: "cabillaud-tomate-olives",
+  r019: "risotto-orge-champignons-epinards",
+  r039: "salade-betterave-chevre-lentilles",
+} as const;
+let cataloguePromise: Promise<CatalogueData> | null = null;
 
-/** Source entries already covered by a materially equivalent V1 recipe. */
-export const DUPLICATE_CATALOGUE_RECIPES: Readonly<Record<string, string>> = Object.fromEntries(
-  CATALOGUE.recipes.flatMap((recipe) => recipe.app.duplicate_of
+export function loadCatalogue(): Promise<CatalogueData> {
+  // Vite handles JSON modules in both development and production. Import
+  // attributes make this request fail in the development server on Safari.
+  cataloguePromise ??= import("./data/recettes-anti-inflammatoires.json")
+    .then((module) => module.default as unknown as CatalogueData)
+    // A failed chunk must not be memoized: one network hiccup would otherwise
+    // break the catalogue for the whole session, retry included.
+    .catch((error: unknown) => {
+      cataloguePromise = null;
+      throw error instanceof Error ? error : new Error("Catalogue indisponible");
+    });
+  return cataloguePromise;
+}
+
+export function duplicateCatalogueRecipes(catalogue: CatalogueData): Readonly<Record<string, string>> {
+  return Object.fromEntries(catalogue.recipes.flatMap((recipe) => recipe.app.duplicate_of
     ? [[recipe.id, recipe.app.duplicate_of] as const]
-    : []),
-);
+    : []));
+}
 
-export const CATALOGUE_RECIPES = CATALOGUE.recipes.filter(
-  (recipe) => !recipe.app.duplicate_of,
-);
+export function visibleCatalogueRecipes(catalogue: CatalogueData): CatalogueRecipe[] {
+  return catalogue.recipes.filter((recipe) => !recipe.app.duplicate_of);
+}
 const GENERATED_RECIPE_IMAGES = new Set<string>(generatedRecipeImages);
 const RECIPE_IMAGE_PLACEHOLDER = "/assets/recipe-placeholder.svg";
 
@@ -126,37 +140,17 @@ export function reviewFor(recipe: CatalogueRecipe): CatalogueRecipeReview {
   return recipe.app.review;
 }
 
-function normalize(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+/**
+ * Favourite identifier of a catalogue recipe. It matches the identifier used by
+ * the planner projection, so a recipe saved from either surface is the same one.
+ */
+export function catalogueFavoriteId(recipe: CatalogueRecipe | string): string {
+  const id = typeof recipe === "string" ? recipe : recipe.id;
+  return id.startsWith("catalog-") ? id : `catalog-${id}`;
 }
 
-function normalizedUnit(ingredient: CatalogueIngredient): { quantity: number; unit: IngredientUnit } {
-  if (ingredient.quantite_normalisee !== undefined && ingredient.unite_normalisee !== undefined) {
-    return { quantity: ingredient.quantite_normalisee, unit: ingredient.unite_normalisee };
-  }
-  if (ingredient.unite === "kg") return { quantity: ingredient.quantite * 1000, unit: "g" };
-  if (ingredient.unite === "l") return { quantity: ingredient.quantite * 1000, unit: "ml" };
-  if (ingredient.unite === "g" || ingredient.unite === "ml") return { quantity: ingredient.quantite, unit: ingredient.unite };
-  if (ingredient.unite === "c. à s.") return { quantity: ingredient.quantite, unit: "c_soupe" };
-  if (ingredient.unite === "c. à c.") return { quantity: ingredient.quantite, unit: "c_cafe" };
-  if (ingredient.unite === "cm") return { quantity: ingredient.quantite * 5, unit: "g" };
-  return { quantity: ingredient.quantite, unit: "piece" };
-}
-
-function seasonsFor(recipe: CatalogueRecipe): readonly Season[] {
-  const mapping: Record<string, Season> = {
-    printemps: "spring",
-    ete: "summer",
-    automne: "autumn",
-    hiver: "winter",
-    "toute-annee": "all-year",
-  };
-  return [...new Set(recipe.saisons.map((season) => mapping[season]).filter(Boolean))];
+export function catalogueRecipeIdOf(favoriteId: string): string {
+  return favoriteId.startsWith("catalog-") ? favoriteId.slice("catalog-".length) : favoriteId;
 }
 
 export function catalogueImageFor(recipe: CatalogueRecipe): string {
@@ -166,44 +160,81 @@ export function catalogueImageFor(recipe: CatalogueRecipe): string {
     : RECIPE_IMAGE_PLACEHOLDER;
 }
 
-function plannerIngredient(raw: CatalogueIngredient, portions: number): Ingredient {
-  const normalized = normalizedUnit(raw);
-  return {
-    id: raw.id ?? `catalog-${normalize(raw.nom)}`,
-    name: raw.nom,
-    quantity: Math.max(0.01, normalized.quantity / Math.max(1, portions)),
-    unit: normalized.unit,
-    category: raw.categorie_courses,
-    ...(raw.allergenes.length ? { allergens: raw.allergenes } : {}),
-  };
+/** Categories that complete a meal rather than make one. */
+const SIDE_DISH_CATEGORIES = new Set(["accompagnement", "boisson", "dessert", "snack", "sauce"]);
+
+export type PlannerExclusionKind = "duplicate" | "side-dish" | "editorial";
+
+export interface PlannerAvailability {
+  plannable: boolean;
+  kind?: PlannerExclusionKind;
 }
 
-export const IMPORTED_PLAN_RECIPES: readonly Recipe[] = CATALOGUE_RECIPES
-  .filter((recipe) => recipe.app.planner.eligible)
-  .map((recipe) => ({
-    id: `catalog-${recipe.id}`,
-    title: recipe.titre,
-    mealTypes: recipe.app.planner.meal_types,
-    diet: recipe.app.planner.diets,
-    prepMinutes: recipe.app.planner.active_minutes ?? (recipe.temps.preparation + recipe.temps.cuisson),
-    costPerPortion: recipe.app.planner.cost_per_portion_eur,
-    seasons: seasonsFor(recipe),
-    equipment: recipe.app.planner.equipment,
-    allergens: recipe.app.planner.allergens,
-    tags: [...recipe.tags, recipe.categorie, ...recipe.ingredients.map((item) => normalize(item.nom))],
-    ingredients: recipe.ingredients.map((ingredient) => plannerIngredient(ingredient, recipe.portions)),
-    nutrition: {
-      calories: recipe.nutrition_par_portion.calories,
-      protein: recipe.nutrition_par_portion.proteines_g,
-      fiber: recipe.nutrition_par_portion.fibres_g,
-      estimated: true,
-      note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif.",
-    },
-    description: reviewFor(recipe).summary,
-    steps: recipe.etapes,
-    conservation: recipe.conservation,
-    image: catalogueImageFor(recipe),
-  }));
+/**
+ * Explains whether a catalogue recipe can enter a weekly menu. Ineligibility is
+ * an explicit editorial decision recorded per recipe; it is reported, never
+ * overridden.
+ */
+export function plannerAvailabilityFor(recipe: CatalogueRecipe): PlannerAvailability {
+  if (recipe.app.duplicate_of) return { plannable: false, kind: "duplicate" };
+  if (recipe.app.planner.eligible) return { plannable: true };
+  return { plannable: false, kind: SIDE_DISH_CATEGORIES.has(recipe.categorie) ? "side-dish" : "editorial" };
+}
+
+export interface CatalogueFilters {
+  category: string;
+  /** Maximum hands-on minutes, or 0 for no limit. */
+  maxActiveMinutes: number;
+  cost: "" | "economique" | "moyen" | "eleve";
+  season: string;
+  diet: string;
+  withoutAllergen: string;
+  plannableOnly: boolean;
+  sort: "title" | "time" | "cost";
+}
+
+export const EMPTY_CATALOGUE_FILTERS: CatalogueFilters = {
+  category: "all",
+  maxActiveMinutes: 0,
+  cost: "",
+  season: "",
+  diet: "",
+  withoutAllergen: "",
+  plannableOnly: false,
+  sort: "title",
+};
+
+export function catalogueActiveMinutes(recipe: CatalogueRecipe): number {
+  return recipe.app.planner.active_minutes ?? recipe.temps.preparation + recipe.temps.cuisson;
+}
+
+/** Applies the browsing filters, then the requested order. Data only, no UI. */
+export function filterCatalogueRecipes(
+  recipes: readonly CatalogueRecipe[],
+  filters: CatalogueFilters,
+  normalizedQuery = "",
+): CatalogueRecipe[] {
+  const matches = recipes.filter((recipe) => {
+    if (filters.category !== "all" && recipe.categorie !== filters.category) return false;
+    if (filters.maxActiveMinutes > 0 && catalogueActiveMinutes(recipe) > filters.maxActiveMinutes) return false;
+    if (filters.cost && recipe.cout !== filters.cost) return false;
+    if (filters.season && !recipe.saisons.includes(filters.season) && !recipe.saisons.includes("toute-annee")) return false;
+    if (filters.diet && !recipe.regimes.includes(filters.diet)) return false;
+    if (filters.withoutAllergen && recipe.app.planner.allergens.includes(filters.withoutAllergen)) return false;
+    if (filters.plannableOnly && !plannerAvailabilityFor(recipe).plannable) return false;
+    if (!normalizedQuery) return true;
+    const searchable = `${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")} ${recipe.tags.join(" ")}`
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    return searchable.includes(normalizedQuery);
+  });
+
+  const costRank = { economique: 0, moyen: 1, eleve: 2 } as const;
+  return matches.sort((left, right) => {
+    if (filters.sort === "time") return catalogueActiveMinutes(left) - catalogueActiveMinutes(right) || left.titre.localeCompare(right.titre, "fr");
+    if (filters.sort === "cost") return costRank[left.cout] - costRank[right.cout] || left.titre.localeCompare(right.titre, "fr");
+    return left.titre.localeCompare(right.titre, "fr");
+  });
+}
 
 export function catalogueCategoryName(id: string): string {
   return CATALOGUE_CATEGORIES.find((category) => category.id === id)?.nom ?? id;

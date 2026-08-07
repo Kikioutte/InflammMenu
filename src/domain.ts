@@ -32,6 +32,8 @@ export interface Ingredient {
   unit: IngredientUnit;
   category: IngredientCategory;
   allergens?: readonly string[];
+  /** Everyday cupboard ingredient explicitly excluded from shopping lists. */
+  pantryStaple?: boolean;
 }
 
 export interface Nutrition {
@@ -50,6 +52,11 @@ export interface Recipe {
   /** Diets with which the recipe is compatible. */
   diet: readonly DietMode[];
   prepMinutes: number;
+  /**
+   * Hands-off time before the dish is ready: soaking, chilling, marinating or
+   * fermenting. Never counted in prepMinutes, which is active cooking time.
+   */
+  restMinutes?: number;
   costPerPortion: number;
   seasons: readonly Season[];
   equipment: readonly Equipment[];
@@ -73,9 +80,17 @@ export interface UserProfile {
   maxPrepMinutes: number;
   allergies: readonly string[];
   excludedIngredientIds: readonly string[];
+  /** Recipes the user asked never to be offered again. */
+  dislikedRecipeIds: readonly string[];
+  /** Recipes kept available but pushed down: the « bof » of a three-level rating. */
+  softDislikedRecipeIds: readonly string[];
+  /**
+   * Weekly frequencies the generator aims for. Editorial defaults follow the
+   * Mediterranean dietary pattern; they are goals, not nutritional guarantees.
+   */
+  weeklyTargets: { legumeMeals: number; fishMeals: number };
   diet: DietMode;
   equipment: readonly Equipment[];
-  calorieTarget?: number;
 }
 
 export interface PlannedMeal {
@@ -86,6 +101,15 @@ export interface PlannedMeal {
   portions: number;
   source: "generated" | "replacement" | "manual";
   completed?: boolean;
+  /** Kept as-is when the week is generated again. */
+  locked?: boolean;
+  /**
+   * Slot identifier of the meal cooked in a larger batch. A leftover meal
+   * reuses that recipe and requires no additional cooking session.
+   */
+  leftoverOf?: string;
+  /** Meal taken outside the household: no cooking, no shopping, no cost. */
+  skipped?: boolean;
 }
 
 export interface WeeklyPlan {
@@ -99,12 +123,25 @@ export interface WeeklyPlan {
   version: 1;
 }
 
+/** Quantity already at home, deducted from the shopping list. */
+export interface PantryAmount {
+  quantity: number;
+  unit: IngredientUnit;
+}
+
+export interface ShoppingAmount {
+  quantity: number;
+  unit: IngredientUnit;
+}
+
 export interface ShoppingItem {
   ingredientId: string;
   name: string;
   category: IngredientCategory;
-  quantity: number;
-  unit: IngredientUnit;
+  /** Exact culinary quantities, kept separate when no reviewed conversion exists. */
+  amounts: readonly ShoppingAmount[];
+  /** Practical packaging guidance that never overwrites the culinary quantities. */
+  purchaseSuggestion?: string;
   checked: boolean;
   inPantry: boolean;
 }
@@ -117,6 +154,9 @@ export const DEFAULT_PROFILE: UserProfile = {
   maxPrepMinutes: 30,
   allergies: [],
   excludedIngredientIds: [],
+  dislikedRecipeIds: [],
+  softDislikedRecipeIds: [],
+  weeklyTargets: { legumeMeals: 2, fishMeals: 2 },
   diet: "classic",
   equipment: ["hob", "oven", "microwave", "blender", "toaster"],
 };
