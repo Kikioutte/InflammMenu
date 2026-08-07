@@ -172,6 +172,37 @@ test("app updates are watched without touching a page that has no worker yet", a
   }
 });
 
+test("the first service-worker controller is not mistaken for an update", async () => {
+  const { watchForAppUpdate } = await import("../src/storage.ts");
+  const originalNavigator = globalThis.navigator;
+  const listeners = new Map();
+  let notified = 0;
+  try {
+    Object.defineProperty(globalThis, "navigator", {
+      configurable: true,
+      value: {
+        serviceWorker: {
+          controller: null,
+          addEventListener: (type, handler) => listeners.set(`sw:${type}`, handler),
+          removeEventListener: (type) => listeners.delete(`sw:${type}`),
+          getRegistration: () => Promise.resolve(null),
+        },
+      },
+    });
+
+    const stop = watchForAppUpdate(() => { notified += 1; });
+    await Promise.resolve();
+    listeners.get("sw:controllerchange")?.();
+    assert.equal(notified, 0, "la première prise de contrôle correspond à l’installation initiale");
+
+    listeners.get("sw:controllerchange")?.();
+    assert.equal(notified, 1, "un remplacement ultérieur du contrôleur signale une mise à jour");
+    stop();
+  } finally {
+    Object.defineProperty(globalThis, "navigator", { value: originalNavigator, configurable: true });
+  }
+});
+
 test("weekly targets are persisted and clamped, with defaults for older profiles", () => {
   assert.deepEqual(migrateAppState(state())?.profile.weeklyTargets, { legumeMeals: 2, fishMeals: 2 });
   assert.deepEqual(

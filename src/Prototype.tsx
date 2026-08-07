@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type ComponentType, type SyntheticEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ComponentType, type SyntheticEvent } from "react";
 import {
   ArchiveIcon,
   ArrowLeftIcon,
@@ -27,7 +27,6 @@ import {
   MoonIcon,
 } from "@radix-ui/react-icons";
 import {
-  BottomSheet,
   Carousel,
   FlowStack,
   KeyboardInput,
@@ -37,6 +36,7 @@ import {
   type FlowControls,
   type FlowScreen,
 } from "./mobile";
+import * as Dialog from "@radix-ui/react-dialog";
 import {
   buildShoppingList,
   formatShoppingListText,
@@ -127,6 +127,40 @@ import "@fontsource/dm-sans/600.css";
 
 type TabId = "home" | "week" | "courses" | "favorites";
 type IconType = ComponentType<{ className?: string }>;
+type AppStateUpdate = AppState | ((current: AppState) => AppState);
+
+type AppStateStore = {
+  getSnapshot: () => AppState;
+  subscribe: (listener: () => void) => () => void;
+  setState: (update: AppStateUpdate) => void;
+};
+
+function createAppStateStore(initial: AppState): AppStateStore {
+  let state = initial;
+  const listeners = new Set<() => void>();
+  return {
+    getSnapshot: () => state,
+    subscribe: (listener) => {
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    },
+    setState: (update) => {
+      const next = typeof update === "function" ? update(state) : update;
+      if (Object.is(next, state)) return;
+      state = next;
+      listeners.forEach((listener) => listener());
+    },
+  };
+}
+
+function LiveAppState({ store, children }: { store: AppStateStore; children: (state: AppState) => React.ReactNode }) {
+  const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
+  return <>{children(state)}</>;
+}
+
+function popFlowToRoot(flow: FlowControls) {
+  for (let depth = flow.stack.length - 1; depth > 0; depth -= 1) flow.pop();
+}
 
 const DAY_LABELS = ["Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam.", "Dim."];
 const MEAL_LABELS: Record<MealType, string> = {
@@ -718,7 +752,7 @@ function MealActionsSheet({ plan, slotId, onClose, onReplace, onToggleLock, onTo
   const skipped = planned?.skipped === true;
   const run = (action: () => void) => { onClose(); action(); };
   return (
-    <BottomSheet open={Boolean(planned && recipe)} onOpenChange={(open) => { if (!open) onClose(); }} title={recipe?.title ?? "Repas"} description={planned ? `${DAY_LABELS[planned.dayIndex]} · ${MEAL_LABELS[planned.mealType]}` : undefined}>
+    <WebSheet open={Boolean(planned && recipe)} onOpenChange={(open) => { if (!open) onClose(); }} title={recipe?.title ?? "Repas"} description={planned ? `${DAY_LABELS[planned.dayIndex]} · ${MEAL_LABELS[planned.mealType]}` : undefined}>
       {planned && recipe ? <div className="meal-actions" data-testid="meal-actions-sheet">
         <button type="button" data-testid="action-completed" disabled={skipped} onClick={() => run(() => onToggleCompleted(planned))}><CheckCircledIcon /> {planned.completed ? "Ne plus marquer comme cuisiné" : "Marquer comme cuisiné"}</button>
         <button type="button" data-testid="action-swap" disabled={skipped || isLeftover || hasLeftover} onClick={() => run(() => onSwap(planned))}><ReloadIcon /> Échanger avec un autre repas</button>
@@ -727,7 +761,7 @@ function MealActionsSheet({ plan, slotId, onClose, onReplace, onToggleLock, onTo
         <button type="button" data-testid="action-skip" onClick={() => run(() => onToggleSkipped(planned))}><Cross2Icon /> {skipped ? "Remettre ce repas au menu" : "Repas hors foyer"}</button>
         <button type="button" data-testid="action-replace" disabled={skipped} onClick={() => run(() => onReplace(planned, recipe))}><ReloadIcon /> Remplacer par une autre recette</button>
       </div> : null}
-    </BottomSheet>
+    </WebSheet>
   );
 }
 
@@ -836,6 +870,7 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
         <button className="secondary-button" type="button" data-testid="share-list" onClick={() => void share()}><Share2Icon /> Partager</button>
         <button className="secondary-button" type="button" data-testid="copy-list" onClick={() => void copy()}><CopyIcon /> Copier</button>
         <button className="secondary-button" type="button" data-testid="download-list" onClick={download}><DownloadIcon /> Fichier</button>
+        <button className="secondary-button" type="button" data-testid="print-list" onClick={() => window.print()}><CopyIcon /> Imprimer</button>
       </div>
       <p className="export-feedback" role="status" aria-live="polite" data-testid="export-feedback">{exportFeedback}</p>
       <button className={`secondary-button pantry-button ${pantryMode ? "is-active" : ""}`} type="button" onClick={() => setPantryMode((value) => !value)}><CheckIcon /> {pantryMode ? "Terminer l’inventaire" : "Retirer ce que j’ai déjà"}</button>
@@ -1013,7 +1048,7 @@ function FavoritesView({ favoriteIds, history, catalogue, catalogueError, onLoad
           </label>
         </div>
         <p className="catalogue-count">{catalogueRecipes.length} résultat{catalogueRecipes.length > 1 ? "s" : ""}</p>
-        <BottomSheet open={filtersOpen} onOpenChange={setFiltersOpen} title="Filtrer le catalogue" description="Les filtres se cumulent et n’altèrent jamais les relectures éditoriales.">
+        <WebSheet open={filtersOpen} onOpenChange={setFiltersOpen} title="Filtrer le catalogue" description="Les filtres se cumulent et n’altèrent jamais les relectures éditoriales.">
           <div className="catalogue-filter-sheet" data-testid="catalogue-filter-sheet">
             <fieldset><legend>Temps actif maximum</legend><div className="choice-row">{[0, 15, 30, 45].map((minutes) => <button type="button" key={minutes} className={filters.maxActiveMinutes === minutes ? "is-selected" : ""} data-testid={`filter-time-${minutes}`} onClick={() => setFilters((current) => ({ ...current, maxActiveMinutes: minutes }))}>{minutes === 0 ? "Peu importe" : `${minutes} min`}</button>)}</div></fieldset>
             <fieldset><legend>Coût</legend><div className="choice-row">{([["", "Peu importe"], ["economique", "Économique"], ["moyen", "Moyen"], ["eleve", "Élevé"]] as const).map(([value, label]) => <button type="button" key={label} className={filters.cost === value ? "is-selected" : ""} onClick={() => setFilters((current) => ({ ...current, cost: value }))}>{label}</button>)}</div></fieldset>
@@ -1026,7 +1061,7 @@ function FavoritesView({ favoriteIds, history, catalogue, catalogueError, onLoad
               <button type="button" className="primary-button" onClick={() => setFiltersOpen(false)}>Voir {catalogueRecipes.length} recette{catalogueRecipes.length > 1 ? "s" : ""}</button>
             </div>
           </div>
-        </BottomSheet>
+        </WebSheet>
         <div className="catalogue-list">{catalogueRecipes.map((recipe) => { const review = reviewFor(recipe); const availability = plannerAvailabilityFor(recipe); const exclusion = availability.kind ? PLANNER_EXCLUSION_TEXT[availability.kind] : undefined; return <button type="button" className="catalogue-card" key={recipe.id} onClick={() => onOpenCatalogue(recipe)}><img className="catalogue-card__image" src={catalogueImageFor(recipe)} alt="" loading="lazy" decoding="async" onError={handleRecipeImageError} /><span className={`catalogue-card__status is-${review.status}`}>{review.status === "validated" ? "Profil cohérent" : "Avec repères"}</span>{exclusion ? <span className="catalogue-card__planner">{exclusion.badge}</span> : null}<small>{catalogueCategoryName(recipe.categorie)} · {formatCatalogueCardDuration(recipe)}</small><strong>{recipe.titre}</strong><p>{review.summary}</p><span className="catalogue-card__meta">{recipe.regimes.slice(0, 2).map((item) => item.replaceAll("-", " ")).join(" · ")}<ChevronRightIcon /></span></button>; })}</div>
       </section> : <div className="history-list">{history.length ? <>
         {history.map((plan) => <article className="history-card" key={plan.id} data-testid={`history-card-${plan.id}`}>
@@ -1193,6 +1228,34 @@ function PlanSlotView({ plan, recipe, profile, onConfirm }: {
       </section>;
     })}
   </main></MobileScroll>;
+}
+
+/** Responsive web dialog used by the PWA outside the phone-only prototype runtime. */
+function WebSheet({ open, onOpenChange, title, description, children }: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title: string;
+  description?: string;
+  children: React.ReactNode;
+}) {
+  return <Dialog.Root open={open} onOpenChange={onOpenChange}>
+    <Dialog.Portal>
+      <Dialog.Overlay className="web-sheet__overlay" />
+      <Dialog.Content className="web-sheet__content">
+        <div className="web-sheet__handle" aria-hidden="true" />
+        <header className="web-sheet__header">
+          <span>
+            <Dialog.Title>{title}</Dialog.Title>
+            {description ? <Dialog.Description>{description}</Dialog.Description> : null}
+          </span>
+          <Dialog.Close asChild>
+            <button type="button" className="icon-button web-sheet__close" aria-label={`Fermer « ${title} »`}><Cross2Icon /></button>
+          </Dialog.Close>
+        </header>
+        <div className="web-sheet__body">{children}</div>
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>;
 }
 
 function Header({ title, onBack, action }: { title: string; onBack: () => void; action?: React.ReactNode }) {
@@ -1397,12 +1460,15 @@ export type RecipeRating = "loved" | "neutral" | "meh" | "avoided";
 
 function RecipeView({ recipe, planned, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate }: { recipe: Recipe; planned?: PlannedMeal; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void }) {
   const [portions, setPortionsState] = useState(planned?.portions ?? 2);
-  const setPortions = (update: (value: number) => number) => setPortionsState((value) => {
-    const next = Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, update(value)));
-    if (next !== value) onPortionsChange?.(next);
-    return next;
-  });
+  const setPortions = (update: (value: number) => number) => {
+    const next = Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, update(portions)));
+    if (next === portions) return;
+    setPortionsState(next);
+    onPortionsChange?.(next);
+  };
   const [isFavorite, setIsFavorite] = useState(favorite);
+  useEffect(() => { if (planned) setPortionsState(planned.portions); }, [planned?.portions]);
+  useEffect(() => { setIsFavorite(favorite); }, [favorite]);
   const ingredients = scaleIngredients(recipe, portions);
   const advance = advancePrepFor(recipe);
   const [catalogueRecipe, setCatalogueRecipe] = useState<CatalogueRecipe | undefined>();
@@ -1486,19 +1552,13 @@ function ReplaceView({ plan, current, profile, onConfirm }: { plan: WeeklyPlan; 
   return <MobileScroll className="app-screen"><main className="page-content pushed-page replace-page"><div className="page-heading"><span className="eyebrow">À la place de</span><h1>{currentRecipe?.title}</h1><p>Les allergies, le régime et le temps actif maximum restent strictement respectés.</p></div><Carousel ariaLabel="Motif du remplacement" className="reason-carousel" contentClassName="reason-carousel__track">{["Plus rapide", "Moins cher", "Végétarien", "Autres ingrédients", "Réutiliser mes ingrédients"].map((item) => <button type="button" className={`reason-chip ${reason === item ? "is-selected" : ""}`} key={item} data-testid={`reason-${normalizeText(item).replace(/\s+/g, "-")}`} onClick={() => setReason(item)}>{item}</button>)}</Carousel><div className="replacement-list">{candidates.map((recipe) => <button type="button" key={recipe.id} className={`replacement-card ${selectedId === recipe.id ? "is-selected" : ""}`} onClick={() => setSelectedId(recipe.id)}><img src={recipe.image} alt="" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {recipe.costPerPortion.toFixed(2).replace(".", ",")} €/portion</small><strong>{recipe.title}</strong><em>{recipe.description}</em></span><i>{selectedId === recipe.id ? <CheckIcon /> : null}</i></button>)}</div>{currentRecipe ? <button type="button" className={`dislike-toggle ${dislikeCurrent ? "is-selected" : ""}`} aria-pressed={dislikeCurrent} data-testid="dislike-current" onClick={() => setDislikeCurrent((value) => !value)}><span className="dislike-toggle__box" aria-hidden="true">{dislikeCurrent ? <CheckIcon /> : null}</span><span><strong>Ne plus me proposer « {currentRecipe.title} »</strong><small>La recette est écartée des prochaines semaines. Réversible depuis votre profil.</small></span></button> : null}{selected ? <button type="button" className="primary-button full-button" onClick={() => onConfirm(selected, { dislikeCurrent })}>Choisir ce repas</button> : <p className="notice-banner">Aucune alternative compatible avec ces critères.</p>}</main></MobileScroll>;
 }
 
-function AppShell({ flow }: { flow: FlowControls }) {
+function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateStore }) {
   const [tab, setTab] = useState<TabId>("home");
-  const [appState, setAppState] = useState<AppState>(DEFAULT_APP_STATE);
+  const appState = useSyncExternalStore(appStore.subscribe, appStore.getSnapshot, appStore.getSnapshot);
+  const setAppState = appStore.setState;
   const [hydrated, setHydrated] = useState(false);
   const [archivedWeek, setArchivedWeek] = useState<WeeklyPlan | null>(null);
   const { offline, canInstall, install, updateReady, reload } = useInstallAndConnectivity();
-  /**
-   * FlowStack renders pushed screens from the closure they were created in, and
-   * AppShell state changes do not re-render them. Their handlers must therefore
-   * read the live state here instead of a plan captured at push time.
-   */
-  const stateRef = useRef(appState);
-  stateRef.current = appState;
   useRecipeRegistry(appState.customRecipes);
 
   const rateRecipe = (recipeId: string, rating: RecipeRating) => setAppState((current) => {
@@ -1516,7 +1576,7 @@ function AppShell({ flow }: { flow: FlowControls }) {
     };
   });
   const ratingOf = (recipeId: string): RecipeRating => {
-    const live = stateRef.current;
+    const live = appStore.getSnapshot();
     if (live.profile.dislikedRecipeIds.includes(recipeId)) return "avoided";
     if (live.profile.softDislikedRecipeIds.includes(recipeId)) return "meh";
     if (live.favoriteRecipeIds.includes(recipeId)) return "loved";
@@ -1616,7 +1676,7 @@ function AppShell({ flow }: { flow: FlowControls }) {
   });
 
   function createPlan(target: "current" | "upcoming" = "current"): WeeklyPlan {
-    const live = stateRef.current;
+    const live = appStore.getSnapshot();
     const monday = mondayOf();
     if (target === "upcoming") monday.setDate(monday.getDate() + 7);
     const plan = makePlan(
@@ -1679,14 +1739,13 @@ function AppShell({ flow }: { flow: FlowControls }) {
 
   function replacementScreen(planned: PlannedMeal): FlowScreen {
     return { id: `replace-${planned.id}`, title: "Remplacer le repas", headerHeight: 56, header: (route) => <Header title="Remplacer" onBack={route.pop} />, render: (route) => {
-      const plan = stateRef.current.currentPlan;
+      const liveState = appStore.getSnapshot();
+      const plan = liveState.currentPlan;
       if (!plan) return <EmptyRoot icon={CalendarIcon} title="Semaine indisponible" body="Cette semaine n’est plus au menu." />;
-      return <ReplaceView plan={plan} current={planned} profile={stateRef.current.profile} onConfirm={(recipe, options) => {
-        let updatedMeal = planned;
+      return <ReplaceView plan={plan} current={planned} profile={liveState.profile} onConfirm={(recipe, options) => {
         setAppState((current) => {
           if (!current.currentPlan) return current;
           const updatedPlan = replacePlannedMeal(current.currentPlan, planned.id, recipe, ACTIVE_RECIPES);
-          updatedMeal = updatedPlan.meals.find((meal) => meal.id === planned.id) ?? planned;
           return {
             ...withUpdatedPlan(current, updatedPlan),
             profile: options.dislikeCurrent && !current.profile.dislikedRecipeIds.includes(planned.recipeId)
@@ -1694,23 +1753,24 @@ function AppShell({ flow }: { flow: FlowControls }) {
               : current.profile,
           };
         });
-        route.replace(recipeScreen(recipe, updatedMeal));
+        route.pop();
       }} />;
     } };
   }
 
   function planSlotScreen(recipe: Recipe): FlowScreen {
     return { id: `plan-${recipe.id}`, title: "Planifier", headerHeight: 56, header: (route) => <Header title="Planifier" onBack={route.pop} />, render: (route) => {
-      const plan = stateRef.current.currentPlan;
+      const liveState = appStore.getSnapshot();
+      const plan = liveState.currentPlan;
       if (!plan) return <EmptyRoot icon={CalendarIcon} title="Aucune semaine" body="Générez une semaine avant d’y placer une recette." />;
-      return <PlanSlotView plan={plan} recipe={recipe} profile={stateRef.current.profile} onConfirm={(slot) => {
-        const live = stateRef.current;
+      return <PlanSlotView plan={plan} recipe={recipe} profile={liveState.profile} onConfirm={(slot) => {
+        const live = appStore.getSnapshot();
         if (!live.currentPlan) return "Cette semaine n’est plus disponible.";
         try {
           const updated = assignRecipeToSlot(live.currentPlan, slot, recipe, ACTIVE_RECIPES, live.profile);
           setAppState((current) => withUpdatedPlan(current, updated));
           setTab("week");
-          route.pop();
+          popFlowToRoot(route);
           return null;
         } catch (error) {
           return error instanceof Error ? error.message : "Impossible de planifier cette recette.";
@@ -1728,7 +1788,30 @@ function AppShell({ flow }: { flow: FlowControls }) {
   }
 
   function recipeScreen(recipe: Recipe, planned?: PlannedMeal): FlowScreen {
-    return { id: `recipe-${planned?.id ?? recipe.id}`, title: recipe.title, headerHeight: 56, header: (route) => <Header title="Recette" onBack={route.pop} />, render: (route) => <RecipeView recipe={recipe} planned={planned} favorite={stateRef.current.favoriteRecipeIds.includes(recipe.id)} onFavorite={() => toggleFavorite(recipe.id)} rating={ratingOf(recipe.id)} onRate={(rating) => rateRecipe(recipe.id, rating)} note={stateRef.current.recipeNotes[recipe.id] ?? ""} onNoteChange={(note) => setRecipeNote(recipe.id, note)} onDuplicate={() => route.push(customRecipeScreen(customRecipeFrom(recipe)))} onReplace={planned ? () => route.replace(replacementScreen(planned)) : undefined} onPlan={!planned ? () => route.push(planSlotScreen(recipe)) : undefined} onPortionsChange={planned ? (portions) => setAppState((current) => (current.currentPlan ? withUpdatedPlan(current, setMealPortions(current.currentPlan, planned.id, portions, ACTIVE_RECIPES)) : current)) : undefined} onCook={(portions) => route.push(cookingScreen(recipe, portions))} /> };
+    return {
+      id: `recipe-${planned?.id ?? recipe.id}`,
+      title: recipe.title,
+      headerHeight: 56,
+      header: (route) => <Header title="Recette" onBack={route.pop} />,
+      render: (route) => <LiveAppState store={appStore}>{(live) => {
+        const livePlanned = planned ? live.currentPlan?.meals.find((meal) => meal.id === planned.id) ?? planned : undefined;
+        return <RecipeView
+          recipe={recipe}
+          planned={livePlanned}
+          favorite={live.favoriteRecipeIds.includes(recipe.id)}
+          onFavorite={() => toggleFavorite(recipe.id)}
+          rating={ratingOf(recipe.id)}
+          onRate={(rating) => rateRecipe(recipe.id, rating)}
+          note={live.recipeNotes[recipe.id] ?? ""}
+          onNoteChange={(note) => setRecipeNote(recipe.id, note)}
+          onDuplicate={() => route.push(customRecipeScreen(customRecipeFrom(recipe)))}
+          onReplace={livePlanned ? () => route.replace(replacementScreen(livePlanned)) : undefined}
+          onPlan={!livePlanned ? () => route.push(planSlotScreen(recipe)) : undefined}
+          onPortionsChange={livePlanned ? (portions) => setAppState((current) => (current.currentPlan ? withUpdatedPlan(current, setMealPortions(current.currentPlan, livePlanned.id, portions, ACTIVE_RECIPES)) : current)) : undefined}
+          onCook={(portions) => route.push(cookingScreen(recipe, portions))}
+        />;
+      }}</LiveAppState>,
+    };
   }
 
   function replayPlan(plan: WeeklyPlan): void {
@@ -1749,24 +1832,24 @@ function AppShell({ flow }: { flow: FlowControls }) {
   }
 
   function historyPlanScreen(plan: WeeklyPlan): FlowScreen {
-    return { id: `history-${plan.id}`, title: formatWeekRange(plan.startsOn), headerHeight: 56, header: (route) => <Header title="Semaine archivée" onBack={route.pop} />, render: (route) => <HistoryPlanView plan={plan} profile={stateRef.current.profile} onOpenRecipe={(recipe) => route.push(recipeScreen(recipe))} onReplay={() => { replayPlan(plan); setTab("week"); route.pop(); }} /> };
+    return { id: `history-${plan.id}`, title: formatWeekRange(plan.startsOn), headerHeight: 56, header: (route) => <Header title="Semaine archivée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <HistoryPlanView plan={plan} profile={live.profile} onOpenRecipe={(recipe) => route.push(recipeScreen(recipe))} onReplay={() => { replayPlan(plan); setTab("week"); route.pop(); }} />}</LiveAppState> };
   }
 
   function catalogueRecipeScreen(recipe: CatalogueRecipe): FlowScreen {
     const favoriteId = catalogueFavoriteId(recipe);
     const projected = recipeById.get(favoriteId);
-    return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <CatalogueRecipeView recipe={recipe} favorite={stateRef.current.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} /> };
+    return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView recipe={recipe} favorite={live.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} />}</LiveAppState> };
   }
 
-  const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <InformationView state={stateRef.current} onRestore={(restored) => { setArchivedWeek(null); setAppState(restored); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} /> });
+  const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView state={live} onRestore={(restored) => { setArchivedWeek(null); setAppState(restored); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
   const openProfile = () => flow.push({ id: "profile", title: "Profil alimentaire", headerHeight: 56, header: (route) => <Header title="Mon profil" onBack={route.pop} />, render: (route) => <ProfileView initial={appState.profile} onOpenInformation={() => route.push(informationScreen())} onSave={(profile) => { setAppState((current) => ({ ...current, profile, onboardingCompleted: true })); route.pop(); }} /> });
-  const openGenerate = () => flow.push({ id: "generate", title: "Générer ma semaine", headerHeight: 56, header: (route) => <Header title="Nouvelle semaine" onBack={route.pop} />, render: (route) => <GenerateView profile={stateRef.current.profile} lockedCount={preservableLockedMeals(stateRef.current.currentPlan, ACTIVE_RECIPES, stateRef.current.profile).length} canPrepareNext={Boolean(stateRef.current.currentPlan)} onCreate={createPlan} onComplete={(target) => { if (target === "current") setTab("week"); route.pop(); }} /> });
+  const openGenerate = () => flow.push({ id: "generate", title: "Générer ma semaine", headerHeight: 56, header: (route) => <Header title="Nouvelle semaine" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <GenerateView profile={live.profile} lockedCount={preservableLockedMeals(live.currentPlan, ACTIVE_RECIPES, live.profile).length} canPrepareNext={Boolean(live.currentPlan)} onCreate={createPlan} onComplete={(target) => { if (target === "current") setTab("week"); route.pop(); }} />}</LiveAppState> });
   function leftoverScreen(planned: PlannedMeal, recipe: Recipe): FlowScreen {
     return { id: `leftover-${planned.id}`, title: "Restes", headerHeight: 56, header: (route) => <Header title="Cuisiner en double" onBack={route.pop} />, render: (route) => {
-      const plan = stateRef.current.currentPlan;
+      const plan = appStore.getSnapshot().currentPlan;
       if (!plan) return <EmptyRoot icon={ArchiveIcon} title="Aucune semaine" body="Générez une semaine avant de prévoir des restes." />;
       return <LeftoverView plan={plan} source={planned} recipe={recipe} onConfirm={(targetSlotId) => {
-        const live = stateRef.current.currentPlan;
+        const live = appStore.getSnapshot().currentPlan;
         if (!live) return "Cette semaine n’est plus disponible.";
         try {
           const updated = planLeftover(live, planned.id, targetSlotId, ACTIVE_RECIPES);
@@ -1782,10 +1865,10 @@ function AppShell({ flow }: { flow: FlowControls }) {
 
   function swapScreen(planned: PlannedMeal): FlowScreen {
     return { id: `swap-${planned.id}`, title: "Échanger", headerHeight: 56, header: (route) => <Header title="Échanger" onBack={route.pop} />, render: (route) => {
-      const plan = stateRef.current.currentPlan;
+      const plan = appStore.getSnapshot().currentPlan;
       if (!plan) return <EmptyRoot icon={CalendarIcon} title="Aucune semaine" body="Générez une semaine avant de déplacer un repas." />;
       return <SwapView plan={plan} source={planned} onConfirm={(targetSlotId) => {
-        const live = stateRef.current.currentPlan;
+        const live = appStore.getSnapshot().currentPlan;
         if (!live) return "Cette semaine n’est plus disponible.";
         try {
           const updated = swapPlannedMeals(live, planned.id, targetSlotId);
@@ -1825,6 +1908,7 @@ function AppShell({ flow }: { flow: FlowControls }) {
 }
 
 export default function Prototype() {
-  const initial = useMemo<FlowScreen>(() => ({ id: "root", render: (flow) => <AppShell flow={flow} /> }), []);
+  const appStore = useMemo(() => createAppStateStore(DEFAULT_APP_STATE), []);
+  const initial = useMemo<FlowScreen>(() => ({ id: "root", render: (flow) => <AppShell flow={flow} appStore={appStore} /> }), [appStore]);
   return <FlowStack initial={initial} />;
 }

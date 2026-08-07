@@ -164,11 +164,12 @@ test("la disponibilité au planificateur est expliquée sans lever la barrière 
 test("un échec de chargement du catalogue n'est pas mémorisé", async () => {
   const source = await readFile(sourceUrl, "utf8");
   const loader = source.slice(source.indexOf("export function loadCatalogue"));
+  const recovery = loader.slice(loader.indexOf(".catch("));
 
-  assert.match(loader, /\.catch\(/, "le rejet doit être attrapé");
-  assert.match(loader, /cataloguePromise = null/, "la promesse échouée doit être oubliée pour permettre un réessai");
+  assert.match(recovery, /\.catch\(/, "le rejet doit être attrapé");
+  assert.match(recovery, /cataloguePromise = null/, "la promesse échouée doit être oubliée pour permettre un réessai");
   assert.ok(
-    loader.indexOf("cataloguePromise = null") < loader.indexOf("throw"),
+    recovery.indexOf("cataloguePromise = null") < recovery.indexOf("throw"),
     "la promesse est vidée avant de propager l'erreur",
   );
 });

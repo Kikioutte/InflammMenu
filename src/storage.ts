@@ -544,7 +544,14 @@ export function watchForAppUpdate(onUpdateReady: () => void): () => void {
   if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return () => undefined;
 
   let cancelled = false;
+  let pageWasControlled = Boolean(navigator.serviceWorker.controller);
   const notify = () => { if (!cancelled) onUpdateReady(); };
+  const handleControllerChange = () => {
+    // The first controller acquired after installation is the initial offline
+    // worker, not an application update. Later controller changes are updates.
+    if (pageWasControlled) notify();
+    pageWasControlled = true;
+  };
   const trackInstalling = (registration: ServiceWorkerRegistration) => {
     const installing = registration.installing;
     if (!installing) return;
@@ -554,7 +561,7 @@ export function watchForAppUpdate(onUpdateReady: () => void): () => void {
     });
   };
 
-  navigator.serviceWorker.addEventListener("controllerchange", notify);
+  navigator.serviceWorker.addEventListener("controllerchange", handleControllerChange);
   void navigator.serviceWorker.getRegistration().then((registration) => {
     if (!registration || cancelled) return;
     if (registration.waiting && navigator.serviceWorker.controller) notify();
@@ -564,7 +571,7 @@ export function watchForAppUpdate(onUpdateReady: () => void): () => void {
 
   return () => {
     cancelled = true;
-    navigator.serviceWorker.removeEventListener("controllerchange", notify);
+    navigator.serviceWorker.removeEventListener("controllerchange", handleControllerChange);
   };
 }
 

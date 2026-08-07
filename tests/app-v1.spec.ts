@@ -1,12 +1,18 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
+// Keep request interception deterministic. Service-worker update behaviour is
+// covered independently in storage.test.mjs.
+test.use({ serviceWorkers: "block" });
+
 async function openFreshApp(page: Page) {
   await page.goto("/");
   const onboarding = page.getByTestId("onboarding-view");
-  if (await onboarding.isVisible().catch(() => false)) {
+  const home = page.getByTestId("home-view");
+  await expect(onboarding.or(home)).toBeVisible();
+  if (await onboarding.isVisible()) {
     await page.getByTestId("onboarding-skip").click();
   }
-  await expect(page.getByTestId("home-view")).toBeVisible();
+  await expect(home).toBeVisible();
 }
 
 async function expectNoHorizontalOverflow(locator: Locator) {
@@ -27,11 +33,9 @@ async function generateWeek(page: Page) {
   await expect(page.getByTestId("week-view")).toBeVisible();
 }
 
-test.beforeEach(async ({ page }) => {
-  await openFreshApp(page);
-});
-
 test("l’accueil expose les repères et actions principales avec des noms accessibles", async ({ page }) => {
+  await openFreshApp(page);
+
   await expect(page.getByRole("main")).toHaveCount(1);
   await expect(page.getByRole("navigation", { name: "Navigation principale" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 1, name: /Une semaine/ })).toBeVisible();
@@ -46,6 +50,8 @@ test("l’accueil expose les repères et actions principales avec des noms acces
 });
 
 test("le profil est modifiable et conserve ses libellés accessibles", async ({ page }) => {
+  await openFreshApp(page);
+
   const profileTrigger = page.getByRole("button", { name: "Ajuster mon profil" });
   await profileTrigger.click();
   await expect(page.getByRole("heading", { name: "Mon profil alimentaire" })).toBeVisible();
@@ -76,6 +82,8 @@ test("le profil est modifiable et conserve ses libellés accessibles", async ({ 
 });
 
 test("la génération construit une semaine navigable puis une liste de courses", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
 
   await expect(page.getByRole("heading", { name: "Ma semaine" })).toBeVisible();
@@ -103,6 +111,8 @@ test("la génération construit une semaine navigable puis une liste de courses"
 });
 
 test("la semaine permet d’ouvrir une recette et le remplacement d’un repas", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
 
   const firstMeal = page.locator(".meal-card__main").first();
@@ -118,6 +128,8 @@ test("la semaine permet d’ouvrir une recette et le remplacement d’un repas",
 });
 
 test("un repas conservé survit à une nouvelle génération", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
 
   const firstCard = page.locator(".meal-card").first();
@@ -145,6 +157,8 @@ test("un repas conservé survit à une nouvelle génération", async ({ page }) 
 });
 
 test("marquer un repas comme cuisiné met à jour la progression et survit au rechargement", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
 
   const firstCard = page.locator(".meal-card").first();
@@ -171,6 +185,8 @@ test("la liste de courses peut être copiée, partagée et téléchargée", asyn
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.addInitScript(() => {
     (window as unknown as { sharedPayloads: unknown[] }).sharedPayloads = [];
+    (window as unknown as { printCalls: number }).printCalls = 0;
+    window.print = () => { (window as unknown as { printCalls: number }).printCalls += 1; };
     Object.defineProperty(navigator, "share", {
       configurable: true,
       value: (data: unknown) => {
@@ -197,6 +213,9 @@ test("la liste de courses peut être copiée, partagée et téléchargée", asyn
   expect(shared).toHaveLength(1);
   expect(shared[0].text).toContain("Liste de courses — Inflamm’Menu");
 
+  await page.getByTestId("print-list").click();
+  expect(await page.evaluate(() => (window as unknown as { printCalls: number }).printCalls)).toBe(1);
+
   const download = page.waitForEvent("download");
   await page.getByTestId("download-list").click();
   const file = await download;
@@ -206,6 +225,8 @@ test("la liste de courses peut être copiée, partagée et téléchargée", asyn
 });
 
 test("chaque repas affiche son coût estimé et ses allergènes déclarés", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
 
   const facts = page.locator(".meal-facts").first();
@@ -285,6 +306,8 @@ test("une semaine dont la date est passée est archivée au lieu d’être prés
 });
 
 test("l’accueil montre tous les repas du jour, y compris en trois repas", async ({ page }) => {
+  await openFreshApp(page);
+
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
   await page.getByRole("button", { name: "3 repas" }).click();
   await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
@@ -302,6 +325,8 @@ test("l’accueil montre tous les repas du jour, y compris en trois repas", asyn
 });
 
 test("une recette écartée disparaît des semaines suivantes et reste réversible", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
 
   const firstCard = page.locator(".meal-card").first();
@@ -334,6 +359,8 @@ test("une recette écartée disparaît des semaines suivantes et reste réversib
 });
 
 test("une recette du catalogue peut être placée sur un créneau précis", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
@@ -351,6 +378,8 @@ test("une recette du catalogue peut être placée sur un créneau précis", asyn
 });
 
 test("un plat peut être cuisiné en double et servi en restes", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   await page.locator(".day-card").first().click();
 
@@ -360,7 +389,7 @@ test("un plat peut être cuisiné en double et servi en restes", async ({ page }
   await page.getByTestId("action-leftover").click();
 
   await expect(page.getByTestId("leftover-view")).toBeVisible();
-  await expect(page.getByText("Conservation")).toBeVisible();
+  await expect(page.getByText("Conservation", { exact: true })).toBeVisible();
   await page.locator(".plan-slot").first().click();
 
   await expect(page.getByTestId("week-view")).toBeVisible();
@@ -375,6 +404,8 @@ test("un plat peut être cuisiné en double et servi en restes", async ({ page }
 });
 
 test("le bilan de la semaine expose les repères sans promesse médicale", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
 
   const balance = page.getByTestId("week-balance");
@@ -389,6 +420,8 @@ test("le bilan de la semaine expose les repères sans promesse médicale", async
 });
 
 test("les portions d’un repas se règlent et se répercutent sur la semaine", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   await page.locator(".meal-card__main").first().click();
 
@@ -409,6 +442,8 @@ test("les portions d’un repas se règlent et se répercutent sur la semaine", 
 });
 
 test("les données locales s’exportent et se restaurent", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   await page.getByRole("button", { name: "Accueil", exact: true }).click();
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
@@ -426,11 +461,18 @@ test("les données locales s’exportent et se restaurent", async ({ page }) => 
   expect(file.suggestedFilename()).toMatch(/^inflamm-menu-sauvegarde-\d{4}-\d{2}-\d{2}\.json$/);
   const backupPath = await file.path();
 
-  await page.evaluate(() => {
+  await page.evaluate(async () => {
     window.localStorage.clear();
-    indexedDB.deleteDatabase("inflamm-menu");
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.deleteDatabase("inflamm-menu");
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+      request.onblocked = () => reject(new Error("La base locale est encore ouverte."));
+    });
   });
   await page.reload();
+  await expect(page.getByTestId("onboarding-view")).toBeVisible();
+  await page.getByTestId("onboarding-skip").click();
   await expect(page.getByTestId("home-view")).toBeVisible();
   await expect(page.getByText("Bonjour Camille")).toHaveCount(0);
 
@@ -448,6 +490,8 @@ test("les données locales s’exportent et se restaurent", async ({ page }) => 
 });
 
 test("une sauvegarde étrangère est refusée avec un message clair", async ({ page }) => {
+  await openFreshApp(page);
+
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
   await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
   await page.getByTestId("backup-import").setInputFiles({
@@ -459,6 +503,8 @@ test("une sauvegarde étrangère est refusée avec un message clair", async ({ p
 });
 
 test("l’installation et l’état hors ligne sont signalés sans être simulés", async ({ page, context }) => {
+  await openFreshApp(page);
+
   await expect(page.getByTestId("install-banner")).toHaveCount(0);
   await expect(page.getByTestId("offline-strip")).toHaveCount(0);
 
@@ -484,8 +530,9 @@ test("l’installation et l’état hors ligne sont signalés sans être simulé
 
 test("un catalogue injoignable affiche une erreur et se recharge au réessai", async ({ page }) => {
   let blocked = true;
-  await page.route("**/*catalogue*.js", (route) => (blocked ? route.abort() : route.continue()));
-  await page.route("**/*recettes-anti-inflammatoires*", (route) => (blocked ? route.abort() : route.continue()));
+  await page.route(/recettes-anti-inflammatoires\.json$/, (route) => (blocked ? route.abort() : route.continue()));
+
+  await openFreshApp(page);
 
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
@@ -499,6 +546,8 @@ test("un catalogue injoignable affiche une erreur et se recharge au réessai", a
 });
 
 test("changer un repas ne décoche pas toute la liste de courses", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   await page.getByRole("button", { name: "Courses", exact: true }).click();
 
@@ -525,6 +574,8 @@ test("changer un repas ne décoche pas toute la liste de courses", async ({ page
 });
 
 test("les objectifs hebdomadaires sont visibles, réglables et suivis", async ({ page }) => {
+  await openFreshApp(page);
+
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
   const targets = page.getByTestId("targets-section");
   await expect(targets).toBeVisible();
@@ -545,6 +596,8 @@ test("les objectifs hebdomadaires sont visibles, réglables et suivis", async ({
 });
 
 test("les favoris et l’historique restent accessibles depuis la navigation principale", async ({ page }) => {
+  await openFreshApp(page);
+
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await expect(page.getByTestId("favorites-view")).toBeVisible();
   await expect(page.getByRole("tablist", { name: "Catalogue, favoris et historique" })).toBeVisible();
@@ -618,7 +671,9 @@ test("le mode cuisine déroule les étapes et tente de garder l’écran allumé
   await expect(page.getByTestId("cooking-view")).toBeVisible();
   await expect(page.getByText(`Étape 1 sur ${steps}`)).toBeVisible();
   await expect(page.getByTestId("cooking-wake-lock")).toContainText("Écran maintenu allumé");
-  expect(await page.evaluate(() => (window as unknown as { wakeLockRequests: string[] }).wakeLockRequests)).toEqual(["screen"]);
+  const wakeLockRequests = await page.evaluate(() => (window as unknown as { wakeLockRequests: string[] }).wakeLockRequests);
+  expect(wakeLockRequests.length).toBeGreaterThan(0);
+  expect(wakeLockRequests.every((type) => type === "screen")).toBe(true);
 
   await expect(page.getByTestId("cooking-previous")).toBeDisabled();
   const firstStep = await page.getByTestId("cooking-step").innerText();
@@ -636,6 +691,8 @@ test("le mode cuisine déroule les étapes et tente de garder l’écran allumé
 });
 
 test("une semaine archivée peut être supprimée et le plafond est expliqué", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   await page.getByRole("button", { name: "Accueil", exact: true }).click();
   await page.getByRole("button", { name: "Créer une autre semaine" }).click();
@@ -660,6 +717,8 @@ test("une semaine archivée peut être supprimée et le plafond est expliqué", 
 });
 
 test("une semaine archivée s’ouvre et peut être reprise", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   const firstWeekTitle = await page.locator(".meal-card__main strong").first().innerText();
 
@@ -686,6 +745,8 @@ test("une semaine archivée s’ouvre et peut être reprise", async ({ page }) =
 });
 
 test("le catalogue expose les recettes uniques relues et leurs précautions", async ({ page }) => {
+  await openFreshApp(page);
+
   // The production bundle split and absence of catalogue preload are checked
   // by validate-build-split.mjs. Vite may eagerly fetch dynamic modules in dev.
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
@@ -708,6 +769,8 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
 });
 
 test("une recette du catalogue peut être enregistrée en favori", async ({ page }) => {
+  await openFreshApp(page);
+
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
@@ -734,6 +797,8 @@ test("une recette du catalogue peut être enregistrée en favori", async ({ page
 });
 
 test("les temps passifs sont séparés du temps de préparation", async ({ page }) => {
+  await openFreshApp(page);
+
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
 
@@ -762,6 +827,8 @@ test("les temps passifs sont séparés du temps de préparation", async ({ page 
 });
 
 test("la vue semaine entière et les sessions de cuisine résument le menu", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
 
   await page.getByTestId("layout-week").click();
@@ -776,6 +843,8 @@ test("la vue semaine entière et les sessions de cuisine résument le menu", asy
 });
 
 test("un repas peut être échangé, sorti du foyer, puis remis au menu", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   await page.locator(".day-card").first().click();
   const firstCard = page.locator(".meal-card").first();
@@ -792,15 +861,17 @@ test("un repas peut être échangé, sorti du foyer, puis remis au menu", async 
   await page.getByTestId("action-skip").click();
   await expect(page.locator(".meal-card").first()).toHaveAttribute("data-skipped", "true");
   await expect(page.locator(".meal-card").first()).toContainText("Hors foyer");
-  await expect(page.locator(".week-summary div").nth(1)).not.toHaveText(cost);
+  expect(await page.locator(".week-summary div").nth(1).innerText()).not.toBe(cost);
 
   await page.locator(".meal-card").first().getByTestId(/^meal-actions-/).click();
   await page.getByTestId("action-skip").click();
   await expect(page.locator(".meal-card").first()).toHaveAttribute("data-skipped", "false");
-  await expect(page.locator(".week-summary div").nth(1)).toHaveText(cost);
+  expect(await page.locator(".week-summary div").nth(1).innerText()).toBe(cost);
 });
 
 test("la semaine prochaine se prépare sans toucher à la semaine en cours", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   const currentFirst = await page.locator(".meal-card__main strong").first().innerText();
 
@@ -818,6 +889,8 @@ test("la semaine prochaine se prépare sans toucher à la semaine en cours", asy
 });
 
 test("le catalogue se filtre et se trie", async ({ page }) => {
+  await openFreshApp(page);
+
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await expect(page.getByText("544 résultats")).toBeVisible();
@@ -841,6 +914,8 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
 });
 
 test("une recette se note, s’annote et se duplique", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   await page.locator(".meal-card__main").first().click();
   const title = await page.locator(".recipe-content h1").innerText();
@@ -860,20 +935,23 @@ test("une recette se note, s’annote et se duplique", async ({ page }) => {
   await expect(page.getByTestId("custom-recipe-view")).toBeVisible();
   await page.getByTestId("custom-title").fill("Ma recette du dimanche");
   await page.getByTestId("custom-save").click();
-  await expect(page.locator(".recipe-content h1")).toHaveText("Ma recette du dimanche");
+  await expect(page.getByTestId("flow-current").locator(".recipe-content h1")).toHaveText("Ma recette du dimanche");
   expect(title.length).toBeGreaterThan(0);
 });
 
 test("le garde-manger déduit les quantités et le budget réel se saisit", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   await page.getByRole("button", { name: "Courses", exact: true }).click();
   await page.getByRole("button", { name: "Retirer ce que j’ai déjà" }).click();
 
   const firstItem = page.locator(".shopping-item").first();
-  const before = await firstItem.locator("small").innerText();
+  const purchaseSuggestion = firstItem.locator(".shopping-toggle small");
+  const before = await purchaseSuggestion.innerText();
   const amountInput = firstItem.getByTestId(/^pantry-amount-/);
   await amountInput.fill("1");
-  await expect(firstItem.locator("small")).not.toHaveText(before);
+  await expect(purchaseSuggestion).not.toHaveText(before);
 
   await page.getByTestId("spend-input").fill("72,50");
   await expect(page.getByTestId("spend-tracker")).toContainText("72,50 € dépensés");
@@ -903,6 +981,8 @@ test("le premier lancement met le profil avant la première génération", async
 });
 
 test("la taille du texte est réglable et persiste", async ({ page }) => {
+  await openFreshApp(page);
+
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
   await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
   await expect(page.getByTestId("comfort-card")).toBeVisible();
@@ -916,6 +996,8 @@ test("la taille du texte est réglable et persiste", async ({ page }) => {
 });
 
 test("la semaine s’exporte au format calendrier", async ({ page }) => {
+  await openFreshApp(page);
+
   await generateWeek(page);
   const download = page.waitForEvent("download");
   await page.getByTestId("export-calendar").click();

@@ -109,14 +109,16 @@ export const DUPLICATE_CATALOGUE_RECIPES = {
   r039: "salade-betterave-chevre-lentilles",
 } as const;
 let cataloguePromise: Promise<CatalogueData> | null = null;
+const catalogueUrl = new URL("./data/recettes-anti-inflammatoires.json", import.meta.url).href;
 
 export function loadCatalogue(): Promise<CatalogueData> {
-  // Vite handles JSON modules in both development and production. Import
-  // attributes make this request fail in the development server on Safari.
-  cataloguePromise ??= import("./data/recettes-anti-inflammatoires.json")
-    .then((module) => module.default as unknown as CatalogueData)
-    // A failed chunk must not be memoized: one network hiccup would otherwise
-    // break the catalogue for the whole session, retry included.
+  // Fetching the emitted JSON asset keeps it outside the initial bundle and,
+  // unlike a failed dynamic module import, can genuinely be retried.
+  cataloguePromise ??= fetch(catalogueUrl, { headers: { Accept: "application/json" } })
+    .then((response) => {
+      if (!response.ok) throw new Error(`Catalogue indisponible (${response.status})`);
+      return response.json() as Promise<CatalogueData>;
+    })
     .catch((error: unknown) => {
       cataloguePromise = null;
       throw error instanceof Error ? error : new Error("Catalogue indisponible");

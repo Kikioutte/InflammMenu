@@ -96,7 +96,8 @@ test("the planner adapter prefers v2.1 canonical values with a v2 fallback", () 
   assert.match(plannerGeneratorSource, /ingredient\.quantite_normalisee !== undefined/);
   assert.match(plannerGeneratorSource, /active_minutes \?\? recipe\.temps\.preparation \+ recipe\.temps\.cuisson/);
   assert.match(plannerGeneratorSource, /pantry_staple === true/);
-  assert.match(catalogueSource, /import\("\.\/data\/recettes-anti-inflammatoires\.json"/);
+  assert.match(catalogueSource, /new URL\("\.\/data\/recettes-anti-inflammatoires\.json", import\.meta\.url\)/);
+  assert.match(catalogueSource, /fetch\(catalogueUrl/);
 });
 
 test("demonstrably unrelated foods do not carry gluten or tree-nut allergens", () => {
