@@ -91,7 +91,7 @@ jobs:
       - name: Validate the alternative deployment worker
         run: npm run test:sites
 
-      - name: Record validation and remove temporary automation
+      - name: Record the validated source changes
         run: |
           cat > docs/remediation-2026-08-08.md <<'EOF'
           # Corrections de l’audit du 8 août 2026
@@ -122,13 +122,9 @@ jobs:
             scripts/apply-audit-remediation-consolidation.py \
             scripts/apply-audit-remediation-hotfix.py \
             scripts/apply-final-generated-test-fixes.py \
-            scripts/apply-csp-dev-compat.py \
-            .github/workflows/remediate-core-temp.yml \
-            .github/workflows/finalize-remediation-temp.yml \
-            .github/workflows/consolidate-remediation-temp.yml \
-            .github/workflows/export-source-temp.yml \
-            .github/workflows/hotfix-remediation-temp.yml \
-            .github/workflows/csp-compat-temp.yml
+            scripts/apply-csp-dev-compat.py
+          git restore --source=HEAD --staged --worktree .github/workflows
+          rm -f .github/workflows/validate-pr.yml
           git add -A
           git diff --cached --check
           git commit -m "Finaliser toutes les corrections validées de l’audit"
