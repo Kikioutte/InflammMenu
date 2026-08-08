@@ -11,9 +11,10 @@ test("service worker requires a complete shell before skipWaiting", () => {
   assert.match(worker, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/);
 });
 
-test("service worker caches catalogue requests and bounds runtime images", () => {
-  assert.match(worker, /recettes-anti-inflammatoires\.json/);
-  assert.match(worker, /CATALOGUE_CACHE/);
+test("service worker revalidates catalogue requests and bounds runtime images", () => {
+  assert.match(worker, /async function networkFirst/);
+  assert.match(worker, /fetch\(request, \{ cache: "no-cache" \}\)/);
+  assert.match(worker, /event\.respondWith\(networkFirst\(request, CATALOGUE_CACHE\)\)/);
   assert.match(worker, /MAX_RUNTIME_IMAGES = 120/);
   assert.match(worker, /trimCache/);
 });
@@ -23,12 +24,10 @@ test("precache discovers unquoted CSS url references", () => {
   assert.match(precache, /woff2/);
 });
 
-
 test("precache includes JSON resources used for offline planner cautions", () => {
   assert.match(precache, /json/);
   assert.match(precache, /planner-cautions/);
 });
-
 
 test("document CSP does not require HTTPS rewriting during local validation", async () => {
   const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
@@ -37,7 +36,6 @@ test("document CSP does not require HTTPS rewriting during local validation", as
   assert.match(html, /object-src 'none'/);
 });
 
-
 test("publishes canonical metadata and a Pages fallback", async () => {
   const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
   const pages = await readFile(new URL("../scripts/prepare-github-pages.mjs", import.meta.url), "utf8");
@@ -45,8 +43,8 @@ test("publishes canonical metadata and a Pages fallback", async () => {
   assert.match(html, /property="og:url"/);
   assert.match(html, /rel="icon"/);
   assert.match(pages, /404\.html/);
+  assert.match(pages, /og\\\.\\\(\?:png\|jpe\?g\\\)/);
 });
-
 
 test("document CSP allows the Vite development preamble without opening remote scripts", async () => {
   const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
