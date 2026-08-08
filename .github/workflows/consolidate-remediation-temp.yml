@@ -7,6 +7,7 @@ on:
       - scripts/apply-audit-remediation-consolidation.py
       - scripts/apply-planner-caution-split.py
       - scripts/apply-audit-remediation-hotfix.py
+      - scripts/apply-final-generated-test-fixes.py
       - .github/workflows/consolidate-remediation-temp.yml
   workflow_dispatch:
 
@@ -47,6 +48,7 @@ jobs:
           fi
           python3 scripts/apply-audit-remediation-consolidation.py
           python3 scripts/apply-audit-remediation-hotfix.py
+          python3 scripts/apply-final-generated-test-fixes.py
           python3 scripts/apply-csp-dev-compat.py
 
       - name: Optimize the social preview image
@@ -118,6 +120,7 @@ jobs:
             scripts/finalize-audit-remediation.py \
             scripts/apply-audit-remediation-consolidation.py \
             scripts/apply-audit-remediation-hotfix.py \
+            scripts/apply-final-generated-test-fixes.py \
             scripts/apply-csp-dev-compat.py \
             .github/workflows/remediate-core-temp.yml \
             .github/workflows/finalize-remediation-temp.yml \
