@@ -754,3 +754,30 @@ button { -webkit-tap-highlight-color: transparent; }
   .app-shell, .app-screen, .page-content { height: auto; overflow: visible; background: #fff; }
   .meal-card { break-inside: avoid; box-shadow: none; }
 }
+
+
+/* Audit remediation: bounded catalogue rendering and recoverable status UI. */
+.catalogue-card { content-visibility: auto; contain-intrinsic-size: 360px; }
+.catalogue-more { margin-bottom: 28px; }
+.app-status-banner { margin: 10px 14px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.app-status-banner button { flex: 0 0 36px; width: 36px; height: 36px; border: 0; border-radius: 999px; background: rgba(255,255,255,.55); color: inherit; display: grid; place-items: center; }
+.fatal-error { min-height: 100dvh; padding: 48px 24px; background: var(--ivory); color: var(--ink); font-family: var(--sans); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+.fatal-error > svg { width: 42px; height: 42px; color: var(--terracotta); }
+.fatal-error h1 { margin: 0; font-family: var(--serif); font-size: clamp(32px, 7vw, 48px); }
+.fatal-error p { max-width: 560px; color: var(--muted); line-height: 1.6; }
+.fatal-error button { width: min(100%, 420px); padding: 0 20px; }
+
+
+/* Audit remediation: WCAG 2.2 target sizes without enlarging the visual progress bar. */
+.cooking-progress button { min-width: 44px; min-height: 44px; height: 44px; padding: 19px 0; }
+.history-card__delete, .stepper button, .aisle-order button { min-width: 44px; min-height: 44px; }
+
+
+/* Audit remediation: explicit keyboard focus and reduced-motion completion. */
+:where(button, a, input, textarea, select, [tabindex]):focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}

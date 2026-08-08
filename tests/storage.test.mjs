@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const { APP_STATE_VERSION, migrateAppState } = await import("../src/storage.ts");
@@ -66,7 +67,13 @@ test("locked and cooked marks survive a save/load round trip", () => {
     estimatedCost: 12,
     version: 1,
   };
-  const migrated = migrateAppState(state({ currentPlan, history: [currentPlan] }));
+  const archivedPlan = {
+    ...currentPlan,
+    id: "week-2026-07-27-archive",
+    startsOn: "2026-07-27",
+    generatedAt: "2026-07-27T00:00:00.000Z",
+  };
+  const migrated = migrateAppState(state({ currentPlan, history: [archivedPlan] }));
 
   assert.equal(migrated?.currentPlan?.meals[0].locked, true);
   assert.equal(migrated?.currentPlan?.meals[1].completed, true);
@@ -298,7 +305,27 @@ test("the new local settings are validated like everything else", async () => {
     recipeNotes: { r1: "  ", r2: "moins de sel", r3: 42 },
     shoppingCategoryOrder: ["grocery", "inconnu", "grocery"],
     actualSpend: { w1: 42.5, w2: "beaucoup", w3: -5 },
-    customRecipes: [{ id: "sans-prefixe", title: "x" }, { id: "perso-1", title: "Ma version", mealTypes: ["lunch"], ingredients: [], steps: [], prepMinutes: 10, costPerPortion: 2 }],
+    customRecipes: [
+      { id: "sans-prefixe", title: "x" },
+      {
+        id: "perso-1",
+        title: "Ma version",
+        mealTypes: ["lunch"],
+        diet: ["classic", "vegetarian", "no-pork"],
+        prepMinutes: 10,
+        costPerPortion: 2,
+        seasons: ["all-year"],
+        equipment: [],
+        allergens: [],
+        tags: ["maison"],
+        ingredients: [{ id: "carrot", name: "Carotte", quantity: 100, unit: "g", category: "fruit-vegetable" }],
+        nutrition: { calories: 100, protein: 2, fiber: 3, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+        description: "Une version personnelle valide.",
+        steps: ["Préparer les ingrédients."],
+        conservation: "À consommer rapidement.",
+        image: "/assets/recipe-placeholder.svg",
+      },
+    ],
     textScale: "gigantesque",
     remindersEnabled: "oui",
   }));
@@ -312,4 +339,48 @@ test("the new local settings are validated like everything else", async () => {
   assert.equal(messy?.textScale, "normal");
   assert.equal(messy?.remindersEnabled, false, "seule la valeur booléenne vraie active les rappels");
   assert.deepEqual(migrateAppState(messy), messy, "l'état reste stable après un second passage");
+});
+
+
+test("audit remediation: strict imports and nested custom recipes", async () => {
+  const { importAppState, migrateAppState } = await import("../src/storage.ts");
+  assert.throws(() => importAppState("{}"), /aucune donnée Inflamm.Menu reconnue/i);
+  assert.throws(() => importAppState(JSON.stringify({ hello: 1 })), /aucune donnée Inflamm.Menu reconnue/i);
+  assert.throws(() => importAppState(JSON.stringify({ format: "inflamm-menu-backup", version: 999, state: {} })), /version plus récente/i);
+
+  const malformed = migrateAppState({
+    profile: {},
+    customRecipes: [{
+      id: "perso-danger",
+      title: "Danger",
+      mealTypes: ["lunch"],
+      ingredients: [],
+      steps: ["Étape"],
+      prepMinutes: 10,
+      costPerPortion: 2,
+    }],
+  });
+  assert.equal(malformed.customRecipes.length, 0);
+});
+
+test("audit remediation: plan normalization removes duplicate slots and invalid leftovers", async () => {
+  const { normalizePlan } = await import("../src/storage.ts");
+  const normalized = normalizePlan({
+    startsOn: "2026-08-03",
+    meals: [
+      { id: "a", dayIndex: 0, mealType: "lunch", recipeId: "r1", portions: 2, source: "generated", leftoverOf: "a" },
+      { id: "b", dayIndex: 0, mealType: "lunch", recipeId: "r2", portions: 2, source: "generated" },
+      { id: "c", dayIndex: 1, mealType: "lunch", recipeId: "r3", portions: 2, source: "generated", leftoverOf: "a" },
+    ],
+  });
+  assert.equal(normalized.meals.length, 2);
+  assert.equal(normalized.meals[0].leftoverOf, undefined);
+  assert.equal(normalized.meals[1].leftoverOf, undefined);
+  assert.equal(normalizePlan({ startsOn: "2026-08-04", meals: [{ id: "a", dayIndex: 0, mealType: "lunch", recipeId: "r", portions: 1, source: "generated" }] }), null);
+});
+
+
+test("legacy localStorage replica wins a revision tie", async () => {
+  const source = await readFile(new URL("../src/storage.ts", import.meta.url), "utf8");
+  assert.match(source, /localState\.stateRevision >= indexedState\.stateRevision/);
 });

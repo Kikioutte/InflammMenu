@@ -39,3 +39,15 @@ writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 
 writeFileSync(path.join(output, ".nojekyll"), "");
 console.log(`Prepared GitHub Pages build for ${base}`);
+
+
+// Remove test-only mobile chrome from the public Pages artifact.
+const { rm } = await import("node:fs/promises");
+for (const relative of ["assets/iphone", "assets/android", "assets/status", "qa"]) {
+  await rm(new URL(`../dist/pages/${relative}`, import.meta.url), { recursive: true, force: true });
+}
+
+
+// Create the GitHub Pages SPA fallback after every path has been rebased.
+const { copyFile } = await import("node:fs/promises");
+await copyFile(new URL("../dist/pages/index.html", import.meta.url), new URL("../dist/pages/404.html", import.meta.url));

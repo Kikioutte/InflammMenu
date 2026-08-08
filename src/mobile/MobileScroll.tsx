@@ -33,6 +33,10 @@ function shouldIgnoreScrollDrag(target: EventTarget | null) {
   );
 }
 
+function prefersReducedMotion() {
+  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 type DragSample = {
   y: number;
   time: number;
@@ -98,7 +102,7 @@ export function MobileScroll({ className, children }: MobileScrollProps) {
   }, []);
 
   const setRubberBand = useCallback((value: number) => {
-    const clamped = Math.max(-scrollPhysics.maxOverdrag, Math.min(scrollPhysics.maxOverdrag, value));
+    const clamped = prefersReducedMotion() ? 0 : Math.max(-scrollPhysics.maxOverdrag, Math.min(scrollPhysics.maxOverdrag, value));
     overscrollRef.current = clamped;
     setOverscrollY(clamped);
   }, []);
@@ -108,7 +112,7 @@ export function MobileScroll({ className, children }: MobileScrollProps) {
   }, []);
 
   const rubberBand = useCallback((distance: number) => {
-    return distance * scrollPhysics.overdragScale;
+    return prefersReducedMotion() ? 0 : distance * scrollPhysics.overdragScale;
   }, []);
 
   const pushDragSample = useCallback((y: number) => {
@@ -121,6 +125,7 @@ export function MobileScroll({ className, children }: MobileScrollProps) {
   }, []);
 
   const releaseVelocity = useCallback(() => {
+    if (prefersReducedMotion()) return 0;
     const samples = dragSamplesRef.current;
     if (samples.length < 2) return 0;
 
@@ -138,6 +143,10 @@ export function MobileScroll({ className, children }: MobileScrollProps) {
 
   const springBack = useCallback((initialVelocity = 0) => {
     stopInertia();
+    if (prefersReducedMotion()) {
+      setRubberBand(0);
+      return;
+    }
 
     let position = overscrollRef.current;
     let velocity = Math.max(-1400, Math.min(1400, initialVelocity));
@@ -242,6 +251,10 @@ export function MobileScroll({ className, children }: MobileScrollProps) {
   }, [keyboardHeight, updateThumb]);
 
   const startMomentum = useCallback((scroll: HTMLDivElement, initialVelocity: number) => {
+    if (prefersReducedMotion()) {
+      updateThumb(true);
+      return;
+    }
     let velocity = initialVelocity;
 
     const step = (time: number) => {

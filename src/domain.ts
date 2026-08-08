@@ -66,6 +66,8 @@ export interface Recipe {
   ingredients: readonly Ingredient[];
   nutrition: Nutrition;
   description: string;
+  /** Reviewed safety or preparation caution, available even when the full catalogue is offline. */
+  caution?: string;
   steps: readonly string[];
   conservation: string;
   image: string;

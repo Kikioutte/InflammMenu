@@ -20,19 +20,22 @@
     "validate:final": "node scripts/validate-final-batches.mjs",
     "update:runtime-lock": "node scripts/update-mobile-runtime-lock.mjs",
     "build:pages": "npm run check:runtime && npm run validate:planner && tsc && vite build --base=/InflammMenu/ --outDir dist/pages && node scripts/prepare-github-pages.mjs && node scripts/generate-precache.mjs dist/pages /InflammMenu/ && node scripts/validate-build-split.mjs dist/pages",
-    "test:runtime": "playwright test",
+    "test:runtime": "playwright test tests/mobile-runtime.spec.ts",
     "test:engine": "node --test tests/engine.test.mjs",
     "test:storage": "node --test tests/storage.test.mjs",
     "test:catalogue": "npm run validate:catalogue && node --test tests/catalogue.test.mjs tests/catalogue-schema-v21.test.mjs",
     "test:merge": "node --test tests/merge-final-batches.test.mjs",
-    "test:sites": "node --test tests/sites-worker.test.mjs",
-    "test:preview": "npm run check:runtime && npm run validate:research && npm run validate:pilots && npm run validate:final && npm run validate:image-prompts && npm run validate:v1-images && npm run validate:images:present && npm run validate:ingredient-ids && npm run validate:planner && npm run test:catalogue && npm run test:engine && npm run test:storage && npm run test:merge",
+    "test:sites": "npm run build && node --test tests/sites-worker.test.mjs",
+    "test:preview": "npm run check:runtime && npm run validate:research && npm run validate:pilots && npm run validate:final && npm run validate:image-prompts && npm run validate:v1-images && npm run validate:images:present && npm run validate:ingredient-ids && npm run validate:planner && npm run test:catalogue && npm run test:engine && npm run test:storage && npm run test:merge && npm run test:sw",
     "test:release": "npm run test:preview && npm run validate:images",
     "status:production": "node scripts/report-production-status.mjs",
     "predev": "npm run check:runtime",
     "dev": "vite",
     "prebuild": "npm run check:runtime && npm run validate:planner",
-    "build": "tsc && vite build && node scripts/generate-precache.mjs dist/client / && node scripts/validate-build-split.mjs dist/client && node scripts/prepare-sites-build.mjs"
+    "build": "tsc && vite build && node scripts/generate-precache.mjs dist/client / && node scripts/validate-build-split.mjs dist/client && node scripts/prepare-sites-build.mjs",
+    "test:app": "playwright test tests/app-v1.spec.ts",
+    "test:browser": "playwright test tests/app-v1.spec.ts tests/mobile-runtime.spec.ts",
+    "test:sw": "node --test tests/service-worker.test.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
@@ -53,5 +56,8 @@
     "@vitejs/plugin-react": "6.0.3",
     "typescript": "7.0.2",
     "vite": "8.1.3"
+  },
+  "overrides": {
+    "postcss": "8.5.18"
   }
 }

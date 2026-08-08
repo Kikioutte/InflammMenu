@@ -13,7 +13,7 @@ const serviceWorkerPath = path.join(output, "sw.js");
 const indexPath = path.join(output, "index.html");
 const manifestPath = path.join(output, "manifest.webmanifest");
 const excludedPath = /\/(?:recipes|iphone|android|status|qa)\//;
-const shellExtension = /\.(?:css|html|js|jpg|png|svg|webmanifest|woff2?)$/i;
+const shellExtension = /\.(?:css|html|js|json|jpg|png|svg|webmanifest|woff2?)$/i;
 
 for (const file of [serviceWorkerPath, indexPath, manifestPath]) {
   if (!existsSync(file)) throw new Error(`Fichier de build manquant : ${file}`);
@@ -43,6 +43,8 @@ const references = new Set([
   `${normalizedBase}index.html`,
   `${normalizedBase}manifest.webmanifest`,
 ]);
+const plannerCautionsPath = `${normalizedBase}data/planner-cautions.json`;
+if (existsSync(outputFileFor(plannerCautionsPath))) references.add(plannerCautionsPath);
 const indexHtml = readFileSync(indexPath, "utf8");
 for (const match of indexHtml.matchAll(/(?:src|href)=["']([^"']+)["']/g)) {
   const publicPath = toPublicPath(match[1]);
@@ -57,7 +59,11 @@ for (const icon of manifest.icons ?? []) {
 
 for (const file of filesIn(output).filter((candidate) => /\.(?:css|html|js)$/i.test(candidate))) {
   const contents = readFileSync(file, "utf8");
-  for (const match of contents.matchAll(/["'`](\/[^"'`\s)]+\.(?:jpg|png|svg|woff2?))["'`]/gi)) {
+  const discovered = [
+    ...contents.matchAll(/["'`](\/[^"'`\s)]+\.(?:jpg|png|svg|woff2?))["'`]/gi),
+    ...contents.matchAll(/url\(\s*["']?([^"')\s]+\.(?:jpg|png|svg|woff2?))["']?\s*\)/gi),
+  ];
+  for (const match of discovered) {
     const publicPath = toPublicPath(match[1]);
     if (publicPath) references.add(publicPath);
   }
