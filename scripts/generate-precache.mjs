@@ -13,6 +13,7 @@ const serviceWorkerPath = path.join(output, "sw.js");
 const indexPath = path.join(output, "index.html");
 const manifestPath = path.join(output, "manifest.webmanifest");
 const excludedPath = /\/(?:recipes|iphone|android|status|qa)\//;
+const socialImagePath = /\/og\.(?:png|jpe?g)$/i;
 const shellExtension = /\.(?:css|html|js|json|jpg|png|svg|webmanifest|woff2?)$/i;
 
 for (const file of [serviceWorkerPath, indexPath, manifestPath]) {
@@ -70,7 +71,7 @@ for (const file of filesIn(output).filter((candidate) => /\.(?:css|html|js)$/i.t
 }
 
 const appShell = [...references]
-  .filter((publicPath) => !excludedPath.test(publicPath) && !publicPath.endsWith("/og.png"))
+  .filter((publicPath) => !excludedPath.test(publicPath) && !socialImagePath.test(publicPath))
   .filter((publicPath) => publicPath === normalizedBase || shellExtension.test(publicPath))
   .filter((publicPath) => existsSync(outputFileFor(publicPath)))
   .sort();
@@ -78,8 +79,8 @@ const appShell = [...references]
 if (!appShell.includes(normalizedBase) || !appShell.includes(`${normalizedBase}index.html`)) {
   throw new Error("Le précache généré ne contient pas les points d’entrée de l’application.");
 }
-if (appShell.some((publicPath) => excludedPath.test(publicPath))) {
-  throw new Error("Le précache contient une image de recette, de QA ou de simulateur.");
+if (appShell.some((publicPath) => excludedPath.test(publicPath) || socialImagePath.test(publicPath))) {
+  throw new Error("Le précache contient une image de recette, de partage, de QA ou de simulateur.");
 }
 
 const hash = createHash("sha256");
