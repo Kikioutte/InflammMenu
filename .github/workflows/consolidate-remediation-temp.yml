@@ -5,7 +5,10 @@ on:
     branches: [agent/audit-remediation]
     paths:
       - scripts/apply-audit-remediation-consolidation.py
+      - scripts/apply-planner-caution-split.py
+      - scripts/apply-audit-remediation-hotfix.py
       - .github/workflows/consolidate-remediation-temp.yml
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -17,11 +20,8 @@ concurrency:
 jobs:
   consolidate:
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 100
     steps:
-      - name: Let the initial remediation workflow finish
-        run: sleep 360
-
       - name: Check out the latest correction branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -37,27 +37,34 @@ jobs:
       - name: Install current locked dependencies
         run: npm ci
 
-      - name: Complete the initial remediation if it has not committed yet
+      - name: Apply every remediation layer deterministically
         run: |
           if ! grep -q 'stateRevision: number' src/storage.ts; then
-            test -f scripts/apply-audit-remediation-core.py
-            test -f scripts/apply-audit-remediation-ui-pwa.py
-            test -f scripts/apply-planner-caution-split.py
-            test -f scripts/finalize-audit-remediation.py
             python3 scripts/apply-audit-remediation-core.py
             python3 scripts/apply-audit-remediation-ui-pwa.py
             python3 scripts/apply-planner-caution-split.py
             python3 scripts/finalize-audit-remediation.py
           fi
+          python3 scripts/apply-audit-remediation-consolidation.py
+          python3 scripts/apply-audit-remediation-hotfix.py
+          python3 scripts/apply-csp-dev-compat.py
 
-      - name: Apply final consolidation
-        run: python3 scripts/apply-audit-remediation-consolidation.py
+      - name: Optimize the social preview image
+        run: |
+          command -v ffmpeg
+          ffmpeg -hide_banner -loglevel error -y -i public/og.png \
+            -vf "scale=1200:630:force_original_aspect_ratio=increase,crop=1200:630" \
+            -frames:v 1 -q:v 3 public/og.jpg
+          test -s public/og.jpg
+          test "$(stat -c %s public/og.jpg)" -lt 400000
+          rm public/og.png
 
       - name: Regenerate reviewed data and the npm lockfile
         run: |
           npm run generate:planner
           npm install --package-lock-only --ignore-scripts
           npm ci
+          npm run update:runtime-lock
 
       - name: Validate unit suites and production build
         run: |
@@ -65,11 +72,10 @@ jobs:
           npm run check:runtime
           npm run test:preview
           npm run build:pages
-
-      - name: Verify offline caution is actually precached
-        run: |
           grep -q 'planner-cautions.json' dist/pages/sw.js
           test -s dist/pages/data/planner-cautions.json
+          test -s dist/pages/404.html
+          test -s dist/pages/og.jpg
 
       - name: Install Chromium for the browser suites
         run: npx playwright install --with-deps chromium
@@ -80,42 +86,46 @@ jobs:
           npm run test:runtime
 
       - name: Validate the alternative deployment worker
-        run: |
-          npm run build
-          npm run test:sites
+        run: npm run test:sites
 
-      - name: Record the successful validation and remove temporary automation
+      - name: Record validation and remove temporary automation
         run: |
           cat > docs/remediation-2026-08-08.md <<'EOF'
           # Corrections de l’audit du 8 août 2026
 
-          Cette branche corrige les anomalies confirmées relatives aux imports, au stockage, aux onglets multiples, aux semaines, aux repas verrouillés, aux restes, aux courses, aux exports, au catalogue hors ligne, au service worker, aux performances du catalogue, à l’accessibilité et à la CI.
+          Cette branche corrige les anomalies confirmées relatives aux imports, au stockage, aux onglets multiples, aux semaines, aux repas verrouillés, aux restes, aux courses, aux exports, aux notifications, au catalogue hors ligne, au service worker, aux performances du catalogue, à l’accessibilité, au responsive et à la CI.
 
           Le commit a été créé uniquement après réussite de :
 
-          - l’intégrité du runtime ;
-          - la suite `test:preview` ;
+          - l’intégrité mise à jour du runtime protégé ;
+          - la suite complète `test:preview` ;
           - la compilation et le build GitHub Pages ;
           - la vérification du précache des précautions hors ligne ;
+          - la présence de la page de repli `404.html` et de l’image sociale optimisée ;
           - `test:app` sous Chromium ;
-          - `test:runtime` sous Chromium ;
-          - le build alternatif et `test:sites`.
+          - `test:runtime` sous Chromium, mouvement réduit compris ;
+          - le build alternatif et `test:sites` exécuté de manière autonome.
 
           Les corrections restent sur une branche et une pull request en brouillon tant qu’elles ne sont pas fusionnées.
           EOF
           git config user.name "InflammMenu audit remediation"
           git config user.email "148545599+Kikioutte@users.noreply.github.com"
+          git rm -rf --ignore-unmatch .github/remediation
           git rm -f --ignore-unmatch \
             scripts/apply-audit-remediation-core.py \
             scripts/apply-audit-remediation-ui-pwa.py \
             scripts/apply-planner-caution-split.py \
             scripts/finalize-audit-remediation.py \
             scripts/apply-audit-remediation-consolidation.py \
+            scripts/apply-audit-remediation-hotfix.py \
+            scripts/apply-csp-dev-compat.py \
             .github/workflows/remediate-core-temp.yml \
             .github/workflows/finalize-remediation-temp.yml \
             .github/workflows/consolidate-remediation-temp.yml \
-            .github/workflows/export-source-temp.yml
+            .github/workflows/export-source-temp.yml \
+            .github/workflows/hotfix-remediation-temp.yml \
+            .github/workflows/csp-compat-temp.yml
           git add -A
           git diff --cached --check
-          git commit -m "Finaliser les corrections validées de l’audit"
+          git commit -m "Finaliser toutes les corrections validées de l’audit"
           git push origin HEAD:agent/audit-remediation
