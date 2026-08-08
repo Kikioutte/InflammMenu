@@ -14,6 +14,7 @@ test("service worker requires a complete shell before skipWaiting", () => {
 test("service worker revalidates catalogue requests and bounds runtime images", () => {
   assert.match(worker, /async function networkFirst/);
   assert.match(worker, /fetch\(request, \{ cache: "no-cache" \}\)/);
+  assert.match(worker, /return await cache\.match\(request\) \|\| response/);
   assert.match(worker, /event\.respondWith\(networkFirst\(request, CATALOGUE_CACHE\)\)/);
   assert.match(worker, /MAX_RUNTIME_IMAGES = 120/);
   assert.match(worker, /trimCache/);
@@ -43,7 +44,7 @@ test("publishes canonical metadata and a Pages fallback", async () => {
   assert.match(html, /property="og:url"/);
   assert.match(html, /rel="icon"/);
   assert.match(pages, /404\.html/);
-  assert.match(pages, /og\\\.\\\(\?:png\|jpe\?g\\\)/);
+  assert.ok(pages.includes("og\\.(?:png|jpe?g)"));
 });
 
 test("document CSP allows the Vite development preamble without opening remote scripts", async () => {
