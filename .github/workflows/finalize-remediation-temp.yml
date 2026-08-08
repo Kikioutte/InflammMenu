@@ -1,88 +1,13 @@
 name: Finalize audit remediation
 
 on:
-  push:
-    branches: [agent/audit-remediation]
+  workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: audit-remediation
-  cancel-in-progress: true
+  contents: read
 
 jobs:
-  remediate:
-    if: github.event.head_commit.message != 'Appliquer les corrections complètes de l’audit'
+  paused:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
     steps:
-      - name: Check out latest correction branch
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          ref: agent/audit-remediation
-          persist-credentials: true
-
-      - name: Set up Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install current locked dependencies
-        run: npm ci
-
-      - name: Apply core corrections when the earlier job did not commit them
-        run: |
-          if ! grep -q 'stateRevision: number' src/storage.ts; then
-            python3 scripts/apply-audit-remediation-core.py
-          fi
-
-      - name: Apply UI, PWA and CI corrections
-        run: |
-          python3 scripts/apply-audit-remediation-ui-pwa.py
-          python3 scripts/apply-planner-caution-split.py
-          python3 scripts/finalize-audit-remediation.py
-
-      - name: Regenerate reviewed data and lockfile
-        run: |
-          npm run generate:planner
-          npm install --package-lock-only --ignore-scripts
-          npm ci
-
-      - name: Validate data, engine, storage and build
-        run: |
-          git diff --check
-          npm run check:runtime
-          npm run test:preview
-          npm run build:pages
-
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
-
-      - name: Run browser suites
-        run: |
-          npm run test:app
-          npm run test:runtime
-
-      - name: Validate alternative deployment worker
-        run: |
-          npm run build
-          npm run test:sites
-
-      - name: Commit only validated corrections
-        run: |
-          git config user.name "InflammMenu audit remediation"
-          git config user.email "148545599+Kikioutte@users.noreply.github.com"
-          git rm -f --ignore-unmatch \
-            scripts/apply-audit-remediation-core.py \
-            scripts/apply-audit-remediation-ui-pwa.py \
-            scripts/apply-planner-caution-split.py \
-            scripts/finalize-audit-remediation.py \
-            .github/workflows/remediate-core-temp.yml \
-            .github/workflows/finalize-remediation-temp.yml \
-            .github/workflows/export-source-temp.yml
-          git add -A
-          git diff --cached --check
-          git commit -m "Appliquer les corrections complètes de l’audit"
-          git push origin HEAD:agent/audit-remediation
+      - run: echo "Temporary workflow paused while the verified payload is restored."
