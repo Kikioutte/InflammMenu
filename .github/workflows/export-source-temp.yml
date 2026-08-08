@@ -1,4 +1,4 @@
-name: Apply audit remediation
+name: Diagnose remediation payload
 
 on:
   push:
@@ -6,35 +6,35 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  apply:
+  diagnose:
     runs-on: ubuntu-latest
     steps:
       - name: Check out remediation branch
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          fetch-depth: 0
-          persist-credentials: true
+          persist-credentials: false
 
-      - name: Rebuild and apply remediation patch
-        env:
-          BASE_SHA: 742591d7ff6dafc3afb5ea897c791517b7a13e04
-          PATCH_SHA256: 5713494604c60ab46874a2a99375baf67301515dcf8928bf006e0bc814bdc988
+      - name: Normalize and inspect payload
         run: |
           set -euo pipefail
-          cat .github/remediation/part-* | tr -d '[:space:]' > "$RUNNER_TEMP/remediation.patch.gz.b64"
-          echo "$PATCH_SHA256  $RUNNER_TEMP/remediation.patch.gz.b64" | sha256sum -c -
-          base64 -d "$RUNNER_TEMP/remediation.patch.gz.b64" | gzip -d > "$RUNNER_TEMP/remediation.patch"
-          git reset --hard "$BASE_SHA"
-          git apply --binary --index "$RUNNER_TEMP/remediation.patch"
-          mkdir -p docs/qa
-          git mv public/qa/compare-details.html docs/qa/
-          git mv public/qa/compare.html docs/qa/
-          git mv public/qa/implementation-home.png docs/qa/
-          git mv public/qa/source-option-1.png docs/qa/
-          git config user.name Kikioutte
-          git config user.email 148545599+Kikioutte@users.noreply.github.com
-          git commit -m "Corriger les anomalies de l audit technique"
-          git push --force origin HEAD:agent/audit-remediation
+          mkdir -p "$RUNNER_TEMP/remediation-payload"
+          for index in 00 01 02 03 04 05; do
+            source=".github/remediation/part-$index"
+            target="$RUNNER_TEMP/remediation-payload/part-$index"
+            tr -d '[:space:]' < "$source" > "$target"
+            wc -c "$target"
+            sha256sum "$target"
+          done
+          cat "$RUNNER_TEMP"/remediation-payload/part-{00,01,02,03,04,05} > "$RUNNER_TEMP/remediation-payload/combined.b64"
+          wc -c "$RUNNER_TEMP/remediation-payload/combined.b64"
+          sha256sum "$RUNNER_TEMP/remediation-payload/combined.b64"
+
+      - name: Upload normalized payload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: normalized-remediation-payload
+          path: ${{ runner.temp }}/remediation-payload
+          retention-days: 1
