@@ -1,4 +1,4 @@
-name: Export exact dependencies
+name: Export Chromium test runtime
 
 on:
   push:
@@ -23,19 +23,15 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Generate corrected lockfile and install exact dependencies
+      - name: Install exact dependencies and Chromium
         run: |
-          npm pkg set overrides.postcss=8.5.24
-          npm install --package-lock-only --ignore-scripts
           npm ci
-          node -e "const lock=require('./package-lock.json'); console.log('postcss='+lock.packages['node_modules/postcss'].version)"
-          tar -czf "$RUNNER_TEMP/node-modules.tgz" node_modules
+          npx playwright install --with-deps chromium
+          tar -czf "$RUNNER_TEMP/playwright-browsers.tgz" -C "$HOME/.cache" ms-playwright
 
-      - name: Upload validation dependencies
+      - name: Upload Chromium runtime
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: remediation-dependencies
-          path: |
-            package-lock.json
-            ${{ runner.temp }}/node-modules.tgz
+          name: remediation-chromium
+          path: ${{ runner.temp }}/playwright-browsers.tgz
           retention-days: 1
