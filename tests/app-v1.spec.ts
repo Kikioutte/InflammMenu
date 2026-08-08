@@ -76,7 +76,7 @@ test("le profil est modifiable et conserve ses libellés accessibles", async ({ 
   await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
   await expect(page.getByTestId("home-view")).toBeVisible();
   await expect(profileTrigger).toBeFocused();
-  await expect(page.getByText("95 € maximum")).toBeVisible();
+  await expect(page.getByText("95 € de budget cible")).toBeVisible();
 
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
@@ -1003,4 +1003,74 @@ test("la semaine s’exporte au format calendrier", async ({ page }) => {
   await page.getByTestId("export-calendar").click();
   const file = await download;
   expect(file.suggestedFilename()).toMatch(/^inflamm-menu-\d{4}-\d{2}-\d{2}\.ics$/);
+});
+
+
+test("une recette personnelle favorite conserve les allergènes de ses ingrédients après rechargement", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify({
+      version: 2,
+      profile: {},
+      currentPlan: null,
+      upcomingPlan: null,
+      favoriteRecipeIds: ["perso-allergene"],
+      history: [],
+      checkedShoppingItemIds: [],
+      pantryIngredientIds: [],
+      customRecipes: [{
+        id: "perso-allergene",
+        title: "Recette test allergène",
+        mealTypes: ["lunch"],
+        diet: ["classic", "vegetarian", "no-pork"],
+        prepMinutes: 10,
+        costPerPortion: 2,
+        seasons: ["all-year"],
+        equipment: [],
+        allergens: [],
+        tags: ["test"],
+        ingredients: [{ id: "milk", name: "Lait", quantity: 100, unit: "ml", category: "fresh", allergens: ["lait"] }],
+        nutrition: { calories: 100, protein: 4, fiber: 1, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+        description: "Une recette de test.",
+        steps: Array.from({ length: 20 }, (_, index) => `Étape ${index + 1}`),
+        conservation: "À consommer rapidement.",
+        image: "/assets/recipe-placeholder.svg",
+      }],
+      onboardingCompleted: true,
+    }));
+  });
+
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: /Recette test allergène/ }).click();
+  await expect(page.getByText("Lait", { exact: true })).toBeVisible();
+  await page.getByTestId("start-cooking").click();
+  await expect(page.getByTestId("cooking-view")).toBeVisible();
+  await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
+
+  await page.reload();
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await expect(page.getByRole("button", { name: /Recette test allergène/ })).toBeVisible();
+});
+
+
+test("un réglage de confort ne détruit pas le brouillon du profil", async ({ page }) => {
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByLabel("Votre prénom").fill("Brouillon non enregistré");
+  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+  await page.getByTestId("text-scale-large").click();
+  await page.getByRole("button", { name: "Retour" }).click();
+  await expect(page.getByLabel("Votre prénom")).toHaveValue("Brouillon non enregistré");
+});
+
+
+test("la génération reprend les objectifs configurés sans promettre un plafond budgétaire", async ({ page }) => {
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: "Plus de repas avec légumineuses" }).click();
+  await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await page.getByRole("button", { name: "Générer ma semaine" }).click();
+  await expect(page.getByText("3 repas avec légumineuses visés")).toBeVisible();
+  await expect(page.getByText("80 € visés")).toBeVisible();
+  await expect(page.getByText(/€ max\./)).toHaveCount(0);
 });

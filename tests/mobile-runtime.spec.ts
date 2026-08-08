@@ -274,3 +274,25 @@ test("FlowStack replace preserves the original return focus target", async ({ pa
   await expect(page.getByRole("heading", { name: "Flow root" })).toBeVisible();
   await expect(rootTrigger).toBeFocused();
 });
+
+
+test("reduced motion disables momentum and spring transitions", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/tests/runtime-fixture.html");
+  const parent = page.getByTestId("mobile-scroll");
+  await drag(page, parent, 0, -140, 4);
+  const afterRelease = await parent.evaluate((element) => element.scrollTop);
+  await page.waitForTimeout(300);
+  expect(await parent.evaluate((element) => element.scrollTop)).toBeCloseTo(afterRelease, 0);
+  expect(Math.abs(Number(await parent.getAttribute("data-overscroll")))).toBeLessThan(0.1);
+
+  await page.goto("/tests/runtime-fixture.html?fixture=flow");
+  await page.getByRole("button", { name: "Push level 2" }).click();
+  const current = page.getByTestId("flow-current");
+  await expect(current).toBeVisible();
+  const translateX = await current.evaluate((element) => {
+    const transform = getComputedStyle(element).transform;
+    return transform === "none" ? 0 : new DOMMatrixReadOnly(transform).m41;
+  });
+  expect(translateX).toBeCloseTo(0, 0);
+});

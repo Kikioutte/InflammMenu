@@ -34,6 +34,8 @@ export interface AppState {
   textScale: "normal" | "large";
   remindersEnabled: boolean;
   onboardingCompleted: boolean;
+  /** Monotonic local revision used to choose the newest replica and synchronise tabs. */
+  stateRevision: number;
   /** @deprecated Use favoriteRecipeIds. Kept for version-0 data compatibility. */
   favorites: string[];
   /** @deprecated Use checkedShoppingItemIds. Kept for version-0 data compatibility. */
@@ -82,6 +84,7 @@ export const DEFAULT_APP_STATE: AppState = createState({
   textScale: "normal",
   remindersEnabled: false,
   onboardingCompleted: false,
+  stateRevision: 0,
 });
 
 type StateInput = Pick<
@@ -101,7 +104,7 @@ type StateInput = Pick<
   | "textScale"
   | "remindersEnabled"
   | "onboardingCompleted"
->;
+> & { stateRevision?: number };
 
 function createState(input: StateInput): AppState {
   const favoriteRecipeIds = [...input.favoriteRecipeIds];
@@ -125,6 +128,7 @@ function createState(input: StateInput): AppState {
     textScale: input.textScale,
     remindersEnabled: input.remindersEnabled,
     onboardingCompleted: input.onboardingCompleted,
+    stateRevision: Math.max(0, Math.floor(input.stateRevision ?? 0)),
     favorites: [...favoriteRecipeIds],
     checkedShoppingIds: [...checkedShoppingItemIds],
     pantryIds: [...pantryIngredientIds],
@@ -184,27 +188,58 @@ function normalizeMeal(value: unknown): PlannedMeal | null {
 export function normalizePlan(value: unknown): WeeklyPlan | null {
   if (!isRecord(value)) return null;
   if (typeof value.startsOn !== "string" || !ISO_DATE.test(value.startsOn)) return null;
-  if (Number.isNaN(new Date(`${value.startsOn}T00:00:00`).getTime())) return null;
+  const [year, month, day] = value.startsOn.split("-").map(Number);
+  const start = new Date(Date.UTC(year, month - 1, day));
+  if (start.toISOString().slice(0, 10) !== value.startsOn || start.getUTCDay() !== 1) return null;
   if (!Array.isArray(value.meals)) return null;
 
-  const meals = value.meals.map(normalizeMeal).filter((meal): meal is PlannedMeal => Boolean(meal));
-  // A plan whose meals were all rejected is not a plan any more.
+  const meals: PlannedMeal[] = [];
+  const ids = new Set<string>();
+  const slots = new Set<string>();
+  for (const candidate of value.meals) {
+    const meal = normalizeMeal(candidate);
+    if (!meal) continue;
+    const slot = `${meal.dayIndex}-${meal.mealType}`;
+    if (ids.has(meal.id) || slots.has(slot)) continue;
+    ids.add(meal.id);
+    slots.add(slot);
+    meals.push(meal);
+  }
   if (!meals.length) return null;
-  const known = new Set(meals.map((meal) => meal.id));
+
+  const byId = new Map(meals.map((meal) => [meal.id, meal]));
+  const normalizedMeals = meals.map((meal) => {
+    if (!meal.leftoverOf) return meal;
+    const source = byId.get(meal.leftoverOf);
+    const gap = source ? meal.dayIndex - source.dayIndex : 0;
+    const valid = Boolean(
+      source &&
+      source.id !== meal.id &&
+      !source.leftoverOf &&
+      !source.skipped &&
+      !meal.skipped &&
+      source.recipeId === meal.recipeId &&
+      source.mealType === meal.mealType &&
+      gap > 0 && gap <= 2,
+    );
+    if (valid) return { ...meal, completed: false, locked: false };
+    const { leftoverOf: _discarded, ...withoutLeftover } = meal;
+    return withoutLeftover;
+  });
 
   return {
-    id: typeof value.id === "string" && value.id ? value.id : `week-${value.startsOn}`,
+    id: (() => {
+      const cleaned = typeof value.id === "string" ? value.id.replace(/[\r\n\u0000-\u001f\u007f]/g, "").trim().slice(0, 180) : "";
+      return cleaned || `week-${value.startsOn}`;
+    })(),
     startsOn: value.startsOn,
     generatedAt:
       typeof value.generatedAt === "string" && !Number.isNaN(new Date(value.generatedAt).getTime())
-        ? value.generatedAt
+        ? new Date(value.generatedAt).toISOString()
         : `${value.startsOn}T00:00:00.000Z`,
     profileSnapshot: normalizeProfile(value.profileSnapshot),
-    // A leftover pointing at a dropped slot would be an orphan.
-    meals: meals.map((meal) => (meal.leftoverOf && !known.has(meal.leftoverOf)
-      ? { ...meal, leftoverOf: undefined }
-      : meal)),
-    estimatedCost: Math.max(0, finiteNumber(value.estimatedCost, 0)),
+    meals: normalizedMeals,
+    estimatedCost: Math.min(100_000, Math.max(0, finiteNumber(value.estimatedCost, 0))),
     version: 1,
   };
 }
@@ -257,19 +292,119 @@ function normalizeSpend(value: unknown): Record<string, number> {
   );
 }
 
+function cleanUserText(value: unknown, maximum: number): string {
+  return typeof value === "string"
+    ? value.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "").trim().slice(0, maximum)
+    : "";
+}
+
+const CUSTOM_MEAL_TYPES = new Set(["breakfast", "lunch", "dinner"]);
+const CUSTOM_DIETS = new Set(["classic", "vegetarian", "no-pork"]);
+const CUSTOM_SEASONS = new Set(["spring", "summer", "autumn", "winter", "all-year"]);
+const CUSTOM_EQUIPMENT = new Set(["hob", "oven", "microwave", "blender", "toaster", "steamer"]);
+const CUSTOM_CATEGORIES = new Set(DEFAULT_CATEGORY_ORDER);
+const SAFE_RECIPE_IMAGE = /^\/assets\/[a-zA-Z0-9_./-]+$/;
+
+function normalizedEnumArray(value: unknown, allowed: ReadonlySet<string>, maximum = 30): string[] {
+  return stringArray(value)
+    .map((item) => item.trim())
+    .filter((item) => allowed.has(item))
+    .slice(0, maximum);
+}
+
+function normalizeCustomRecipe(value: unknown): Recipe | null {
+  if (!isRecord(value)) return null;
+  const id = cleanUserText(value.id, 160);
+  const title = cleanUserText(value.title, 90);
+  if (!/^perso-[a-zA-Z0-9][a-zA-Z0-9._-]*$/.test(id) || !title) return null;
+
+  const mealTypes = normalizedEnumArray(value.mealTypes, CUSTOM_MEAL_TYPES, 3) as Recipe["mealTypes"];
+  const diet = normalizedEnumArray(value.diet, CUSTOM_DIETS, 3) as Recipe["diet"];
+  const seasons = normalizedEnumArray(value.seasons, CUSTOM_SEASONS, 5) as Recipe["seasons"];
+  const equipment = normalizedEnumArray(value.equipment, CUSTOM_EQUIPMENT, 6) as Recipe["equipment"];
+  if (!mealTypes.length || !diet.length || !seasons.length) return null;
+
+  const prepMinutes = finiteNumber(value.prepMinutes, Number.NaN);
+  const costPerPortion = finiteNumber(value.costPerPortion, Number.NaN);
+  if (!Number.isFinite(prepMinutes) || prepMinutes < 1 || prepMinutes > 1_440) return null;
+  if (!Number.isFinite(costPerPortion) || costPerPortion < 0 || costPerPortion > 10_000) return null;
+  const restMinutes = value.restMinutes === undefined ? undefined : finiteNumber(value.restMinutes, Number.NaN);
+  if (restMinutes !== undefined && (!Number.isFinite(restMinutes) || restMinutes < 0 || restMinutes > 525_600)) return null;
+
+  if (!Array.isArray(value.ingredients) || value.ingredients.length < 1 || value.ingredients.length > 100) return null;
+  const ingredients = value.ingredients.flatMap((rawIngredient) => {
+    if (!isRecord(rawIngredient)) return [];
+    const rawId = cleanUserText(rawIngredient.id, 120);
+    const name = cleanUserText(rawIngredient.name, 160);
+    const quantity = finiteNumber(rawIngredient.quantity, Number.NaN);
+    if (!rawId || !name || !Number.isFinite(quantity) || quantity <= 0 || quantity > 1_000_000) return [];
+    if (typeof rawIngredient.unit !== "string" || !UNITS.has(rawIngredient.unit)) return [];
+    if (typeof rawIngredient.category !== "string" || !CUSTOM_CATEGORIES.has(rawIngredient.category as IngredientCategory)) return [];
+    return [{
+      id: canonicalIngredientId(rawId),
+      name,
+      quantity,
+      unit: rawIngredient.unit as Recipe["ingredients"][number]["unit"],
+      category: rawIngredient.category as IngredientCategory,
+      ...(stringArray(rawIngredient.allergens).length ? { allergens: stringArray(rawIngredient.allergens).slice(0, 14) } : {}),
+      ...(rawIngredient.pantryStaple === true ? { pantryStaple: true } : {}),
+    }];
+  });
+  if (ingredients.length !== value.ingredients.length) return null;
+
+  if (!Array.isArray(value.steps) || value.steps.length < 1 || value.steps.length > 100) return null;
+  const steps = value.steps.map((step) => cleanUserText(step, 2_000));
+  if (steps.some((step) => !step)) return null;
+
+  if (!isRecord(value.nutrition)) return null;
+  const calories = finiteNumber(value.nutrition.calories, Number.NaN);
+  const protein = finiteNumber(value.nutrition.protein, Number.NaN);
+  const fiber = finiteNumber(value.nutrition.fiber, Number.NaN);
+  if (![calories, protein, fiber].every((item) => Number.isFinite(item) && item >= 0 && item <= 100_000)) return null;
+
+  const image = cleanUserText(value.image, 500);
+  if (image && !SAFE_RECIPE_IMAGE.test(image)) return null;
+
+  return {
+    id,
+    title,
+    mealTypes,
+    diet,
+    prepMinutes: Math.round(prepMinutes),
+    ...(restMinutes !== undefined ? { restMinutes: Math.round(restMinutes) } : {}),
+    costPerPortion,
+    seasons,
+    equipment,
+    allergens: stringArray(value.allergens).slice(0, 14),
+    tags: stringArray(value.tags).map((tag) => cleanUserText(tag, 80)).filter(Boolean).slice(0, 100),
+    ingredients,
+    nutrition: {
+      calories,
+      protein,
+      fiber,
+      estimated: true,
+      note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif.",
+    },
+    description: cleanUserText(value.description, 2_000),
+    ...(cleanUserText(value.caution, 2_000) ? { caution: cleanUserText(value.caution, 2_000) } : {}),
+    steps,
+    conservation: cleanUserText(value.conservation, 1_000),
+    image: image || "/assets/recipe-placeholder.svg",
+  };
+}
+
 function normalizeCustomRecipes(value: unknown): Recipe[] {
   if (!Array.isArray(value)) return [];
-  return value.filter((recipe): recipe is Recipe => {
-    if (!isRecord(recipe)) return false;
-    return (
-      typeof recipe.id === "string" && recipe.id.startsWith("perso-") &&
-      typeof recipe.title === "string" && recipe.title.trim().length > 0 &&
-      Array.isArray(recipe.mealTypes) && recipe.mealTypes.length > 0 &&
-      Array.isArray(recipe.ingredients) && Array.isArray(recipe.steps) &&
-      typeof recipe.prepMinutes === "number" && Number.isFinite(recipe.prepMinutes) &&
-      typeof recipe.costPerPortion === "number" && Number.isFinite(recipe.costPerPortion)
-    );
-  }).slice(0, 200);
+  const recipes: Recipe[] = [];
+  const ids = new Set<string>();
+  for (const candidate of value.slice(0, 500)) {
+    const recipe = normalizeCustomRecipe(candidate);
+    if (!recipe || ids.has(recipe.id)) continue;
+    ids.add(recipe.id);
+    recipes.push(recipe);
+    if (recipes.length === 200) break;
+  }
+  return recipes;
 }
 
 function normalizeWeeklyTargets(value: unknown): UserProfile["weeklyTargets"] {
@@ -289,7 +424,6 @@ function normalizeProfile(value: unknown): UserProfile {
 
   return {
     ...DEFAULT_PROFILE,
-    ...value,
     firstName:
       typeof value.firstName === "string" ? value.firstName.trim().slice(0, 40) : DEFAULT_PROFILE.firstName,
     // typeof NaN and typeof Infinity are both "number": bound the values, do not
@@ -309,12 +443,17 @@ function normalizeProfile(value: unknown): UserProfile {
   } as UserProfile;
 }
 
+function normalizeRevision(value: unknown): number {
+  return typeof value === "number" && Number.isSafeInteger(value) && value >= 0 ? value : 0;
+}
+
 /**
  * Migrates the early unversioned prototype shape and validates all collection
  * fields before they are exposed to React.
  */
 export function migrateAppState(value: unknown): AppState | null {
   if (!isRecord(value)) return null;
+  if (typeof value.version === "number" && value.version > APP_STATE_VERSION) return null;
 
   const favoriteRecipeIds = stringArray(
     Array.isArray(value.favoriteRecipeIds) ? value.favoriteRecipeIds : value.favorites,
@@ -328,14 +467,23 @@ export function migrateAppState(value: unknown): AppState | null {
   const pantryIngredientIds = [...new Set(stringArray(
     Array.isArray(value.pantryIngredientIds) ? value.pantryIngredientIds : value.pantryIds,
   ).map(canonicalIngredientId))];
-  const plan = normalizePlan(value.currentPlan) ?? normalizePlan(value.plan);
+  const currentPlan = normalizePlan(value.currentPlan) ?? normalizePlan(value.plan);
+  const upcomingCandidate = normalizePlan(value.upcomingPlan);
+  const upcomingPlan = upcomingCandidate?.id === currentPlan?.id ? null : upcomingCandidate;
+  const reserved = new Set([currentPlan?.id, upcomingPlan?.id].filter((id): id is string => Boolean(id)));
+  const seenHistory = new Set<string>();
+  const history = planArray(value.history).filter((plan) => {
+    if (reserved.has(plan.id) || seenHistory.has(plan.id)) return false;
+    seenHistory.add(plan.id);
+    return true;
+  }).slice(0, HISTORY_LIMIT);
 
   return createState({
     profile: normalizeProfile(value.profile),
-    currentPlan: plan,
-    upcomingPlan: normalizePlan(value.upcomingPlan),
+    currentPlan,
+    upcomingPlan,
     favoriteRecipeIds,
-    history: planArray(value.history).slice(0, HISTORY_LIMIT),
+    history,
     checkedShoppingItemIds,
     pantryIngredientIds,
     pantryAmounts: normalizePantryAmounts(value.pantryAmounts),
@@ -346,6 +494,7 @@ export function migrateAppState(value: unknown): AppState | null {
     textScale: value.textScale === "large" ? "large" : "normal",
     remindersEnabled: value.remindersEnabled === true,
     onboardingCompleted: value.onboardingCompleted === true,
+    stateRevision: normalizeRevision(value.stateRevision),
   });
 }
 
@@ -457,30 +606,88 @@ async function removeIndexedState(): Promise<void> {
   }
 }
 
-export async function loadAppState(): Promise<AppState> {
+function freshestState(indexedState: AppState | null, localState: AppState | null): AppState | null {
+  if (!indexedState) return localState;
+  if (!localState) return indexedState;
+  return localState.stateRevision >= indexedState.stateRevision ? localState : indexedState;
+}
+
+const STORAGE_CHANNEL = "inflamm-menu:app-state-sync";
+
+function broadcastStoredState(state: AppState): void {
+  if (typeof BroadcastChannel === "undefined") return;
   try {
-    const indexedState = await readIndexedState();
-    if (indexedState) {
-      writeLocalState(indexedState);
-      return indexedState;
-    }
+    const channel = new BroadcastChannel(STORAGE_CHANNEL);
+    channel.postMessage(state);
+    channel.close();
+  } catch {
+    // Storage events still cover browsers without a usable BroadcastChannel.
+  }
+}
+
+export async function loadAppState(): Promise<AppState> {
+  const localState = readLocalState();
+  let indexedState: AppState | null = null;
+  try {
+    indexedState = await readIndexedState();
   } catch {
     // Safari private mode and embedded browsers can expose IndexedDB but reject operations.
   }
 
-  const localState = readLocalState();
-  if (localState) return localState;
-  return cloneDefaultState();
+  const newest = freshestState(indexedState, localState);
+  if (!newest) return cloneDefaultState();
+  if (newest === indexedState) writeLocalState(newest);
+  else {
+    try { await writeIndexedState(newest); } catch { /* localStorage remains the valid replica */ }
+  }
+  return newest;
 }
 
-export async function saveAppState(state: AppState): Promise<void> {
+export interface SaveAppStateResult {
+  localSaved: boolean;
+  indexedSaved: boolean;
+}
+
+export async function saveAppState(state: AppState): Promise<SaveAppStateResult> {
   const normalized = migrateAppState(state) ?? cloneDefaultState();
   const localSaved = writeLocalState(normalized);
+  let indexedSaved = false;
   try {
     await writeIndexedState(normalized);
+    indexedSaved = true;
   } catch (error) {
     if (!localSaved) throw error;
   }
+  if (localSaved || indexedSaved) broadcastStoredState(normalized);
+  return { localSaved, indexedSaved };
+}
+
+/** Receives the newest state written by another tab without creating a save loop. */
+export function watchForStoredState(onState: (state: AppState) => void): () => void {
+  if (typeof window === "undefined") return () => undefined;
+  const deliver = (value: unknown) => {
+    const state = migrateAppState(value);
+    if (state) onState(state);
+  };
+  const onStorage = (event: StorageEvent) => {
+    if (event.key !== LOCAL_STORAGE_KEY || !event.newValue) return;
+    try { deliver(JSON.parse(event.newValue) as unknown); } catch { /* ignore malformed external writes */ }
+  };
+  window.addEventListener("storage", onStorage);
+
+  let channel: BroadcastChannel | null = null;
+  if (typeof BroadcastChannel !== "undefined") {
+    try {
+      channel = new BroadcastChannel(STORAGE_CHANNEL);
+      channel.addEventListener("message", (event) => deliver(event.data));
+    } catch {
+      channel = null;
+    }
+  }
+  return () => {
+    window.removeEventListener("storage", onStorage);
+    channel?.close();
+  };
 }
 
 export async function resetAppState(): Promise<void> {
@@ -512,11 +719,22 @@ export function exportAppState(state: AppState, exportedAt = new Date().toISOStr
   return `${JSON.stringify(backup, null, 2)}\n`;
 }
 
+const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
+const RECOGNIZED_STATE_KEYS = new Set([
+  "version", "profile", "currentPlan", "plan", "upcomingPlan", "favoriteRecipeIds", "favorites",
+  "history", "checkedShoppingItemIds", "checkedShoppingIds", "pantryIngredientIds", "pantryIds",
+  "pantryAmounts", "recipeNotes", "shoppingCategoryOrder", "actualSpend", "customRecipes",
+  "textScale", "remindersEnabled", "onboardingCompleted", "stateRevision",
+]);
+
 /**
  * Reads a backup file. Older exports and raw state dumps are accepted, but the
  * content always goes through the same migration and validation as stored data.
  */
 export function importAppState(raw: string): AppState {
+  if (new TextEncoder().encode(raw).byteLength > MAX_BACKUP_BYTES) {
+    throw new Error("Sauvegarde trop volumineuse : la limite est de 8 Mo.");
+  }
   let parsed: unknown;
   try {
     parsed = JSON.parse(raw);
@@ -525,13 +743,27 @@ export function importAppState(raw: string): AppState {
   }
 
   if (!isRecord(parsed)) throw new Error("Fichier illisible : ce n’est pas une sauvegarde Inflamm’Menu.");
-  const candidate = isRecord(parsed.state) ? parsed.state : parsed;
-  if (parsed.format !== undefined && parsed.format !== BACKUP_FORMAT) {
-    throw new Error("Ce fichier ne provient pas d’Inflamm’Menu.");
+  let candidate: Record<string, unknown>;
+  if (parsed.format !== undefined) {
+    if (parsed.format !== BACKUP_FORMAT) throw new Error("Ce fichier ne provient pas d’Inflamm’Menu.");
+    if (typeof parsed.version === "number" && parsed.version > APP_STATE_VERSION) {
+      throw new Error("Cette sauvegarde provient d’une version plus récente d’Inflamm’Menu.");
+    }
+    if (!isRecord(parsed.state)) throw new Error("Sauvegarde incomplète : aucune donnée exploitable.");
+    if (!Object.keys(parsed.state).some((key) => RECOGNIZED_STATE_KEYS.has(key))) {
+      throw new Error("Sauvegarde incomplète : aucune donnée Inflamm’Menu reconnue.");
+    }
+    candidate = parsed.state;
+  } else {
+    const rawCandidate = isRecord(parsed.state) ? parsed.state : parsed;
+    if (!Object.keys(rawCandidate).some((key) => RECOGNIZED_STATE_KEYS.has(key))) {
+      throw new Error("Ce fichier ne contient aucune donnée Inflamm’Menu reconnue.");
+    }
+    candidate = rawCandidate;
   }
 
   const migrated = migrateAppState(candidate);
-  if (!migrated) throw new Error("Sauvegarde incomplète : aucune donnée exploitable.");
+  if (!migrated) throw new Error("Sauvegarde incomplète ou version incompatible.");
   return migrated;
 }
 

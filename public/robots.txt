@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /InflammMenu/
+Sitemap: https://kikioutte.github.io/InflammMenu/sitemap.xml

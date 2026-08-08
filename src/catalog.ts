@@ -110,20 +110,64 @@ export const DUPLICATE_CATALOGUE_RECIPES = {
 } as const;
 let cataloguePromise: Promise<CatalogueData> | null = null;
 const catalogueUrl = new URL("./data/recettes-anti-inflammatoires.json", import.meta.url).href;
+export const CATALOGUE_CACHE_NAME = "inflamm-menu-catalogue-v1";
+const plannerCautionsUrl = typeof window === "undefined"
+  ? "/data/planner-cautions.json"
+  : `${import.meta.env.BASE_URL}data/planner-cautions.json`;
+let plannerCautionsPromise: Promise<Record<string, string>> | null = null;
+
+export function loadPlannerCaution(recipeId: string): Promise<string | undefined> {
+  plannerCautionsPromise ??= fetch(plannerCautionsUrl, { headers: { Accept: "application/json" } })
+    .then((response) => {
+      if (!response.ok) throw new Error(`Précautions indisponibles (${response.status})`);
+      return response.json() as Promise<Record<string, string>>;
+    })
+    .catch((error) => { plannerCautionsPromise = null; throw error; });
+  return plannerCautionsPromise.then((cautions) => cautions[recipeId]);
+}
+
+function parseCatalogueResponse(response: Response): Promise<CatalogueData> {
+  if (!response.ok) throw new Error(`Catalogue indisponible (${response.status})`);
+  return response.json().then((value: unknown) => {
+    if (!value || typeof value !== "object" || !Array.isArray((value as CatalogueData).recipes)) {
+      throw new Error("Catalogue invalide");
+    }
+    return value as CatalogueData;
+  });
+}
 
 export function loadCatalogue(): Promise<CatalogueData> {
-  // Fetching the emitted JSON asset keeps it outside the initial bundle and,
-  // unlike a failed dynamic module import, can genuinely be retried.
   cataloguePromise ??= fetch(catalogueUrl, { headers: { Accept: "application/json" } })
-    .then((response) => {
-      if (!response.ok) throw new Error(`Catalogue indisponible (${response.status})`);
-      return response.json() as Promise<CatalogueData>;
-    })
+    .then(parseCatalogueResponse)
     .catch((error: unknown) => {
       cataloguePromise = null;
       throw error instanceof Error ? error : new Error("Catalogue indisponible");
     });
   return cataloguePromise;
+}
+
+/** Downloads and verifies the full catalogue, then stores the exact response in Cache Storage. */
+export async function cacheCatalogueForOffline(): Promise<CatalogueData> {
+  const response = await fetch(catalogueUrl, {
+    cache: "reload",
+    headers: { Accept: "application/json" },
+  });
+  const cacheable = response.clone();
+  const data = await parseCatalogueResponse(response);
+  if (typeof caches === "undefined") throw new Error("Le cache hors ligne n’est pas disponible sur cet appareil.");
+  const cache = await caches.open(CATALOGUE_CACHE_NAME);
+  await cache.put(catalogueUrl, cacheable);
+  cataloguePromise = Promise.resolve(data);
+  return data;
+}
+
+export async function catalogueAvailableOffline(): Promise<boolean> {
+  if (typeof caches === "undefined") return false;
+  try {
+    return Boolean(await caches.match(catalogueUrl));
+  } catch {
+    return false;
+  }
 }
 
 export function duplicateCatalogueRecipes(catalogue: CatalogueData): Readonly<Record<string, string>> {
@@ -211,6 +255,17 @@ export function catalogueActiveMinutes(recipe: CatalogueRecipe): number {
 }
 
 /** Applies the browsing filters, then the requested order. Data only, no UI. */
+const SEARCHABLE_CATALOGUE_TEXT = new WeakMap<CatalogueRecipe, string>();
+
+function searchableCatalogueText(recipe: CatalogueRecipe): string {
+  const cached = SEARCHABLE_CATALOGUE_TEXT.get(recipe);
+  if (cached) return cached;
+  const value = `${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")} ${recipe.tags.join(" ")}`
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/œ/g, "oe").replace(/æ/g, "ae").toLowerCase();
+  SEARCHABLE_CATALOGUE_TEXT.set(recipe, value);
+  return value;
+}
+
 export function filterCatalogueRecipes(
   recipes: readonly CatalogueRecipe[],
   filters: CatalogueFilters,
@@ -225,9 +280,7 @@ export function filterCatalogueRecipes(
     if (filters.withoutAllergen && recipe.app.planner.allergens.includes(filters.withoutAllergen)) return false;
     if (filters.plannableOnly && !plannerAvailabilityFor(recipe).plannable) return false;
     if (!normalizedQuery) return true;
-    const searchable = `${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")} ${recipe.tags.join(" ")}`
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    return searchable.includes(normalizedQuery);
+    return searchableCatalogueText(recipe).includes(normalizedQuery);
   });
 
   const costRank = { economique: 0, moyen: 1, eleve: 2 } as const;

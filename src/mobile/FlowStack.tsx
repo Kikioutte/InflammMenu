@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, motion, useIsPresent } from "motion/react";
+import { AnimatePresence, motion, useIsPresent, useReducedMotion } from "motion/react";
 import { useDrag } from "@use-gesture/react";
 import { useMobileDevice } from "./Device";
 import { useKeyboard, useKeyboardDismissDrag, useKeyboardInsets } from "./Keyboard";
@@ -70,6 +70,7 @@ type FlowSceneProps = {
 
 function FlowScene({ entry, controls, direction, isTop, isVisible, parkedX, screenWidth, swipeX, register }: FlowSceneProps) {
   const isPresent = useIsPresent();
+  const reduceMotion = useReducedMotion();
   const isActive = isTop && isPresent;
   const screenVariants = {
     enter: (animationDirection: number) => ({
@@ -92,13 +93,13 @@ function FlowScene({ entry, controls, direction, isTop, isVisible, parkedX, scre
       tabIndex={-1}
       custom={direction}
       variants={screenVariants}
-      initial={isTop ? "enter" : false}
+      initial={reduceMotion ? false : isTop ? "enter" : false}
       animate={{
-        x: isTop ? swipeX : parkedX,
-        scale: isTop ? 1 : 0.985,
+        x: reduceMotion ? 0 : isTop ? swipeX : parkedX,
+        scale: reduceMotion ? 1 : isTop ? 1 : 0.985,
       }}
-      exit="exit"
-      transition={{ type: "spring", stiffness: 360, damping: 38, mass: 0.9 }}
+      exit={reduceMotion ? { x: 0, scale: 1 } : "exit"}
+      transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 360, damping: 38, mass: 0.9 }}
       style={{
         opacity: isVisible ? 1 : 0,
         pointerEvents: isActive ? "auto" : "none",

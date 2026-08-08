@@ -101,21 +101,45 @@ function canonicalAllergen(value: string): string {
   return ALLERGEN_ALIASES[normalized] ?? normalized;
 }
 
+const NORMALIZED_TAGS = new WeakMap<Recipe, readonly string[]>();
+const NORMALIZED_TAG_CANDIDATES = new Map<string, ReadonlySet<string>>();
+const NORMALIZED_INGREDIENT_IDS = new WeakMap<Recipe, readonly string[]>();
+const NUT_OR_SEED_CACHE = new WeakMap<Recipe, boolean>();
+
+function normalizedTagsOf(recipe: Recipe): readonly string[] {
+  const cached = NORMALIZED_TAGS.get(recipe);
+  if (cached) return cached;
+  const tags = recipe.tags.map(normalize);
+  NORMALIZED_TAGS.set(recipe, tags);
+  return tags;
+}
+
+function ingredientIdsOf(recipe: Recipe): readonly string[] {
+  const cached = NORMALIZED_INGREDIENT_IDS.get(recipe);
+  if (cached) return cached;
+  const ids = recipe.ingredients.map((ingredient) => canonicalIngredientId(ingredient.id));
+  NORMALIZED_INGREDIENT_IDS.set(recipe, ids);
+  return ids;
+}
+
 function hasTag(recipe: Recipe, candidates: readonly string[]): boolean {
-  const wanted = new Set(candidates.map(normalize));
-  return recipe.tags.some((tag) => {
-    const normalizedTag = normalize(tag);
-    return [...wanted].some(
-      (candidate) => normalizedTag === candidate || normalizedTag.startsWith(`${candidate}-`),
-    );
-  });
+  const key = candidates.join("\u0000");
+  let wanted = NORMALIZED_TAG_CANDIDATES.get(key);
+  if (!wanted) {
+    wanted = new Set(candidates.map(normalize));
+    NORMALIZED_TAG_CANDIDATES.set(key, wanted);
+  }
+  return normalizedTagsOf(recipe).some((tag) =>
+    [...wanted].some((candidate) => tag === candidate || tag.startsWith(`${candidate}-`)),
+  );
 }
 
 function hasNutOrSeed(recipe: Recipe): boolean {
-  return (
-    hasTag(recipe, TAGS.nutSeed) ||
-    recipe.ingredients.some((ingredient) => NUT_OR_SEED_INGREDIENTS.has(normalize(ingredient.id)))
-  );
+  const cached = NUT_OR_SEED_CACHE.get(recipe);
+  if (cached !== undefined) return cached;
+  const result = hasTag(recipe, TAGS.nutSeed) || ingredientIdsOf(recipe).some((id) => NUT_OR_SEED_INGREDIENTS.has(normalize(id)));
+  NUT_OR_SEED_CACHE.set(recipe, result);
+  return result;
 }
 
 function hashSeed(seed: string | number): number {
@@ -196,7 +220,7 @@ export function mealCost(recipe: Recipe, portions: number): number {
   return round(recipe.costPerPortion * Math.max(0, portions));
 }
 
-function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
+export function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
   const allergies = new Set(profile.allergies.map(canonicalAllergen));
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
 
@@ -210,13 +234,13 @@ function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
   );
 }
 
+function ingredientReuseFromSet(recipe: Recipe, used: ReadonlySet<string>): number {
+  return ingredientIdsOf(recipe).reduce((total, id) => total + (used.has(id) ? 1 : 0), 0);
+}
+
 function ingredientReuse(recipe: Recipe, selected: readonly Recipe[]): number {
   if (selected.length === 0) return 0;
-  const used = new Set(selected.flatMap((item) => item.ingredients.map((ingredient) => canonicalIngredientId(ingredient.id))));
-  return recipe.ingredients.reduce(
-    (total, ingredient) => total + (used.has(canonicalIngredientId(ingredient.id)) ? 1 : 0),
-    0,
-  );
+  return ingredientReuseFromSet(recipe, new Set(selected.flatMap(ingredientIdsOf)));
 }
 
 function tagCount(recipes: readonly Recipe[], candidates: readonly string[]): number {
@@ -269,7 +293,15 @@ export function generateWeeklyPlan(
     if (meal.dayIndex < 0 || meal.dayIndex > 6) continue;
     if (keptSlots.has(slotKey)) continue;
     if ([...keptSlots.values()].some((kept) => kept.recipeId === meal.recipeId)) continue;
-    keptSlots.set(slotKey, { ...meal, portions: people, locked: true });
+    if (meal.skipped) continue;
+    keptSlots.set(slotKey, {
+      ...meal,
+      portions: Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, Math.round(meal.portions))),
+      completed: false,
+      skipped: false,
+      leftoverOf: undefined,
+      locked: true,
+    });
   }
 
   const keptRecipeIds = new Set([...keptSlots.values()].map((meal) => meal.recipeId));
@@ -305,6 +337,7 @@ export function generateWeeklyPlan(
     const candidates = eligible.filter(
       (recipe) => !used.has(recipe.id) && recipe.mealTypes.includes(slot.mealType),
     );
+    const selectedIngredientIds = new Set(selected.flatMap(ingredientIdsOf));
 
     if (candidates.length === 0) {
       throw new Error(`Aucune recette unique disponible pour le créneau ${slot.dayIndex}-${slot.mealType}.`);
@@ -320,7 +353,7 @@ export function generateWeeklyPlan(
           (hasTag(recipe, TAGS.wholeGrain) ? 18 : 0) +
           (hasNutOrSeed(recipe) ? 14 : 0) +
           (seasonal ? 12 : 0) +
-          ingredientReuse(recipe, selected) * 5;
+          ingredientReuseFromSet(recipe, selectedIngredientIds) * 5;
         // Saved recipes are a preference, weighted above quality nudges but
         // below the legume/fish targets, and never above the safety filters.
         const favoriteScore = favorites.has(recipe.id) ? 120 : 0;
@@ -446,14 +479,12 @@ export function replacePlannedMeal(
 ): WeeklyPlan {
   const replacementId = typeof replacement === "string" ? replacement : replacement.id;
   const allRecipes = typeof replacement === "string" ? recipes : [...recipes, replacement];
-  // Leftover slots repeat their source on purpose and never block a replacement.
   const recipeIds = new Set(plan.meals.filter((meal) => !meal.leftoverOf).map((meal) => meal.recipeId));
   const existing = plan.meals.find((meal) => meal.id === slotId);
   if (!existing) return plan;
-  const replacementRecipe =
-    typeof replacement === "string"
-      ? recipes.find((recipe) => recipe.id === replacementId)
-      : replacement;
+  const replacementRecipe = typeof replacement === "string"
+    ? recipes.find((recipe) => recipe.id === replacementId)
+    : replacement;
   if (replacementRecipe && !replacementRecipe.mealTypes.includes(existing.mealType)) {
     throw new Error("Cette recette ne correspond pas au type du repas remplacé.");
   }
@@ -461,26 +492,33 @@ export function replacePlannedMeal(
     throw new Error("Cette recette est déjà utilisée dans la semaine.");
   }
 
-  // Leftovers follow the meal they were cooked with, so the pair stays coherent.
-  const meals = plan.meals.map((meal) =>
-    meal.id === slotId
-      ? { ...meal, recipeId: replacementId, source: "replacement" as const, completed: false }
-      : meal.leftoverOf === slotId
-        ? { ...meal, recipeId: replacementId, completed: false }
-        : meal,
-  );
+  const meals = plan.meals.map((meal) => {
+    if (meal.id === slotId) {
+      return {
+        ...meal,
+        recipeId: replacementId,
+        source: "replacement" as const,
+        completed: false,
+        locked: false,
+        ...(existing.leftoverOf ? { leftoverOf: undefined } : {}),
+      };
+    }
+    return meal.leftoverOf === slotId
+      ? { ...meal, recipeId: replacementId, portions: existing.portions, completed: false }
+      : meal;
+  });
   const lookup = new Map(allRecipes.map((recipe) => [recipe.id, recipe]));
   const canRecalculate = meals.every((meal) => lookup.has(meal.recipeId));
-
-  return {
-    ...plan,
-    meals,
-    estimatedCost: canRecalculate ? totalPlanCost(meals, lookup) : plan.estimatedCost,
-  };
+  return { ...plan, meals, estimatedCost: canRecalculate ? totalPlanCost(meals, lookup) : plan.estimatedCost };
 }
 
 /** Swaps two planned meals, keeping every other mark attached to its dish. */
-export function swapPlannedMeals(plan: WeeklyPlan, firstSlotId: string, secondSlotId: string): WeeklyPlan {
+export function swapPlannedMeals(
+  plan: WeeklyPlan,
+  firstSlotId: string,
+  secondSlotId: string,
+  recipes: readonly Recipe[] = [],
+): WeeklyPlan {
   const first = plan.meals.find((meal) => meal.id === firstSlotId);
   const second = plan.meals.find((meal) => meal.id === secondSlotId);
   if (!first || !second || first.id === second.id) return plan;
@@ -494,20 +532,20 @@ export function swapPlannedMeals(plan: WeeklyPlan, firstSlotId: string, secondSl
   const carried = (meal: PlannedMeal, other: PlannedMeal): PlannedMeal => ({
     ...meal,
     recipeId: other.recipeId,
+    portions: other.portions,
     source: "manual",
     completed: other.completed,
     locked: other.locked,
     skipped: other.skipped,
   });
-
-  return {
-    ...plan,
-    meals: plan.meals.map((meal) => (meal.id === first.id
-      ? carried(meal, second)
-      : meal.id === second.id
-        ? carried(meal, first)
-        : meal)),
-  };
+  const meals = plan.meals.map((meal) => (meal.id === first.id
+    ? carried(meal, second)
+    : meal.id === second.id
+      ? carried(meal, first)
+      : meal));
+  const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+  const canRecalculate = meals.every((meal) => byId.has(meal.recipeId));
+  return { ...plan, meals, estimatedCost: canRecalculate ? totalPlanCost(meals, byId) : plan.estimatedCost };
 }
 
 /** Marks a meal as taken outside the household: no cooking, no shopping, no cost. */
@@ -517,9 +555,13 @@ export function setMealSkipped(
   skipped: boolean,
   recipes: readonly Recipe[],
 ): WeeklyPlan {
-  if (!plan.meals.some((meal) => meal.id === slotId)) return plan;
+  const target = plan.meals.find((meal) => meal.id === slotId);
+  if (!target) return plan;
+  if (skipped && plan.meals.some((meal) => meal.leftoverOf === slotId && !meal.skipped)) {
+    throw new Error("Ce plat sert de base à des restes : retirez-les avant de le passer hors foyer.");
+  }
   const meals = plan.meals.map((meal) => (meal.id === slotId
-    ? { ...meal, skipped, ...(skipped ? { completed: false } : {}) }
+    ? { ...meal, skipped, ...(skipped ? { completed: false, locked: false } : {}) }
     : meal));
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
   const canRecalculate = meals.every((meal) => byId.has(meal.recipeId));
@@ -547,7 +589,7 @@ export function cookingSessionsOf(plan: WeeklyPlan, recipes: readonly Recipe[]):
     const session = days.get(meal.dayIndex) ?? { dayIndex: meal.dayIndex, meals: [], activeMinutes: 0, servesLater: 0 };
     session.meals.push(meal);
     session.activeMinutes += recipe?.prepMinutes ?? 0;
-    session.servesLater += plan.meals.filter((other) => other.leftoverOf === meal.id).length;
+    session.servesLater += plan.meals.filter((other) => other.leftoverOf === meal.id && !other.skipped).length;
     days.set(meal.dayIndex, session);
   }
   return [...days.values()].sort((left, right) => left.dayIndex - right.dayIndex);
@@ -581,7 +623,9 @@ export function setMealPortions(
     MAX_MEAL_PORTIONS,
     Math.max(MIN_MEAL_PORTIONS, Math.round(Number.isFinite(portions) ? portions : MIN_MEAL_PORTIONS)),
   );
-  const meals = plan.meals.map((meal) => (meal.id === slotId ? { ...meal, portions: safePortions } : meal));
+  const meals = plan.meals.map((meal) => (
+    meal.id === slotId || meal.leftoverOf === slotId ? { ...meal, portions: safePortions } : meal
+  ));
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
   const canRecalculate = meals.every((meal) => byId.has(meal.recipeId));
   return { ...plan, meals, estimatedCost: canRecalculate ? totalPlanCost(meals, byId) : plan.estimatedCost };
@@ -589,7 +633,8 @@ export function setMealPortions(
 
 /** Records that a planned meal has been cooked, or undoes that record. */
 export function setPlannedMealCompleted(plan: WeeklyPlan, slotId: string, completed: boolean): WeeklyPlan {
-  if (!plan.meals.some((meal) => meal.id === slotId)) return plan;
+  const target = plan.meals.find((meal) => meal.id === slotId);
+  if (!target || (completed && (target.skipped || target.leftoverOf))) return plan;
   return {
     ...plan,
     meals: plan.meals.map((meal) => (meal.id === slotId ? { ...meal, completed } : meal)),
@@ -604,7 +649,7 @@ export interface PlanProgress {
 }
 
 export function planProgress(plan: WeeklyPlan | null | undefined): PlanProgress {
-  const tracked = plan?.meals.filter((meal) => !meal.skipped) ?? [];
+  const tracked = plan?.meals.filter((meal) => !meal.skipped && !meal.leftoverOf) ?? [];
   const total = tracked.length;
   const completed = tracked.filter((meal) => meal.completed === true).length;
   return { completed, total, ratio: total ? completed / total : 0 };
@@ -651,7 +696,7 @@ export function leftoverCandidates(
   recipes: readonly Recipe[],
 ): PlannedMeal[] {
   const source = plan.meals.find((meal) => meal.id === sourceSlotId);
-  if (!source || source.leftoverOf) return [];
+  if (!source || source.leftoverOf || source.skipped) return [];
   const recipe = recipes.find((item) => item.id === source.recipeId);
   if (!recipe) return [];
 
@@ -662,6 +707,8 @@ export function leftoverCandidates(
       gap > 0 &&
       gap <= MAX_LEFTOVER_DAYS &&
       !meal.leftoverOf &&
+      !meal.skipped &&
+      meal.mealType === source.mealType &&
       !plan.meals.some((other) => other.leftoverOf === meal.id) &&
       recipe.mealTypes.includes(meal.mealType)
     );
@@ -688,7 +735,7 @@ export function planLeftover(
   }
 
   const meals = plan.meals.map((meal) => (meal.id === targetSlotId
-    ? { ...meal, recipeId: source.recipeId, source: "manual" as const, completed: false, locked: false, leftoverOf: sourceSlotId }
+    ? { ...meal, recipeId: source.recipeId, portions: source.portions, source: "manual" as const, completed: false, locked: false, skipped: false, leftoverOf: sourceSlotId }
     : meal));
   const byId = new Map(recipes.map((item) => [item.id, item]));
   const canRecalculate = meals.every((meal) => byId.has(meal.recipeId));
@@ -817,7 +864,8 @@ export function buildShoppingList(
       amounts,
       purchaseSuggestion: purchaseSuggestionFor(item.ingredientId, amounts),
       checked: checked.has(item.ingredientId),
-      inPantry: pantry.has(item.ingredientId),
+      // A numeric stock entry is partial unless it covers the whole requirement.
+      inPantry: pantry.has(item.ingredientId) && !owned,
     };
   })
     // Fully covered by the pantry: nothing left to buy.
@@ -892,6 +940,7 @@ export function restorePlan(
       portions: people,
       completed: false,
       locked: false,
+      skipped: false,
     }));
 
   return {
@@ -929,29 +978,85 @@ export function planToCalendar(plan: WeeklyPlan, recipes: readonly Recipe[]): st
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
   const times: Record<MealType, string> = { breakfast: "0800", lunch: "1230", dinner: "1930" };
   const labels: Record<MealType, string> = { breakfast: "Petit-déjeuner", lunch: "Déjeuner", dinner: "Dîner" };
-  const escape = (value: string): string => value.replace(/([,;\\])/g, "\\$1").replace(/\r?\n/g, "\\n");
+  const escape = (value: string): string => value
+    .replace(/\\/g, "\\\\")
+    .replace(/\r\n|\r|\n/g, "\\n")
+    .replace(/([,;])/g, "\\$1");
+  const safeToken = (value: string): string => value.replace(/[\r\n\u0000-\u001f\u007f]/g, "-").slice(0, 220);
   const dayStamp = (dayIndex: number): string => {
     const [year, month, day] = plan.startsOn.split("-").map(Number);
     const date = new Date(Date.UTC(year, month - 1, day + dayIndex));
     return date.toISOString().slice(0, 10).replace(/-/g, "");
   };
+  const generated = new Date(plan.generatedAt);
+  const stamp = (Number.isNaN(generated.getTime()) ? new Date(`${plan.startsOn}T00:00:00.000Z`) : generated)
+    .toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 
   const events = plan.meals.filter((meal) => !meal.skipped).map((meal) => {
     const recipe = byId.get(meal.recipeId);
     const start = `${dayStamp(meal.dayIndex)}T${times[meal.mealType]}00`;
     return [
       "BEGIN:VEVENT",
-      `UID:${plan.id}-${meal.id}@inflamm-menu`,
-      `DTSTAMP:${plan.generatedAt.replace(/[-:]/g, "").replace(/\.\d{3}/, "")}`,
+      `UID:${safeToken(`${plan.id}-${meal.id}`)}@inflamm-menu`,
+      `DTSTAMP:${stamp}`,
       `DTSTART;TZID=Europe/Paris:${start}`,
-      `DURATION:PT45M`,
+      "DURATION:PT45M",
       `SUMMARY:${escape(`${labels[meal.mealType]} — ${recipe?.title ?? "Repas"}`)}`,
       `DESCRIPTION:${escape(`${meal.portions} portions · Inflamm’Menu${meal.leftoverOf ? " · restes" : ""}`)}`,
       "END:VEVENT",
     ].join("\r\n");
   });
 
-  return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//InflammMenu//FR", "CALSCALE:GREGORIAN", ...events, "END:VCALENDAR", ""].join("\r\n");
+  const foldLine = (line: string): string[] => {
+    const folded: string[] = [];
+    let current = "";
+    let currentBytes = 0;
+    let limit = 75;
+    for (const character of line) {
+      const characterBytes = new TextEncoder().encode(character).byteLength;
+      if (current && currentBytes + characterBytes > limit) {
+        folded.push(folded.length ? ` ${current}` : current);
+        current = character;
+        currentBytes = characterBytes;
+        limit = 74;
+      } else {
+        current += character;
+        currentBytes += characterBytes;
+      }
+    }
+    folded.push(folded.length ? ` ${current}` : current);
+    return folded;
+  };
+
+  const calendarLines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//InflammMenu//FR",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "X-WR-CALNAME:Inflamm’Menu",
+    "BEGIN:VTIMEZONE",
+    "TZID:Europe/Paris",
+    "X-LIC-LOCATION:Europe/Paris",
+    "BEGIN:DAYLIGHT",
+    "TZOFFSETFROM:+0100",
+    "TZOFFSETTO:+0200",
+    "TZNAME:CEST",
+    "DTSTART:19700329T020000",
+    "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU",
+    "END:DAYLIGHT",
+    "BEGIN:STANDARD",
+    "TZOFFSETFROM:+0200",
+    "TZOFFSETTO:+0100",
+    "TZNAME:CET",
+    "DTSTART:19701025T030000",
+    "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU",
+    "END:STANDARD",
+    "END:VTIMEZONE",
+    ...events.flatMap((event) => event.split("\r\n")),
+    "END:VCALENDAR",
+  ];
+  return [...calendarLines.flatMap(foldLine), ""].join("\r\n");
 }
 
 export interface ShoppingListTextOptions {
