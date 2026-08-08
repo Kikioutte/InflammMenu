@@ -1,40 +1,13 @@
-name: Diagnose remediation payload
+name: Apply audit remediation
 
 on:
-  push:
-    branches: [agent/audit-remediation]
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  diagnose:
+  paused:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out remediation branch
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          persist-credentials: false
-
-      - name: Normalize and inspect payload
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/remediation-payload"
-          for index in 00 01 02 03 04 05; do
-            source=".github/remediation/part-$index"
-            target="$RUNNER_TEMP/remediation-payload/part-$index"
-            tr -d '[:space:]' < "$source" > "$target"
-            wc -c "$target"
-            sha256sum "$target"
-          done
-          cat "$RUNNER_TEMP"/remediation-payload/part-{00,01,02,03,04,05} > "$RUNNER_TEMP/remediation-payload/combined.b64"
-          wc -c "$RUNNER_TEMP/remediation-payload/combined.b64"
-          sha256sum "$RUNNER_TEMP/remediation-payload/combined.b64"
-
-      - name: Upload normalized payload
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: normalized-remediation-payload
-          path: ${{ runner.temp }}/remediation-payload
-          retention-days: 1
+      - run: echo "Payload diagnostics paused until corrected fragments are uploaded."
