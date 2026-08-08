@@ -1,4 +1,4 @@
-name: Export source snapshot
+name: Generate package lock
 
 on:
   push:
@@ -9,18 +9,29 @@ permissions:
   contents: read
 
 jobs:
-  export:
+  lock:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Package tracked source tree
-        run: git archive --format=tar.gz --output="$RUNNER_TEMP/source-snapshot.tgz" HEAD
-
-      - name: Upload source snapshot
-        uses: actions/upload-artifact@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          name: source-snapshot
-          path: ${{ runner.temp }}/source-snapshot.tgz
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Generate lockfile with patched PostCSS
+        run: |
+          npm pkg set overrides.postcss=8.5.24
+          npm install --package-lock-only --ignore-scripts
+          node -e "const lock=require('./package-lock.json'); console.log(lock.packages['node_modules/postcss'].version)"
+
+      - name: Upload package lock
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: package-lock
+          path: package-lock.json
           retention-days: 1
