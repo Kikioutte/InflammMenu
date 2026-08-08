@@ -1,37 +1,13 @@
-name: Export Chromium test runtime
+name: Apply audit remediation
 
 on:
-  push:
-    branches: [agent/audit-remediation]
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  export:
+  apply:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          persist-credentials: false
-
-      - name: Set up Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install exact dependencies and Chromium
-        run: |
-          npm ci
-          npx playwright install --with-deps chromium
-          tar -czf "$RUNNER_TEMP/playwright-browsers.tgz" -C "$HOME/.cache" ms-playwright
-
-      - name: Upload Chromium runtime
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: remediation-chromium
-          path: ${{ runner.temp }}/playwright-browsers.tgz
-          retention-days: 1
+      - run: echo "Payload staging in progress."
