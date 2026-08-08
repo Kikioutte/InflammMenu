@@ -1,6 +1,8 @@
 name: Apply audit remediation
 
 on:
+  push:
+    branches: [agent/audit-remediation]
   workflow_dispatch:
 
 permissions:
@@ -10,4 +12,29 @@ jobs:
   apply:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Payload staging in progress."
+      - name: Check out remediation branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Rebuild and apply remediation patch
+        env:
+          BASE_SHA: 742591d7ff6dafc3afb5ea897c791517b7a13e04
+          PATCH_SHA256: 5713494604c60ab46874a2a99375baf67301515dcf8928bf006e0bc814bdc988
+        run: |
+          set -euo pipefail
+          cat .github/remediation/part-* | tr -d '[:space:]' > "$RUNNER_TEMP/remediation.patch.gz.b64"
+          echo "$PATCH_SHA256  $RUNNER_TEMP/remediation.patch.gz.b64" | sha256sum -c -
+          base64 -d "$RUNNER_TEMP/remediation.patch.gz.b64" | gzip -d > "$RUNNER_TEMP/remediation.patch"
+          git reset --hard "$BASE_SHA"
+          git apply --binary --index "$RUNNER_TEMP/remediation.patch"
+          mkdir -p docs/qa
+          git mv public/qa/compare-details.html docs/qa/
+          git mv public/qa/compare.html docs/qa/
+          git mv public/qa/implementation-home.png docs/qa/
+          git mv public/qa/source-option-1.png docs/qa/
+          git config user.name Kikioutte
+          git config user.email 148545599+Kikioutte@users.noreply.github.com
+          git commit -m "Corriger les anomalies de l audit technique"
+          git push --force origin HEAD:agent/audit-remediation
