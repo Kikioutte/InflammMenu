@@ -5,6 +5,7 @@ on:
     branches: [agent/audit-remediation]
     paths:
       - scripts/apply-final-code-review-fixes.py
+      - scripts/fix-spend-comma.py
       - .github/workflows/final-code-review-temp.yml
 
 permissions:
@@ -35,7 +36,9 @@ jobs:
         run: npm ci
 
       - name: Apply final code-review fixes
-        run: python3 scripts/apply-final-code-review-fixes.py
+        run: |
+          python3 scripts/apply-final-code-review-fixes.py
+          python3 scripts/fix-spend-comma.py
 
       - name: Validate data, unit tests and GitHub Pages build
         run: |
@@ -57,7 +60,7 @@ jobs:
         run: |
           git config user.name "InflammMenu audit remediation"
           git config user.email "148545599+Kikioutte@users.noreply.github.com"
-          git rm scripts/apply-final-code-review-fixes.py
+          git rm scripts/apply-final-code-review-fixes.py scripts/fix-spend-comma.py
           git restore --source=HEAD --staged --worktree .github/workflows
           git add src/Prototype.tsx src/prototype.css src/storage.ts tests/app-v1.spec.ts tests/storage.test.mjs
           git diff --cached --check
