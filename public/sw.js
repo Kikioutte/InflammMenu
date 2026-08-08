@@ -78,6 +78,19 @@ async function cacheFirst(request, cacheName, maximum) {
   return response;
 }
 
+async function networkFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  try {
+    const response = await fetch(request, { cache: "no-cache" });
+    if (response.ok && response.type === "basic") await putSafely(cache, request, response);
+    return response;
+  } catch (error) {
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    throw error;
+  }
+}
+
 async function navigationResponse(request) {
   const cache = await caches.open(SHELL_CACHE);
   try {
@@ -105,7 +118,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
   if (url.pathname.endsWith("recettes-anti-inflammatoires.json")) {
-    event.respondWith(cacheFirst(request, CATALOGUE_CACHE));
+    event.respondWith(networkFirst(request, CATALOGUE_CACHE));
     return;
   }
   if (url.pathname.endsWith("planner-cautions.json")) {
