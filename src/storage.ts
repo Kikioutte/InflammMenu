@@ -750,6 +750,9 @@ export function importAppState(raw: string): AppState {
       throw new Error("Cette sauvegarde provient d’une version plus récente d’Inflamm’Menu.");
     }
     if (!isRecord(parsed.state)) throw new Error("Sauvegarde incomplète : aucune donnée exploitable.");
+    if (!Object.keys(parsed.state).some((key) => RECOGNIZED_STATE_KEYS.has(key))) {
+      throw new Error("Sauvegarde incomplète : aucune donnée Inflamm’Menu reconnue.");
+    }
     candidate = parsed.state;
   } else {
     const rawCandidate = isRecord(parsed.state) ? parsed.state : parsed;

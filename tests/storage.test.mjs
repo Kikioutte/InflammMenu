@@ -121,11 +121,13 @@ test("a backup round trip preserves every local decision", async () => {
 });
 
 test("restoring rejects foreign or broken files and accepts a raw state dump", async () => {
-  const { importAppState } = await import("../src/storage.ts");
+  const { importAppState, BACKUP_FORMAT } = await import("../src/storage.ts");
 
   assert.throws(() => importAppState("{pas du json"), /Fichier illisible/);
   assert.throws(() => importAppState("[]"), /Fichier illisible/);
   assert.throws(() => importAppState(JSON.stringify({ format: "autre-app", state: {} })), /ne provient pas/);
+  assert.throws(() => importAppState(JSON.stringify({ format: BACKUP_FORMAT, version: APP_STATE_VERSION, state: {} })), /incomplète/);
+  assert.throws(() => importAppState(JSON.stringify({ format: BACKUP_FORMAT, version: APP_STATE_VERSION, state: { hello: "world" } })), /incomplète/);
 
   const rawState = importAppState(JSON.stringify(state()));
   assert.equal(rawState.version, APP_STATE_VERSION);
