@@ -1,0 +1,65 @@
+name: Final code review fixes
+
+on:
+  push:
+    branches: [agent/audit-remediation]
+    paths:
+      - scripts/apply-final-code-review-fixes.py
+      - .github/workflows/final-code-review-temp.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: final-code-review-fixes
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - name: Check out correction branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: agent/audit-remediation
+          persist-credentials: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Apply final code-review fixes
+        run: python3 scripts/apply-final-code-review-fixes.py
+
+      - name: Validate data, unit tests and GitHub Pages build
+        run: |
+          git diff --check
+          npm run check:runtime
+          npm run test:preview
+          npm run build:pages
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Validate application and runtime journeys
+        run: |
+          npm run test:app
+          npm run test:runtime
+          npm run test:sites
+
+      - name: Commit validated source changes
+        run: |
+          git config user.name "InflammMenu audit remediation"
+          git config user.email "148545599+Kikioutte@users.noreply.github.com"
+          git rm scripts/apply-final-code-review-fixes.py
+          git restore --source=HEAD --staged --worktree .github/workflows
+          git add src/Prototype.tsx src/prototype.css src/storage.ts tests/app-v1.spec.ts tests/storage.test.mjs
+          git diff --cached --check
+          git commit -m "Finaliser les corrections issues de la revue de code"
+          git push origin HEAD:agent/audit-remediation
