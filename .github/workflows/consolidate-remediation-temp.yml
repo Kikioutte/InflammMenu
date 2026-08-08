@@ -53,7 +53,8 @@ jobs:
 
       - name: Optimize the social preview image
         run: |
-          command -v ffmpeg
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
           ffmpeg -hide_banner -loglevel error -y -i public/og.png \
             -vf "scale=1200:630:force_original_aspect_ratio=increase,crop=1200:630" \
             -frames:v 1 -q:v 3 public/og.jpg
