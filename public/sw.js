@@ -82,8 +82,11 @@ async function networkFirst(request, cacheName) {
   const cache = await caches.open(cacheName);
   try {
     const response = await fetch(request, { cache: "no-cache" });
-    if (response.ok && response.type === "basic") await putSafely(cache, request, response);
-    return response;
+    if (response.ok && response.type === "basic") {
+      await putSafely(cache, request, response);
+      return response;
+    }
+    return await cache.match(request) || response;
   } catch (error) {
     const cached = await cache.match(request);
     if (cached) return cached;
