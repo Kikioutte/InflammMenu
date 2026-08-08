@@ -769,8 +769,10 @@ button { -webkit-tap-highlight-color: transparent; }
 
 
 /* Audit remediation: WCAG 2.2 target sizes without enlarging the visual progress bar. */
-.cooking-progress button { min-width: 44px; min-height: 44px; height: 44px; padding: 19px 0; }
-.history-card__delete, .stepper button, .aisle-order button { min-width: 44px; min-height: 44px; }
+.cooking-progress { overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; }
+.cooking-progress::-webkit-scrollbar { display: none; }
+.cooking-progress li { flex: 0 0 44px; }
+.cooking-progress button { min-height: 44px; height: 44px; padding: 19px 0; }
 
 
 /* Audit remediation: explicit keyboard focus and reduced-motion completion. */

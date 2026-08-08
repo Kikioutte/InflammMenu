@@ -386,3 +386,18 @@ test("legacy localStorage replica wins a revision tie", async () => {
   const source = await readFile(new URL("../src/storage.ts", import.meta.url), "utf8");
   assert.match(source, /localState\.stateRevision >= indexedState\.stateRevision/);
 });
+
+
+test("valid imported leftovers cannot remain locked or cooked", async () => {
+  const { normalizePlan } = await import("../src/storage.ts");
+  const normalized = normalizePlan({
+    startsOn: "2026-08-03",
+    meals: [
+      { id: "source", dayIndex: 0, mealType: "lunch", recipeId: "r1", portions: 2, source: "generated" },
+      { id: "leftover", dayIndex: 1, mealType: "lunch", recipeId: "r1", portions: 2, source: "manual", leftoverOf: "source", completed: true, locked: true },
+    ],
+  });
+  assert.equal(normalized.meals[1].leftoverOf, "source");
+  assert.equal(normalized.meals[1].completed, false);
+  assert.equal(normalized.meals[1].locked, false);
+});

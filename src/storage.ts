@@ -222,7 +222,7 @@ export function normalizePlan(value: unknown): WeeklyPlan | null {
       source.mealType === meal.mealType &&
       gap > 0 && gap <= 2,
     );
-    if (valid) return meal;
+    if (valid) return { ...meal, completed: false, locked: false };
     const { leftoverOf: _discarded, ...withoutLeftover } = meal;
     return withoutLeftover;
   });
