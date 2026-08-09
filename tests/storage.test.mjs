@@ -443,3 +443,19 @@ test("valid imported leftovers cannot remain locked or cooked", async () => {
   assert.equal(normalized.meals[1].completed, false);
   assert.equal(normalized.meals[1].locked, false);
 });
+
+test("daily constraints migrate safely and discard malformed entries", () => {
+  const migrated = migrateAppState(state({ profile: {
+    ...state().profile,
+    dayConstraints: [
+      { dayIndex: 0, maxPrepMinutes: 15, portions: 4, skippedMealTypes: ["dinner", "unknown"] },
+      { dayIndex: 8, maxPrepMinutes: 20, skippedMealTypes: ["lunch"] },
+      { dayIndex: 2, maxPrepMinutes: Infinity, portions: -8, skippedMealTypes: [] },
+    ],
+  } }));
+  assert.deepEqual(migrated?.profile.dayConstraints, [
+    { dayIndex: 0, maxPrepMinutes: 15, portions: 4, skippedMealTypes: ["dinner"] },
+    { dayIndex: 2, portions: 1, skippedMealTypes: [] },
+  ]);
+  assert.deepEqual(migrateAppState(state())?.profile.dayConstraints, []);
+});

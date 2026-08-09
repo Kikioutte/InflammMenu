@@ -780,3 +780,88 @@ button { -webkit-tap-highlight-color: transparent; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
+
+/* Daily planning, immediate suggestions and contextual reminders. */
+.home-tonight {
+  width: 100%;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, .88);
+}
+.contextual-reminders { margin: 18px 0; }
+.contextual-reminders > button {
+  width: 100%;
+  min-height: 64px;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--white);
+  color: var(--ink);
+  display: grid;
+  grid-template-columns: 24px 1fr 18px;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+.contextual-reminders > button > svg:first-child { color: var(--terracotta); }
+.contextual-reminders span { display: grid; gap: 3px; }
+.contextual-reminders small { color: var(--muted); line-height: 1.35; }
+.daily-constraint-card,
+.tonight-controls {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .7);
+}
+.daily-constraint-card h3 { margin: 0 0 12px; font-family: var(--serif); font-size: 26px; }
+.daily-constraint-card select {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+}
+.daily-constraints .day-carousel button { position: relative; min-width: 58px; }
+.daily-constraints .day-carousel i { color: var(--terracotta); font-style: normal; font-size: 18px; line-height: 8px; }
+.outside-slots { margin: 16px 0 0; padding: 0; border: 0; }
+.outside-slots legend,
+.tonight-controls legend { margin-bottom: 8px; font-weight: 600; }
+.text-button { min-height: 40px; border: 0; background: transparent; color: var(--terracotta); font-weight: 600; }
+.tonight-page { padding-bottom: 36px; }
+.tonight-controls { display: grid; gap: 18px; }
+.tonight-controls fieldset { margin: 0; padding: 0; border: 0; }
+.tonight-results { margin-top: 24px; }
+.tonight-card {
+  width: 100%;
+  min-height: 104px;
+  margin-top: 10px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--white);
+  color: var(--ink);
+  display: grid;
+  grid-template-columns: 104px 1fr 20px;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+.tonight-card img { width: 104px; height: 100%; min-height: 104px; object-fit: cover; }
+.tonight-card span { min-width: 0; display: grid; gap: 4px; padding: 10px 0; }
+.tonight-card small,
+.tonight-card em { color: var(--muted); font-size: 11px; font-style: normal; line-height: 1.35; }
+.tonight-card strong { font-family: var(--serif); font-size: 19px; line-height: 1.08; }
+.tonight-card > svg { margin-right: 8px; }
+.plant-diversity-details {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(83, 99, 69, .08);
+}
+.plant-diversity-details summary { cursor: pointer; color: var(--sage); font-weight: 600; }
+.plant-diversity-details p { margin: 10px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }

@@ -81,6 +81,37 @@ test("le profil est modifiable et conserve ses libellés accessibles", async ({ 
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
+test("les contraintes quotidiennes pilotent la semaine générée", async ({ page }) => {
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByTestId("constraint-day-0").click();
+  await page.getByTestId("constraint-time").selectOption("15");
+  await page.getByRole("button", { name: "Ajouter une portion pour ce jour" }).click();
+  await page.getByTestId("constraint-skip-dinner").click();
+  await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
+
+  await generateWeek(page);
+  await page.locator(".day-card").first().click();
+  const mondayMeals = page.locator('[data-testid^="meal-card-day-0-"]');
+  await expect(mondayMeals).toHaveCount(2);
+  await expect(mondayMeals.filter({ hasText: "Dîner" })).toHaveAttribute("data-skipped", "true");
+  await expect(mondayMeals.first()).toContainText("3 portions");
+});
+
+test("le mode ce soir propose trois recettes et la semaine affiche sa diversité végétale", async ({ page }) => {
+  await openFreshApp(page);
+  await page.getByTestId("tonight-open").click();
+  await expect(page.getByTestId("tonight-view")).toBeVisible();
+  await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(3);
+  await page.getByTestId("tonight-time-15").click();
+  expect(await page.locator('[data-testid^="tonight-result-"]').count()).toBeGreaterThan(0);
+  await page.getByRole("button", { name: "Retour" }).click();
+
+  await generateWeek(page);
+  await expect(page.getByTestId("plant-diversity")).toBeVisible();
+  await expect(page.getByTestId("plant-diversity").locator("summary")).toContainText("végétaux comptés");
+});
+
 test("la génération construit une semaine navigable puis une liste de courses", async ({ page }) => {
   await openFreshApp(page);
 

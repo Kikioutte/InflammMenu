@@ -1092,3 +1092,74 @@ test("calendar export escapes isolated carriage returns, folds long lines and de
     assert.ok(Buffer.byteLength(line) <= 75, `calendar line exceeds 75 octets: ${Buffer.byteLength(line)}`);
   }
 });
+
+test("daily constraints drive time, portions and meals outside before generation", () => {
+  const varied = Array.from({ length: 34 }, (_, index) => recipe(index + 700, {
+    prepMinutes: index < 18 ? 10 : 40,
+  }));
+  const constrainedProfile = {
+    ...profile,
+    dayConstraints: [{ dayIndex: 0, maxPrepMinutes: 10, portions: 4, skippedMealTypes: ["dinner"] }],
+  };
+  const plan = engine.generateWeeklyPlan(varied, constrainedProfile, { seed: "daily-constraints" });
+  const monday = plan.meals.filter((meal) => meal.dayIndex === 0);
+  assert.equal(monday.length, 2);
+  assert.ok(monday.every((meal) => varied.find((item) => item.id === meal.recipeId).prepMinutes <= 10));
+  assert.ok(monday.every((meal) => meal.portions === 4));
+  assert.equal(monday.find((meal) => meal.mealType === "dinner").skipped, true);
+  assert.ok(plan.meals.filter((meal) => meal.dayIndex > 0).every((meal) => meal.portions === 1));
+});
+
+test("tonight recommendations stay safe and favour ingredients already in reserve", () => {
+  const options = [
+    recipe(801, { ingredients: [{ id: "carrot", name: "Carotte", quantity: 1, unit: "piece", category: "fruit-vegetable" }] }),
+    recipe(802, { ingredients: [{ id: "lentil", name: "Lentilles", quantity: 80, unit: "g", category: "grocery" }] }),
+    recipe(803, { prepMinutes: 50 }),
+    recipe(804, { allergens: ["arachides"] }),
+  ];
+  const recommendations = engine.recommendTonight(options, { ...profile, allergies: ["arachides"] }, {
+    mealType: "dinner",
+    maxPrepMinutes: 30,
+    portions: 2,
+    pantryIngredientIds: ["carrot"],
+    limit: 3,
+  });
+  assert.equal(recommendations[0].recipe.id, "recipe-801");
+  assert.equal(recommendations.some((item) => item.recipe.id === "recipe-803"), false);
+  assert.equal(recommendations.some((item) => item.recipe.id === "recipe-804"), false);
+  assert.equal(recommendations[0].estimatedCost, 4);
+});
+
+test("contextual reminders cover same-day rest, next-day preparation and today's leftovers", () => {
+  const recipes = [
+    recipe(901, { restMinutes: 90 }),
+    recipe(902, { restMinutes: 300 }),
+    recipe(903),
+  ];
+  const plan = {
+    id: "week-reminders", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: profile, estimatedCost: 1, version: 1,
+    meals: [
+      { id: "same-day", dayIndex: 0, mealType: "lunch", recipeId: "recipe-901", portions: 1, source: "generated" },
+      { id: "tomorrow", dayIndex: 1, mealType: "dinner", recipeId: "recipe-902", portions: 1, source: "generated" },
+      { id: "leftover", dayIndex: 0, mealType: "dinner", recipeId: "recipe-903", portions: 1, source: "manual", leftoverOf: "source" },
+    ],
+  };
+  const reminders = engine.contextualRemindersForDate(plan, recipes, "2026-08-03");
+  assert.deepEqual(new Set(reminders.map((item) => item.kind)), new Set(["rest-today", "start-tonight", "leftovers-today"]));
+});
+
+test("plant diversity counts distinct plants without water, oil or animal products", () => {
+  const plants = recipe(950, { ingredients: [
+    { id: "carrot", name: "Carotte", quantity: 1, unit: "piece", category: "fruit-vegetable" },
+    { id: "cumin", name: "Cumin", quantity: 1, unit: "c_cafe", category: "grocery" },
+    { id: "water", name: "Eau", quantity: 100, unit: "ml", category: "beverage" },
+    { id: "olive-oil", name: "Huile d'olive", quantity: 1, unit: "c_soupe", category: "grocery" },
+    { id: "salmon", name: "Saumon", quantity: 100, unit: "g", category: "meat-fish" },
+  ] });
+  const plan = { id: "week-plants", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: profile, estimatedCost: 1, version: 1, meals: [
+    { id: "meal", dayIndex: 0, mealType: "dinner", recipeId: plants.id, portions: 1, source: "generated" },
+  ] };
+  assert.deepEqual(engine.plantDiversityOf(plan, [plants]), { count: 2, ingredients: ["Carotte", "Cumin"] });
+  assert.equal(engine.summarizePlan(plan, [plants], profile).plantDiversity, 2);
+});

@@ -1,6 +1,8 @@
 import {
   DEFAULT_PROFILE,
+  type DayConstraint,
   type IngredientCategory,
+  type MealType,
   type PantryAmount,
   type PlannedMeal,
   type Recipe,
@@ -9,7 +11,7 @@ import {
 } from "./domain.ts";
 import { canonicalIngredientId, legacyShoppingItemKeyToCanonical } from "./shopping.ts";
 
-export const APP_STATE_VERSION = 2 as const;
+export const APP_STATE_VERSION = 3 as const;
 
 export const APP_STATE_DATA_KEYS = [
   "profile",
@@ -444,6 +446,32 @@ function normalizeWeeklyTargets(value: unknown): UserProfile["weeklyTargets"] {
   };
 }
 
+function normalizeDayConstraints(value: unknown): DayConstraint[] {
+  if (!Array.isArray(value)) return [];
+  const result = new Map<number, DayConstraint>();
+  for (const item of value) {
+    if (!isRecord(item)) continue;
+    const dayIndex = finiteNumber(item.dayIndex, -1);
+    if (!Number.isInteger(dayIndex) || dayIndex < 0 || dayIndex > 6) continue;
+    const skippedMealTypes = stringArray(item.skippedMealTypes)
+      .filter((entry): entry is MealType => MEAL_TYPES.has(entry));
+    const maxPrepMinutes = typeof item.maxPrepMinutes === "number" && Number.isFinite(item.maxPrepMinutes)
+      ? boundedNumber(item.maxPrepMinutes, DEFAULT_PROFILE.maxPrepMinutes, 1, 24 * 60)
+      : undefined;
+    const portions = typeof item.portions === "number" && Number.isFinite(item.portions)
+      ? boundedNumber(item.portions, DEFAULT_PROFILE.people, 1, 8)
+      : undefined;
+    if (maxPrepMinutes === undefined && portions === undefined && skippedMealTypes.length === 0) continue;
+    result.set(dayIndex, {
+      dayIndex: dayIndex as DayConstraint["dayIndex"],
+      ...(maxPrepMinutes === undefined ? {} : { maxPrepMinutes }),
+      ...(portions === undefined ? {} : { portions }),
+      skippedMealTypes,
+    });
+  }
+  return [...result.values()].sort((left, right) => left.dayIndex - right.dayIndex);
+}
+
 function normalizeProfile(value: unknown): UserProfile {
   if (!isRecord(value)) return { ...DEFAULT_PROFILE };
 
@@ -457,6 +485,7 @@ function normalizeProfile(value: unknown): UserProfile {
     mealsPerDay: value.mealsPerDay === 3 ? 3 : 2,
     weeklyBudget: boundedNumber(value.weeklyBudget, DEFAULT_PROFILE.weeklyBudget, 1, 10_000),
     maxPrepMinutes: boundedNumber(value.maxPrepMinutes, DEFAULT_PROFILE.maxPrepMinutes, 1, 24 * 60),
+    dayConstraints: normalizeDayConstraints(value.dayConstraints),
     allergies: stringArray(value.allergies),
     excludedIngredientIds: [...new Set(stringArray(value.excludedIngredientIds).map(canonicalIngredientId))],
     dislikedRecipeIds: stringArray(value.dislikedRecipeIds),
@@ -838,6 +867,7 @@ function hasCompleteCurrentProfileShape(value: unknown): boolean {
     && (value.mealsPerDay === 2 || value.mealsPerDay === 3)
     && typeof value.weeklyBudget === "number" && Number.isFinite(value.weeklyBudget)
     && typeof value.maxPrepMinutes === "number" && Number.isFinite(value.maxPrepMinutes)
+    && Array.isArray(value.dayConstraints)
     && isStrictStringArray(value.allergies)
     && isStrictStringArray(value.excludedIngredientIds)
     && isStrictStringArray(value.dislikedRecipeIds)
