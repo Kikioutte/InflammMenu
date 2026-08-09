@@ -991,3 +991,104 @@ test("the week exports as a valid calendar file", () => {
   assert.match(ics, /SUMMARY:(Déjeuner|Dîner) — /);
   assert.ok(ics.split("\r\n").every((line) => line.length <= 400));
 });
+
+
+test("audit remediation: locked meals preserve portions and reset cooked state", async () => {
+  const { generateWeeklyPlan } = await import("../src/engine.ts");
+  const { DEFAULT_PROFILE } = await import("../src/domain.ts");
+  const recipes = Array.from({ length: 14 }, (_, index) => ({
+    id: `safe-${index}`,
+    title: `Safe ${index}`,
+    mealTypes: [index < 7 ? "lunch" : "dinner"],
+    diet: ["classic"], prepMinutes: 5, costPerPortion: 1,
+    seasons: ["all-year"], equipment: [], allergens: [], tags: [],
+    ingredients: [{ id: `ingredient-${index}`, name: "Ingredient", quantity: 1, unit: "piece", category: "grocery" }],
+    nutrition: { calories: 1, protein: 1, fiber: 1, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    description: "", steps: ["Faire"], conservation: "", image: "/assets/recipe-placeholder.svg",
+  }));
+  const locked = { id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: "safe-0", portions: 6, source: "generated", locked: true, completed: true };
+  const plan = generateWeeklyPlan(recipes, { ...DEFAULT_PROFILE, people: 2, equipment: [] }, { seed: "locked", lockedMeals: [locked] });
+  const kept = plan.meals.find((meal) => meal.id === locked.id);
+  assert.equal(kept.portions, 6);
+  assert.equal(kept.completed, false);
+});
+
+test("audit remediation: swaps recalculate cost and replacing a leftover clears its link", async () => {
+  const { swapPlannedMeals, replacePlannedMeal } = await import("../src/engine.ts");
+  const makeRecipe = (id, cost) => ({
+    id, title: id, mealTypes: ["lunch"], diet: ["classic"], prepMinutes: 1,
+    costPerPortion: cost, seasons: ["all-year"], equipment: [], allergens: [], tags: [],
+    ingredients: [{ id, name: id, quantity: 1, unit: "piece", category: "grocery" }],
+    nutrition: { calories: 1, protein: 1, fiber: 1, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    description: "", steps: ["Faire"], conservation: "", image: "/assets/recipe-placeholder.svg",
+  });
+  const recipes = [makeRecipe("cheap", 1), makeRecipe("expensive", 10), makeRecipe("new", 3)];
+  const plan = { id: "week", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: {}, version: 1, estimatedCost: 12, meals: [
+    { id: "a", dayIndex: 0, mealType: "lunch", recipeId: "cheap", portions: 2, source: "generated" },
+    { id: "b", dayIndex: 1, mealType: "lunch", recipeId: "expensive", portions: 1, source: "generated" },
+  ] };
+  const swapped = swapPlannedMeals(plan, "a", "b", recipes);
+  assert.equal(swapped.estimatedCost, 12);
+  assert.equal(swapped.meals[0].portions, 1);
+  assert.equal(swapped.meals[1].portions, 2);
+
+  const leftoverPlan = { ...plan, meals: [plan.meals[0], { ...plan.meals[1], recipeId: "cheap", leftoverOf: "a" }] };
+  const replaced = replacePlannedMeal(leftoverPlan, "b", recipes[2], recipes);
+  assert.equal(replaced.meals[1].leftoverOf, undefined);
+});
+
+test("audit remediation: skipped meals cannot become leftover targets and partial pantry remains visible", async () => {
+  const { leftoverCandidates, buildShoppingList } = await import("../src/engine.ts");
+  const recipe = {
+    id: "tofu", title: "Tofu", mealTypes: ["lunch"], diet: ["classic"], prepMinutes: 1,
+    costPerPortion: 1, seasons: ["all-year"], equipment: [], allergens: [], tags: [],
+    ingredients: [{ id: "tofu", name: "Tofu", quantity: 100, unit: "g", category: "fresh" }],
+    nutrition: { calories: 1, protein: 1, fiber: 1, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    description: "", steps: ["Faire"], conservation: "", image: "/assets/recipe-placeholder.svg",
+  };
+  const plan = { id: "week", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: {}, version: 1, estimatedCost: 2, meals: [
+    { id: "a", dayIndex: 0, mealType: "lunch", recipeId: "tofu", portions: 2, source: "generated" },
+    { id: "b", dayIndex: 1, mealType: "lunch", recipeId: "tofu", portions: 2, source: "generated", skipped: true },
+  ] };
+  assert.equal(leftoverCandidates(plan, "a", [recipe]).length, 0);
+  const list = buildShoppingList({ ...plan, meals: [plan.meals[0]] }, [recipe], {
+    pantryIngredientIds: ["tofu"],
+    pantryAmounts: { tofu: { quantity: 50, unit: "g" } },
+  });
+  assert.equal(list[0].amounts[0].quantity, 150);
+  assert.equal(list[0].inPantry, false);
+});
+
+test("audit remediation: calendar tokens cannot inject new lines", async () => {
+  const { planToCalendar } = await import("../src/engine.ts");
+  const plan = { id: "week\r\nX-EVIL:1", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: {}, version: 1, estimatedCost: 0, meals: [
+    { id: "slot\nBEGIN:EVIL", dayIndex: 0, mealType: "lunch", recipeId: "missing", portions: 1, source: "generated" },
+  ] };
+  const calendar = planToCalendar(plan, []);
+  assert.doesNotMatch(calendar, /\r\nX-EVIL:/);
+  assert.doesNotMatch(calendar, /\r\nBEGIN:EVIL/);
+  assert.match(calendar, /\r\nMETHOD:PUBLISH\r\n/);
+});
+
+test("calendar export escapes isolated carriage returns, folds long lines and declares its timezone", async () => {
+  const { planToCalendar } = await import("../src/engine.ts");
+  const recipe = {
+    id: "calendar-recipe", title: `Plat${String.fromCharCode(13)}X-EVIL:1 ${"é".repeat(90)}`, mealTypes: ["lunch"], diet: ["classic"],
+    prepMinutes: 1, costPerPortion: 1, seasons: ["all-year"], equipment: [], allergens: [], tags: [],
+    ingredients: [{ id: "ingredient", name: "Ingredient", quantity: 1, unit: "piece", category: "grocery" }],
+    nutrition: { calories: 1, protein: 1, fiber: 1, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    description: "", steps: ["Faire"], conservation: "", image: "/assets/recipe-placeholder.svg",
+  };
+  const plan = {
+    id: "week", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: {}, version: 1, estimatedCost: 1,
+    meals: [{ id: "slot", dayIndex: 0, mealType: "lunch", recipeId: recipe.id, portions: 1, source: "generated" }],
+  };
+  const calendar = planToCalendar(plan, [recipe]);
+  assert.equal(calendar.includes("\r\nX-EVIL:"), false);
+  assert.ok(calendar.includes("Plat\\nX-EVIL:1"));
+  assert.ok(calendar.includes("BEGIN:VTIMEZONE\r\nTZID:Europe/Paris"));
+  for (const line of calendar.split("\r\n")) {
+    assert.ok(Buffer.byteLength(line) <= 75, `calendar line exceeds 75 octets: ${Buffer.byteLength(line)}`);
+  }
+});

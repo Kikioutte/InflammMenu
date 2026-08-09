@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { canonicalIngredientId, shoppingRuleFor } from "../src/shopping.ts";
 
 const root = new URL("../", import.meta.url);
 const catalogueUrl = new URL("src/data/recettes-anti-inflammatoires.json", root);
 const imagesUrl = new URL("src/data/generated-recipe-images.json", root);
 const outputUrl = new URL("src/data/planner-recipes.json", root);
+const cautionsUrl = new URL("public/data/planner-cautions.json", root);
 const [catalogue, imageNames] = await Promise.all(
   [catalogueUrl, imagesUrl].map(async (url) => JSON.parse(await readFile(url, "utf8"))),
 );
@@ -73,12 +74,24 @@ const recipes = catalogue.recipes
   }));
 
 assert(recipes.length > 0, "projection planificateur vide");
+const cautions = Object.fromEntries(catalogue.recipes
+  .filter((recipe) => !recipe.app.duplicate_of && recipe.app.planner.eligible && recipe.app.review.caution)
+  .map((recipe) => [`catalog-${recipe.id}`, recipe.app.review.caution]));
 const serialized = `${JSON.stringify(recipes)}\n`;
+const serializedCautions = `${JSON.stringify(cautions)}\n`;
 if (process.argv.includes("--check")) {
-  const current = await readFile(outputUrl, "utf8").catch(() => "");
+  const [current, currentCautions] = await Promise.all([
+    readFile(outputUrl, "utf8").catch(() => ""),
+    readFile(cautionsUrl, "utf8").catch(() => ""),
+  ]);
   assert.equal(current, serialized, "planner-recipes.json n'est pas synchronisé avec le catalogue");
-  console.log(`Projection planificateur valide : ${recipes.length} recettes, ${Buffer.byteLength(serialized)} octets.`);
+  assert.equal(currentCautions, serializedCautions, "planner-cautions.json n'est pas synchronisé avec le catalogue");
+  console.log(`Projection planificateur valide : ${recipes.length} recettes, ${Buffer.byteLength(serialized)} octets, ${Object.keys(cautions).length} précautions hors ligne.`);
 } else {
-  await writeFile(outputUrl, serialized);
-  console.log(`Projection planificateur générée : ${recipes.length} recettes, ${Buffer.byteLength(serialized)} octets.`);
+  await mkdir(new URL("./", cautionsUrl), { recursive: true });
+  await Promise.all([
+    writeFile(outputUrl, serialized),
+    writeFile(cautionsUrl, serializedCautions),
+  ]);
+  console.log(`Projection planificateur générée : ${recipes.length} recettes, ${Buffer.byteLength(serialized)} octets, ${Object.keys(cautions).length} précautions hors ligne.`);
 }

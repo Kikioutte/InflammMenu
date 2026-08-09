@@ -1,0 +1,52 @@
+name: Validate pull requests
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate data and unit tests
+        run: npm run test:preview
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Test application journeys
+        run: npm run test:app
+
+      - name: Test mobile runtime
+        run: npm run test:runtime
+
+      - name: Build GitHub Pages artifact
+        run: npm run build:pages
+
+      - name: Test installed PWA, offline catalogue and multi-tab sync
+        run: npm run test:pwa:built
+
+      - name: Build alternative worker and test it
+        run: npm run test:sites

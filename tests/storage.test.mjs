@@ -66,7 +66,13 @@ test("locked and cooked marks survive a save/load round trip", () => {
     estimatedCost: 12,
     version: 1,
   };
-  const migrated = migrateAppState(state({ currentPlan, history: [currentPlan] }));
+  const archivedPlan = {
+    ...currentPlan,
+    id: "week-2026-07-27-archive",
+    startsOn: "2026-07-27",
+    generatedAt: "2026-07-27T00:00:00.000Z",
+  };
+  const migrated = migrateAppState(state({ currentPlan, history: [archivedPlan] }));
 
   assert.equal(migrated?.currentPlan?.meals[0].locked, true);
   assert.equal(migrated?.currentPlan?.meals[1].completed, true);
@@ -114,11 +120,33 @@ test("a backup round trip preserves every local decision", async () => {
 });
 
 test("restoring rejects foreign or broken files and accepts a raw state dump", async () => {
-  const { importAppState } = await import("../src/storage.ts");
+  const { importAppState, BACKUP_FORMAT } = await import("../src/storage.ts");
 
   assert.throws(() => importAppState("{pas du json"), /Fichier illisible/);
   assert.throws(() => importAppState("[]"), /Fichier illisible/);
   assert.throws(() => importAppState(JSON.stringify({ format: "autre-app", state: {} })), /ne provient pas/);
+  assert.throws(() => importAppState(JSON.stringify({ format: BACKUP_FORMAT, version: APP_STATE_VERSION, state: {} })), /incomplète/);
+  assert.throws(() => importAppState(JSON.stringify({ format: BACKUP_FORMAT, version: APP_STATE_VERSION, state: { hello: "world" } })), /incomplète/);
+  assert.throws(() => importAppState(JSON.stringify({ version: APP_STATE_VERSION })), /incomplète/);
+  assert.throws(() => importAppState(JSON.stringify({ profile: {} })), /incomplète/);
+  assert.throws(() => importAppState(JSON.stringify({
+    format: BACKUP_FORMAT,
+    version: APP_STATE_VERSION,
+    exportedAt: "2026-08-08T10:00:00.000Z",
+    state: { version: APP_STATE_VERSION },
+  })), /incomplète/);
+  const corruptedCompleteState = Object.fromEntries([
+    "profile", "currentPlan", "upcomingPlan", "favoriteRecipeIds", "history",
+    "checkedShoppingItemIds", "pantryIngredientIds", "pantryAmounts", "recipeNotes",
+    "shoppingCategoryOrder", "actualSpend", "customRecipes", "textScale",
+    "remindersEnabled", "onboardingCompleted", "stateRevision",
+  ].map((key) => [key, null]));
+  assert.throws(() => importAppState(JSON.stringify({
+    format: BACKUP_FORMAT,
+    version: APP_STATE_VERSION,
+    exportedAt: "2026-08-08T10:00:00.000Z",
+    state: corruptedCompleteState,
+  })), /incomplète/);
 
   const rawState = importAppState(JSON.stringify(state()));
   assert.equal(rawState.version, APP_STATE_VERSION);
@@ -298,7 +326,27 @@ test("the new local settings are validated like everything else", async () => {
     recipeNotes: { r1: "  ", r2: "moins de sel", r3: 42 },
     shoppingCategoryOrder: ["grocery", "inconnu", "grocery"],
     actualSpend: { w1: 42.5, w2: "beaucoup", w3: -5 },
-    customRecipes: [{ id: "sans-prefixe", title: "x" }, { id: "perso-1", title: "Ma version", mealTypes: ["lunch"], ingredients: [], steps: [], prepMinutes: 10, costPerPortion: 2 }],
+    customRecipes: [
+      { id: "sans-prefixe", title: "x" },
+      {
+        id: "perso-1",
+        title: "Ma version",
+        mealTypes: ["lunch"],
+        diet: ["classic", "vegetarian", "no-pork"],
+        prepMinutes: 10,
+        costPerPortion: 2,
+        seasons: ["all-year"],
+        equipment: [],
+        allergens: [],
+        tags: ["maison"],
+        ingredients: [{ id: "carrot", name: "Carotte", quantity: 100, unit: "g", category: "fruit-vegetable" }],
+        nutrition: { calories: 100, protein: 2, fiber: 3, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+        description: "Une version personnelle valide.",
+        steps: ["Préparer les ingrédients."],
+        conservation: "À consommer rapidement.",
+        image: "/assets/recipe-placeholder.svg",
+      },
+    ],
     textScale: "gigantesque",
     remindersEnabled: "oui",
   }));
@@ -312,4 +360,86 @@ test("the new local settings are validated like everything else", async () => {
   assert.equal(messy?.textScale, "normal");
   assert.equal(messy?.remindersEnabled, false, "seule la valeur booléenne vraie active les rappels");
   assert.deepEqual(migrateAppState(messy), messy, "l'état reste stable après un second passage");
+});
+
+
+test("audit remediation: strict imports and nested custom recipes", async () => {
+  const { importAppState, migrateAppState } = await import("../src/storage.ts");
+  assert.throws(() => importAppState("{}"), /aucune donnée Inflamm.Menu reconnue/i);
+  assert.throws(() => importAppState(JSON.stringify({ hello: 1 })), /aucune donnée Inflamm.Menu reconnue/i);
+  assert.throws(() => importAppState(JSON.stringify({ format: "inflamm-menu-backup", version: 999, state: {} })), /version plus récente/i);
+
+  const malformed = migrateAppState({
+    profile: {},
+    customRecipes: [{
+      id: "perso-danger",
+      title: "Danger",
+      mealTypes: ["lunch"],
+      ingredients: [],
+      steps: ["Étape"],
+      prepMinutes: 10,
+      costPerPortion: 2,
+    }],
+  });
+  assert.equal(malformed.customRecipes.length, 0);
+});
+
+test("audit remediation: plan normalization removes duplicate slots and invalid leftovers", async () => {
+  const { normalizePlan } = await import("../src/storage.ts");
+  const normalized = normalizePlan({
+    startsOn: "2026-08-03",
+    meals: [
+      { id: "a", dayIndex: 0, mealType: "lunch", recipeId: "r1", portions: 2, source: "generated", leftoverOf: "a" },
+      { id: "b", dayIndex: 0, mealType: "lunch", recipeId: "r2", portions: 2, source: "generated" },
+      { id: "c", dayIndex: 1, mealType: "lunch", recipeId: "r3", portions: 2, source: "generated", leftoverOf: "a" },
+    ],
+  });
+  assert.equal(normalized.meals.length, 2);
+  assert.equal(normalized.meals[0].leftoverOf, undefined);
+  assert.equal(normalized.meals[1].leftoverOf, undefined);
+  assert.equal(normalizePlan({ startsOn: "2026-08-04", meals: [{ id: "a", dayIndex: 0, mealType: "lunch", recipeId: "r", portions: 1, source: "generated" }] }), null);
+});
+
+
+test("concurrent tab edits to different fields are merged without data loss", async () => {
+  const { mergeAppStateReplicas, stampAppStateChanges } = await import("../src/storage.ts");
+  const base = migrateAppState({ ...state(), stateRevision: 10 });
+  const profileEdit = stampAppStateChanges(base, {
+    ...base,
+    profile: { ...base.profile, firstName: "Synchronisé" },
+  }, 100);
+  const comfortEdit = stampAppStateChanges(base, {
+    ...base,
+    textScale: "large",
+  }, 101);
+
+  const merged = mergeAppStateReplicas(comfortEdit, profileEdit);
+  assert.equal(merged.profile.firstName, "Synchronisé");
+  assert.equal(merged.textScale, "large");
+  assert.equal(merged.fieldRevisions.profile, 100);
+  assert.equal(merged.fieldRevisions.textScale, 101);
+  assert.deepEqual(mergeAppStateReplicas(merged, comfortEdit), merged, "une ancienne réplique ne recrée pas une boucle de sauvegarde");
+
+  const collisionA = stampAppStateChanges(base, { ...base, profile: { ...base.profile, firstName: "Alice" } }, 200);
+  const collisionB = stampAppStateChanges(base, { ...base, profile: { ...base.profile, firstName: "Brune" } }, 200);
+  assert.equal(
+    mergeAppStateReplicas(collisionA, collisionB).profile.firstName,
+    mergeAppStateReplicas(collisionB, collisionA).profile.firstName,
+    "une collision d’horloge converge vers la même valeur dans les deux onglets",
+  );
+});
+
+
+test("valid imported leftovers cannot remain locked or cooked", async () => {
+  const { normalizePlan } = await import("../src/storage.ts");
+  const normalized = normalizePlan({
+    startsOn: "2026-08-03",
+    meals: [
+      { id: "source", dayIndex: 0, mealType: "lunch", recipeId: "r1", portions: 2, source: "generated" },
+      { id: "leftover", dayIndex: 1, mealType: "lunch", recipeId: "r1", portions: 2, source: "manual", leftoverOf: "source", completed: true, locked: true },
+    ],
+  });
+  assert.equal(normalized.meals[1].leftoverOf, "source");
+  assert.equal(normalized.meals[1].completed, false);
+  assert.equal(normalized.meals[1].locked, false);
 });

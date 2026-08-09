@@ -7,7 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const output = path.join(root, "dist", "pages");
 const base = "/InflammMenu/";
 const textExtensions = new Set([".css", ".html", ".js", ".json", ".map", ".svg", ".webmanifest"]);
-const rootedPublicPath = /(["'`])\/(assets\/|icons\/|index\.html|manifest\.webmanifest|og\.png|sw\.js)/g;
+const rootedPublicPath = /(["'`])\/(assets\/|icons\/|index\.html|manifest\.webmanifest|og\.(?:png|jpe?g)|sw\.js)/g;
 
 function filesIn(directory) {
   return readdirSync(directory).flatMap((name) => {
@@ -39,3 +39,13 @@ writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 
 writeFileSync(path.join(output, ".nojekyll"), "");
 console.log(`Prepared GitHub Pages build for ${base}`);
+
+// Remove test-only mobile chrome from the public Pages artifact.
+const { rm } = await import("node:fs/promises");
+for (const relative of ["assets/iphone", "assets/android", "assets/status", "qa"]) {
+  await rm(new URL(`../dist/pages/${relative}`, import.meta.url), { recursive: true, force: true });
+}
+
+// Create the GitHub Pages SPA fallback after every path has been rebased.
+const { copyFile } = await import("node:fs/promises");
+await copyFile(new URL("../dist/pages/index.html", import.meta.url), new URL("../dist/pages/404.html", import.meta.url));
