@@ -59,6 +59,10 @@
 - Les recettes personnelles portent le préfixe `perso-` et conservent les identifiants d'ingrédients canoniques, sans quoi la liste de courses cesse d'être juste.
 - Les rappels sont produits localement à l'ouverture de l'application, une fois par jour, uniquement si l'autorisation a été accordée. Ne jamais laisser entendre qu'ils sont programmés côté serveur.
 - Le catalogue complet n'est pas préchargé : il se télécharge à la demande depuis l'écran Informations. Toute formulation sur le hors-ligne doit rester exacte sur ce point.
+- `UserProfile.dayConstraints` personnalise un jour avant génération : plafond de temps actif, portions et créneaux hors foyer. Une contrainte quotidienne ne contourne jamais les allergies, le régime ou l’équipement. Les échanges et planifications manuelles doivent aussi respecter le plafond du jour.
+- « Que cuisiner ce soir ? » propose jusqu’à trois recettes issues de `ACTIVE_RECIPES`, compatibles avec le profil et le temps choisi. Le garde-manger, les favoris, la saison et le coût influencent l’ordre, jamais les filtres de sécurité.
+- Les rappels contextuels couvrent les repos à lancer le jour même ou la veille et les restes prévus aujourd’hui. Ils sont visibles sur l’accueil et notifiés au plus une fois par date quand l’application est ouverte.
+- La diversité végétale compte les végétaux distincts, légumineuses, céréales, herbes et épices de la semaine, en excluant notamment eau, sel, huiles, bouillons, sucrants et produits animaux. C’est un indicateur descriptif transparent, jamais un score de santé ni un objectif médical.
 
 In ChatGPT Work Mode, run `sites-preview start "$PWD"`, open `http://terminal.local:4173/` in the cloud browser, and verify the rendered app and its primary interactions. Keep that preview open and tell the user to inspect it in the cloud browser; do not present the local URL as a user-facing chat link. In Codex Desktop, run the local server yourself, open the preview in the in-app browser, and provide the clickable local URL. Do not deploy to Sites unless the user explicitly asks to share, publish, or deploy. Do not give the user server-start instructions when you can run it.
 

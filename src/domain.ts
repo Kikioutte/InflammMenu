@@ -1,5 +1,7 @@
 export type MealType = "breakfast" | "lunch" | "dinner";
 
+export type DayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
 export type DietMode = "classic" | "vegetarian" | "no-pork";
 
 export type IngredientCategory =
@@ -80,6 +82,8 @@ export interface UserProfile {
   mealsPerDay: 2 | 3;
   weeklyBudget: number;
   maxPrepMinutes: number;
+  /** Optional overrides applied before a week is generated. */
+  dayConstraints: readonly DayConstraint[];
   allergies: readonly string[];
   excludedIngredientIds: readonly string[];
   /** Recipes the user asked never to be offered again. */
@@ -95,9 +99,19 @@ export interface UserProfile {
   equipment: readonly Equipment[];
 }
 
+export interface DayConstraint {
+  dayIndex: DayIndex;
+  /** Active-time limit for this day. Omitted means the profile-wide limit. */
+  maxPrepMinutes?: number;
+  /** Portions generated for every meal on this day. Omitted means people. */
+  portions?: number;
+  /** Slots already known to be taken outside the household. */
+  skippedMealTypes: readonly MealType[];
+}
+
 export interface PlannedMeal {
   id: string;
-  dayIndex: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  dayIndex: DayIndex;
   mealType: MealType;
   recipeId: string;
   portions: number;
@@ -154,6 +168,7 @@ export const DEFAULT_PROFILE: UserProfile = {
   mealsPerDay: 2,
   weeklyBudget: 80,
   maxPrepMinutes: 30,
+  dayConstraints: [],
   allergies: [],
   excludedIngredientIds: [],
   dislikedRecipeIds: [],

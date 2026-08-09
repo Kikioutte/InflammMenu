@@ -39,6 +39,7 @@ import {
 import * as Dialog from "@radix-ui/react-dialog";
 import {
   buildShoppingList,
+  canSwapPlannedMeals,
   formatShoppingListText,
   generateWeeklyPlan,
   getReplacementCandidates,
@@ -56,14 +57,15 @@ import {
   MAX_MEAL_PORTIONS,
   MIN_MEAL_PORTIONS,
   cookingSessionsOf,
+  contextualRemindersForDate,
   inspectPlanReplay,
   isPlanExpired,
   planDayOffset,
   mealCost,
-  mealsToStartTonight,
   planToCalendar,
   planProgress,
   recipeAllergens,
+  recommendTonight,
   preservableLockedMeals,
   replacePlannedMeal,
   restorePlan,
@@ -77,6 +79,7 @@ import {
 } from "./engine";
 import {
   DEFAULT_PROFILE,
+  type DayConstraint,
   type DietMode,
   type Equipment,
   type IngredientCategory,
@@ -575,23 +578,21 @@ function OnboardingView({ profile, onOpenProfile, onSkip }: { profile: UserProfi
   );
 }
 
-function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate, onProfile, onOpenMeal, onOpenWeek }: {
+function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate, onTonight, onProfile, onOpenMeal, onOpenWeek }: {
   profile: UserProfile;
   plan: WeeklyPlan | null;
   archivedWeek?: WeeklyPlan | null;
   upcomingPlan?: WeeklyPlan | null;
   onGenerate: () => void;
+  onTonight: () => void;
   onProfile: () => void;
   onOpenMeal: (planned: PlannedMeal, recipe: Recipe) => void;
   onOpenWeek: () => void;
 }) {
   const todayIndex = plan ? currentDayIndex(plan.startsOn) : 0;
   const todayMeals = plan?.meals.filter((meal) => meal.dayIndex === todayIndex) ?? [];
-  const tomorrowStarters = (plan && todayIndex < 6 ? plan.meals.filter((meal) => meal.dayIndex === todayIndex + 1) : [])
-    .map((meal) => ({ meal, recipe: recipeById.get(meal.recipeId) }))
-    .filter((entry): entry is { meal: PlannedMeal; recipe: Recipe } => Boolean(entry.recipe))
-    .filter((entry) => advancePrepFor(entry.recipe)?.level === "day-before");
   const firstName = profile.firstName.trim();
+  const contextualReminders = contextualRemindersForDate(plan, ACTIVE_RECIPES, isoDate(new Date()));
   return (
     <main className="home-view" data-testid="home-view">
       <section className="home-hero">
@@ -599,6 +600,7 @@ function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate, onPro
         <div className="home-hero__content">
           <Wordmark /><p className="home-kicker">Bonjour{firstName ? ` ${firstName}` : ""}</p><h1>Une semaine<br />qui vous fait<br />du bien</h1>
           <button className="primary-button home-cta" type="button" onClick={onGenerate}>{plan ? "Créer une autre semaine" : "Générer ma semaine"}</button>
+          <button className="secondary-button home-tonight" type="button" data-testid="tonight-open" onClick={onTonight}><ClockIcon /> Que cuisiner ce soir ?</button>
           <p className="home-meta">{profile.mealsPerDay * 7} repas · {profile.people} personne{profile.people > 1 ? "s" : ""} · {profile.weeklyBudget} € de budget cible</p>
         </div>
       </section>
@@ -608,7 +610,7 @@ function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate, onPro
         </button>
         {upcomingPlan ? <p className="locked-banner expired-banner" data-testid="upcoming-banner"><CalendarIcon /> Semaine du {formatWeekRange(upcomingPlan.startsOn)} déjà préparée : elle prendra le relais automatiquement.</p> : null}
         {archivedWeek && !plan ? <p className="notice-banner expired-banner" data-testid="expired-banner">Votre semaine du {formatWeekRange(archivedWeek.startsOn)} est terminée : elle a rejoint l’historique. Générez la suivante quand vous le souhaitez.</p> : null}
-        {tomorrowStarters.length ? <div className="tonight-note" data-testid="tonight-note"><ClockIcon /><span><strong>À lancer ce soir pour demain</strong>{tomorrowStarters.map(({ meal, recipe }) => `${recipe.title} (${formatRecipeDuration(recipe.restMinutes ?? 0)} de repos, ${MEAL_LABELS[meal.mealType].toLocaleLowerCase("fr-FR")})`).join(" · ")}</span></div> : null}
+        {contextualReminders.length ? <section className="contextual-reminders" data-testid="contextual-reminders"><div className="section-heading"><div><span className="eyebrow">Aujourd’hui</span><h2>À ne pas oublier</h2></div></div>{contextualReminders.map((reminder) => { const recipe = recipeById.get(reminder.meal.recipeId); return <button type="button" key={reminder.id} disabled={!recipe} onClick={() => recipe && onOpenMeal(reminder.meal, recipe)}><ClockIcon /><span><strong>{reminder.title}</strong><small>{reminder.body}</small></span><ChevronRightIcon /></button>; })}</section> : null}
         {plan ? <><WeekStrip startsOn={plan.startsOn} selected={todayIndex} compact /><div className="meal-list">
           {todayMeals.map((planned) => { const recipe = recipeById.get(planned.recipeId); return recipe ? <MealPreview key={planned.id} planned={planned} recipe={recipe} startsOn={plan.startsOn} onOpen={() => onOpenMeal(planned, recipe)} /> : null; })}
         </div></> : <div className="empty-preview"><CalendarIcon /><p>Créez votre premier menu directement sur cet appareil.</p></div>}
@@ -802,6 +804,7 @@ function WeekBalance({ summary, profile }: { summary: PlanSummary; profile: User
     { label: "Repas avec céréales complètes", value: summary.wholeGrainMeals, hint: "Riz complet, épeautre, sarrasin" },
     { label: "Repas avec noix ou graines", value: summary.nutOrSeedMeals, hint: "Sources de graisses insaturées" },
     { label: "Repas de saison", value: summary.seasonalMeals, hint: "Saison en cours ou toute l’année" },
+    { label: "Végétaux différents", value: summary.plantDiversity, hint: "Légumes, fruits, légumineuses, céréales, herbes et épices" },
   ];
   return (
     <section className="week-balance" data-testid="week-balance" aria-label="Bilan de la semaine">
@@ -814,6 +817,7 @@ function WeekBalance({ summary, profile }: { summary: PlanSummary; profile: User
           </li>
         ))}
       </ul>
+      {summary.plantIngredients.length ? <details className="plant-diversity-details" data-testid="plant-diversity"><summary>Voir les {summary.plantDiversity} végétaux comptés</summary><p>{summary.plantIngredients.join(" · ")}</p></details> : null}
       <div className="week-balance__nutrition"><span><strong>{summary.averageCalories.toFixed(0)}</strong> kcal</span><span><strong>{summary.averageProtein.toFixed(0)}</strong> g protéines</span><span><strong>{summary.averageFiber.toFixed(0)}</strong> g fibres</span></div>
       <p className="catalogue-disclaimer">Moyennes estimatives par portion, à titre indicatif. Ces repères décrivent l’organisation de vos repas selon un modèle méditerranéen ; ils ne constituent ni une évaluation nutritionnelle ni un avis médical.</p>
     </section>
@@ -1213,16 +1217,18 @@ function CustomRecipeView({ draft, onSave, onDelete }: { draft: Recipe; onSave: 
   </main></MobileScroll>;
 }
 
-function SwapView({ plan, source, onConfirm }: {
+function SwapView({ plan, source, profile, onConfirm }: {
   plan: WeeklyPlan;
   source: PlannedMeal;
+  profile: UserProfile;
   onConfirm: (targetSlotId: string) => string | null;
 }) {
   const [error, setError] = useState("");
   const sourceRecipe = recipeById.get(source.recipeId);
   const candidates = plan.meals.filter((meal) => meal.id !== source.id
     && !meal.leftoverOf
-    && !plan.meals.some((other) => other.leftoverOf === meal.id));
+    && !plan.meals.some((other) => other.leftoverOf === meal.id)
+    && canSwapPlannedMeals(plan, source.id, meal.id, ACTIVE_RECIPES, profile));
   return <MobileScroll className="app-screen"><main className="page-content pushed-page plan-slot-page" data-testid="swap-view">
     <div className="page-heading"><span className="eyebrow">Déplacer</span><h1>{sourceRecipe?.title ?? "Ce repas"}</h1><p>Choisissez le repas avec lequel l’échanger. Les deux plats gardent leurs repères, seuls les jours changent.</p></div>
     {error ? <p className="notice-banner" role="alert">{error}</p> : null}
@@ -1305,6 +1311,7 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
   const [maxPrep, setMaxPrep] = useState(String(initial.maxPrepMinutes));
   const [allergies, setAllergies] = useState(initial.allergies.join(", "));
   const [excluded, setExcluded] = useState(initial.excludedIngredientIds.map((id) => ingredientNameById.get(id) ?? id).join(", "));
+  const [constraintDay, setConstraintDay] = useState<DayConstraint["dayIndex"]>(0);
   const toggleEquipment = (item: Equipment) => setProfile((current) => ({ ...current, equipment: current.equipment.includes(item) ? current.equipment.filter((entry) => entry !== item) : [...current.equipment, item] }));
   const targets = weeklyTargetsOf(profile);
   const setTarget = (key: "legumeMeals" | "fishMeals", delta: number) => setProfile((current) => {
@@ -1317,6 +1324,22 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
     if (values.has(id)) values.delete(id); else values.add(id);
     return [...values].join(", ");
   });
+  const currentConstraint = profile.dayConstraints.find((item) => item.dayIndex === constraintDay)
+    ?? { dayIndex: constraintDay, skippedMealTypes: [] };
+  const storeConstraint = (next: DayConstraint) => setProfile((current) => {
+    const empty = next.maxPrepMinutes === undefined && next.portions === undefined && next.skippedMealTypes.length === 0;
+    const others = current.dayConstraints.filter((item) => item.dayIndex !== next.dayIndex);
+    return { ...current, dayConstraints: empty ? others : [...others, next].sort((left, right) => left.dayIndex - right.dayIndex) };
+  });
+  const toggleSkippedSlot = (mealType: MealType) => {
+    const skipped = currentConstraint.skippedMealTypes.includes(mealType);
+    storeConstraint({
+      ...currentConstraint,
+      skippedMealTypes: skipped
+        ? currentConstraint.skippedMealTypes.filter((item) => item !== mealType)
+        : [...currentConstraint.skippedMealTypes, mealType],
+    });
+  };
   const commit = () => {
     keyboard.hide();
     onSave({ ...profile, weeklyBudget: Math.min(10_000, Math.max(1, Math.round(Number(budget) || DEFAULT_PROFILE.weeklyBudget))), maxPrepMinutes: Math.min(1_440, Math.max(1, Math.round(Number(maxPrep) || DEFAULT_PROFILE.maxPrepMinutes))), allergies: parseList(allergies), excludedIngredientIds: resolveExcludedIngredients(excluded) });
@@ -1327,6 +1350,19 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
       <label className="text-field"><span>Votre prénom</span><KeyboardInput autoComplete="given-name" maxLength={40} value={profile.firstName} placeholder="Ex. Camille" onChange={(event) => setProfile((current) => ({ ...current, firstName: event.target.value }))} onBlur={keyboard.hide} /><small>Utilisé uniquement pour personnaliser l’accueil.</small></label>
       <div className="setting-row"><span><strong>Nombre de personnes</strong><small>Quantités adaptées</small></span><div className="stepper"><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.max(1, current.people - 1) }))} aria-label="Retirer une personne"><MinusIcon /></button><b>{profile.people}</b><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.min(12, current.people + 1) }))} aria-label="Ajouter une personne"><PlusIcon /></button></div></div>
       <div className="setting-row setting-row--stack"><span><strong>Repas par jour</strong><small>Ajoutez le petit-déjeuner si vous le souhaitez</small></span><div className="choice-row">{([2, 3] as const).map((value) => <button type="button" className={profile.mealsPerDay === value ? "is-selected" : ""} key={value} onClick={() => setProfile((current) => ({ ...current, mealsPerDay: value }))}>{value} repas</button>)}</div></div>
+    </section>
+    <section className="form-section daily-constraints" data-testid="daily-constraints"><h2>Organisation par jour</h2>
+      <p className="inline-help">Adaptez avant la génération le temps disponible, les portions et les repas déjà prévus à l’extérieur.</p>
+      <Carousel ariaLabel="Choisir le jour à personnaliser" className="day-carousel" contentClassName="day-carousel__track">
+        {DAY_LABELS.map((day, index) => <button type="button" key={day} className={constraintDay === index ? "is-selected" : ""} data-testid={`constraint-day-${index}`} onClick={() => setConstraintDay(index as DayConstraint["dayIndex"])}><span>{day.slice(0, 3)}</span>{profile.dayConstraints.some((item) => item.dayIndex === index) ? <i aria-label="Personnalisé">•</i> : null}</button>)}
+      </Carousel>
+      <div className="daily-constraint-card">
+        <h3>{DAY_LABELS[constraintDay]}</h3>
+        <label className="text-field"><span>Temps actif maximum</span><select data-testid="constraint-time" value={currentConstraint.maxPrepMinutes ?? ""} onChange={(event) => storeConstraint({ ...currentConstraint, maxPrepMinutes: event.target.value ? Number(event.target.value) : undefined })}><option value="">Comme le profil ({profile.maxPrepMinutes} min)</option>{[15, 20, 30, 45, 60, 90].map((minutes) => <option key={minutes} value={minutes}>{minutes} minutes</option>)}</select></label>
+        <div className="setting-row"><span><strong>Portions ce jour-là</strong><small>{currentConstraint.portions === undefined ? "Comme le foyer" : "Invités ou repas réduit"}</small></span><div className="stepper"><button type="button" aria-label="Retirer une portion pour ce jour" onClick={() => storeConstraint({ ...currentConstraint, portions: Math.max(1, (currentConstraint.portions ?? profile.people) - 1) })}><MinusIcon /></button><b data-testid="constraint-portions">{currentConstraint.portions ?? profile.people}</b><button type="button" aria-label="Ajouter une portion pour ce jour" onClick={() => storeConstraint({ ...currentConstraint, portions: Math.min(8, (currentConstraint.portions ?? profile.people) + 1) })}><PlusIcon /></button></div></div>
+        {currentConstraint.portions !== undefined ? <button type="button" className="text-button" onClick={() => storeConstraint({ ...currentConstraint, portions: undefined })}>Reprendre {profile.people} portions</button> : null}
+        <fieldset className="outside-slots"><legend>Repas prévus à l’extérieur</legend><div className="choice-row">{(profile.mealsPerDay === 3 ? (["breakfast", "lunch", "dinner"] as MealType[]) : (["lunch", "dinner"] as MealType[])).map((mealType) => <button type="button" key={mealType} className={currentConstraint.skippedMealTypes.includes(mealType) ? "is-selected" : ""} aria-pressed={currentConstraint.skippedMealTypes.includes(mealType)} data-testid={`constraint-skip-${mealType}`} onClick={() => toggleSkippedSlot(mealType)}>{MEAL_LABELS[mealType]}</button>)}</div></fieldset>
+      </div>
     </section>
     <section className="form-section"><h2>Mes préférences</h2><div className="choice-grid">{(Object.keys(DIET_LABELS) as DietMode[]).map((item) => <button type="button" className={profile.diet === item ? "is-selected" : ""} key={item} onClick={() => setProfile((current) => ({ ...current, diet: item }))}>{DIET_LABELS[item]}</button>)}</div>
       <label className="text-field"><span>Budget hebdomadaire (€)</span><KeyboardInput type="number" inputMode="numeric" min={1} max={10_000} step={1} value={budget} onChange={(event) => setBudget(event.target.value)} onBlur={keyboard.hide} /></label>
@@ -1458,7 +1494,7 @@ function ComfortSection({ state, onTextScale, onReminders }: { state: AppState; 
           <button type="button" key={value} className={state.textScale === value ? "is-selected" : ""} aria-pressed={state.textScale === value} data-testid={`text-scale-${value}`} onClick={() => onTextScale(value)}>{label}</button>
         ))}
       </div>
-      <p style={{ marginTop: 18 }}>Un rappel peut s’afficher à l’ouverture de l’application quand un plat du lendemain doit être lancé la veille (trempage, marinade, fermentation).</p>
+      <p style={{ marginTop: 18 }}>Un rappel peut s’afficher à l’ouverture pour lancer un repos aujourd’hui ou la veille, et pour signaler les restes prévus au menu.</p>
       {state.remindersEnabled && permission === "granted"
         ? <button type="button" className="secondary-button full-button" data-testid="reminders-off" onClick={() => onReminders(false)}><CheckIcon /> Rappels activés — désactiver</button>
         : <button type="button" className="secondary-button full-button" disabled={permission === "denied" || permission === "unsupported"} data-testid="reminders-on" onClick={() => void enableReminders()}><ClockIcon /> Activer les rappels</button>}
@@ -1498,6 +1534,39 @@ function AllergenNotice({ allergens }: { allergens: readonly string[] }) {
   return <aside className="allergen-notice"><strong>Allergènes à vérifier</strong><div>{allergens.map((allergen) => <span key={allergen}>{ALLERGEN_LABELS[allergen] ?? allergen.replaceAll("-", " ")}</span>)}</div><p>Contrôlez les étiquettes et les traces éventuelles, surtout en cas d’allergie sévère.</p></aside>;
 }
 
+function TonightView({ profile, pantryIds, favoriteIds, onOpenRecipe }: {
+  profile: UserProfile;
+  pantryIds: string[];
+  favoriteIds: string[];
+  onOpenRecipe: (recipe: Recipe, portions: number) => void;
+}) {
+  const [mealType, setMealType] = useState<"lunch" | "dinner">("dinner");
+  const [maxMinutes, setMaxMinutes] = useState(Math.min(45, profile.maxPrepMinutes));
+  const [portions, setPortions] = useState(Math.min(8, Math.max(1, profile.people)));
+  const recommendations = useMemo(() => recommendTonight(ACTIVE_RECIPES, profile, {
+    mealType,
+    maxPrepMinutes: maxMinutes,
+    portions,
+    pantryIngredientIds: pantryIds,
+    favoriteRecipeIds: favoriteIds,
+    season: [11, 0, 1].includes(new Date().getMonth()) ? "winter" : [2, 3, 4].includes(new Date().getMonth()) ? "spring" : [5, 6, 7].includes(new Date().getMonth()) ? "summer" : "autumn",
+    limit: 3,
+  }), [favoriteIds, maxMinutes, mealType, pantryIds, portions, profile]);
+  return <MobileScroll className="app-screen"><main className="page-content pushed-page tonight-page" data-testid="tonight-view">
+    <div className="page-heading"><span className="eyebrow">Décision rapide</span><h1>Que cuisiner ce soir ?</h1><p>Jusqu’à trois idées compatibles avec votre profil, classées selon le temps, le budget et ce que vous avez déjà.</p></div>
+    <section className="tonight-controls">
+      <fieldset><legend>Pour quel repas ?</legend><div className="choice-row"><button type="button" className={mealType === "lunch" ? "is-selected" : ""} onClick={() => setMealType("lunch")}>Déjeuner</button><button type="button" className={mealType === "dinner" ? "is-selected" : ""} onClick={() => setMealType("dinner")}>Dîner</button></div></fieldset>
+      <fieldset><legend>Temps actif disponible</legend><div className="choice-row">{[15, 20, 30, 45, 60].map((minutes) => <button type="button" key={minutes} className={maxMinutes === minutes ? "is-selected" : ""} data-testid={`tonight-time-${minutes}`} onClick={() => setMaxMinutes(minutes)}>{minutes} min</button>)}</div></fieldset>
+      <div className="setting-row"><span><strong>Nombre de portions</strong><small>Quantités de la recette adaptées</small></span><div className="stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => Math.max(1, value - 1))}><MinusIcon /></button><b data-testid="tonight-portions">{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => Math.min(8, value + 1))}><PlusIcon /></button></div></div>
+    </section>
+    <section className="tonight-results" aria-live="polite"><div className="section-heading"><div><span className="eyebrow">Suggestions</span><h2>{recommendations.length ? "Prêtes à cuisiner" : "Aucune recette compatible"}</h2></div></div>
+      {recommendations.map(({ recipe, pantryMatches, estimatedCost }) => <button type="button" className="tonight-card" key={recipe.id} data-testid={`tonight-result-${recipe.id}`} onClick={() => onOpenRecipe(recipe, portions)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {formatEuros(estimatedCost)}</small><strong>{recipe.title}</strong><em>{pantryMatches ? `${pantryMatches} ingrédient${pantryMatches > 1 ? "s" : ""} déjà en réserve` : "Ingrédients à vérifier dans les courses"}</em></span><ChevronRightIcon /></button>)}
+      {!recommendations.length ? <p className="notice-banner">Augmentez le temps disponible ou ajustez vos équipements dans le profil.</p> : null}
+    </section>
+    <p className="privacy-note">Les propositions respectent les allergies, aliments exclus, équipements et préférences enregistrés.</p>
+  </main></MobileScroll>;
+}
+
 function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCreate, onComplete }: { profile: UserProfile; lockedCount?: number; canPrepareNext?: boolean; onCreate: (target: "current" | "upcoming") => WeeklyPlan; onComplete: (target: "current" | "upcoming") => void }) {
   const [phase, setPhase] = useState<"ready" | "loading" | "success" | "error">("ready");
   const [result, setResult] = useState<WeeklyPlan | null>(null);
@@ -1524,8 +1593,8 @@ function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCrea
 
 export type RecipeRating = "loved" | "neutral" | "meh" | "avoided";
 
-function RecipeView({ recipe, planned, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate }: { recipe: Recipe; planned?: PlannedMeal; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void }) {
-  const [portions, setPortionsState] = useState(planned?.portions ?? 2);
+function RecipeView({ recipe, planned, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate }: { recipe: Recipe; planned?: PlannedMeal; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void }) {
+  const [portions, setPortionsState] = useState(planned?.portions ?? initialPortions);
   const setPortions = (update: (value: number) => number) => {
     const next = Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, update(portions)));
     if (next === portions) return;
@@ -1809,28 +1878,30 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     });
   }, [hydrated, appState.currentPlan, appState.upcomingPlan, appState.profile, appState.customRecipes]);
 
-  // Local reminder for dishes that must be started the day before. Fires once
-  // per day, only while the app is open: nothing is scheduled on a server.
+  // Local contextual digest. Fires once per day while the app is open: nothing
+  // is scheduled on a server and failure never blocks the application.
   const remindedOn = useRef<string>("");
   useEffect(() => {
     if (!hydrated || !appState.remindersEnabled) return;
     if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
     const today = isoDate(new Date());
-    if (remindedOn.current === today) return;
-    const due = mealsToStartTonight(appState.currentPlan, ACTIVE_RECIPES, today);
+    const reminderStorageKey = "inflamm-menu:reminded-on";
+    if (remindedOn.current === today || window.localStorage.getItem(reminderStorageKey) === today) return;
+    const due = contextualRemindersForDate(appState.currentPlan, ACTIVE_RECIPES, today);
     if (!due.length) return;
     const showReminder = async () => {
       const options = {
-        body: due.map((item) => `${item.recipe.title} — ${formatRecipeDuration(item.minutes)} de repos`).join("\n"),
+        body: due.map((item) => `${item.title} — ${item.body}`).join("\n"),
         tag: `inflamm-menu-${today}`,
       };
       try {
         const registration = "serviceWorker" in navigator
           ? await navigator.serviceWorker.getRegistration()
           : undefined;
-        if (registration?.showNotification) await registration.showNotification("À lancer ce soir", options);
-        else new Notification("À lancer ce soir", options);
+        if (registration?.showNotification) await registration.showNotification("Vos rappels cuisine", options);
+        else new Notification("Vos rappels cuisine", options);
         remindedOn.current = today;
+        try { window.localStorage.setItem(reminderStorageKey, today); } catch { /* In-memory guard still prevents repeats. */ }
       } catch {
         // A revoked or platform-level permission must not break the application.
       }
@@ -1976,7 +2047,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     return { id: `cooking-${recipe.id}`, title: "Mode cuisine", headerHeight: 56, header: (route) => <Header title="Mode cuisine" onBack={route.pop} />, render: () => <CookingView recipe={recipe} portions={portions} /> };
   }
 
-  function recipeScreen(recipe: Recipe, planned?: PlannedMeal): FlowScreen {
+  function recipeScreen(recipe: Recipe, planned?: PlannedMeal, initialPortions?: number): FlowScreen {
     return {
       id: `recipe-${planned?.id ?? recipe.id}`,
       title: recipe.title,
@@ -1987,6 +2058,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
         return <RecipeView
           recipe={recipe}
           planned={livePlanned}
+          initialPortions={initialPortions ?? live.profile.people}
           favorite={live.favoriteRecipeIds.includes(recipe.id)}
           onFavorite={() => toggleFavorite(recipe.id)}
           rating={ratingOf(recipe.id)}
@@ -2063,6 +2135,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     route.pop();
   }} />}</LiveAppState> });
   const openGenerate = () => flow.push({ id: "generate", title: "Générer ma semaine", headerHeight: 56, header: (route) => <Header title="Nouvelle semaine" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <GenerateView profile={live.profile} lockedCount={preservableLockedMeals(live.currentPlan, ACTIVE_RECIPES, live.profile).length} canPrepareNext={Boolean(live.currentPlan)} onCreate={createPlan} onComplete={(target) => { if (target === "current") setTab("week"); route.pop(); }} />}</LiveAppState> });
+  const openTonight = () => flow.push({ id: "tonight", title: "Que cuisiner ce soir ?", headerHeight: 56, header: (route) => <Header title="Ce soir" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <TonightView profile={live.profile} pantryIds={[...live.pantryIngredientIds, ...Object.keys(live.pantryAmounts)]} favoriteIds={live.favoriteRecipeIds} onOpenRecipe={(recipe, portions) => route.push(recipeScreen(recipe, undefined, portions))} />}</LiveAppState> });
   function leftoverScreen(planned: PlannedMeal, recipe: Recipe): FlowScreen {
     return { id: `leftover-${planned.id}`, title: "Restes", headerHeight: 56, header: (route) => <Header title="Cuisiner en double" onBack={route.pop} />, render: (route) => {
       const plan = appStore.getSnapshot().currentPlan;
@@ -2086,11 +2159,11 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     return { id: `swap-${planned.id}`, title: "Échanger", headerHeight: 56, header: (route) => <Header title="Échanger" onBack={route.pop} />, render: (route) => {
       const plan = appStore.getSnapshot().currentPlan;
       if (!plan) return <EmptyRoot icon={CalendarIcon} title="Aucune semaine" body="Générez une semaine avant de déplacer un repas." />;
-      return <SwapView plan={plan} source={planned} onConfirm={(targetSlotId) => {
+      return <SwapView plan={plan} source={planned} profile={appStore.getSnapshot().profile} onConfirm={(targetSlotId) => {
         const live = appStore.getSnapshot().currentPlan;
         if (!live) return "Cette semaine n’est plus disponible.";
         try {
-          const updated = swapPlannedMeals(live, planned.id, targetSlotId, ACTIVE_RECIPES);
+          const updated = swapPlannedMeals(live, planned.id, targetSlotId, ACTIVE_RECIPES, appStore.getSnapshot().profile);
           setAppState((current) => withUpdatedPlan(current, updated));
           route.pop();
           return null;
@@ -2110,7 +2183,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     if (tab === "courses") return <CoursesView plan={appState.currentPlan} profile={appState.profile} checkedIds={appState.checkedShoppingItemIds} pantryIds={appState.pantryIngredientIds} pantryAmounts={appState.pantryAmounts} categoryOrder={appState.shoppingCategoryOrder} spent={appState.currentPlan ? appState.actualSpend[appState.currentPlan.id] : undefined} onToggleChecked={toggleChecked} onTogglePantry={togglePantry} onSetPantryAmount={setPantryAmount} onMoveCategory={moveCategory} onSetSpent={setSpent} />;
     if (tab === "favorites") return <FavoritesView favoriteIds={appState.favoriteRecipeIds} history={appState.history} catalogue={catalogue} catalogueError={catalogueError} onLoadCatalogue={ensureCatalogue} onRetryCatalogue={retryCatalogue} onOpenRecipe={(recipe) => flow.push(recipeScreen(recipe))} onOpenCatalogue={(recipe) => flow.push(catalogueRecipeScreen(recipe))} onOpenHistory={(plan) => flow.push(historyPlanScreen(plan))} onDeleteHistory={(plan) => setAppState((current) => ({ ...current, history: current.history.filter((item) => item.id !== plan.id) }))} />;
     if (!appState.onboardingCompleted) return <OnboardingView profile={appState.profile} onOpenProfile={openProfile} onSkip={() => setAppState((current) => ({ ...current, onboardingCompleted: true }))} />;
-    return <HomeView profile={appState.profile} plan={appState.currentPlan} archivedWeek={archivedWeek} upcomingPlan={appState.upcomingPlan} onGenerate={openGenerate} onProfile={openProfile} onOpenMeal={openMeal} onOpenWeek={() => setTab("week")} />;
+    return <HomeView profile={appState.profile} plan={appState.currentPlan} archivedWeek={archivedWeek} upcomingPlan={appState.upcomingPlan} onGenerate={openGenerate} onTonight={openTonight} onProfile={openProfile} onOpenMeal={openMeal} onOpenWeek={() => setTab("week")} />;
   }, [tab, appState, archivedWeek, catalogue, catalogueError, ensureCatalogue, retryCatalogue]);
 
   return <div className={`app-shell ${appState.textScale === "large" ? "is-large-text" : ""}`} data-text-scale={appState.textScale}>

@@ -1,4 +1,5 @@
 import type {
+  DayConstraint,
   Ingredient,
   MealType,
   PantryAmount,
@@ -47,6 +48,9 @@ export interface PlanSummary {
   wholeGrainMeals: number;
   nutOrSeedMeals: number;
   seasonalMeals: number;
+  /** Distinct whole plant ingredients, herbs and spices used during the week. */
+  plantDiversity: number;
+  plantIngredients: string[];
   withinBudget: boolean;
   /** Estimated averages per portion, never a nutritional assessment. */
   averageCalories: number;
@@ -234,6 +238,81 @@ export function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
   );
 }
 
+export function dayConstraintOf(profile: UserProfile, dayIndex: number): DayConstraint | undefined {
+  return profile.dayConstraints?.find((constraint) => constraint.dayIndex === dayIndex);
+}
+
+/** Applies the global safety rules plus the active-time override for one slot. */
+export function recipeIsAllowedForSlot(
+  recipe: Recipe,
+  profile: UserProfile,
+  dayIndex: number,
+): boolean {
+  const constraint = dayConstraintOf(profile, dayIndex);
+  const maxPrepMinutes = constraint?.maxPrepMinutes ?? profile.maxPrepMinutes;
+  if (recipe.prepMinutes > maxPrepMinutes) return false;
+  // Let recipeIsAllowed validate every global rule while substituting only the
+  // time limit; daily overrides never weaken allergies, diet or equipment.
+  return recipeIsAllowed(recipe, { ...profile, maxPrepMinutes });
+}
+
+function portionsForDay(profile: UserProfile, dayIndex: number): number {
+  return dayConstraintOf(profile, dayIndex)?.portions ?? Math.max(1, Math.round(profile.people));
+}
+
+function slotIsSkipped(profile: UserProfile, dayIndex: number, mealType: MealType): boolean {
+  return dayConstraintOf(profile, dayIndex)?.skippedMealTypes.includes(mealType) ?? false;
+}
+
+export interface TonightOptions {
+  mealType: "lunch" | "dinner";
+  maxPrepMinutes: number;
+  portions: number;
+  pantryIngredientIds?: readonly string[];
+  favoriteRecipeIds?: readonly string[];
+  season?: "spring" | "summer" | "autumn" | "winter";
+  limit?: number;
+}
+
+export interface TonightRecommendation {
+  recipe: Recipe;
+  pantryMatches: number;
+  estimatedCost: number;
+}
+
+/** Three safe, explainable ideas for an immediate meal. */
+export function recommendTonight(
+  recipes: readonly Recipe[],
+  profile: UserProfile,
+  options: TonightOptions,
+): TonightRecommendation[] {
+  const maxPrepMinutes = Math.min(180, Math.max(5, Math.round(options.maxPrepMinutes)));
+  const portions = Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, Math.round(options.portions)));
+  const pantry = new Set((options.pantryIngredientIds ?? []).map(canonicalIngredientId));
+  const favorites = new Set(options.favoriteRecipeIds ?? []);
+  const softDisliked = new Set(profile.softDislikedRecipeIds ?? []);
+  const seed = `${options.mealType}:${maxPrepMinutes}:${[...pantry].sort().join(",")}`;
+  return recipes
+    .filter((recipe) => recipe.mealTypes.includes(options.mealType)
+      && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes }))
+    .map((recipe) => {
+      const pantryMatches = ingredientIdsOf(recipe).filter((id) => pantry.has(id)).length;
+      const seasonal = !options.season || recipe.seasons.includes(options.season) || recipe.seasons.includes("all-year");
+      const score = pantryMatches * 120
+        + (favorites.has(recipe.id) ? 80 : 0)
+        + (seasonal ? 18 : 0)
+        - (softDisliked.has(recipe.id) ? 200 : 0)
+        - recipe.prepMinutes * 2
+        - recipe.costPerPortion * portions * 4;
+      return { recipe, pantryMatches, estimatedCost: mealCost(recipe, portions), score };
+    })
+    .sort((left, right) => right.score - left.score
+      || seededRank(seed, left.recipe.id) - seededRank(seed, right.recipe.id)
+      || left.recipe.title.localeCompare(right.recipe.title, "fr"))
+    .slice(0, Math.min(6, Math.max(1, options.limit ?? 3)))
+    .map(({ score: _score, ...recommendation }) => recommendation);
+}
+
 function ingredientReuseFromSet(recipe: Recipe, used: ReadonlySet<string>): number {
   return ingredientIdsOf(recipe).reduce((total, id) => total + (used.has(id) ? 1 : 0), 0);
 }
@@ -273,9 +352,9 @@ export function generateWeeklyPlan(
   const slots = Array.from({ length: 7 }, (_, dayIndex) =>
     mealTypes.map((mealType) => ({ dayIndex, mealType })),
   ).flat();
-  const eligible = recipes.filter((recipe) => recipeIsAllowed(recipe, profile));
+  // Time is evaluated per slot below; all other profile safeguards are shared.
+  const eligible = recipes.filter((recipe) => recipeIsAllowed(recipe, { ...profile, maxPrepMinutes: 24 * 60 }));
   const catalogue = new Map(recipes.map((recipe) => [recipe.id, recipe]));
-  const people = Math.max(1, Math.round(profile.people));
   const favorites = new Set(options.favoriteRecipeIds ?? []);
   const softDisliked = new Set(profile.softDislikedRecipeIds ?? []);
   const targets = weeklyTargetsOf(profile);
@@ -287,13 +366,13 @@ export function generateWeeklyPlan(
     // A leftover only makes sense next to the batch it came from.
     if (meal.leftoverOf) continue;
     // A lock never overrides allergies, diet, equipment or the time limit.
-    if (!lockedRecipe || !recipeIsAllowed(lockedRecipe, profile)) continue;
+    if (!lockedRecipe || !recipeIsAllowedForSlot(lockedRecipe, profile, meal.dayIndex)) continue;
     if (!lockedRecipe.mealTypes.includes(meal.mealType)) continue;
     if (!mealTypes.includes(meal.mealType)) continue;
     if (meal.dayIndex < 0 || meal.dayIndex > 6) continue;
     if (keptSlots.has(slotKey)) continue;
     if ([...keptSlots.values()].some((kept) => kept.recipeId === meal.recipeId)) continue;
-    if (meal.skipped) continue;
+    if (meal.skipped || slotIsSkipped(profile, meal.dayIndex, meal.mealType)) continue;
     keptSlots.set(slotKey, {
       ...meal,
       portions: Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, Math.round(meal.portions))),
@@ -306,16 +385,15 @@ export function generateWeeklyPlan(
 
   const keptRecipeIds = new Set([...keptSlots.values()].map((meal) => meal.recipeId));
 
-  for (const mealType of mealTypes) {
-    const kept = [...keptSlots.values()].filter((meal) => meal.mealType === mealType).length;
-    const needed = 7 - kept;
+  for (const slot of slots) {
+    if (keptSlots.has(`${slot.dayIndex}-${slot.mealType}`)) continue;
     const available = eligible.filter(
-      (recipe) => recipe.mealTypes.includes(mealType) && !keptRecipeIds.has(recipe.id),
+      (recipe) => recipe.mealTypes.includes(slot.mealType)
+        && !keptRecipeIds.has(recipe.id)
+        && recipeIsAllowedForSlot(recipe, profile, slot.dayIndex),
     ).length;
-    if (available < needed) {
-      throw new Error(
-        `Catalogue insuffisant pour ${mealType}: ${available} recette(s) compatible(s), ${needed} requises.`,
-      );
+    if (available === 0) {
+      throw new Error(`Aucune recette compatible avec la contrainte du jour ${slot.dayIndex + 1} (${slot.mealType}).`);
     }
   }
 
@@ -334,8 +412,11 @@ export function generateWeeklyPlan(
 
     const legumeDeficit = Math.max(0, targets.legumeMeals - tagCount(selected, TAGS.legume));
     const fishDeficit = profile.diet === "classic" ? Math.max(0, targets.fishMeals - tagCount(selected, TAGS.fish)) : 0;
+    const portions = portionsForDay(profile, slot.dayIndex);
     const candidates = eligible.filter(
-      (recipe) => !used.has(recipe.id) && recipe.mealTypes.includes(slot.mealType),
+      (recipe) => !used.has(recipe.id)
+        && recipe.mealTypes.includes(slot.mealType)
+        && recipeIsAllowedForSlot(recipe, profile, slot.dayIndex),
     );
     const selectedIngredientIds = new Set(selected.flatMap(ingredientIdsOf));
 
@@ -360,7 +441,7 @@ export function generateWeeklyPlan(
         // « Bof » : la recette reste possible, mais passe après les autres.
         const softDislikeScore = softDisliked.has(recipe.id) ? -200 : 0;
         // Cost remains meaningful even when nutrition/season scores are tied.
-        return targetScore + favoriteScore + softDislikeScore + qualityScore - recipe.costPerPortion * people * 7;
+        return targetScore + favoriteScore + softDislikeScore + qualityScore - recipe.costPerPortion * portions * 7;
       };
       const difference = score(right) - score(left);
       if (difference !== 0) return difference;
@@ -374,8 +455,9 @@ export function generateWeeklyPlan(
       dayIndex: slot.dayIndex as PlannedMeal["dayIndex"],
       mealType: slot.mealType,
       recipeId: selectedRecipe.id,
-      portions: people,
+      portions,
       source: "generated",
+      ...(slotIsSkipped(profile, slot.dayIndex, slot.mealType) ? { skipped: true } : {}),
     });
   }
 
@@ -398,7 +480,9 @@ export function generateWeeklyPlan(
       const previous = byId.get(meal.recipeId);
       if (!previous) return;
       for (const candidate of eligible) {
-        if (used.has(candidate.id) || !candidate.mealTypes.includes(meal.mealType)) continue;
+        if (used.has(candidate.id)
+          || !candidate.mealTypes.includes(meal.mealType)
+          || !recipeIsAllowedForSlot(candidate, profile, meal.dayIndex)) continue;
         const losesLegume = hasTag(previous, TAGS.legume) && !hasTag(candidate, TAGS.legume);
         const losesFish = hasTag(previous, TAGS.fish) && !hasTag(candidate, TAGS.fish);
         if (losesLegume && currentLegumes <= targets.legumeMeals) continue;
@@ -447,7 +531,7 @@ export function getReplacementCandidates(
       (recipe) =>
         !usedIds.has(recipe.id) &&
         recipe.mealTypes.includes(meal.mealType) &&
-        recipeIsAllowed(recipe, profile),
+        recipeIsAllowedForSlot(recipe, profile, meal.dayIndex),
     )
     .sort((left, right) => {
       const softDisliked = new Set(profile.softDislikedRecipeIds ?? []);
@@ -512,12 +596,37 @@ export function replacePlannedMeal(
   return { ...plan, meals, estimatedCost: canRecalculate ? totalPlanCost(meals, lookup) : plan.estimatedCost };
 }
 
+/** Returns whether two slots can be exchanged without breaking meal or day constraints. */
+export function canSwapPlannedMeals(
+  plan: WeeklyPlan,
+  firstSlotId: string,
+  secondSlotId: string,
+  recipes: readonly Recipe[] = [],
+  profile?: UserProfile,
+): boolean {
+  const first = plan.meals.find((meal) => meal.id === firstSlotId);
+  const second = plan.meals.find((meal) => meal.id === secondSlotId);
+  if (!first || !second || first.id === second.id || first.leftoverOf || second.leftoverOf) return false;
+  if (plan.meals.some((meal) => meal.leftoverOf === first.id || meal.leftoverOf === second.id)) return false;
+  if (!profile) return true;
+
+  const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+  const firstRecipe = byId.get(first.recipeId);
+  const secondRecipe = byId.get(second.recipeId);
+  return Boolean(firstRecipe && secondRecipe
+    && firstRecipe.mealTypes.includes(second.mealType)
+    && secondRecipe.mealTypes.includes(first.mealType)
+    && recipeIsAllowedForSlot(firstRecipe, profile, second.dayIndex)
+    && recipeIsAllowedForSlot(secondRecipe, profile, first.dayIndex));
+}
+
 /** Swaps two planned meals, keeping every other mark attached to its dish. */
 export function swapPlannedMeals(
   plan: WeeklyPlan,
   firstSlotId: string,
   secondSlotId: string,
   recipes: readonly Recipe[] = [],
+  profile?: UserProfile,
 ): WeeklyPlan {
   const first = plan.meals.find((meal) => meal.id === firstSlotId);
   const second = plan.meals.find((meal) => meal.id === secondSlotId);
@@ -527,6 +636,9 @@ export function swapPlannedMeals(
   }
   if (plan.meals.some((meal) => meal.leftoverOf === first.id || meal.leftoverOf === second.id)) {
     throw new Error("Ce plat sert de base à des restes : retirez-les avant de le déplacer.");
+  }
+  if (profile && !canSwapPlannedMeals(plan, firstSlotId, secondSlotId, recipes, profile)) {
+      throw new Error("Cet échange ne respecte pas le temps ou le type de repas prévu pour ces jours.");
   }
 
   const carried = (meal: PlannedMeal, other: PlannedMeal): PlannedMeal => ({
@@ -677,7 +789,7 @@ export function preservableLockedMeals(
     return Boolean(
       !meal.leftoverOf &&
         recipe &&
-        recipeIsAllowed(recipe, profile) &&
+        recipeIsAllowedForSlot(recipe, profile, meal.dayIndex) &&
         recipe.mealTypes.includes(meal.mealType) &&
         mealTypes.includes(meal.mealType) &&
         meal.dayIndex >= 0 &&
@@ -753,9 +865,9 @@ export function assignableSlots(
   recipe: Recipe,
   profile: UserProfile,
 ): Array<PlanSlot & { taken: string }> {
-  if (!recipeIsAllowed(recipe, profile)) return [];
+  if (!recipeIsAllowed(recipe, { ...profile, maxPrepMinutes: 24 * 60 })) return [];
   return plan.meals
-    .filter((meal) => recipe.mealTypes.includes(meal.mealType))
+    .filter((meal) => recipe.mealTypes.includes(meal.mealType) && recipeIsAllowedForSlot(recipe, profile, meal.dayIndex))
     .map((meal) => ({ dayIndex: meal.dayIndex, mealType: meal.mealType, taken: meal.recipeId }));
 }
 
@@ -774,7 +886,7 @@ export function assignRecipeToSlot(
     (meal) => meal.dayIndex === slot.dayIndex && meal.mealType === slot.mealType,
   );
   if (!target) throw new Error("Ce créneau n'existe pas dans la semaine.");
-  if (!recipeIsAllowed(recipe, profile)) {
+  if (!recipeIsAllowedForSlot(recipe, profile, slot.dayIndex)) {
     throw new Error("Cette recette ne respecte pas votre profil (allergies, régime, équipement ou temps).");
   }
   if (!recipe.mealTypes.includes(slot.mealType)) {
@@ -909,7 +1021,7 @@ export function inspectPlanReplay(
   const usable = plan.meals.filter((meal) => mealTypes.includes(meal.mealType));
   const blockedMeals = usable.filter((meal) => {
     const recipe = byId.get(meal.recipeId);
-    return !recipe || !recipeIsAllowed(recipe, profile);
+    return !recipe || !recipeIsAllowedForSlot(recipe, profile, meal.dayIndex);
   });
   const missingSlots = mealTypes.reduce(
     (total, mealType) => total + Math.max(0, 7 - usable.filter((meal) => meal.mealType === mealType).length),
@@ -931,16 +1043,15 @@ export function restorePlan(
 ): WeeklyPlan {
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
   const mealTypes = requiredMealTypes(profile.mealsPerDay);
-  const people = Math.max(1, Math.round(profile.people));
   const meals = plan.meals
     .filter((meal) => mealTypes.includes(meal.mealType))
     .map((meal) => ({
       ...meal,
       id: `day-${meal.dayIndex}-${meal.mealType}`,
-      portions: people,
+      portions: portionsForDay(profile, meal.dayIndex),
       completed: false,
       locked: false,
-      skipped: false,
+      skipped: slotIsSkipped(profile, meal.dayIndex, meal.mealType),
     }));
 
   return {
@@ -971,6 +1082,73 @@ export function mealsToStartTonight(
       const advance = recipe ? advancePrepFor(recipe) : null;
       return recipe && advance?.level === "day-before" ? [{ meal, recipe, minutes: advance.minutes }] : [];
     });
+}
+
+export interface ContextualReminder {
+  id: string;
+  kind: "start-tonight" | "rest-today" | "leftovers-today";
+  title: string;
+  body: string;
+  meal: PlannedMeal;
+}
+
+/** Local reminders derived from the plan whenever the application is opened. */
+export function contextualRemindersForDate(
+  plan: WeeklyPlan | null | undefined,
+  recipes: readonly Recipe[],
+  today: string,
+): ContextualReminder[] {
+  if (!plan) return [];
+  const offset = planDayOffset(plan, today);
+  if (offset < -1 || offset > 6) return [];
+  const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+  const reminders: ContextualReminder[] = [];
+
+  for (const meal of plan.meals) {
+    if (meal.skipped || meal.completed) continue;
+    const recipe = byId.get(meal.recipeId);
+    if (!recipe) continue;
+    if (meal.dayIndex === offset && meal.leftoverOf) {
+      reminders.push({
+        id: `leftovers-${meal.id}`,
+        kind: "leftovers-today",
+        title: "Restes prévus aujourd’hui",
+        body: `${recipe.title} est déjà prêt : vérifiez sa conservation avant de servir.`,
+        meal,
+      });
+      continue;
+    }
+    const advance = advancePrepFor(recipe);
+    if (meal.dayIndex === offset && !meal.leftoverOf && advance?.level === "same-day") {
+      reminders.push({
+        id: `rest-${meal.id}`,
+        kind: "rest-today",
+        title: "Repos à lancer aujourd’hui",
+        body: `${recipe.title} demande ${formatDurationLabel(advance.minutes)} de repos.`,
+        meal,
+      });
+    }
+    if (meal.dayIndex === offset + 1 && !meal.leftoverOf && advance?.level === "day-before") {
+      reminders.push({
+        id: `tonight-${meal.id}`,
+        kind: "start-tonight",
+        title: "À lancer ce soir",
+        body: `${recipe.title} demande ${formatDurationLabel(advance.minutes)} de repos.`,
+        meal,
+      });
+    }
+  }
+  return reminders;
+}
+
+function formatDurationLabel(minutes: number): string {
+  if (minutes >= 24 * 60 && minutes % (24 * 60) === 0) return `${minutes / (24 * 60)} j`;
+  if (minutes >= 60) {
+    const hours = Math.floor(minutes / 60);
+    const rest = minutes % 60;
+    return rest ? `${hours} h ${rest} min` : `${hours} h`;
+  }
+  return `${minutes} min`;
 }
 
 /** Minimal iCalendar export of a week, one event per meal. */
@@ -1129,6 +1307,37 @@ export function reconcileCheckedItems(
   );
 }
 
+const NON_PLANT_WORDS = /(^|-)(eau|water|sel|salt|huile|oil|bouillon|stock|miel|honey|sirop|syrup|lait|milk|yaourt|yogurt|fromage|cheese|oeuf|egg|poulet|chicken|boeuf|beef|porc|pork|dinde|turkey|saumon|sardine|maquereau|thon|cabillaud|poisson|fish|crevette|shrimp|moule|beurre|butter)(-|$)/;
+
+export interface PlantDiversity {
+  count: number;
+  ingredients: string[];
+}
+
+/**
+ * Counts distinct identifiable plants used in the week. Water, salt, oils,
+ * sweeteners, stocks and animal products are excluded; herbs and spices count.
+ * This is a transparent variety marker, not a health score.
+ */
+export function plantDiversityOf(plan: WeeklyPlan, recipes: readonly Recipe[]): PlantDiversity {
+  const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+  const plants = new Map<string, string>();
+  for (const meal of plan.meals) {
+    if (meal.skipped) continue;
+    const recipe = byId.get(meal.recipeId);
+    if (!recipe) continue;
+    for (const ingredient of recipe.ingredients) {
+      if (ingredient.category === "meat-fish") continue;
+      const id = normalize(canonicalIngredientId(ingredient.id));
+      const name = normalize(ingredient.name);
+      if (!id || NON_PLANT_WORDS.test(id) || NON_PLANT_WORDS.test(name)) continue;
+      plants.set(id, ingredient.name.trim());
+    }
+  }
+  const ingredients = [...plants.values()].sort((left, right) => left.localeCompare(right, "fr"));
+  return { count: ingredients.length, ingredients };
+}
+
 export function summarizePlan(
   plan: WeeklyPlan,
   recipes: readonly Recipe[],
@@ -1144,6 +1353,7 @@ export function summarizePlan(
   const averagePrepMinutes = cooked.length
     ? round(cooked.reduce((total, recipe) => total + recipe.prepMinutes, 0) / cooked.length, 1)
     : 0;
+  const plantDiversity = plantDiversityOf(plan, recipes);
 
   return {
     mealCount: plan.meals.length,
@@ -1157,6 +1367,8 @@ export function summarizePlan(
     seasonalMeals: selected.filter(
       (recipe) => recipe.seasons.includes("summer") || recipe.seasons.includes("all-year"),
     ).length,
+    plantDiversity: plantDiversity.count,
+    plantIngredients: plantDiversity.ingredients,
     withinBudget: plan.estimatedCost <= profile.weeklyBudget,
     averageCalories: average(selected.map((recipe) => recipe.nutrition.calories)),
     averageProtein: average(selected.map((recipe) => recipe.nutrition.protein)),
