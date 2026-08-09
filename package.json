@@ -35,6 +35,8 @@
     "build": "tsc && vite build && node scripts/generate-precache.mjs dist/client / && node scripts/validate-build-split.mjs dist/client && node scripts/prepare-sites-build.mjs",
     "test:app": "playwright test tests/app-v1.spec.ts",
     "test:browser": "playwright test tests/app-v1.spec.ts tests/mobile-runtime.spec.ts",
+    "test:pwa": "npm run build:pages && npm run test:pwa:built",
+    "test:pwa:built": "playwright test --config=playwright.pwa.config.ts",
     "test:sw": "node --test tests/service-worker.test.mjs"
   },
   "dependencies": {

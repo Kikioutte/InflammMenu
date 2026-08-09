@@ -11,6 +11,27 @@ import { canonicalIngredientId, legacyShoppingItemKeyToCanonical } from "./shopp
 
 export const APP_STATE_VERSION = 2 as const;
 
+export const APP_STATE_DATA_KEYS = [
+  "profile",
+  "currentPlan",
+  "upcomingPlan",
+  "favoriteRecipeIds",
+  "history",
+  "checkedShoppingItemIds",
+  "pantryIngredientIds",
+  "pantryAmounts",
+  "recipeNotes",
+  "shoppingCategoryOrder",
+  "actualSpend",
+  "customRecipes",
+  "textScale",
+  "remindersEnabled",
+  "onboardingCompleted",
+] as const;
+
+export type AppStateDataKey = typeof APP_STATE_DATA_KEYS[number];
+export type AppStateFieldRevisions = Record<AppStateDataKey, number>;
+
 export interface AppState {
   version: typeof APP_STATE_VERSION;
   profile: UserProfile;
@@ -36,6 +57,8 @@ export interface AppState {
   onboardingCompleted: boolean;
   /** Monotonic local revision used to choose the newest replica and synchronise tabs. */
   stateRevision: number;
+  /** Per-field clocks let concurrent tabs merge unrelated edits instead of overwriting them. */
+  fieldRevisions: AppStateFieldRevisions;
   /** @deprecated Use favoriteRecipeIds. Kept for version-0 data compatibility. */
   favorites: string[];
   /** @deprecated Use checkedShoppingItemIds. Kept for version-0 data compatibility. */
@@ -85,6 +108,7 @@ export const DEFAULT_APP_STATE: AppState = createState({
   remindersEnabled: false,
   onboardingCompleted: false,
   stateRevision: 0,
+  fieldRevisions: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, 0])) as AppStateFieldRevisions,
 });
 
 type StateInput = Pick<
@@ -104,7 +128,7 @@ type StateInput = Pick<
   | "textScale"
   | "remindersEnabled"
   | "onboardingCompleted"
-> & { stateRevision?: number };
+> & { stateRevision?: number; fieldRevisions?: Partial<AppStateFieldRevisions> };
 
 function createState(input: StateInput): AppState {
   const favoriteRecipeIds = [...input.favoriteRecipeIds];
@@ -129,6 +153,7 @@ function createState(input: StateInput): AppState {
     remindersEnabled: input.remindersEnabled,
     onboardingCompleted: input.onboardingCompleted,
     stateRevision: Math.max(0, Math.floor(input.stateRevision ?? 0)),
+    fieldRevisions: normalizeFieldRevisions(input.fieldRevisions, input.stateRevision),
     favorites: [...favoriteRecipeIds],
     checkedShoppingIds: [...checkedShoppingItemIds],
     pantryIds: [...pantryIngredientIds],
@@ -447,6 +472,15 @@ function normalizeRevision(value: unknown): number {
   return typeof value === "number" && Number.isSafeInteger(value) && value >= 0 ? value : 0;
 }
 
+function normalizeFieldRevisions(value: unknown, fallbackValue: unknown): AppStateFieldRevisions {
+  const fallback = normalizeRevision(fallbackValue);
+  const record = isRecord(value) ? value : {};
+  return Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [
+    key,
+    Object.hasOwn(record, key) ? normalizeRevision(record[key]) : fallback,
+  ])) as AppStateFieldRevisions;
+}
+
 /**
  * Migrates the early unversioned prototype shape and validates all collection
  * fields before they are exposed to React.
@@ -495,7 +529,48 @@ export function migrateAppState(value: unknown): AppState | null {
     remindersEnabled: value.remindersEnabled === true,
     onboardingCompleted: value.onboardingCompleted === true,
     stateRevision: normalizeRevision(value.stateRevision),
+    fieldRevisions: normalizeFieldRevisions(value.fieldRevisions, value.stateRevision),
   });
+}
+
+/** Adds one revision to every top-level field changed by a local action. */
+export function stampAppStateChanges(current: AppState, candidate: AppState, revision: number): AppState {
+  const safeRevision = Math.max(current.stateRevision + 1, normalizeRevision(revision));
+  const fieldRevisions = { ...current.fieldRevisions };
+  for (const key of APP_STATE_DATA_KEYS) {
+    if (!Object.is(candidate[key], current[key])) fieldRevisions[key] = safeRevision;
+  }
+  return migrateAppState({ ...candidate, stateRevision: safeRevision, fieldRevisions }) ?? cloneDefaultState();
+}
+
+/**
+ * Merges two local replicas field by field. Unrelated changes made at nearly
+ * the same time in two tabs are both kept; edits to the same field use the
+ * newest field revision.
+ */
+export function mergeAppStateReplicas(left: AppState, right: AppState): AppState {
+  const rightWins = (key: AppStateDataKey) => {
+    const leftRevision = left.fieldRevisions[key];
+    const rightRevision = right.fieldRevisions[key];
+    if (rightRevision !== leftRevision) return rightRevision > leftRevision;
+    const leftValue = JSON.stringify(left[key]) ?? "";
+    const rightValue = JSON.stringify(right[key]) ?? "";
+    return rightValue > leftValue;
+  };
+  const anyRightWins = APP_STATE_DATA_KEYS.some(rightWins);
+  if (!anyRightWins && right.stateRevision <= left.stateRevision) return left;
+
+  const merged: Record<string, unknown> = { ...left };
+  const fieldRevisions = { ...left.fieldRevisions };
+  for (const key of APP_STATE_DATA_KEYS) {
+    const leftRevision = left.fieldRevisions[key];
+    const rightRevision = right.fieldRevisions[key];
+    if (rightWins(key)) merged[key] = right[key];
+    fieldRevisions[key] = Math.max(leftRevision, rightRevision);
+  }
+  merged.stateRevision = Math.max(left.stateRevision, right.stateRevision);
+  merged.fieldRevisions = fieldRevisions;
+  return migrateAppState(merged) ?? left;
 }
 
 function cloneDefaultState(): AppState {
@@ -609,7 +684,8 @@ async function removeIndexedState(): Promise<void> {
 function freshestState(indexedState: AppState | null, localState: AppState | null): AppState | null {
   if (!indexedState) return localState;
   if (!localState) return indexedState;
-  return localState.stateRevision >= indexedState.stateRevision ? localState : indexedState;
+  if (localState.stateRevision === indexedState.stateRevision) return localState;
+  return mergeAppStateReplicas(indexedState, localState);
 }
 
 const STORAGE_CHANNEL = "inflamm-menu:app-state-sync";
@@ -724,8 +800,90 @@ const RECOGNIZED_STATE_KEYS = new Set([
   "version", "profile", "currentPlan", "plan", "upcomingPlan", "favoriteRecipeIds", "favorites",
   "history", "checkedShoppingItemIds", "checkedShoppingIds", "pantryIngredientIds", "pantryIds",
   "pantryAmounts", "recipeNotes", "shoppingCategoryOrder", "actualSpend", "customRecipes",
-  "textScale", "remindersEnabled", "onboardingCompleted", "stateRevision",
+  "textScale", "remindersEnabled", "onboardingCompleted", "stateRevision", "fieldRevisions",
 ]);
+
+const CURRENT_BACKUP_KEYS = [
+  "profile", "currentPlan", "upcomingPlan", "favoriteRecipeIds", "history",
+  "checkedShoppingItemIds", "pantryIngredientIds", "pantryAmounts", "recipeNotes",
+  "shoppingCategoryOrder", "actualSpend", "customRecipes", "textScale",
+  "remindersEnabled", "onboardingCompleted", "stateRevision",
+] as const;
+
+function hasUsableLegacyStateShape(value: Record<string, unknown>): boolean {
+  const profile = value.profile;
+  if (!isRecord(profile)) return false;
+  const profileIsUsable = typeof profile.people === "number"
+    && (profile.mealsPerDay === 2 || profile.mealsPerDay === 3)
+    && typeof profile.weeklyBudget === "number"
+    && typeof profile.maxPrepMinutes === "number"
+    && Array.isArray(profile.allergies)
+    && typeof profile.diet === "string"
+    && Array.isArray(profile.equipment);
+  const hasPlanSlot = Object.hasOwn(value, "currentPlan") || Object.hasOwn(value, "plan");
+  const hasFavorites = Array.isArray(value.favoriteRecipeIds) || Array.isArray(value.favorites);
+  const hasCheckedItems = Array.isArray(value.checkedShoppingItemIds) || Array.isArray(value.checkedShoppingIds);
+  const hasPantry = Array.isArray(value.pantryIngredientIds) || Array.isArray(value.pantryIds);
+  return profileIsUsable && hasPlanSlot && hasFavorites && Array.isArray(value.history) && hasCheckedItems && hasPantry;
+}
+
+function isStrictStringArray(value: unknown): boolean {
+  return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+function hasCompleteCurrentProfileShape(value: unknown): boolean {
+  if (!isRecord(value) || !isRecord(value.weeklyTargets)) return false;
+  return typeof value.firstName === "string"
+    && typeof value.people === "number" && Number.isFinite(value.people)
+    && (value.mealsPerDay === 2 || value.mealsPerDay === 3)
+    && typeof value.weeklyBudget === "number" && Number.isFinite(value.weeklyBudget)
+    && typeof value.maxPrepMinutes === "number" && Number.isFinite(value.maxPrepMinutes)
+    && isStrictStringArray(value.allergies)
+    && isStrictStringArray(value.excludedIngredientIds)
+    && isStrictStringArray(value.dislikedRecipeIds)
+    && isStrictStringArray(value.softDislikedRecipeIds)
+    && typeof value.weeklyTargets.legumeMeals === "number" && Number.isFinite(value.weeklyTargets.legumeMeals)
+    && typeof value.weeklyTargets.fishMeals === "number" && Number.isFinite(value.weeklyTargets.fishMeals)
+    && (value.diet === "classic" || value.diet === "vegetarian" || value.diet === "no-pork")
+    && isStrictStringArray(value.equipment);
+}
+
+function hasCompleteCurrentStateShape(value: Record<string, unknown>): boolean {
+  const requiredKeysArePresent = CURRENT_BACKUP_KEYS.every((key) => Object.hasOwn(value, key));
+  const plansAreValid = (value.currentPlan === null || normalizePlan(value.currentPlan) !== null)
+    && (value.upcomingPlan === null || normalizePlan(value.upcomingPlan) !== null)
+    && Array.isArray(value.history)
+    && value.history.every((plan) => normalizePlan(plan) !== null);
+  const collectionsAreValid = isStrictStringArray(value.favoriteRecipeIds)
+    && isStrictStringArray(value.checkedShoppingItemIds)
+    && isStrictStringArray(value.pantryIngredientIds)
+    && isRecord(value.pantryAmounts)
+    && isRecord(value.recipeNotes)
+    && Array.isArray(value.shoppingCategoryOrder)
+    && isRecord(value.actualSpend)
+    && Array.isArray(value.customRecipes);
+  const preferencesAreValid = (value.textScale === "normal" || value.textScale === "large")
+    && typeof value.remindersEnabled === "boolean"
+    && typeof value.onboardingCompleted === "boolean"
+    && Number.isSafeInteger(value.stateRevision)
+    && Number(value.stateRevision) >= 0;
+  return requiredKeysArePresent
+    && hasCompleteCurrentProfileShape(value.profile)
+    && plansAreValid
+    && collectionsAreValid
+    && preferencesAreValid;
+}
+
+function assertCompleteImport(candidate: Record<string, unknown>, backupVersion?: number): void {
+  const candidateVersion = typeof candidate.version === "number" ? candidate.version : undefined;
+  const mustUseCurrentShape = backupVersion === APP_STATE_VERSION || candidateVersion === APP_STATE_VERSION;
+  const completeEnough = mustUseCurrentShape
+    ? hasCompleteCurrentStateShape(candidate)
+    : hasUsableLegacyStateShape(candidate);
+  if (!completeEnough) {
+    throw new Error("Sauvegarde incomplète : elle ne sera pas restaurée pour protéger vos données actuelles.");
+  }
+}
 
 /**
  * Reads a backup file. Older exports and raw state dumps are accepted, but the
@@ -749,17 +907,23 @@ export function importAppState(raw: string): AppState {
     if (typeof parsed.version === "number" && parsed.version > APP_STATE_VERSION) {
       throw new Error("Cette sauvegarde provient d’une version plus récente d’Inflamm’Menu.");
     }
+    if (typeof parsed.version !== "number") throw new Error("Sauvegarde incomplète : version absente ou invalide.");
+    if (typeof parsed.exportedAt !== "string" || Number.isNaN(Date.parse(parsed.exportedAt))) {
+      throw new Error("Sauvegarde incomplète : date d’export absente ou invalide.");
+    }
     if (!isRecord(parsed.state)) throw new Error("Sauvegarde incomplète : aucune donnée exploitable.");
     if (!Object.keys(parsed.state).some((key) => RECOGNIZED_STATE_KEYS.has(key))) {
       throw new Error("Sauvegarde incomplète : aucune donnée Inflamm’Menu reconnue.");
     }
     candidate = parsed.state;
+    assertCompleteImport(candidate, parsed.version);
   } else {
     const rawCandidate = isRecord(parsed.state) ? parsed.state : parsed;
     if (!Object.keys(rawCandidate).some((key) => RECOGNIZED_STATE_KEYS.has(key))) {
       throw new Error("Ce fichier ne contient aucune donnée Inflamm’Menu reconnue.");
     }
     candidate = rawCandidate;
+    assertCompleteImport(candidate);
   }
 
   const migrated = migrateAppState(candidate);

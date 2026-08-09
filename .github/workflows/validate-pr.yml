@@ -45,5 +45,8 @@ jobs:
       - name: Build GitHub Pages artifact
         run: npm run build:pages
 
+      - name: Test installed PWA, offline catalogue and multi-tab sync
+        run: npm run test:pwa:built
+
       - name: Build alternative worker and test it
         run: npm run test:sites

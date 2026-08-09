@@ -1,5 +1,4 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const { APP_STATE_VERSION, migrateAppState } = await import("../src/storage.ts");
@@ -128,6 +127,26 @@ test("restoring rejects foreign or broken files and accepts a raw state dump", a
   assert.throws(() => importAppState(JSON.stringify({ format: "autre-app", state: {} })), /ne provient pas/);
   assert.throws(() => importAppState(JSON.stringify({ format: BACKUP_FORMAT, version: APP_STATE_VERSION, state: {} })), /incomplète/);
   assert.throws(() => importAppState(JSON.stringify({ format: BACKUP_FORMAT, version: APP_STATE_VERSION, state: { hello: "world" } })), /incomplète/);
+  assert.throws(() => importAppState(JSON.stringify({ version: APP_STATE_VERSION })), /incomplète/);
+  assert.throws(() => importAppState(JSON.stringify({ profile: {} })), /incomplète/);
+  assert.throws(() => importAppState(JSON.stringify({
+    format: BACKUP_FORMAT,
+    version: APP_STATE_VERSION,
+    exportedAt: "2026-08-08T10:00:00.000Z",
+    state: { version: APP_STATE_VERSION },
+  })), /incomplète/);
+  const corruptedCompleteState = Object.fromEntries([
+    "profile", "currentPlan", "upcomingPlan", "favoriteRecipeIds", "history",
+    "checkedShoppingItemIds", "pantryIngredientIds", "pantryAmounts", "recipeNotes",
+    "shoppingCategoryOrder", "actualSpend", "customRecipes", "textScale",
+    "remindersEnabled", "onboardingCompleted", "stateRevision",
+  ].map((key) => [key, null]));
+  assert.throws(() => importAppState(JSON.stringify({
+    format: BACKUP_FORMAT,
+    version: APP_STATE_VERSION,
+    exportedAt: "2026-08-08T10:00:00.000Z",
+    state: corruptedCompleteState,
+  })), /incomplète/);
 
   const rawState = importAppState(JSON.stringify(state()));
   assert.equal(rawState.version, APP_STATE_VERSION);
@@ -382,9 +401,32 @@ test("audit remediation: plan normalization removes duplicate slots and invalid 
 });
 
 
-test("legacy localStorage replica wins a revision tie", async () => {
-  const source = await readFile(new URL("../src/storage.ts", import.meta.url), "utf8");
-  assert.match(source, /localState\.stateRevision >= indexedState\.stateRevision/);
+test("concurrent tab edits to different fields are merged without data loss", async () => {
+  const { mergeAppStateReplicas, stampAppStateChanges } = await import("../src/storage.ts");
+  const base = migrateAppState({ ...state(), stateRevision: 10 });
+  const profileEdit = stampAppStateChanges(base, {
+    ...base,
+    profile: { ...base.profile, firstName: "Synchronisé" },
+  }, 100);
+  const comfortEdit = stampAppStateChanges(base, {
+    ...base,
+    textScale: "large",
+  }, 101);
+
+  const merged = mergeAppStateReplicas(comfortEdit, profileEdit);
+  assert.equal(merged.profile.firstName, "Synchronisé");
+  assert.equal(merged.textScale, "large");
+  assert.equal(merged.fieldRevisions.profile, 100);
+  assert.equal(merged.fieldRevisions.textScale, 101);
+  assert.deepEqual(mergeAppStateReplicas(merged, comfortEdit), merged, "une ancienne réplique ne recrée pas une boucle de sauvegarde");
+
+  const collisionA = stampAppStateChanges(base, { ...base, profile: { ...base.profile, firstName: "Alice" } }, 200);
+  const collisionB = stampAppStateChanges(base, { ...base, profile: { ...base.profile, firstName: "Brune" } }, 200);
+  assert.equal(
+    mergeAppStateReplicas(collisionA, collisionB).profile.firstName,
+    mergeAppStateReplicas(collisionB, collisionA).profile.firstName,
+    "une collision d’horloge converge vers la même valeur dans les deux onglets",
+  );
 });
 
 

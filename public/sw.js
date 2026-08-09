@@ -17,6 +17,16 @@ async function fetchRequired(request) {
   return response;
 }
 
+async function matchCached(cache, request) {
+  // All requests reaching this worker are same-origin. Ignoring Vary keeps the
+  // immutable shell usable when a static host adds a response-only Vary header.
+  return cache.match(request, { ignoreVary: true });
+}
+
+function shellEntry(suffix) {
+  return APP_SHELL.find((path) => path.endsWith(suffix));
+}
+
 async function trimCache(cache, maximum) {
   const keys = await cache.keys();
   const excess = keys.length - maximum;
@@ -40,7 +50,8 @@ async function precacheShell() {
   const responses = await Promise.all(APP_SHELL.map((path) => fetchRequired(path)));
   await Promise.all(APP_SHELL.map((path, index) => cache.put(path, responses[index].clone())));
 
-  const indexResponse = await cache.match("/index.html") || await cache.match("/");
+  const indexResponse = await matchCached(cache, shellEntry("/index.html") ?? "/index.html")
+    || await matchCached(cache, shellEntry("/") ?? "/");
   if (!indexResponse) throw new Error("Application shell index missing");
   const html = await indexResponse.text();
   const assetPaths = [...html.matchAll(/(?:src|href)=["']([^"']+)["']/g)]
@@ -71,7 +82,7 @@ self.addEventListener("activate", (event) => {
 
 async function cacheFirst(request, cacheName, maximum) {
   const cache = await caches.open(cacheName);
-  const cached = await cache.match(request);
+  const cached = await matchCached(cache, request);
   if (cached) return cached;
   const response = await fetch(request);
   if (response.ok && response.type === "basic") await putSafely(cache, request, response, maximum);
@@ -86,9 +97,9 @@ async function networkFirst(request, cacheName) {
       await putSafely(cache, request, response);
       return response;
     }
-    return await cache.match(request) || response;
+    return await matchCached(cache, request) || response;
   } catch (error) {
-    const cached = await cache.match(request);
+    const cached = await matchCached(cache, request);
     if (cached) return cached;
     throw error;
   }
@@ -98,10 +109,13 @@ async function navigationResponse(request) {
   const cache = await caches.open(SHELL_CACHE);
   try {
     const response = await fetch(request);
-    if (response.ok && response.type === "basic") await putSafely(cache, "/index.html", response);
+    if (response.ok && response.type === "basic") {
+      await putSafely(cache, shellEntry("/index.html") ?? "/index.html", response);
+    }
     return response;
   } catch {
-    const fallback = await cache.match("/index.html") || await cache.match("/");
+    const fallback = await matchCached(cache, shellEntry("/index.html") ?? "/index.html")
+      || await matchCached(cache, shellEntry("/") ?? "/");
     if (fallback) return fallback;
     return new Response(
       "<!doctype html><html lang=\"fr\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width\"><title>Inflamm’Menu</title><body><p>Inflamm’Menu est momentanément indisponible hors connexion.</p></body></html>",
@@ -120,7 +134,7 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(navigationResponse(request));
     return;
   }
-  if (url.pathname.endsWith("recettes-anti-inflammatoires.json")) {
+  if (/\/recettes-anti-inflammatoires(?:-[^/]+)?\.json$/.test(url.pathname)) {
     event.respondWith(networkFirst(request, CATALOGUE_CACHE));
     return;
   }

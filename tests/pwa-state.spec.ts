@@ -1,0 +1,78 @@
+import { expect, test, type Page } from "@playwright/test";
+
+async function openFreshApp(page: Page) {
+  await page.goto("/InflammMenu/");
+  const onboarding = page.getByTestId("onboarding-view");
+  const home = page.getByTestId("home-view");
+  await expect(onboarding.or(home)).toBeVisible();
+  if (await onboarding.isVisible()) await page.getByTestId("onboarding-skip").click();
+  await expect(home).toBeVisible();
+  await page.waitForFunction(() => Boolean(window.localStorage.getItem("inflamm-menu:app-state")));
+}
+
+async function openInformation(page: Page) {
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+  await expect(page.getByRole("heading", { name: "À propos de l’application" })).toBeVisible();
+}
+
+test("deux onglets conservent des réglages différents et les synchronisent", async ({ page, context }) => {
+  await openFreshApp(page);
+  const secondPage = await context.newPage();
+  await secondPage.goto("/InflammMenu/");
+  await expect(secondPage.getByTestId("home-view")).toBeVisible();
+
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByLabel("Votre prénom").fill("Synchronisé");
+  await openInformation(secondPage);
+
+  await Promise.all([
+    page.getByRole("button", { name: "Enregistrer mon profil" }).click(),
+    secondPage.getByTestId("text-scale-large").click(),
+  ]);
+
+  await expect(page.locator(".app-shell")).toHaveAttribute("data-text-scale", "large");
+  await secondPage.getByRole("button", { name: "Retour" }).click();
+  await expect(secondPage.getByLabel("Votre prénom")).toHaveValue("Synchronisé");
+
+  await expect.poll(async () => secondPage.evaluate(() => {
+    const raw = window.localStorage.getItem("inflamm-menu:app-state");
+    if (!raw) return null;
+    const state = JSON.parse(raw);
+    return { firstName: state.profile?.firstName, textScale: state.textScale };
+  })).toEqual({ firstName: "Synchronisé", textScale: "large" });
+});
+
+test("le vrai service worker conserve le catalogue et uniquement les polices latines", async ({ page, context }) => {
+  await openFreshApp(page);
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) {
+      await new Promise<void>((resolve) => navigator.serviceWorker.addEventListener("controllerchange", () => resolve(), { once: true }));
+    }
+  });
+
+  await openInformation(page);
+  await page.getByTestId("offline-catalogue-download").click();
+  await expect(page.getByTestId("offline-catalogue-download")).toContainText("Catalogue vérifié hors ligne");
+
+  const cacheState = await page.evaluate(async () => {
+    const names = await caches.keys();
+    const shellName = names.find((name) => name.startsWith("inflamm-menu-shell-"));
+    const catalogueName = names.find((name) => name.startsWith("inflamm-menu-catalogue-"));
+    const shellUrls = shellName ? (await (await caches.open(shellName)).keys()).map((request) => request.url) : [];
+    const catalogueUrls = catalogueName ? (await (await caches.open(catalogueName)).keys()).map((request) => request.url) : [];
+    return { names, shellUrls, catalogueUrls };
+  });
+  expect(cacheState.names.some((name) => name.startsWith("inflamm-menu-shell-"))).toBe(true);
+  expect(cacheState.catalogueUrls.some((url) => /recettes-anti-inflammatoires(?:-[^/]+)?\.json$/.test(url))).toBe(true);
+  expect(cacheState.shellUrls.filter((url) => /cyrillic|vietnamese|latin-ext/i.test(url))).toEqual([]);
+
+  await context.setOffline(true);
+  await page.reload();
+  await expect(page.getByTestId("home-view")).toBeVisible();
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("tab", { name: "Catalogue" }).click();
+  await expect(page.getByText("544 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByText("544 résultats")).toBeVisible();
+});

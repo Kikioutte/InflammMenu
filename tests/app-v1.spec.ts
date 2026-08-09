@@ -479,6 +479,9 @@ test("les données locales s’exportent et se restaurent", async ({ page }) => 
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
   await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
   await page.getByTestId("backup-import").setInputFiles(backupPath);
+  await expect(page.getByTestId("backup-feedback")).toContainText("Sauvegarde vérifiée");
+  await expect(page.getByText("Bonjour Camille")).toHaveCount(0);
+  await page.getByTestId("backup-confirm").click();
   await expect(page.getByTestId("backup-feedback")).toContainText("Sauvegarde restaurée");
 
   await page.getByRole("button", { name: "Retour" }).click();
@@ -500,6 +503,31 @@ test("une sauvegarde étrangère est refusée avec un message clair", async ({ p
     buffer: Buffer.from(JSON.stringify({ format: "autre-app", state: {} })),
   });
   await expect(page.getByTestId("backup-error")).toContainText("ne provient pas d’Inflamm’Menu");
+});
+
+test("une sauvegarde tronquée est refusée et une restauration vérifiée peut être annulée", async ({ page }) => {
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+
+  await page.getByTestId("backup-import").setInputFiles({
+    name: "tronquee.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify({ version: 2 })),
+  });
+  await expect(page.getByTestId("backup-error")).toContainText("incomplète");
+  await expect(page.getByTestId("backup-confirmation")).toHaveCount(0);
+
+  const completeState = await page.evaluate(() => window.localStorage.getItem("inflamm-menu:app-state"));
+  await page.getByTestId("backup-import").setInputFiles({
+    name: "valide.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(completeState ?? ""),
+  });
+  await expect(page.getByTestId("backup-confirmation")).toBeVisible();
+  await page.getByTestId("backup-cancel").click();
+  await expect(page.getByTestId("backup-confirmation")).toHaveCount(0);
+  await expect(page.getByTestId("backup-feedback")).toContainText("données actuelles sont conservées");
 });
 
 test("l’installation et l’état hors ligne sont signalés sans être simulés", async ({ page, context }) => {

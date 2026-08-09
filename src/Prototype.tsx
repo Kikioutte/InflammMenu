@@ -117,8 +117,10 @@ import {
   exportAppState,
   importAppState,
   loadAppState,
+  mergeAppStateReplicas,
   registerOfflineSupport,
   saveAppState,
+  stampAppStateChanges,
   watchForAppUpdate,
   watchForStoredState,
   type AppState,
@@ -137,7 +139,8 @@ type AppStateStore = {
   getSnapshot: () => AppState;
   subscribe: (listener: () => void) => () => void;
   setState: (update: AppStateUpdate) => void;
-  replaceState: (state: AppState) => void;
+  hydrateState: (state: AppState) => void;
+  mergeState: (state: AppState) => boolean;
 };
 
 function createAppStateStore(initial: AppState): AppStateStore {
@@ -158,14 +161,14 @@ function createAppStateStore(initial: AppState): AppStateStore {
     setState: (update) => {
       const candidate = typeof update === "function" ? update(state) : update;
       if (Object.is(candidate, state)) return;
-      publish({
-        ...candidate,
-        stateRevision: Math.max(state.stateRevision + 1, Date.now() * 1_000 + tabRevisionNonce),
-      });
+      publish(stampAppStateChanges(state, candidate, Date.now() * 1_000 + tabRevisionNonce));
     },
-    replaceState: (next) => {
-      if (next.stateRevision < state.stateRevision) return;
-      publish(next);
+    hydrateState: publish,
+    mergeState: (incoming) => {
+      const merged = mergeAppStateReplicas(state, incoming);
+      if (Object.is(merged, state)) return false;
+      publish(merged);
+      return true;
     },
   };
 }
@@ -1356,6 +1359,7 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
 function BackupSection({ state, onRestore }: { state: AppState; onRestore: (restored: AppState) => void }) {
   const [feedback, setFeedback] = useState("");
   const [error, setError] = useState("");
+  const [pendingRestore, setPendingRestore] = useState<AppState | null>(null);
   const inputId = "backup-file-input";
   const download = () => {
     try {
@@ -1371,9 +1375,9 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
     if (!file) return;
     try {
       const restored = importAppState(await file.text());
-      onRestore(restored);
+      setPendingRestore(restored);
       setError("");
-      setFeedback(`Sauvegarde restaurée : ${restored.history.length} semaine(s) archivée(s), ${restored.favoriteRecipeIds.length} favori(s).`);
+      setFeedback(`Sauvegarde vérifiée : ${restored.history.length} semaine(s) archivée(s), ${restored.favoriteRecipeIds.length} favori(s). Confirmez pour remplacer les données de cet appareil.`);
     } catch (importError) {
       setFeedback("");
       setError(importError instanceof Error ? importError.message : "Restauration impossible.");
@@ -1389,6 +1393,20 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
           <input id={inputId} type="file" accept="application/json,.json" data-testid="backup-import" onChange={(event) => { void restore(event.target.files?.[0]); event.target.value = ""; }} />
         </label>
       </div>
+      {pendingRestore ? <div className="backup-confirmation" data-testid="backup-confirmation" role="group" aria-label="Confirmer la restauration">
+        <p><strong>Cette action remplacera toutes les données actuellement enregistrées sur cet appareil.</strong></p>
+        <div className="backup-actions">
+          <button type="button" className="primary-button" data-testid="backup-confirm" onClick={() => {
+            onRestore(pendingRestore);
+            setPendingRestore(null);
+            setFeedback(`Sauvegarde restaurée : ${pendingRestore.history.length} semaine(s) archivée(s), ${pendingRestore.favoriteRecipeIds.length} favori(s).`);
+          }}>Confirmer la restauration</button>
+          <button type="button" className="secondary-button" data-testid="backup-cancel" onClick={() => {
+            setPendingRestore(null);
+            setFeedback("Restauration annulée. Vos données actuelles sont conservées.");
+          }}>Annuler</button>
+        </div>
+      </div> : null}
       {feedback ? <p className="export-feedback" role="status" aria-live="polite" data-testid="backup-feedback">{feedback}</p> : null}
       {error ? <p className="notice-banner" role="alert" data-testid="backup-error">{error}</p> : null}
       <p className="privacy-note">La restauration remplace le profil, la semaine en cours, l’historique, les favoris et la liste de courses de cet appareil.</p>
@@ -1612,7 +1630,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const [tab, setTab] = useState<TabId>("home");
   const appState = useSyncExternalStore(appStore.subscribe, appStore.getSnapshot, appStore.getSnapshot);
   const setAppState = appStore.setState;
-  const replaceAppState = appStore.replaceState;
+  const hydrateAppState = appStore.hydrateState;
+  const mergeAppState = appStore.mergeState;
   const [hydrated, setHydrated] = useState(false);
   const [archivedWeek, setArchivedWeek] = useState<WeeklyPlan | null>(null);
   const [appNotice, setAppNotice] = useState("");
@@ -1710,7 +1729,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
         const restored = { ...stored, favoriteRecipeIds: validFavorites };
         const favoritesUnchanged = validFavorites.length === stored.favoriteRecipeIds.length
           && validFavorites.every((id, index) => id === stored.favoriteRecipeIds[index]);
-        if (favoritesUnchanged) replaceAppState(restored);
+        if (favoritesUnchanged) hydrateAppState(restored);
         else setAppState(restored);
       }
       setHydrated(true);
@@ -1720,12 +1739,10 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   }, []);
 
   useEffect(() => watchForStoredState((incoming) => {
-    const current = appStore.getSnapshot();
-    if (incoming.stateRevision > current.stateRevision) {
-      replaceAppState(incoming);
+    if (mergeAppState(incoming)) {
       setAppNotice("Les modifications d’un autre onglet ont été synchronisées.");
     }
-  }), [appStore, replaceAppState]);
+  }), [appStore, mergeAppState]);
 
   useEffect(() => {
     if (!hydrated) return;

@@ -14,10 +14,16 @@ test("service worker requires a complete shell before skipWaiting", () => {
 test("service worker revalidates catalogue requests and bounds runtime images", () => {
   assert.match(worker, /async function networkFirst/);
   assert.match(worker, /fetch\(request, \{ cache: "no-cache" \}\)/);
-  assert.match(worker, /return await cache\.match\(request\) \|\| response/);
+  assert.match(worker, /return await matchCached\(cache, request\) \|\| response/);
   assert.match(worker, /event\.respondWith\(networkFirst\(request, CATALOGUE_CACHE\)\)/);
+  assert.match(worker, /recettes-anti-inflammatoires\(\?:-\[\^\/\]\+\)\?/);
   assert.match(worker, /MAX_RUNTIME_IMAGES = 120/);
   assert.match(worker, /trimCache/);
+});
+
+test("service worker reuses same-origin shell responses despite host Vary headers", () => {
+  assert.match(worker, /cache\.match\(request, \{ ignoreVary: true \}\)/);
+  assert.match(worker, /shellEntry\("\/index\.html"\)/);
 });
 
 test("precache discovers unquoted CSS url references", () => {
