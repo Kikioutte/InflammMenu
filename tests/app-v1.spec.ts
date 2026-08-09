@@ -98,13 +98,24 @@ test("les contraintes quotidiennes pilotent la semaine générée", async ({ pag
   await expect(mondayMeals.first()).toContainText("3 portions");
 });
 
-test("le mode ce soir propose trois recettes et la semaine affiche sa diversité végétale", async ({ page }) => {
+test("le mode ce soir révèle les recettes par groupes de six et la semaine affiche sa diversité végétale", async ({ page }) => {
   await openFreshApp(page);
   await page.getByTestId("tonight-open").click();
   await expect(page.getByTestId("tonight-view")).toBeVisible();
-  await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(3);
+  await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(6);
+  await expect(page.getByTestId("tonight-results-count")).toContainText("6 recettes sur");
+  await page.getByTestId("tonight-more").click();
+  await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(12);
+  const visibleIds = await page.locator('[data-testid^="tonight-result-"]').evaluateAll((cards) => cards.map((card) => card.getAttribute("data-testid")));
+  expect(new Set(visibleIds).size).toBe(12);
   await page.getByTestId("tonight-time-15").click();
-  expect(await page.locator('[data-testid^="tonight-result-"]').count()).toBeGreaterThan(0);
+  await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(1);
+  await expect(page.getByTestId("tonight-results-count")).toHaveText("1 recette sur 1");
+  await expect(page.getByTestId("tonight-more")).toHaveCount(0);
+  await expect(page.getByText("Seulement 1 recette correspond à ces critères.")).toBeVisible();
+  await page.getByTestId("tonight-time-30").click();
+  await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(6);
+  await expect(page.getByTestId("tonight-more")).toBeVisible();
   await page.getByRole("button", { name: "Retour" }).click();
 
   await generateWeek(page);

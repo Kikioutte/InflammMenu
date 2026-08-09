@@ -60,7 +60,7 @@
 - Les rappels sont produits localement à l'ouverture de l'application, une fois par jour, uniquement si l'autorisation a été accordée. Ne jamais laisser entendre qu'ils sont programmés côté serveur.
 - Le catalogue complet n'est pas préchargé : il se télécharge à la demande depuis l'écran Informations. Toute formulation sur le hors-ligne doit rester exacte sur ce point.
 - `UserProfile.dayConstraints` personnalise un jour avant génération : plafond de temps actif, portions et créneaux hors foyer. Une contrainte quotidienne ne contourne jamais les allergies, le régime ou l’équipement. Les échanges et planifications manuelles doivent aussi respecter le plafond du jour.
-- « Que cuisiner ce soir ? » propose jusqu’à trois recettes issues de `ACTIVE_RECIPES`, compatibles avec le profil et le temps choisi. Le garde-manger, les favoris, la saison et le coût influencent l’ordre, jamais les filtres de sécurité.
+- « Que cuisiner ce soir ? » classe toutes les recettes compatibles de `ACTIVE_RECIPES`, en affiche six puis six de plus à la demande. Le garde-manger, les favoris, la saison et le coût influencent l’ordre, jamais les filtres de sécurité.
 - Les rappels contextuels couvrent les repos à lancer le jour même ou la veille et les restes prévus aujourd’hui. Ils sont visibles sur l’accueil et notifiés au plus une fois par date quand l’application est ouverte.
 - La diversité végétale compte les végétaux distincts, légumineuses, céréales, herbes et épices de la semaine, en excluant notamment eau, sel, huiles, bouillons, sucrants et produits animaux. C’est un indicateur descriptif transparent, jamais un score de santé ni un objectif médical.
 

@@ -835,6 +835,8 @@ button { -webkit-tap-highlight-color: transparent; }
 .tonight-controls { display: grid; gap: 18px; }
 .tonight-controls fieldset { margin: 0; padding: 0; border: 0; }
 .tonight-results { margin-top: 24px; }
+.tonight-results__count { margin: 4px 0 12px; color: var(--muted); font-size: 12px; }
+.tonight-more { margin-top: 14px; }
 .tonight-card {
   width: 100%;
   min-height: 104px;
