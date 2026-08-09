@@ -1128,6 +1128,19 @@ test("tonight recommendations stay safe and favour ingredients already in reserv
   assert.equal(recommendations.some((item) => item.recipe.id === "recipe-803"), false);
   assert.equal(recommendations.some((item) => item.recipe.id === "recipe-804"), false);
   assert.equal(recommendations[0].estimatedCost, 4);
+
+  const largerSet = Array.from({ length: 12 }, (_, index) => recipe(820 + index));
+  assert.equal(engine.recommendTonight(largerSet, profile, {
+    mealType: "dinner",
+    maxPrepMinutes: 30,
+    portions: 2,
+    limit: 12,
+  }).length, 12);
+  assert.equal(engine.recommendTonight(largerSet, profile, {
+    mealType: "dinner",
+    maxPrepMinutes: 30,
+    portions: 2,
+  }).length, 3);
 });
 
 test("contextual reminders cover same-day rest, next-day preparation and today's leftovers", () => {

@@ -280,7 +280,7 @@ export interface TonightRecommendation {
   estimatedCost: number;
 }
 
-/** Three safe, explainable ideas for an immediate meal. */
+/** Safe, explainable ideas for an immediate meal, ranked before limiting. */
 export function recommendTonight(
   recipes: readonly Recipe[],
   profile: UserProfile,
@@ -288,6 +288,8 @@ export function recommendTonight(
 ): TonightRecommendation[] {
   const maxPrepMinutes = Math.min(180, Math.max(5, Math.round(options.maxPrepMinutes)));
   const portions = Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, Math.round(options.portions)));
+  const requestedLimit = Number.isFinite(options.limit) ? Math.max(1, Math.round(options.limit as number)) : 3;
+  const limit = Math.min(recipes.length, requestedLimit);
   const pantry = new Set((options.pantryIngredientIds ?? []).map(canonicalIngredientId));
   const favorites = new Set(options.favoriteRecipeIds ?? []);
   const softDisliked = new Set(profile.softDislikedRecipeIds ?? []);
@@ -309,7 +311,7 @@ export function recommendTonight(
     .sort((left, right) => right.score - left.score
       || seededRank(seed, left.recipe.id) - seededRank(seed, right.recipe.id)
       || left.recipe.title.localeCompare(right.recipe.title, "fr"))
-    .slice(0, Math.min(6, Math.max(1, options.limit ?? 3)))
+    .slice(0, limit)
     .map(({ score: _score, ...recommendation }) => recommendation);
 }
 
