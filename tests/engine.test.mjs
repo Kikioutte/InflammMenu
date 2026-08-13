@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 const engine = await import("../src/engine.ts");
+const shopping = await import("../src/shopping.ts");
 
 const nutrition = {
   calories: 400,
@@ -1211,7 +1212,7 @@ test("meal attendance overrides only the selected slot and flows into shopping q
   assert.equal(list.find((item) => item.ingredientId === lunchRecipe.ingredients[0].id).amounts[0].quantity, 100);
 });
 
-test("shopping merges reviewed name variants even when source identifiers differ", () => {
+test("shopping never merges unknown ingredients from their display name alone", () => {
   const first = recipe(780, {
     ingredients: [{ id: "source-a", name: "Huile d’olive", quantity: 1, unit: "c_soupe", category: "grocery" }],
   });
@@ -1227,9 +1228,111 @@ test("shopping merges reviewed name variants even when source identifiers differ
     ],
   };
   const list = engine.buildShoppingList(plan, [first, second]);
-  assert.equal(list.length, 1);
-  assert.equal(list[0].ingredientId, "olive-oil");
-  assert.deepEqual(list[0].amounts, [{ unit: "ml", quantity: 45 }]);
+  assert.equal(list.length, 2);
+  assert.deepEqual(list.map((item) => item.ingredientId).sort(), ["source-a", "source-b"]);
+});
+
+test("culinary identities remain distinct while reviewed shopping identities merge", () => {
+  assert.notEqual(shopping.canonicalIngredientId("olive-oil"), shopping.canonicalIngredientId("huile-olive-vierge-extra"));
+  assert.equal(shopping.shoppingIdentityFor("olive-oil").shoppingId, "olive-oil");
+  assert.equal(shopping.shoppingIdentityFor("huile-olive-vierge-extra").shoppingId, "olive-oil");
+});
+
+test("reviewed shopping groups are stable regardless of meal order", () => {
+  const oil = recipe(782, { ingredients: [{ id: "olive-oil", name: "Huile d’olive", quantity: 15, unit: "ml", category: "grocery" }] });
+  const extraVirgin = recipe(783, { ingredients: [{ id: "huile-olive-vierge-extra", name: "huile d'olive vierge extra", quantity: 30, unit: "ml", category: "grocery" }] });
+  const planFor = (meals) => ({
+    id: "week-shopping-order", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: profile, version: 1, estimatedCost: 1, meals,
+  });
+  const firstOrder = planFor([
+    { id: "a", dayIndex: 0, mealType: "lunch", recipeId: oil.id, portions: 1, source: "manual" },
+    { id: "b", dayIndex: 0, mealType: "dinner", recipeId: extraVirgin.id, portions: 1, source: "manual" },
+  ]);
+  const reverseOrder = planFor([...firstOrder.meals].reverse());
+  const expected = [{
+    ingredientId: "olive-oil", name: "huile d’olive vierge extra", category: "grocery",
+    amounts: [{ unit: "ml", quantity: 45 }], purchaseSuggestion: "À vérifier dans vos placards", checked: false, inPantry: false,
+  }];
+  assert.deepEqual(engine.buildShoppingList(firstOrder, [oil, extraVirgin]), expected);
+  assert.deepEqual(engine.buildShoppingList(reverseOrder, [oil, extraVirgin]), expected);
+});
+
+test("legacy pantry quantities from two group members add up only in matching units", () => {
+  const dish = recipe(786, { ingredients: [
+    { id: "olive-oil", name: "huile d’olive", quantity: 500, unit: "ml", category: "grocery" },
+    { id: "parsley", name: "persil", quantity: 40, unit: "g", category: "fruit-vegetable" },
+    { id: "catalog-persil-plat-cisele", name: "persil ciselé", quantity: 2, unit: "piece", category: "fruit-vegetable" },
+  ] });
+  const plan = { id: "week-pantry-groups", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: profile, version: 1, estimatedCost: 1, meals: [{ id: "a", dayIndex: 0, mealType: "dinner", recipeId: dish.id, portions: 1, source: "manual" }] };
+  const list = engine.buildShoppingList(plan, [dish], { pantryAmounts: {
+    "olive-oil": { quantity: 100, unit: "ml" },
+    "huile-olive-vierge-extra": { quantity: 250, unit: "ml" },
+    "persil-plat": { quantity: 10, unit: "g" },
+    "catalog-persil-plat-cisele": { quantity: 1, unit: "piece" },
+  } });
+  assert.deepEqual(list.find((item) => item.ingredientId === "olive-oil").amounts, [{ unit: "ml", quantity: 150 }]);
+  assert.deepEqual(list.find((item) => item.ingredientId === "parsley").amounts, [{ unit: "g", quantity: 30 }, { unit: "piece", quantity: 1 }]);
+});
+
+test("only explicitly reviewed fresh herbs, onions, lemons and mustards share a shopping line", () => {
+  const ingredients = [
+    { id: "parsley", name: "persil", quantity: 10, unit: "g", category: "fruit-vegetable" },
+    { id: "catalog-persil-plat-cisele", name: "persil ciselé", quantity: 5, unit: "g", category: "grocery" },
+    { id: "mint", name: "menthe", quantity: 4, unit: "g", category: "fruit-vegetable" },
+    { id: "catalog-feuilles-de-menthe-fraiche", name: "feuilles de menthe", quantity: 1, unit: "piece", category: "fruit-vegetable" },
+    { id: "onion", name: "oignon", quantity: 100, unit: "g", category: "fruit-vegetable" },
+    { id: "oignon-jaune", name: "oignon jaune", quantity: 1, unit: "piece", category: "fruit-vegetable" },
+    { id: "oignon-rouge", name: "oignon rouge", quantity: 1, unit: "piece", category: "fruit-vegetable" },
+    { id: "lemon", name: "citron", quantity: 1, unit: "piece", category: "fruit-vegetable" },
+    { id: "catalog-citrons", name: "citrons", quantity: 2, unit: "piece", category: "fruit-vegetable" },
+    { id: "catalog-citron-non-traite", name: "citron non traité", quantity: 1, unit: "piece", category: "fruit-vegetable" },
+    { id: "mustard", name: "moutarde", quantity: 5, unit: "ml", category: "grocery" },
+    { id: "moutarde-dijon", name: "moutarde de Dijon", quantity: 10, unit: "ml", category: "grocery" },
+    { id: "moutarde-ancienne", name: "moutarde ancienne", quantity: 5, unit: "ml", category: "grocery" },
+    { id: "moutarde-douce", name: "moutarde douce", quantity: 5, unit: "ml", category: "grocery" },
+  ];
+  const dish = recipe(784, { ingredients });
+  const plan = {
+    id: "week-reviewed-groups", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: profile, version: 1, estimatedCost: 1,
+    meals: [{ id: "a", dayIndex: 0, mealType: "dinner", recipeId: dish.id, portions: 1, source: "manual" }],
+  };
+  const list = engine.buildShoppingList(plan, [dish]);
+  const byId = new Map(list.map((item) => [item.ingredientId, item]));
+  assert.deepEqual(byId.get("parsley").amounts, [{ unit: "g", quantity: 15 }]);
+  assert.deepEqual(byId.get("mint").amounts, [{ unit: "g", quantity: 4 }, { unit: "piece", quantity: 1 }]);
+  assert.deepEqual(byId.get("onion").amounts, [{ unit: "g", quantity: 100 }, { unit: "piece", quantity: 1 }]);
+  assert.ok(byId.has("oignon-rouge"));
+  assert.deepEqual(byId.get("lemon").amounts, [{ unit: "piece", quantity: 3 }]);
+  assert.ok(byId.has("catalog-citron-non-traite"));
+  assert.deepEqual(byId.get("mustard").amounts, [{ unit: "ml", quantity: 15 }]);
+  assert.ok(byId.has("moutarde-ancienne"));
+  assert.ok(byId.has("moutarde-douce"));
+});
+
+test("reviewed allergen and variety exceptions never merge in shopping", () => {
+  const dish = recipe(785, { ingredients: [
+    { id: "catalog-vinaigre-de-xeres", name: "vinaigre de Xérès", quantity: 15, unit: "ml", category: "grocery" },
+    { id: "vinaigre-xeres", name: "vinaigre de Xérès", quantity: 15, unit: "ml", category: "grocery", allergens: ["sulfites"] },
+    { id: "courge-musquee", name: "courge", quantity: 100, unit: "g", category: "fruit-vegetable" },
+    { id: "courge-butternut", name: "courge", quantity: 100, unit: "g", category: "fruit-vegetable" },
+  ] });
+  const plan = { id: "week-exceptions", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: profile, version: 1, estimatedCost: 1, meals: [{ id: "a", dayIndex: 0, mealType: "dinner", recipeId: dish.id, portions: 1, source: "manual" }] };
+  const ids = engine.buildShoppingList(plan, [dish]).map((item) => item.ingredientId);
+  assert.ok(ids.includes("catalog-vinaigre-de-xeres") && ids.includes("vinaigre-xeres"));
+  assert.ok(ids.includes("courge-musquee") && ids.includes("courge-butternut"));
+});
+
+test("shopping group validation rejects incomplete, overlapping and colliding definitions", () => {
+  const known = new Set(["known-a", "known-b", "known-c"]);
+  const valid = { shopping_id: "known-a", display_name: "Produit", category: "grocery", member_ids: ["known-a", "known-b"] };
+  assert.equal(shopping.validateShoppingGroups([valid], known).length, 1);
+  assert.throws(() => shopping.validateShoppingGroups([{ ...valid, display_name: "" }], known), /libellé/);
+  assert.throws(() => shopping.validateShoppingGroups([{ ...valid, category: "ailleurs" }], known), /rayon/);
+  assert.throws(() => shopping.validateShoppingGroups([{ ...valid, member_ids: ["known-a", "unknown"] }], known), /inconnu/);
+  assert.throws(() => shopping.validateShoppingGroups([valid, { ...valid, shopping_id: "other", member_ids: ["known-b", "known-c"] }], known), /plusieurs groupes/);
+  assert.throws(() => shopping.validateShoppingGroups([{ ...valid, shopping_id: "known-c" }], known), /collision/);
 });
 
 test("empty recipe diagnostics identify time, equipment and protected exclusions", () => {

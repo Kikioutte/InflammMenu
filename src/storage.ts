@@ -9,7 +9,7 @@ import {
   type UserProfile,
   type WeeklyPlan,
 } from "./domain.ts";
-import { canonicalIngredientId, legacyShoppingItemKeyToCanonical } from "./shopping.ts";
+import { canonicalIngredientId, legacyShoppingItemKeyToCanonical, shoppingIdentityFor } from "./shopping.ts";
 import { substitutionRuleAppliesToIngredientId, substitutionRuleById } from "./substitutions.ts";
 
 export const APP_STATE_VERSION = 3 as const;
@@ -292,15 +292,19 @@ const UNITS = new Set(["g", "ml", "piece", "c_soupe", "c_cafe"]);
 
 function normalizePantryAmounts(value: unknown): Record<string, PantryAmount> {
   if (!isRecord(value)) return {};
-  const entries: Array<[string, PantryAmount]> = [];
+  const amounts = new Map<string, PantryAmount>();
   for (const [rawId, rawAmount] of Object.entries(value)) {
     if (!isRecord(rawAmount)) continue;
     const quantity = finiteNumber(rawAmount.quantity, 0);
     if (quantity <= 0) continue;
     if (typeof rawAmount.unit !== "string" || !UNITS.has(rawAmount.unit)) continue;
-    entries.push([canonicalIngredientId(rawId), { quantity, unit: rawAmount.unit as PantryAmount["unit"] }]);
+    const unit = rawAmount.unit as PantryAmount["unit"];
+    const shoppingId = legacyShoppingItemKeyToCanonical(rawId);
+    const key = `${shoppingId}:${unit}`;
+    const previous = amounts.get(key);
+    amounts.set(key, { quantity: (previous?.quantity ?? 0) + quantity, unit });
   }
-  return Object.fromEntries(entries);
+  return Object.fromEntries(amounts);
 }
 
 function normalizeNotes(value: unknown): Record<string, string> {
@@ -550,7 +554,7 @@ export function migrateAppState(value: unknown): AppState | null {
   ).map(legacyShoppingItemKeyToCanonical))];
   const pantryIngredientIds = [...new Set(stringArray(
     Array.isArray(value.pantryIngredientIds) ? value.pantryIngredientIds : value.pantryIds,
-  ).map(canonicalIngredientId))];
+  ).map((id) => shoppingIdentityFor(id).shoppingId))];
   const currentPlan = normalizePlan(value.currentPlan) ?? normalizePlan(value.plan);
   const upcomingCandidate = normalizePlan(value.upcomingPlan);
   const upcomingPlan = upcomingCandidate?.id === currentPlan?.id ? null : upcomingCandidate;

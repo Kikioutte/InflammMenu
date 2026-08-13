@@ -1,6 +1,84 @@
 {
-  "schema_version": "1.0.0",
-  "reviewed_at": "2026-08-06",
+  "schema_version": "2.0.0",
+  "reviewed_at": "2026-08-13",
+  "shopping_groups": [
+    {
+      "shopping_id": "olive-oil",
+      "display_name": "huile d’olive vierge extra",
+      "category": "grocery",
+      "member_ids": ["olive-oil", "huile-olive-vierge-extra"],
+      "purchase": { "kind": "pantry-check" }
+    },
+    {
+      "shopping_id": "parsley",
+      "display_name": "persil plat frais",
+      "category": "fruit-vegetable",
+      "member_ids": ["parsley", "persil-plat", "catalog-persil-plat-cisele"],
+      "purchase": { "kind": "bunches", "grams_per_bunch": 30 }
+    },
+    {
+      "shopping_id": "dill",
+      "display_name": "aneth frais",
+      "category": "fruit-vegetable",
+      "member_ids": ["dill", "catalog-aneth-frais-cisele"],
+      "purchase": { "kind": "bunches", "grams_per_bunch": 20 }
+    },
+    {
+      "shopping_id": "mint",
+      "display_name": "menthe fraîche",
+      "category": "fruit-vegetable",
+      "member_ids": ["mint", "catalog-feuilles-de-menthe-fraiche", "catalog-menthe-fraiche-ciselee"],
+      "purchase": { "kind": "bunches", "grams_per_bunch": 30 }
+    },
+    {
+      "shopping_id": "basil",
+      "display_name": "basilic frais",
+      "category": "fruit-vegetable",
+      "member_ids": ["basil", "catalog-feuilles-de-basilic-frais"],
+      "purchase": { "kind": "bunches", "grams_per_bunch": 30 }
+    },
+    {
+      "shopping_id": "onion",
+      "display_name": "oignon jaune",
+      "category": "fruit-vegetable",
+      "member_ids": ["onion", "oignon-jaune"],
+      "purchase": { "kind": "pieces" }
+    },
+    {
+      "shopping_id": "lemon",
+      "display_name": "citron",
+      "category": "fruit-vegetable",
+      "member_ids": ["lemon", "catalog-citrons"],
+      "purchase": { "kind": "pieces" }
+    },
+    {
+      "shopping_id": "echalote",
+      "display_name": "échalote",
+      "category": "fruit-vegetable",
+      "member_ids": ["echalote", "catalog-echalote"]
+    },
+    {
+      "shopping_id": "mustard",
+      "display_name": "moutarde de Dijon",
+      "category": "grocery",
+      "member_ids": ["mustard", "moutarde-dijon"],
+      "purchase": { "kind": "pantry-check" }
+    },
+    {
+      "shopping_id": "romarin-frais",
+      "display_name": "romarin frais",
+      "category": "fruit-vegetable",
+      "member_ids": ["romarin-frais", "catalog-romarin-frais"],
+      "purchase": { "kind": "bunches", "grams_per_bunch": 20 }
+    },
+    {
+      "shopping_id": "ciboulette",
+      "display_name": "ciboulette fraîche",
+      "category": "fruit-vegetable",
+      "member_ids": ["ciboulette", "ciboulette-fraiche"],
+      "purchase": { "kind": "bunches", "grams_per_bunch": 20 }
+    }
+  ],
   "rules": {
     "eau": { "pantry_staple": true },
     "catalog-eau-filtree": { "pantry_staple": true },

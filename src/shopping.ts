@@ -1,6 +1,6 @@
 import aliasSource from "./data/ingredient-id-aliases.json" with { type: "json" };
 import ruleSource from "./data/ingredient-shopping-rules.json" with { type: "json" };
-import type { IngredientUnit, ShoppingAmount } from "./domain.ts";
+import type { IngredientCategory, IngredientUnit, ShoppingAmount } from "./domain.ts";
 
 type PurchaseRule =
   | { kind: "pieces" }
@@ -19,7 +19,18 @@ type AliasSource = {
   canonical_groups: Array<{ canonical_id: string; aliases: string[] }>;
 };
 
-type RuleSource = { rules: Record<string, IngredientShoppingRule> };
+export type ShoppingGroup = {
+  shopping_id: string;
+  display_name: string;
+  category: IngredientCategory;
+  member_ids: string[];
+  purchase?: PurchaseRule;
+};
+
+type RuleSource = {
+  rules: Record<string, IngredientShoppingRule>;
+  shopping_groups?: unknown;
+};
 
 export function normalizeIngredientId(value: string): string {
   return value
@@ -70,21 +81,97 @@ const rules = new Map(
   Object.entries((ruleSource as RuleSource).rules).map(([id, rule]) => [canonicalIngredientId(id), rule]),
 );
 
+const INGREDIENT_CATEGORIES = new Set<IngredientCategory>([
+  "fruit-vegetable", "grocery", "fresh", "meat-fish", "frozen", "bakery", "beverage",
+]);
+const PURCHASE_KINDS = new Set(["pieces", "bunches", "jar", "pantry-check"]);
+
+/** Validates the reviewed shopping layer independently from culinary aliases. */
+export function validateShoppingGroups(
+  value: unknown,
+  knownCulinaryIds?: ReadonlySet<string>,
+): ShoppingGroup[] {
+  if (!Array.isArray(value)) throw new Error("Les groupes d’achat doivent former une liste.");
+  const shoppingIds = new Set<string>();
+  const members = new Set<string>();
+  return value.map((candidate, index) => {
+    if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
+      throw new Error(`Groupe d’achat ${index + 1} invalide.`);
+    }
+    const source = candidate as Record<string, unknown>;
+    const shoppingId = typeof source.shopping_id === "string" ? normalizeIngredientId(source.shopping_id) : "";
+    const displayName = typeof source.display_name === "string" ? source.display_name.trim() : "";
+    const category = source.category as IngredientCategory;
+    if (!shoppingId || shoppingIds.has(shoppingId)) throw new Error(`Identifiant d’achat absent ou dupliqué : ${shoppingId || index + 1}.`);
+    if (!displayName) throw new Error(`${shoppingId}: libellé d’achat manquant.`);
+    if (!INGREDIENT_CATEGORIES.has(category)) throw new Error(`${shoppingId}: rayon d’achat invalide.`);
+    if (!Array.isArray(source.member_ids) || source.member_ids.length < 2) throw new Error(`${shoppingId}: au moins deux ingrédients sont requis.`);
+    const memberIds = source.member_ids.map((member) => {
+      if (typeof member !== "string" || !member.trim()) throw new Error(`${shoppingId}: membre invalide.`);
+      const canonical = canonicalIngredientId(member);
+      if (members.has(canonical)) throw new Error(`${canonical}: appartient à plusieurs groupes d’achat.`);
+      if (knownCulinaryIds && !knownCulinaryIds.has(canonical)) throw new Error(`${canonical}: ingrédient culinaire inconnu.`);
+      members.add(canonical);
+      return canonical;
+    });
+    if (knownCulinaryIds?.has(shoppingId) && !memberIds.includes(shoppingId)) {
+      throw new Error(`${shoppingId}: collision avec un ingrédient culinaire hors du groupe.`);
+    }
+    const purchase = source.purchase as PurchaseRule | undefined;
+    if (purchase) {
+      if (!purchase.kind || !PURCHASE_KINDS.has(purchase.kind)) throw new Error(`${shoppingId}: règle d’achat invalide.`);
+      if (purchase.kind === "bunches" && (!(purchase.grams_per_bunch > 0) || !Number.isFinite(purchase.grams_per_bunch))) {
+        throw new Error(`${shoppingId}: poids de botte invalide.`);
+      }
+    }
+    shoppingIds.add(shoppingId);
+    return { shopping_id: shoppingId, display_name: displayName, category, member_ids: memberIds, ...(purchase ? { purchase } : {}) };
+  });
+}
+
+const shoppingGroups = validateShoppingGroups((ruleSource as RuleSource).shopping_groups ?? []);
+const shoppingGroupByMember = new Map<string, ShoppingGroup>();
+const shoppingGroupById = new Map<string, ShoppingGroup>();
+for (const group of shoppingGroups) {
+  shoppingGroupById.set(group.shopping_id, group);
+  for (const member of group.member_ids) shoppingGroupByMember.set(member, group);
+}
+
+export interface ShoppingIdentity {
+  shoppingId: string;
+  displayName?: string;
+  category?: IngredientCategory;
+}
+
+/** Maps a culinary ingredient to its stable, explicitly reviewed purchase identity. */
+export function shoppingIdentityFor(rawId: string): ShoppingIdentity {
+  const culinaryId = canonicalIngredientId(rawId);
+  const group = shoppingGroupByMember.get(culinaryId);
+  return group
+    ? { shoppingId: group.shopping_id, displayName: group.display_name, category: group.category }
+    : { shoppingId: culinaryId };
+}
+
 export function shoppingRuleFor(rawId: string): IngredientShoppingRule | undefined {
-  return rules.get(canonicalIngredientId(rawId));
+  const identity = shoppingIdentityFor(rawId);
+  const base = rules.get(identity.shoppingId) ?? rules.get(canonicalIngredientId(rawId));
+  const group = shoppingGroupById.get(identity.shoppingId);
+  if (!group?.purchase) return base;
+  return { ...base, purchase: group.purchase };
 }
 
 const LEGACY_UNITS = new Set<IngredientUnit>(["g", "ml", "piece", "c_soupe", "c_cafe"]);
 
 export function legacyShoppingItemKeyToCanonical(storedKey: string): string {
   const separator = storedKey.lastIndexOf(":");
-  if (separator < 0) return canonicalIngredientId(storedKey);
+  if (separator < 0) return shoppingIdentityFor(storedKey).shoppingId;
   const possibleUnit = storedKey.slice(separator + 1) as IngredientUnit;
-  return canonicalIngredientId(LEGACY_UNITS.has(possibleUnit) ? storedKey.slice(0, separator) : storedKey);
+  const culinaryId = LEGACY_UNITS.has(possibleUnit) ? storedKey.slice(0, separator) : storedKey;
+  return shoppingIdentityFor(culinaryId).shoppingId;
 }
 
 export function storedShoppingItemMatches(storedKey: string, ingredientId: string): boolean {
-  return legacyShoppingItemKeyToCanonical(storedKey) === canonicalIngredientId(ingredientId);
+  return legacyShoppingItemKeyToCanonical(storedKey) === shoppingIdentityFor(ingredientId).shoppingId;
 }
 
 function numberLabel(value: number): string {

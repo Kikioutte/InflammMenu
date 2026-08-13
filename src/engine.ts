@@ -11,11 +11,10 @@ import type {
 } from "./domain.ts";
 import {
   canonicalIngredientId,
-  canonicalIngredientIdFromName,
   formatShoppingAmounts,
   legacyShoppingItemKeyToCanonical,
-  normalizeIngredientId,
   purchaseSuggestionFor,
+  shoppingIdentityFor,
   shoppingRuleFor,
 } from "./shopping.ts";
 import {
@@ -439,7 +438,7 @@ export function recommendTonight(
   const portions = Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, Math.round(options.portions)));
   const requestedLimit = Number.isFinite(options.limit) ? Math.max(1, Math.round(options.limit as number)) : 3;
   const limit = Math.min(recipes.length, requestedLimit);
-  const pantry = new Set((options.pantryIngredientIds ?? []).map(canonicalIngredientId));
+  const pantry = new Set((options.pantryIngredientIds ?? []).map(legacyShoppingItemKeyToCanonical));
   const favorites = new Set(options.favoriteRecipeIds ?? []);
   const softDisliked = new Set(profile.softDislikedRecipeIds ?? []);
   const seed = `${options.mealType}:${maxPrepMinutes}:${[...pantry].sort().join(",")}`;
@@ -447,7 +446,7 @@ export function recommendTonight(
     .filter((recipe) => recipe.mealTypes.includes(options.mealType)
       && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes }))
     .map((recipe) => {
-      const pantryMatches = ingredientIdsOf(recipe).filter((id) => pantry.has(id)).length;
+      const pantryMatches = ingredientIdsOf(recipe).filter((id) => pantry.has(shoppingIdentityFor(id).shoppingId)).length;
       const seasonal = !options.season || recipe.seasons.includes(options.season) || recipe.seasons.includes("all-year");
       const score = pantryMatches * 120
         + (favorites.has(recipe.id) ? 80 : 0)
@@ -1132,7 +1131,7 @@ export function buildShoppingList(
   } = {},
 ): ShoppingItem[] {
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
-  const pantry = new Set((options.pantryIngredientIds ?? []).map(canonicalIngredientId));
+  const pantry = new Set((options.pantryIngredientIds ?? []).map(legacyShoppingItemKeyToCanonical));
   const checked = new Set((options.checkedShoppingItemIds ?? []).map(legacyShoppingItemKeyToCanonical));
   const aggregated = new Map<string, {
     ingredientId: string;
@@ -1140,18 +1139,15 @@ export function buildShoppingList(
     category: ShoppingItem["category"];
     amounts: Map<ShoppingItem["amounts"][number]["unit"], number>;
   }>();
-  const normalizedNameIndex = new Map<string, string>();
-
   for (const meal of plan.meals) {
     if (meal.skipped) continue;
     const recipe = byId.get(meal.recipeId);
     if (!recipe) continue;
     for (const ingredient of ingredientsForPlannedMeal(recipe, meal)) {
-      const normalizedName = normalizeIngredientId(ingredient.name);
-      const ingredientId = normalizedNameIndex.get(normalizedName)
-        ?? canonicalIngredientIdFromName(ingredient.name)
-        ?? canonicalIngredientId(ingredient.id);
-      if (ingredient.pantryStaple || shoppingRuleFor(ingredientId)?.pantry_staple) continue;
+      const culinaryId = canonicalIngredientId(ingredient.id);
+      const identity = shoppingIdentityFor(culinaryId);
+      const ingredientId = identity.shoppingId;
+      if (ingredient.pantryStaple || shoppingRuleFor(culinaryId)?.pantry_staple) continue;
       const unit = ingredient.unit === "c_soupe" || ingredient.unit === "c_cafe" ? "ml" : ingredient.unit;
       const quantity = ingredient.unit === "c_soupe"
         ? ingredient.quantity * 15
@@ -1161,28 +1157,34 @@ export function buildShoppingList(
       const previous = aggregated.get(ingredientId);
       if (previous) {
         previous.amounts.set(unit, round((previous.amounts.get(unit) ?? 0) + quantity, 2));
+        if (!identity.displayName && ingredient.name.localeCompare(previous.name, "fr") < 0) previous.name = ingredient.name;
       } else {
         aggregated.set(ingredientId, {
           ingredientId,
-          name: ingredient.name,
-          category: ingredient.category,
+          name: identity.displayName ?? ingredient.name,
+          category: identity.category ?? ingredient.category,
           amounts: new Map([[unit, round(quantity, 2)]]),
         });
       }
-      normalizedNameIndex.set(normalizedName, ingredientId);
     }
   }
 
-  const stock = new Map(
-    Object.entries(options.pantryAmounts ?? {}).map(([id, amount]) => [canonicalIngredientId(id), amount]),
-  );
+  const stock = new Map<string, Map<PantryAmount["unit"], number>>();
+  for (const [id, amount] of Object.entries(options.pantryAmounts ?? {})) {
+    const shoppingId = legacyShoppingItemKeyToCanonical(id);
+    const amounts = stock.get(shoppingId) ?? new Map<PantryAmount["unit"], number>();
+    amounts.set(amount.unit, round((amounts.get(amount.unit) ?? 0) + amount.quantity, 2));
+    stock.set(shoppingId, amounts);
+  }
 
   return [...aggregated.values()].map((item) => {
-    const owned = stock.get(item.ingredientId);
-    if (owned) {
-      // Deduct what is already at home, in the matching unit only.
-      const current = item.amounts.get(owned.unit);
-      if (current !== undefined) item.amounts.set(owned.unit, round(Math.max(0, current - owned.quantity), 2));
+    const ownedByUnit = stock.get(item.ingredientId);
+    if (ownedByUnit) {
+      // Deduct what is already at home, in each matching unit only.
+      for (const [unit, quantity] of ownedByUnit) {
+        const current = item.amounts.get(unit);
+        if (current !== undefined) item.amounts.set(unit, round(Math.max(0, current - quantity), 2));
+      }
     }
     const amounts = [...item.amounts.entries()]
       .filter(([, quantity]) => quantity > 0)
@@ -1196,7 +1198,7 @@ export function buildShoppingList(
       purchaseSuggestion: purchaseSuggestionFor(item.ingredientId, amounts),
       checked: checked.has(item.ingredientId),
       // A numeric stock entry is partial unless it covers the whole requirement.
-      inPantry: pantry.has(item.ingredientId) && !owned,
+      inPantry: pantry.has(item.ingredientId) && !ownedByUnit,
     };
   })
     // Fully covered by the pantry: nothing left to buy.
