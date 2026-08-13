@@ -103,10 +103,17 @@ export interface DayConstraint {
   dayIndex: DayIndex;
   /** Active-time limit for this day. Omitted means the profile-wide limit. */
   maxPrepMinutes?: number;
-  /** Portions generated for every meal on this day. Omitted means people. */
+  /** Legacy/default portions for every meal on this day. Omitted means people. */
   portions?: number;
+  /** Per-meal attendance; it overrides the day-wide value without affecting other slots. */
+  mealPortions?: readonly MealPortionConstraint[];
   /** Slots already known to be taken outside the household. */
   skippedMealTypes: readonly MealType[];
+}
+
+export interface MealPortionConstraint {
+  mealType: MealType;
+  portions: number;
 }
 
 export interface PlannedMeal {
@@ -126,6 +133,15 @@ export interface PlannedMeal {
   leftoverOf?: string;
   /** Meal taken outside the household: no cooking, no shopping, no cost. */
   skipped?: boolean;
+  /** Reviewed ingredient swaps applied to this meal and its linked leftovers. */
+  substitutions?: readonly PlannedIngredientSubstitution[];
+}
+
+export interface PlannedIngredientSubstitution {
+  /** Canonical identifier of the ingredient present in the original recipe. */
+  ingredientId: string;
+  /** Stable identifier of a reviewed substitution rule. */
+  substitutionId: string;
 }
 
 export interface WeeklyPlan {

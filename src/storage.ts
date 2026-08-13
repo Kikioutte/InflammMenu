@@ -10,6 +10,7 @@ import {
   type WeeklyPlan,
 } from "./domain.ts";
 import { canonicalIngredientId, legacyShoppingItemKeyToCanonical } from "./shopping.ts";
+import { substitutionRuleAppliesToIngredientId, substitutionRuleById } from "./substitutions.ts";
 
 export const APP_STATE_VERSION = 3 as const;
 
@@ -191,6 +192,16 @@ function normalizeMeal(value: unknown): PlannedMeal | null {
   const dayIndex = finiteNumber(value.dayIndex, -1);
   if (!Number.isInteger(dayIndex) || dayIndex < 0 || dayIndex > 6) return null;
 
+  const substitutions = Array.isArray(value.substitutions)
+    ? [...new Map(value.substitutions.flatMap((entry) => {
+      if (!isRecord(entry) || typeof entry.ingredientId !== "string" || typeof entry.substitutionId !== "string") return [];
+      const ingredientId = canonicalIngredientId(entry.ingredientId);
+      const rule = substitutionRuleById(entry.substitutionId);
+      if (!rule || !substitutionRuleAppliesToIngredientId(rule, ingredientId)) return [];
+      return ingredientId ? [[ingredientId, { ingredientId, substitutionId: entry.substitutionId }] as const] : [];
+    })).values()]
+    : [];
+
   return {
     id: value.id,
     dayIndex: dayIndex as PlannedMeal["dayIndex"],
@@ -204,6 +215,7 @@ function normalizeMeal(value: unknown): PlannedMeal | null {
     ...(value.locked === true ? { locked: true } : {}),
     ...(typeof value.leftoverOf === "string" && value.leftoverOf ? { leftoverOf: value.leftoverOf } : {}),
     ...(value.skipped === true ? { skipped: true } : {}),
+    ...(substitutions.length ? { substitutions } : {}),
   };
 }
 
@@ -249,7 +261,7 @@ export function normalizePlan(value: unknown): WeeklyPlan | null {
       source.mealType === meal.mealType &&
       gap > 0 && gap <= 2,
     );
-    if (valid) return { ...meal, completed: false, locked: false };
+    if (valid) return { ...meal, completed: false, locked: false, substitutions: source?.substitutions };
     const { leftoverOf: _discarded, ...withoutLeftover } = meal;
     return withoutLeftover;
   });
@@ -461,11 +473,20 @@ function normalizeDayConstraints(value: unknown): DayConstraint[] {
     const portions = typeof item.portions === "number" && Number.isFinite(item.portions)
       ? boundedNumber(item.portions, DEFAULT_PROFILE.people, 1, 8)
       : undefined;
-    if (maxPrepMinutes === undefined && portions === undefined && skippedMealTypes.length === 0) continue;
+    const mealPortions = Array.isArray(item.mealPortions)
+      ? [...new Map(item.mealPortions.flatMap((entry) => {
+          if (!isRecord(entry) || !MEAL_TYPES.has(entry.mealType as MealType)) return [];
+          if (typeof entry.portions !== "number" || !Number.isFinite(entry.portions)) return [];
+          const mealType = entry.mealType as MealType;
+          return [[mealType, { mealType, portions: boundedNumber(entry.portions, DEFAULT_PROFILE.people, 1, 8) }] as const];
+        })).values()]
+      : [];
+    if (maxPrepMinutes === undefined && portions === undefined && mealPortions.length === 0 && skippedMealTypes.length === 0) continue;
     result.set(dayIndex, {
       dayIndex: dayIndex as DayConstraint["dayIndex"],
       ...(maxPrepMinutes === undefined ? {} : { maxPrepMinutes }),
       ...(portions === undefined ? {} : { portions }),
+      ...(mealPortions.length === 0 ? {} : { mealPortions }),
       skippedMealTypes,
     });
   }
@@ -481,7 +502,7 @@ function normalizeProfile(value: unknown): UserProfile {
       typeof value.firstName === "string" ? value.firstName.trim().slice(0, 40) : DEFAULT_PROFILE.firstName,
     // typeof NaN and typeof Infinity are both "number": bound the values, do not
     // just check their type, or a hand-edited backup breaks the generator.
-    people: boundedNumber(value.people, DEFAULT_PROFILE.people, 1, 12),
+    people: boundedNumber(value.people, DEFAULT_PROFILE.people, 1, 8),
     mealsPerDay: value.mealsPerDay === 3 ? 3 : 2,
     weeklyBudget: boundedNumber(value.weeklyBudget, DEFAULT_PROFILE.weeklyBudget, 1, 10_000),
     maxPrepMinutes: boundedNumber(value.maxPrepMinutes, DEFAULT_PROFILE.maxPrepMinutes, 1, 24 * 60),

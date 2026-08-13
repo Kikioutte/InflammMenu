@@ -79,6 +79,52 @@ test("generation is deterministic, creates 14 unique slots, and meets available 
   assert.ok(summary.withinBudget);
 });
 
+test("an applied substitution recalculates ingredients, allergens, cost and shopping", () => {
+  const walnutRecipe = recipe(30, {
+    id: "walnut-bowl",
+    costPerPortion: 2,
+    allergens: ["fruits-a-coque"],
+    ingredients: [{ id: "walnut", name: "Noix", quantity: 20, unit: "g", category: "grocery", allergens: ["fruits-a-coque"] }],
+  });
+  const plan = {
+    id: "week-substitution", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: { ...profile, allergies: [], excludedIngredientIds: [] },
+    meals: [{ id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: walnutRecipe.id, portions: 2, source: "generated" }],
+    estimatedCost: 4, version: 1,
+  };
+
+  const updated = engine.setMealIngredientSubstitution(plan, "day-0-lunch", "walnut", "nuts-to-pumpkin-seeds", [walnutRecipe]);
+  assert.deepEqual(updated.meals[0].substitutions, [{ ingredientId: "walnut", substitutionId: "nuts-to-pumpkin-seeds" }]);
+  assert.deepEqual(engine.plannedMealAllergens(walnutRecipe, updated.meals[0]), []);
+  assert.equal(updated.estimatedCost, 3.8);
+  assert.equal(engine.plannedMealCost(walnutRecipe, updated.meals[0]), 3.8);
+  const shopping = engine.buildShoppingList(updated, [walnutRecipe]);
+  assert.equal(shopping.some((item) => item.ingredientId === "walnut"), false);
+  assert.equal(shopping.find((item) => item.ingredientId === "pumpkin-seed")?.amounts[0].quantity, 40);
+
+  const restored = engine.setMealIngredientSubstitution(updated, "day-0-lunch", "walnut", null, [walnutRecipe]);
+  assert.deepEqual(restored.meals[0].substitutions, []);
+  assert.deepEqual(engine.plannedMealAllergens(walnutRecipe, restored.meals[0]), ["fruits-a-coque"]);
+});
+
+test("a substitution cannot introduce an allergen excluded by the profile", () => {
+  const yogurtRecipe = recipe(31, {
+    id: "yogurt-bowl",
+    allergens: ["lait"],
+    ingredients: [{ id: "yogurt", name: "Yaourt nature", quantity: 120, unit: "g", category: "fresh", allergens: ["lait"] }],
+  });
+  const plan = {
+    id: "week-allergen", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: { ...profile, allergies: ["soja"], excludedIngredientIds: [] },
+    meals: [{ id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: yogurtRecipe.id, portions: 1, source: "generated" }],
+    estimatedCost: 2, version: 1,
+  };
+  assert.throws(
+    () => engine.setMealIngredientSubstitution(plan, "day-0-lunch", "yogurt", "yogurt-to-soy-yogurt", [yogurtRecipe]),
+    /allergène exclu/,
+  );
+});
+
 test("allergies, exclusions, diet, time, and equipment are strict filters", () => {
   const special = [
     recipe(100, { allergens: ["arachides"] }),
@@ -871,6 +917,38 @@ test("two meals can be swapped, marks included", () => {
   assert.equal(engine.swapPlannedMeals(plan, "inconnu", plan.meals[1].id), plan);
 });
 
+test("a swap validates the substitutions carried by each planned meal", () => {
+  const yogurtDish = recipe(850, {
+    mealTypes: ["lunch"],
+    ingredients: [{ id: "yogurt", name: "Yaourt", quantity: 100, unit: "g", category: "fresh", allergens: ["lait"] }],
+    allergens: ["lait"],
+  });
+  const otherDish = recipe(851, { mealTypes: ["lunch"] });
+  const plan = {
+    id: "week-swap-substitutions",
+    startsOn: "2026-08-03",
+    generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: {},
+    meals: [
+      { id: "a", dayIndex: 0, mealType: "lunch", recipeId: yogurtDish.id, portions: 2, source: "manual", substitutions: [{ ingredientId: "yogurt", substitutionId: "yogurt-to-soy-yogurt" }] },
+      { id: "b", dayIndex: 1, mealType: "lunch", recipeId: otherDish.id, portions: 2, source: "manual" },
+    ],
+    estimatedCost: 10,
+    version: 1,
+  };
+  assert.equal(engine.canSwapPlannedMeals(plan, "a", "b", [yogurtDish, otherDish], { ...profile, allergies: ["soja"] }), false);
+});
+
+test("generation explains when every compatible recipe is already used", () => {
+  const tinyCatalogue = [recipe(860), recipe(861)];
+  assert.throws(
+    () => engine.generateWeeklyPlan(tinyCatalogue, profile, { seed: "unique-empty" }),
+    (error) => error instanceof engine.RecipeCompatibilityError
+      && error.diagnostic.compatibleCount === 2
+      && /déjà utilisées/.test(error.message),
+  );
+});
+
 test("swapping refuses to break a batch and its leftovers", () => {
   const plan = engine.generateWeeklyPlan(catalogue, profile, { seed: "swap-leftover" });
   const target = engine.leftoverCandidates(plan, plan.meals[0].id, catalogue)[0];
@@ -1108,6 +1186,66 @@ test("daily constraints drive time, portions and meals outside before generation
   assert.ok(monday.every((meal) => meal.portions === 4));
   assert.equal(monday.find((meal) => meal.mealType === "dinner").skipped, true);
   assert.ok(plan.meals.filter((meal) => meal.dayIndex > 0).every((meal) => meal.portions === 1));
+});
+
+test("meal attendance overrides only the selected slot and flows into shopping quantities", () => {
+  const varied = Array.from({ length: 24 }, (_, index) => recipe(index + 760));
+  const attendanceProfile = {
+    ...profile,
+    people: 2,
+    dayConstraints: [{
+      dayIndex: 6,
+      portions: 4,
+      mealPortions: [{ mealType: "lunch", portions: 1 }],
+      skippedMealTypes: [],
+    }],
+  };
+  const plan = engine.generateWeeklyPlan(varied, attendanceProfile, { seed: "meal-attendance" });
+  assert.equal(plan.meals.find((meal) => meal.dayIndex === 6 && meal.mealType === "lunch").portions, 1);
+  assert.equal(plan.meals.find((meal) => meal.dayIndex === 6 && meal.mealType === "dinner").portions, 4);
+  assert.ok(plan.meals.filter((meal) => meal.dayIndex !== 6).every((meal) => meal.portions === 2));
+
+  const lunch = plan.meals.find((meal) => meal.dayIndex === 6 && meal.mealType === "lunch");
+  const lunchRecipe = varied.find((item) => item.id === lunch.recipeId);
+  const list = engine.buildShoppingList({ ...plan, meals: [lunch] }, varied);
+  assert.equal(list.find((item) => item.ingredientId === lunchRecipe.ingredients[0].id).amounts[0].quantity, 100);
+});
+
+test("shopping merges reviewed name variants even when source identifiers differ", () => {
+  const first = recipe(780, {
+    ingredients: [{ id: "source-a", name: "Huile d’olive", quantity: 1, unit: "c_soupe", category: "grocery" }],
+  });
+  const second = recipe(781, {
+    ingredients: [{ id: "source-b", name: "huile d'olive", quantity: 2, unit: "c_soupe", category: "grocery" }],
+  });
+  const plan = {
+    id: "week-aliases", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: profile, version: 1, estimatedCost: 1,
+    meals: [
+      { id: "a", dayIndex: 0, mealType: "lunch", recipeId: first.id, portions: 1, source: "generated" },
+      { id: "b", dayIndex: 0, mealType: "dinner", recipeId: second.id, portions: 1, source: "generated" },
+    ],
+  };
+  const list = engine.buildShoppingList(plan, [first, second]);
+  assert.equal(list.length, 1);
+  assert.equal(list[0].ingredientId, "olive-oil");
+  assert.deepEqual(list[0].amounts, [{ unit: "ml", quantity: 45 }]);
+});
+
+test("empty recipe diagnostics identify time, equipment and protected exclusions", () => {
+  const recipes = [
+    recipe(790, { prepMinutes: 35, equipment: ["hob"] }),
+    recipe(791, { prepMinutes: 15, equipment: ["oven"] }),
+    recipe(792, { prepMinutes: 15, equipment: ["hob"], allergens: ["arachides"] }),
+  ];
+  const diagnostic = engine.diagnoseRecipeCompatibility(recipes, { ...profile, allergies: ["arachides"] }, {
+    mealType: "dinner",
+    maxPrepMinutes: 15,
+  });
+  assert.equal(diagnostic.compatibleCount, 0);
+  assert.equal(diagnostic.minimumCompatibleMinutes, 35);
+  assert.deepEqual(diagnostic.missingEquipment, ["oven"]);
+  assert.equal(diagnostic.blockedBy.allergies, 1);
 });
 
 test("tonight recommendations stay safe and favour ingredients already in reserve", () => {

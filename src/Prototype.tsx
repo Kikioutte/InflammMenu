@@ -58,24 +58,29 @@ import {
   MIN_MEAL_PORTIONS,
   cookingSessionsOf,
   contextualRemindersForDate,
+  diagnoseRecipeCompatibility,
   inspectPlanReplay,
   isPlanExpired,
   planDayOffset,
-  mealCost,
+  ingredientSubstitutionsFor,
+  ingredientsForPlannedMeal,
+  plannedMealAllergens,
+  plannedMealCost,
   planToCalendar,
   planProgress,
-  recipeAllergens,
   recommendTonight,
+  RecipeCompatibilityError,
   preservableLockedMeals,
   replacePlannedMeal,
   restorePlan,
-  scaleIngredients,
   setPlannedMealCompleted,
   setPlannedMealLock,
+  setMealIngredientSubstitution,
   summarizePlan,
   type AdvancePrep,
   type PlanSlot,
   type PlanSummary,
+  type RecipeCompatibilityDiagnostic,
 } from "./engine";
 import {
   DEFAULT_PROFILE,
@@ -646,9 +651,9 @@ function advanceHeadline(prep: AdvancePrep): string {
 }
 
 /** Estimated cost and declared allergens, read before opening the recipe. */
-function MealFacts({ recipe, portions }: { recipe: Recipe; portions: number }) {
-  const allergens = recipeAllergens(recipe);
-  const cost = mealCost(recipe, portions);
+function MealFacts({ recipe, planned }: { recipe: Recipe; planned: PlannedMeal }) {
+  const allergens = plannedMealAllergens(recipe, planned);
+  const cost = plannedMealCost(recipe, planned);
   const advance = advancePrepFor(recipe);
   return (
     <span className="meal-facts" data-testid={`meal-facts-${recipe.id}`}>
@@ -695,7 +700,7 @@ function WeekView({ plan, onOpenMeal, onReplace, onToggleLock, onToggleCompleted
         <div className="section-heading"><div><span className="eyebrow">Jour {selectedDay + 1}</span><h2>{selectedDate.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</h2></div><CheckCircledIcon /></div>
         {visibleMeals.map((planned) => { const recipe = recipeById.get(planned.recipeId); if (!recipe) return null; const locked = planned.locked === true; const cooked = planned.completed === true; const skipped = planned.skipped === true; const leftoverSource = planned.leftoverOf ? plan.meals.find((meal) => meal.id === planned.leftoverOf) : undefined; const isLeftover = Boolean(planned.leftoverOf); return (
           <article className={`meal-card ${locked ? "is-locked" : ""} ${cooked ? "is-cooked" : ""} ${isLeftover ? "is-leftover" : ""} ${skipped ? "is-skipped" : ""}`} key={planned.id} data-testid={`meal-card-${planned.id}`} data-locked={locked ? "true" : "false"} data-completed={cooked ? "true" : "false"} data-leftover={isLeftover ? "true" : "false"} data-skipped={skipped ? "true" : "false"}>
-            <button type="button" className="meal-card__main" onClick={() => onOpenMeal(planned, recipe)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{MEAL_LABELS[planned.mealType]}{skipped ? " · Hors foyer" : cooked ? " · Cuisiné" : ""}</small><strong>{recipe.title}</strong><em><ClockIcon /> {skipped ? "Repas pris à l’extérieur" : isLeftover ? `Restes${leftoverSource ? ` de ${DAY_LABELS[leftoverSource.dayIndex].toLocaleLowerCase("fr-FR")}` : ""} · rien à cuisiner` : `${formatRecipeDuration(recipe.prepMinutes)} actives`}{skipped ? "" : ` · ${planned.portions} portions`}</em>{skipped ? null : <MealFacts recipe={recipe} portions={planned.portions} />}</span></button>
+            <button type="button" className="meal-card__main" onClick={() => onOpenMeal(planned, recipe)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{MEAL_LABELS[planned.mealType]}{skipped ? " · Hors foyer" : cooked ? " · Cuisiné" : ""}</small><strong>{recipe.title}</strong><em><ClockIcon /> {skipped ? "Repas pris à l’extérieur" : isLeftover ? `Restes${leftoverSource ? ` de ${DAY_LABELS[leftoverSource.dayIndex].toLocaleLowerCase("fr-FR")}` : ""} · rien à cuisiner` : `${formatRecipeDuration(recipe.prepMinutes)} actives`}{skipped ? "" : ` · ${planned.portions} portions`}</em>{skipped ? null : <MealFacts recipe={recipe} planned={planned} />}</span></button>
             {skipped || isLeftover ? null : <button type="button" className={`meal-card__done ${cooked ? "is-active" : ""}`} aria-pressed={cooked} data-testid={`meal-done-${planned.id}`} aria-label={cooked ? `Annuler « cuisiné » pour ${recipe.title}` : `Marquer ${recipe.title} comme cuisiné`} onClick={() => onToggleCompleted(planned)}><CheckIcon /></button>}
             <div className="meal-card__actions meal-card__actions--pair">
               <button className="meal-card__replace" type="button" disabled={skipped} onClick={() => onReplace(planned, recipe)}><ReloadIcon /> Remplacer</button>
@@ -843,6 +848,8 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
   onSetSpent: (amount: number | null) => void;
 }) {
   const [pantryMode, setPantryMode] = useState(false);
+  const [storeMode, setStoreMode] = useState(false);
+  const [storeCategoryIndex, setStoreCategoryIndex] = useState(0);
   const [exportFeedback, setExportFeedback] = useState("");
   const feedbackTimer = useRef<number | undefined>(undefined);
   useEffect(() => () => window.clearTimeout(feedbackTimer.current), []);
@@ -891,10 +898,31 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
     .map((category) => ({ category, label: CATEGORY_LABELS[category], items: items.filter((item) => item.category === category) }))
     .filter((group) => group.items.length);
   const checkedCount = items.filter((item) => item.checked || item.inPantry).length;
+  const safeStoreIndex = Math.min(Math.max(0, storeCategoryIndex), Math.max(0, groups.length - 1));
+  const storeGroup = groups[safeStoreIndex];
+  if (storeMode && storeGroup) {
+    const aisleChecked = storeGroup.items.filter((item) => item.checked || item.inPantry).length;
+    return (
+      <main className="page-content courses-page store-mode" data-testid="store-mode">
+        <div className="store-mode__top"><span className="eyebrow">Mode magasin</span><button type="button" className="text-button" data-testid="exit-store-mode" onClick={() => setStoreMode(false)}>Quitter</button></div>
+        <div className="store-mode__progress"><strong>Rayon {safeStoreIndex + 1} sur {groups.length}</strong><span>{checkedCount} / {items.length} articles faits</span></div>
+        <header className="store-mode__heading"><small>Rayon actuel</small><h1>{storeGroup.label}</h1><p>{aisleChecked} sur {storeGroup.items.length} articles cochés</p></header>
+        <nav className="store-mode__nav" aria-label="Changer de rayon">
+          <button type="button" className="secondary-button" disabled={safeStoreIndex === 0} data-testid="store-previous-aisle" onClick={() => setStoreCategoryIndex((value) => Math.max(0, value - 1))}><ArrowLeftIcon /> Précédent</button>
+          <button type="button" className="primary-button" disabled={safeStoreIndex === groups.length - 1} data-testid="store-next-aisle" onClick={() => setStoreCategoryIndex((value) => Math.min(groups.length - 1, value + 1))}>{safeStoreIndex === groups.length - 1 ? "Dernier rayon" : "Rayon suivant"} <ChevronRightIcon /></button>
+        </nav>
+        <div className="store-mode__items">{storeGroup.items.map((item) => {
+          const isRemoved = item.checked || item.inPantry;
+          return <button key={item.ingredientId} type="button" className={`store-item ${isRemoved ? "is-checked" : ""}`} aria-pressed={isRemoved} aria-label={item.inPantry ? `${item.name}, en réserve` : `${item.checked ? "Décocher" : "Cocher"} ${item.name}`} disabled={item.inPantry} data-testid={`store-item-${item.ingredientId}`} onClick={() => onToggleChecked(item.ingredientId)}><span className="store-item__check" aria-hidden="true">{isRemoved ? <CheckIcon /> : null}</span><span><strong>{item.name}</strong><small>{item.inPantry ? "En réserve" : item.purchaseSuggestion}</small></span></button>;
+        })}</div>
+      </main>
+    );
+  }
   return (
     <main className="page-content courses-page" data-testid="courses-view">
       <div className="page-heading"><span className="eyebrow">Semaine du {formatWeekRange(plan.startsOn)}</span><h1>Liste de courses</h1><p>{checkedCount} sur {items.length} articles retirés ou cochés</p></div>
       <div className="shopping-progress"><span style={{ width: `${items.length ? (checkedCount / items.length) * 100 : 0}%` }} /></div>
+      <button className="primary-button full-button store-mode-entry" type="button" data-testid="enter-store-mode" onClick={() => { setStoreCategoryIndex(0); setPantryMode(false); setStoreMode(true); }}><ArchiveIcon /> Mode magasin simplifié</button>
       <div className="courses-actions">
         <button className="secondary-button" type="button" data-testid="share-list" onClick={() => void share()}><Share2Icon /> Partager</button>
         <button className="secondary-button" type="button" data-testid="copy-list" onClick={() => void copy()}><CopyIcon /> Copier</button>
@@ -963,11 +991,11 @@ function useWakeLock(active: boolean): boolean {
   return held;
 }
 
-function CookingView({ recipe, portions }: { recipe: Recipe; portions: number }) {
+function CookingView({ recipe, portions, planned }: { recipe: Recipe; portions: number; planned?: PlannedMeal }) {
   const [step, setStep] = useState(0);
   const [done, setDone] = useState<number[]>([]);
   const screenHeld = useWakeLock(true);
-  const ingredients = scaleIngredients(recipe, portions);
+  const ingredients = ingredientsForPlannedMeal(recipe, planned, portions);
   const total = recipe.steps.length;
   const isDone = done.includes(step);
   return <MobileScroll className="app-screen"><main className="cooking-page" data-testid="cooking-view">
@@ -1324,13 +1352,26 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
     if (values.has(id)) values.delete(id); else values.add(id);
     return [...values].join(", ");
   });
-  const currentConstraint = profile.dayConstraints.find((item) => item.dayIndex === constraintDay)
+  const currentConstraint: DayConstraint = profile.dayConstraints.find((item) => item.dayIndex === constraintDay)
     ?? { dayIndex: constraintDay, skippedMealTypes: [] };
   const storeConstraint = (next: DayConstraint) => setProfile((current) => {
-    const empty = next.maxPrepMinutes === undefined && next.portions === undefined && next.skippedMealTypes.length === 0;
+    const empty = next.maxPrepMinutes === undefined && next.portions === undefined && !next.mealPortions?.length && next.skippedMealTypes.length === 0;
     const others = current.dayConstraints.filter((item) => item.dayIndex !== next.dayIndex);
     return { ...current, dayConstraints: empty ? others : [...others, next].sort((left, right) => left.dayIndex - right.dayIndex) };
   });
+  const activeMealTypes = profile.mealsPerDay === 3
+    ? (["breakfast", "lunch", "dinner"] as MealType[])
+    : (["lunch", "dinner"] as MealType[]);
+  const portionsForConstraintMeal = (mealType: MealType) => currentConstraint.mealPortions?.find((item) => item.mealType === mealType)?.portions
+    ?? currentConstraint.portions
+    ?? profile.people;
+  const setConstraintMealPortions = (mealType: MealType, portions: number | undefined) => {
+    const others = (currentConstraint.mealPortions ?? []).filter((item) => item.mealType !== mealType);
+    storeConstraint({
+      ...currentConstraint,
+      mealPortions: portions === undefined ? others : [...others, { mealType, portions }],
+    });
+  };
   const toggleSkippedSlot = (mealType: MealType) => {
     const skipped = currentConstraint.skippedMealTypes.includes(mealType);
     storeConstraint({
@@ -1348,7 +1389,7 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
     <div className="page-heading"><span className="eyebrow">Personnalisation</span><h1>Mon profil alimentaire</h1><p>Ces choix guident chaque menu et restent uniquement sur cet appareil.</p></div>
     <section className="form-section"><h2>Votre foyer</h2>
       <label className="text-field"><span>Votre prénom</span><KeyboardInput autoComplete="given-name" maxLength={40} value={profile.firstName} placeholder="Ex. Camille" onChange={(event) => setProfile((current) => ({ ...current, firstName: event.target.value }))} onBlur={keyboard.hide} /><small>Utilisé uniquement pour personnaliser l’accueil.</small></label>
-      <div className="setting-row"><span><strong>Nombre de personnes</strong><small>Quantités adaptées</small></span><div className="stepper"><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.max(1, current.people - 1) }))} aria-label="Retirer une personne"><MinusIcon /></button><b>{profile.people}</b><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.min(12, current.people + 1) }))} aria-label="Ajouter une personne"><PlusIcon /></button></div></div>
+      <div className="setting-row"><span><strong>Nombre de personnes</strong><small>Quantités adaptées, jusqu’à 8</small></span><div className="stepper"><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.max(1, current.people - 1) }))} aria-label="Retirer une personne"><MinusIcon /></button><b>{profile.people}</b><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.min(8, current.people + 1) }))} aria-label="Ajouter une personne"><PlusIcon /></button></div></div>
       <div className="setting-row setting-row--stack"><span><strong>Repas par jour</strong><small>Ajoutez le petit-déjeuner si vous le souhaitez</small></span><div className="choice-row">{([2, 3] as const).map((value) => <button type="button" className={profile.mealsPerDay === value ? "is-selected" : ""} key={value} onClick={() => setProfile((current) => ({ ...current, mealsPerDay: value }))}>{value} repas</button>)}</div></div>
     </section>
     <section className="form-section daily-constraints" data-testid="daily-constraints"><h2>Organisation par jour</h2>
@@ -1359,8 +1400,13 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
       <div className="daily-constraint-card">
         <h3>{DAY_LABELS[constraintDay]}</h3>
         <label className="text-field"><span>Temps actif maximum</span><select data-testid="constraint-time" value={currentConstraint.maxPrepMinutes ?? ""} onChange={(event) => storeConstraint({ ...currentConstraint, maxPrepMinutes: event.target.value ? Number(event.target.value) : undefined })}><option value="">Comme le profil ({profile.maxPrepMinutes} min)</option>{[15, 20, 30, 45, 60, 90].map((minutes) => <option key={minutes} value={minutes}>{minutes} minutes</option>)}</select></label>
-        <div className="setting-row"><span><strong>Portions ce jour-là</strong><small>{currentConstraint.portions === undefined ? "Comme le foyer" : "Invités ou repas réduit"}</small></span><div className="stepper"><button type="button" aria-label="Retirer une portion pour ce jour" onClick={() => storeConstraint({ ...currentConstraint, portions: Math.max(1, (currentConstraint.portions ?? profile.people) - 1) })}><MinusIcon /></button><b data-testid="constraint-portions">{currentConstraint.portions ?? profile.people}</b><button type="button" aria-label="Ajouter une portion pour ce jour" onClick={() => storeConstraint({ ...currentConstraint, portions: Math.min(8, (currentConstraint.portions ?? profile.people) + 1) })}><PlusIcon /></button></div></div>
-        {currentConstraint.portions !== undefined ? <button type="button" className="text-button" onClick={() => storeConstraint({ ...currentConstraint, portions: undefined })}>Reprendre {profile.people} portions</button> : null}
+        <div className="setting-row"><span><strong>Tous les repas du jour</strong><small>{currentConstraint.portions === undefined ? "Comme le foyer" : "Invités ou présence réduite"}</small></span><div className="stepper"><button type="button" aria-label="Retirer une portion pour ce jour" onClick={() => storeConstraint({ ...currentConstraint, portions: Math.max(1, (currentConstraint.portions ?? profile.people) - 1), mealPortions: [] })}><MinusIcon /></button><b data-testid="constraint-portions">{currentConstraint.portions ?? profile.people}</b><button type="button" aria-label="Ajouter une portion pour ce jour" onClick={() => storeConstraint({ ...currentConstraint, portions: Math.min(8, (currentConstraint.portions ?? profile.people) + 1), mealPortions: [] })}><PlusIcon /></button></div></div>
+        {currentConstraint.portions !== undefined || currentConstraint.mealPortions?.length ? <button type="button" className="text-button" onClick={() => storeConstraint({ ...currentConstraint, portions: undefined, mealPortions: [] })}>Reprendre {profile.people} portions partout</button> : null}
+        <fieldset className="meal-attendance"><legend>Présence par repas</legend><p>Modifiez uniquement le créneau qui accueille un invité ou moins de personnes.</p>{activeMealTypes.map((mealType) => {
+          const portions = portionsForConstraintMeal(mealType);
+          const overridden = currentConstraint.mealPortions?.some((item) => item.mealType === mealType) ?? false;
+          return <div className="setting-row" key={mealType}><span><strong>{MEAL_LABELS[mealType]}</strong><small>{overridden ? "Présence personnalisée" : "Réglage du jour"}</small></span><div className="stepper"><button type="button" aria-label={`Retirer une portion pour ${MEAL_LABELS[mealType].toLocaleLowerCase("fr-FR")}`} onClick={() => setConstraintMealPortions(mealType, Math.max(1, portions - 1))}><MinusIcon /></button><b data-testid={`constraint-portions-${mealType}`}>{portions}</b><button type="button" aria-label={`Ajouter une portion pour ${MEAL_LABELS[mealType].toLocaleLowerCase("fr-FR")}`} onClick={() => setConstraintMealPortions(mealType, Math.min(8, portions + 1))}><PlusIcon /></button></div>{overridden ? <button type="button" className="text-button meal-attendance__reset" onClick={() => setConstraintMealPortions(mealType, undefined)}>Réinitialiser</button> : null}</div>;
+        })}</fieldset>
         <fieldset className="outside-slots"><legend>Repas prévus à l’extérieur</legend><div className="choice-row">{(profile.mealsPerDay === 3 ? (["breakfast", "lunch", "dinner"] as MealType[]) : (["lunch", "dinner"] as MealType[])).map((mealType) => <button type="button" key={mealType} className={currentConstraint.skippedMealTypes.includes(mealType) ? "is-selected" : ""} aria-pressed={currentConstraint.skippedMealTypes.includes(mealType)} data-testid={`constraint-skip-${mealType}`} onClick={() => toggleSkippedSlot(mealType)}>{MEAL_LABELS[mealType]}</button>)}</div></fieldset>
       </div>
     </section>
@@ -1534,13 +1580,36 @@ function AllergenNotice({ allergens }: { allergens: readonly string[] }) {
   return <aside className="allergen-notice"><strong>Allergènes à vérifier</strong><div>{allergens.map((allergen) => <span key={allergen}>{ALLERGEN_LABELS[allergen] ?? allergen.replaceAll("-", " ")}</span>)}</div><p>Contrôlez les étiquettes et les traces éventuelles, surtout en cas d’allergie sévère.</p></aside>;
 }
 
+function CompatibilityHelp({ diagnostic, selectedMinutes, onUseMinutes, onOpenProfile, allCompatibleAlreadyUsed = false }: {
+  diagnostic: RecipeCompatibilityDiagnostic;
+  selectedMinutes?: number;
+  onUseMinutes?: (minutes: number) => void;
+  onOpenProfile?: () => void;
+  allCompatibleAlreadyUsed?: boolean;
+}) {
+  const equipmentLabels = diagnostic.missingEquipment.map((id) =>
+    EQUIPMENT_OPTIONS.find((item) => item.id === id)?.label ?? id,
+  );
+  const safetyBlocked = diagnostic.blockedBy.allergies + diagnostic.blockedBy.excludedIngredients;
+  return <div className="empty-guidance" data-testid="compatibility-help">
+    {allCompatibleAlreadyUsed ? <p><strong>Variété de la semaine</strong><span>Toutes les recettes compatibles sont déjà présentes dans votre menu.</span></p> : null}
+    {diagnostic.mealTypeCount === 0 ? <p><strong>Type de repas</strong><span>Le catalogue ne contient aucune recette pour ce créneau.</span></p> : null}
+    {diagnostic.minimumCompatibleMinutes !== undefined && selectedMinutes !== undefined && diagnostic.minimumCompatibleMinutes > selectedMinutes ? <p><strong>Temps disponible</strong><span>La recette compatible la plus rapide demande {diagnostic.minimumCompatibleMinutes} minutes actives.</span>{onUseMinutes ? <button type="button" onClick={() => onUseMinutes(diagnostic.minimumCompatibleMinutes!)}>Choisir {diagnostic.minimumCompatibleMinutes} min</button> : null}</p> : null}
+    {equipmentLabels.length ? <p><strong>Équipement manquant</strong><span>Des recettes deviendraient disponibles avec : {equipmentLabels.join(" ou ")}.</span>{onOpenProfile ? <button type="button" onClick={onOpenProfile}>Vérifier mes équipements</button> : null}</p> : null}
+    {diagnostic.blockedBy.diet ? <p><strong>Régime enregistré</strong><span>{diagnostic.blockedBy.diet} recette{diagnostic.blockedBy.diet > 1 ? "s ne correspondent" : " ne correspond"} pas au régime choisi.</span></p> : null}
+    {safetyBlocked ? <p><strong>Allergies et exclusions</strong><span>{safetyBlocked} recette{safetyBlocked > 1 ? "s sont écartées" : " est écartée"}. Ces règles de sécurité n’ont pas été assouplies.</span></p> : null}
+    {diagnostic.blockedBy.disliked ? <p><strong>Recettes écartées</strong><span>{diagnostic.blockedBy.disliked} recette{diagnostic.blockedBy.disliked > 1 ? "s restent exclues" : " reste exclue"} selon vos préférences.</span>{onOpenProfile ? <button type="button" onClick={onOpenProfile}>Voir mes recettes écartées</button> : null}</p> : null}
+  </div>;
+}
+
 const TONIGHT_PAGE_SIZE = 6;
 
-function TonightView({ profile, pantryIds, favoriteIds, onOpenRecipe }: {
+function TonightView({ profile, pantryIds, favoriteIds, onOpenRecipe, onOpenProfile }: {
   profile: UserProfile;
   pantryIds: string[];
   favoriteIds: string[];
   onOpenRecipe: (recipe: Recipe, portions: number) => void;
+  onOpenProfile: () => void;
 }) {
   const [mealType, setMealType] = useState<"lunch" | "dinner">("dinner");
   const [maxMinutes, setMaxMinutes] = useState(Math.min(45, profile.maxPrepMinutes));
@@ -1555,6 +1624,10 @@ function TonightView({ profile, pantryIds, favoriteIds, onOpenRecipe }: {
     season: [11, 0, 1].includes(new Date().getMonth()) ? "winter" : [2, 3, 4].includes(new Date().getMonth()) ? "spring" : [5, 6, 7].includes(new Date().getMonth()) ? "summer" : "autumn",
     limit: ACTIVE_RECIPES.length,
   }), [favoriteIds, maxMinutes, mealType, pantryIds, portions, profile]);
+  const diagnostic = useMemo(() => diagnoseRecipeCompatibility(ACTIVE_RECIPES, profile, {
+    mealType,
+    maxPrepMinutes: maxMinutes,
+  }), [maxMinutes, mealType, profile]);
   useEffect(() => setVisibleCount(TONIGHT_PAGE_SIZE), [favoriteIds, maxMinutes, mealType, pantryIds, portions, profile]);
   const visibleRecommendations = recommendations.slice(0, visibleCount);
   const nextCount = Math.min(TONIGHT_PAGE_SIZE, recommendations.length - visibleRecommendations.length);
@@ -1570,39 +1643,49 @@ function TonightView({ profile, pantryIds, favoriteIds, onOpenRecipe }: {
       {visibleRecommendations.map(({ recipe, pantryMatches, estimatedCost }) => <button type="button" className="tonight-card" key={recipe.id} data-testid={`tonight-result-${recipe.id}`} onClick={() => onOpenRecipe(recipe, portions)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {formatEuros(estimatedCost)}</small><strong>{recipe.title}</strong><em>{pantryMatches ? `${pantryMatches} ingrédient${pantryMatches > 1 ? "s" : ""} déjà en réserve` : "Ingrédients à vérifier dans les courses"}</em></span><ChevronRightIcon /></button>)}
       {nextCount > 0 ? <button type="button" className="secondary-button full-button tonight-more" data-testid="tonight-more" onClick={() => setVisibleCount((count) => count + TONIGHT_PAGE_SIZE)}>Voir {nextCount} recette{nextCount > 1 ? "s" : ""} de plus</button> : null}
       {recommendations.length > 0 && recommendations.length < TONIGHT_PAGE_SIZE ? <p className="notice-banner">Seulement {recommendations.length} recette{recommendations.length > 1 ? "s correspondent" : " correspond"} à ces critères. Augmentez le temps disponible ou vérifiez vos équipements pour obtenir plus de choix.</p> : null}
-      {!recommendations.length ? <p className="notice-banner">Augmentez le temps disponible ou ajustez vos équipements dans le profil.</p> : null}
+      {!recommendations.length ? <CompatibilityHelp diagnostic={diagnostic} selectedMinutes={maxMinutes} onUseMinutes={setMaxMinutes} onOpenProfile={onOpenProfile} /> : null}
     </section>
     <p className="privacy-note">Les propositions respectent les allergies, aliments exclus, équipements et préférences enregistrés.</p>
   </main></MobileScroll>;
 }
 
-function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCreate, onComplete }: { profile: UserProfile; lockedCount?: number; canPrepareNext?: boolean; onCreate: (target: "current" | "upcoming") => WeeklyPlan; onComplete: (target: "current" | "upcoming") => void }) {
+function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCreate, onComplete, onOpenProfile }: { profile: UserProfile; lockedCount?: number; canPrepareNext?: boolean; onCreate: (target: "current" | "upcoming") => WeeklyPlan; onComplete: (target: "current" | "upcoming") => void; onOpenProfile: () => void }) {
   const [phase, setPhase] = useState<"ready" | "loading" | "success" | "error">("ready");
   const [result, setResult] = useState<WeeklyPlan | null>(null);
   const [message, setMessage] = useState("");
+  const [diagnostic, setDiagnostic] = useState<RecipeCompatibilityDiagnostic | null>(null);
+  const [diagnosticMinutes, setDiagnosticMinutes] = useState<number | undefined>();
   const [target, setTarget] = useState<"current" | "upcoming">("current");
   const targets = weeklyTargetsOf(profile);
   const generationTimer = useRef<number | null>(null);
   useEffect(() => () => { if (generationTimer.current !== null) window.clearTimeout(generationTimer.current); }, []);
   const start = () => {
     if (phase === "loading") return;
+    setDiagnostic(null);
     setPhase("loading");
     generationTimer.current = window.setTimeout(() => {
       generationTimer.current = null;
       try { const plan = onCreate(target); setResult(plan); setPhase("success"); }
-      catch (error) { setMessage(error instanceof Error ? error.message : "Impossible de créer cette semaine."); setPhase("error"); }
+      catch (error) {
+        setMessage(error instanceof Error ? error.message : "Impossible de créer cette semaine.");
+        if (error instanceof RecipeCompatibilityError) {
+          setDiagnostic(error.diagnostic);
+          setDiagnosticMinutes(error.dayIndex === undefined ? profile.maxPrepMinutes : profile.dayConstraints.find((item) => item.dayIndex === error.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes);
+        }
+        setPhase("error");
+      }
     }, 50);
   };
   return <MobileScroll className="app-screen"><main className="page-content pushed-page generate-page"><div className="generate-mark"><CalendarIcon /></div>
     {phase === "ready" ? <><div className="page-heading page-heading--center"><span className="eyebrow">Votre prochaine semaine</span><h1>Prête en quelques secondes</h1><p>Le moteur vérifie vos préférences, la variété, le budget et la saison.</p></div><section className="generation-summary"><div><PersonIcon /><span><small>Pour</small><strong>{profile.people} personne{profile.people > 1 ? "s" : ""}</strong></span></div><div><ClockIcon /><span><small>Temps actif</small><strong>{profile.maxPrepMinutes} min max.</strong></span></div><div><ArchiveIcon /><span><small>Budget cible</small><strong>{profile.weeklyBudget} € visés</strong></span></div></section>{canPrepareNext ? <div className="segmented-control target-switch" role="group" aria-label="Semaine à générer"><button type="button" className={target === "current" ? "is-selected" : ""} aria-pressed={target === "current"} data-testid="target-current" onClick={() => setTarget("current")}>Cette semaine</button><button type="button" className={target === "upcoming" ? "is-selected" : ""} aria-pressed={target === "upcoming"} data-testid="target-upcoming" onClick={() => setTarget("upcoming")}>La semaine prochaine</button></div> : null}
     {target === "upcoming" ? <p className="inline-help" data-testid="upcoming-help">La semaine en cours, ses repères et sa liste de courses ne bougent pas. Le nouveau menu prendra le relais lundi prochain.</p> : null}
-    <div className="rule-list"><p><CheckIcon /> {profile.mealsPerDay} repas par jour</p><p><CheckIcon /> {targets.legumeMeals} repas avec légumineuses visés</p>{profile.diet === "classic" ? <p><CheckIcon /> {targets.fishMeals} repas avec poisson visés</p> : null}<p><CheckIcon /> Priorité à la saison et au réemploi</p>{lockedCount ? <p data-testid="generate-locked"><LockClosedIcon /> {lockedCount} repas conservé{lockedCount > 1 ? "s" : ""} à l’identique</p> : null}</div><p className="privacy-note">Génération locale, sans compte. Vos données restent sur cet appareil.</p><button type="button" className="primary-button full-button" onClick={start}>Créer ma semaine</button></> : phase === "loading" ? <div className="generation-state" aria-live="polite"><ReloadIcon className="spin" /><h1>Nous composons votre semaine</h1><p>Budget, variété, saison et temps actif sont vérifiés.</p><div className="loading-line"><span /></div></div> : phase === "success" && result ? <div className="generation-state success-state" aria-live="polite"><CheckCircledIcon /><h1>{target === "upcoming" ? "Semaine prochaine prête" : "Votre semaine est prête"}</h1><p>{result.meals.length} repas uniques pour {profile.people} personne{profile.people > 1 ? "s" : ""}, estimés à {result.estimatedCost.toFixed(0)} € · {formatWeekRange(result.startsOn)}.</p><button type="button" className="primary-button full-button" onClick={() => onComplete(target)}>{target === "upcoming" ? "Revenir à l’accueil" : "Voir ma semaine"}</button></div> : <div className="generation-state error-state" role="alert"><Cross2Icon /><h1>Vos critères sont trop serrés</h1><p>{message}</p><button type="button" className="secondary-button full-button" onClick={() => setPhase("ready")}>Modifier et réessayer</button></div>}
+    <div className="rule-list"><p><CheckIcon /> {profile.mealsPerDay} repas par jour</p><p><CheckIcon /> {targets.legumeMeals} repas avec légumineuses visés</p>{profile.diet === "classic" ? <p><CheckIcon /> {targets.fishMeals} repas avec poisson visés</p> : null}<p><CheckIcon /> Priorité à la saison et au réemploi</p>{lockedCount ? <p data-testid="generate-locked"><LockClosedIcon /> {lockedCount} repas conservé{lockedCount > 1 ? "s" : ""} à l’identique</p> : null}</div><p className="privacy-note">Génération locale, sans compte. Vos données restent sur cet appareil.</p><button type="button" className="primary-button full-button" onClick={start}>Créer ma semaine</button></> : phase === "loading" ? <div className="generation-state" aria-live="polite"><ReloadIcon className="spin" /><h1>Nous composons votre semaine</h1><p>Budget, variété, saison et temps actif sont vérifiés.</p><div className="loading-line"><span /></div></div> : phase === "success" && result ? <div className="generation-state success-state" aria-live="polite"><CheckCircledIcon /><h1>{target === "upcoming" ? "Semaine prochaine prête" : "Votre semaine est prête"}</h1><p>{result.meals.length} repas uniques pour votre foyer, estimés à {result.estimatedCost.toFixed(0)} € · {formatWeekRange(result.startsOn)}. Les présences particulières sont appliquées repas par repas.</p><button type="button" className="primary-button full-button" onClick={() => onComplete(target)}>{target === "upcoming" ? "Revenir à l’accueil" : "Voir ma semaine"}</button></div> : <div className="generation-state error-state" role="alert"><Cross2Icon /><h1>Vos critères sont trop serrés</h1><p>{message}</p>{diagnostic ? <CompatibilityHelp diagnostic={diagnostic} selectedMinutes={diagnosticMinutes} onOpenProfile={onOpenProfile} /> : null}<button type="button" className="secondary-button full-button" onClick={onOpenProfile}>Modifier mon profil</button><button type="button" className="text-button" onClick={() => setPhase("ready")}>Réessayer sans modifier</button></div>}
   </main></MobileScroll>;
 }
 
 export type RecipeRating = "loved" | "neutral" | "meh" | "avoided";
 
-function RecipeView({ recipe, planned, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate }: { recipe: Recipe; planned?: PlannedMeal; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void }) {
+function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onSubstitutionChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate }: { recipe: Recipe; planned?: PlannedMeal; profile: UserProfile; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onSubstitutionChange?: (ingredientId: string, substitutionId: string | null) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void }) {
   const [portions, setPortionsState] = useState(planned?.portions ?? initialPortions);
   const setPortions = (update: (value: number) => number) => {
     const next = Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, update(portions)));
@@ -1611,9 +1694,17 @@ function RecipeView({ recipe, planned, initialPortions = 2, favorite, onFavorite
     onPortionsChange?.(next);
   };
   const [isFavorite, setIsFavorite] = useState(favorite);
+  const [openSubstitutionFor, setOpenSubstitutionFor] = useState<string | null>(null);
   useEffect(() => { if (planned) setPortionsState(planned.portions); }, [planned?.portions]);
   useEffect(() => { setIsFavorite(favorite); }, [favorite]);
-  const ingredients = scaleIngredients(recipe, portions);
+  const ingredients = ingredientsForPlannedMeal(recipe, planned, portions);
+  const selectedSubstitutions = new Map((planned?.substitutions ?? []).map((selection) => [canonicalIngredientId(selection.ingredientId), selection.substitutionId]));
+  const allowedSubstitutions = (ingredient: Recipe["ingredients"][number]) => ingredientSubstitutionsFor(ingredient).filter((rule) => {
+    const replacementId = canonicalIngredientId(rule.replacement.id);
+    const blockedByIngredient = profile.excludedIngredientIds.map(canonicalIngredientId).includes(replacementId);
+    const blockedByAllergen = (rule.replacement.allergens ?? []).some((allergen) => profile.allergies.includes(allergen));
+    return !blockedByIngredient && !blockedByAllergen;
+  });
   const advance = advancePrepFor(recipe);
   const [catalogueRecipe, setCatalogueRecipe] = useState<CatalogueRecipe | undefined>();
   const [offlineCaution, setOfflineCaution] = useState<string | undefined>(recipe.caution);
@@ -1640,9 +1731,17 @@ function RecipeView({ recipe, planned, initialPortions = 2, favorite, onFavorite
   const toggle = () => { setIsFavorite((value) => !value); onFavorite(); };
   return <MobileScroll className="app-screen"><main className="recipe-page pushed-page"><img className="recipe-hero" src={recipe.image} alt={recipe.title} width={900} height={900} decoding="async" onError={handleRecipeImageError} /><div className="recipe-content"><span className="eyebrow">{planned ? MEAL_LABELS[planned.mealType] : recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</span><h1>{recipe.title}</h1><div className="recipe-meta"><span><ClockIcon /> {formatRecipeDuration(recipe.prepMinutes)} actives</span><span><PersonIcon /> {portions} portions</span><span>{recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</span></div><p className="recipe-intro">{recipe.description}</p>{durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}<div className={`recipe-actions ${onReplace || onPlan ? "" : "recipe-actions--single"}`}>{onReplace ? <button type="button" className="secondary-button" onClick={onReplace}><ReloadIcon /> Remplacer</button> : null}{onPlan ? <button type="button" className="secondary-button" data-testid="plan-recipe" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} onClick={toggle}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter"}</button></div>
     {advance ? <aside className="advance-note" data-testid="advance-note"><ClockIcon /><span><strong>{advanceHeadline(advance)}</strong>{formatRecipeDuration(advance.minutes)} de repos (trempage, prise au froid, marinade ou fermentation) en plus du temps actif.</span></aside> : null}
-    <AllergenNotice allergens={recipeAllergens(recipe)} />
+    <AllergenNotice allergens={plannedMealAllergens(recipe, planned)} />
+    {planned?.substitutions?.length ? <p className="substitution-summary" data-testid="substitution-summary"><CheckCircledIcon /> {planned.substitutions.length} substitution{planned.substitutions.length > 1 ? "s" : ""} appliquée{planned.substitutions.length > 1 ? "s" : ""}. Allergènes, coût et courses ont été recalculés.</p> : null}
     {displayedCaution ? <aside className="catalogue-caution"><strong>Repère important</strong><p>{displayedCaution}</p></aside> : null}
-    <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => value - 1)}><MinusIcon /></button><b data-testid="recipe-portions">{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => value + 1)}><PlusIcon /></button></div></div>{planned ? <p className="inline-help" data-testid="portions-help">Les portions de ce repas et la liste de courses suivent ce réglage.</p> : null}<ul className="ingredient-list">{ingredients.map((item, index) => <li key={`${item.id}-${item.unit}-${index}`}><CheckCircledIcon /><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}</span></li>)}</ul></section>
+    <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => value - 1)}><MinusIcon /></button><b data-testid="recipe-portions">{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => value + 1)}><PlusIcon /></button></div></div>{planned ? <p className="inline-help" data-testid="portions-help">Les portions, substitutions et la liste de courses suivent ce réglage.</p> : null}<ul className="ingredient-list">{ingredients.map((item, index) => {
+      const source = recipe.ingredients[index];
+      const sourceId = canonicalIngredientId(source.id);
+      const options = planned && onSubstitutionChange ? allowedSubstitutions(source) : [];
+      const selectedId = selectedSubstitutions.get(sourceId);
+      const isOpen = openSubstitutionFor === sourceId;
+      return <li className={`ingredient-row ${selectedId ? "is-substituted" : ""}`} key={`${source.id}-${source.unit}-${index}`}><CheckCircledIcon /><span className="ingredient-row__copy"><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}</span>{selectedId ? <small>À la place de {source.name}</small> : null}</span>{options.length || selectedId ? <button type="button" className="ingredient-swap-button" aria-expanded={isOpen} data-testid={`ingredient-substitute-${sourceId}`} onClick={() => setOpenSubstitutionFor(isOpen ? null : sourceId)}>{selectedId ? "Modifier" : "Remplacer"}</button> : null}{isOpen ? <div className="ingredient-substitution-options" data-testid={`substitution-options-${sourceId}`}><button type="button" className={!selectedId ? "is-selected" : ""} onClick={() => { onSubstitutionChange?.(sourceId, null); setOpenSubstitutionFor(null); }}><strong>Ingrédient d’origine</strong><small>{source.name}</small></button>{options.map((rule) => <button type="button" key={rule.id} className={selectedId === rule.id ? "is-selected" : ""} data-testid={`apply-substitution-${rule.id}`} onClick={() => { onSubstitutionChange?.(sourceId, rule.id); setOpenSubstitutionFor(null); }}><strong>{rule.replacement.name}</strong><small>{rule.note}</small></button>)}</div> : null}</li>;
+    })}</ul>{planned ? <p className="catalogue-disclaimer">Les allergènes déclarés sont recalculés à partir des ingrédients choisis. Vérifiez toujours les étiquettes et les traces éventuelles.</p> : null}</section>
     {onRate ? <section className="recipe-section rating-section" data-testid="recipe-rating"><h2>Mon avis</h2>
       <div className="rating-row">
         {([["loved", "J’aime"], ["neutral", "Sans avis"], ["meh", "Bof"], ["avoided", "Ne plus proposer"]] as const).map(([value, label]) => (
@@ -1701,7 +1800,11 @@ function ReplaceView({ plan, current, profile, onConfirm }: { plan: WeeklyPlan; 
   useEffect(() => { setSelectedId(candidates[0]?.id ?? null); }, [reason]);
   const selected = candidates.find((recipe) => recipe.id === selectedId);
   const currentRecipe = recipeById.get(current.recipeId);
-  return <MobileScroll className="app-screen"><main className="page-content pushed-page replace-page"><div className="page-heading"><span className="eyebrow">À la place de</span><h1>{currentRecipe?.title}</h1><p>Les allergies, le régime et le temps actif maximum restent strictement respectés.</p></div><Carousel ariaLabel="Motif du remplacement" className="reason-carousel" contentClassName="reason-carousel__track">{["Plus rapide", "Moins cher", "Végétarien", "Autres ingrédients", "Réutiliser mes ingrédients"].map((item) => <button type="button" className={`reason-chip ${reason === item ? "is-selected" : ""}`} key={item} data-testid={`reason-${normalizeText(item).replace(/\s+/g, "-")}`} onClick={() => setReason(item)}>{item}</button>)}</Carousel><div className="replacement-list">{candidates.map((recipe) => <button type="button" key={recipe.id} className={`replacement-card ${selectedId === recipe.id ? "is-selected" : ""}`} onClick={() => setSelectedId(recipe.id)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {recipe.costPerPortion.toFixed(2).replace(".", ",")} €/portion</small><strong>{recipe.title}</strong><em>{recipe.description}</em></span><i>{selectedId === recipe.id ? <CheckIcon /> : null}</i></button>)}</div>{currentRecipe ? <button type="button" className={`dislike-toggle ${dislikeCurrent ? "is-selected" : ""}`} aria-pressed={dislikeCurrent} data-testid="dislike-current" onClick={() => setDislikeCurrent((value) => !value)}><span className="dislike-toggle__box" aria-hidden="true">{dislikeCurrent ? <CheckIcon /> : null}</span><span><strong>Ne plus me proposer « {currentRecipe.title} »</strong><small>La recette est écartée des prochaines semaines. Réversible depuis votre profil.</small></span></button> : null}{selected ? <button type="button" className="primary-button full-button" onClick={() => onConfirm(selected, { dislikeCurrent })}>Choisir ce repas</button> : <p className="notice-banner">Aucune alternative compatible avec ces critères.</p>}</main></MobileScroll>;
+  const unusedRecipes = ACTIVE_RECIPES.filter((recipe) => !plan.meals.some((meal) => meal.recipeId === recipe.id));
+  const selectedMinutes = profile.dayConstraints.find((item) => item.dayIndex === current.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes;
+  const diagnostic = diagnoseRecipeCompatibility(unusedRecipes, profile, { mealType: current.mealType, maxPrepMinutes: selectedMinutes });
+  const compatibleAlreadyPlanned = diagnoseRecipeCompatibility(ACTIVE_RECIPES, profile, { mealType: current.mealType, maxPrepMinutes: selectedMinutes }).compatibleCount > 0;
+  return <MobileScroll className="app-screen"><main className="page-content pushed-page replace-page"><div className="page-heading"><span className="eyebrow">À la place de</span><h1>{currentRecipe?.title}</h1><p>Les allergies, le régime et le temps actif maximum restent strictement respectés.</p></div><Carousel ariaLabel="Motif du remplacement" className="reason-carousel" contentClassName="reason-carousel__track">{["Plus rapide", "Moins cher", "Végétarien", "Autres ingrédients", "Réutiliser mes ingrédients"].map((item) => <button type="button" className={`reason-chip ${reason === item ? "is-selected" : ""}`} key={item} data-testid={`reason-${normalizeText(item).replace(/\s+/g, "-")}`} onClick={() => setReason(item)}>{item}</button>)}</Carousel><div className="replacement-list">{candidates.map((recipe) => <button type="button" key={recipe.id} className={`replacement-card ${selectedId === recipe.id ? "is-selected" : ""}`} onClick={() => setSelectedId(recipe.id)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {recipe.costPerPortion.toFixed(2).replace(".", ",")} €/portion</small><strong>{recipe.title}</strong><em>{recipe.description}</em></span><i>{selectedId === recipe.id ? <CheckIcon /> : null}</i></button>)}</div>{currentRecipe ? <button type="button" className={`dislike-toggle ${dislikeCurrent ? "is-selected" : ""}`} aria-pressed={dislikeCurrent} data-testid="dislike-current" onClick={() => setDislikeCurrent((value) => !value)}><span className="dislike-toggle__box" aria-hidden="true">{dislikeCurrent ? <CheckIcon /> : null}</span><span><strong>Ne plus me proposer « {currentRecipe.title} »</strong><small>La recette est écartée des prochaines semaines. Réversible depuis votre profil.</small></span></button> : null}{selected ? <button type="button" className="primary-button full-button" onClick={() => onConfirm(selected, { dislikeCurrent })}>Choisir ce repas</button> : <><h2 className="empty-guidance-title">Aucune alternative compatible</h2><CompatibilityHelp diagnostic={diagnostic} selectedMinutes={selectedMinutes} allCompatibleAlreadyUsed={compatibleAlreadyPlanned} /></>}</main></MobileScroll>;
 }
 
 function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateStore }) {
@@ -2052,8 +2155,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     } : undefined} /> };
   }
 
-  function cookingScreen(recipe: Recipe, portions: number): FlowScreen {
-    return { id: `cooking-${recipe.id}`, title: "Mode cuisine", headerHeight: 56, header: (route) => <Header title="Mode cuisine" onBack={route.pop} />, render: () => <CookingView recipe={recipe} portions={portions} /> };
+  function cookingScreen(recipe: Recipe, portions: number, planned?: PlannedMeal): FlowScreen {
+    return { id: `cooking-${recipe.id}`, title: "Mode cuisine", headerHeight: 56, header: (route) => <Header title="Mode cuisine" onBack={route.pop} />, render: () => <CookingView recipe={recipe} portions={portions} planned={planned} /> };
   }
 
   function recipeScreen(recipe: Recipe, planned?: PlannedMeal, initialPortions?: number): FlowScreen {
@@ -2067,6 +2170,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
         return <RecipeView
           recipe={recipe}
           planned={livePlanned}
+          profile={live.profile}
           initialPortions={initialPortions ?? live.profile.people}
           favorite={live.favoriteRecipeIds.includes(recipe.id)}
           onFavorite={() => toggleFavorite(recipe.id)}
@@ -2089,7 +2193,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
           onReplace={livePlanned ? () => route.replace(replacementScreen(livePlanned)) : undefined}
           onPlan={!livePlanned ? () => route.push(planSlotScreen(recipe)) : undefined}
           onPortionsChange={livePlanned ? (portions) => setAppState((current) => (current.currentPlan ? withUpdatedPlan(current, setMealPortions(current.currentPlan, livePlanned.id, portions, ACTIVE_RECIPES)) : current)) : undefined}
-          onCook={(portions) => route.push(cookingScreen(recipe, portions))}
+          onSubstitutionChange={livePlanned ? (ingredientId, substitutionId) => setAppState((current) => (current.currentPlan ? withUpdatedPlan(current, setMealIngredientSubstitution(current.currentPlan, livePlanned.id, ingredientId, substitutionId, ACTIVE_RECIPES, current.profile)) : current)) : undefined}
+          onCook={(portions) => route.push(cookingScreen(recipe, portions, livePlanned))}
         />;
       }}</LiveAppState>,
     };
@@ -2143,8 +2248,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     });
     route.pop();
   }} />}</LiveAppState> });
-  const openGenerate = () => flow.push({ id: "generate", title: "Générer ma semaine", headerHeight: 56, header: (route) => <Header title="Nouvelle semaine" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <GenerateView profile={live.profile} lockedCount={preservableLockedMeals(live.currentPlan, ACTIVE_RECIPES, live.profile).length} canPrepareNext={Boolean(live.currentPlan)} onCreate={createPlan} onComplete={(target) => { if (target === "current") setTab("week"); route.pop(); }} />}</LiveAppState> });
-  const openTonight = () => flow.push({ id: "tonight", title: "Que cuisiner ce soir ?", headerHeight: 56, header: (route) => <Header title="Ce soir" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <TonightView profile={live.profile} pantryIds={[...live.pantryIngredientIds, ...Object.keys(live.pantryAmounts)]} favoriteIds={live.favoriteRecipeIds} onOpenRecipe={(recipe, portions) => route.push(recipeScreen(recipe, undefined, portions))} />}</LiveAppState> });
+  const openGenerate = () => flow.push({ id: "generate", title: "Générer ma semaine", headerHeight: 56, header: (route) => <Header title="Nouvelle semaine" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <GenerateView profile={live.profile} lockedCount={preservableLockedMeals(live.currentPlan, ACTIVE_RECIPES, live.profile).length} canPrepareNext={Boolean(live.currentPlan)} onCreate={createPlan} onOpenProfile={openProfile} onComplete={(target) => { if (target === "current") setTab("week"); route.pop(); }} />}</LiveAppState> });
+  const openTonight = () => flow.push({ id: "tonight", title: "Que cuisiner ce soir ?", headerHeight: 56, header: (route) => <Header title="Ce soir" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <TonightView profile={live.profile} pantryIds={[...live.pantryIngredientIds, ...Object.keys(live.pantryAmounts)]} favoriteIds={live.favoriteRecipeIds} onOpenProfile={openProfile} onOpenRecipe={(recipe, portions) => route.push(recipeScreen(recipe, undefined, portions))} />}</LiveAppState> });
   function leftoverScreen(planned: PlannedMeal, recipe: Recipe): FlowScreen {
     return { id: `leftover-${planned.id}`, title: "Restes", headerHeight: 56, header: (route) => <Header title="Cuisiner en double" onBack={route.pop} />, render: (route) => {
       const plan = appStore.getSnapshot().currentPlan;
