@@ -76,4 +76,26 @@ for (const [rawId, rule] of Object.entries(ruleSource.rules)) {
   if (rule.purchase?.kind === "bunches") assert(rule.purchase.grams_per_bunch > 0, `${rawId}: poids de botte invalide`);
 }
 
-console.log(`Identifiants ingrédients valides : ${knownIds.size} canoniques, ${reviewedEntries.length} décisions relues, ${aliasSource.exceptions.length} exceptions.`);
+const shoppingIds = new Set();
+const shoppingMembers = new Set();
+const categories = new Set(["fruit-vegetable", "grocery", "fresh", "meat-fish", "frozen", "bakery", "beverage"]);
+for (const [index, group] of (ruleSource.shopping_groups ?? []).entries()) {
+  assert(group && typeof group === "object" && !Array.isArray(group), `groupe d'achat ${index + 1}: définition invalide`);
+  const shoppingId = normalize(group.shopping_id ?? "");
+  assert(shoppingId && shoppingId === group.shopping_id, `groupe d'achat ${index + 1}: identifiant invalide`);
+  assert(!shoppingIds.has(shoppingId), `${shoppingId}: identifiant d'achat dupliqué`);
+  assert(typeof group.display_name === "string" && group.display_name.trim(), `${shoppingId}: libellé d'achat manquant`);
+  assert(categories.has(group.category), `${shoppingId}: rayon d'achat invalide`);
+  assert(Array.isArray(group.member_ids) && group.member_ids.length >= 2, `${shoppingId}: membres insuffisants`);
+  const members = group.member_ids.map(canonicalId);
+  assert(!knownIds.has(shoppingId) || members.includes(shoppingId), `${shoppingId}: collision avec un ingrédient hors du groupe`);
+  for (const member of members) {
+    assert(knownIds.has(member), `${shoppingId}: membre inconnu ${member}`);
+    assert(!shoppingMembers.has(member), `${member}: présent dans plusieurs groupes d'achat`);
+    shoppingMembers.add(member);
+  }
+  if (group.purchase?.kind === "bunches") assert(group.purchase.grams_per_bunch > 0, `${shoppingId}: poids de botte invalide`);
+  shoppingIds.add(shoppingId);
+}
+
+console.log(`Identifiants ingrédients valides : ${knownIds.size} canoniques, ${reviewedEntries.length} décisions relues, ${aliasSource.exceptions.length} exceptions et ${shoppingIds.size} groupes d’achat.`);

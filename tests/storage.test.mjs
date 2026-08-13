@@ -44,7 +44,7 @@ test("unversioned legacy collection names remain supported", () => {
   });
   const migrated = migrateAppState(input);
   assert.deepEqual(migrated?.checkedShoppingItemIds, ["carrot"]);
-  assert.deepEqual(migrated?.pantryIngredientIds, ["huile-olive-vierge-extra"]);
+  assert.deepEqual(migrated?.pantryIngredientIds, ["olive-oil"]);
 });
 
 test("an already migrated state remains stable", () => {
@@ -379,7 +379,7 @@ test("the new local settings are validated like everything else", async () => {
     remindersEnabled: "oui",
   }));
 
-  assert.deepEqual(messy?.pantryAmounts, { "olive-oil": { quantity: 500, unit: "ml" } }, "identifiants canonisés, entrées invalides écartées");
+  assert.deepEqual(messy?.pantryAmounts, { "olive-oil:ml": { quantity: 500, unit: "ml" } }, "identifiants d’achat canonisés, entrées invalides écartées");
   assert.deepEqual(messy?.recipeNotes, { r2: "moins de sel" });
   assert.equal(messy?.shoppingCategoryOrder[0], "grocery");
   assert.equal(messy?.shoppingCategoryOrder.length, DEFAULT_CATEGORY_ORDER.length, "tous les rayons restent présents");
@@ -388,6 +388,30 @@ test("the new local settings are validated like everything else", async () => {
   assert.equal(messy?.textScale, "normal");
   assert.equal(messy?.remindersEnabled, false, "seule la valeur booléenne vraie active les rappels");
   assert.deepEqual(migrateAppState(messy), messy, "l'état reste stable après un second passage");
+});
+
+test("historical shopping state migrates to groups without losing quantities", () => {
+  const migrated = migrateAppState(state({
+    checkedShoppingItemIds: ["olive-oil:ml", "huile-olive-vierge-extra:ml", "moutarde-ancienne:ml"],
+    pantryIngredientIds: ["persil-plat", "catalog-persil-plat-cisele", "oignon-rouge"],
+    pantryAmounts: {
+      "olive-oil": { quantity: 100, unit: "ml" },
+      "huile-olive-vierge-extra": { quantity: 250, unit: "ml" },
+      "parsley": { quantity: 10, unit: "g" },
+      "catalog-persil-plat-cisele": { quantity: 5, unit: "g" },
+      "catalog-feuilles-de-menthe-fraiche": { quantity: 2, unit: "piece" },
+      "mint": { quantity: 8, unit: "g" },
+    },
+  }));
+  assert.deepEqual(migrated?.checkedShoppingItemIds, ["olive-oil", "moutarde-ancienne"]);
+  assert.deepEqual(migrated?.pantryIngredientIds, ["parsley", "oignon-rouge"]);
+  assert.deepEqual(migrated?.pantryAmounts, {
+    "olive-oil:ml": { quantity: 350, unit: "ml" },
+    "parsley:g": { quantity: 15, unit: "g" },
+    "mint:piece": { quantity: 2, unit: "piece" },
+    "mint:g": { quantity: 8, unit: "g" },
+  });
+  assert.deepEqual(migrateAppState(migrated), migrated);
 });
 
 

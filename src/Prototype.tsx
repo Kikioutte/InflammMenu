@@ -97,7 +97,7 @@ import {
   type WeeklyPlan,
 } from "./domain";
 import { RECIPES } from "./recipes";
-import { canonicalIngredientId, storedShoppingItemMatches } from "./shopping.ts";
+import { canonicalIngredientId, shoppingIdentityFor, storedShoppingItemMatches } from "./shopping.ts";
 import {
   CATALOGUE_CATEGORIES,
   CATALOGUE_SUMMARY,
@@ -859,6 +859,9 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
     pantryIngredientIds: pantryIds,
     pantryAmounts,
   });
+  const pantryAmountFor = (ingredientId: string, unit: PantryAmount["unit"]): number => Object.entries(pantryAmounts)
+    .filter(([storedId, amount]) => storedShoppingItemMatches(storedId, ingredientId) && amount.unit === unit)
+    .reduce((total, [, amount]) => total + amount.quantity, 0);
   const listText = formatShoppingListText(items, {
     week: formatWeekRange(plan.startsOn),
     people: profile.people,
@@ -943,7 +946,7 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
       </section>
       <div className="shopping-groups">{groups.map((group, groupIndex) => <section key={group.category} className="shopping-group"><h2>{group.label}<span>{group.items.length}</span>{pantryMode ? <span className="aisle-order"><button type="button" aria-label={`Monter le rayon ${group.label}`} disabled={groupIndex === 0} data-testid={`aisle-up-${group.category}`} onClick={() => onMoveCategory(group.category, -1)}>↑</button><button type="button" aria-label={`Descendre le rayon ${group.label}`} disabled={groupIndex === groups.length - 1} data-testid={`aisle-down-${group.category}`} onClick={() => onMoveCategory(group.category, 1)}>↓</button></span> : null}</h2>{group.items.map((item) => {
         const isRemoved = item.checked || item.inPantry;
-        return <div key={item.ingredientId} className={`shopping-item ${isRemoved ? "is-checked" : ""}`}><button className="shopping-toggle" type="button" aria-label={`${item.checked ? "Décocher" : "Cocher"} ${item.name}`} onClick={() => onToggleChecked(item.ingredientId)}><span className="shopping-check" aria-hidden="true">{isRemoved ? <CheckIcon /> : null}</span><span><strong>{item.name}</strong><small>{item.purchaseSuggestion}</small></span></button>{pantryMode ? <div className="pantry-controls"><button type="button" className={`pantry-chip ${item.inPantry ? "is-selected" : ""}`} onClick={() => onTogglePantry(item.ingredientId)}>{item.inPantry ? "Retiré" : "J’ai déjà"}</button><label className="pantry-amount"><span className="sr-only">Quantité déjà en stock pour {item.name}</span><KeyboardInput inputMode="numeric" placeholder="0" data-testid={`pantry-amount-${item.ingredientId}`} value={pantryAmounts[item.ingredientId]?.quantity ? String(pantryAmounts[item.ingredientId].quantity) : ""} onChange={(event) => {
+        return <div key={item.ingredientId} className={`shopping-item ${isRemoved ? "is-checked" : ""}`}><button className="shopping-toggle" type="button" aria-label={`${item.checked ? "Décocher" : "Cocher"} ${item.name}`} onClick={() => onToggleChecked(item.ingredientId)}><span className="shopping-check" aria-hidden="true">{isRemoved ? <CheckIcon /> : null}</span><span><strong>{item.name}</strong><small>{item.purchaseSuggestion}</small></span></button>{pantryMode ? <div className="pantry-controls"><button type="button" className={`pantry-chip ${item.inPantry ? "is-selected" : ""}`} onClick={() => onTogglePantry(item.ingredientId)}>{item.inPantry ? "Retiré" : "J’ai déjà"}</button><label className="pantry-amount"><span className="sr-only">Quantité déjà en stock pour {item.name}</span><KeyboardInput inputMode="numeric" placeholder="0" data-testid={`pantry-amount-${item.ingredientId}`} value={pantryAmountFor(item.ingredientId, item.amounts[0].unit) ? String(pantryAmountFor(item.ingredientId, item.amounts[0].unit)) : ""} onChange={(event) => {
           const quantity = Number(event.target.value.replace(",", "."));
           onSetPantryAmount(item.ingredientId, Number.isFinite(quantity) && quantity > 0 ? { quantity, unit: item.amounts[0].unit } : null);
         }} /><small>{item.amounts[0].unit === "piece" ? "pcs" : item.amounts[0].unit}</small></label></div> : null}</div>;
@@ -2025,13 +2028,13 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const toggleChecked = (id: string) => setAppState((current) => {
     const checked = current.checkedShoppingItemIds.some((entry) => storedShoppingItemMatches(entry, id));
     const withoutIngredient = current.checkedShoppingItemIds.filter((entry) => !storedShoppingItemMatches(entry, id));
-    return { ...current, checkedShoppingItemIds: checked ? withoutIngredient : [...withoutIngredient, canonicalIngredientId(id)] };
+    return { ...current, checkedShoppingItemIds: checked ? withoutIngredient : [...withoutIngredient, shoppingIdentityFor(id).shoppingId] };
   });
   const togglePantry = (id: string) => setAppState((current) => {
-    const canonical = canonicalIngredientId(id);
-    const inPantry = current.pantryIngredientIds.some((entry) => canonicalIngredientId(entry) === canonical);
-    const withoutIngredient = current.pantryIngredientIds.filter((entry) => canonicalIngredientId(entry) !== canonical);
-    return { ...current, pantryIngredientIds: inPantry ? withoutIngredient : [...withoutIngredient, canonical] };
+    const shoppingId = shoppingIdentityFor(id).shoppingId;
+    const inPantry = current.pantryIngredientIds.some((entry) => shoppingIdentityFor(entry).shoppingId === shoppingId);
+    const withoutIngredient = current.pantryIngredientIds.filter((entry) => shoppingIdentityFor(entry).shoppingId !== shoppingId);
+    return { ...current, pantryIngredientIds: inPantry ? withoutIngredient : [...withoutIngredient, shoppingId] };
   });
 
   function createPlan(target: "current" | "upcoming" = "current"): WeeklyPlan {
@@ -2072,7 +2075,10 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     : current));
   const setPantryAmount = (id: string, amount: PantryAmount | null) => setAppState((current) => {
     const amounts = { ...current.pantryAmounts };
-    if (amount) amounts[id] = amount; else delete amounts[id];
+    for (const [storedId, storedAmount] of Object.entries(amounts)) {
+      if (storedShoppingItemMatches(storedId, id) && (!amount || storedAmount.unit === amount.unit)) delete amounts[storedId];
+    }
+    if (amount) amounts[`${shoppingIdentityFor(id).shoppingId}:${amount.unit}`] = amount;
     return { ...current, pantryAmounts: amounts };
   });
   const moveCategory = (category: IngredientCategory, direction: -1 | 1) => setAppState((current) => {

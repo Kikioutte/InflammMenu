@@ -55,6 +55,7 @@
 - Un repas « hors foyer » (`skipped`) ne coûte rien, n'achète rien, ne se cuisine pas et sort de la progression. Un repas de restes ne se déplace pas sans son plat d'origine : `swapPlannedMeals` refuse et explique.
 - `upcomingPlan` prépare la semaine suivante sans toucher à la semaine en cours ; elle est promue automatiquement à l'ouverture quand son lundi est arrivé.
 - Le garde-manger accepte des quantités : elles sont déduites de la liste de courses dans la même unité seulement, sans conversion hasardeuse. Le budget réel saisi ne corrige jamais les estimations, il en mesure l'écart.
+- L’identité culinaire (`canonicalIngredientId`) reste distincte de l’identité d’achat (`shoppingIdentityFor`). Seuls les groupes explicitement relus dans `ingredient-shopping-rules.json` fusionnent dans les courses et le garde-manger ; un libellé ressemblant ne suffit jamais, et les exceptions d’allergènes ou de variété restent séparées.
 - La notation est à quatre états exclusifs : « j'aime » (bonus), « sans avis », « bof » (malus, jamais une exclusion), « ne plus proposer » (exclusion). Un seul état à la fois par recette.
 - Les recettes personnelles portent le préfixe `perso-` et conservent les identifiants d'ingrédients canoniques, sans quoi la liste de courses cesse d'être juste.
 - Les rappels sont produits localement à l'ouverture de l'application, une fois par jour, uniquement si l'autorisation a été accordée. Ne jamais laisser entendre qu'ils sont programmés côté serveur.
