@@ -87,6 +87,7 @@ test("les contraintes quotidiennes pilotent la semaine générée", async ({ pag
   await page.getByTestId("constraint-day-0").click();
   await page.getByTestId("constraint-time").selectOption("15");
   await page.getByRole("button", { name: "Ajouter une portion pour ce jour" }).click();
+  await page.getByRole("button", { name: "Retirer une portion pour déjeuner" }).click();
   await page.getByTestId("constraint-skip-dinner").click();
   await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
 
@@ -95,7 +96,7 @@ test("les contraintes quotidiennes pilotent la semaine générée", async ({ pag
   const mondayMeals = page.locator('[data-testid^="meal-card-day-0-"]');
   await expect(mondayMeals).toHaveCount(2);
   await expect(mondayMeals.filter({ hasText: "Dîner" })).toHaveAttribute("data-skipped", "true");
-  await expect(mondayMeals.first()).toContainText("3 portions");
+  await expect(mondayMeals.filter({ hasText: "Déjeuner" })).toContainText("2 portions");
 });
 
 test("le mode ce soir révèle les recettes par groupes de six et la semaine affiche sa diversité végétale", async ({ page }) => {
@@ -123,6 +124,27 @@ test("le mode ce soir révèle les recettes par groupes de six et la semaine aff
   await expect(page.getByTestId("plant-diversity").locator("summary")).toContainText("végétaux comptés");
 });
 
+test("un état sans recette explique le critère bloquant sans relâcher les exclusions", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify({
+      version: 2,
+      profile: {
+        people: 2, mealsPerDay: 2, weeklyBudget: 80, maxPrepMinutes: 1,
+        allergies: ["arachides"], excludedIngredientIds: [], dislikedRecipeIds: [], softDislikedRecipeIds: [],
+        weeklyTargets: { legumeMeals: 2, fishMeals: 2 }, dayConstraints: [], diet: "classic", equipment: [],
+      },
+      currentPlan: null, upcomingPlan: null, favoriteRecipeIds: [], history: [],
+      checkedShoppingItemIds: [], pantryIngredientIds: [], customRecipes: [], onboardingCompleted: true,
+    }));
+  });
+  await openFreshApp(page);
+  await page.getByTestId("tonight-open").click();
+  await expect(page.getByRole("heading", { name: "Aucune recette compatible" })).toBeVisible();
+  const help = page.getByTestId("compatibility-help");
+  await expect(help).toContainText("Temps disponible");
+  await expect(help).toContainText("Ces règles de sécurité n’ont pas été assouplies");
+});
+
 test("la génération construit une semaine navigable puis une liste de courses", async ({ page }) => {
   await openFreshApp(page);
 
@@ -130,7 +152,7 @@ test("la génération construit une semaine navigable puis une liste de courses"
 
   await expect(page.getByRole("heading", { name: "Ma semaine" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Ma semaine" })).toBeFocused();
-  await expect(page.getByText("14", { exact: true })).toBeVisible();
+  await expect(page.locator(".week-summary").getByText("14", { exact: true })).toBeVisible();
   await expect(page.getByText("repas", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: /Remplacer/ }).first()).toBeVisible();
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
@@ -140,16 +162,71 @@ test("la génération construit une semaine navigable puis une liste de courses"
   await expect(page.getByRole("heading", { name: "Liste de courses" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Retirer ce que j’ai déjà" })).toBeVisible();
 
+  await page.getByTestId("enter-store-mode").click();
+  await expect(page.getByTestId("store-mode")).toBeVisible();
+  await expect(page.getByText(/Rayon 1 sur/)).toBeVisible();
+  const storeItem = page.locator('[data-testid^="store-item-"]').first();
+  await expect(storeItem).toBeVisible();
+  await expect(storeItem).toHaveAttribute("aria-pressed", "false");
+  await storeItem.click();
+  await expect(storeItem).toHaveAttribute("aria-pressed", "true");
+  await page.getByTestId("store-next-aisle").click();
+  await expect(page.getByText(/Rayon 2 sur/)).toBeVisible();
+  await page.getByTestId("exit-store-mode").click();
+  await expect(page.getByTestId("courses-view")).toBeVisible();
+
   const firstShoppingItem = page.getByRole("button", { name: /^Cocher / }).first();
   await expect(firstShoppingItem).toBeVisible();
   const itemName = (await firstShoppingItem.getAttribute("aria-label"))?.replace(/^Cocher /, "") ?? "";
   await firstShoppingItem.click();
-  await expect(page.getByText(/1 sur \d+ articles/)).toBeVisible();
+  await expect(page.getByText(/\d+ sur \d+ articles/)).toBeVisible();
   await page.waitForTimeout(100);
   await page.reload();
   await page.getByRole("button", { name: "Courses", exact: true }).click();
   await expect(page.getByRole("button", { name: `Décocher ${itemName}` })).toBeVisible();
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
+});
+
+test("une substitution appliquée met à jour la recette, les allergènes et les courses", async ({ page }) => {
+  await page.addInitScript(() => {
+    const now = new Date();
+    const dayIndex = (now.getDay() + 6) % 7;
+    const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayIndex);
+    const startsOn = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, "0")}-${String(monday.getDate()).padStart(2, "0")}`;
+    const recipeIds = [
+      "salade-lentilles-noix", "bowl-quinoa-legumes-houmous", "pates-completes-ratatouille", "salade-sardines-pommes-terre-haricots",
+      "bowl-saumon-riz-complet-avocat", "bowl-poulet-orge-legumes", "bowl-cabillaud-patate-douce", "mijote-aubergine-pois-chiches",
+      "salade-maquereau-betterave-pomme-terre", "curry-pois-chiches-epinards", "omelette-legumes-quinoa", "bowl-tofu-brocoli-sesame",
+      "poulet-curcuma-legumes-semoule", "dal-lentilles-corail-courge",
+    ];
+    [recipeIds[0], recipeIds[dayIndex * 2]] = [recipeIds[dayIndex * 2], recipeIds[0]];
+    const meals = recipeIds.map((recipeId, index) => ({
+      id: `day-${Math.floor(index / 2)}-${index % 2 ? "dinner" : "lunch"}`,
+      dayIndex: Math.floor(index / 2), mealType: index % 2 ? "dinner" : "lunch", recipeId, portions: 2, source: "generated",
+    }));
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify({
+      version: 3,
+      profile: { people: 2, mealsPerDay: 2, weeklyBudget: 80, maxPrepMinutes: 30, allergies: [], excludedIngredientIds: [], diet: "classic", equipment: ["hob", "oven", "microwave", "blender", "toaster", "steamer"] },
+      currentPlan: {
+        id: `week-${startsOn}-substitution`, startsOn, generatedAt: new Date().toISOString(), profileSnapshot: {},
+        meals,
+        estimatedCost: 4.7, version: 1,
+      },
+      favoriteRecipeIds: [], history: [], checkedShoppingItemIds: [], pantryIngredientIds: [], onboardingCompleted: true,
+    }));
+  });
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Semaine", exact: true }).click();
+  await page.locator(".meal-card__main").first().click();
+  await page.getByTestId("ingredient-substitute-walnut").click();
+  await page.getByTestId("apply-substitution-nuts-to-pumpkin-seeds").click();
+  await expect(page.getByTestId("substitution-summary")).toContainText("courses ont été recalculés");
+  await expect(page.locator(".ingredient-row.is-substituted")).toContainText("graines de courge");
+  await expect(page.getByText("Fruits à coque", { exact: true })).toHaveCount(0);
+  await page.getByRole("button", { name: "Retour" }).click();
+  await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await expect(page.getByRole("button", { name: /graines de courge/i })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Cocher noix$/i })).toHaveCount(0);
 });
 
 test("la semaine permet d’ouvrir une recette et le remplacement d’un repas", async ({ page }) => {

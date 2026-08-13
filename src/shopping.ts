@@ -55,6 +55,17 @@ export function canonicalIngredientId(rawId: string): string {
   return current;
 }
 
+/**
+ * Resolves a reviewed alias from a display name when catalogue sources use
+ * unrelated identifiers for the same ingredient. Unknown names deliberately
+ * return undefined so similarly worded but distinct ingredients stay apart.
+ */
+export function canonicalIngredientIdFromName(name: string): string | undefined {
+  const normalized = normalizeIngredientId(name);
+  const canonical = canonicalIngredientId(normalized);
+  return canonical !== normalized ? canonical : undefined;
+}
+
 const rules = new Map(
   Object.entries((ruleSource as RuleSource).rules).map(([id, rule]) => [canonicalIngredientId(id), rule]),
 );

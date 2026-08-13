@@ -98,7 +98,7 @@ test("a backup round trip preserves every local decision", async () => {
     currentPlan: {
       id: "week-2026-08-03-x", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: state().profile,
       meals: [
-        { id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: "r1", portions: 4, source: "manual", locked: true, completed: true },
+        { id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: "r1", portions: 4, source: "manual", locked: true, completed: true, substitutions: [{ ingredientId: "walnut", substitutionId: "nuts-to-pumpkin-seeds" }] },
         { id: "day-1-lunch", dayIndex: 1, mealType: "lunch", recipeId: "r1", portions: 4, source: "manual", leftoverOf: "day-0-lunch" },
       ],
       estimatedCost: 12, version: 1,
@@ -115,8 +115,36 @@ test("a backup round trip preserves every local decision", async () => {
   assert.deepEqual(restored, source);
   assert.equal(restored.currentPlan.meals[0].portions, 4);
   assert.equal(restored.currentPlan.meals[0].locked, true);
+  assert.deepEqual(restored.currentPlan.meals[0].substitutions, [{ ingredientId: "walnut", substitutionId: "nuts-to-pumpkin-seeds" }]);
   assert.deepEqual(restored.profile.dislikedRecipeIds, ["catalog-r002"]);
   assert.equal(restored.currentPlan.meals[1].leftoverOf, "day-0-lunch");
+});
+
+test("stored substitutions are kept only for an ingredient supported by the reviewed rule", () => {
+  const currentPlan = {
+    id: "week-2026-08-03-substitutions",
+    startsOn: "2026-08-03",
+    generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: state().profile,
+    meals: [{
+      id: "day-0-lunch",
+      dayIndex: 0,
+      mealType: "lunch",
+      recipeId: "r1",
+      portions: 2,
+      source: "manual",
+      substitutions: [
+        { ingredientId: "walnut", substitutionId: "nuts-to-pumpkin-seeds" },
+        { ingredientId: "walnut", substitutionId: "yogurt-to-soy-yogurt" },
+      ],
+    }],
+    estimatedCost: 12,
+    version: 1,
+  };
+  const migrated = migrateAppState(state({ currentPlan }));
+  assert.deepEqual(migrated?.currentPlan?.meals[0].substitutions, [
+    { ingredientId: "walnut", substitutionId: "nuts-to-pumpkin-seeds" },
+  ]);
 });
 
 test("restoring rejects foreign or broken files and accepts a raw state dump", async () => {
@@ -294,7 +322,7 @@ test("absurd profile numbers are bounded rather than trusted", () => {
   assert.equal(bounded({ maxPrepMinutes: -30 }).maxPrepMinutes, 1);
   assert.equal(bounded({ people: 0 }).people, 1);
   assert.equal(bounded({ people: -3 }).people, 1);
-  assert.equal(bounded({ people: 10_000 }).people, 12);
+  assert.equal(bounded({ people: 10_000 }).people, 8);
   assert.equal(bounded({ people: 2.6 }).people, 3, "les valeurs décimales sont arrondies");
 });
 
@@ -448,13 +476,13 @@ test("daily constraints migrate safely and discard malformed entries", () => {
   const migrated = migrateAppState(state({ profile: {
     ...state().profile,
     dayConstraints: [
-      { dayIndex: 0, maxPrepMinutes: 15, portions: 4, skippedMealTypes: ["dinner", "unknown"] },
+      { dayIndex: 0, maxPrepMinutes: 15, portions: 4, mealPortions: [{ mealType: "lunch", portions: 1 }, { mealType: "dinner", portions: 20 }, { mealType: "unknown", portions: 3 }], skippedMealTypes: ["dinner", "unknown"] },
       { dayIndex: 8, maxPrepMinutes: 20, skippedMealTypes: ["lunch"] },
       { dayIndex: 2, maxPrepMinutes: Infinity, portions: -8, skippedMealTypes: [] },
     ],
   } }));
   assert.deepEqual(migrated?.profile.dayConstraints, [
-    { dayIndex: 0, maxPrepMinutes: 15, portions: 4, skippedMealTypes: ["dinner"] },
+    { dayIndex: 0, maxPrepMinutes: 15, portions: 4, mealPortions: [{ mealType: "lunch", portions: 1 }, { mealType: "dinner", portions: 8 }], skippedMealTypes: ["dinner"] },
     { dayIndex: 2, portions: 1, skippedMealTypes: [] },
   ]);
   assert.deepEqual(migrateAppState(state())?.profile.dayConstraints, []);
