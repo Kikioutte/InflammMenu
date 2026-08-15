@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { DEFAULT_PROFILE } from "../src/domain.ts";
 import {
   generateWeeklyPlan,
+  recipeForm,
   recipeIsAllowedForSlot,
   summarizePlan,
 } from "../src/engine.ts";
@@ -22,6 +23,16 @@ function assertSafePlan(plan, profile, label) {
   }
 }
 
+function repeatedDailyFormCount(plan) {
+  return Array.from({ length: 7 }, (_, dayIndex) => {
+    const forms = plan.meals
+      .filter((meal) => meal.dayIndex === dayIndex && !meal.skipped)
+      .map((meal) => recipeForm(byId.get(meal.recipeId)))
+      .filter((form) => form !== "other");
+    return new Set(forms).size < forms.length ? 1 : 0;
+  }).reduce((dayTotal, repeated) => dayTotal + repeated, 0);
+}
+
 const plans = Array.from({ length: 100 }, (_, index) => generateWeeklyPlan(recipes, DEFAULT_PROFILE, {
   seed: `diversite-${index}`,
   startsOn,
@@ -29,9 +40,11 @@ const plans = Array.from({ length: 100 }, (_, index) => generateWeeklyPlan(recip
 }));
 const signatures = new Set(plans.map((plan) => plan.meals.map((meal) => meal.recipeId).join(",")));
 const touchedRecipes = new Set(plans.flatMap((plan) => plan.meals.map((meal) => meal.recipeId)));
+const repeatedDailyForms = plans.reduce((total, plan) => total + repeatedDailyFormCount(plan), 0);
 
 assert.ok(signatures.size >= 60, `Diversité insuffisante : ${signatures.size} semaines distinctes sur 100`);
 assert.ok(touchedRecipes.size >= 120, `Catalogue trop peu exploré : ${touchedRecipes.size} recettes touchées sur 100 semaines`);
+assert.equal(repeatedDailyForms, 0, `Journées monotones évitables : ${repeatedDailyForms} répétitions de forme sur 700 journées`);
 for (const [index, plan] of plans.entries()) {
   assertSafePlan(plan, DEFAULT_PROFILE, `profil classique, graine ${index}`);
   assert.ok(plan.estimatedCost <= DEFAULT_PROFILE.weeklyBudget, `profil classique, graine ${index}: budget dépassé`);
@@ -74,10 +87,11 @@ for (const [label, profile] of Object.entries(safetyProfiles)) {
       season,
     });
     assertSafePlan(plan, profile, `${label}, graine ${index}`);
+    assert.equal(repeatedDailyFormCount(plan), 0, `${label}, graine ${index}: forme quotidienne répétée`);
     assert.ok(plan.estimatedCost <= profile.weeklyBudget, `${label}, graine ${index}: budget dépassé`);
   }
 }
 
 console.log(
-  `Générateur diversifié : ${signatures.size} semaines distinctes et ${touchedRecipes.size} recettes touchées sur 100 graines, filtres stricts vérifiés.`,
+  `Générateur diversifié : ${signatures.size} semaines distinctes, ${touchedRecipes.size} recettes touchées et ${repeatedDailyForms} journées monotones sur 700, filtres stricts vérifiés.`,
 );

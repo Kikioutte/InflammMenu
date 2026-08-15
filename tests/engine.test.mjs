@@ -98,6 +98,89 @@ test("different seeds explore the best compatible candidates reproducibly", () =
   );
 });
 
+test("the weekly generator avoids two soups, salads or bowls on the same day when alternatives exist", () => {
+  const forms = ["soupe", "salade", "bowl", "plat"];
+  const varied = Array.from({ length: 48 }, (_, index) => recipe(index + 3_000, {
+    title: forms[index % forms.length] === "bowl"
+      ? `Bol de test ${index}`
+      : `Recette ${forms[index % forms.length]} ${index}`,
+    tags: [forms[index % forms.length]],
+    costPerPortion: 2,
+  }));
+  const noTargets = {
+    ...profile,
+    weeklyBudget: 100,
+    weeklyTargets: { legumeMeals: 0, fishMeals: 0 },
+  };
+
+  for (let seed = 0; seed < 30; seed += 1) {
+    const plan = engine.generateWeeklyPlan(varied, noTargets, { seed: `daily-form-${seed}` });
+    for (let dayIndex = 0; dayIndex < 7; dayIndex += 1) {
+      const dayForms = plan.meals
+        .filter((meal) => meal.dayIndex === dayIndex && !meal.skipped)
+        .map((meal) => engine.recipeForm(varied.find((item) => item.id === meal.recipeId)));
+      assert.equal(
+        dayForms[0] !== "other" && dayForms[0] === dayForms[1],
+        false,
+        `forme ${dayForms[0]} répétée au jour ${dayIndex + 1}, graine ${seed}`,
+      );
+    }
+  }
+});
+
+test("a future locked meal guides the earlier slot toward a different serving form", () => {
+  const soups = Array.from({ length: 20 }, (_, index) => recipe(index + 3_100, {
+    title: `Soupe verrouillée ${index}`,
+    tags: ["soupe"],
+  }));
+  const salads = Array.from({ length: 20 }, (_, index) => recipe(index + 3_200, {
+    title: `Salade alternative ${index}`,
+    tags: ["salade"],
+  }));
+  const locked = {
+    id: "day-0-dinner",
+    dayIndex: 0,
+    mealType: "dinner",
+    recipeId: soups[0].id,
+    portions: 1,
+    source: "generated",
+    locked: true,
+  };
+  const all = [...soups, ...salads];
+  const plan = engine.generateWeeklyPlan(all, {
+    ...profile,
+    weeklyBudget: 100,
+    weeklyTargets: { legumeMeals: 0, fishMeals: 0 },
+  }, { seed: "locked-form", lockedMeals: [locked] });
+  const lunch = plan.meals.find((meal) => meal.dayIndex === 0 && meal.mealType === "lunch");
+  const lunchRecipe = all.find((item) => item.id === lunch.recipeId);
+
+  assert.equal(engine.recipeForm(lunchRecipe), "salad");
+  assert.equal(plan.meals.find((meal) => meal.id === locked.id)?.recipeId, locked.recipeId);
+});
+
+test("daily form variety stays soft when the safe catalogue only contains soups", () => {
+  const soupsOnly = Array.from({ length: 20 }, (_, index) => recipe(index + 3_250, {
+    title: `Soupe sûre ${index}`,
+    tags: ["soupe"],
+  }));
+  const plan = engine.generateWeeklyPlan(soupsOnly, {
+    ...profile,
+    weeklyBudget: 100,
+    weeklyTargets: { legumeMeals: 0, fishMeals: 0 },
+  }, { seed: "soups-only" });
+
+  assert.equal(plan.meals.length, 14);
+  assert.ok(plan.meals.every((meal) => engine.recipeForm(soupsOnly.find((item) => item.id === meal.recipeId)) === "soup"));
+});
+
+test("recipe forms prioritize explicit bowls and ignore ingredient-like tags", () => {
+  assert.equal(engine.recipeForm(recipe(3_300, { title: "Bol de quinoa", tags: ["salade"] })), "bowl");
+  assert.equal(engine.recipeForm(recipe(3_301, { title: "Velouté de carottes", tags: ["plat"] })), "soup");
+  assert.equal(engine.recipeForm(recipe(3_302, { title: "Assiette de lentilles", tags: ["salade"] })), "salad");
+  assert.equal(engine.recipeForm(recipe(3_303, { title: "Curry de lentilles", tags: ["salade-romaine"] })), "other");
+});
+
 test("an applied substitution recalculates ingredients, allergens, cost and shopping", () => {
   const walnutRecipe = recipe(30, {
     id: "walnut-bowl",

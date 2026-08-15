@@ -86,6 +86,15 @@ const NUT_OR_SEED_INGREDIENTS = new Set([
   "walnut",
 ]);
 
+export type RecipeForm = "soup" | "salad" | "bowl" | "other";
+
+const RECIPE_FORM_CACHE = new WeakMap<Recipe, RecipeForm>();
+const RECIPE_FORM_TAGS = {
+  soup: ["soupe", "veloute", "potage", "gaspacho", "salmorejo", "minestrone"],
+  salad: ["salade", "taboule"],
+  bowl: ["bowl", "bol"],
+} as const;
+
 function normalize(value: string): string {
   return value
     .normalize("NFD")
@@ -150,6 +159,29 @@ function hasTag(recipe: Recipe, candidates: readonly string[]): boolean {
   );
 }
 
+/** Broad serving form used only to avoid a visibly monotonous day. */
+export function recipeForm(recipe: Recipe): RecipeForm {
+  const cached = RECIPE_FORM_CACHE.get(recipe);
+  if (cached) return cached;
+  const title = normalize(recipe.title);
+  const exactTags = new Set(normalizedTagsOf(recipe));
+  const titleStartsWith = (words: readonly string[]) => words.some((word) =>
+    title === word || title.startsWith(`${word}-`),
+  );
+  const taggedAs = (words: readonly string[]) => words.some((word) => exactTags.has(word));
+  // A bowl can legitimately be catalogued as a salad, so its explicit title
+  // takes precedence over the broader catalogue category.
+  const result: RecipeForm = titleStartsWith(RECIPE_FORM_TAGS.bowl) || taggedAs(RECIPE_FORM_TAGS.bowl)
+    ? "bowl"
+    : titleStartsWith(RECIPE_FORM_TAGS.soup) || taggedAs(RECIPE_FORM_TAGS.soup)
+      ? "soup"
+      : titleStartsWith(RECIPE_FORM_TAGS.salad) || taggedAs(RECIPE_FORM_TAGS.salad)
+        ? "salad"
+        : "other";
+  RECIPE_FORM_CACHE.set(recipe, result);
+  return result;
+}
+
 function hasNutOrSeed(recipe: Recipe): boolean {
   const cached = NUT_OR_SEED_CACHE.get(recipe);
   if (cached !== undefined) return cached;
@@ -179,6 +211,7 @@ function seededRank(seed: string | number, value: string): number {
  */
 const WEEKLY_SELECTION_TOLERANCE = 50;
 const MAX_WEEKLY_COST_PENALTY = 40;
+const REPEATED_DAILY_FORM_PENALTY = 180;
 
 function cappedWeeklyCostPenalty(recipe: Recipe, portions: number): number {
   return Math.min(MAX_WEEKLY_COST_PENALTY, recipe.costPerPortion * portions * 7);
@@ -518,6 +551,24 @@ function totalPlanCost(meals: readonly PlannedMeal[], byId: ReadonlyMap<string, 
   );
 }
 
+function dailyFormConflictCount(
+  meals: readonly PlannedMeal[],
+  dayIndex: number,
+  byId: ReadonlyMap<string, Recipe>,
+  replacement?: { mealIndex: number; recipe: Recipe },
+): number {
+  const counts = new Map<Exclude<RecipeForm, "other">, number>();
+  meals.forEach((meal, mealIndex) => {
+    if (meal.dayIndex !== dayIndex || meal.skipped) return;
+    const recipe = replacement?.mealIndex === mealIndex ? replacement.recipe : byId.get(meal.recipeId);
+    if (!recipe) return;
+    const form = recipeForm(recipe);
+    if (form === "other") return;
+    counts.set(form, (counts.get(form) ?? 0) + 1);
+  });
+  return [...counts.values()].reduce((total, count) => total + Math.max(0, count - 1), 0);
+}
+
 /**
  * Creates a menu using only local rule evaluation. A recipe is never repeated.
  * Throws when the filtered catalogue cannot fill every requested slot safely.
@@ -610,6 +661,16 @@ export function generateWeeklyPlan(
         && recipeIsAllowedForSlot(recipe, profile, slot.dayIndex),
     );
     const selectedIngredientIds = new Set(selected.flatMap(ingredientIdsOf));
+    const formsAlreadyServedToday = new Set(
+      [
+        ...meals.filter((meal) => meal.dayIndex === slot.dayIndex && !meal.skipped),
+        ...[...keptSlots.values()].filter((meal) => meal.dayIndex === slot.dayIndex && !meal.skipped),
+      ]
+        .map((meal) => catalogue.get(meal.recipeId))
+        .filter((recipe): recipe is Recipe => Boolean(recipe))
+        .map(recipeForm)
+        .filter((form): form is Exclude<RecipeForm, "other"> => form !== "other"),
+    );
 
     if (candidates.length === 0) {
       const diagnostic = diagnoseRecipeCompatibility(recipes, profile, {
@@ -639,8 +700,12 @@ export function generateWeeklyPlan(
       const favoriteScore = favorites.has(recipe.id) ? 120 : 0;
       // « Bof » : la recette reste possible, mais passe après les autres.
       const softDislikeScore = softDisliked.has(recipe.id) ? -200 : 0;
+      const form = recipeForm(recipe);
+      const dailyFormScore = form !== "other" && formsAlreadyServedToday.has(form)
+        ? -REPEATED_DAILY_FORM_PENALTY
+        : 0;
       // Cost remains meaningful without erasing season, quality and variety.
-      return targetScore + favoriteScore + softDislikeScore + qualityScore
+      return targetScore + favoriteScore + softDislikeScore + qualityScore + dailyFormScore
         - cappedWeeklyCostPenalty(recipe, portions);
     };
     const selectedRecipe = selectSeededWeeklyCandidate(
@@ -676,6 +741,9 @@ export function generateWeeklyPlan(
     let best:
       | { mealIndex: number; recipe: Recipe; saving: number }
       | undefined;
+    let bestWorseningForm:
+      | { mealIndex: number; recipe: Recipe; saving: number }
+      | undefined;
 
     meals.forEach((meal, mealIndex) => {
       if (meal.locked) return;
@@ -690,9 +758,21 @@ export function generateWeeklyPlan(
         if (losesLegume && currentLegumes <= targets.legumeMeals) continue;
         if (profile.diet === "classic" && losesFish && currentFish <= targets.fishMeals) continue;
         const saving = (previous.costPerPortion - candidate.costPerPortion) * meal.portions;
-        if (saving > 0 && (!best || saving > best.saving)) best = { mealIndex, recipe: candidate, saving };
+        if (saving <= 0) continue;
+        const beforeConflicts = dailyFormConflictCount(meals, meal.dayIndex, byId);
+        const afterConflicts = dailyFormConflictCount(meals, meal.dayIndex, byId, { mealIndex, recipe: candidate });
+        const option = { mealIndex, recipe: candidate, saving };
+        if (afterConflicts <= beforeConflicts) {
+          if (!best || saving > best.saving) best = option;
+        } else if (!bestWorseningForm || saving > bestWorseningForm.saving) {
+          bestWorseningForm = option;
+        }
       }
     });
+
+    // Respect the budget as a best-effort constraint, but exhaust every
+    // non-monotonous saving before introducing a repeated daily form.
+    best ??= bestWorseningForm;
 
     if (best) {
       used.delete(meals[best.mealIndex].recipeId);
