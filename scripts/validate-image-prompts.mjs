@@ -5,20 +5,13 @@ import { readdir, readFile } from "node:fs/promises";
 const rootUrl = new URL("../", import.meta.url);
 const researchUrl = new URL("research/", rootUrl);
 const catalogue = JSON.parse(await readFile(new URL("src/data/recettes-anti-inflammatoires.json", rootUrl), "utf8"));
-const recipes = new Map(
-  catalogue.recipes
-    .filter(({ id }) => {
-      const numericId = Number.parseInt(id.slice(1), 10);
-      return numericId >= 1 && numericId <= 550;
-    })
-    .map((recipe) => [recipe.id, recipe]),
-);
+const recipes = new Map(catalogue.recipes.map((recipe) => [recipe.id, recipe]));
 const files = (await readdir(researchUrl))
   .filter((name) => /^image-prompts-r\d{3}-r\d{3}\.json$/.test(name))
   .sort();
 
-assert.equal(recipes.size, 550, "550 recettes cibles sont requises");
-assert.equal(files.length, 22, "22 lots de prompts image sont requis");
+assert.ok(recipes.size > 0, "Le catalogue image ne peut pas être vide");
+assert.ok(files.length > 0, "Au moins un lot de prompts image est requis");
 
 const ids = new Set();
 const outputs = new Set();
@@ -38,7 +31,7 @@ for (const file of files) {
   const document = JSON.parse(await readFile(new URL(file, researchUrl), "utf8"));
   const prompts = document.prompts ?? document;
   assert.ok(Array.isArray(prompts), `${file}: liste de prompts absente`);
-  assert.equal(prompts.length, 25, `${file}: 25 prompts sont requis`);
+  assert.ok(prompts.length > 0, `${file}: aucun prompt`);
 
   for (const entry of prompts) {
     const recipe = recipes.get(entry.id);
@@ -72,6 +65,6 @@ for (const file of files) {
   }
 }
 
-assert.equal(ids.size, 550, "550 prompts uniques sont requis");
-assert.equal(outputs.size, 550, "550 fichiers de sortie uniques sont requis");
-console.log("Prompts image valides : 550 recettes, titres et fichiers de sortie parfaitement alignés.");
+assert.equal(ids.size, recipes.size, `${recipes.size} prompts uniques sont requis`);
+assert.equal(outputs.size, recipes.size, `${recipes.size} fichiers de sortie uniques sont requis`);
+console.log(`Prompts image valides : ${recipes.size} recettes, titres et fichiers de sortie parfaitement alignés.`);

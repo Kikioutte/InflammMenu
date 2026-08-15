@@ -3,6 +3,7 @@ import generatedRecipeImages from "./data/generated-recipe-images.json" with { t
 import type { DietMode, Equipment, IngredientCategory, IngredientUnit, MealType } from "./domain.ts";
 
 export type CatalogueReviewStatus = "validated" | "caution";
+export type CreamiProgram = "ICE CREAM" | "LITE ICE CREAM" | "SORBET" | "GELATO" | "FROZEN YOGURT";
 
 export interface CatalogueRecipeReview {
   status: CatalogueReviewStatus;
@@ -56,6 +57,14 @@ export interface CatalogueRecipe {
   regimes: string[];
   saisons: string[];
   tags: string[];
+  /** Dedicated culinary tools required by the recipe, including appliances that
+   * are not part of the weekly planner profile. */
+  materiel?: string[];
+  creami?: {
+    modele: "Ninja CREAMi Deluxe (NC501EU)";
+    programme: CreamiProgram;
+    zone: "FULL";
+  };
   composes_actifs: Array<{ aliment: string; compose: string; action: string }>;
   ingredients: CatalogueIngredient[];
   etapes: string[];
@@ -260,7 +269,7 @@ const SEARCHABLE_CATALOGUE_TEXT = new WeakMap<CatalogueRecipe, string>();
 function searchableCatalogueText(recipe: CatalogueRecipe): string {
   const cached = SEARCHABLE_CATALOGUE_TEXT.get(recipe);
   if (cached) return cached;
-  const value = `${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")} ${recipe.tags.join(" ")}`
+  const value = `${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")} ${recipe.tags.join(" ")} ${(recipe.materiel ?? []).join(" ")}`
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/œ/g, "oe").replace(/æ/g, "ae").toLowerCase();
   SEARCHABLE_CATALOGUE_TEXT.set(recipe, value);
   return value;
