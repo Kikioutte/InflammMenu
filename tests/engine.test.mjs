@@ -1485,6 +1485,69 @@ test("tonight recommendations stay safe and favour ingredients already in reserv
   }).length, 3);
 });
 
+test("tonight recommendations spread serving forms without hiding compatible recipes", () => {
+  const soups = Array.from({ length: 8 }, (_, index) => recipe(850 + index, {
+    title: `Soupe test ${index + 1}`,
+    tags: ["soupe"],
+    prepMinutes: 10,
+    costPerPortion: 1,
+  }));
+  const salads = Array.from({ length: 5 }, (_, index) => recipe(860 + index, {
+    title: `Salade test ${index + 1}`,
+    tags: ["salade"],
+    prepMinutes: 15,
+    costPerPortion: 1.5,
+  }));
+  const bowls = Array.from({ length: 5 }, (_, index) => recipe(870 + index, {
+    title: `Bowl test ${index + 1}`,
+    tags: ["bowl"],
+    prepMinutes: 15,
+    costPerPortion: 1.5,
+  }));
+  const varied = recipe(880, {
+    title: "Poêlée test",
+    tags: ["plat"],
+    prepMinutes: 15,
+    costPerPortion: 1.5,
+  });
+  const options = {
+    mealType: "dinner",
+    maxPrepMinutes: 30,
+    portions: 2,
+    limit: 19,
+  };
+  const first = engine.recommendTonight([...soups, ...salads, ...bowls, varied], profile, options);
+  const second = engine.recommendTonight([...soups, ...salads, ...bowls, varied], profile, options);
+  const firstPageForms = first.slice(0, 6).map(({ recipe: item }) => engine.recipeForm(item));
+  const explicitCounts = firstPageForms.reduce((counts, form) => ({
+    ...counts,
+    [form]: (counts[form] ?? 0) + 1,
+  }), {});
+
+  assert.deepEqual(first, second);
+  assert.equal(first.length, 19);
+  assert.equal(new Set(first.map(({ recipe: item }) => item.id)).size, 19);
+  assert.equal(new Set(firstPageForms).size, 4);
+  assert.ok((explicitCounts.soup ?? 0) <= 2);
+  assert.ok((explicitCounts.salad ?? 0) <= 2);
+  assert.ok((explicitCounts.bowl ?? 0) <= 2);
+  for (const pageStart of [0, 6]) {
+    const forms = first.slice(pageStart, pageStart + 6).map(({ recipe: item }) => engine.recipeForm(item));
+    const counts = forms.reduce((byForm, form) => ({
+      ...byForm,
+      [form]: (byForm[form] ?? 0) + 1,
+    }), {});
+    assert.ok(new Set(forms).size >= 3);
+    assert.ok((counts.soup ?? 0) <= 2);
+    assert.ok((counts.salad ?? 0) <= 2);
+    assert.ok((counts.bowl ?? 0) <= 2);
+  }
+
+  const soupOnly = engine.recommendTonight(soups, profile, { ...options, limit: soups.length });
+  assert.equal(soupOnly.length, soups.length);
+  assert.equal(new Set(soupOnly.map(({ recipe: item }) => item.id)).size, soups.length);
+});
+
 test("contextual reminders cover same-day rest, next-day preparation and today's leftovers", () => {
   const recipes = [
     recipe(901, { restMinutes: 90 }),

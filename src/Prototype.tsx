@@ -69,6 +69,7 @@ import {
   planToCalendar,
   planProgress,
   recommendTonight,
+  recipeForm,
   RecipeCompatibilityError,
   preservableLockedMeals,
   replacePlannedMeal,
@@ -1644,7 +1645,7 @@ function TonightView({ profile, pantryIds, favoriteIds, onOpenRecipe, onOpenProf
     </section>
     <section className="tonight-results" aria-live="polite"><div className="section-heading"><div><span className="eyebrow">Suggestions</span><h2>{recommendations.length ? "Prêtes à cuisiner" : "Aucune recette compatible"}</h2></div></div>
       {recommendations.length ? <p className="tonight-results__count" data-testid="tonight-results-count">{visibleRecommendations.length} recette{visibleRecommendations.length > 1 ? "s" : ""} sur {recommendations.length}</p> : null}
-      {visibleRecommendations.map(({ recipe, pantryMatches, estimatedCost }) => <button type="button" className="tonight-card" key={recipe.id} data-testid={`tonight-result-${recipe.id}`} onClick={() => onOpenRecipe(recipe, portions)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {formatEuros(estimatedCost)}</small><strong>{recipe.title}</strong><em>{pantryMatches ? `${pantryMatches} ingrédient${pantryMatches > 1 ? "s" : ""} déjà en réserve` : "Ingrédients à vérifier dans les courses"}</em></span><ChevronRightIcon /></button>)}
+      {visibleRecommendations.map(({ recipe, pantryMatches, estimatedCost }) => <button type="button" className="tonight-card" key={recipe.id} data-testid={`tonight-result-${recipe.id}`} data-recipe-form={recipeForm(recipe)} onClick={() => onOpenRecipe(recipe, portions)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {formatEuros(estimatedCost)}</small><strong>{recipe.title}</strong><em>{pantryMatches ? `${pantryMatches} ingrédient${pantryMatches > 1 ? "s" : ""} déjà en réserve` : "Ingrédients à vérifier dans les courses"}</em></span><ChevronRightIcon /></button>)}
       {nextCount > 0 ? <button type="button" className="secondary-button full-button tonight-more" data-testid="tonight-more" onClick={() => setVisibleCount((count) => count + TONIGHT_PAGE_SIZE)}>Voir {nextCount} recette{nextCount > 1 ? "s" : ""} de plus</button> : null}
       {recommendations.length > 0 && recommendations.length < TONIGHT_PAGE_SIZE ? <p className="notice-banner">Seulement {recommendations.length} recette{recommendations.length > 1 ? "s correspondent" : " correspond"} à ces critères. Augmentez le temps disponible ou vérifiez vos équipements pour obtenir plus de choix.</p> : null}
       {!recommendations.length ? <CompatibilityHelp diagnostic={diagnostic} selectedMinutes={maxMinutes} onUseMinutes={setMaxMinutes} onOpenProfile={onOpenProfile} /> : null}
