@@ -238,7 +238,7 @@ test("la semaine permet d’ouvrir une recette et le remplacement d’un repas",
   await firstMeal.click();
   await expect(page.getByText("Repères par portion")).toBeVisible();
   await expect(page.getByRole("button", { name: "Retour" })).toBeVisible();
-  await page.getByTestId("flow-current").getByRole("button", { name: "Remplacer" }).click();
+  await page.getByTestId("flow-current").locator(".recipe-actions").getByRole("button", { name: "Remplacer", exact: true }).click();
 
   await expect(page.locator(".replace-page h1")).toBeVisible();
   await expect(page.getByText(/Les allergies, le régime et le temps actif maximum/)).toBeVisible();
@@ -688,7 +688,7 @@ test("un catalogue injoignable affiche une erreur et se recharge au réessai", a
 
   blocked = false;
   await page.getByTestId("catalogue-retry").click();
-  await expect(page.getByText("544 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByText("624 recettes uniques disponibles")).toBeVisible();
   await expect(page.getByTestId("catalogue-error")).toHaveCount(0);
 });
 
@@ -899,8 +899,8 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
 
-  await expect(page.getByText("544 recettes uniques disponibles")).toBeVisible();
-  await expect(page.getByText("544 résultats")).toBeVisible();
+  await expect(page.getByText("624 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByText("624 résultats")).toBeVisible();
 
   await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
   await expect(page.getByText("1 résultat", { exact: true })).toBeVisible();
@@ -940,6 +940,26 @@ test("une recette du catalogue peut être enregistrée en favori", async ({ page
 
   await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
   await expect(page.getByRole("heading", { name: "Soupe miso au wakame, shiitakés et tofu" })).toBeVisible();
+  await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
+});
+
+test("les desserts Ninja CREAMi affichent leur programme et leur congélation sans être planifiables", async ({ page }) => {
+  await openFreshApp(page);
+
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("tab", { name: "Catalogue" }).click();
+  await page.getByPlaceholder("Recette ou ingrédient").fill("Ninja CREAMi Deluxe");
+  await expect(page.getByText("80 résultats")).toBeVisible();
+
+  await page.getByRole("button", { name: /Crème glacée cajou, lucuma et éclats de cacao/ }).click();
+  await expect(page.getByRole("heading", { name: "Crème glacée cajou, lucuma et éclats de cacao" })).toBeVisible();
+  await expect(page.getByTestId("catalogue-equipment")).toContainText("Ninja CREAMi Deluxe (NC501EU)");
+  await expect(page.getByTestId("catalogue-equipment")).toContainText("Programme ICE CREAM · Zone FULL");
+  await expect(page.getByText("Congélation", { exact: true })).toBeVisible();
+  await expect(page.getByText("1 j", { exact: true })).toBeVisible();
+  await expect(page.getByTestId("planner-exclusion")).toContainText("Hors menus hebdomadaires");
+  await expect(page.getByTestId("catalogue-plan")).toHaveCount(0);
+  await expect(page.getByText(/fruits à coque/i).first()).toBeVisible();
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
@@ -1040,7 +1060,7 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
 
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
-  await expect(page.getByText("544 résultats")).toBeVisible();
+  await expect(page.getByText("624 résultats")).toBeVisible();
 
   await page.getByTestId("catalogue-filters-open").click();
   await page.getByTestId("filter-time-15").click();
@@ -1049,7 +1069,7 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
 
   const filtered = await page.getByTestId("catalogue-filters-open").innerText();
   expect(filtered).toContain("(2)");
-  await expect(page.getByText("544 résultats")).toHaveCount(0);
+  await expect(page.getByText("624 résultats")).toHaveCount(0);
 
   await page.getByTestId("catalogue-sort").selectOption("time");
   await expect(page.locator(".catalogue-card").first()).toBeVisible();
@@ -1057,7 +1077,7 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
   await page.getByTestId("catalogue-filters-open").click();
   await page.getByTestId("catalogue-filters-reset").click();
   await page.getByRole("button", { name: /^Voir \d+ recettes?$/ }).click();
-  await expect(page.getByText("544 résultats")).toBeVisible();
+  await expect(page.getByText("624 résultats")).toBeVisible();
 });
 
 test("une recette se note, s’annote et se duplique", async ({ page }) => {

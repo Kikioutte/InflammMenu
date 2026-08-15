@@ -19,8 +19,9 @@ for (const recipeFile of recipeFiles) {
       output_file: `public/assets/recipes/generated/${recipe.image.nom_fichier}`,
       status: "waiting_image_generation",
       prompt: [
-        `Photographie culinaire éditoriale premium, carrée, réaliste, de la recette française « ${recipe.titre} ».`,
+        `Photographie culinaire éditoriale premium, carrée et réaliste de la création culinaire « ${recipe.titre} ».`,
         `Montrer fidèlement le plat fini avec uniquement les ingrédients réellement présents et visibles lorsque pertinent : ${visibleIngredients.join(", ")}.`,
+        ...(recipe.creami ? [`Dessert glacé fraîchement brassé au programme ${recipe.creami.programme} du Ninja CREAMi Deluxe : représenter une texture physiquement crédible pour ce programme, servie en boules ou à la cuillère dans un petit bol froid, sans montrer la machine.`] : []),
         "Vaisselle artisanale en céramique crème, petite touche de textile sauge, fond minéral clair, lumière naturelle chaude venant de côté, ombres douces, palette ivoire, vert sauge et terre cuite.",
         "Cadrage trois-quarts légèrement plongeant, portion crédible, texture appétissante mais naturelle, stylisme sobre, aucune garniture absente de la recette.",
         "Ultra-photoréalisme : vraie texture de cuisson, découpes et proportions physiquement plausibles, petites irrégularités naturelles, profondeur de champ optique et couleurs alimentaires non sursaturées. Le résultat doit être indiscernable d'une photographie culinaire prise avec un appareil photo.",
@@ -29,7 +30,7 @@ for (const recipeFile of recipeFiles) {
       ].join(" "),
     };
   });
-  const range = basename(recipeFile).match(/pilot-(r\d{3}-r\d{3})/)?.[1];
+  const range = basename(recipeFile).match(/(?:pilot|creami)-(r\d{3}-r\d{3})/)?.[1];
   if (!range) throw new Error(`${recipeFile}: plage introuvable`);
   const output = `research/image-prompts-${range}.json`;
   await writeFile(output, `${JSON.stringify({

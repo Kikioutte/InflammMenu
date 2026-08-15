@@ -127,7 +127,19 @@
     "saint-jacques-noix": "noix-saint-jacques",
     "sesame-noir": "graines-sesame-noir",
     "tomates-concassees-sans-sel": "tomate-concassee-sans-sel",
-    "vinaigre-balsamique": "vinaigre-balsamique-avec-sulfites"
+    "vinaigre-balsamique": "vinaigre-balsamique-avec-sulfites",
+    "cassis": "blackcurrant",
+    "griottes-denoyautees": "sour-cherry",
+    "jus-d-orange": "orange-juice",
+    "jus-de-citron": "lemon-juice",
+    "jus-de-citron-vert": "lime-juice",
+    "jus-de-grenade-pur": "pomegranate-juice",
+    "mangue-mure": "mango",
+    "peches-blanches": "white-peach",
+    "poires-mures": "pear",
+    "puree-de-sesame-noir": "black-sesame-paste",
+    "yaourt-grec-nature": "greek-yogurt",
+    "zeste-d-orange-non-traitee": "orange-zest"
   },
   "canonical_groups": [
     { "canonical_id": "oats", "aliases": ["catalog-flocons-d-avoine", "flocons-avoine", "flocons-avoine-complets", "catalog-flocons-d-avoine-complets"] },

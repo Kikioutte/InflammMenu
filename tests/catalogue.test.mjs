@@ -152,7 +152,7 @@ test("la disponibilité au planificateur est expliquée sans lever la barrière 
 
   assert.equal(counts.plannable, 327, "les recettes planifiables restent inchangées");
   assert.equal(counts.duplicate, 6);
-  assert.equal(counts["side-dish"] + counts.editorial, 217);
+  assert.equal(counts["side-dish"] + counts.editorial, 297);
   assert.ok(counts.editorial > 0, "des exclusions éditoriales subsistent");
 
   const sodiumExcluded = catalogue.recipes.find((recipe) => recipe.id === "r084");
@@ -179,7 +179,7 @@ test("les filtres et le tri du catalogue portent sur les vraies données", async
   const catalogue = JSON.parse(await readFile(dataUrl, "utf8"));
   const visible = visibleCatalogueRecipes(catalogue);
 
-  assert.equal(filterCatalogueRecipes(visible, EMPTY_CATALOGUE_FILTERS).length, 544, "sans filtre, tout le catalogue visible");
+  assert.equal(filterCatalogueRecipes(visible, EMPTY_CATALOGUE_FILTERS).length, 624, "sans filtre, tout le catalogue visible");
 
   const quick = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, maxActiveMinutes: 15 });
   assert.ok(quick.length > 0 && quick.length < visible.length);
@@ -204,4 +204,21 @@ test("les filtres et le tri du catalogue portent sur les vraies données", async
   const searched = filterCatalogueRecipes(visible, EMPTY_CATALOGUE_FILTERS, "wakame");
   assert.equal(searched.length, 1);
   assert.equal(filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, cost: "eleve" }, "wakame").length <= 1, true);
+});
+
+test("les 80 desserts CREAMi sont trouvables sans entrer dans le planificateur", async () => {
+  const { filterCatalogueRecipes, EMPTY_CATALOGUE_FILTERS, visibleCatalogueRecipes } = await import("../src/catalog.ts");
+  const visible = visibleCatalogueRecipes(catalogue);
+  const creami = filterCatalogueRecipes(visible, EMPTY_CATALOGUE_FILTERS, "ninja creami deluxe");
+  assert.equal(creami.length, 80);
+  assert.ok(creami.every((recipe) => recipe.categorie === "dessert"));
+  assert.ok(creami.every((recipe) => recipe.app.planner.eligible === false));
+  assert.ok(creami.every((recipe) => recipe.temps.repos >= 1_440));
+  assert.ok(creami.every((recipe) => recipe.materiel?.includes("Ninja CREAMi Deluxe (NC501EU)")));
+  assert.ok(creami.every((recipe) => recipe.creami?.zone === "FULL"));
+
+  const desserts = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, category: "dessert" });
+  assert.ok(desserts.length >= 108);
+  assert.ok(creami.every((recipe) => desserts.some(({ id }) => id === recipe.id)));
+  assert.ok(creami.every((recipe) => !plannerRecipes.some(({ id }) => id === `catalog-${recipe.id}`)));
 });

@@ -13,6 +13,7 @@
 - Integrate only source recipes that are not materially duplicated by the V1 catalogue. Keep the six reviewed duplicate mappings explicit in `DUPLICATE_CATALOGUE_RECIPES` so they remain auditable and excluded from both the visible catalogue and weekly generator.
 - Describe compatibility at the level of the overall Mediterranean-style dietary pattern. Do not render the source mechanism text as proof that an isolated ingredient prevents or treats inflammation.
 - Keep visible cautions for concentrated turmeric/piperine preparations, seaweed/iodine, fermentation safety, high-sodium ingredients, coconut-rich recipes, and concentrated sweet snacks. Preserve the medical disclaimer and the official source links in the information screen.
+- Les desserts Ninja CREAMi Deluxe `r551` à `r630` restent des recettes d'appoint non planifiables (`planner.eligible: false`, `planner.equipment: []`). Chaque fiche conserve six portions, une base sous la ligne MAX FILL, une congélation à plat de 24 h séparée du temps actif, le modèle `NC501EU`, la zone `FULL` et l'un des cinq programmes relus (`ICE CREAM`, `LITE ICE CREAM`, `SORBET`, `GELATO`, `FROZEN YOGURT`). Les résultats de texture sont présentés comme estimatifs, sans promesse médicale ; les images restent uniques, réalistes, carrées 900 × 900 et limitées à 350 Ko.
 
 ### Semaine : conserver, cuisiner, archiver
 

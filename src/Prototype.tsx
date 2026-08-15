@@ -318,7 +318,7 @@ export function formatRecipeDuration(minutes: number): string {
   return `${hours} h${remainderMinutes ? ` ${remainderMinutes} min` : ""}`;
 }
 
-export type CataloguePassiveDurationLabel = "Fermentation" | "Infusion" | "Marinade" | "Repos";
+export type CataloguePassiveDurationLabel = "Congélation" | "Fermentation" | "Infusion" | "Marinade" | "Repos";
 
 function positiveDuration(value: number | null | undefined): number | null {
   return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : null;
@@ -327,6 +327,7 @@ function positiveDuration(value: number | null | undefined): number | null {
 /** Selects the most useful name for a catalogue recipe's passive time. */
 export function cataloguePassiveDurationLabel(recipe: CatalogueRecipe): CataloguePassiveDurationLabel {
   const context = normalizeText(`${recipe.titre} ${recipe.tags.join(" ")} ${recipe.etapes.join(" ")}`);
+  if (context.includes("congel")) return "Congélation";
   if (context.includes("ferment")) return "Fermentation";
   if (context.includes("infus")) return "Infusion";
   if (context.includes("marin")) return "Marinade";
@@ -1509,7 +1510,7 @@ function OfflineCatalogueSection() {
   return (
     <section className="information-card" data-testid="offline-catalogue">
       <h2>Catalogue hors ligne</h2>
-      <p>La semaine, les recettes planifiées et la liste de courses fonctionnent déjà sans connexion. Le catalogue complet (550 recettes) peut être conservé explicitement sur cet appareil.</p>
+      <p>La semaine, les recettes planifiées et la liste de courses fonctionnent déjà sans connexion. Le catalogue complet ({CATALOGUE_SUMMARY.nombre_recettes} recettes) peut être conservé explicitement sur cet appareil.</p>
       <button type="button" className="secondary-button full-button" data-testid="offline-catalogue-download" disabled={status === "loading" || status === "ready"} onClick={() => {
         setStatus("loading");
         void cacheCatalogueForOffline().then(() => setStatus("ready")).catch(() => setStatus("error"));
@@ -1780,6 +1781,7 @@ function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan }: { recipe:
       <div className={`catalogue-verdict is-${review.status}`}><span>{review.status === "validated" ? "Profil cohérent" : "Validée avec repères"}</span><p>{review.summary}</p></div>
       <div className={`recipe-actions ${onPlan ? "" : "recipe-actions--single"}`}>{onPlan ? <button type="button" className="secondary-button" data-testid="catalogue-plan" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} data-testid="catalogue-favorite" aria-pressed={isFavorite} onClick={toggleFavorite}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter aux favoris"}</button></div>
       {durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}
+      {recipe.materiel?.length ? <section className="recipe-section catalogue-equipment" data-testid="catalogue-equipment"><h2>Matériel</h2><ul>{recipe.materiel.map((item) => <li key={item}><CheckCircledIcon /><span>{item}</span></li>)}{recipe.creami ? <li><CheckCircledIcon /><span>Programme {recipe.creami.programme} · Zone {recipe.creami.zone}</span></li> : null}</ul></section> : null}
       {exclusion ? <aside className="planner-exclusion" data-testid="planner-exclusion"><strong>{exclusion.title}</strong><p>{exclusion.body}</p></aside> : null}
       {review.caution ? <aside className="catalogue-caution"><strong>À savoir</strong><p>{review.caution}</p></aside> : null}
       <AllergenNotice allergens={recipe.app.planner.allergens} />

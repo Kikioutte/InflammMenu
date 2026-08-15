@@ -24,8 +24,8 @@ for (const name of names.filter((entry) => /^image-prompts-r\d{3}-r\d{3}\.json$/
   }
 }
 
-assert.equal(recipes.size, 550, "550 recettes du catalogue sont requises");
-assert.equal(promptStatuses.size, 550, "550 prompts image sont requis");
+assert.ok(recipes.size > 0, "Le catalogue image ne peut pas être vide");
+assert.equal(promptStatuses.size, recipes.size, `${recipes.size} prompts image sont requis`);
 
 const expectedByFilename = new Map(
   [...recipes.values()].map((recipe) => [recipe.image.nom_fichier, recipe]),

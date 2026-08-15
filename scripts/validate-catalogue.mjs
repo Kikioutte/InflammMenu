@@ -35,6 +35,7 @@ const allowedAllergens = new Set([
   "mollusques",
 ]);
 const allowedProvenanceKinds = new Set(["nutrition", "cost", "inspiration", "safety"]);
+const allowedCreamiPrograms = new Set(["ICE CREAM", "LITE ICE CREAM", "SORBET", "GELATO", "FROZEN YOGURT"]);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -103,6 +104,16 @@ export function validateCatalogue(catalogue) {
     );
     assert(Array.isArray(recipe.ingredients) && recipe.ingredients.length > 0, `${label}: ingrédients requis`);
     assert(Array.isArray(recipe.etapes) && recipe.etapes.length > 0, `${label}: étapes requises`);
+    if (recipe.materiel !== undefined) {
+      assert(Array.isArray(recipe.materiel) && recipe.materiel.length > 0, `${label}: matériel invalide`);
+      for (const item of recipe.materiel) assert(nonEmptyString(item), `${label}: libellé de matériel invalide`);
+    }
+    if (recipe.tags.includes("ninja-creami-deluxe")) {
+      assert(recipe.creami?.modele === "Ninja CREAMi Deluxe (NC501EU)", `${label}: modèle CREAMi Deluxe requis`);
+      assert(allowedCreamiPrograms.has(recipe.creami?.programme), `${label}: programme CREAMi inconnu`);
+      assert(recipe.creami?.zone === "FULL", `${label}: zone CREAMi FULL requise`);
+      assert(recipe.materiel?.includes("Ninja CREAMi Deluxe (NC501EU)"), `${label}: machine absente du matériel`);
+    }
     assert(recipe.score_anti_inflammatoire >= 0 && recipe.score_anti_inflammatoire <= 10, `${label}: indice éditorial hors limites`);
 
     if (isV21 || recipe.provenance !== undefined) assertProvenance(recipe.provenance, `${label}.provenance`);
