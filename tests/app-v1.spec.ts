@@ -187,6 +187,28 @@ test("la génération construit une semaine navigable puis une liste de courses"
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
+test("créer une autre semaine renouvelle les recettes dans l’interface", async ({ page }) => {
+  await openFreshApp(page);
+  await page.evaluate(() => { Date.now = () => 1_700_000_000_001; });
+  await generateWeek(page);
+
+  await page.getByTestId("layout-week").click();
+  const firstWeek = await page.locator('[data-testid^="overview-"] span').allInnerTexts();
+  expect(firstWeek).toHaveLength(14);
+
+  await page.getByRole("button", { name: "Accueil", exact: true }).click();
+  await page.evaluate(() => { Date.now = () => 1_700_000_000_002; });
+  await page.getByRole("button", { name: "Créer une autre semaine" }).click();
+  await page.getByRole("button", { name: "Créer ma semaine" }).click();
+  await page.getByRole("button", { name: "Voir ma semaine" }).click();
+  await page.getByTestId("layout-week").click();
+
+  const secondWeek = await page.locator('[data-testid^="overview-"] span').allInnerTexts();
+  expect(secondWeek).toHaveLength(14);
+  expect(secondWeek).not.toEqual(firstWeek);
+  expect(new Set(secondWeek).size).toBe(14);
+});
+
 test("une substitution appliquée met à jour la recette, les allergènes et les courses", async ({ page }) => {
   await page.addInitScript(() => {
     const now = new Date();

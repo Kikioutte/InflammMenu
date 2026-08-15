@@ -67,7 +67,12 @@ export interface PlanSummary {
 
 const DEFAULT_START = "2026-08-03";
 const TAGS = {
-  legume: ["legume", "legumineuse", "legumineuses", "lentille", "pois-chiche", "haricot"],
+  legume: [
+    "legume", "legumes", "legumineuse", "legumineuses",
+    "lentille", "lentilles", "pois-chiche", "pois-chiches",
+    "pois-casse", "pois-casses", "haricot", "haricots",
+    "feve", "feves", "soja", "tofu", "tempeh",
+  ],
   fish: ["fish", "poisson", "saumon", "sardine", "maquereau", "cabillaud", "thon"],
   wholeGrain: ["whole-grain", "cereale-complete", "cereales-completes", "complet"],
   nutSeed: ["nuts-seeds", "noix-graines", "noix", "graine", "graines"],
@@ -165,6 +170,33 @@ function hashSeed(seed: string | number): number {
 
 function seededRank(seed: string | number, value: string): number {
   return hashSeed(`${String(seed)}:${value}`) / 0xffffffff;
+}
+
+/**
+ * A generated week should favour the strongest compatible recipes without
+ * turning a tiny score difference into a permanent winner. Recipes inside
+ * this score window remain eligible for the seeded, reproducible choice.
+ */
+const WEEKLY_SELECTION_TOLERANCE = 50;
+const MAX_WEEKLY_COST_PENALTY = 40;
+
+function cappedWeeklyCostPenalty(recipe: Recipe, portions: number): number {
+  return Math.min(MAX_WEEKLY_COST_PENALTY, recipe.costPerPortion * portions * 7);
+}
+
+function selectSeededWeeklyCandidate(
+  candidates: readonly Recipe[],
+  score: (recipe: Recipe) => number,
+  seed: string | number,
+  slotKey: string,
+): Recipe {
+  const ranked = [...candidates].sort((left, right) =>
+    score(right) - score(left) || left.id.localeCompare(right.id),
+  );
+  const bestScore = score(ranked[0]);
+  const pool = ranked.filter((recipe) => score(recipe) >= bestScore - WEEKLY_SELECTION_TOLERANCE);
+  const index = Math.min(pool.length - 1, Math.floor(seededRank(seed, slotKey) * pool.length));
+  return pool[index];
 }
 
 function round(value: number, digits = 2): number {
@@ -592,29 +624,31 @@ export function generateWeeklyPlan(
       );
     }
 
-    const selectedRecipe = [...candidates].sort((left, right) => {
-      const score = (recipe: Recipe): number => {
-        const seasonal = recipe.seasons.includes(season) || recipe.seasons.includes("all-year");
-        const targetScore =
-          (legumeDeficit > 0 && hasTag(recipe, TAGS.legume) ? 700 : 0) +
-          (fishDeficit > 0 && hasTag(recipe, TAGS.fish) ? 700 : 0);
-        const qualityScore =
-          (hasTag(recipe, TAGS.wholeGrain) ? 18 : 0) +
-          (hasNutOrSeed(recipe) ? 14 : 0) +
-          (seasonal ? 12 : 0) +
-          ingredientReuseFromSet(recipe, selectedIngredientIds) * 5;
-        // Saved recipes are a preference, weighted above quality nudges but
-        // below the legume/fish targets, and never above the safety filters.
-        const favoriteScore = favorites.has(recipe.id) ? 120 : 0;
-        // « Bof » : la recette reste possible, mais passe après les autres.
-        const softDislikeScore = softDisliked.has(recipe.id) ? -200 : 0;
-        // Cost remains meaningful even when nutrition/season scores are tied.
-        return targetScore + favoriteScore + softDislikeScore + qualityScore - recipe.costPerPortion * portions * 7;
-      };
-      const difference = score(right) - score(left);
-      if (difference !== 0) return difference;
-      return seededRank(seed, left.id) - seededRank(seed, right.id) || left.id.localeCompare(right.id);
-    })[0];
+    const score = (recipe: Recipe): number => {
+      const seasonal = recipe.seasons.includes(season) || recipe.seasons.includes("all-year");
+      const targetScore =
+        (legumeDeficit > 0 && hasTag(recipe, TAGS.legume) ? 700 : 0) +
+        (fishDeficit > 0 && hasTag(recipe, TAGS.fish) ? 700 : 0);
+      const qualityScore =
+        (hasTag(recipe, TAGS.wholeGrain) ? 18 : 0) +
+        (hasNutOrSeed(recipe) ? 14 : 0) +
+        (seasonal ? 12 : 0) +
+        ingredientReuseFromSet(recipe, selectedIngredientIds) * 5;
+      // Saved recipes are a preference, weighted above quality nudges but
+      // below the legume/fish targets, and never above the safety filters.
+      const favoriteScore = favorites.has(recipe.id) ? 120 : 0;
+      // « Bof » : la recette reste possible, mais passe après les autres.
+      const softDislikeScore = softDisliked.has(recipe.id) ? -200 : 0;
+      // Cost remains meaningful without erasing season, quality and variety.
+      return targetScore + favoriteScore + softDislikeScore + qualityScore
+        - cappedWeeklyCostPenalty(recipe, portions);
+    };
+    const selectedRecipe = selectSeededWeeklyCandidate(
+      candidates,
+      score,
+      seed,
+      `${slot.dayIndex}-${slot.mealType}`,
+    );
 
     used.add(selectedRecipe.id);
     selected.push(selectedRecipe);

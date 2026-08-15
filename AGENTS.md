@@ -17,6 +17,7 @@
 
 ### Semaine : conserver, cuisiner, archiver
 
+- La génération choisit de façon reproductible parmi les meilleurs candidats compatibles : une même graine redonne exactement la même semaine, tandis que des graines différentes explorent réellement le catalogue. Le tirage intervient toujours après les filtres stricts et les objectifs hebdomadaires. Le coût reste un critère plafonné dans le classement, puis la passe budgétaire ramène le menu sous le budget lorsqu'une solution compatible existe.
 - Un repas « conservé » (cadenas) garde son créneau, sa recette et ses portions à la génération suivante, reste hors du rééquilibrage budgétaire et n'est jamais dupliqué ailleurs dans la semaine. Un cadenas n'est jamais une raison de servir une recette qui viole une allergie, le régime, l'équipement ou le temps actif maximum : dans ce cas il est ignoré silencieusement et le créneau est régénéré (`preservableLockedMeals`).
 - Le repère « cuisiné » (`PlannedMeal.completed`) est purement déclaratif : il alimente la progression de la semaine, ne modifie pas la liste de courses, et repart de zéro quand le repas est remplacé ou quand une semaine archivée est reprise.
 - L'export de la liste de courses (partage natif, presse-papiers, fichier `.txt`) utilise `formatShoppingListText` : rayons en majuscules, quantités culinaires exactes suivies du conseil d'achat entre parenthèses, articles cochés ou en réserve résumés en pied de liste et jamais listés. La mention « quantités et prix indicatifs » reste dans le texte exporté.

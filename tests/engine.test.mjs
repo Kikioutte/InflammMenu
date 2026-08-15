@@ -80,6 +80,24 @@ test("generation is deterministic, creates 14 unique slots, and meets available 
   assert.ok(summary.withinBudget);
 });
 
+test("different seeds explore the best compatible candidates reproducibly", () => {
+  const uniform = Array.from({ length: 80 }, (_, index) => recipe(index + 1_000, {
+    tags: ["poisson", "légumineuses", "céréales-complètes"],
+    costPerPortion: 2 + (index % 5) * 0.15,
+  }));
+  const plans = Array.from({ length: 30 }, (_, index) => engine.generateWeeklyPlan(uniform, {
+    ...profile,
+    weeklyBudget: 100,
+  }, { seed: `exploration-${index}`, startsOn: "2026-08-03" }));
+
+  assert.ok(new Set(plans.map((plan) => plan.meals.map((meal) => meal.recipeId).join(","))).size >= 25);
+  assert.ok(new Set(plans.flatMap((plan) => plan.meals.map((meal) => meal.recipeId))).size >= 65);
+  assert.deepEqual(
+    engine.generateWeeklyPlan(uniform, profile, { seed: "reproductible" }),
+    engine.generateWeeklyPlan(uniform, profile, { seed: "reproductible" }),
+  );
+});
+
 test("an applied substitution recalculates ingredients, allergens, cost and shopping", () => {
   const walnutRecipe = recipe(30, {
     id: "walnut-bowl",
