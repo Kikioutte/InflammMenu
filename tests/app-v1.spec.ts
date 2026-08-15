@@ -187,6 +187,28 @@ test("la génération construit une semaine navigable puis une liste de courses"
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
+test("créer une autre semaine renouvelle les recettes dans l’interface", async ({ page }) => {
+  await openFreshApp(page);
+  await page.evaluate(() => { Date.now = () => 1_700_000_000_001; });
+  await generateWeek(page);
+
+  await page.getByTestId("layout-week").click();
+  const firstWeek = await page.locator('[data-testid^="overview-"] span').allInnerTexts();
+  expect(firstWeek).toHaveLength(14);
+
+  await page.getByRole("button", { name: "Accueil", exact: true }).click();
+  await page.evaluate(() => { Date.now = () => 1_700_000_000_002; });
+  await page.getByRole("button", { name: "Créer une autre semaine" }).click();
+  await page.getByRole("button", { name: "Créer ma semaine" }).click();
+  await page.getByRole("button", { name: "Voir ma semaine" }).click();
+  await page.getByTestId("layout-week").click();
+
+  const secondWeek = await page.locator('[data-testid^="overview-"] span').allInnerTexts();
+  expect(secondWeek).toHaveLength(14);
+  expect(secondWeek).not.toEqual(firstWeek);
+  expect(new Set(secondWeek).size).toBe(14);
+});
+
 test("une substitution appliquée met à jour la recette, les allergènes et les courses", async ({ page }) => {
   await page.addInitScript(() => {
     const now = new Date();
@@ -1107,6 +1129,8 @@ test("une recette se note, s’annote et se duplique", async ({ page }) => {
 });
 
 test("le garde-manger déduit les quantités et le budget réel se saisit", async ({ page }) => {
+  // Keep this shopping-list fixture stable across seasons and CI timings.
+  await page.clock.setFixedTime(new Date("2026-08-10T12:00:00Z"));
   await openFreshApp(page);
 
   await generateWeek(page);
@@ -1114,11 +1138,12 @@ test("le garde-manger déduit les quantités et le budget réel se saisit", asyn
   await page.getByRole("button", { name: "Retirer ce que j’ai déjà" }).click();
 
   const firstItem = page.locator(".shopping-item").first();
-  const purchaseSuggestion = firstItem.locator(".shopping-toggle small");
-  const before = await purchaseSuggestion.innerText();
+  const itemCount = await page.locator(".shopping-item").count();
   const amountInput = firstItem.getByTestId(/^pantry-amount-/);
-  await amountInput.fill("1");
-  await expect(purchaseSuggestion).not.toHaveText(before);
+  // Cover the full requirement: a one-unit deduction can legitimately leave
+  // the rounded purchase advice unchanged (for example, still "1 botte").
+  await amountInput.fill("99999");
+  await expect(page.locator(".shopping-item")).toHaveCount(itemCount - 1);
 
   await page.getByTestId("spend-input").fill("72,50");
   await expect(page.getByTestId("spend-tracker")).toContainText("72,50 € dépensés");
