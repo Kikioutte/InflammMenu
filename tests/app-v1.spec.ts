@@ -105,10 +105,28 @@ test("le mode ce soir révèle les recettes par groupes de six et la semaine aff
   await expect(page.getByTestId("tonight-view")).toBeVisible();
   await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(6);
   await expect(page.getByTestId("tonight-results-count")).toContainText("6 recettes sur");
+  const firstPageForms = await page.locator('[data-testid^="tonight-result-"]').evaluateAll((cards) =>
+    cards.map((card) => card.getAttribute("data-recipe-form")),
+  );
+  const firstPageCounts = firstPageForms.reduce<Record<string, number>>((counts, form) => ({
+    ...counts,
+    [form ?? "missing"]: (counts[form ?? "missing"] ?? 0) + 1,
+  }), {});
+  expect(new Set(firstPageForms).size).toBeGreaterThanOrEqual(3);
+  expect(firstPageCounts.soup ?? 0).toBeLessThanOrEqual(2);
+  expect(firstPageCounts.salad ?? 0).toBeLessThanOrEqual(2);
+  expect(firstPageCounts.bowl ?? 0).toBeLessThanOrEqual(2);
   await page.getByTestId("tonight-more").click();
   await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(12);
   const visibleIds = await page.locator('[data-testid^="tonight-result-"]').evaluateAll((cards) => cards.map((card) => card.getAttribute("data-testid")));
   expect(new Set(visibleIds).size).toBe(12);
+  await page.getByRole("button", { name: "Déjeuner" }).click();
+  await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(6);
+  await page.getByTestId("tonight-more").click();
+  await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(12);
+  await page.getByRole("button", { name: "Ajouter une portion" }).click();
+  await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(6);
+  await page.getByRole("button", { name: "Dîner" }).click();
   await page.getByTestId("tonight-time-15").click();
   await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(1);
   await expect(page.getByTestId("tonight-results-count")).toHaveText("1 recette sur 1");

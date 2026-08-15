@@ -66,6 +66,8 @@ export interface PlanSummary {
 }
 
 const DEFAULT_START = "2026-08-03";
+const TONIGHT_FORM_REPEAT_PENALTY = 24;
+const TONIGHT_RECOMMENDATION_PAGE_SIZE = 6;
 const TAGS = {
   legume: [
     "legume", "legumes", "legumineuse", "legumineuses",
@@ -507,7 +509,7 @@ export function recommendTonight(
   const favorites = new Set(options.favoriteRecipeIds ?? []);
   const softDisliked = new Set(profile.softDislikedRecipeIds ?? []);
   const seed = `${options.mealType}:${maxPrepMinutes}:${[...pantry].sort().join(",")}`;
-  return recipes
+  const ranked = recipes
     .filter((recipe) => recipe.mealTypes.includes(options.mealType)
       && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes }))
     .map((recipe) => {
@@ -523,7 +525,38 @@ export function recommendTonight(
     })
     .sort((left, right) => right.score - left.score
       || seededRank(seed, left.recipe.id) - seededRank(seed, right.recipe.id)
-      || left.recipe.title.localeCompare(right.recipe.title, "fr"))
+      || left.recipe.title.localeCompare(right.recipe.title, "fr"));
+  const remaining = [...ranked];
+  const diversified: typeof ranked = [];
+
+  // Preserve the score as the source of truth, then gently spread explicit
+  // serving forms within each visible group. This never removes a compatible
+  // recipe: when only one form is available, every result is still returned.
+  while (remaining.length > 0) {
+    const pageForms = new Map<Exclude<RecipeForm, "other">, number>();
+    const pageLength = Math.min(TONIGHT_RECOMMENDATION_PAGE_SIZE, remaining.length);
+    for (let pageIndex = 0; pageIndex < pageLength; pageIndex += 1) {
+      let bestIndex = 0;
+      let bestAdjustedScore = Number.NEGATIVE_INFINITY;
+      remaining.forEach((candidate, index) => {
+        const form = recipeForm(candidate.recipe);
+        const repeatPenalty = form === "other"
+          ? 0
+          : (pageForms.get(form) ?? 0) * TONIGHT_FORM_REPEAT_PENALTY;
+        const adjustedScore = candidate.score - repeatPenalty;
+        if (adjustedScore > bestAdjustedScore) {
+          bestIndex = index;
+          bestAdjustedScore = adjustedScore;
+        }
+      });
+      const [selected] = remaining.splice(bestIndex, 1);
+      diversified.push(selected);
+      const form = recipeForm(selected.recipe);
+      if (form !== "other") pageForms.set(form, (pageForms.get(form) ?? 0) + 1);
+    }
+  }
+
+  return diversified
     .slice(0, limit)
     .map(({ score: _score, ...recommendation }) => recommendation);
 }
