@@ -757,6 +757,14 @@ test("a recipe can be assigned to a compatible slot, safety filters included", (
   assert.equal(new Set(updated.meals.map((meal) => meal.recipeId)).size, 14, "aucun doublon");
   assert.notEqual(updated.estimatedCost, undefined);
   assert.equal(plan.meals.find((meal) => meal.dayIndex === 2 && meal.mealType === "dinner").recipeId !== spare.id, true);
+
+  const slotToRestore = plan.meals.find((meal) => meal.dayIndex === 3 && meal.mealType === "dinner");
+  const skipped = engine.setMealSkipped(plan, slotToRestore.id, true, catalogue);
+  const restored = engine.assignRecipeToSlot(skipped, { dayIndex: 3, mealType: "dinner" }, spare, catalogue, profile);
+  const restoredMeal = restored.meals.find((meal) => meal.id === slotToRestore.id);
+  assert.equal(restoredMeal.skipped, false, "planifier un plat remet le créneau au foyer");
+  assert.ok(restored.estimatedCost > skipped.estimatedCost, "le coût du repas réactivé est recalculé");
+  assert.ok(engine.buildShoppingList(restored, catalogue).length >= engine.buildShoppingList(skipped, catalogue).length);
 });
 
 test("assigning refuses unsafe, mismatched, duplicated or unknown slots", () => {

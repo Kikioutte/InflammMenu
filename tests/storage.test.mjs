@@ -90,6 +90,13 @@ test("disliked recipes are persisted and legacy profiles default to an empty lis
   assert.deepEqual(migrateAppState(withDislikes), withDislikes);
 });
 
+test("allergen aliases are canonicalized when the profile is persisted", () => {
+  const migrated = migrateAppState(state({
+    profile: { ...state().profile, allergies: ["Fruits à coque", "noix", "soya", "œufs", "lactose"] },
+  }));
+  assert.deepEqual(migrated.profile.allergies, ["fruits-a-coque", "soja", "oeuf", "lait"]);
+});
+
 test("a backup round trip preserves every local decision", async () => {
   const { exportAppState, importAppState, BACKUP_FORMAT } = await import("../src/storage.ts");
   const source = migrateAppState(state({
@@ -552,6 +559,37 @@ test("audit remediation: strict imports and nested custom recipes", async () => 
   assert.equal(malformed.customRecipes.length, 0);
 });
 
+test("personal recipes survive a Pages base path and an invalid image only falls back", () => {
+  const customRecipe = {
+    id: "perso-pages",
+    title: "Ma recette Pages",
+    mealTypes: ["lunch"],
+    diet: ["classic"],
+    prepMinutes: 10,
+    costPerPortion: 2,
+    seasons: ["all-year"],
+    equipment: [],
+    allergens: [],
+    tags: ["maison"],
+    ingredients: [{ id: "carrot", name: "Carotte", quantity: 100, unit: "g", category: "fruit-vegetable" }],
+    nutrition: { calories: 100, protein: 2, fiber: 3, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    description: "Une version personnelle valide.",
+    steps: ["Préparer les ingrédients."],
+    conservation: "À consommer rapidement.",
+    image: "/InflammMenu/assets/recipes/ma-recette.jpg",
+  };
+
+  const pagesState = migrateAppState(state({ customRecipes: [customRecipe] }));
+  assert.equal(pagesState.customRecipes.length, 1);
+  assert.equal(pagesState.customRecipes[0].image, "/InflammMenu/assets/recipes/ma-recette.jpg");
+
+  const unsafeState = migrateAppState(state({
+    customRecipes: [{ ...customRecipe, image: "javascript:alert(1)" }],
+  }));
+  assert.equal(unsafeState.customRecipes.length, 1, "une image invalide ne détruit jamais la recette");
+  assert.equal(unsafeState.customRecipes[0].image, "/assets/recipe-placeholder.svg");
+});
+
 test("audit remediation: plan normalization removes duplicate slots and invalid leftovers", async () => {
   const { normalizePlan } = await import("../src/storage.ts");
   const normalized = normalizePlan({
@@ -570,7 +608,7 @@ test("audit remediation: plan normalization removes duplicate slots and invalid 
 
 
 test("concurrent tab edits to different fields are merged without data loss", async () => {
-  const { mergeAppStateReplicas, stampAppStateChanges } = await import("../src/storage.ts");
+  const { mergeAppStateReplicas, reconcileStoredStates, stampAppStateChanges } = await import("../src/storage.ts");
   const base = migrateAppState({ ...state(), stateRevision: 10 });
   const profileEdit = stampAppStateChanges(base, {
     ...base,
@@ -588,13 +626,23 @@ test("concurrent tab edits to different fields are merged without data loss", as
   assert.equal(merged.fieldRevisions.textScale, 101);
   assert.deepEqual(mergeAppStateReplicas(merged, comfortEdit), merged, "une ancienne réplique ne recrée pas une boucle de sauvegarde");
 
-  const collisionA = stampAppStateChanges(base, { ...base, profile: { ...base.profile, firstName: "Alice" } }, 200);
-  const collisionB = stampAppStateChanges(base, { ...base, profile: { ...base.profile, firstName: "Brune" } }, 200);
+  const tiedProfileEdit = stampAppStateChanges(base, {
+    ...base,
+    profile: { ...base.profile, firstName: "Même révision" },
+  }, 300);
+  const tiedComfortEdit = stampAppStateChanges(base, { ...base, textScale: "large" }, 300);
+  const reconciledTie = reconcileStoredStates(tiedProfileEdit, tiedComfortEdit);
+  assert.equal(reconciledTie.profile.firstName, "Même révision");
+  assert.equal(reconciledTie.textScale, "large");
+
+  const collisionA = stampAppStateChanges(base, { ...base, profile: { ...base.profile, firstName: "zzz" } }, 200, "200:mutation-a");
+  const collisionB = stampAppStateChanges(base, { ...base, profile: { ...base.profile, firstName: "aaa" } }, 200, "200:mutation-z");
   assert.equal(
     mergeAppStateReplicas(collisionA, collisionB).profile.firstName,
     mergeAppStateReplicas(collisionB, collisionA).profile.firstName,
     "une collision d’horloge converge vers la même valeur dans les deux onglets",
   );
+  assert.equal(mergeAppStateReplicas(collisionA, collisionB).profile.firstName, "aaa", "le contenu lexical ne choisit plus le gagnant");
 });
 
 

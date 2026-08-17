@@ -25,6 +25,7 @@ assert.doesNotMatch(appShell, /\/og\.(?:png|jpe?g)/i, "l'image sociale ne doit p
 if (output.endsWith(path.join("dist", "pages"))) {
   assert.match(index, /\/InflammMenu\/og\.jpg/, "l'image sociale GitHub Pages n'est pas rebasée");
   assert.doesNotMatch(index, /content=["']\/og\.jpg["']/, "un chemin racine cassé subsiste pour l'image sociale");
+  assert.doesNotMatch(index, /script-src[^;]*'unsafe-inline'/, "la CSP publiée autorise encore les scripts inline");
 }
 
 console.log(`Découpage valide : bundle initial ${entryStats.size} octets (${entryGzipSize} gzip), catalogue et image sociale absents du précache initial.`);

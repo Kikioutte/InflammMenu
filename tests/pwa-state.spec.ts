@@ -18,6 +18,32 @@ async function openInformation(page: Page) {
   await expect(page.getByRole("heading", { name: "À propos de l’application" })).toBeVisible();
 }
 
+async function generateWeek(page: Page) {
+  await page.getByRole("button", { name: "Générer ma semaine" }).click();
+  await page.getByRole("button", { name: "Créer ma semaine" }).click();
+  await page.getByRole("button", { name: "Voir ma semaine" }).click();
+  await expect(page.getByTestId("week-view")).toBeVisible();
+}
+
+test("une recette personnelle survit au rechargement sous la base GitHub Pages", async ({ page }) => {
+  await openFreshApp(page);
+  await generateWeek(page);
+  await page.locator(".meal-card__main").first().click();
+  await page.getByTestId("duplicate-recipe").click();
+  await page.getByTestId("custom-title").fill("Ma recette personnelle Pages");
+  await page.getByTestId("custom-save").click();
+  await page.getByTestId("flow-current").getByRole("button", { name: "Ajouter", exact: true }).click();
+
+  await expect.poll(() => page.evaluate(() => {
+    const raw = window.localStorage.getItem("inflamm-menu:app-state");
+    return raw ? JSON.parse(raw).customRecipes?.length : 0;
+  })).toBe(1);
+
+  await page.reload();
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await expect(page.getByText("Ma recette personnelle Pages", { exact: true })).toBeVisible();
+});
+
 test("deux onglets conservent des réglages différents et les synchronisent", async ({ page, context }) => {
   await openFreshApp(page);
   const secondPage = await context.newPage();
