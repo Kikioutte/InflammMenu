@@ -483,6 +483,35 @@ test("l’accueil montre tous les repas du jour, y compris en trois repas", asyn
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
+test("ajouter le petit-déjeuner conserve la semaine courante et les courses cochées", async ({ page }) => {
+  await openFreshApp(page);
+  await generateWeek(page);
+
+  const planId = await page.evaluate(() => JSON.parse(localStorage.getItem("inflamm-menu:app-state") ?? "{}").currentPlan?.id);
+  await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await page.locator(".shopping-toggle").first().click();
+  const checkedBefore = await page.evaluate(() => JSON.parse(localStorage.getItem("inflamm-menu:app-state") ?? "{}").checkedShoppingItemIds ?? []);
+  expect(checkedBefore.length).toBe(1);
+
+  await page.getByRole("button", { name: "Accueil", exact: true }).click();
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: "3 repas" }).click();
+  await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
+
+  await expect.poll(() => page.evaluate(() => {
+    const state = JSON.parse(localStorage.getItem("inflamm-menu:app-state") ?? "{}");
+    return {
+      planId: state.currentPlan?.id,
+      meals: state.currentPlan?.meals?.length,
+      checked: state.checkedShoppingItemIds,
+    };
+  })).toEqual({ planId, meals: 14, checked: checkedBefore });
+
+  await page.getByRole("button", { name: "Semaine", exact: true }).click();
+  await expect(page.getByTestId("week-view")).toBeVisible();
+  await expect(page.locator(".meal-card")).toHaveCount(2);
+});
+
 test("une recette écartée disparaît des semaines suivantes et reste réversible", async ({ page }) => {
   await openFreshApp(page);
 
@@ -1196,9 +1225,20 @@ test("la taille du texte est réglable et persiste", async ({ page }) => {
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
   await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
   await expect(page.getByTestId("comfort-card")).toBeVisible();
+  const sample = page.getByTestId("comfort-card").locator("p").first();
+  const normalSize = await sample.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize));
+  expect(normalSize).toBeGreaterThanOrEqual(12);
+
+  await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
+  const browserScaledSize = await sample.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize));
+  expect(browserScaledSize).toBeGreaterThanOrEqual(normalSize * 2 - 0.1);
+  await page.evaluate(() => { document.documentElement.style.fontSize = ""; });
 
   await page.getByTestId("text-scale-large").click();
   await expect(page.locator(".app-shell")).toHaveAttribute("data-text-scale", "large");
+  const largeSize = await sample.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize));
+  expect(largeSize).toBeGreaterThanOrEqual(14);
+  await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 
   await page.waitForTimeout(100);
   await page.reload();

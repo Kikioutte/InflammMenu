@@ -83,6 +83,7 @@ import {
   type PlanSummary,
   type RecipeCompatibilityDiagnostic,
 } from "./engine";
+import { canonicalAllergen } from "./allergens";
 import {
   DEFAULT_PROFILE,
   type DayConstraint,
@@ -249,16 +250,44 @@ const CATEGORY_LABELS: Record<IngredientCategory, string> = {
  * variants. AppShell refreshes this registry whenever custom recipes change, so
  * every screen and every engine call sees the same set.
  */
+type RecipeRegistrySnapshot = {
+  customRecipes: readonly Recipe[];
+  recipes: readonly Recipe[];
+  byId: ReadonlyMap<string, Recipe>;
+};
+
 let ACTIVE_RECIPES: readonly Recipe[] = RECIPES;
-const recipeById = new Map(RECIPES.map((recipe) => [recipe.id, recipe]));
+let recipeById: ReadonlyMap<string, Recipe> = new Map(RECIPES.map((recipe) => [recipe.id, recipe]));
+let recipeRegistrySnapshot: RecipeRegistrySnapshot = {
+  customRecipes: [],
+  recipes: ACTIVE_RECIPES,
+  byId: recipeById,
+};
+const recipeRegistryListeners = new Set<() => void>();
+
+function subscribeRecipeRegistry(listener: () => void) {
+  recipeRegistryListeners.add(listener);
+  return () => recipeRegistryListeners.delete(listener);
+}
+
+function replaceRecipeRegistry(customRecipes: readonly Recipe[]) {
+  if (recipeRegistrySnapshot.customRecipes === customRecipes) return;
+  const recipes = customRecipes.length ? [...RECIPES, ...customRecipes] : RECIPES;
+  const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+  ACTIVE_RECIPES = recipes;
+  recipeById = byId;
+  recipeRegistrySnapshot = { customRecipes, recipes, byId };
+  recipeRegistryListeners.forEach((listener) => listener());
+}
 
 function useRecipeRegistry(customRecipes: readonly Recipe[]): readonly Recipe[] {
-  return useMemo(() => {
-    ACTIVE_RECIPES = customRecipes.length ? [...RECIPES, ...customRecipes] : RECIPES;
-    recipeById.clear();
-    for (const recipe of ACTIVE_RECIPES) recipeById.set(recipe.id, recipe);
-    return ACTIVE_RECIPES;
-  }, [customRecipes]);
+  const snapshot = useSyncExternalStore(
+    subscribeRecipeRegistry,
+    () => recipeRegistrySnapshot,
+    () => recipeRegistrySnapshot,
+  );
+  useEffect(() => replaceRecipeRegistry(customRecipes), [customRecipes]);
+  return snapshot.recipes;
 }
 const ingredientNameById = new Map(
   RECIPES.flatMap((recipe) => recipe.ingredients).map((ingredient) => [ingredient.id, ingredient.name]),
@@ -1709,10 +1738,11 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
   useEffect(() => { setIsFavorite(favorite); }, [favorite]);
   const ingredients = ingredientsForPlannedMeal(recipe, planned, portions);
   const selectedSubstitutions = new Map((planned?.substitutions ?? []).map((selection) => [canonicalIngredientId(selection.ingredientId), selection.substitutionId]));
+  const blockedAllergens = new Set(profile.allergies.map(canonicalAllergen));
   const allowedSubstitutions = (ingredient: Recipe["ingredients"][number]) => ingredientSubstitutionsFor(ingredient).filter((rule) => {
     const replacementId = canonicalIngredientId(rule.replacement.id);
     const blockedByIngredient = profile.excludedIngredientIds.map(canonicalIngredientId).includes(replacementId);
-    const blockedByAllergen = (rule.replacement.allergens ?? []).some((allergen) => profile.allergies.includes(allergen));
+    const blockedByAllergen = (rule.replacement.allergens ?? []).map(canonicalAllergen).some((allergen) => blockedAllergens.has(allergen));
     return !blockedByIngredient && !blockedByAllergen;
   });
   const advance = advancePrepFor(recipe);
@@ -1821,6 +1851,11 @@ function ReplaceView({ plan, current, profile, onConfirm }: { plan: WeeklyPlan; 
 function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateStore }) {
   const [tab, setTab] = useState<TabId>("home");
   const appState = useSyncExternalStore(appStore.subscribe, appStore.getSnapshot, appStore.getSnapshot);
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle("is-large-text", appState.textScale === "large");
+    return () => root.classList.remove("is-large-text");
+  }, [appState.textScale]);
   const setAppState = appStore.setState;
   const hydrateAppState = appStore.hydrateState;
   const mergeAppState = appStore.mergeState;
@@ -1983,13 +2018,13 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   useEffect(() => {
     if (!hydrated) return;
     setAppState((current) => {
-      const currentSafe = !current.currentPlan || inspectPlanReplay(current.currentPlan, ACTIVE_RECIPES, current.profile).canReplay;
-      const upcomingSafe = !current.upcomingPlan || inspectPlanReplay(current.upcomingPlan, ACTIVE_RECIPES, current.profile).canReplay;
+      const currentSafe = !current.currentPlan || inspectPlanReplay(current.currentPlan, ACTIVE_RECIPES, current.profile).blockedMeals.length === 0;
+      const upcomingSafe = !current.upcomingPlan || inspectPlanReplay(current.upcomingPlan, ACTIVE_RECIPES, current.profile).blockedMeals.length === 0;
       if (currentSafe && upcomingSafe) return current;
       const removed = [!currentSafe ? current.currentPlan : null, !upcomingSafe ? current.upcomingPlan : null]
         .filter((plan): plan is WeeklyPlan => Boolean(plan));
       const removedIds = new Set(removed.map((plan) => plan.id));
-      setAppNotice("Une semaine importée ou synchronisée ne respecte plus votre profil et a été déplacée dans l’historique.");
+      setAppNotice("Une semaine contient un repas qui ne respecte plus votre profil et a été déplacée dans l’historique.");
       return {
         ...current,
         currentPlan: currentSafe ? current.currentPlan : null,
@@ -2243,8 +2278,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView state={live} onRestore={(restored) => { setArchivedWeek(null); setAppState(restored); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
   const openProfile = () => flow.push({ id: "profile", title: "Profil alimentaire", headerHeight: 56, header: (route) => <Header title="Mon profil" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <ProfileView key={JSON.stringify(live.profile)} initial={live.profile} onOpenInformation={() => route.push(informationScreen())} onSave={(profile) => {
     const snapshot = appStore.getSnapshot();
-    const currentCompatible = !snapshot.currentPlan || inspectPlanReplay(snapshot.currentPlan, ACTIVE_RECIPES, profile).canReplay;
-    const upcomingCompatible = !snapshot.upcomingPlan || inspectPlanReplay(snapshot.upcomingPlan, ACTIVE_RECIPES, profile).canReplay;
+    const currentCompatible = !snapshot.currentPlan || inspectPlanReplay(snapshot.currentPlan, ACTIVE_RECIPES, profile).blockedMeals.length === 0;
+    const upcomingCompatible = !snapshot.upcomingPlan || inspectPlanReplay(snapshot.upcomingPlan, ACTIVE_RECIPES, profile).blockedMeals.length === 0;
     if (!currentCompatible || !upcomingCompatible) setAppNotice("Une semaine incompatible avec votre nouveau profil a été déplacée dans l’historique. Générez un nouveau menu pour appliquer vos critères en toute sécurité.");
     setAppState((current) => {
       const removed = [!currentCompatible ? current.currentPlan : null, !upcomingCompatible ? current.upcomingPlan : null].filter((plan): plan is WeeklyPlan => Boolean(plan));

@@ -11,6 +11,7 @@ import {
 } from "./domain.ts";
 import { canonicalIngredientId, legacyShoppingItemKeyToCanonical, shoppingIdentityFor } from "./shopping.ts";
 import { substitutionRuleAppliesToIngredientId, substitutionRuleById } from "./substitutions.ts";
+import { canonicalAllergens } from "./allergens.ts";
 
 export const APP_STATE_VERSION = 3 as const;
 
@@ -34,6 +35,7 @@ export const APP_STATE_DATA_KEYS = [
 
 export type AppStateDataKey = typeof APP_STATE_DATA_KEYS[number];
 export type AppStateFieldRevisions = Record<AppStateDataKey, number>;
+export type AppStateFieldMutationIds = Record<AppStateDataKey, string>;
 
 export interface AppState {
   version: typeof APP_STATE_VERSION;
@@ -62,6 +64,8 @@ export interface AppState {
   stateRevision: number;
   /** Per-field clocks let concurrent tabs merge unrelated edits instead of overwriting them. */
   fieldRevisions: AppStateFieldRevisions;
+  /** Stable mutation identities resolve same-clock conflicts without inspecting user data. */
+  fieldMutationIds: AppStateFieldMutationIds;
   /** @deprecated Use favoriteRecipeIds. Kept for version-0 data compatibility. */
   favorites: string[];
   /** @deprecated Use checkedShoppingItemIds. Kept for version-0 data compatibility. */
@@ -112,6 +116,7 @@ export const DEFAULT_APP_STATE: AppState = createState({
   onboardingCompleted: false,
   stateRevision: 0,
   fieldRevisions: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, 0])) as AppStateFieldRevisions,
+  fieldMutationIds: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, "initial"])) as AppStateFieldMutationIds,
 });
 
 type StateInput = Pick<
@@ -131,12 +136,19 @@ type StateInput = Pick<
   | "textScale"
   | "remindersEnabled"
   | "onboardingCompleted"
-> & { stateRevision?: number; fieldRevisions?: Partial<AppStateFieldRevisions> };
+> & {
+  stateRevision?: number;
+  fieldRevisions?: Partial<AppStateFieldRevisions>;
+  fieldMutationIds?: Partial<AppStateFieldMutationIds>;
+};
 
 function createState(input: StateInput): AppState {
   const favoriteRecipeIds = [...input.favoriteRecipeIds];
   const checkedShoppingItemIds = [...input.checkedShoppingItemIds];
   const pantryIngredientIds = [...input.pantryIngredientIds];
+  const stateRevision = Math.max(0, Math.floor(input.stateRevision ?? 0));
+  const fieldRevisions = normalizeFieldRevisions(input.fieldRevisions, input.stateRevision);
+  const fieldMutationIds = normalizeFieldMutationIds(input.fieldMutationIds, fieldRevisions, input);
 
   return {
     version: APP_STATE_VERSION,
@@ -155,8 +167,9 @@ function createState(input: StateInput): AppState {
     textScale: input.textScale,
     remindersEnabled: input.remindersEnabled,
     onboardingCompleted: input.onboardingCompleted,
-    stateRevision: Math.max(0, Math.floor(input.stateRevision ?? 0)),
-    fieldRevisions: normalizeFieldRevisions(input.fieldRevisions, input.stateRevision),
+    stateRevision,
+    fieldRevisions,
+    fieldMutationIds,
     favorites: [...favoriteRecipeIds],
     checkedShoppingIds: [...checkedShoppingItemIds],
     pantryIds: [...pantryIngredientIds],
@@ -346,7 +359,16 @@ const CUSTOM_DIETS = new Set(["classic", "vegetarian", "no-pork"]);
 const CUSTOM_SEASONS = new Set(["spring", "summer", "autumn", "winter", "all-year"]);
 const CUSTOM_EQUIPMENT = new Set(["hob", "oven", "microwave", "blender", "toaster", "steamer"]);
 const CUSTOM_CATEGORIES = new Set(DEFAULT_CATEGORY_ORDER);
-const SAFE_RECIPE_IMAGE = /^\/assets\/[a-zA-Z0-9_./-]+$/;
+const SAFE_RECIPE_IMAGE = /^\/(?:[a-zA-Z0-9_-]+\/)*assets\/[a-zA-Z0-9_./-]+$/;
+const RECIPE_PLACEHOLDER_IMAGE = "/assets/recipe-placeholder.svg";
+
+function normalizeRecipeImage(value: unknown): string {
+  const image = cleanUserText(value, 500);
+  if (!image || !SAFE_RECIPE_IMAGE.test(image)) return RECIPE_PLACEHOLDER_IMAGE;
+  const segments = image.split("/");
+  if (segments.some((segment) => segment === "." || segment === "..")) return RECIPE_PLACEHOLDER_IMAGE;
+  return image;
+}
 
 function normalizedEnumArray(value: unknown, allowed: ReadonlySet<string>, maximum = 30): string[] {
   return stringArray(value)
@@ -405,8 +427,7 @@ function normalizeCustomRecipe(value: unknown): Recipe | null {
   const fiber = finiteNumber(value.nutrition.fiber, Number.NaN);
   if (![calories, protein, fiber].every((item) => Number.isFinite(item) && item >= 0 && item <= 100_000)) return null;
 
-  const image = cleanUserText(value.image, 500);
-  if (image && !SAFE_RECIPE_IMAGE.test(image)) return null;
+  const image = normalizeRecipeImage(value.image);
 
   return {
     id,
@@ -432,7 +453,7 @@ function normalizeCustomRecipe(value: unknown): Recipe | null {
     ...(cleanUserText(value.caution, 2_000) ? { caution: cleanUserText(value.caution, 2_000) } : {}),
     steps,
     conservation: cleanUserText(value.conservation, 1_000),
-    image: image || "/assets/recipe-placeholder.svg",
+    image,
   };
 }
 
@@ -511,7 +532,7 @@ function normalizeProfile(value: unknown): UserProfile {
     weeklyBudget: boundedNumber(value.weeklyBudget, DEFAULT_PROFILE.weeklyBudget, 1, 10_000),
     maxPrepMinutes: boundedNumber(value.maxPrepMinutes, DEFAULT_PROFILE.maxPrepMinutes, 1, 24 * 60),
     dayConstraints: normalizeDayConstraints(value.dayConstraints),
-    allergies: stringArray(value.allergies),
+    allergies: canonicalAllergens(stringArray(value.allergies)),
     excludedIngredientIds: [...new Set(stringArray(value.excludedIngredientIds).map(canonicalIngredientId))],
     dislikedRecipeIds: stringArray(value.dislikedRecipeIds),
     softDislikedRecipeIds: stringArray(value.softDislikedRecipeIds),
@@ -533,6 +554,34 @@ function normalizeFieldRevisions(value: unknown, fallbackValue: unknown): AppSta
     key,
     Object.hasOwn(record, key) ? normalizeRevision(record[key]) : fallback,
   ])) as AppStateFieldRevisions;
+}
+
+function stableValueFingerprint(value: unknown): string {
+  const serialized = JSON.stringify(value) ?? "";
+  let hash = 0xcbf29ce484222325n;
+  for (let index = 0; index < serialized.length; index += 1) {
+    hash ^= BigInt(serialized.charCodeAt(index));
+    hash = BigInt.asUintN(64, hash * 0x100000001b3n);
+  }
+  return hash.toString(16).padStart(16, "0");
+}
+
+function normalizeFieldMutationIds(
+  value: unknown,
+  revisions: AppStateFieldRevisions,
+  state: Pick<AppState, AppStateDataKey>,
+): AppStateFieldMutationIds {
+  const record = isRecord(value) ? value : {};
+  return Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => {
+    const candidate = record[key];
+    const valid = typeof candidate === "string" && /^[a-zA-Z0-9:._-]{1,160}$/.test(candidate);
+    return [key, valid ? candidate : `legacy:${revisions[key]}:${stableValueFingerprint(state[key])}`];
+  })) as AppStateFieldMutationIds;
+}
+
+function createMutationId(revision: number): string {
+  const uuid = globalThis.crypto?.randomUUID?.();
+  return `${revision}:${uuid ?? `${Math.random().toString(36).slice(2)}-${Date.now().toString(36)}`}`;
 }
 
 /**
@@ -584,17 +633,25 @@ export function migrateAppState(value: unknown): AppState | null {
     onboardingCompleted: value.onboardingCompleted === true,
     stateRevision: normalizeRevision(value.stateRevision),
     fieldRevisions: normalizeFieldRevisions(value.fieldRevisions, value.stateRevision),
+    fieldMutationIds: isRecord(value.fieldMutationIds) ? value.fieldMutationIds : undefined,
   });
 }
 
 /** Adds one revision to every top-level field changed by a local action. */
-export function stampAppStateChanges(current: AppState, candidate: AppState, revision: number): AppState {
+export function stampAppStateChanges(current: AppState, candidate: AppState, revision: number, mutationId?: string): AppState {
   const safeRevision = Math.max(current.stateRevision + 1, normalizeRevision(revision));
   const fieldRevisions = { ...current.fieldRevisions };
+  const fieldMutationIds = { ...current.fieldMutationIds };
+  const safeMutationId = mutationId && /^[a-zA-Z0-9:._-]{1,160}$/.test(mutationId)
+    ? mutationId
+    : createMutationId(safeRevision);
   for (const key of APP_STATE_DATA_KEYS) {
-    if (!Object.is(candidate[key], current[key])) fieldRevisions[key] = safeRevision;
+    if (!Object.is(candidate[key], current[key])) {
+      fieldRevisions[key] = safeRevision;
+      fieldMutationIds[key] = safeMutationId;
+    }
   }
-  return migrateAppState({ ...candidate, stateRevision: safeRevision, fieldRevisions }) ?? cloneDefaultState();
+  return migrateAppState({ ...candidate, stateRevision: safeRevision, fieldRevisions, fieldMutationIds }) ?? cloneDefaultState();
 }
 
 /**
@@ -607,23 +664,26 @@ export function mergeAppStateReplicas(left: AppState, right: AppState): AppState
     const leftRevision = left.fieldRevisions[key];
     const rightRevision = right.fieldRevisions[key];
     if (rightRevision !== leftRevision) return rightRevision > leftRevision;
-    const leftValue = JSON.stringify(left[key]) ?? "";
-    const rightValue = JSON.stringify(right[key]) ?? "";
-    return rightValue > leftValue;
+    return right.fieldMutationIds[key] > left.fieldMutationIds[key];
   };
   const anyRightWins = APP_STATE_DATA_KEYS.some(rightWins);
   if (!anyRightWins && right.stateRevision <= left.stateRevision) return left;
 
   const merged: Record<string, unknown> = { ...left };
   const fieldRevisions = { ...left.fieldRevisions };
+  const fieldMutationIds = { ...left.fieldMutationIds };
   for (const key of APP_STATE_DATA_KEYS) {
     const leftRevision = left.fieldRevisions[key];
     const rightRevision = right.fieldRevisions[key];
-    if (rightWins(key)) merged[key] = right[key];
+    if (rightWins(key)) {
+      merged[key] = right[key];
+      fieldMutationIds[key] = right.fieldMutationIds[key];
+    }
     fieldRevisions[key] = Math.max(leftRevision, rightRevision);
   }
   merged.stateRevision = Math.max(left.stateRevision, right.stateRevision);
   merged.fieldRevisions = fieldRevisions;
+  merged.fieldMutationIds = fieldMutationIds;
   return migrateAppState(merged) ?? left;
 }
 
@@ -735,10 +795,9 @@ async function removeIndexedState(): Promise<void> {
   }
 }
 
-function freshestState(indexedState: AppState | null, localState: AppState | null): AppState | null {
+export function reconcileStoredStates(indexedState: AppState | null, localState: AppState | null): AppState | null {
   if (!indexedState) return localState;
   if (!localState) return indexedState;
-  if (localState.stateRevision === indexedState.stateRevision) return localState;
   return mergeAppStateReplicas(indexedState, localState);
 }
 
@@ -764,10 +823,10 @@ export async function loadAppState(): Promise<AppState> {
     // Safari private mode and embedded browsers can expose IndexedDB but reject operations.
   }
 
-  const newest = freshestState(indexedState, localState);
+  const newest = reconcileStoredStates(indexedState, localState);
   if (!newest) return cloneDefaultState();
-  if (newest === indexedState) writeLocalState(newest);
-  else {
+  if (newest !== localState) writeLocalState(newest);
+  if (newest !== indexedState) {
     try { await writeIndexedState(newest); } catch { /* localStorage remains the valid replica */ }
   }
   return newest;
@@ -854,7 +913,7 @@ const RECOGNIZED_STATE_KEYS = new Set([
   "version", "profile", "currentPlan", "plan", "upcomingPlan", "favoriteRecipeIds", "favorites",
   "history", "checkedShoppingItemIds", "checkedShoppingIds", "pantryIngredientIds", "pantryIds",
   "pantryAmounts", "recipeNotes", "shoppingCategoryOrder", "actualSpend", "customRecipes",
-  "textScale", "remindersEnabled", "onboardingCompleted", "stateRevision", "fieldRevisions",
+  "textScale", "remindersEnabled", "onboardingCompleted", "stateRevision", "fieldRevisions", "fieldMutationIds",
 ]);
 
 const CURRENT_BACKUP_KEYS = [

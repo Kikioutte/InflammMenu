@@ -23,6 +23,7 @@ import {
   substitutionsForIngredient,
   type IngredientSubstitutionRule,
 } from "./substitutions.ts";
+import { canonicalAllergen } from "./allergens.ts";
 
 export interface GeneratePlanOptions {
   /** Stable input used to make otherwise equivalent choices reproducible. */
@@ -108,30 +109,11 @@ function normalize(value: string): string {
     .replace(/[ _]+/g, "-");
 }
 
-const ALLERGEN_ALIASES: Readonly<Record<string, string>> = {
-  cacahuete: "arachides",
-  cacahuetes: "arachides",
-  crustace: "crustaces",
-  crustaces: "crustaces",
-  lactose: "lait",
-  laitages: "lait",
-  noix: "fruits-a-coque",
-  noisette: "fruits-a-coque",
-  noisettes: "fruits-a-coque",
-  amande: "fruits-a-coque",
-  amandes: "fruits-a-coque",
-  oeufs: "oeuf",
-};
-
-function canonicalAllergen(value: string): string {
-  const normalized = normalize(value);
-  return ALLERGEN_ALIASES[normalized] ?? normalized;
-}
-
 const NORMALIZED_TAGS = new WeakMap<Recipe, readonly string[]>();
 const NORMALIZED_TAG_CANDIDATES = new Map<string, ReadonlySet<string>>();
 const NORMALIZED_INGREDIENT_IDS = new WeakMap<Recipe, readonly string[]>();
 const NUT_OR_SEED_CACHE = new WeakMap<Recipe, boolean>();
+const RECIPE_ALLERGEN_CACHE = new WeakMap<Recipe, string[]>();
 
 function normalizedTagsOf(recipe: Recipe): readonly string[] {
   const cached = NORMALIZED_TAGS.get(recipe);
@@ -263,13 +245,17 @@ export function weeklyTargetsOf(profile: UserProfile): { legumeMeals: number; fi
  * ingredients, normalized to the regulated identifiers and deduplicated.
  */
 export function recipeAllergens(recipe: Recipe): string[] {
-  return [
+  const cached = RECIPE_ALLERGEN_CACHE.get(recipe);
+  if (cached) return cached;
+  const allergens = [
     ...new Set(
       [...recipe.allergens, ...recipe.ingredients.flatMap((ingredient) => ingredient.allergens ?? [])].map(
         canonicalAllergen,
       ),
     ),
   ].sort();
+  RECIPE_ALLERGEN_CACHE.set(recipe, allergens);
+  return allergens;
 }
 
 /** Rest times short enough to fit inside the cooking session are not signalled. */
@@ -620,6 +606,13 @@ export function generateWeeklyPlan(
   ).flat();
   // Time is evaluated per slot below; all other profile safeguards are shared.
   const eligible = recipes.filter((recipe) => recipeIsAllowed(recipe, { ...profile, maxPrepMinutes: 24 * 60 }));
+  const eligibleBySlot = new Map(slots.map((slot) => {
+    const maxPrepMinutes = dayConstraintOf(profile, slot.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes;
+    return [
+      `${slot.dayIndex}-${slot.mealType}`,
+      eligible.filter((recipe) => recipe.mealTypes.includes(slot.mealType) && recipe.prepMinutes <= maxPrepMinutes),
+    ] as const;
+  }));
   const catalogue = new Map(recipes.map((recipe) => [recipe.id, recipe]));
   const favorites = new Set(options.favoriteRecipeIds ?? []);
   const softDisliked = new Set(profile.softDislikedRecipeIds ?? []);
@@ -653,11 +646,8 @@ export function generateWeeklyPlan(
 
   for (const slot of slots) {
     if (keptSlots.has(`${slot.dayIndex}-${slot.mealType}`)) continue;
-    const available = eligible.filter(
-      (recipe) => recipe.mealTypes.includes(slot.mealType)
-        && !keptRecipeIds.has(recipe.id)
-        && recipeIsAllowedForSlot(recipe, profile, slot.dayIndex),
-    ).length;
+    const available = (eligibleBySlot.get(`${slot.dayIndex}-${slot.mealType}`) ?? [])
+      .filter((recipe) => !keptRecipeIds.has(recipe.id)).length;
     if (available === 0) {
       const diagnostic = diagnoseRecipeCompatibility(recipes, profile, {
         mealType: slot.mealType,
@@ -688,11 +678,8 @@ export function generateWeeklyPlan(
     const legumeDeficit = Math.max(0, targets.legumeMeals - tagCount(selected, TAGS.legume));
     const fishDeficit = profile.diet === "classic" ? Math.max(0, targets.fishMeals - tagCount(selected, TAGS.fish)) : 0;
     const portions = portionsForSlot(profile, slot.dayIndex, slot.mealType);
-    const candidates = eligible.filter(
-      (recipe) => !used.has(recipe.id)
-        && recipe.mealTypes.includes(slot.mealType)
-        && recipeIsAllowedForSlot(recipe, profile, slot.dayIndex),
-    );
+    const candidates = (eligibleBySlot.get(`${slot.dayIndex}-${slot.mealType}`) ?? [])
+      .filter((recipe) => !used.has(recipe.id));
     const selectedIngredientIds = new Set(selected.flatMap(ingredientIdsOf));
     const formsAlreadyServedToday = new Set(
       [
@@ -782,10 +769,8 @@ export function generateWeeklyPlan(
       if (meal.locked) return;
       const previous = byId.get(meal.recipeId);
       if (!previous) return;
-      for (const candidate of eligible) {
-        if (used.has(candidate.id)
-          || !candidate.mealTypes.includes(meal.mealType)
-          || !recipeIsAllowedForSlot(candidate, profile, meal.dayIndex)) continue;
+      for (const candidate of eligibleBySlot.get(`${meal.dayIndex}-${meal.mealType}`) ?? []) {
+        if (used.has(candidate.id)) continue;
         const losesLegume = hasTag(previous, TAGS.legume) && !hasTag(candidate, TAGS.legume);
         const losesFish = hasTag(previous, TAGS.fish) && !hasTag(candidate, TAGS.fish);
         if (losesLegume && currentLegumes <= targets.legumeMeals) continue;
@@ -1253,9 +1238,15 @@ export function assignRecipeToSlot(
     throw new Error("Cette recette ne correspond pas au type du repas choisi.");
   }
   const updated = replacePlannedMeal(plan, target.id, recipe, recipes);
+  const meals = updated.meals.map((meal) => (meal.id === target.id
+    ? { ...meal, source: "manual" as const, skipped: false }
+    : meal));
+  const lookup = new Map([...recipes, recipe].map((item) => [item.id, item]));
+  const canRecalculate = meals.every((meal) => lookup.has(meal.recipeId));
   return {
     ...updated,
-    meals: updated.meals.map((meal) => (meal.id === target.id ? { ...meal, source: "manual" as const } : meal)),
+    meals,
+    estimatedCost: canRecalculate ? totalPlanCost(meals, lookup) : updated.estimatedCost,
   };
 }
 

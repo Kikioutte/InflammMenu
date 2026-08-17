@@ -22,6 +22,10 @@ for (const file of filesIn(output)) {
   let contents = readFileSync(file, "utf8");
   contents = contents.replace(rootedPublicPath, `$1${base}$2`);
 
+  if (path.extname(file) === ".html") {
+    contents = contents.replace("script-src 'self' 'unsafe-inline'", "script-src 'self'");
+  }
+
   if (path.basename(file) === "sw.js") {
     contents = contents
       .replace('  "/",', `  "${base}",`)
