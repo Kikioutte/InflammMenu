@@ -431,7 +431,12 @@ function useInstallAndConnectivity() {
   const [installed, setInstalled] = useState(false);
   const [updateReady, setUpdateReady] = useState(false);
 
-  useEffect(() => watchForAppUpdate(() => setUpdateReady(true)), []);
+  useEffect(() => {
+    // Attach takeover listeners before registration can start an update.
+    const stopWatching = watchForAppUpdate(() => setUpdateReady(true));
+    void registerOfflineSupport();
+    return stopWatching;
+  }, []);
 
   useEffect(() => {
     const goOffline = () => setOffline(true);
@@ -1921,7 +1926,6 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
       }
       setHydrated(true);
     });
-    void registerOfflineSupport();
     return () => { active = false; };
   }, []);
 

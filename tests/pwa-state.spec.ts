@@ -1,4 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
+import { readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 
 async function openFreshApp(page: Page) {
   await page.goto("/InflammMenu/");
@@ -75,4 +77,51 @@ test("le vrai service worker conserve le catalogue et uniquement les polices lat
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await expect(page.getByText("624 recettes uniques disponibles")).toBeVisible();
   await expect(page.getByText("624 résultats")).toBeVisible();
+});
+
+test("une version B est détectée puis rechargée sans effacer les données locales", async ({ page }) => {
+  const workerPath = resolve("dist/pages/sw.js");
+  const originalWorker = await readFile(workerPath, "utf8");
+  const updatedWorker = `${originalWorker.replace(
+    /(const SHELL_CACHE = `\$\{SHELL_CACHE_PREFIX\})[^`]+(`;)/,
+    "$1e2e-update-b$2",
+  )}\n// e2e-update-b\n`;
+  expect(updatedWorker).not.toBe(originalWorker);
+
+  try {
+    await openFreshApp(page);
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.ready;
+      if (!navigator.serviceWorker.controller) {
+        await new Promise<void>((resolveController) => navigator.serviceWorker.addEventListener(
+          "controllerchange",
+          () => resolveController(),
+          { once: true },
+        ));
+      }
+      window.localStorage.setItem("inflamm-menu:pwa-update-sentinel", "conservé");
+    });
+
+    await writeFile(workerPath, updatedWorker);
+    await page.evaluate(async () => {
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (!registration) throw new Error("Service worker absent");
+      const previousController = navigator.serviceWorker.controller;
+      const controllerChanged = new Promise<void>((resolveController) => navigator.serviceWorker.addEventListener(
+        "controllerchange",
+        () => resolveController(),
+        { once: true },
+      ));
+      await registration.update();
+      if (navigator.serviceWorker.controller === previousController) await controllerChanged;
+    });
+
+    await expect(page.getByTestId("update-banner")).toBeVisible();
+    await page.getByTestId("update-reload").click();
+    await expect(page.getByTestId("home-view")).toBeVisible();
+    await expect.poll(() => page.evaluate(() => window.localStorage.getItem("inflamm-menu:pwa-update-sentinel")))
+      .toBe("conservé");
+  } finally {
+    await writeFile(workerPath, originalWorker);
+  }
 });

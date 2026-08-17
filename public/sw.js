@@ -108,7 +108,7 @@ async function networkFirst(request, cacheName) {
 async function navigationResponse(request) {
   const cache = await caches.open(SHELL_CACHE);
   try {
-    const response = await fetch(request);
+    const response = await fetch(request, { cache: "no-cache" });
     if (response.ok && response.type === "basic") {
       await putSafely(cache, shellEntry("/index.html") ?? "/index.html", response);
     }

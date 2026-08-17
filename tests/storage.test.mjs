@@ -194,11 +194,13 @@ test("app updates are watched without touching a page that has no worker yet", a
     const installing = {
       state: "installing",
       addEventListener: (type, handler) => listeners.set(`installing:${type}`, handler),
+      removeEventListener: (type) => listeners.delete(`installing:${type}`),
     };
     const registration = {
       installing,
       waiting: null,
       addEventListener: (type, handler) => listeners.set(`registration:${type}`, handler),
+      removeEventListener: (type) => listeners.delete(`registration:${type}`),
     };
     Object.defineProperty(globalThis, "navigator", {
       configurable: true,
@@ -225,6 +227,120 @@ test("app updates are watched without touching a page that has no worker yet", a
     assert.equal(notified, 1, "plus aucune notification après nettoyage");
   } finally {
     Object.defineProperty(globalThis, "navigator", { value: originalNavigator, configurable: true });
+  }
+});
+
+test("app update checks run when the PWA becomes visible or returns online", async () => {
+  const { watchForAppUpdate } = await import("../src/storage.ts");
+  const originalNavigator = globalThis.navigator;
+  const originalDocument = globalThis.document;
+  const originalWindow = globalThis.window;
+  const listeners = new Map();
+  let updateChecks = 0;
+  const registration = {
+    installing: null,
+    waiting: null,
+    update: async () => { updateChecks += 1; },
+    addEventListener: (type, handler) => listeners.set(`registration:${type}`, handler),
+    removeEventListener: (type) => listeners.delete(`registration:${type}`),
+  };
+  try {
+    Object.defineProperty(globalThis, "navigator", {
+      configurable: true,
+      value: {
+        serviceWorker: {
+          controller: {},
+          addEventListener: (type, handler) => listeners.set(`sw:${type}`, handler),
+          removeEventListener: (type) => listeners.delete(`sw:${type}`),
+          getRegistration: async () => registration,
+        },
+      },
+    });
+    Object.defineProperty(globalThis, "document", {
+      configurable: true,
+      value: {
+        visibilityState: "hidden",
+        addEventListener: (type, handler) => listeners.set(`document:${type}`, handler),
+        removeEventListener: (type) => listeners.delete(`document:${type}`),
+      },
+    });
+    Object.defineProperty(globalThis, "window", {
+      configurable: true,
+      value: {
+        addEventListener: (type, handler) => listeners.set(`window:${type}`, handler),
+        removeEventListener: (type) => listeners.delete(`window:${type}`),
+      },
+    });
+
+    const stop = watchForAppUpdate(() => undefined);
+    await Promise.resolve();
+    assert.equal(updateChecks, 0, "observer la version courante ne force pas encore de requête");
+
+    listeners.get("document:visibilitychange")?.();
+    await Promise.resolve();
+    assert.equal(updateChecks, 0, "un passage en arrière-plan ne déclenche rien");
+
+    globalThis.document.visibilityState = "visible";
+    listeners.get("document:visibilitychange")?.();
+    await Promise.resolve();
+    assert.equal(updateChecks, 1);
+
+    listeners.get("window:online")?.();
+    await Promise.resolve();
+    assert.equal(updateChecks, 2);
+
+    stop();
+    assert.equal(listeners.has("document:visibilitychange"), false);
+    assert.equal(listeners.has("window:online"), false);
+  } finally {
+    Object.defineProperty(globalThis, "navigator", { value: originalNavigator, configurable: true });
+    if (originalDocument === undefined) delete globalThis.document;
+    else Object.defineProperty(globalThis, "document", { value: originalDocument, configurable: true });
+    if (originalWindow === undefined) delete globalThis.window;
+    else Object.defineProperty(globalThis, "window", { value: originalWindow, configurable: true });
+  }
+});
+
+test("offline support explicitly checks for a newer worker after registration", async () => {
+  const { registerOfflineSupport } = await import("../src/storage.ts");
+  const originalNavigator = globalThis.navigator;
+  const originalDocument = globalThis.document;
+  const originalWindow = globalThis.window;
+  let updateChecks = 0;
+  let registeredOptions;
+  const registration = {
+    update: async () => { updateChecks += 1; },
+  };
+  try {
+    Object.defineProperty(globalThis, "navigator", {
+      configurable: true,
+      value: {
+        serviceWorker: {
+          register: async (_url, options) => {
+            registeredOptions = options;
+            return registration;
+          },
+        },
+      },
+    });
+    Object.defineProperty(globalThis, "window", {
+      configurable: true,
+      value: { location: { hostname: "localhost" }, isSecureContext: true },
+    });
+    Object.defineProperty(globalThis, "document", {
+      configurable: true,
+      value: { readyState: "complete" },
+    });
+
+    assert.equal(await registerOfflineSupport(), registration);
+    assert.equal(updateChecks, 1);
+    assert.equal(registeredOptions.updateViaCache, "none");
+  } finally {
+    Object.defineProperty(globalThis, "navigator", { value: originalNavigator, configurable: true });
+    if (originalDocument === undefined) delete globalThis.document;
+    else Object.defineProperty(globalThis, "document", { value: originalDocument, configurable: true });
+    if (originalWindow === undefined) delete globalThis.window;
+    else Object.defineProperty(globalThis, "window", { value: originalWindow, configurable: true });
   }
 });
 

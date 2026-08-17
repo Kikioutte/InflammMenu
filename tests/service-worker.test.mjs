@@ -24,6 +24,7 @@ test("service worker revalidates catalogue requests and bounds runtime images", 
 test("service worker reuses same-origin shell responses despite host Vary headers", () => {
   assert.match(worker, /cache\.match\(request, \{ ignoreVary: true \}\)/);
   assert.match(worker, /shellEntry\("\/index\.html"\)/);
+  assert.match(worker, /async function navigationResponse[\s\S]*fetch\(request, \{ cache: "no-cache" \}\)/);
 });
 
 test("precache discovers unquoted CSS url references", () => {

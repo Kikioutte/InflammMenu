@@ -996,6 +996,9 @@ export function watchForAppUpdate(onUpdateReady: () => void): () => void {
 
   let cancelled = false;
   let pageWasControlled = Boolean(navigator.serviceWorker.controller);
+  const registrationCleanups: Array<() => void> = [];
+  const trackedRegistrations = new WeakSet<ServiceWorkerRegistration>();
+  const trackedWorkers = new WeakSet<ServiceWorker>();
   const notify = () => { if (!cancelled) onUpdateReady(); };
   const handleControllerChange = () => {
     // The first controller acquired after installation is the initial offline
@@ -1005,24 +1008,53 @@ export function watchForAppUpdate(onUpdateReady: () => void): () => void {
   };
   const trackInstalling = (registration: ServiceWorkerRegistration) => {
     const installing = registration.installing;
-    if (!installing) return;
-    installing.addEventListener("statechange", () => {
+    if (!installing || trackedWorkers.has(installing)) return;
+    trackedWorkers.add(installing);
+    const handleStateChange = () => {
       // Only a page already controlled by a worker can go stale.
       if (installing.state === "installed" && navigator.serviceWorker.controller) notify();
-    });
+    };
+    installing.addEventListener("statechange", handleStateChange);
+    registrationCleanups.push(() => installing.removeEventListener("statechange", handleStateChange));
   };
 
-  navigator.serviceWorker.addEventListener("controllerchange", handleControllerChange);
-  void navigator.serviceWorker.getRegistration().then((registration) => {
-    if (!registration || cancelled) return;
+  const trackRegistration = (registration: ServiceWorkerRegistration) => {
+    if (trackedRegistrations.has(registration)) return;
+    trackedRegistrations.add(registration);
     if (registration.waiting && navigator.serviceWorker.controller) notify();
     trackInstalling(registration);
-    registration.addEventListener("updatefound", () => trackInstalling(registration));
-  }).catch(() => undefined);
+    const handleUpdateFound = () => trackInstalling(registration);
+    registration.addEventListener("updatefound", handleUpdateFound);
+    registrationCleanups.push(() => registration.removeEventListener("updatefound", handleUpdateFound));
+  };
+
+  const inspectRegistration = async (requestUpdate: boolean) => {
+    try {
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (!registration || cancelled) return;
+      trackRegistration(registration);
+      if (requestUpdate) await registration.update();
+    } catch {
+      // Safari may reject an update check while the page is backgrounded or offline.
+    }
+  };
+
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === "visible") void inspectRegistration(true);
+  };
+  const handleOnline = () => { void inspectRegistration(true); };
+
+  navigator.serviceWorker.addEventListener("controllerchange", handleControllerChange);
+  if (typeof document !== "undefined") document.addEventListener("visibilitychange", handleVisibilityChange);
+  if (typeof window !== "undefined") window.addEventListener("online", handleOnline);
+  void inspectRegistration(false);
 
   return () => {
     cancelled = true;
     navigator.serviceWorker.removeEventListener("controllerchange", handleControllerChange);
+    if (typeof document !== "undefined") document.removeEventListener("visibilitychange", handleVisibilityChange);
+    if (typeof window !== "undefined") window.removeEventListener("online", handleOnline);
+    registrationCleanups.splice(0).forEach((cleanup) => cleanup());
   };
 }
 
@@ -1035,10 +1067,15 @@ export async function registerOfflineSupport(): Promise<ServiceWorkerRegistratio
     if (document.readyState === "loading") {
       await new Promise<void>((resolve) => window.addEventListener("load", () => resolve(), { once: true }));
     }
-    return await navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`, {
-      scope: import.meta.env.BASE_URL,
+    const baseUrl = import.meta.env?.BASE_URL ?? "/";
+    const registration = await navigator.serviceWorker.register(`${baseUrl}sw.js`, {
+      scope: baseUrl,
       updateViaCache: "none",
     });
+    // `register()` normally schedules a check, but WebKit may defer it for an
+    // installed PWA. An explicit check makes the launch path deterministic.
+    try { await registration.update(); } catch { /* Offline launch remains supported. */ }
+    return registration;
   } catch {
     return null;
   }
