@@ -10267,7 +10267,8 @@
           "note": "Miso blanc ou d'orge",
           "categorie_courses": "grocery",
           "allergenes": [
-            "soja"
+            "soja",
+            "gluten"
           ],
           "id": "catalog-pate-de-miso-non-pasteurise",
           "quantite_normalisee": 4,
@@ -10401,7 +10402,7 @@
         "review": {
           "status": "caution",
           "summary": "Tofu, champignons et légumes donnent une soupe variée et légère.",
-          "caution": "Miso et algues peuvent apporter beaucoup de sodium et d'iode. À éviter ou adapter en cas de trouble thyroïdien, maladie rénale ou traitement concerné."
+          "caution": "Le miso d’orge contient du gluten ; choisir un miso certifié sans gluten si nécessaire. Miso et algues peuvent aussi apporter beaucoup de sodium et d'iode. À éviter ou adapter en cas de trouble thyroïdien, maladie rénale ou traitement concerné."
         },
         "planner": {
           "eligible": true,
@@ -10420,7 +10421,8 @@
           ],
           "allergens": [
             "soja",
-            "sesame"
+            "sesame",
+            "gluten"
           ],
           "active_minutes": 27
         }

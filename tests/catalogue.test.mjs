@@ -95,6 +95,50 @@ test("planner metadata is explicit and no longer inferred from recipe prose", ()
   assert.match(plannerGeneratorSource, /recipe\.app\.planner\.eligible/);
 });
 
+test("r036 is rejected for gluten across catalogue, planner and replay boundaries", async () => {
+  const engine = await import("../src/engine.ts");
+  const { DEFAULT_PROFILE } = await import("../src/domain.ts");
+  const { filterCatalogueRecipes, EMPTY_CATALOGUE_FILTERS, visibleCatalogueRecipes } = await import("../src/catalog.ts");
+  const sourceRecipe = catalogue.recipes.find((recipe) => recipe.id === "r036");
+  const plannerRecipe = plannerRecipes.find((recipe) => recipe.id === "catalog-r036");
+  assert.ok(sourceRecipe, "r036 absente du catalogue source");
+  assert.ok(plannerRecipe, "r036 absente de la projection planificateur");
+
+  const glutenProfile = { ...DEFAULT_PROFILE, allergies: ["gluten"] };
+  assert.equal(engine.recipeIsAllowed(plannerRecipe, glutenProfile), false, "le moteur doit exclure r036");
+
+  const glutenFree = filterCatalogueRecipes(visibleCatalogueRecipes(catalogue), {
+    ...EMPTY_CATALOGUE_FILTERS,
+    withoutAllergen: "gluten",
+  });
+  assert.equal(glutenFree.some((recipe) => recipe.id === "r036"), false, "le filtre sans gluten doit exclure r036");
+
+  const archivedMeal = {
+    id: "day-0-dinner",
+    dayIndex: 0,
+    mealType: "dinner",
+    recipeId: plannerRecipe.id,
+    portions: 2,
+    source: "generated",
+    locked: false,
+    completed: false,
+    substitutions: [],
+  };
+  const archivedPlan = {
+    id: "week-r036-regression",
+    startsOn: "2026-08-24",
+    generatedAt: "2026-08-24T00:00:00.000Z",
+    profileSnapshot: { ...DEFAULT_PROFILE, allergies: [] },
+    meals: [archivedMeal],
+    estimatedCost: plannerRecipe.costPerPortion * 2,
+    version: 1,
+  };
+  const replay = engine.inspectPlanReplay(archivedPlan, plannerRecipes, glutenProfile);
+  assert.equal(replay.canReplay, false);
+  assert.deepEqual(replay.blockedMeals.map((meal) => meal.recipeId), [plannerRecipe.id]);
+  assert.ok(engine.plannedMealAllergens(plannerRecipe, archivedMeal).includes("gluten"), "les substitutions ne doivent pas masquer le gluten déclaré");
+});
+
 test("passive infusion and fermentation are excluded from active kitchen time", () => {
   const infusion = catalogue.recipes.find((recipe) => recipe.id === "r005");
   const fermentation = catalogue.recipes.find((recipe) => recipe.id === "r023");

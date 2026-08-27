@@ -112,3 +112,13 @@ test("demonstrably unrelated foods do not carry gluten or tree-nut allergens", (
   const walnuts = catalogue.recipes[0].ingredients.find((ingredient) => ingredient.nom === "noix de Grenoble concassées");
   assert.deepEqual(walnuts?.allergenes, ["fruits-a-coque"]);
 });
+
+test("r036 declares gluten while barley miso remains an allowed ingredient variant", () => {
+  const recipe = catalogue.recipes.find((entry) => entry.id === "r036");
+  assert.ok(recipe, "r036 absente du catalogue");
+  const miso = recipe.ingredients.find((ingredient) => ingredient.id === "catalog-pate-de-miso-non-pasteurise");
+  assert.ok(miso, "ingrédient miso absent de r036");
+  assert.match(miso.note, /orge/i);
+  assert.ok(miso.allergenes.includes("gluten"), "le miso d’orge doit déclarer le gluten");
+  assert.ok(recipe.app.planner.allergens.includes("gluten"), "le filtre planificateur doit déclarer le gluten");
+});
