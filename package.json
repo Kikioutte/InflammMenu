@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "audit:production": "npm audit --omit=dev --audit-level=high",
     "check:runtime": "node scripts/check-mobile-runtime.mjs",
     "validate:catalogue": "node scripts/validate-catalogue.mjs",
     "validate:creami": "node scripts/validate-creami-recipes.mjs",
@@ -28,7 +29,7 @@
     "test:catalogue": "npm run validate:catalogue && node --test tests/catalogue.test.mjs tests/catalogue-schema-v21.test.mjs",
     "test:merge": "node --test tests/merge-final-batches.test.mjs",
     "test:sites": "npm run build && node --test tests/sites-worker.test.mjs",
-    "test:preview": "npm run check:runtime && npm run validate:research && npm run validate:pilots && npm run validate:final && npm run validate:creami && npm run validate:image-prompts && npm run validate:v1-images && npm run validate:images:present && npm run validate:ingredient-ids && npm run validate:planner && npm run validate:generator-diversity && npm run test:catalogue && npm run test:engine && npm run test:storage && npm run test:merge && npm run test:sw",
+    "test:preview": "npm run check:runtime && npm run validate:research && npm run validate:pilots && npm run validate:final && npm run validate:creami && npm run validate:image-prompts && npm run validate:v1-images && npm run validate:images:present && npm run validate:ingredient-ids && npm run validate:planner && npm run validate:generator-diversity && npm run test:catalogue && npm run test:engine && npm run test:storage && npm run test:merge && npm run test:sw && npm run test:workflows",
     "test:release": "npm run test:preview && npm run validate:images",
     "status:production": "node scripts/report-production-status.mjs",
     "predev": "npm run check:runtime",
@@ -39,7 +40,8 @@
     "test:browser": "playwright test tests/app-v1.spec.ts tests/mobile-runtime.spec.ts",
     "test:pwa": "npm run build:pages && npm run test:pwa:built",
     "test:pwa:built": "playwright test --config=playwright.pwa.config.ts",
-    "test:sw": "node --test tests/service-worker.test.mjs"
+    "test:sw": "node --test tests/service-worker.test.mjs",
+    "test:workflows": "node --test tests/workflows.test.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
