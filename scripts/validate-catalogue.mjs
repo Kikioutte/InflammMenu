@@ -5,6 +5,18 @@ const dataUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.
 
 const allowedSchemaVersions = new Set(["2.0.0", "2.1.0"]);
 const allowedReviewStatuses = new Set(["validated", "caution"]);
+const allowedCatalogueDiets = new Set([
+  "classique",
+  "low-fodmap",
+  "pescetarien",
+  "sans-fruits-a-coque",
+  "sans-gluten",
+  "sans-lactose",
+  "sans-porc",
+  "vegetalien",
+  "vegetarien",
+  "volaille",
+]);
 const allowedMealTypes = new Set(["breakfast", "lunch", "dinner"]);
 const allowedDiets = new Set(["classic", "vegetarian", "no-pork"]);
 const allowedEquipment = new Set(["hob", "oven", "microwave", "blender", "toaster", "steamer"]);
@@ -104,6 +116,7 @@ export function validateCatalogue(catalogue) {
     );
     assert(Array.isArray(recipe.ingredients) && recipe.ingredients.length > 0, `${label}: ingrédients requis`);
     assert(Array.isArray(recipe.etapes) && recipe.etapes.length > 0, `${label}: étapes requises`);
+    assertArrayValues(recipe.regimes, allowedCatalogueDiets, `${label}.regimes`);
     if (recipe.materiel !== undefined) {
       assert(Array.isArray(recipe.materiel) && recipe.materiel.length > 0, `${label}: matériel invalide`);
       for (const item of recipe.materiel) assert(nonEmptyString(item), `${label}: libellé de matériel invalide`);
@@ -169,6 +182,12 @@ export function validateCatalogue(catalogue) {
 
     const ingredientAllergens = [...new Set(recipe.ingredients.flatMap((ingredient) => ingredient.allergenes))].sort();
     const plannerAllergens = [...new Set(planner.allergens)].sort();
+    if (recipe.regimes.includes("sans-lactose")) {
+      assert(
+        !recipe.ingredients.some((ingredient) => ingredient.facultatif !== true && ingredient.allergenes.includes("lait")),
+        `${label}: régime sans-lactose incompatible avec un ingrédient obligatoire contenant du lait`,
+      );
+    }
     assert(
       JSON.stringify(ingredientAllergens) === JSON.stringify(plannerAllergens),
       `${label}: les allergènes du planificateur doivent correspondre aux ingrédients`,

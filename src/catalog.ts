@@ -263,6 +263,10 @@ export function catalogueActiveMinutes(recipe: CatalogueRecipe): number {
   return recipe.app.planner.active_minutes ?? recipe.temps.preparation + recipe.temps.cuisson;
 }
 
+function hasRequiredAllergen(recipe: CatalogueRecipe, allergen: string): boolean {
+  return recipe.ingredients.some((ingredient) => ingredient.facultatif !== true && ingredient.allergenes.includes(allergen));
+}
+
 /** Applies the browsing filters, then the requested order. Data only, no UI. */
 const SEARCHABLE_CATALOGUE_TEXT = new WeakMap<CatalogueRecipe, string>();
 
@@ -286,6 +290,7 @@ export function filterCatalogueRecipes(
     if (filters.cost && recipe.cout !== filters.cost) return false;
     if (filters.season && !recipe.saisons.includes(filters.season) && !recipe.saisons.includes("toute-annee")) return false;
     if (filters.diet && !recipe.regimes.includes(filters.diet)) return false;
+    if (filters.diet === "sans-lactose" && hasRequiredAllergen(recipe, "lait")) return false;
     if (filters.withoutAllergen && recipe.app.planner.allergens.includes(filters.withoutAllergen)) return false;
     if (filters.plannableOnly && !plannerAvailabilityFor(recipe).plannable) return false;
     if (!normalizedQuery) return true;

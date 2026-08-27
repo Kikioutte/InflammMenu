@@ -235,6 +235,24 @@ test("les filtres et le tri du catalogue portent sur les vraies données", async
   const glutenFree = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, withoutAllergen: "gluten" });
   assert.ok(glutenFree.every((recipe) => !recipe.app.planner.allergens.includes("gluten")));
 
+  const r169 = catalogue.recipes.find((recipe) => recipe.id === "r169");
+  const r039 = catalogue.recipes.find((recipe) => recipe.id === "r039");
+  assert.ok(r169 && r039);
+  const lactoseFree = (recipes) => filterCatalogueRecipes(recipes, {
+    ...EMPTY_CATALOGUE_FILTERS,
+    diet: "sans-lactose",
+  });
+  assert.equal(
+    lactoseFree([{ ...r169, regimes: [...r169.regimes, "sans-lactose"] }]).length,
+    0,
+    "le filtre se défend contre une recette sans-lactose qui impose du lait",
+  );
+  assert.deepEqual(
+    lactoseFree([r039]).map((recipe) => recipe.id),
+    ["r039"],
+    "un produit laitier facultatif n'invalide pas la version sans lactose",
+  );
+
   const plannable = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, plannableOnly: true });
   assert.equal(plannable.length, 327, "le filtre planifiable respecte la relecture éditoriale");
 

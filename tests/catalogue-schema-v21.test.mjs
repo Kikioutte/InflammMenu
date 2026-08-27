@@ -129,6 +129,45 @@ test("the validator rejects an explicit optional label without the matching flag
   assert.doesNotThrow(() => validateCatalogue(fixture));
 });
 
+test("a lactose-free recipe cannot require an ingredient that declares milk", () => {
+  const fixture = v21Fixture();
+  const recipe = fixture.recipes[0];
+  recipe.regimes = ["sans-lactose"];
+  recipe.ingredients = recipe.ingredients.map((ingredient) => ({
+    ...ingredient,
+    note: "",
+    allergenes: [],
+  }));
+  recipe.ingredients[0].allergenes = ["lait"];
+  recipe.ingredients[0].facultatif = false;
+  recipe.app.planner.allergens = ["lait"];
+
+  assert.throws(() => validateCatalogue(fixture), /r001: régime sans-lactose incompatible avec un ingrédient obligatoire contenant du lait/);
+
+  recipe.ingredients[0].facultatif = true;
+  assert.doesNotThrow(() => validateCatalogue(fixture), "un ingrédient laitier réellement facultatif peut être omis");
+});
+
+test("r169 no longer advertises a lactose-free version while yogurt is mandatory", () => {
+  const recipe = catalogue.recipes.find((entry) => entry.id === "r169");
+  assert.ok(recipe, "r169 absente du catalogue");
+  assert.ok(
+    recipe.ingredients.some((ingredient) => !ingredient.facultatif && ingredient.allergenes.includes("lait")),
+    "le yaourt obligatoire de r169 doit rester explicitement déclaré comme lait",
+  );
+  assert.equal(recipe.regimes.includes("sans-lactose"), false);
+
+  const optionalDairyRecipe = catalogue.recipes.find((entry) => entry.id === "r039");
+  assert.ok(optionalDairyRecipe?.regimes.includes("sans-lactose"));
+  const optionalDairyIngredients = optionalDairyRecipe.ingredients
+    .filter((ingredient) => ingredient.allergenes.includes("lait"));
+  assert.ok(optionalDairyIngredients.length > 0, "r039 doit toujours déclarer sa feta comme lait");
+  assert.ok(
+    optionalDairyIngredients.every((ingredient) => ingredient.facultatif),
+    "r039 reste sans lactose uniquement parce que sa feta peut être omise",
+  );
+});
+
 test("schema v2.1 rejects active time beyond total recipe time", () => {
   const fixture = v21Fixture();
   fixture.recipes[0].app.planner.active_minutes = fixture.recipes[0].temps.total + 1;
