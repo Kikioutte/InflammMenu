@@ -27,6 +27,18 @@ function shellEntry(suffix) {
   return APP_SHELL.find((path) => path.endsWith(suffix));
 }
 
+function isHtmlResponse(response) {
+  const contentType = response.headers.get("Content-Type") ?? "";
+  return contentType.split(";", 1)[0].trim().toLowerCase() === "text/html";
+}
+
+function isCanonicalShellNavigation(request) {
+  const pathname = new URL(request.url).pathname;
+  return [shellEntry("/"), shellEntry("/index.html")]
+    .filter(Boolean)
+    .includes(pathname);
+}
+
 async function trimCache(cache, maximum) {
   const keys = await cache.keys();
   const excess = keys.length - maximum;
@@ -52,7 +64,7 @@ async function precacheShell() {
 
   const indexResponse = await matchCached(cache, shellEntry("/index.html") ?? "/index.html")
     || await matchCached(cache, shellEntry("/") ?? "/");
-  if (!indexResponse) throw new Error("Application shell index missing");
+  if (!indexResponse || !isHtmlResponse(indexResponse)) throw new Error("Application shell HTML index missing");
   const html = await indexResponse.text();
   const assetPaths = [...html.matchAll(/(?:src|href)=["']([^"']+)["']/g)]
     .map((match) => new URL(match[1], self.location.origin))
@@ -109,7 +121,7 @@ async function navigationResponse(request) {
   const cache = await caches.open(SHELL_CACHE);
   try {
     const response = await fetch(request, { cache: "no-cache" });
-    if (response.ok && response.type === "basic") {
+    if (response.ok && response.type === "basic" && isCanonicalShellNavigation(request) && isHtmlResponse(response)) {
       await putSafely(cache, shellEntry("/index.html") ?? "/index.html", response);
     }
     return response;

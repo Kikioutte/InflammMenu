@@ -27,6 +27,14 @@ test("service worker reuses same-origin shell responses despite host Vary header
   assert.match(worker, /async function navigationResponse[\s\S]*fetch\(request, \{ cache: "no-cache" \}\)/);
 });
 
+test("only canonical HTML navigations may refresh the offline shell", () => {
+  assert.match(worker, /function isHtmlResponse/);
+  assert.match(worker, /response\.headers\.get\("Content-Type"\)/);
+  assert.match(worker, /if \(!indexResponse \|\| !isHtmlResponse\(indexResponse\)\)/);
+  assert.match(worker, /function isCanonicalShellNavigation/);
+  assert.match(worker, /isCanonicalShellNavigation\(request\) && isHtmlResponse\(response\)/);
+});
+
 test("precache discovers unquoted CSS url references", () => {
   assert.ok(precache.includes("matchAll(/url\\("));
   assert.match(precache, /woff2/);

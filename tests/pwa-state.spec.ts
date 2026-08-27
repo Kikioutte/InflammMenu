@@ -105,6 +105,90 @@ test("le vrai service worker conserve le catalogue et uniquement les polices lat
   await expect(page.getByText("624 résultats")).toBeVisible();
 });
 
+test("une navigation vers une ressource ne peut jamais remplacer le shell HTML hors ligne", async ({ page, context }) => {
+  await openFreshApp(page);
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) {
+      await new Promise<void>((resolveController) => navigator.serviceWorker.addEventListener(
+        "controllerchange",
+        () => resolveController(),
+        { once: true },
+      ));
+    }
+  });
+
+  const resourcePaths = await page.evaluate(async () => {
+    const manifest = await fetch("manifest.webmanifest").then((response) => response.json());
+    const icon = new URL(manifest.icons[0].src, window.location.href).pathname;
+    return [
+      "/InflammMenu/manifest.webmanifest",
+      "/InflammMenu/robots.txt",
+      icon,
+      "/InflammMenu/ressource-inexistante-audit",
+    ];
+  });
+  const shellFingerprint = () => page.evaluate(async () => {
+    const cacheName = (await caches.keys()).find((name) => name.startsWith("inflamm-menu-shell-"));
+    if (!cacheName) throw new Error("Cache shell absent");
+    const cache = await caches.open(cacheName);
+    const keys = await cache.keys();
+    const indexRequest = keys.find((request) => new URL(request.url).pathname.endsWith("/index.html"));
+    if (!indexRequest) throw new Error("Index du shell absent");
+    const response = await cache.match(indexRequest, { ignoreVary: true });
+    if (!response) throw new Error("Réponse index absente");
+    const bytes = new TextEncoder().encode(await response.clone().text());
+    const digest = [...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes))]
+      .map((byte) => byte.toString(16).padStart(2, "0"))
+      .join("");
+    const contentType = response.headers.get("Content-Type")
+      ?.split(";", 1)[0]
+      .trim()
+      .toLowerCase() ?? null;
+    return {
+      digest,
+      contentType,
+      sentinel: response.headers.get("X-InflammMenu-Shell-Sentinel"),
+    };
+  });
+  const markCachedShell = (sentinel: string) => page.evaluate(async (value) => {
+    const cacheName = (await caches.keys()).find((name) => name.startsWith("inflamm-menu-shell-"));
+    if (!cacheName) throw new Error("Cache shell absent");
+    const cache = await caches.open(cacheName);
+    const keys = await cache.keys();
+    const indexRequest = keys.find((request) => new URL(request.url).pathname.endsWith("/index.html"));
+    if (!indexRequest) throw new Error("Index du shell absent");
+    const response = await cache.match(indexRequest, { ignoreVary: true });
+    if (!response) throw new Error("Réponse index absente");
+    const headers = new Headers(response.headers);
+    headers.set("X-InflammMenu-Shell-Sentinel", value);
+    await cache.put(indexRequest, new Response(await response.arrayBuffer(), {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    }));
+  }, sentinel);
+  const initialShell = await shellFingerprint();
+  expect(initialShell.contentType).toContain("text/html");
+  expect(initialShell.sentinel).toBeNull();
+
+  for (const [index, resourcePath] of resourcePaths.entries()) {
+    const sentinel = `audit-shell-${index}`;
+    await markCachedShell(sentinel);
+    await page.goto(resourcePath);
+    await expect.poll(shellFingerprint).toEqual({ ...initialShell, sentinel });
+  }
+
+  await page.goto("/InflammMenu/");
+  await expect(page.getByTestId("home-view")).toBeVisible();
+  await expect.poll(shellFingerprint).toEqual(initialShell);
+
+  await context.setOffline(true);
+  await page.goto("/InflammMenu/");
+  await expect(page.getByTestId("home-view")).toBeVisible();
+  expect((await page.locator("html").evaluate((element) => element.ownerDocument.contentType))).toBe("text/html");
+});
+
 test("une version B est détectée puis rechargée sans effacer les données locales", async ({ page }) => {
   const workerPath = resolve("dist/pages/sw.js");
   const originalWorker = await readFile(workerPath, "utf8");
