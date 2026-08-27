@@ -701,7 +701,8 @@ button { -webkit-tap-highlight-color: transparent; }
 .aisle-order { display: inline-flex; gap: 4px; margin-left: auto; }
 .aisle-order button { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); color: var(--sage-dark); font-size: var(--font-13); }
 .aisle-order button:disabled { opacity: .4; }
-.pantry-controls { display: flex; align-items: center; gap: 6px; }
+.pantry-controls { display: flex; align-items: flex-start; gap: 6px; }
+.pantry-amounts { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
 .pantry-amount { display: flex; align-items: center; gap: 4px; }
 .pantry-amount input { width: 54px; min-height: 34px; padding: 0 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--white); font-size: var(--font-12); text-align: right; }
 .pantry-amount small { color: var(--muted); font-size: var(--font-10); }

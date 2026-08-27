@@ -2283,15 +2283,131 @@ test("le garde-manger déduit les quantités et le budget réel se saisit", asyn
   // Cover the full requirement: a one-unit deduction can legitimately leave
   // the rounded purchase advice unchanged (for example, still "1 botte").
   await amountInput.fill("99999");
+  await amountInput.blur();
+  await expect(amountInput).toBeVisible();
+  await page.getByRole("button", { name: "Terminer l’inventaire" }).click();
   await expect(page.locator(".shopping-item")).toHaveCount(itemCount - 1);
 
   await page.getByTestId("spend-input").fill("72,50");
   await expect(page.getByTestId("spend-tracker")).toContainText("72,50 € dépensés");
   await expect(page.locator(".spend-delta")).toBeVisible();
 
+  await page.getByRole("button", { name: "Retirer ce que j’ai déjà" }).click();
   const firstAisle = await page.locator(".shopping-group h2").first().innerText();
   await page.locator(".aisle-order button").nth(1).click();
   await expect(page.locator(".shopping-group h2").first()).not.toHaveText(firstAisle);
+});
+
+test("le garde-manger conserve un stock distinct pour chaque unité", async ({ page }) => {
+  await page.addInitScript(() => {
+    const seedKey = "inflamm-menu:test-stock-multi-unite";
+    if (window.sessionStorage.getItem(seedKey)) return;
+    window.sessionStorage.setItem(seedKey, "seeded");
+    const today = new Date();
+    const dayIndex = (today.getDay() + 6) % 7;
+    const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - dayIndex);
+    const startsOn = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, "0")}-${String(monday.getDate()).padStart(2, "0")}`;
+    const profile = { people: 1, mealsPerDay: 2, weeklyBudget: 80, maxPrepMinutes: 30, allergies: [], excludedIngredientIds: [], diet: "classic", equipment: ["hob"] };
+    const customRecipe = {
+      id: "perso-stock-multi-unite",
+      title: "Poireaux en deux unités",
+      mealTypes: ["lunch", "dinner"],
+      diet: ["classic", "vegetarian", "no-pork"],
+      prepMinutes: 20,
+      costPerPortion: 2,
+      seasons: ["all-year"],
+      equipment: ["hob"],
+      allergens: [],
+      tags: [],
+      ingredients: [
+        { id: "leek", name: "poireaux", quantity: 140, unit: "g", category: "fruit-vegetable" },
+        { id: "leek", name: "poireaux", quantity: 1.5, unit: "piece", category: "fruit-vegetable" },
+      ],
+      nutrition: {
+        calories: 250,
+        protein: 8,
+        fiber: 7,
+        estimated: true,
+        note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif.",
+      },
+      description: "Fixture multi-unité.",
+      steps: ["Préparer les poireaux."],
+      conservation: "À consommer rapidement.",
+      image: "/assets/recipe-placeholder.svg",
+    };
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify({
+      version: 3,
+      profile,
+      currentPlan: {
+        id: "week-stock-multi-unite",
+        startsOn,
+        generatedAt: new Date().toISOString(),
+        profileSnapshot: profile,
+        meals: Array.from({ length: 7 }, (_, dayIndex) => (["lunch", "dinner"].map((mealType) => ({
+          id: `day-${dayIndex}-${mealType}`,
+          dayIndex,
+          mealType,
+          recipeId: customRecipe.id,
+          portions: 1,
+          source: "manual",
+        })))).flat(),
+        estimatedCost: 2,
+        version: 1,
+      },
+      upcomingPlan: null,
+      favoriteRecipeIds: [],
+      history: [],
+      checkedShoppingItemIds: [],
+      pantryIngredientIds: [],
+      pantryAmounts: {},
+      customRecipes: [customRecipe],
+      onboardingCompleted: true,
+    }));
+  });
+
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await page.getByRole("button", { name: "Retirer ce que j’ai déjà" }).click();
+
+  const grams = page.getByTestId("pantry-amount-leek-g");
+  const pieces = page.getByTestId("pantry-amount-leek-piece");
+  await expect(grams).toBeVisible();
+  await expect(pieces).toBeVisible();
+  await grams.pressSequentially("40");
+  await grams.blur();
+  await pieces.pressSequentially("0,5");
+  await expect(pieces).toHaveValue("0,5");
+  await pieces.blur();
+
+  await expect.poll(() => page.evaluate(() => {
+    const state = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}");
+    return state.pantryAmounts;
+  })).toMatchObject({
+    "leek:g": { quantity: 40, unit: "g" },
+    "leek:piece": { quantity: 0.5, unit: "piece" },
+  });
+
+  await page.reload();
+  await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await page.getByRole("button", { name: "Retirer ce que j’ai déjà" }).click();
+  await expect(page.getByTestId("pantry-amount-leek-g")).toHaveValue("40");
+  await expect(page.getByTestId("pantry-amount-leek-piece")).toHaveValue("0.5");
+
+  await page.getByTestId("pantry-amount-leek-piece").fill("99999");
+  await page.getByTestId("pantry-amount-leek-piece").blur();
+  await page.getByTestId("pantry-amount-leek-g").fill("99999");
+  await page.getByTestId("pantry-amount-leek-g").blur();
+  await expect(page.getByTestId("pantry-amount-leek-piece")).toBeVisible();
+  await expect(page.getByTestId("pantry-amount-leek-g")).toBeVisible();
+
+  await page.getByTestId("pantry-amount-leek-g").fill("40");
+  await page.getByTestId("pantry-amount-leek-g").blur();
+  await page.getByTestId("pantry-amount-leek-piece").fill("");
+  await page.getByTestId("pantry-amount-leek-piece").blur();
+  await expect.poll(() => page.evaluate(() => {
+    const state = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}");
+    return state.pantryAmounts;
+  })).toEqual({ "leek:g": { quantity: 40, unit: "g" } });
 });
 
 test("le premier lancement met le profil avant la première génération", async ({ page }) => {
