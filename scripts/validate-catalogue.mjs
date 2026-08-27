@@ -1,6 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 
+import { CATALOGUE_SEASONS } from "./catalogue-seasons.mjs";
+
 const dataUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
 
 const allowedSchemaVersions = new Set(["2.0.0", "2.1.0"]);
@@ -17,6 +19,7 @@ const allowedCatalogueDiets = new Set([
   "vegetarien",
   "volaille",
 ]);
+const allowedCatalogueSeasons = new Set(CATALOGUE_SEASONS);
 const allowedMealTypes = new Set(["breakfast", "lunch", "dinner"]);
 const allowedDiets = new Set(["classic", "vegetarian", "no-pork"]);
 const allowedEquipment = new Set(["hob", "oven", "microwave", "blender", "toaster", "steamer"]);
@@ -97,6 +100,14 @@ export function validateCatalogue(catalogue) {
   const isV21 = catalogue.meta.schema_version === "2.1.0";
   assert(Array.isArray(catalogue.recipes), "recipes doit être un tableau");
   assert(catalogue.meta.nombre_recettes === catalogue.recipes.length, "meta.nombre_recettes doit correspondre au catalogue");
+  if (catalogue.taxonomie_tags?.saisons !== undefined) {
+    assertArrayValues(catalogue.taxonomie_tags.saisons, allowedCatalogueSeasons, "taxonomie_tags.saisons");
+    assert(
+      catalogue.taxonomie_tags.saisons.length === allowedCatalogueSeasons.size
+        && new Set(catalogue.taxonomie_tags.saisons).size === allowedCatalogueSeasons.size,
+      "taxonomie_tags.saisons doit déclarer exactement les cinq saisons canoniques",
+    );
+  }
 
   const ids = new Set();
   const slugs = new Set();
@@ -117,6 +128,8 @@ export function validateCatalogue(catalogue) {
     assert(Array.isArray(recipe.ingredients) && recipe.ingredients.length > 0, `${label}: ingrédients requis`);
     assert(Array.isArray(recipe.etapes) && recipe.etapes.length > 0, `${label}: étapes requises`);
     assertArrayValues(recipe.regimes, allowedCatalogueDiets, `${label}.regimes`);
+    assertArrayValues(recipe.saisons, allowedCatalogueSeasons, `${label}.saisons`);
+    assert(recipe.saisons.length > 0, `${label}: au moins une saison requise`);
     if (recipe.materiel !== undefined) {
       assert(Array.isArray(recipe.materiel) && recipe.materiel.length > 0, `${label}: matériel invalide`);
       for (const item of recipe.materiel) assert(nonEmptyString(item), `${label}: libellé de matériel invalide`);

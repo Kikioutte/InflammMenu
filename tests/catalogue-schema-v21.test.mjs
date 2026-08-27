@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
+import { projectCatalogueSeasons } from "../scripts/catalogue-seasons.mjs";
 import { validateCatalogue } from "../scripts/validate-catalogue.mjs";
 
 const dataUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
@@ -166,6 +167,20 @@ test("r169 no longer advertises a lactose-free version while yogurt is mandatory
     optionalDairyIngredients.every((ingredient) => ingredient.facultatif),
     "r039 reste sans lactose uniquement parce que sa feta peut être omise",
   );
+});
+
+test("catalogue seasons use the five canonical taxonomy values", () => {
+  const expected = ["automne", "ete", "hiver", "printemps", "toute-annee"];
+  assert.deepEqual([...new Set(catalogue.recipes.flatMap((recipe) => recipe.saisons))].sort(), expected);
+  assert.deepEqual([...catalogue.taxonomie_tags.saisons].sort(), expected);
+
+  const fixture = v21Fixture();
+  fixture.recipes[0].saisons = ["été"];
+  assert.throws(() => validateCatalogue(fixture), /r001\.saisons: valeur inconnue été/);
+  fixture.recipes[0].saisons = [];
+  assert.throws(() => validateCatalogue(fixture), /r001: au moins une saison requise/);
+  assert.throws(() => projectCatalogueSeasons(["été"], "r-test"), /r-test: saison inconnue été/);
+  assert.deepEqual(projectCatalogueSeasons(["ete", "toute-annee", "ete"], "r-test"), ["summer", "all-year"]);
 });
 
 test("schema v2.1 rejects active time beyond total recipe time", () => {

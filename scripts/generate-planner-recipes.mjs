@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { canonicalIngredientId, shoppingRuleFor } from "../src/shopping.ts";
+import { projectCatalogueSeasons } from "./catalogue-seasons.mjs";
 
 const root = new URL("../", import.meta.url);
 const catalogueUrl = new URL("src/data/recettes-anti-inflammatoires.json", root);
@@ -14,8 +15,6 @@ const [catalogue, imageNames] = await Promise.all(
 const generatedImages = new Set(imageNames);
 
 const normalize = (value) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-const seasons = { printemps: "spring", ete: "summer", automne: "autumn", hiver: "winter", "toute-annee": "all-year" };
-
 function normalizedAmount(ingredient) {
   if (ingredient.quantite_normalisee !== undefined && ingredient.unite_normalisee !== undefined) {
     return { quantity: ingredient.quantite_normalisee, unit: ingredient.unite_normalisee };
@@ -41,7 +40,7 @@ const recipes = catalogue.recipes
     // so the app can warn that a meal must be started in advance.
     ...(recipe.temps.repos > 0 ? { restMinutes: recipe.temps.repos } : {}),
     costPerPortion: recipe.app.planner.cost_per_portion_eur,
-    seasons: [...new Set(recipe.saisons.map((season) => seasons[season]).filter(Boolean))],
+    seasons: projectCatalogueSeasons(recipe.saisons, recipe.id),
     equipment: recipe.app.planner.equipment,
     allergens: recipe.app.planner.allergens,
     tags: [...recipe.tags, recipe.categorie, ...recipe.ingredients.map((ingredient) => normalize(ingredient.nom))],

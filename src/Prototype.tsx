@@ -78,6 +78,7 @@ import {
   setPlannedMealCompleted,
   setPlannedMealLock,
   setMealIngredientSubstitution,
+  seasonForIsoDate,
   summarizePlan,
   type AdvancePrep,
   type PlanSlot,
@@ -556,7 +557,7 @@ function makePlan(profile: UserProfile, lockedMeals: readonly PlannedMeal[] = []
     seed,
     startsOn: startsOn ?? isoDate(monday),
     generatedAt: new Date().toISOString(),
-    season: [11, 0, 1].includes(monday.getMonth()) ? "winter" : [2, 3, 4].includes(monday.getMonth()) ? "spring" : [5, 6, 7].includes(monday.getMonth()) ? "summer" : "autumn",
+    season: seasonForIsoDate(isoDate(monday)),
     lockedMeals,
     favoriteRecipeIds,
   });
@@ -1689,7 +1690,7 @@ function TonightView({ profile, pantryIds, favoriteIds, onOpenRecipe, onOpenProf
     portions,
     pantryIngredientIds: pantryIds,
     favoriteRecipeIds: favoriteIds,
-    season: [11, 0, 1].includes(new Date().getMonth()) ? "winter" : [2, 3, 4].includes(new Date().getMonth()) ? "spring" : [5, 6, 7].includes(new Date().getMonth()) ? "summer" : "autumn",
+    season: seasonForIsoDate(isoDate(new Date())),
     limit: ACTIVE_RECIPES.length,
   }), [favoriteIds, maxMinutes, mealType, pantryIds, portions, profile]);
   const diagnostic = useMemo(() => diagnoseRecipeCompatibility(ACTIVE_RECIPES, profile, {

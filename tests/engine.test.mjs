@@ -80,6 +80,69 @@ test("generation is deterministic, creates 14 unique slots, and meets available 
   assert.ok(summary.withinBudget);
 });
 
+test("the plan season is derived from its Monday across generation, summary and replacements", () => {
+  const calendar = [
+    ["2026-01-05", "winter"], ["2026-02-02", "winter"],
+    ["2026-03-02", "spring"], ["2026-04-06", "spring"], ["2026-05-04", "spring"],
+    ["2026-06-01", "summer"], ["2026-07-06", "summer"], ["2026-08-03", "summer"],
+    ["2026-09-07", "autumn"], ["2026-10-05", "autumn"], ["2026-11-02", "autumn"],
+    ["2026-12-07", "winter"],
+  ];
+  assert.deepEqual(calendar.map(([date]) => engine.seasonForIsoDate(date)), calendar.map(([, season]) => season));
+
+  for (const [startsOn, season] of calendar.filter(([, value], index) => index === 0 || value !== calendar[index - 1][1])) {
+    const matching = recipe(700 + startsOn.charCodeAt(5), { id: `matching-${season}`, seasons: [season] });
+    const opposite = recipe(710 + startsOn.charCodeAt(6), { id: `opposite-${season}`, seasons: [season === "winter" ? "summer" : "winter"] });
+    const allYear = recipe(720 + startsOn.charCodeAt(8), { id: `all-year-${season}`, seasons: ["all-year"] });
+    const plan = {
+      id: `week-${season}`,
+      startsOn,
+      generatedAt: `${startsOn}T00:00:00.000Z`,
+      profileSnapshot: profile,
+      version: 1,
+      estimatedCost: 6,
+      meals: [matching, opposite, allYear].map((item, dayIndex) => ({
+        id: `day-${dayIndex}-dinner`, dayIndex, mealType: "dinner", recipeId: item.id, portions: 1, source: "manual",
+      })),
+    };
+    assert.equal(engine.summarizePlan(plan, [matching, opposite, allYear], profile).seasonalMeals, 2, startsOn);
+  }
+
+  const winterCandidate = recipe(790, { id: "winter-candidate", title: "Z hiver", seasons: ["winter"], tags: [] });
+  const summerCandidate = recipe(791, { id: "summer-candidate", title: "A été", seasons: ["summer"], tags: [] });
+  const current = recipe(792, { id: "current-season", seasons: ["all-year"], tags: [] });
+  const replacementPlan = {
+    id: "week-replacement-season",
+    startsOn: "2026-01-05",
+    generatedAt: "2026-01-05T00:00:00.000Z",
+    profileSnapshot: profile,
+    version: 1,
+    estimatedCost: 2,
+    meals: [{ id: "day-0-dinner", dayIndex: 0, mealType: "dinner", recipeId: current.id, portions: 1, source: "manual" }],
+  };
+  assert.equal(
+    engine.getReplacementCandidates(replacementPlan, "day-0-dinner", [current, summerCandidate, winterCandidate], profile)[0].id,
+    winterCandidate.id,
+  );
+
+  const slots = Array.from({ length: 7 }, (_, dayIndex) => ["lunch", "dinner"].map((mealType) => ({ dayIndex, mealType }))).flat();
+  const lockedRecipes = slots.slice(0, 13).map((_, index) => recipe(800 + index, { tags: [], seasons: ["all-year"] }));
+  const lockedMeals = slots.slice(0, 13).map((slot, index) => ({
+    id: `day-${slot.dayIndex}-${slot.mealType}`,
+    ...slot,
+    recipeId: lockedRecipes[index].id,
+    portions: 1,
+    source: "generated",
+    locked: true,
+  }));
+  const generationRecipes = [...lockedRecipes, winterCandidate, summerCandidate];
+  const generationProfile = { ...profile, weeklyBudget: 1_000, weeklyTargets: { legumeMeals: 0, fishMeals: 0 } };
+  const options = { seed: "derived-winter", startsOn: "2026-01-05", lockedMeals };
+  const derived = engine.generateWeeklyPlan(generationRecipes, generationProfile, options);
+  const explicit = engine.generateWeeklyPlan(generationRecipes, generationProfile, { ...options, season: "winter" });
+  assert.deepEqual(derived, explicit, "sans option explicite, janvier doit utiliser winter");
+});
+
 test("different seeds explore the best compatible candidates reproducibly", () => {
   const uniform = Array.from({ length: 80 }, (_, index) => recipe(index + 1_000, {
     tags: ["poisson", "légumineuses", "céréales-complètes"],

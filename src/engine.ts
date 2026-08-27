@@ -5,6 +5,7 @@ import type {
   PantryAmount,
   PlannedMeal,
   Recipe,
+  Season,
   ShoppingItem,
   UserProfile,
   WeeklyPlan,
@@ -25,6 +26,8 @@ import {
 } from "./substitutions.ts";
 import { canonicalAllergen } from "./allergens.ts";
 
+type PlanningSeason = Exclude<Season, "all-year">;
+
 export interface GeneratePlanOptions {
   /** Stable input used to make otherwise equivalent choices reproducible. */
   seed?: string | number;
@@ -32,7 +35,7 @@ export interface GeneratePlanOptions {
   startsOn?: string;
   /** Mainly useful when importing a plan. Defaults to midnight on startsOn. */
   generatedAt?: string;
-  season?: "spring" | "summer" | "autumn" | "winter";
+  season?: PlanningSeason;
   /**
    * Meals the user asked to keep. Their slot is not regenerated, their recipe
    * stays out of the candidate pool, and the budget pass never replaces them.
@@ -67,6 +70,18 @@ export interface PlanSummary {
 }
 
 const DEFAULT_START = "2026-08-03";
+
+/** Meteorological season of the plan's Monday, read without timezone conversion. */
+export function seasonForIsoDate(startsOn: string): PlanningSeason {
+  const match = /^\d{4}-(\d{2})-\d{2}$/.exec(startsOn);
+  const parsedMonth = match ? Number(match[1]) : Number.NaN;
+  const month = parsedMonth >= 1 && parsedMonth <= 12 ? parsedMonth : 8;
+  if (month === 12 || month <= 2) return "winter";
+  if (month <= 5) return "spring";
+  if (month <= 8) return "summer";
+  return "autumn";
+}
+
 const TONIGHT_FORM_REPEAT_PENALTY = 24;
 const TONIGHT_RECOMMENDATION_PAGE_SIZE = 6;
 const TAGS = {
@@ -411,7 +426,7 @@ export interface TonightOptions {
   portions: number;
   pantryIngredientIds?: readonly string[];
   favoriteRecipeIds?: readonly string[];
-  season?: "spring" | "summer" | "autumn" | "winter";
+  season?: PlanningSeason;
   limit?: number;
 }
 
@@ -618,7 +633,7 @@ export function generateWeeklyPlan(
 ): WeeklyPlan {
   const seed = options.seed ?? "inflamm-menu-v1";
   const startsOn = options.startsOn ?? DEFAULT_START;
-  const season = options.season ?? "summer";
+  const season = options.season ?? seasonForIsoDate(startsOn);
   const mealTypes = requiredMealTypes(profile.mealsPerDay);
   const slots = Array.from({ length: 7 }, (_, dayIndex) =>
     mealTypes.map((mealType) => ({ dayIndex, mealType })),
@@ -879,6 +894,7 @@ export function getReplacementCandidates(
   const current = recipes.find((recipe) => recipe.id === meal.recipeId);
   const usedIds = new Set(plan.meals.filter((item) => !item.skipped).map((item) => item.recipeId));
   const normalizedReason = normalize(reason);
+  const season = seasonForIsoDate(plan.startsOn);
 
   return recipes
     .filter(
@@ -902,7 +918,7 @@ export function getReplacementCandidates(
         if (current && (normalizedReason.includes("autre") || normalizedReason.includes("different"))) {
           value -= ingredientReuse(recipe, [current]) * 8;
         }
-        value += (recipe.seasons.includes("summer") || recipe.seasons.includes("all-year")) ? 3 : 0;
+        value += (recipe.seasons.includes(season) || recipe.seasons.includes("all-year")) ? 3 : 0;
         return value;
       };
       return score(right) - score(left) || left.title.localeCompare(right.title, "fr");
@@ -1858,6 +1874,7 @@ export function summarizePlan(
     ? round(cooked.reduce((total, recipe) => total + recipe.prepMinutes, 0) / cooked.length, 1)
     : 0;
   const plantDiversity = plantDiversityOf(plan, recipes);
+  const season = seasonForIsoDate(plan.startsOn);
 
   return {
     mealCount: activeMeals.length,
@@ -1869,7 +1886,7 @@ export function summarizePlan(
     wholeGrainMeals: tagCount(selected, TAGS.wholeGrain),
     nutOrSeedMeals: selected.filter(hasNutOrSeed).length,
     seasonalMeals: selected.filter(
-      (recipe) => recipe.seasons.includes("summer") || recipe.seasons.includes("all-year"),
+      (recipe) => recipe.seasons.includes(season) || recipe.seasons.includes("all-year"),
     ).length,
     plantDiversity: plantDiversity.count,
     plantIngredients: plantDiversity.ingredients,

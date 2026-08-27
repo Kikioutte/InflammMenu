@@ -13,7 +13,7 @@
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
       "printemps",
-      "été"
+      "ete"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Le quinoa et la courgette composent une interprétation culinaire originale du khichdi."
@@ -31,7 +31,7 @@
     ],
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
-      "été",
+      "ete",
       "automne"
     ],
     "famille_regime": "vegetalien",
@@ -50,7 +50,7 @@
     ],
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
-      "été",
+      "ete",
       "automne"
     ],
     "famille_regime": "vegetalien",
@@ -127,7 +127,7 @@
     ],
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
-      "été",
+      "ete",
       "automne"
     ],
     "famille_regime": "vegetalien",
@@ -147,7 +147,7 @@
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
       "printemps",
-      "été"
+      "ete"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Le fenouil braisé apporte une base aromatique originale au tempeh."
@@ -203,7 +203,7 @@
     ],
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
-      "toute_annee"
+      "toute-annee"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Des palets vapeur non fermentés combinent riz, urad et légumes dans une forme originale."
@@ -221,7 +221,7 @@
     ],
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
-      "été",
+      "ete",
       "automne"
     ],
     "famille_regime": "vegetalien",
@@ -280,7 +280,7 @@
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
       "printemps",
-      "été"
+      "ete"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Le radis devient fondant au four et reçoit le sésame seulement au service."
@@ -299,7 +299,7 @@
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
       "printemps",
-      "été"
+      "ete"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Ce pilaf d'orge associe fenouil frais et cardamome sans produits laitiers."
@@ -336,7 +336,7 @@
     ],
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
-      "toute_annee"
+      "toute-annee"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Les graines de lotus soufflées sont grillées sans friture ni enrobage sucré."
@@ -354,7 +354,7 @@
     ],
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
-      "toute_annee"
+      "toute-annee"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Des bouchées cuites combinent pois chiches entiers écrasés et épinards."
@@ -372,7 +372,7 @@
     ],
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
-      "toute_annee"
+      "toute-annee"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Les dattes lient des carrés cuits sans sirop ni sucre ajouté."
@@ -390,7 +390,7 @@
     ],
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
-      "toute_annee"
+      "toute-annee"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Une purée de lentilles cuites et farine de riz forme des crackers fins."
@@ -428,7 +428,7 @@
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
       "printemps",
-      "été"
+      "ete"
     ],
     "famille_regime": "vegetarien",
     "note_originalite": "La mangue rôtie remplace les coulis sucrés dans ce dessert lacté."
@@ -466,7 +466,7 @@
     "inspiration_culinaire": "cuisine végétale inspirée de traditions culinaires indiennes associées à l'Ayurveda",
     "saisons": [
       "printemps",
-      "été"
+      "ete"
     ],
     "famille_regime": "vegetalien",
     "note_originalite": "Les haricots blancs donnent de l'onctuosité à un chutney sans coco ni yaourt."

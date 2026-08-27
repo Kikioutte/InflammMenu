@@ -268,6 +268,27 @@ test("les filtres et le tri du catalogue portent sur les vraies données", async
   assert.equal(filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, cost: "eleve" }, "wakame").length <= 1, true);
 });
 
+test("les saisons normalisées restent visibles dans les filtres et la projection", async () => {
+  const { filterCatalogueRecipes, EMPTY_CATALOGUE_FILTERS } = await import("../src/catalog.ts");
+  const affectedIds = [
+    "r526", "r527", "r528", "r532", "r533", "r536", "r537", "r540", "r541", "r543", "r544", "r545", "r546", "r548", "r550",
+  ];
+  const affected = catalogue.recipes.filter((recipe) => affectedIds.includes(recipe.id));
+  const summerAffected = filterCatalogueRecipes(affected, { ...EMPTY_CATALOGUE_FILTERS, season: "ete" });
+  const winterAffected = filterCatalogueRecipes(affected, { ...EMPTY_CATALOGUE_FILTERS, season: "hiver" });
+
+  assert.deepEqual(
+    summerAffected.map((recipe) => recipe.id).sort(),
+    ["r526", "r527", "r528", "r532", "r533", "r536", "r537", "r540", "r541", "r543", "r544", "r545", "r546", "r548", "r550"],
+  );
+  assert.deepEqual(winterAffected.map((recipe) => recipe.id).sort(), ["r536", "r543", "r544", "r545", "r546"]);
+
+  for (const id of ["r526", "r527", "r537"]) {
+    const projected = plannerRecipes.find((recipe) => recipe.id === `catalog-${id}`);
+    assert.ok(projected?.seasons.includes("summer"), `${id}: la projection doit conserver la saison été`);
+  }
+});
+
 test("les 80 desserts CREAMi sont trouvables sans entrer dans le planificateur", async () => {
   const { filterCatalogueRecipes, EMPTY_CATALOGUE_FILTERS, visibleCatalogueRecipes } = await import("../src/catalog.ts");
   const visible = visibleCatalogueRecipes(catalogue);

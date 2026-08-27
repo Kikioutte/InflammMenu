@@ -4,6 +4,7 @@ import type { DietMode, Equipment, IngredientCategory, IngredientUnit, MealType 
 
 export type CatalogueReviewStatus = "validated" | "caution";
 export type CreamiProgram = "ICE CREAM" | "LITE ICE CREAM" | "SORBET" | "GELATO" | "FROZEN YOGURT";
+export type CatalogueSeason = "printemps" | "ete" | "automne" | "hiver" | "toute-annee";
 
 export interface CatalogueRecipeReview {
   status: CatalogueReviewStatus;
@@ -55,7 +56,7 @@ export interface CatalogueRecipe {
   difficulte: "facile" | "intermediaire" | "avance";
   cout: "economique" | "moyen" | "eleve";
   regimes: string[];
-  saisons: string[];
+  saisons: CatalogueSeason[];
   tags: string[];
   /** Dedicated culinary tools required by the recipe, including appliances that
    * are not part of the weekly planner profile. */
@@ -241,7 +242,7 @@ export interface CatalogueFilters {
   /** Maximum hands-on minutes, or 0 for no limit. */
   maxActiveMinutes: number;
   cost: "" | "economique" | "moyen" | "eleve";
-  season: string;
+  season: "" | Exclude<CatalogueSeason, "toute-annee">;
   diet: string;
   withoutAllergen: string;
   plannableOnly: boolean;
