@@ -9,6 +9,7 @@ const catalogueUrl = new URL("src/data/recettes-anti-inflammatoires.json", root)
 const imagesUrl = new URL("src/data/generated-recipe-images.json", root);
 const outputUrl = new URL("src/data/planner-recipes.json", root);
 const cautionsUrl = new URL("public/data/planner-cautions.json", root);
+const cautionIdsUrl = new URL("src/data/planner-caution-ids.json", root);
 const [catalogue, imageNames] = await Promise.all(
   [catalogueUrl, imagesUrl].map(async (url) => JSON.parse(await readFile(url, "utf8"))),
 );
@@ -84,19 +85,23 @@ const cautions = Object.fromEntries(catalogue.recipes
   .map((recipe) => [`catalog-${recipe.id}`, recipe.app.review.caution]));
 const serialized = `${JSON.stringify(recipes)}\n`;
 const serializedCautions = `${JSON.stringify(cautions)}\n`;
+const serializedCautionIds = `${JSON.stringify(Object.keys(cautions).sort())}\n`;
 if (process.argv.includes("--check")) {
-  const [current, currentCautions] = await Promise.all([
+  const [current, currentCautions, currentCautionIds] = await Promise.all([
     readFile(outputUrl, "utf8").catch(() => ""),
     readFile(cautionsUrl, "utf8").catch(() => ""),
+    readFile(cautionIdsUrl, "utf8").catch(() => ""),
   ]);
   assert.equal(current, serialized, "planner-recipes.json n'est pas synchronisé avec le catalogue");
   assert.equal(currentCautions, serializedCautions, "planner-cautions.json n'est pas synchronisé avec le catalogue");
+  assert.equal(currentCautionIds, serializedCautionIds, "planner-caution-ids.json n'est pas synchronisé avec le catalogue");
   console.log(`Projection planificateur valide : ${recipes.length} recettes, ${Buffer.byteLength(serialized)} octets, ${Object.keys(cautions).length} précautions hors ligne.`);
 } else {
   await mkdir(new URL("./", cautionsUrl), { recursive: true });
   await Promise.all([
     writeFile(outputUrl, serialized),
     writeFile(cautionsUrl, serializedCautions),
+    writeFile(cautionIdsUrl, serializedCautionIds),
   ]);
   console.log(`Projection planificateur générée : ${recipes.length} recettes, ${Buffer.byteLength(serialized)} octets, ${Object.keys(cautions).length} précautions hors ligne.`);
 }

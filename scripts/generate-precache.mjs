@@ -58,7 +58,13 @@ for (const icon of manifest.icons ?? []) {
   if (publicPath) references.add(publicPath);
 }
 
-for (const file of filesIn(output).filter((candidate) => /\.(?:css|html|js)$/i.test(candidate))) {
+const outputFiles = filesIn(output);
+for (const file of outputFiles) {
+  const relativePath = path.relative(output, file).split(path.sep).join("/");
+  if (/^assets\/.*\.(?:css|js)$/i.test(relativePath)) {
+    references.add(`${normalizedBase}${relativePath}`);
+  }
+  if (!/\.(?:css|html|js)$/i.test(file)) continue;
   const contents = readFileSync(file, "utf8");
   const discovered = [
     ...contents.matchAll(/["'`](\/[^"'`\s)]+\.(?:jpg|png|svg|woff2?))["'`]/gi),

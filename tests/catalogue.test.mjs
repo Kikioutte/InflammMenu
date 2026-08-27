@@ -5,14 +5,46 @@ import test from "node:test";
 const dataUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
 const sourceUrl = new URL("../src/catalog.ts", import.meta.url);
 const plannerUrl = new URL("../src/data/planner-recipes.json", import.meta.url);
+const plannerCautionsUrl = new URL("../public/data/planner-cautions.json", import.meta.url);
+const plannerCatalogUrl = new URL("../src/planner-catalog.ts", import.meta.url);
 const plannerGeneratorUrl = new URL("../scripts/generate-planner-recipes.mjs", import.meta.url);
 const prototypeUrl = new URL("../src/Prototype.tsx", import.meta.url);
 
 const catalogue = JSON.parse(await readFile(dataUrl, "utf8"));
 const catalogueSource = await readFile(sourceUrl, "utf8");
 const plannerRecipes = JSON.parse(await readFile(plannerUrl, "utf8"));
+const plannerCautions = JSON.parse(await readFile(plannerCautionsUrl, "utf8"));
 const plannerGeneratorSource = await readFile(plannerGeneratorUrl, "utf8");
 const prototypeSource = await readFile(prototypeUrl, "utf8");
+
+let freshImportId = 0;
+
+function importFreshCatalogueModule(label) {
+  const url = new URL(sourceUrl);
+  url.searchParams.set("test", `${label}-${freshImportId += 1}`);
+  return import(url.href);
+}
+
+function jsonResponse(value) {
+  return new Response(JSON.stringify(value), { headers: { "Content-Type": "application/json" } });
+}
+
+function replaceGlobal(t, name, value) {
+  const previous = Object.getOwnPropertyDescriptor(globalThis, name);
+  Object.defineProperty(globalThis, name, { configurable: true, writable: true, value });
+  t.after(() => {
+    if (previous) Object.defineProperty(globalThis, name, previous);
+    else delete globalThis[name];
+  });
+}
+
+function singleRecipeCatalogue(recipe) {
+  return {
+    ...catalogue,
+    meta: { ...catalogue.meta, nombre_recettes: 1 },
+    recipes: [recipe],
+  };
+}
 
 test("the imported catalogue is versioned, complete and internally consistent", () => {
   assert.equal(
@@ -35,6 +67,108 @@ test("the imported catalogue is versioned, complete and internally consistent", 
     assert.ok(recipe.etapes.length > 0, `${recipe.id}: instructions missing`);
     assert.ok(recipe.nutrition_par_portion.calories >= 0, `${recipe.id}: invalid calories`);
   }
+});
+
+test("la frontière runtime accepte le vrai catalogue et rejette les payloads incomplets", async () => {
+  const { validateCatalogueData, validatePlannerCautions } = await import("../src/catalog-validation.ts");
+
+  assert.equal(validateCatalogueData(catalogue).recipes.length, 630);
+  assert.throws(() => validateCatalogueData({ recipes: [{}] }), /Catalogue invalide/);
+  assert.throws(
+    () => validateCatalogueData({ ...catalogue, meta: { ...catalogue.meta, nombre_recettes: 0 }, categories: [], recipes: [] }),
+    /tableau non vide requis/,
+    "un payload vide ne constitue jamais le catalogue complet attendu par l’application",
+  );
+  assert.throws(
+    () => validateCatalogueData(singleRecipeCatalogue(catalogue.recipes[0])),
+    /630 recettes attendues, 1 reçues/,
+    "un catalogue tronqué mais auto-cohérent ne doit pas remplacer l’édition complète",
+  );
+  assert.throws(
+    () => validateCatalogueData(singleRecipeCatalogue({}), { expectedRecipeCount: 1 }),
+    /Catalogue invalide \(recipes\[0\]\.id/,
+    "un objet recette vide ne doit pas franchir une enveloppe pourtant valide",
+  );
+
+  const recipeWithoutAllergens = structuredClone(catalogue.recipes[0]);
+  delete recipeWithoutAllergens.app.planner.allergens;
+  assert.throws(
+    () => validateCatalogueData(singleRecipeCatalogue(recipeWithoutAllergens), { expectedRecipeCount: 1 }),
+    /app\.planner\.allergens/,
+    "un champ critique imbriqué ne doit pas être couvert par le cast TypeScript",
+  );
+
+  const v20Recipe = structuredClone(catalogue.recipes[0]);
+  delete v20Recipe.provenance;
+  delete v20Recipe.app.planner.targets;
+  delete v20Recipe.app.planner.active_minutes;
+  for (const ingredient of v20Recipe.ingredients) {
+    delete ingredient.id;
+    delete ingredient.quantite_normalisee;
+    delete ingredient.unite_normalisee;
+    delete ingredient.facultatif;
+  }
+  const v20Catalogue = singleRecipeCatalogue(v20Recipe);
+  v20Catalogue.meta.schema_version = "2.0.0";
+  assert.doesNotThrow(() => validateCatalogueData(v20Catalogue, { expectedRecipeCount: 1 }), "les ajouts v2.1 restent optionnels en v2.0");
+  v20Recipe.ingredients[0].id = "oats";
+  assert.throws(
+    () => validateCatalogueData(v20Catalogue, { expectedRecipeCount: 1 }),
+    /quantite_normalisee/,
+    "un bloc de normalisation v2.0 doit être absent ou complet",
+  );
+
+  assert.equal(validatePlannerCautions(plannerCautions)["catalog-r002"], plannerCautions["catalog-r002"]);
+  assert.throws(() => validatePlannerCautions([]), /Précautions invalides/);
+  assert.throws(
+    () => validatePlannerCautions({ "catalog-r002": "valide", "catalog-r006": 42 }),
+    /Précautions invalides/,
+    "une entrée valide ne doit pas masquer une autre entrée invalide",
+  );
+  assert.throws(() => validatePlannerCautions({}), /310 entrées attendues, 0 reçues/);
+
+  const glutenRecipe = structuredClone(catalogue.recipes.find(({ id }) => id === "r036"));
+  glutenRecipe.app.planner.allergens = [];
+  assert.throws(
+    () => validateCatalogueData(singleRecipeCatalogue(glutenRecipe), { expectedRecipeCount: 1 }),
+    /allergens: incohérents avec les ingrédients/,
+    "les allergènes du planificateur ne peuvent pas être falsifiés indépendamment des ingrédients",
+  );
+  const unknownAllergenRecipe = structuredClone(catalogue.recipes[0]);
+  unknownAllergenRecipe.ingredients[0].allergenes = ["allergene-invente"];
+  unknownAllergenRecipe.app.planner.allergens = ["allergene-invente"];
+  assert.throws(
+    () => validateCatalogueData(singleRecipeCatalogue(unknownAllergenRecipe), { expectedRecipeCount: 1 }),
+    /valeur inconnue allergene-invente/,
+  );
+});
+
+test("la projection JSON du planificateur franchit elle aussi une frontière runtime", async () => {
+  const { validatePlannerRecipes } = await import("../src/catalog-validation.ts");
+  const validated = validatePlannerRecipes(plannerRecipes);
+  assert.equal(validated.length, plannerRecipes.length);
+
+  const wrongCautionIds = { ...plannerCautions };
+  const [removedId] = Object.keys(wrongCautionIds);
+  delete wrongCautionIds[removedId];
+  wrongCautionIds["catalog-id-invente"] = "Texte non vide mais rattaché à une recette inconnue.";
+  const { validatePlannerCautions } = await import("../src/catalog-validation.ts");
+  assert.throws(
+    () => validatePlannerCautions(wrongCautionIds),
+    /identifiants incohérents/,
+    "le bon nombre de précautions ne peut pas masquer un dictionnaire incomplet ou falsifié",
+  );
+
+  const mismatched = structuredClone(plannerRecipes);
+  mismatched[0].allergens = [];
+  assert.throws(() => validatePlannerRecipes(mismatched), /allergens: incohérents avec les ingrédients/);
+  assert.throws(() => validatePlannerRecipes([]), /tableau non vide requis/);
+
+  const source = await readFile(plannerCatalogUrl, "utf8");
+  assert.doesNotMatch(source, /as unknown as readonly Recipe\[\]/);
+  assert.match(source, /validatePlannerRecipes/);
+  const { IMPORTED_PLAN_RECIPES } = await import(plannerCatalogUrl.href);
+  assert.equal(IMPORTED_PLAN_RECIPES.length, plannerRecipes.length);
 });
 
 test("every recipe carries its editorial review in the JSON source", () => {
@@ -206,17 +340,142 @@ test("la disponibilité au planificateur est expliquée sans lever la barrière 
   assert.deepEqual(plannerAvailabilityFor(drink), { plannable: false, kind: "side-dish" });
 });
 
-test("un échec de chargement du catalogue n'est pas mémorisé", async () => {
-  const source = await readFile(sourceUrl, "utf8");
-  const loader = source.slice(source.indexOf("export function loadCatalogue"));
-  const recovery = loader.slice(loader.indexOf(".catch("));
+test("un catalogue invalide n'est pas mémorisé et le chargement peut être réessayé", { concurrency: false }, async (t) => {
+  const invalid = singleRecipeCatalogue({});
+  let fetchCount = 0;
+  replaceGlobal(t, "fetch", async () => jsonResponse(fetchCount++ === 0 ? invalid : catalogue));
+  const { loadCatalogue } = await importFreshCatalogueModule("load-retry");
 
-  assert.match(recovery, /\.catch\(/, "le rejet doit être attrapé");
-  assert.match(recovery, /cataloguePromise = null/, "la promesse échouée doit être oubliée pour permettre un réessai");
-  assert.ok(
-    recovery.indexOf("cataloguePromise = null") < recovery.indexOf("throw"),
-    "la promesse est vidée avant de propager l'erreur",
+  await assert.rejects(loadCatalogue(), /Catalogue invalide/);
+  const recovered = await loadCatalogue();
+
+  assert.equal(fetchCount, 2, "le second appel doit réellement relancer fetch");
+  assert.equal(recovered.recipes.length, 630);
+});
+
+test("un HTTP 200 corrompu se replie sur la dernière copie hors ligne validée", { concurrency: false }, async (t) => {
+  let cacheName = "";
+  let cacheDeletes = 0;
+  replaceGlobal(t, "fetch", async () => jsonResponse(singleRecipeCatalogue({})));
+  replaceGlobal(t, "caches", {
+    open: async (name) => {
+      cacheName = name;
+      return {
+        match: async () => jsonResponse(catalogue),
+        delete: async () => { cacheDeletes += 1; return true; },
+      };
+    },
+  });
+  const { CATALOGUE_CACHE_NAME, loadCatalogue } = await importFreshCatalogueModule("invalid-network-cache-fallback");
+
+  const recovered = await loadCatalogue();
+  assert.equal(recovered.recipes.length, 630);
+  assert.equal(cacheName, CATALOGUE_CACHE_NAME);
+  assert.equal(CATALOGUE_CACHE_NAME, "inflamm-menu-catalogue-v2");
+  assert.equal(cacheDeletes, 0, "la copie validée ne doit pas être supprimée à cause du réseau corrompu");
+});
+
+test("un ancien payload corrompu n'est jamais annoncé comme catalogue hors ligne vérifié", { concurrency: false }, async (t) => {
+  let entryDeletes = 0;
+  let legacyCacheDeletes = 0;
+  replaceGlobal(t, "caches", {
+    open: async (name) => name === "inflamm-menu-catalogue-v2"
+      ? {
+          match: async () => jsonResponse(singleRecipeCatalogue({})),
+          delete: async () => { entryDeletes += 1; return true; },
+        }
+      : { match: async () => null, delete: async () => true },
+    delete: async (name) => {
+      if (name === "inflamm-menu-catalogue-v1") legacyCacheDeletes += 1;
+      return true;
+    },
+  });
+  const { catalogueAvailableOffline } = await importFreshCatalogueModule("invalid-offline-status");
+
+  assert.equal(await catalogueAvailableOffline(), false);
+  assert.equal(entryDeletes, 1, "une entrée invalide détectée doit être retirée du cache courant");
+  assert.equal(legacyCacheDeletes, 1, "un cache v1 vide ou invalide doit être nettoyé après vérification");
+});
+
+test("un catalogue v1 valide est vérifié puis migré sans perdre le hors-ligne", { concurrency: false }, async (t) => {
+  let currentResponse = null;
+  let legacyResponse = jsonResponse(catalogue);
+  const deletedCaches = [];
+  replaceGlobal(t, "fetch", async () => { throw new Error("réseau indisponible"); });
+  replaceGlobal(t, "caches", {
+    open: async (name) => name === "inflamm-menu-catalogue-v2"
+      ? {
+          match: async () => currentResponse?.clone() ?? null,
+          put: async (_request, response) => { currentResponse = response.clone(); },
+          delete: async () => { currentResponse = null; return true; },
+        }
+      : {
+          match: async () => legacyResponse?.clone() ?? null,
+          delete: async () => { legacyResponse = null; return true; },
+        },
+    delete: async (name) => {
+      deletedCaches.push(name);
+      if (name === "inflamm-menu-catalogue-v1") legacyResponse = null;
+      return true;
+    },
+  });
+  const { catalogueAvailableOffline, loadCatalogue } = await importFreshCatalogueModule("legacy-cache-migration");
+
+  assert.equal(await catalogueAvailableOffline(), true);
+  assert.ok(currentResponse, "la réponse v1 validée doit être recopiée dans v2");
+  assert.equal(legacyResponse, null);
+  assert.deepEqual(deletedCaches, ["inflamm-menu-catalogue-v1"]);
+  assert.equal((await loadCatalogue()).recipes.length, 630, "la copie migrée reste utilisable sans réseau");
+});
+
+test("le module de validation différé est mémorisé puis libéré après un échec de chunk", () => {
+  const loader = catalogueSource.slice(
+    catalogueSource.indexOf("let catalogueValidationPromise"),
+    catalogueSource.indexOf("export function loadPlannerCaution"),
   );
+  assert.match(loader, /catalogueValidationPromise \?\?= import\("\.\/catalog-validation\.ts"\)/);
+  assert.match(loader, /\.catch\(/);
+  assert.ok(
+    loader.lastIndexOf("catalogueValidationPromise = null") > loader.indexOf(".catch("),
+    "une panne de chargement du chunk ne doit pas empoisonner les réessais",
+  );
+});
+
+test("le téléchargement hors ligne ne cache qu'un catalogue entièrement validé", { concurrency: false }, async (t) => {
+  const invalid = singleRecipeCatalogue({});
+  let fetchCount = 0;
+  let openCount = 0;
+  let putCount = 0;
+  replaceGlobal(t, "fetch", async () => jsonResponse(fetchCount++ === 0 ? invalid : catalogue));
+  replaceGlobal(t, "caches", {
+    open: async () => {
+      openCount += 1;
+      return { put: async () => { putCount += 1; } };
+    },
+  });
+  const { cacheCatalogueForOffline } = await importFreshCatalogueModule("cache-atomic");
+
+  await assert.rejects(cacheCatalogueForOffline(), /Catalogue invalide/);
+  assert.equal(openCount, 0, "Cache Storage ne doit pas être ouvert pour un payload invalide");
+  assert.equal(putCount, 0, "aucune réponse invalide ne doit être écrite");
+
+  const recovered = await cacheCatalogueForOffline();
+  assert.equal(recovered.recipes.length, 630);
+  assert.equal(fetchCount, 2);
+  assert.equal(openCount, 1);
+  assert.equal(putCount, 1);
+});
+
+test("un payload de précautions invalide est rejeté puis retenté", { concurrency: false }, async (t) => {
+  let fetchCount = 0;
+  replaceGlobal(t, "fetch", async () => jsonResponse(fetchCount++ === 0
+    ? { "catalog-r002": "valide", "catalog-r006": 42 }
+    : plannerCautions));
+  const { loadPlannerCaution } = await importFreshCatalogueModule("cautions-retry");
+
+  await assert.rejects(loadPlannerCaution("catalog-r002"), /Précautions invalides/);
+  assert.equal(await loadPlannerCaution("catalog-r002"), plannerCautions["catalog-r002"]);
+  assert.equal(fetchCount, 2, "la promesse rejetée doit être oubliée avant le réessai");
 });
 
 test("les filtres et le tri du catalogue portent sur les vraies données", async () => {

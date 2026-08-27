@@ -93,6 +93,10 @@ test("le vrai service worker conserve le catalogue et uniquement les polices lat
     return { names, shellUrls, catalogueUrls };
   });
   expect(cacheState.names.some((name) => name.startsWith("inflamm-menu-shell-"))).toBe(true);
+  expect(cacheState.names).toContain("inflamm-menu-catalogue-v2");
+  expect(cacheState.names).not.toContain("inflamm-menu-catalogue-v1");
+  expect(cacheState.shellUrls.some((url) => /\/assets\/catalog-validation-[A-Za-z0-9_-]+\.js$/.test(url))).toBe(true);
+  expect(cacheState.shellUrls.some((url) => /recettes-anti-inflammatoires(?:-[^/]+)?\.json$/.test(url))).toBe(false);
   expect(cacheState.catalogueUrls.some((url) => /recettes-anti-inflammatoires(?:-[^/]+)?\.json$/.test(url))).toBe(true);
   expect(cacheState.shellUrls.filter((url) => /cyrillic|vietnamese|latin-ext/i.test(url))).toEqual([]);
 

@@ -124,17 +124,27 @@ export const DUPLICATE_CATALOGUE_RECIPES = {
 } as const;
 let cataloguePromise: Promise<CatalogueData> | null = null;
 const catalogueUrl = new URL("./data/recettes-anti-inflammatoires.json", import.meta.url).href;
-export const CATALOGUE_CACHE_NAME = "inflamm-menu-catalogue-v1";
+export const CATALOGUE_CACHE_NAME = "inflamm-menu-catalogue-v2";
+const LEGACY_CATALOGUE_CACHE_NAME = "inflamm-menu-catalogue-v1";
 const plannerCautionsUrl = typeof window === "undefined"
   ? "/data/planner-cautions.json"
   : `${import.meta.env.BASE_URL}data/planner-cautions.json`;
 let plannerCautionsPromise: Promise<Record<string, string>> | null = null;
+let catalogueValidationPromise: Promise<typeof import("./catalog-validation.ts")> | null = null;
+
+function loadCatalogueValidation(): Promise<typeof import("./catalog-validation.ts")> {
+  catalogueValidationPromise ??= import("./catalog-validation.ts").catch((error: unknown) => {
+    catalogueValidationPromise = null;
+    throw error;
+  });
+  return catalogueValidationPromise;
+}
 
 export function loadPlannerCaution(recipeId: string): Promise<string | undefined> {
   plannerCautionsPromise ??= fetch(plannerCautionsUrl, { headers: { Accept: "application/json" } })
     .then((response) => {
       if (!response.ok) throw new Error(`Précautions indisponibles (${response.status})`);
-      return response.json() as Promise<Record<string, string>>;
+      return response.json().then(async (value: unknown) => (await loadCatalogueValidation()).validatePlannerCautions(value));
     })
     .catch((error) => { plannerCautionsPromise = null; throw error; });
   return plannerCautionsPromise.then((cautions) => cautions[recipeId]);
@@ -142,17 +152,64 @@ export function loadPlannerCaution(recipeId: string): Promise<string | undefined
 
 function parseCatalogueResponse(response: Response): Promise<CatalogueData> {
   if (!response.ok) throw new Error(`Catalogue indisponible (${response.status})`);
-  return response.json().then((value: unknown) => {
-    if (!value || typeof value !== "object" || !Array.isArray((value as CatalogueData).recipes)) {
-      throw new Error("Catalogue invalide");
-    }
-    return value as CatalogueData;
-  });
+  return response.json().then(async (value: unknown) => (await loadCatalogueValidation()).validateCatalogueData(value));
+}
+
+async function readValidatedCatalogueCacheEntry(cache: Cache): Promise<{ data: CatalogueData; response: Response } | null> {
+  const response = await cache.match(catalogueUrl);
+  if (!response) return null;
+
+  // Load failures for the validator chunk are transient and must never delete
+  // an otherwise healthy offline copy. Only parsing/schema failures invalidate
+  // the cached catalogue.
+  const { validateCatalogueData } = await loadCatalogueValidation();
+  const migratable = response.clone();
+  try {
+    if (!response.ok) throw new Error(`Catalogue indisponible (${response.status})`);
+    return { data: validateCatalogueData(await response.json() as unknown), response: migratable };
+  } catch {
+    try { await cache.delete(catalogueUrl); } catch { /* The invalid entry still cannot be exposed. */ }
+    return null;
+  }
+}
+
+async function loadValidatedCachedCatalogue(): Promise<CatalogueData | null> {
+  if (typeof caches === "undefined") return null;
+  const currentCache = await caches.open(CATALOGUE_CACHE_NAME);
+  const current = await readValidatedCatalogueCacheEntry(currentCache);
+  if (current) return current.data;
+
+  // v1 could contain either an explicitly downloaded catalogue or an
+  // unchecked network response from the previous worker. Validate it first,
+  // then migrate only the healthy case so updates preserve offline access.
+  const legacyCache = await caches.open(LEGACY_CATALOGUE_CACHE_NAME);
+  const legacy = await readValidatedCatalogueCacheEntry(legacyCache);
+  if (!legacy) {
+    try { await caches.delete(LEGACY_CATALOGUE_CACHE_NAME); } catch { /* Best-effort cleanup. */ }
+    return null;
+  }
+  try {
+    await currentCache.put(catalogueUrl, legacy.response);
+    await caches.delete(LEGACY_CATALOGUE_CACHE_NAME);
+  } catch {
+    // The validated legacy entry remains readable if quota blocks migration.
+  }
+  return legacy.data;
+}
+
+async function fetchCatalogueWithValidatedFallback(): Promise<CatalogueData> {
+  try {
+    const response = await fetch(catalogueUrl, { headers: { Accept: "application/json" } });
+    return await parseCatalogueResponse(response);
+  } catch (error) {
+    const cached = await loadValidatedCachedCatalogue();
+    if (cached) return cached;
+    throw error;
+  }
 }
 
 export function loadCatalogue(): Promise<CatalogueData> {
-  cataloguePromise ??= fetch(catalogueUrl, { headers: { Accept: "application/json" } })
-    .then(parseCatalogueResponse)
+  cataloguePromise ??= fetchCatalogueWithValidatedFallback()
     .catch((error: unknown) => {
       cataloguePromise = null;
       throw error instanceof Error ? error : new Error("Catalogue indisponible");
@@ -171,14 +228,14 @@ export async function cacheCatalogueForOffline(): Promise<CatalogueData> {
   if (typeof caches === "undefined") throw new Error("Le cache hors ligne n’est pas disponible sur cet appareil.");
   const cache = await caches.open(CATALOGUE_CACHE_NAME);
   await cache.put(catalogueUrl, cacheable);
+  try { await caches.delete(LEGACY_CATALOGUE_CACHE_NAME); } catch { /* v2 is already durable. */ }
   cataloguePromise = Promise.resolve(data);
   return data;
 }
 
 export async function catalogueAvailableOffline(): Promise<boolean> {
-  if (typeof caches === "undefined") return false;
   try {
-    return Boolean(await caches.match(catalogueUrl));
+    return Boolean(await loadValidatedCachedCatalogue());
   } catch {
     return false;
   }

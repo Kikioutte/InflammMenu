@@ -21,7 +21,9 @@ assert(entryStats.size < 1_370_000, `bundle initial trop lourd : ${entryStats.si
 assert(entryGzipSize < 320_000, `bundle initial gzip trop lourd : ${entryGzipSize} octets`);
 
 const appShell = serviceWorker.match(/const APP_SHELL = \[[\s\S]*?\];/)?.[0] ?? "";
+assert.match(appShell, /\/assets\/catalog-validation-[A-Za-z0-9_-]+\.js/, "le validateur JSON différé manque au précache hors ligne");
 assert.doesNotMatch(appShell, /catalogue-/, "le catalogue différé ne doit pas être précaché");
+assert.doesNotMatch(appShell, /recettes-anti-inflammatoires[^"']*\.json/, "le gros JSON catalogue ne doit pas être précaché");
 assert.doesNotMatch(appShell, /\/og\.(?:png|jpe?g)/i, "l'image sociale ne doit pas bloquer l'installation hors ligne");
 
 if (output.endsWith(path.join("dist", "pages"))) {
@@ -30,4 +32,4 @@ if (output.endsWith(path.join("dist", "pages"))) {
   assert.doesNotMatch(index, /script-src[^;]*'unsafe-inline'/, "la CSP publiée autorise encore les scripts inline");
 }
 
-console.log(`Découpage valide : bundle initial ${entryStats.size} octets (${entryGzipSize} gzip), catalogue et image sociale absents du précache initial.`);
+console.log(`Découpage valide : bundle initial ${entryStats.size} octets (${entryGzipSize} gzip), validateur JSON précaché, catalogue et image sociale différés.`);
