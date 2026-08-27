@@ -40,8 +40,8 @@ jobs:
       - name: Validate data and unit tests
         run: npm run test:preview
 
-      - name: Install Chromium for Playwright
-        run: npx playwright install --with-deps chromium
+      - name: Install Chromium and WebKit for Playwright
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Test application journeys and mobile runtime
         run: npm run test:browser

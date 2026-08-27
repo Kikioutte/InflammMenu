@@ -713,7 +713,7 @@ test("l’accueil expose les repères et actions principales avec des noms acces
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
-test("le profil est modifiable et conserve ses libellés accessibles", async ({ page }) => {
+test("le profil est modifiable et conserve ses libellés accessibles @webkit-smoke", async ({ page }) => {
   await openFreshApp(page);
 
   const profileTrigger = page.getByRole("button", { name: "Ajuster mon profil" });
@@ -730,6 +730,17 @@ test("le profil est modifiable et conserve ses libellés accessibles", async ({ 
   await expect(budget).toHaveValue("80");
   await expect(prepTime).toHaveValue("30");
   await expect(page.getByRole("button", { name: "Gluten", exact: true })).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByRole("button", { name: "2 repas", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "3 repas", exact: true })).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByTestId("constraint-day-0")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("constraint-day-1")).toHaveAttribute("aria-pressed", "false");
+  await page.getByTestId("constraint-day-1").click();
+  await expect(page.getByTestId("constraint-day-0")).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByTestId("constraint-day-1")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "Classique", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "Végétarien", exact: true })).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByRole("button", { name: "Four", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "Vapeur", exact: true })).toHaveAttribute("aria-pressed", "false");
   await expect(allergies).toHaveAttribute("placeholder", "Sélectionnez ci-dessus ou saisissez un terme");
   await expect(excluded).toHaveAttribute("placeholder", "Ex. brocoli, saumon");
   await expect(page.getByRole("button", { name: "Retirer une personne" })).toBeVisible();
@@ -737,6 +748,8 @@ test("le profil est modifiable et conserve ses libellés accessibles", async ({ 
 
   await budget.fill("95");
   await page.getByRole("button", { name: "Végétarien" }).click();
+  await expect(page.getByRole("button", { name: "Classique", exact: true })).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByRole("button", { name: "Végétarien", exact: true })).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
   await expect(page.getByTestId("home-view")).toBeVisible();
   await expect(profileTrigger).toBeFocused();
@@ -767,6 +780,10 @@ test("le mode ce soir révèle les recettes par groupes de six et la semaine aff
   await openFreshApp(page);
   await page.getByTestId("tonight-open").click();
   await expect(page.getByTestId("tonight-view")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Dîner", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "Déjeuner", exact: true })).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByTestId("tonight-time-30")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("tonight-time-15")).toHaveAttribute("aria-pressed", "false");
   await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(6);
   await expect(page.getByTestId("tonight-results-count")).toContainText("6 recettes sur");
   const firstPageForms = await page.locator('[data-testid^="tonight-result-"]').evaluateAll((cards) =>
@@ -785,6 +802,8 @@ test("le mode ce soir révèle les recettes par groupes de six et la semaine aff
   const visibleIds = await page.locator('[data-testid^="tonight-result-"]').evaluateAll((cards) => cards.map((card) => card.getAttribute("data-testid")));
   expect(new Set(visibleIds).size).toBe(12);
   await page.getByRole("button", { name: "Déjeuner" }).click();
+  await expect(page.getByRole("button", { name: "Déjeuner", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: "Dîner", exact: true })).toHaveAttribute("aria-pressed", "false");
   await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(6);
   await page.getByTestId("tonight-more").click();
   await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(12);
@@ -792,6 +811,8 @@ test("le mode ce soir révèle les recettes par groupes de six et la semaine aff
   await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(6);
   await page.getByRole("button", { name: "Dîner" }).click();
   await page.getByTestId("tonight-time-15").click();
+  await expect(page.getByTestId("tonight-time-15")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("tonight-time-30")).toHaveAttribute("aria-pressed", "false");
   await expect(page.locator('[data-testid^="tonight-result-"]')).toHaveCount(1);
   await expect(page.getByTestId("tonight-results-count")).toHaveText("1 recette sur 1");
   await expect(page.getByTestId("tonight-more")).toHaveCount(0);
@@ -827,7 +848,7 @@ test("un état sans recette explique le critère bloquant sans relâcher les exc
   await expect(help).toContainText("Ces règles de sécurité n’ont pas été assouplies");
 });
 
-test("la génération construit une semaine navigable puis une liste de courses", async ({ page }) => {
+test("la génération construit une semaine navigable puis une liste de courses @webkit-smoke", async ({ page }) => {
   await openFreshApp(page);
 
   await generateWeek(page);
@@ -836,6 +857,17 @@ test("la génération construit une semaine navigable puis une liste de courses"
   await expect(page.getByRole("heading", { name: "Ma semaine" })).toBeFocused();
   await expect(page.locator(".week-summary").getByText("14", { exact: true })).toBeVisible();
   await expect(page.getByText("repas", { exact: true })).toBeVisible();
+  const dayCards = page.locator(".day-card");
+  const selectedDay = page.locator(".day-card.is-selected");
+  const otherDay = page.locator(".day-card:not(.is-selected)").first();
+  await expect(selectedDay).toHaveCount(1);
+  await expect(selectedDay).toHaveAttribute("aria-pressed", "true");
+  await expect(otherDay).toHaveAttribute("aria-pressed", "false");
+  const selectedDayIndex = await selectedDay.evaluate((card) => Array.from(card.parentElement?.children ?? []).indexOf(card));
+  const otherDayIndex = await otherDay.evaluate((card) => Array.from(card.parentElement?.children ?? []).indexOf(card));
+  await otherDay.click();
+  await expect(dayCards.nth(selectedDayIndex)).toHaveAttribute("aria-pressed", "false");
+  await expect(dayCards.nth(otherDayIndex)).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("button", { name: /Remplacer/ }).first()).toBeVisible();
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 
@@ -923,9 +955,15 @@ test("une substitution appliquée met à jour la recette, les allergènes et les
   await page.getByRole("button", { name: "Semaine", exact: true }).click();
   await page.locator(".meal-card__main").first().click();
   await page.getByTestId("ingredient-substitute-walnut").click();
+  const substitutionOptions = page.getByTestId("substitution-options-walnut");
+  await expect(substitutionOptions.getByRole("button", { name: /Ingrédient d’origine/ })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("apply-substitution-nuts-to-pumpkin-seeds")).toHaveAttribute("aria-pressed", "false");
   await page.getByTestId("apply-substitution-nuts-to-pumpkin-seeds").click();
   await expect(page.getByTestId("substitution-summary")).toContainText("courses ont été recalculés");
   await expect(page.locator(".ingredient-row.is-substituted")).toContainText("graines de courge");
+  await page.getByTestId("ingredient-substitute-walnut").click();
+  await expect(substitutionOptions.getByRole("button", { name: /Ingrédient d’origine/ })).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByTestId("apply-substitution-nuts-to-pumpkin-seeds")).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByText("Fruits à coque", { exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: "Retour" }).click();
   await page.getByRole("button", { name: "Courses", exact: true }).click();
@@ -946,6 +984,17 @@ test("la semaine permet d’ouvrir une recette et le remplacement d’un repas",
 
   await expect(page.locator(".replace-page h1")).toBeVisible();
   await expect(page.getByText(/Les allergies, le régime et le temps actif maximum/)).toBeVisible();
+  await expect(page.getByTestId("reason-plus-rapide")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("reason-moins-cher")).toHaveAttribute("aria-pressed", "false");
+  await page.getByTestId("reason-moins-cher").click();
+  await expect(page.getByTestId("reason-plus-rapide")).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByTestId("reason-moins-cher")).toHaveAttribute("aria-pressed", "true");
+  const replacementCards = page.locator(".replacement-card");
+  await expect(replacementCards.first()).toHaveAttribute("aria-pressed", "true");
+  await expect(replacementCards.nth(1)).toHaveAttribute("aria-pressed", "false");
+  await replacementCards.nth(1).click();
+  await expect(replacementCards.first()).toHaveAttribute("aria-pressed", "false");
+  await expect(replacementCards.nth(1)).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("button", { name: "Choisir ce repas" })).toBeVisible();
   await expect(page.getByTestId("flow-fixed-header").getByRole("button")).toHaveCount(1);
 });
@@ -1004,12 +1053,19 @@ test("marquer un repas comme cuisiné met à jour la progression et survit au re
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
-test("la liste de courses peut être copiée, partagée et téléchargée", async ({ page, context }) => {
-  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+test("la liste de courses peut être copiée, partagée et téléchargée @webkit-smoke", async ({ page }) => {
   await page.addInitScript(() => {
+    let clipboardText = "";
     (window as unknown as { sharedPayloads: unknown[] }).sharedPayloads = [];
     (window as unknown as { printCalls: number }).printCalls = 0;
     window.print = () => { (window as unknown as { printCalls: number }).printCalls += 1; };
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        readText: () => Promise.resolve(clipboardText),
+        writeText: (text: string) => { clipboardText = text; return Promise.resolve(); },
+      },
+    });
     Object.defineProperty(navigator, "share", {
       configurable: true,
       value: (data: unknown) => {
@@ -1137,6 +1193,11 @@ test("l’accueil montre tous les repas du jour, y compris en trois repas", asyn
   await generateWeek(page);
 
   await page.getByRole("button", { name: "Accueil", exact: true }).click();
+  const weekStrip = page.getByRole("list", { name: /Semaine du/ });
+  await expect(weekStrip).toBeVisible();
+  await expect(weekStrip.getByRole("listitem")).toHaveCount(7);
+  await expect(weekStrip.getByRole("button")).toHaveCount(0);
+  await expect(weekStrip.locator('[aria-current="date"]')).toHaveCount(1);
   await expect(page.locator(".meal-preview")).toHaveCount(3);
   await expect(page.locator(".meal-preview").first()).toHaveAttribute("data-completed", "false");
 
@@ -2140,9 +2201,23 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await expect(page.getByText("624 résultats")).toBeVisible();
+  const categoryButtons = page.locator(".catalogue-filters button");
+  await expect(categoryButtons.first()).toHaveAttribute("aria-pressed", "true");
+  await expect(categoryButtons.nth(1)).toHaveAttribute("aria-pressed", "false");
+  await categoryButtons.nth(1).click();
+  await expect(categoryButtons.first()).toHaveAttribute("aria-pressed", "false");
+  await expect(categoryButtons.nth(1)).toHaveAttribute("aria-pressed", "true");
+  await categoryButtons.first().click();
 
   await page.getByTestId("catalogue-filters-open").click();
+  await expect(page.getByRole("group", { name: "Temps actif maximum" }).getByTestId("filter-time-0")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("group", { name: "Coût" }).getByRole("button", { name: "Peu importe", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("group", { name: "Saison" }).getByRole("button", { name: "Toutes", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("group", { name: "Régime" }).getByRole("button", { name: "Tous", exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("group", { name: "Sans allergène" }).getByTestId("filter-allergen-any")).toHaveAttribute("aria-pressed", "true");
   await page.getByTestId("filter-time-15").click();
+  await expect(page.getByTestId("filter-time-0")).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByTestId("filter-time-15")).toHaveAttribute("aria-pressed", "true");
   await page.getByTestId("filter-plannable").click();
   await page.getByRole("button", { name: /^Voir \d+ recettes?$/ }).click();
 

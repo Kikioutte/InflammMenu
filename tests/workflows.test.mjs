@@ -48,6 +48,7 @@ test("la validation et le déploiement partagent un pipeline unique", async () =
   assert.match(uploadStep, /actions\/upload-pages-artifact@[0-9a-f]{40}[\s\S]*path: dist\/pages/);
   assert.doesNotMatch(workflow, /actions\/configure-pages@/);
   assert.doesNotMatch(workflow, /npm run test:(?:app|runtime)\b/);
+  assert.match(workflow, /npx playwright install --with-deps chromium webkit/);
 
   const requiredSteps = [
     "npm run audit:production",
