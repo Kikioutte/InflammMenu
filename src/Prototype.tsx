@@ -1172,7 +1172,7 @@ function FavoritesView({ favoriteIds, history, catalogue, catalogueError, onLoad
         {renderedCatalogueRecipes.length < catalogueRecipes.length ? <button type="button" className="secondary-button full-button catalogue-more" data-testid="catalogue-more" onClick={() => setVisibleCatalogueCount((count) => Math.min(catalogueRecipes.length, count + 60))}>Afficher 60 recettes de plus</button> : null}
       </section> : <div className="history-list">{history.length ? <>
         {history.map((plan) => <article className="history-card" key={plan.id} data-testid={`history-card-${plan.id}`}>
-          <button type="button" className="history-card__open" onClick={() => onOpenHistory(plan)}><span><small>Générée le {new Date(plan.generatedAt).toLocaleDateString("fr-FR")}</small><strong>{formatWeekRange(plan.startsOn)}</strong><ChevronRightIcon /></span><em>{plan.meals.length} repas · {plan.estimatedCost.toFixed(0)} € estimés</em></button>
+          <button type="button" className="history-card__open" onClick={() => onOpenHistory(plan)}><span><small>Générée le {new Date(plan.generatedAt).toLocaleDateString("fr-FR")}</small><strong>{formatWeekRange(plan.startsOn)}</strong><ChevronRightIcon /></span><em>{plan.meals.filter((meal) => !meal.skipped).length} repas · {plan.estimatedCost.toFixed(0)} € estimés</em></button>
           <button type="button" className="history-card__delete" data-testid={`history-delete-${plan.id}`} aria-label={`Supprimer la semaine du ${formatWeekRange(plan.startsOn)}`} onClick={() => onDeleteHistory(plan)}><Cross2Icon /></button>
         </article>)}
         <p className="inline-help">{history.length} semaine{history.length > 1 ? "s" : ""} conservée{history.length > 1 ? "s" : ""} sur cet appareil, {HISTORY_LIMIT} au maximum : au-delà, la plus ancienne est retirée automatiquement.</p>
@@ -1192,7 +1192,7 @@ function HistoryPlanView({ plan, profile, onOpenRecipe, onReplay }: {
   const summary = summarizePlan(plan, ACTIVE_RECIPES, profile);
   const cookedCount = planProgress(plan).completed;
   return <MobileScroll className="app-screen"><main className="page-content pushed-page history-page" data-testid="history-plan-view">
-    <div className="page-heading"><span className="eyebrow">Générée le {new Date(plan.generatedAt).toLocaleDateString("fr-FR")}</span><h1>{formatWeekRange(plan.startsOn)}</h1><p>{plan.meals.length} repas archivés{cookedCount ? `, dont ${cookedCount} cuisiné${cookedCount > 1 ? "s" : ""}` : ""}.</p></div>
+    <div className="page-heading"><span className="eyebrow">Générée le {new Date(plan.generatedAt).toLocaleDateString("fr-FR")}</span><h1>{formatWeekRange(plan.startsOn)}</h1><p>{summary.mealCount} repas archivés{cookedCount ? `, dont ${cookedCount} cuisiné${cookedCount > 1 ? "s" : ""}` : ""}.</p></div>
     <div className="week-summary"><div><strong>{summary.mealCount}</strong><span>repas</span></div><div><strong>{plan.estimatedCost.toFixed(0)} €</strong><span>estimés</span></div><div><strong>{summary.averagePrepMinutes.toFixed(0)} min</strong><span>actives en moyenne</span></div></div>
     {report.canReplay
       ? <button className="primary-button full-button" type="button" data-testid="replay-plan" onClick={onReplay}>Reprendre cette semaine</button>
@@ -1320,7 +1320,7 @@ function PlanSlotView({ plan, recipe, profile, onConfirm }: {
 }) {
   const slots = assignableSlots(plan, recipe, profile);
   const [error, setError] = useState("");
-  const alreadyPlanned = plan.meals.find((meal) => meal.recipeId === recipe.id);
+  const alreadyPlanned = plan.meals.find((meal) => !meal.skipped && meal.recipeId === recipe.id);
   return <MobileScroll className="app-screen"><main className="page-content pushed-page plan-slot-page" data-testid="plan-slot-view">
     <div className="page-heading"><span className="eyebrow">Planifier</span><h1>{recipe.title}</h1><p>Choisissez le repas à remplacer. Les allergies, le régime, l’équipement et le temps actif restent respectés.</p></div>
     {alreadyPlanned ? <p className="notice-banner" data-testid="already-planned">Cette recette est déjà au menu ({DAY_LABELS[alreadyPlanned.dayIndex]}, {MEAL_LABELS[alreadyPlanned.mealType].toLocaleLowerCase("fr-FR")}). Une même recette n’est pas répétée dans la semaine.</p> : null}
@@ -1718,7 +1718,7 @@ function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCrea
   return <MobileScroll className="app-screen"><main className="page-content pushed-page generate-page"><div className="generate-mark"><CalendarIcon /></div>
     {phase === "ready" ? <><div className="page-heading page-heading--center"><span className="eyebrow">Votre prochaine semaine</span><h1>Prête en quelques secondes</h1><p>Le moteur vérifie vos préférences, la variété, le budget et la saison.</p></div><section className="generation-summary"><div><PersonIcon /><span><small>Pour</small><strong>{profile.people} personne{profile.people > 1 ? "s" : ""}</strong></span></div><div><ClockIcon /><span><small>Temps actif</small><strong>{profile.maxPrepMinutes} min max.</strong></span></div><div><ArchiveIcon /><span><small>Budget cible</small><strong>{profile.weeklyBudget} € visés</strong></span></div></section>{canPrepareNext ? <div className="segmented-control target-switch" role="group" aria-label="Semaine à générer"><button type="button" className={target === "current" ? "is-selected" : ""} aria-pressed={target === "current"} data-testid="target-current" onClick={() => setTarget("current")}>Cette semaine</button><button type="button" className={target === "upcoming" ? "is-selected" : ""} aria-pressed={target === "upcoming"} data-testid="target-upcoming" onClick={() => setTarget("upcoming")}>La semaine prochaine</button></div> : null}
     {target === "upcoming" ? <p className="inline-help" data-testid="upcoming-help">La semaine en cours, ses repères et sa liste de courses ne bougent pas. Le nouveau menu prendra le relais lundi prochain.</p> : null}
-    <div className="rule-list"><p><CheckIcon /> {profile.mealsPerDay} repas par jour</p><p><CheckIcon /> {targets.legumeMeals} repas avec légumineuses visés</p>{profile.diet === "classic" ? <p><CheckIcon /> {targets.fishMeals} repas avec poisson visés</p> : null}<p><CheckIcon /> Priorité à la saison et au réemploi</p>{lockedCount ? <p data-testid="generate-locked"><LockClosedIcon /> {lockedCount} repas conservé{lockedCount > 1 ? "s" : ""} à l’identique</p> : null}</div><p className="privacy-note">Génération locale, sans compte. Vos données restent sur cet appareil.</p><button type="button" className="primary-button full-button" onClick={start}>Créer ma semaine</button></> : phase === "loading" ? <div className="generation-state" aria-live="polite"><ReloadIcon className="spin" /><h1>Nous composons votre semaine</h1><p>Budget, variété, saison et temps actif sont vérifiés.</p><div className="loading-line"><span /></div></div> : phase === "success" && result ? <div className="generation-state success-state" aria-live="polite"><CheckCircledIcon /><h1>{target === "upcoming" ? "Semaine prochaine prête" : "Votre semaine est prête"}</h1><p>{result.meals.length} repas uniques pour votre foyer, estimés à {result.estimatedCost.toFixed(0)} € · {formatWeekRange(result.startsOn)}. Les présences particulières sont appliquées repas par repas.</p><button type="button" className="primary-button full-button" onClick={() => onComplete(target)}>{target === "upcoming" ? "Revenir à l’accueil" : "Voir ma semaine"}</button></div> : <div className="generation-state error-state" role="alert"><Cross2Icon /><h1>Vos critères sont trop serrés</h1><p>{message}</p>{diagnostic ? <CompatibilityHelp diagnostic={diagnostic} selectedMinutes={diagnosticMinutes} onOpenProfile={onOpenProfile} /> : null}<button type="button" className="secondary-button full-button" onClick={onOpenProfile}>Modifier mon profil</button><button type="button" className="text-button" onClick={() => setPhase("ready")}>Réessayer sans modifier</button></div>}
+    <div className="rule-list"><p><CheckIcon /> {profile.mealsPerDay} repas par jour</p><p><CheckIcon /> {targets.legumeMeals} repas avec légumineuses visés</p>{profile.diet === "classic" ? <p><CheckIcon /> {targets.fishMeals} repas avec poisson visés</p> : null}<p><CheckIcon /> Priorité à la saison et au réemploi</p>{lockedCount ? <p data-testid="generate-locked"><LockClosedIcon /> {lockedCount} repas conservé{lockedCount > 1 ? "s" : ""} à l’identique</p> : null}</div><p className="privacy-note">Génération locale, sans compte. Vos données restent sur cet appareil.</p><button type="button" className="primary-button full-button" onClick={start}>Créer ma semaine</button></> : phase === "loading" ? <div className="generation-state" aria-live="polite"><ReloadIcon className="spin" /><h1>Nous composons votre semaine</h1><p>Budget, variété, saison et temps actif sont vérifiés.</p><div className="loading-line"><span /></div></div> : phase === "success" && result ? <div className="generation-state success-state" aria-live="polite"><CheckCircledIcon /><h1>{target === "upcoming" ? "Semaine prochaine prête" : "Votre semaine est prête"}</h1><p>{result.meals.filter((meal) => !meal.skipped).length} repas uniques pour votre foyer, estimés à {result.estimatedCost.toFixed(0)} € · {formatWeekRange(result.startsOn)}. Les présences particulières sont appliquées repas par repas.</p><button type="button" className="primary-button full-button" onClick={() => onComplete(target)}>{target === "upcoming" ? "Revenir à l’accueil" : "Voir ma semaine"}</button></div> : <div className="generation-state error-state" role="alert"><Cross2Icon /><h1>Vos critères sont trop serrés</h1><p>{message}</p>{diagnostic ? <CompatibilityHelp diagnostic={diagnostic} selectedMinutes={diagnosticMinutes} onOpenProfile={onOpenProfile} /> : null}<button type="button" className="secondary-button full-button" onClick={onOpenProfile}>Modifier mon profil</button><button type="button" className="text-button" onClick={() => setPhase("ready")}>Réessayer sans modifier</button></div>}
   </main></MobileScroll>;
 }
 
@@ -1841,7 +1841,9 @@ function ReplaceView({ plan, current, profile, onConfirm }: { plan: WeeklyPlan; 
   useEffect(() => { setSelectedId(candidates[0]?.id ?? null); }, [reason]);
   const selected = candidates.find((recipe) => recipe.id === selectedId);
   const currentRecipe = recipeById.get(current.recipeId);
-  const unusedRecipes = ACTIVE_RECIPES.filter((recipe) => !plan.meals.some((meal) => meal.recipeId === recipe.id));
+  const unusedRecipes = ACTIVE_RECIPES.filter((recipe) =>
+    !plan.meals.some((meal) => !meal.skipped && meal.recipeId === recipe.id),
+  );
   const selectedMinutes = profile.dayConstraints.find((item) => item.dayIndex === current.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes;
   const diagnostic = diagnoseRecipeCompatibility(unusedRecipes, profile, { mealType: current.mealType, maxPrepMinutes: selectedMinutes });
   const compatibleAlreadyPlanned = diagnoseRecipeCompatibility(ACTIVE_RECIPES, profile, { mealType: current.mealType, maxPrepMinutes: selectedMinutes }).compatibleCount > 0;
@@ -2137,9 +2139,15 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     if (amount === null) delete spend[current.currentPlan.id]; else spend[current.currentPlan.id] = amount;
     return { ...current, actualSpend: spend };
   });
-  const toggleMealSkipped = (planned: PlannedMeal) => setAppState((current) => (current.currentPlan
-    ? withUpdatedPlan(current, setMealSkipped(current.currentPlan, planned.id, planned.skipped !== true, ACTIVE_RECIPES))
-    : current));
+  const toggleMealSkipped = (planned: PlannedMeal) => {
+    try {
+      setAppState((current) => (current.currentPlan
+        ? withUpdatedPlan(current, setMealSkipped(current.currentPlan, planned.id, planned.skipped !== true, ACTIVE_RECIPES))
+        : current));
+    } catch (error) {
+      setAppNotice(error instanceof Error ? error.message : "Impossible de modifier ce repas.");
+    }
+  };
   const toggleMealCompleted = (planned: PlannedMeal) => setAppState((current) => (current.currentPlan
     ? { ...current, currentPlan: setPlannedMealCompleted(current.currentPlan, planned.id, planned.completed !== true) }
     : current));

@@ -1087,6 +1087,91 @@ test("a meal taken outside costs nothing and buys nothing", () => {
   assert.equal(restored.estimatedCost, plan.estimatedCost);
 });
 
+test("a meal planned outside consumes no recipe capacity or weekly target", () => {
+  const minimalCatalogue = Array.from({ length: 13 }, (_, index) => recipe(5_000 + index, {
+    tags: index === 0 ? ["poisson"] : ["céréales-complètes"],
+  }));
+  const outsideProfile = {
+    ...profile,
+    weeklyBudget: 100,
+    weeklyTargets: { legumeMeals: 0, fishMeals: 1 },
+    dayConstraints: [{ dayIndex: 0, skippedMealTypes: ["lunch"] }],
+  };
+
+  const plan = engine.generateWeeklyPlan(minimalCatalogue, outsideProfile, { seed: "outside-capacity" });
+  const activeMeals = plan.meals.filter((meal) => !meal.skipped);
+  const summary = engine.summarizePlan(plan, minimalCatalogue, outsideProfile);
+
+  assert.equal(plan.meals.length, 14, "le créneau hors foyer reste visible dans la semaine");
+  assert.equal(activeMeals.length, 13);
+  assert.equal(new Set(activeMeals.map((meal) => meal.recipeId)).size, 13, "les repas actifs restent uniques");
+  assert.ok(activeMeals.some((meal) => meal.recipeId === minimalCatalogue[0].id), "le poisson doit être servi à un repas actif");
+  assert.equal(summary.mealCount, 13);
+  assert.equal(summary.fishMeals, 1, "le repas hors foyer ne doit jamais satisfaire l’objectif poisson");
+});
+
+test("weekly aggregates ignore every value carried by a meal outside", () => {
+  const outsideFish = recipe(5_100, {
+    tags: ["poisson", "légumineuses"],
+    nutrition: { ...nutrition, calories: 999, protein: 99, fiber: 99 },
+  });
+  const activeGrain = recipe(5_101, {
+    tags: ["céréales-complètes"],
+    nutrition: { ...nutrition, calories: 321, protein: 12, fiber: 5 },
+  });
+  const plan = {
+    id: "week-outside-summary",
+    startsOn: "2026-08-03",
+    generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: profile,
+    version: 1,
+    estimatedCost: 2,
+    meals: [
+      { id: "outside", dayIndex: 0, mealType: "lunch", recipeId: outsideFish.id, portions: 1, source: "generated", skipped: true },
+      { id: "active", dayIndex: 0, mealType: "dinner", recipeId: activeGrain.id, portions: 1, source: "generated" },
+    ],
+  };
+
+  const summary = engine.summarizePlan(plan, [outsideFish, activeGrain], profile);
+  assert.equal(summary.mealCount, 1);
+  assert.equal(summary.fishMeals, 0);
+  assert.equal(summary.legumeMeals, 0);
+  assert.equal(summary.wholeGrainMeals, 1);
+  assert.equal(summary.averageCalories, 321);
+  assert.equal(summary.averageProtein, 12);
+  assert.equal(summary.averageFiber, 5);
+});
+
+test("a dormant outside recipe remains reusable and cannot create an active duplicate", () => {
+  const plan = engine.generateWeeklyPlan(catalogue, profile, { seed: "outside-reuse" });
+  const dormant = plan.meals[0];
+  const outside = engine.setMealSkipped(plan, dormant.id, true, catalogue);
+  const replacementTarget = outside.meals[1];
+  assert.ok(
+    engine.getReplacementCandidates(outside, replacementTarget.id, catalogue, profile)
+      .some((candidate) => candidate.id === dormant.recipeId),
+    "une recette uniquement liée à un créneau extérieur ne doit pas rester réservée",
+  );
+
+  const duplicated = {
+    ...outside,
+    meals: outside.meals.slice(0, 2).map((meal, index) => ({
+      ...meal,
+      id: index === 0 ? "outside-duplicate" : "active-duplicate",
+      recipeId: dormant.recipeId,
+      skipped: index === 0,
+    })),
+  };
+  const reactivated = engine.setMealSkipped(duplicated, "outside-duplicate", false, catalogue);
+  assert.equal(reactivated.meals.every((meal) => !meal.skipped), true);
+  assert.equal(new Set(reactivated.meals.map((meal) => meal.recipeId)).size, 2);
+
+  assert.throws(
+    () => engine.setMealSkipped(duplicated, "outside-duplicate", false, [catalogue.find((item) => item.id === dormant.recipeId)]),
+    /Aucune recette inutilisée et compatible/,
+  );
+});
+
 test("cooking sessions group what really has to be cooked", () => {
   const plan = engine.generateWeeklyPlan(catalogue, profile, { seed: "sessions" });
   const target = engine.leftoverCandidates(plan, plan.meals[0].id, catalogue)[0];

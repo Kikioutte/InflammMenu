@@ -675,10 +675,43 @@ export function generateWeeklyPlan(
       continue;
     }
 
+    const slotKey = `${slot.dayIndex}-${slot.mealType}` as const;
+    const slotCandidates = eligibleBySlot.get(slotKey) ?? [];
+    const portions = portionsForSlot(profile, slot.dayIndex, slot.mealType);
+    if (slotIsSkipped(profile, slot.dayIndex, slot.mealType)) {
+      if (slotCandidates.length === 0) {
+        const diagnostic = diagnoseRecipeCompatibility(recipes, profile, {
+          mealType: slot.mealType,
+          maxPrepMinutes: dayConstraintOf(profile, slot.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes,
+        });
+        throw new RecipeCompatibilityError(
+          `Aucune recette compatible pour le jour ${slot.dayIndex + 1}.`,
+          diagnostic,
+          slot.mealType,
+          slot.dayIndex,
+        );
+      }
+      const displayRecipe = selectSeededWeeklyCandidate(
+        slotCandidates,
+        () => 0,
+        seed,
+        `${slotKey}-skipped`,
+      );
+      meals.push({
+        id: `day-${slot.dayIndex}-${slot.mealType}`,
+        dayIndex: slot.dayIndex as PlannedMeal["dayIndex"],
+        mealType: slot.mealType,
+        recipeId: displayRecipe.id,
+        portions,
+        source: "generated",
+        skipped: true,
+      });
+      continue;
+    }
+
     const legumeDeficit = Math.max(0, targets.legumeMeals - tagCount(selected, TAGS.legume));
     const fishDeficit = profile.diet === "classic" ? Math.max(0, targets.fishMeals - tagCount(selected, TAGS.fish)) : 0;
-    const portions = portionsForSlot(profile, slot.dayIndex, slot.mealType);
-    const candidates = (eligibleBySlot.get(`${slot.dayIndex}-${slot.mealType}`) ?? [])
+    const candidates = slotCandidates
       .filter((recipe) => !used.has(recipe.id));
     const selectedIngredientIds = new Set(selected.flatMap(ingredientIdsOf));
     const formsAlreadyServedToday = new Set(
@@ -744,7 +777,6 @@ export function generateWeeklyPlan(
       recipeId: selectedRecipe.id,
       portions,
       source: "generated",
-      ...(slotIsSkipped(profile, slot.dayIndex, slot.mealType) ? { skipped: true } : {}),
     });
   }
 
@@ -755,7 +787,10 @@ export function generateWeeklyPlan(
   let changed = true;
   while (currentCost > profile.weeklyBudget && changed) {
     changed = false;
-    const selectedNow = meals.map((meal) => byId.get(meal.recipeId)).filter((item): item is Recipe => Boolean(item));
+    const selectedNow = meals
+      .filter((meal) => !meal.skipped)
+      .map((meal) => byId.get(meal.recipeId))
+      .filter((item): item is Recipe => Boolean(item));
     const currentLegumes = tagCount(selectedNow, TAGS.legume);
     const currentFish = tagCount(selectedNow, TAGS.fish);
     let best:
@@ -766,7 +801,7 @@ export function generateWeeklyPlan(
       | undefined;
 
     meals.forEach((meal, mealIndex) => {
-      if (meal.locked) return;
+      if (meal.locked || meal.skipped) return;
       const previous = byId.get(meal.recipeId);
       if (!previous) return;
       for (const candidate of eligibleBySlot.get(`${meal.dayIndex}-${meal.mealType}`) ?? []) {
@@ -823,7 +858,7 @@ export function getReplacementCandidates(
   const meal = plan.meals.find((item) => item.id === slotId);
   if (!meal) return [];
   const current = recipes.find((recipe) => recipe.id === meal.recipeId);
-  const usedIds = new Set(plan.meals.map((item) => item.recipeId));
+  const usedIds = new Set(plan.meals.filter((item) => !item.skipped).map((item) => item.recipeId));
   const normalizedReason = normalize(reason);
 
   return recipes
@@ -863,7 +898,6 @@ export function replacePlannedMeal(
 ): WeeklyPlan {
   const replacementId = typeof replacement === "string" ? replacement : replacement.id;
   const allRecipes = typeof replacement === "string" ? recipes : [...recipes, replacement];
-  const recipeIds = new Set(plan.meals.filter((meal) => !meal.leftoverOf).map((meal) => meal.recipeId));
   const existing = plan.meals.find((meal) => meal.id === slotId);
   if (!existing) return plan;
   const replacementRecipe = typeof replacement === "string"
@@ -872,7 +906,10 @@ export function replacePlannedMeal(
   if (replacementRecipe && !replacementRecipe.mealTypes.includes(existing.mealType)) {
     throw new Error("Cette recette ne correspond pas au type du repas remplacé.");
   }
-  if (recipeIds.has(replacementId) && existing.recipeId !== replacementId) {
+  const usedByAnotherActiveMeal = plan.meals.some((meal) =>
+    meal.id !== existing.id && !meal.leftoverOf && !meal.skipped && meal.recipeId === replacementId,
+  );
+  if (usedByAnotherActiveMeal) {
     throw new Error("Cette recette est déjà utilisée dans la semaine.");
   }
 
@@ -976,8 +1013,23 @@ export function setMealSkipped(
   if (skipped && plan.meals.some((meal) => meal.leftoverOf === slotId && !meal.skipped)) {
     throw new Error("Ce plat sert de base à des restes : retirez-les avant de le passer hors foyer.");
   }
+  const duplicateActiveRecipe = !skipped && plan.meals.some((meal) =>
+    meal.id !== target.id && !meal.leftoverOf && !meal.skipped && meal.recipeId === target.recipeId,
+  );
+  const replacement = duplicateActiveRecipe
+    ? getReplacementCandidates(plan, slotId, recipes, plan.profileSnapshot, "different")[0]
+    : undefined;
+  if (duplicateActiveRecipe && !replacement) {
+    throw new Error("Aucune recette inutilisée et compatible ne permet de remettre ce repas au menu.");
+  }
   const meals = plan.meals.map((meal) => (meal.id === slotId
-    ? { ...meal, skipped, ...(skipped ? { completed: false, locked: false } : {}) }
+    ? {
+        ...meal,
+        recipeId: replacement?.id ?? meal.recipeId,
+        skipped,
+        ...(replacement ? { source: "replacement" as const, substitutions: undefined } : {}),
+        ...(skipped ? { completed: false, locked: false } : {}),
+      }
     : meal));
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
   const canRecalculate = meals.every((meal) => byId.has(meal.recipeId));
@@ -1703,7 +1755,10 @@ export function summarizePlan(
   profile: UserProfile = plan.profileSnapshot,
 ): PlanSummary {
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
-  const selected = plan.meals.map((meal) => byId.get(meal.recipeId)).filter((item): item is Recipe => Boolean(item));
+  const activeMeals = plan.meals.filter((meal) => !meal.skipped);
+  const selected = activeMeals
+    .map((meal) => byId.get(meal.recipeId))
+    .filter((item): item is Recipe => Boolean(item));
   // Leftovers are eaten, not cooked: they must not lower the average session time.
   const cooked = plan.meals
     .filter((meal) => !meal.leftoverOf && !meal.skipped)
@@ -1715,7 +1770,7 @@ export function summarizePlan(
   const plantDiversity = plantDiversityOf(plan, recipes);
 
   return {
-    mealCount: plan.meals.length,
+    mealCount: activeMeals.length,
     cookingSessions: cooked.length,
     estimatedCost: plan.estimatedCost,
     averagePrepMinutes,
