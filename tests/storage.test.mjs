@@ -774,3 +774,317 @@ test("daily constraints migrate safely and discard malformed entries", () => {
   ]);
   assert.deepEqual(migrateAppState(state())?.profile.dayConstraints, []);
 });
+
+function controlledIndexedDb() {
+  const records = new Map();
+  const pendingWrites = [];
+  const writeWaiters = [];
+  let activeWriters = 0;
+  let maxActiveWriters = 0;
+  let writesStarted = 0;
+
+  const clone = (value) => value === undefined ? undefined : structuredClone(value);
+  const notifyWriteWaiters = () => {
+    for (let index = writeWaiters.length - 1; index >= 0; index -= 1) {
+      if (writesStarted < writeWaiters[index].count) continue;
+      writeWaiters.splice(index, 1)[0].resolve();
+    }
+  };
+
+  const database = {
+    objectStoreNames: { contains: () => true },
+    createObjectStore: () => undefined,
+    close: () => undefined,
+    transaction: (_storeName, mode) => {
+      const staged = new Map();
+      const requests = [];
+      let announced = false;
+      let finished = false;
+      const transaction = {
+        error: null,
+        oncomplete: null,
+        onerror: null,
+        onabort: null,
+        abort: () => {
+          if (finished) return;
+          finished = true;
+          if (mode === "readwrite") activeWriters -= 1;
+          queueMicrotask(() => transaction.onabort?.());
+        },
+        objectStore: () => ({
+          get: (key) => {
+            const request = { result: clone(records.get(key)), onsuccess: null };
+            requests.push(request);
+            if (requests.length === 2) {
+              queueMicrotask(() => {
+                if (finished) return;
+                if (mode === "readonly") {
+                  finished = true;
+                  transaction.oncomplete?.();
+                  return;
+                }
+                request.onsuccess?.();
+                if (!announced) {
+                  finished = true;
+                  activeWriters -= 1;
+                  transaction.oncomplete?.();
+                }
+              });
+            }
+            return request;
+          },
+          put: (value, key) => {
+            staged.set(key, clone(value));
+            if (mode !== "readwrite" || key !== "current" || announced) return {};
+            announced = true;
+            writesStarted += 1;
+            pendingWrites.push({
+              release: () => {
+                for (const [recordKey, recordValue] of staged) records.set(recordKey, clone(recordValue));
+                finished = true;
+                activeWriters -= 1;
+                queueMicrotask(() => transaction.oncomplete?.());
+              },
+              reject: () => {
+                transaction.error = new Error("Échec IndexedDB contrôlé");
+                finished = true;
+                activeWriters -= 1;
+                queueMicrotask(() => transaction.onerror?.());
+              },
+            });
+            notifyWriteWaiters();
+            return {};
+          },
+        }),
+      };
+      if (mode === "readwrite") {
+        activeWriters += 1;
+        maxActiveWriters = Math.max(maxActiveWriters, activeWriters);
+      }
+      return transaction;
+    },
+  };
+
+  return {
+    factory: {
+      open: () => {
+        const request = { result: database, error: null, onsuccess: null, onerror: null, onblocked: null, onupgradeneeded: null };
+        queueMicrotask(() => request.onsuccess?.());
+        return request;
+      },
+    },
+    waitForWrites: (count) => writesStarted >= count
+      ? Promise.resolve()
+      : new Promise((resolve) => writeWaiters.push({ count, resolve })),
+    releaseNextWrite: () => {
+      const pending = pendingWrites.shift();
+      assert.ok(pending, "une écriture contrôlée doit être en attente");
+      pending.release();
+    },
+    rejectNextWrite: () => {
+      const pending = pendingWrites.shift();
+      assert.ok(pending, "une écriture contrôlée doit être en attente");
+      pending.reject();
+    },
+    seed: (key, value) => records.set(key, clone(value)),
+    read: (key) => clone(records.get(key)),
+    metrics: () => ({ activeWriters, maxActiveWriters, writesStarted, pendingWrites: pendingWrites.length }),
+  };
+}
+
+function memoryLocalStorage() {
+  const records = new Map();
+  return {
+    getItem: (key) => records.has(key) ? records.get(key) : null,
+    setItem: (key, value) => records.set(key, String(value)),
+    removeItem: (key) => records.delete(key),
+    clear: () => records.clear(),
+  };
+}
+
+test("rapid saves keep one slow IndexedDB writer and persist the newest exact snapshot", async () => {
+  const { saveAppState, stampAppStateChanges } = await import("../src/storage.ts");
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window");
+  const originalIndexedDb = Object.getOwnPropertyDescriptor(globalThis, "indexedDB");
+  const originalBroadcastChannel = Object.getOwnPropertyDescriptor(globalThis, "BroadcastChannel");
+  const localStorage = memoryLocalStorage();
+  const indexedDb = controlledIndexedDb();
+
+  try {
+    Object.defineProperty(globalThis, "window", { configurable: true, value: { localStorage } });
+    Object.defineProperty(globalThis, "indexedDB", { configurable: true, value: indexedDb.factory });
+    Object.defineProperty(globalThis, "BroadcastChannel", { configurable: true, value: undefined });
+
+    const snapshots = [];
+    let current = migrateAppState(state());
+    for (let revision = 1; revision <= 100; revision += 1) {
+      current = stampAppStateChanges(current, {
+        ...current,
+        profile: { ...current.profile, firstName: `Mutation ${revision}` },
+      }, revision, `${revision}:burst`);
+      snapshots.push(current);
+    }
+
+    const initialSaves = snapshots.slice(0, 50).map((snapshot) => saveAppState(snapshot));
+    await indexedDb.waitForWrites(1);
+    assert.deepEqual(indexedDb.metrics(), { activeWriters: 1, maxActiveWriters: 1, writesStarted: 1, pendingWrites: 1 });
+
+    let burstResolved = 0;
+    const burstSaves = snapshots.slice(50).map((snapshot) => {
+      const operation = saveAppState(snapshot);
+      void operation.then(() => { burstResolved += 1; });
+      return operation;
+    });
+    const staleSave = saveAppState(snapshots[9]);
+    void staleSave.then(() => { burstResolved += 1; });
+
+    assert.deepEqual(
+      JSON.parse(localStorage.getItem("inflamm-menu:app-state")),
+      snapshots[99],
+      "chaque appel conserve immédiatement le dernier état dans le secours synchrone",
+    );
+    assert.equal(burstResolved, 0, "aucune Promise récente ne dépend de l’écriture ancienne encore en vol");
+    assert.equal(indexedDb.metrics().writesStarted, 1, "la rafale ne démarre pas un second writer en parallèle");
+
+    indexedDb.releaseNextWrite();
+    const initialResults = await Promise.all(initialSaves);
+    assert.equal(initialResults.every((result) => result.state.stateRevision === snapshots[49].stateRevision), true);
+    await indexedDb.waitForWrites(2);
+    assert.equal(burstResolved, 0, "même l’appel stale attend la réplique locale plus récente capturée dans sa cible");
+    assert.deepEqual(indexedDb.metrics(), { activeWriters: 1, maxActiveWriters: 1, writesStarted: 2, pendingWrites: 1 });
+
+    indexedDb.releaseNextWrite();
+    const results = await Promise.all([...burstSaves, staleSave]);
+    assert.equal(burstResolved, 51);
+    assert.equal(results.every((result) => result.state.stateRevision === snapshots[99].stateRevision), true);
+    assert.deepEqual(indexedDb.read("current"), snapshots[99], "IndexedDB termine sur le snapshot exact le plus récent");
+    assert.deepEqual(JSON.parse(localStorage.getItem("inflamm-menu:app-state")), snapshots[99]);
+    assert.deepEqual(indexedDb.metrics(), { activeWriters: 0, maxActiveWriters: 1, writesStarted: 2, pendingWrites: 0 });
+  } finally {
+    if (originalWindow) Object.defineProperty(globalThis, "window", originalWindow); else delete globalThis.window;
+    if (originalIndexedDb) Object.defineProperty(globalThis, "indexedDB", originalIndexedDb); else delete globalThis.indexedDB;
+    if (originalBroadcastChannel) Object.defineProperty(globalThis, "BroadcastChannel", originalBroadcastChannel); else delete globalThis.BroadcastChannel;
+  }
+});
+
+test("a failed slow writer never resolves from a superseded local snapshot", async () => {
+  const { saveAppState, stampAppStateChanges } = await import("../src/storage.ts");
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window");
+  const originalIndexedDb = Object.getOwnPropertyDescriptor(globalThis, "indexedDB");
+  const originalBroadcastChannel = Object.getOwnPropertyDescriptor(globalThis, "BroadcastChannel");
+  const localStorage = memoryLocalStorage();
+  const indexedDb = controlledIndexedDb();
+
+  try {
+    Object.defineProperty(globalThis, "window", { configurable: true, value: { localStorage } });
+    Object.defineProperty(globalThis, "indexedDB", { configurable: true, value: indexedDb.factory });
+    Object.defineProperty(globalThis, "BroadcastChannel", { configurable: true, value: undefined });
+
+    const base = migrateAppState(state());
+    const requested = stampAppStateChanges(base, {
+      ...base,
+      profile: { ...base.profile, firstName: "Écriture A" },
+    }, 1, "1:writer-a");
+    const concurrent = stampAppStateChanges(base, { ...base, textScale: "large" }, 2, "2:writer-d");
+    const operation = saveAppState(requested);
+    await indexedDb.waitForWrites(1);
+
+    const nativeSetItem = localStorage.setItem;
+    nativeSetItem("inflamm-menu:app-state", JSON.stringify(concurrent));
+    localStorage.setItem = (key, value) => {
+      if (key === "inflamm-menu:app-state") throw new Error("localStorage indisponible après la course");
+      nativeSetItem(key, value);
+    };
+    indexedDb.rejectNextWrite();
+
+    await assert.rejects(operation, /Échec IndexedDB contrôlé/);
+    assert.deepEqual(JSON.parse(localStorage.getItem("inflamm-menu:app-state")), concurrent);
+    assert.deepEqual(indexedDb.metrics(), { activeWriters: 0, maxActiveWriters: 1, writesStarted: 1, pendingWrites: 0 });
+  } finally {
+    if (originalWindow) Object.defineProperty(globalThis, "window", originalWindow); else delete globalThis.window;
+    if (originalIndexedDb) Object.defineProperty(globalThis, "indexedDB", originalIndexedDb); else delete globalThis.indexedDB;
+    if (originalBroadcastChannel) Object.defineProperty(globalThis, "BroadcastChannel", originalBroadcastChannel); else delete globalThis.BroadcastChannel;
+  }
+});
+
+test("a newer reset marker wins a race with the final local snapshot proof", async () => {
+  const { saveAppState, stampAppStateChanges } = await import("../src/storage.ts");
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window");
+  const originalIndexedDb = Object.getOwnPropertyDescriptor(globalThis, "indexedDB");
+  const originalBroadcastChannel = Object.getOwnPropertyDescriptor(globalThis, "BroadcastChannel");
+  const localStorage = memoryLocalStorage();
+  const newerReset = "1:reset:concurrent";
+
+  try {
+    Object.defineProperty(globalThis, "window", { configurable: true, value: { localStorage } });
+    Object.defineProperty(globalThis, "indexedDB", {
+      configurable: true,
+      value: { open: () => { throw new Error("IndexedDB indisponible pour la course reset"); } },
+    });
+    Object.defineProperty(globalThis, "BroadcastChannel", { configurable: true, value: undefined });
+
+    const base = migrateAppState(state());
+    const requested = stampAppStateChanges(base, {
+      ...base,
+      profile: { ...base.profile, firstName: "Ne doit pas franchir le reset" },
+    }, 1, "1:before-reset");
+    const nativeSetItem = localStorage.setItem;
+    let injectReset = true;
+    localStorage.setItem = (key, value) => {
+      nativeSetItem(key, value);
+      if (injectReset && key === "inflamm-menu:app-state") {
+        injectReset = false;
+        nativeSetItem("inflamm-menu:reset-marker", newerReset);
+      }
+    };
+
+    const result = await saveAppState(requested);
+    const persisted = JSON.parse(localStorage.getItem("inflamm-menu:app-state"));
+    assert.equal(result.state.storageGeneration, newerReset);
+    assert.equal(persisted.storageGeneration, newerReset);
+    assert.equal(persisted.profile.firstName, "");
+    assert.equal(localStorage.getItem("inflamm-menu:reset-marker"), newerReset);
+  } finally {
+    if (originalWindow) Object.defineProperty(globalThis, "window", originalWindow); else delete globalThis.window;
+    if (originalIndexedDb) Object.defineProperty(globalThis, "indexedDB", originalIndexedDb); else delete globalThis.indexedDB;
+    if (originalBroadcastChannel) Object.defineProperty(globalThis, "BroadcastChannel", originalBroadcastChannel); else delete globalThis.BroadcastChannel;
+  }
+});
+
+test("an IndexedDB snapshot newer than its missing marker cannot be overwritten by a stale save", async () => {
+  const { replaceAppStateData, saveAppState, stampAppStateChanges } = await import("../src/storage.ts");
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window");
+  const originalIndexedDb = Object.getOwnPropertyDescriptor(globalThis, "indexedDB");
+  const originalBroadcastChannel = Object.getOwnPropertyDescriptor(globalThis, "BroadcastChannel");
+  const localStorage = memoryLocalStorage();
+  const indexedDb = controlledIndexedDb();
+
+  try {
+    Object.defineProperty(globalThis, "window", { configurable: true, value: { localStorage } });
+    Object.defineProperty(globalThis, "indexedDB", { configurable: true, value: indexedDb.factory });
+    Object.defineProperty(globalThis, "BroadcastChannel", { configurable: true, value: undefined });
+
+    const base = migrateAppState(state());
+    const stale = stampAppStateChanges(base, {
+      ...base,
+      profile: { ...base.profile, firstName: "Écriture obsolète" },
+    }, 1, "1:stale");
+    const newer = replaceAppStateData(base, migrateAppState(state({
+      profile: { ...state().profile, firstName: "Réplique IndexedDB plus récente" },
+    })));
+    indexedDb.seed("current", newer);
+
+    const operation = saveAppState(stale);
+    await indexedDb.waitForWrites(1);
+    indexedDb.releaseNextWrite();
+    const result = await operation;
+
+    assert.deepEqual(result.state, newer);
+    assert.deepEqual(indexedDb.read("current"), newer);
+    assert.deepEqual(JSON.parse(localStorage.getItem("inflamm-menu:app-state")), newer);
+  } finally {
+    if (originalWindow) Object.defineProperty(globalThis, "window", originalWindow); else delete globalThis.window;
+    if (originalIndexedDb) Object.defineProperty(globalThis, "indexedDB", originalIndexedDb); else delete globalThis.indexedDB;
+    if (originalBroadcastChannel) Object.defineProperty(globalThis, "BroadcastChannel", originalBroadcastChannel); else delete globalThis.BroadcastChannel;
+  }
+});

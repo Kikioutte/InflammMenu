@@ -855,7 +855,6 @@ function readLocalReplica(): StorageReplica {
 function writeLocalReplica(state: AppState): ReplicaWriteResult {
   if (!localStorageAvailable()) return { saved: false, activeGeneration: LEGACY_STORAGE_GENERATION, state: null };
   let activeGeneration = LEGACY_STORAGE_GENERATION;
-  let markerAdvanced = false;
   const resetTombstone = isResetTombstone(state);
   try {
     activeGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
@@ -880,7 +879,6 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
     if (order > 0 && resetTombstone) {
       window.localStorage.setItem(LOCAL_RESET_MARKER_KEY, state.storageGeneration);
       activeGeneration = state.storageGeneration;
-      markerAdvanced = true;
     }
     const stateToWrite = order === 0
       && storedState?.storageGeneration === state.storageGeneration
@@ -895,15 +893,21 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
       persistedMarker,
       ...(persistedState ? [persistedState.storageGeneration] : []),
     ]);
+    const markerSaved = resetTombstone
+      && compareStorageGenerations(persistedMarker, state.storageGeneration) === 0;
+    const completeStateSaved = persistedState !== null
+      && compareStorageGenerations(persistedState.storageGeneration, activeGeneration) === 0
+      && stateCovers(persistedState, state);
     return {
-      saved: compareStorageGenerations(activeGeneration, state.storageGeneration) === 0,
+      saved: markerSaved || completeStateSaved,
       activeGeneration,
-      state: persistedState?.storageGeneration === activeGeneration ? persistedState : null,
+      state: completeStateSaved ? persistedState : (markerSaved ? state : null),
     };
   } catch {
     let persistedState: AppState | null = null;
+    let persistedMarker = LEGACY_STORAGE_GENERATION;
     try {
-      const persistedMarker = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+      persistedMarker = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
       const persistedRaw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
       try { persistedState = persistedRaw ? migrateAppState(JSON.parse(persistedRaw) as unknown) : null; } catch { persistedState = null; }
       activeGeneration = newestStorageGeneration([
@@ -915,15 +919,14 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
     // tombstone itself is the durable reset. Report that truthfully so the UI
     // does not claim that the previous data is still active.
     const markerSaved = resetTombstone
-      && markerAdvanced
-      && compareStorageGenerations(activeGeneration, state.storageGeneration) === 0;
-    const completeStateSaved = !resetTombstone
-      && persistedState?.storageGeneration === state.storageGeneration
-      && sameStateSnapshot(mergeAppStateReplicas(state, persistedState), persistedState);
+      && compareStorageGenerations(persistedMarker, state.storageGeneration) === 0;
+    const completeStateSaved = persistedState !== null
+      && compareStorageGenerations(persistedState.storageGeneration, activeGeneration) === 0
+      && stateCovers(persistedState, state);
     return {
       saved: markerSaved || completeStateSaved,
       activeGeneration,
-      state: markerSaved ? state : (completeStateSaved ? persistedState : null),
+      state: completeStateSaved ? persistedState : (markerSaved ? state : null),
     };
   }
 }
@@ -963,7 +966,14 @@ async function readIndexedReplica(): Promise<StorageReplica> {
             reject(new Error("IndexedDB contains an unreadable app state"));
             return;
           }
-          resolve({ state, generation: parseStoredGeneration(markerRequest.result) });
+          const markerGeneration = parseStoredGeneration(markerRequest.result);
+          resolve({
+            state,
+            generation: newestStorageGeneration([
+              markerGeneration,
+              ...(state ? [state.storageGeneration] : []),
+            ]),
+          });
         } catch (error) {
           reject(error);
         }
@@ -992,6 +1002,9 @@ async function writeIndexedReplica(state: AppState): Promise<ReplicaWriteResult>
         try {
           activeGeneration = parseStoredGeneration(markerRequest.result);
           const storedState = migrateAppState(stateRequest.result);
+          if (storedState) {
+            activeGeneration = newestStorageGeneration([activeGeneration, storedState.storageGeneration]);
+          }
           const order = compareStorageGenerations(state.storageGeneration, activeGeneration);
           if (order < 0) {
             persistedState = storedState?.storageGeneration === activeGeneration ? storedState : null;
@@ -1136,6 +1149,13 @@ function sameStateSnapshot(left: AppState, right: AppState): boolean {
     ));
 }
 
+/** True when persisting `persisted` also durably covers `requested`. */
+function stateCovers(persisted: AppState, requested: AppState): boolean {
+  const generationOrder = compareStorageGenerations(persisted.storageGeneration, requested.storageGeneration);
+  if (generationOrder !== 0) return generationOrder > 0;
+  return sameStateSnapshot(mergeAppStateReplicas(requested, persisted), persisted);
+}
+
 async function performSaveAppState(state: AppState): Promise<SaveAppStateResult> {
   const candidate = migrateAppState(state) ?? cloneDefaultState();
   let replicas = await readReplicasBestEffort();
@@ -1160,6 +1180,10 @@ async function performSaveAppState(state: AppState): Promise<SaveAppStateResult>
       indexedResult = { saved: false, activeGeneration: LEGACY_STORAGE_GENERATION, state: null };
       indexedError = error;
     }
+    // IndexedDB is asynchronous: another tab may replace the synchronous
+    // fallback while its transaction is pending. Re-prove local durability
+    // before treating that fallback as the successful replica.
+    if (!indexedResult.saved) localResult = writeLocalReplica(resolved.state);
 
     const observedGeneration = newestStorageGeneration([
       resolved.generation,
@@ -1189,12 +1213,104 @@ async function performSaveAppState(state: AppState): Promise<SaveAppStateResult>
   return { localSaved: localResult.saved, indexedSaved: indexedResult.saved, state: resolved.state };
 }
 
-let saveQueue: Promise<void> = Promise.resolve();
+interface PendingSaveRequest {
+  target: AppState;
+  resolve: (result: SaveAppStateResult) => void;
+  reject: (error: unknown) => void;
+}
 
-/** Serializes saves in one tab; cross-tab ordering is handled by replica RMW merges. */
+let pendingSaveState: AppState | null = null;
+let pendingSaveRequests: PendingSaveRequest[] = [];
+let saveWriterRunning = false;
+let saveDrainScheduled = false;
+
+function coalesceSaveTarget(current: AppState | null, candidate: AppState): AppState {
+  return current ? mergeAppStateReplicas(current, candidate) : candidate;
+}
+
+function settleCoveredSaveRequests(result: SaveAppStateResult): void {
+  const remaining: PendingSaveRequest[] = [];
+  for (const request of pendingSaveRequests) {
+    if (!stateCovers(result.state, request.target)) {
+      remaining.push(request);
+      continue;
+    }
+    request.resolve(result);
+  }
+  pendingSaveRequests = remaining;
+}
+
+function coalescedRequestedState(requests: readonly PendingSaveRequest[]): AppState | null {
+  let state: AppState | null = null;
+  for (const request of requests) {
+    state = coalesceSaveTarget(state, request.target);
+  }
+  return state;
+}
+
+async function drainSaveQueue(): Promise<void> {
+  if (saveWriterRunning) return;
+  saveWriterRunning = true;
+  try {
+    while (pendingSaveState) {
+      const target = pendingSaveState;
+      pendingSaveState = null;
+      try {
+        const result = await performSaveAppState(target);
+        settleCoveredSaveRequests(result);
+        if (pendingSaveState && stateCovers(result.state, pendingSaveState)) pendingSaveState = null;
+        if (pendingSaveRequests.length) {
+          const requested = coalescedRequestedState(pendingSaveRequests);
+          if (requested) pendingSaveState = coalesceSaveTarget(pendingSaveState, requested);
+        }
+      } catch (error) {
+        const arrivedWhileWriting = pendingSaveState;
+        pendingSaveState = null;
+        if (arrivedWhileWriting) {
+          const requested = coalescedRequestedState(pendingSaveRequests);
+          pendingSaveState = coalesceSaveTarget(target, arrivedWhileWriting);
+          if (requested) pendingSaveState = coalesceSaveTarget(pendingSaveState, requested);
+          continue;
+        }
+        const rejected = pendingSaveRequests;
+        pendingSaveRequests = [];
+        for (const request of rejected) request.reject(error);
+      }
+    }
+  } finally {
+    saveWriterRunning = false;
+    if (pendingSaveState) scheduleSaveDrain();
+  }
+}
+
+function scheduleSaveDrain(): void {
+  if (saveWriterRunning || saveDrainScheduled) return;
+  saveDrainScheduled = true;
+  void Promise.resolve().then(() => {
+    saveDrainScheduled = false;
+    return drainSaveQueue();
+  });
+}
+
+/**
+ * Keeps localStorage as the synchronous fallback while coalescing IndexedDB
+ * work. A caller resolves only after a durable snapshot dominates its state.
+ */
 export function saveAppState(state: AppState): Promise<SaveAppStateResult> {
-  const operation = saveQueue.then(() => performSaveAppState(state));
-  saveQueue = operation.then(() => undefined, () => undefined);
+  const candidate = migrateAppState(state) ?? cloneDefaultState();
+  const localResult = writeLocalReplica(candidate);
+  const target = localResult.state
+    ? mergeAppStateReplicas(candidate, localResult.state)
+    : candidate;
+  pendingSaveState = coalesceSaveTarget(pendingSaveState, target);
+  const operation = new Promise<SaveAppStateResult>((resolve, reject) => {
+    pendingSaveRequests.push({
+      target,
+      resolve,
+      reject,
+    });
+  });
+  scheduleSaveDrain();
   return operation;
 }
 
