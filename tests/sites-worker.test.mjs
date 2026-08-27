@@ -3,18 +3,35 @@ import { access } from "node:fs/promises";
 import test from "node:test";
 import worker from "../worker/index.js";
 
+function assertSecurityHeaders(response) {
+  assert.match(response.headers.get("content-security-policy") ?? "", /frame-ancestors 'none'/);
+  assert.match(response.headers.get("content-security-policy") ?? "", /script-src 'self'(?:;|$)/);
+  assert.doesNotMatch(response.headers.get("content-security-policy") ?? "", /script-src[^;]*'unsafe-inline'/);
+  assert.equal(response.headers.get("x-frame-options"), "DENY");
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.equal(response.headers.get("referrer-policy"), "no-referrer");
+  assert.equal(response.headers.get("permissions-policy"), "camera=(), geolocation=(), microphone=(), payment=(), usb=()");
+}
+
 test("serves existing static assets without a fallback", async () => {
   const calls = [];
   const response = await worker.fetch(new Request("https://example.test/assets/app.js"), {
     ASSETS: {
       fetch: async (request) => {
         calls.push(new URL(request.url).pathname);
-        return new Response("asset", { status: 200 });
+        return new Response("asset", {
+          status: 200,
+          headers: { "cache-control": "public, max-age=60", "content-type": "text/javascript" },
+        });
       },
     },
   });
 
   assert.equal(response.status, 200);
+  assert.equal(await response.text(), "asset");
+  assert.equal(response.headers.get("content-type"), "text/javascript");
+  assert.equal(response.headers.get("cache-control"), "public, max-age=60");
+  assertSecurityHeaders(response);
   assert.deepEqual(calls, ["/assets/app.js"]);
 });
 
@@ -38,6 +55,8 @@ test("falls back to index.html for an unknown app route", async () => {
   );
 
   assert.equal(response.status, 200);
+  assert.equal(await response.text(), "app");
+  assertSecurityHeaders(response);
   assert.deepEqual(calls, ["/flow/step-two?source=share", "/index.html"]);
 });
 
@@ -57,6 +76,8 @@ test("does not turn missing API or write requests into the app shell", async () 
     });
 
     assert.equal(response.status, 404);
+    assert.equal(await response.text(), "missing");
+    assertSecurityHeaders(response);
     assert.equal(calls, 1);
   }
 });

@@ -1364,6 +1364,17 @@ test("les données locales s’exportent et se restaurent", async ({ page }) => 
   await staleTab.close();
 });
 
+test("la confidentialité décrit la frontière d’origine du stockage local", async ({ page }) => {
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+
+  await expect(page.getByRole("heading", { name: "Confidentialité" })).toBeVisible();
+  await expect(page.getByText(/sépare ce stockage par origine/)).toBeVisible();
+  await expect(page.getByTestId("backup-card")).toContainText("stockées localement par cette adresse web");
+  await expect(page.getByTestId("shared-origin-warning")).toHaveCount(0);
+});
+
 test("une restauration n’annonce son succès qu’après une écriture durable", async ({ page }) => {
   await openFreshApp(page);
   await expect.poll(() => page.evaluate(() => window.localStorage.getItem("inflamm-menu:app-state"))).not.toBeNull();

@@ -103,6 +103,7 @@ import {
 } from "./domain";
 import { RECIPES } from "./recipes";
 import { canonicalIngredientId, shoppingIdentityFor, storedShoppingItemMatches } from "./shopping.ts";
+import { usesSharedGitHubPagesOrigin } from "./privacy.ts";
 import {
   CATALOGUE_CATEGORIES,
   CATALOGUE_SUMMARY,
@@ -593,10 +594,23 @@ function Wordmark() {
 }
 
 function WeekStrip({ startsOn, selected, onSelect, compact = false }: { startsOn: string; selected: number; onSelect?: (index: number) => void; compact?: boolean }) {
+  const className = `week-strip ${compact ? "week-strip--compact" : ""}`;
+  const label = `Semaine du ${formatWeekRange(startsOn)}`;
+  if (!onSelect) {
+    return (
+      <div className={className} aria-label={label} role="list">
+        {DAY_LABELS.map((short, index) => (
+          <span key={short} role="listitem" className={`week-day ${selected === index ? "is-today" : ""}`} aria-label={`${short} ${dateAt(startsOn, index).getDate()}`} aria-current={selected === index ? "date" : undefined}>
+            <span>{short}</span><strong>{dateAt(startsOn, index).getDate()}</strong><i aria-hidden="true" />
+          </span>
+        ))}
+      </div>
+    );
+  }
   return (
-    <div className={`week-strip ${compact ? "week-strip--compact" : ""}`} aria-label={`Semaine du ${formatWeekRange(startsOn)}`}>
+    <div className={className} aria-label={label}>
       {DAY_LABELS.map((short, index) => (
-        <button key={short} type="button" className={`week-day ${selected === index ? "is-today" : ""}`} aria-label={`${short} ${dateAt(startsOn, index).getDate()}`} onClick={() => onSelect?.(index)}>
+        <button key={short} type="button" className={`week-day ${selected === index ? "is-today" : ""}`} aria-label={`${short} ${dateAt(startsOn, index).getDate()}`} aria-current={selected === index ? "date" : undefined} onClick={() => onSelect(index)}>
           <span>{short}</span><strong>{dateAt(startsOn, index).getDate()}</strong><i aria-hidden="true" />
         </button>
       ))}
@@ -745,7 +759,7 @@ function WeekView({ plan, onOpenMeal, onReplace, onToggleLock, onToggleCompleted
       </div>
       {layout === "week" ? <WeekOverview plan={plan} onOpenMeal={onOpenMeal} onFocusDay={(index) => { setSelectedDay(index); setLayout("day"); }} /> : <>
       <Carousel ariaLabel="Choisir un jour" className="day-carousel" contentClassName="day-carousel__track">
-        {DAY_LABELS.map((day, index) => <button key={day} type="button" className={`day-card ${selectedDay === index ? "is-selected" : ""}`} onClick={() => setSelectedDay(index)}><span>{day}</span><strong>{dateAt(plan.startsOn, index).getDate()}</strong></button>)}
+        {DAY_LABELS.map((day, index) => <button key={day} type="button" className={`day-card ${selectedDay === index ? "is-selected" : ""}`} aria-pressed={selectedDay === index} onClick={() => setSelectedDay(index)}><span>{day}</span><strong>{dateAt(plan.startsOn, index).getDate()}</strong></button>)}
       </Carousel>
       <section className="day-plan">
         <div className="section-heading"><div><span className="eyebrow">Jour {selectedDay + 1}</span><h2>{selectedDate.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })}</h2></div><CheckCircledIcon /></div>
@@ -1259,7 +1273,7 @@ function FavoritesView({ favoriteIds, customRecipes, history, catalogue, catalog
       </> : savedCount ? <div className="empty-day"><MagnifyingGlassIcon /><h3>Aucun résultat</h3><p>Aucune de vos {savedCount} recettes enregistrées ne correspond à « {query} ».</p></div> : <div className="empty-day"><HeartIcon /><h3>Aucune recette enregistrée</h3><p>Ajoutez un favori ou créez votre version d’une recette pour la retrouver ici.</p></div>}</div> : mode === "catalogue" ? !catalogue ? (catalogueError ? <CatalogueError onRetry={onRetryCatalogue} /> : <div className="app-loading" aria-live="polite"><ReloadIcon className="spin" /><span>Chargement du catalogue…</span></div>) : <section className="catalogue-browser" aria-label="Catalogue vérifié">
         <div className="catalogue-method"><strong>{catalogueRecipes.length} recettes uniques disponibles</strong><p>Les {catalogue.recipes.length} recettes ont été relues : {Object.keys(DUPLICATE_CATALOGUE_RECIPES).length} variantes trop proches ont été écartées du catalogue affiché.</p></div>
         <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher une recette</span><KeyboardInput value={query} placeholder="Recette ou ingrédient" onChange={(event) => setQuery(event.target.value)} /></label>
-        <Carousel ariaLabel="Filtrer les catégories" className="catalogue-filters" contentClassName="catalogue-filters__track"><button type="button" className={category === "all" ? "is-selected" : ""} onClick={() => setCategory("all")}>Toutes</button>{CATALOGUE_CATEGORIES.map((item) => <button type="button" key={item.id} className={category === item.id ? "is-selected" : ""} onClick={() => setCategory(item.id)}>{item.nom}</button>)}</Carousel>
+        <Carousel ariaLabel="Filtrer les catégories" className="catalogue-filters" contentClassName="catalogue-filters__track"><button type="button" className={category === "all" ? "is-selected" : ""} aria-pressed={category === "all"} onClick={() => setCategory("all")}>Toutes</button>{CATALOGUE_CATEGORIES.map((item) => <button type="button" key={item.id} className={category === item.id ? "is-selected" : ""} aria-pressed={category === item.id} onClick={() => setCategory(item.id)}>{item.nom}</button>)}</Carousel>
         <div className="catalogue-toolbar">
           <button type="button" className={`secondary-button ${activeFilterCount ? "is-active" : ""}`} data-testid="catalogue-filters-open" onClick={() => setFiltersOpen(true)}><MixerHorizontalIcon /> Filtres{activeFilterCount ? ` (${activeFilterCount})` : ""}</button>
           <label className="catalogue-sort"><span className="sr-only">Trier les recettes</span>
@@ -1273,11 +1287,11 @@ function FavoritesView({ favoriteIds, customRecipes, history, catalogue, catalog
         <p className="catalogue-count">{catalogueRecipes.length} résultat{catalogueRecipes.length > 1 ? "s" : ""}</p>
         <WebSheet open={filtersOpen} onOpenChange={setFiltersOpen} title="Filtrer le catalogue" description="Les filtres se cumulent et n’altèrent jamais les relectures éditoriales.">
           <div className="catalogue-filter-sheet" data-testid="catalogue-filter-sheet">
-            <fieldset><legend>Temps actif maximum</legend><div className="choice-row">{[0, 15, 30, 45].map((minutes) => <button type="button" key={minutes} className={filters.maxActiveMinutes === minutes ? "is-selected" : ""} data-testid={`filter-time-${minutes}`} onClick={() => setFilters((current) => ({ ...current, maxActiveMinutes: minutes }))}>{minutes === 0 ? "Peu importe" : `${minutes} min`}</button>)}</div></fieldset>
-            <fieldset><legend>Coût</legend><div className="choice-row">{([["", "Peu importe"], ["economique", "Économique"], ["moyen", "Moyen"], ["eleve", "Élevé"]] as const).map(([value, label]) => <button type="button" key={label} className={filters.cost === value ? "is-selected" : ""} onClick={() => setFilters((current) => ({ ...current, cost: value }))}>{label}</button>)}</div></fieldset>
-            <fieldset><legend>Saison</legend><div className="choice-row">{([["", "Toutes"], ["printemps", "Printemps"], ["ete", "Été"], ["automne", "Automne"], ["hiver", "Hiver"]] as const).map(([value, label]) => <button type="button" key={label} className={filters.season === value ? "is-selected" : ""} onClick={() => setFilters((current) => ({ ...current, season: value }))}>{label}</button>)}</div></fieldset>
-            <fieldset><legend>Régime</legend><div className="choice-row">{([["", "Tous"], ["vegetalien", "Végétalien"], ["vegetarien", "Végétarien"], ["sans-gluten", "Sans gluten"], ["sans-lactose", "Sans lactose"], ["pescetarien", "Pescétarien"]] as const).map(([value, label]) => <button type="button" key={label} className={filters.diet === value ? "is-selected" : ""} onClick={() => setFilters((current) => ({ ...current, diet: value }))}>{label}</button>)}</div></fieldset>
-            <fieldset><legend>Sans allergène</legend><div className="choice-row">{[["", "Peu importe"] as const, ...ALLERGEN_OPTIONS.map((item) => [item.id, item.label] as const)].map(([value, label]) => <button type="button" key={label} className={filters.withoutAllergen === value ? "is-selected" : ""} data-testid={`filter-allergen-${value || "any"}`} onClick={() => setFilters((current) => ({ ...current, withoutAllergen: value }))}>{label}</button>)}</div></fieldset>
+            <fieldset><legend>Temps actif maximum</legend><div className="choice-row">{[0, 15, 30, 45].map((minutes) => <button type="button" key={minutes} className={filters.maxActiveMinutes === minutes ? "is-selected" : ""} aria-pressed={filters.maxActiveMinutes === minutes} data-testid={`filter-time-${minutes}`} onClick={() => setFilters((current) => ({ ...current, maxActiveMinutes: minutes }))}>{minutes === 0 ? "Peu importe" : `${minutes} min`}</button>)}</div></fieldset>
+            <fieldset><legend>Coût</legend><div className="choice-row">{([["", "Peu importe"], ["economique", "Économique"], ["moyen", "Moyen"], ["eleve", "Élevé"]] as const).map(([value, label]) => <button type="button" key={label} className={filters.cost === value ? "is-selected" : ""} aria-pressed={filters.cost === value} onClick={() => setFilters((current) => ({ ...current, cost: value }))}>{label}</button>)}</div></fieldset>
+            <fieldset><legend>Saison</legend><div className="choice-row">{([["", "Toutes"], ["printemps", "Printemps"], ["ete", "Été"], ["automne", "Automne"], ["hiver", "Hiver"]] as const).map(([value, label]) => <button type="button" key={label} className={filters.season === value ? "is-selected" : ""} aria-pressed={filters.season === value} onClick={() => setFilters((current) => ({ ...current, season: value }))}>{label}</button>)}</div></fieldset>
+            <fieldset><legend>Régime</legend><div className="choice-row">{([["", "Tous"], ["vegetalien", "Végétalien"], ["vegetarien", "Végétarien"], ["sans-gluten", "Sans gluten"], ["sans-lactose", "Sans lactose"], ["pescetarien", "Pescétarien"]] as const).map(([value, label]) => <button type="button" key={label} className={filters.diet === value ? "is-selected" : ""} aria-pressed={filters.diet === value} onClick={() => setFilters((current) => ({ ...current, diet: value }))}>{label}</button>)}</div></fieldset>
+            <fieldset><legend>Sans allergène</legend><div className="choice-row">{[["", "Peu importe"] as const, ...ALLERGEN_OPTIONS.map((item) => [item.id, item.label] as const)].map(([value, label]) => <button type="button" key={label} className={filters.withoutAllergen === value ? "is-selected" : ""} aria-pressed={filters.withoutAllergen === value} data-testid={`filter-allergen-${value || "any"}`} onClick={() => setFilters((current) => ({ ...current, withoutAllergen: value }))}>{label}</button>)}</div></fieldset>
             <button type="button" className={`dislike-toggle ${filters.plannableOnly ? "is-selected" : ""}`} aria-pressed={filters.plannableOnly} data-testid="filter-plannable" onClick={() => setFilters((current) => ({ ...current, plannableOnly: !current.plannableOnly }))}><span className="dislike-toggle__box" aria-hidden="true">{filters.plannableOnly ? <CheckIcon /> : null}</span><span><strong>Seulement les recettes planifiables</strong><small>Masque les recettes d’appoint et celles écartées par la relecture.</small></span></button>
             <div className="filter-sheet-actions">
               <button type="button" className="secondary-button" data-testid="catalogue-filters-reset" onClick={() => setFilters(EMPTY_CATALOGUE_FILTERS)}>Tout effacer</button>
@@ -1411,7 +1425,7 @@ function CustomRecipeView({ draft, onSave, onDelete }: { draft: Recipe; onSave: 
       onConfirm={onDelete}
       trigger={<button type="button" className="secondary-button full-button" data-testid="custom-delete">Supprimer cette recette</button>}
     /> : null}
-    <p className="privacy-note">Vos recettes personnelles restent sur cet appareil et entrent dans vos semaines comme les autres, filtres de sécurité compris.</p>
+    <p className="privacy-note">Vos recettes personnelles restent dans le stockage local de cette adresse web, sur cet appareil, et entrent dans vos semaines comme les autres, filtres de sécurité compris.</p>
   </main></MobileScroll>;
 }
 
@@ -1620,7 +1634,7 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
     onSave({ ...profile, weeklyBudget: Math.min(10_000, Math.max(1, Math.round(Number(budget) || DEFAULT_PROFILE.weeklyBudget))), maxPrepMinutes: Math.min(1_440, Math.max(1, Math.round(Number(maxPrep) || DEFAULT_PROFILE.maxPrepMinutes))), allergies: parseList(allergies), excludedIngredientIds: resolveExcludedIngredients(excluded) });
   };
   return <MobileScroll className="app-screen"><main className="page-content pushed-page profile-page">
-    <div className="page-heading"><span className="eyebrow">Personnalisation</span><h1>Mon profil alimentaire</h1><p>Ces choix guident chaque menu et restent uniquement sur cet appareil.</p></div>
+    <div className="page-heading"><span className="eyebrow">Personnalisation</span><h1>Mon profil alimentaire</h1><p>Ces choix guident chaque menu et restent dans le stockage local de cette adresse web, sur cet appareil.</p></div>
     <section className="form-section"><h2>Votre foyer</h2>
       <label className="text-field"><span>Votre prénom</span><KeyboardInput autoComplete="given-name" maxLength={40} value={profile.firstName} placeholder="Ex. Camille" onChange={(event) => setProfile((current) => ({ ...current, firstName: event.target.value }))} onBlur={keyboard.hide} /><small>Utilisé uniquement pour personnaliser l’accueil.</small></label>
       <div className="setting-row"><span><strong>Nombre de personnes</strong><small>Quantités adaptées, jusqu’à 8</small></span><div className="stepper"><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.max(1, current.people - 1) }))} aria-label="Retirer une personne"><MinusIcon /></button><b>{profile.people}</b><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.min(8, current.people + 1) }))} aria-label="Ajouter une personne"><PlusIcon /></button></div></div>
@@ -1667,7 +1681,7 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
         : <p className="inline-help">Aucune recette écartée. Depuis l’écran « Remplacer », vous pouvez demander à ne plus voir une recette.</p>}
     </section>
     <button className="information-link" type="button" onClick={onOpenInformation}><span><strong>Informations et confidentialité</strong><small>Données, estimations et avertissement santé</small></span><ChevronRightIcon /></button>
-    <p className="privacy-note">La génération repose sur des règles locales. Votre profil et vos menus restent sur cet appareil.</p>
+    <p className="privacy-note">La génération repose sur des règles locales. Votre profil et vos menus restent dans le stockage local de cette adresse web, sur cet appareil.</p>
     <button className="primary-button full-button" type="button" onClick={commit}>Enregistrer mon profil</button>
   </main></MobileScroll>;
 }
@@ -1750,7 +1764,7 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
   return (
     <section className="information-card" data-testid="backup-card">
       <h2>Sauvegarder mes données</h2>
-      <p>Vos données vivent uniquement sur cet appareil : vider les données du site les efface. Exportez un fichier pour les conserver ou les transférer, puis restaurez-le quand vous le souhaitez.</p>
+      <p>Vos données sont stockées localement par cette adresse web, sur cet appareil : vider les données du site les efface. Exportez un fichier pour les conserver ou les transférer, puis restaurez-le quand vous le souhaitez.</p>
       <div className="backup-actions">
         <button type="button" className="secondary-button" data-testid="backup-export" onClick={download}><DownloadIcon /> Exporter</button>
         <label className="secondary-button backup-import" htmlFor={inputId}><ArchiveIcon /> Restaurer
@@ -1830,10 +1844,11 @@ function ComfortSection({ state, onTextScale, onReminders }: { state: AppState; 
 }
 
 function InformationView({ state, onRestore, onTextScale, onReminders }: { state: AppState; onRestore: (restored: AppState) => Promise<void>; onTextScale: (scale: "normal" | "large") => void; onReminders: (enabled: boolean) => void }) {
+  const sharedPagesOrigin = usesSharedGitHubPagesOrigin();
   return <MobileScroll className="app-screen"><main className="page-content pushed-page information-page">
     <div className="page-heading"><span className="eyebrow">En toute transparence</span><h1>À propos de l’application</h1><p>Les repères essentiels sur le fonctionnement de cette V1 locale.</p></div>
     <section className="information-card"><h2>Génération locale</h2><p>Les semaines sont composées directement sur votre appareil à partir de règles déterministes, de filtres et d’une base de recettes intégrée.</p></section>
-    <section className="information-card"><h2>Confidentialité</h2><p>Votre prénom, vos préférences, vos menus, vos favoris et votre liste de courses sont enregistrés localement sur cet appareil. Cette V1 ne crée pas de compte et ne transmet pas ces données à un serveur.</p><p>La suppression des données du site dans les réglages du navigateur efface ces informations locales.</p></section>
+    <section className="information-card"><h2>Confidentialité</h2><p>Votre prénom, vos préférences, vos menus, vos favoris et votre liste de courses sont enregistrés dans le stockage local de cette adresse web, sur cet appareil. Cette V1 ne crée pas de compte et ne transmet pas ces données à un serveur.</p><p>Le navigateur sépare ce stockage par origine — protocole, domaine et port — et non par dossier. La suppression des données du site dans les réglages du navigateur efface ces informations locales.</p>{sharedPagesOrigin ? <p className="notice-banner" role="note" data-testid="shared-origin-warning">L’adresse kikioutte.github.io est partagée entre les projets GitHub Pages du compte. Un autre projet servi depuis cette même origine peut donc techniquement lire ce stockage. Avant un passage à une adresse dédiée, exportez une copie ; ne supprimez les anciennes données qu’après une restauration vérifiée.</p> : null}</section>
     <BackupSection state={state} onRestore={onRestore} />
     <OfflineCatalogueSection />
     <ComfortSection state={state} onTextScale={onTextScale} onReminders={onReminders} />
@@ -1957,7 +1972,7 @@ function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCrea
   return <MobileScroll className="app-screen"><main className="page-content pushed-page generate-page"><div className="generate-mark"><CalendarIcon /></div>
     {phase === "ready" ? <><div className="page-heading page-heading--center"><span className="eyebrow">Votre prochaine semaine</span><h1>Prête en quelques secondes</h1><p>Le moteur vérifie vos préférences, la variété, le budget et la saison.</p></div><section className="generation-summary"><div><PersonIcon /><span><small>Pour</small><strong>{profile.people} personne{profile.people > 1 ? "s" : ""}</strong></span></div><div><ClockIcon /><span><small>Temps actif</small><strong>{profile.maxPrepMinutes} min max.</strong></span></div><div><ArchiveIcon /><span><small>Budget cible</small><strong>{profile.weeklyBudget} € visés</strong></span></div></section>{canPrepareNext ? <div className="segmented-control target-switch" role="group" aria-label="Semaine à générer"><button type="button" className={target === "current" ? "is-selected" : ""} aria-pressed={target === "current"} data-testid="target-current" onClick={() => setTarget("current")}>Cette semaine</button><button type="button" className={target === "upcoming" ? "is-selected" : ""} aria-pressed={target === "upcoming"} data-testid="target-upcoming" onClick={() => setTarget("upcoming")}>La semaine prochaine</button></div> : null}
     {target === "upcoming" ? <p className="inline-help" data-testid="upcoming-help">La semaine en cours, ses repères et sa liste de courses ne bougent pas. Le nouveau menu prendra le relais lundi prochain.</p> : null}
-    <div className="rule-list"><p><CheckIcon /> {profile.mealsPerDay} repas par jour</p><p><CheckIcon /> {targets.legumeMeals} repas avec légumes secs ou soja visés</p>{profile.diet === "classic" ? <p><CheckIcon /> {targets.fishMeals} repas avec poisson visés</p> : null}<p><CheckIcon /> Priorité à la saison et au réemploi</p>{lockedCount ? <p data-testid="generate-locked"><LockClosedIcon /> {lockedCount} repas conservé{lockedCount > 1 ? "s" : ""} à l’identique</p> : null}</div><p className="privacy-note">Génération locale, sans compte. Vos données restent sur cet appareil.</p><button type="button" className="primary-button full-button" onClick={start}>Créer ma semaine</button></> : phase === "loading" ? <div className="generation-state" aria-live="polite"><ReloadIcon className="spin" /><h1>Nous composons votre semaine</h1><p>Budget, variété, saison et temps actif sont vérifiés.</p><div className="loading-line"><span /></div></div> : phase === "success" && result ? <div className="generation-state success-state" aria-live="polite"><CheckCircledIcon /><h1>{target === "upcoming" ? "Semaine prochaine prête" : "Votre semaine est prête"}</h1><p>{result.meals.filter((meal) => !meal.skipped).length} repas uniques pour votre foyer, estimés à {result.estimatedCost.toFixed(0)} € · {formatWeekRange(result.startsOn)}. Les présences particulières sont appliquées repas par repas.</p><button type="button" className="primary-button full-button" onClick={() => onComplete(target)}>{target === "upcoming" ? "Revenir à l’accueil" : "Voir ma semaine"}</button></div> : <div className="generation-state error-state" role="alert"><Cross2Icon /><h1>Vos critères sont trop serrés</h1><p>{message}</p>{diagnostic ? <CompatibilityHelp diagnostic={diagnostic} selectedMinutes={diagnosticMinutes} onOpenProfile={onOpenProfile} /> : null}<button type="button" className="secondary-button full-button" onClick={onOpenProfile}>Modifier mon profil</button><button type="button" className="text-button" onClick={() => setPhase("ready")}>Réessayer sans modifier</button></div>}
+    <div className="rule-list"><p><CheckIcon /> {profile.mealsPerDay} repas par jour</p><p><CheckIcon /> {targets.legumeMeals} repas avec légumes secs ou soja visés</p>{profile.diet === "classic" ? <p><CheckIcon /> {targets.fishMeals} repas avec poisson visés</p> : null}<p><CheckIcon /> Priorité à la saison et au réemploi</p>{lockedCount ? <p data-testid="generate-locked"><LockClosedIcon /> {lockedCount} repas conservé{lockedCount > 1 ? "s" : ""} à l’identique</p> : null}</div><p className="privacy-note">Génération locale, sans compte. Vos données restent dans le stockage local de cette adresse web, sur cet appareil.</p><button type="button" className="primary-button full-button" onClick={start}>Créer ma semaine</button></> : phase === "loading" ? <div className="generation-state" aria-live="polite"><ReloadIcon className="spin" /><h1>Nous composons votre semaine</h1><p>Budget, variété, saison et temps actif sont vérifiés.</p><div className="loading-line"><span /></div></div> : phase === "success" && result ? <div className="generation-state success-state" aria-live="polite"><CheckCircledIcon /><h1>{target === "upcoming" ? "Semaine prochaine prête" : "Votre semaine est prête"}</h1><p>{result.meals.filter((meal) => !meal.skipped).length} repas uniques pour votre foyer, estimés à {result.estimatedCost.toFixed(0)} € · {formatWeekRange(result.startsOn)}. Les présences particulières sont appliquées repas par repas.</p><button type="button" className="primary-button full-button" onClick={() => onComplete(target)}>{target === "upcoming" ? "Revenir à l’accueil" : "Voir ma semaine"}</button></div> : <div className="generation-state error-state" role="alert"><Cross2Icon /><h1>Vos critères sont trop serrés</h1><p>{message}</p>{diagnostic ? <CompatibilityHelp diagnostic={diagnostic} selectedMinutes={diagnosticMinutes} onOpenProfile={onOpenProfile} /> : null}<button type="button" className="secondary-button full-button" onClick={onOpenProfile}>Modifier mon profil</button><button type="button" className="text-button" onClick={() => setPhase("ready")}>Réessayer sans modifier</button></div>}
   </main></MobileScroll>;
 }
 
@@ -2033,7 +2048,7 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
       <label className="text-field"><span className="sr-only">Note personnelle sur cette recette</span>
         <KeyboardTextarea value={note} rows={3} placeholder="Ex. moitié moins de sel, cuisson 5 min de plus…" data-testid="recipe-note-input" onChange={(event) => onNoteChange(event.target.value)} />
       </label>
-      <p className="inline-help">Enregistrée sur cet appareil, jamais transmise.</p>
+      <p className="inline-help">Enregistrée dans le stockage local de cette adresse web, jamais transmise.</p>
     </section> : null}
     <section className="recipe-section nutrition-section"><h2>Repères par portion</h2><div><span><strong>{recipe.nutrition.calories}</strong> kcal</span><span><strong>{recipe.nutrition.protein}</strong> g protéines</span><span><strong>{recipe.nutrition.fiber}</strong> g fibres</span></div><small>{recipe.nutrition.note}</small></section>
     {onEdit ? <button type="button" className="secondary-button full-button" data-testid="edit-custom-recipe" onClick={onEdit}><MixerHorizontalIcon /> Modifier ou supprimer cette recette</button> : null}
