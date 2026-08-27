@@ -188,6 +188,38 @@ test("restoring rejects foreign or broken files and accepts a raw state dump", a
   assert.deepEqual(rawState.profile.dislikedRecipeIds, []);
 });
 
+test("an oversized backup file is rejected before its contents are read", async () => {
+  const {
+    exportAppState,
+    importAppStateFile,
+    MAX_BACKUP_BYTES,
+  } = await import("../src/storage.ts");
+  let reads = 0;
+  await assert.rejects(
+    () => importAppStateFile({
+      size: MAX_BACKUP_BYTES + 1,
+      text: async () => {
+        reads += 1;
+        return "{}";
+      },
+    }),
+    /8 Mo/,
+  );
+  assert.equal(reads, 0);
+
+  const source = migrateAppState(state({ profile: { ...state().profile, firstName: "Petit fichier" } }));
+  const raw = exportAppState(source);
+  const restored = await importAppStateFile({
+    size: Buffer.byteLength(raw),
+    text: async () => {
+      reads += 1;
+      return raw;
+    },
+  });
+  assert.equal(reads, 1);
+  assert.equal(restored.profile.firstName, "Petit fichier");
+});
+
 test("app updates are watched without touching a page that has no worker yet", async () => {
   const { watchForAppUpdate } = await import("../src/storage.ts");
 

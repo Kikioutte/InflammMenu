@@ -625,6 +625,57 @@ test("replaying is refused when the archived week misses the newly requested mea
   assert.equal(twoMealsAgain.canReplay, true);
 });
 
+test("replaying is refused when a recipe does not support its stored meal type", () => {
+  const archived = engine.generateWeeklyPlan(catalogue, profile, { seed: "archive-meal-type" });
+  const breakfastOnly = recipe(89, { mealTypes: ["breakfast"] });
+  const mismatched = {
+    ...archived,
+    meals: archived.meals.map((meal, index) => (index === 0 ? { ...meal, recipeId: breakfastOnly.id } : meal)),
+  };
+
+  const report = engine.inspectPlanReplay(mismatched, [...catalogue, breakfastOnly], profile);
+  assert.equal(report.missingSlots, 0);
+  assert.deepEqual(report.blockedMeals.map((meal) => meal.id), [mismatched.meals[0].id]);
+  assert.equal(report.canReplay, false);
+});
+
+test("an imported active plan requires its exact grid while preserving legitimate live changes", () => {
+  const active = engine.generateWeeklyPlan(catalogue, profile, { seed: "active-import" });
+  assert.deepEqual(
+    engine.inspectActivePlan(active, catalogue, profile),
+    { blockedMeals: [], missingSlots: 0, unexpectedSlots: 0, inferredMealsPerDay: 2, canActivate: true },
+  );
+
+  const missing = { ...active, meals: active.meals.slice(1) };
+  const missingReport = engine.inspectActivePlan(missing, catalogue, profile);
+  assert.equal(missingReport.missingSlots, 1);
+  assert.equal(missingReport.canActivate, false);
+
+  const breakfast = recipe(92, { mealTypes: ["breakfast"] });
+  const extra = {
+    ...active,
+    meals: [...active.meals, {
+      ...active.meals[0],
+      id: "day-0-breakfast",
+      mealType: "breakfast",
+      recipeId: breakfast.id,
+    }],
+  };
+  const extraReport = engine.inspectActivePlan(extra, [...catalogue, breakfast], profile);
+  assert.equal(extraReport.unexpectedSlots, 1);
+  assert.equal(extraReport.inferredMealsPerDay, null);
+  assert.equal(extraReport.canActivate, false);
+
+  const outside = engine.setMealSkipped(active, active.meals[0].id, true, catalogue);
+  assert.equal(engine.inspectActivePlan(outside, catalogue, profile).canActivate, true);
+
+  const expandedProfile = { ...profile, mealsPerDay: 3 };
+  const staleSnapshot = { ...active, profileSnapshot: expandedProfile };
+  const expandedReport = engine.inspectActivePlan(staleSnapshot, catalogue, expandedProfile);
+  assert.equal(expandedReport.canActivate, true);
+  assert.equal(expandedReport.inferredMealsPerDay, 2, "la grille réelle prime sur un snapshot legacy périmé");
+});
+
 test("declared allergens are merged, normalized and deduplicated per recipe", () => {
   const dish = recipe(90, {
     allergens: ["Gluten", "poisson"],

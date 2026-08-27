@@ -908,7 +908,7 @@ export function exportAppState(state: AppState, exportedAt = new Date().toISOStr
   return `${JSON.stringify(backup, null, 2)}\n`;
 }
 
-const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
+export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
 const RECOGNIZED_STATE_KEYS = new Set([
   "version", "profile", "currentPlan", "plan", "upcomingPlan", "favoriteRecipeIds", "favorites",
   "history", "checkedShoppingItemIds", "checkedShoppingIds", "pantryIngredientIds", "pantryIds",
@@ -1043,6 +1043,14 @@ export function importAppState(raw: string): AppState {
   const migrated = migrateAppState(candidate);
   if (!migrated) throw new Error("Sauvegarde incomplète ou version incompatible.");
   return migrated;
+}
+
+/** Rejects oversized files before allocating and decoding their full contents. */
+export async function importAppStateFile(file: Pick<File, "size" | "text">): Promise<AppState> {
+  if (file.size > MAX_BACKUP_BYTES) {
+    throw new Error("Sauvegarde trop volumineuse : la limite est de 8 Mo.");
+  }
+  return importAppState(await file.text());
 }
 
 /**

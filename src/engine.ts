@@ -367,6 +367,7 @@ function plannedMealIsAllowedForSlot(meal: PlannedMeal, recipe: Recipe, profile:
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
   return (
     !(profile.dislikedRecipeIds ?? []).includes(recipe.id) &&
+    recipe.mealTypes.includes(meal.mealType) &&
     recipe.diet.includes(profile.diet) &&
     recipe.prepMinutes <= maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
@@ -1418,6 +1419,74 @@ export interface PlanReplayReport {
   /** Slots the archived week cannot fill, e.g. after switching to 3 meals a day. */
   missingSlots: number;
   canReplay: boolean;
+}
+
+export interface ActivePlanReport {
+  /** Meals whose recipe or substitutions no longer satisfy the active profile. */
+  blockedMeals: PlannedMeal[];
+  /** Required day/type slots absent from the active week. */
+  missingSlots: number;
+  /** Slots outside the complete two- or three-meal grid inferred from the plan. */
+  unexpectedSlots: number;
+  /** Grid inferred from the complete persisted slots, independent of a stale snapshot. */
+  inferredMealsPerDay: UserProfile["mealsPerDay"] | null;
+  canActivate: boolean;
+}
+
+/**
+ * Validates a plan that will become active without rebuilding it. Unlike an
+ * archived replay, an imported active week must already match one exact grid:
+ * seven lunches and dinners, plus either zero or seven breakfasts. The grid is
+ * inferred from the slots because older profile edits could update the stored
+ * snapshot without regenerating the week. Current profile safety stays strict.
+ */
+export function inspectActivePlan(
+  plan: WeeklyPlan | null | undefined,
+  recipes: readonly Recipe[],
+  profile: UserProfile,
+): ActivePlanReport {
+  if (!plan) {
+    return { blockedMeals: [], missingSlots: 0, unexpectedSlots: 0, inferredMealsPerDay: null, canActivate: false };
+  }
+  const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+  const breakfastCount = plan.meals.filter((meal) => meal.mealType === "breakfast").length;
+  const inferredMealsPerDay: UserProfile["mealsPerDay"] | null = breakfastCount === 0
+    ? 2
+    : breakfastCount === 7
+      ? 3
+      : null;
+  const requiredSlots = new Set(
+    Array.from({ length: 7 }, (_, dayIndex) =>
+      requiredMealTypes(inferredMealsPerDay ?? 2).map((mealType) => `${dayIndex}-${mealType}`),
+    ).flat(),
+  );
+  const seenSlots = new Set<string>();
+  const blockedMeals: PlannedMeal[] = [];
+  let unexpectedSlots = 0;
+
+  for (const meal of plan.meals) {
+    const slot = `${meal.dayIndex}-${meal.mealType}`;
+    if (!requiredSlots.has(slot) || seenSlots.has(slot)) {
+      unexpectedSlots += 1;
+      continue;
+    }
+    seenSlots.add(slot);
+    const recipe = byId.get(meal.recipeId);
+    if (!recipe || !plannedMealIsAllowedForSlot(meal, recipe, profile)) blockedMeals.push(meal);
+  }
+
+  const missingSlots = [...requiredSlots].filter((slot) => !seenSlots.has(slot)).length;
+  return {
+    blockedMeals,
+    missingSlots,
+    unexpectedSlots,
+    inferredMealsPerDay,
+    canActivate:
+      blockedMeals.length === 0 &&
+      missingSlots === 0 &&
+      unexpectedSlots === 0 &&
+      inferredMealsPerDay !== null,
+  };
 }
 
 /** Checks an archived week against the current profile before reusing it. */

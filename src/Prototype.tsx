@@ -59,6 +59,7 @@ import {
   cookingSessionsOf,
   contextualRemindersForDate,
   diagnoseRecipeCompatibility,
+  inspectActivePlan,
   inspectPlanReplay,
   isPlanExpired,
   planDayOffset,
@@ -125,7 +126,7 @@ import {
   DEFAULT_APP_STATE,
   HISTORY_LIMIT,
   exportAppState,
-  importAppState,
+  importAppStateFile,
   loadAppState,
   mergeAppStateReplicas,
   registerOfflineSupport,
@@ -1481,6 +1482,7 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
   const [feedback, setFeedback] = useState("");
   const [error, setError] = useState("");
   const [pendingRestore, setPendingRestore] = useState<AppState | null>(null);
+  const restoreRequest = useRef(0);
   const inputId = "backup-file-input";
   const download = () => {
     try {
@@ -1494,13 +1496,40 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
   };
   const restore = async (file: File | undefined) => {
     if (!file) return;
+    const requestId = ++restoreRequest.current;
+    setPendingRestore(null);
+    setFeedback("");
+    setError("");
     try {
-      const restored = importAppState(await file.text());
-      setPendingRestore(restored);
-      setError("");
+      const restored = await importAppStateFile(file);
+      if (requestId !== restoreRequest.current) return;
+      const restoredRecipes = [...new Map(
+        [...RECIPES, ...restored.customRecipes].map((recipe) => [recipe.id, recipe] as const),
+      ).values()];
+      const currentReport = restored.currentPlan
+        ? inspectActivePlan(restored.currentPlan, restoredRecipes, restored.profile)
+        : null;
+      const upcomingReport = restored.upcomingPlan
+        ? inspectActivePlan(restored.upcomingPlan, restoredRecipes, restored.profile)
+        : null;
+      const activePlansAreCompatible = (!currentReport || currentReport.canActivate)
+        && (!upcomingReport || upcomingReport.canActivate);
+      if (!activePlansAreCompatible) {
+        throw new Error("Sauvegarde refusée : une semaine active est incomplète ou incompatible. Vos données actuelles sont conservées.");
+      }
+      const restoredWithActiveProfile = {
+        ...restored,
+        currentPlan: restored.currentPlan
+          ? { ...restored.currentPlan, profileSnapshot: { ...restored.profile, mealsPerDay: currentReport?.inferredMealsPerDay ?? restored.profile.mealsPerDay } }
+          : null,
+        upcomingPlan: restored.upcomingPlan
+          ? { ...restored.upcomingPlan, profileSnapshot: { ...restored.profile, mealsPerDay: upcomingReport?.inferredMealsPerDay ?? restored.profile.mealsPerDay } }
+          : null,
+      };
+      setPendingRestore(restoredWithActiveProfile);
       setFeedback(`Sauvegarde vérifiée : ${restored.history.length} semaine(s) archivée(s), ${restored.favoriteRecipeIds.length} favori(s). Confirmez pour remplacer les données de cet appareil.`);
     } catch (importError) {
-      setFeedback("");
+      if (requestId !== restoreRequest.current) return;
       setError(importError instanceof Error ? importError.message : "Restauration impossible.");
     }
   };
@@ -2020,13 +2049,13 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   useEffect(() => {
     if (!hydrated) return;
     setAppState((current) => {
-      const currentSafe = !current.currentPlan || inspectPlanReplay(current.currentPlan, ACTIVE_RECIPES, current.profile).blockedMeals.length === 0;
-      const upcomingSafe = !current.upcomingPlan || inspectPlanReplay(current.upcomingPlan, ACTIVE_RECIPES, current.profile).blockedMeals.length === 0;
+      const currentSafe = !current.currentPlan || inspectActivePlan(current.currentPlan, ACTIVE_RECIPES, current.profile).canActivate;
+      const upcomingSafe = !current.upcomingPlan || inspectActivePlan(current.upcomingPlan, ACTIVE_RECIPES, current.profile).canActivate;
       if (currentSafe && upcomingSafe) return current;
       const removed = [!currentSafe ? current.currentPlan : null, !upcomingSafe ? current.upcomingPlan : null]
         .filter((plan): plan is WeeklyPlan => Boolean(plan));
       const removedIds = new Set(removed.map((plan) => plan.id));
-      setAppNotice("Une semaine contient un repas qui ne respecte plus votre profil et a été déplacée dans l’historique.");
+      setAppNotice("Une semaine incompatible avec votre profil a été déplacée dans l’historique.");
       return {
         ...current,
         currentPlan: currentSafe ? current.currentPlan : null,
@@ -2286,8 +2315,10 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView state={live} onRestore={(restored) => { setArchivedWeek(null); setAppState(restored); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
   const openProfile = () => flow.push({ id: "profile", title: "Profil alimentaire", headerHeight: 56, header: (route) => <Header title="Mon profil" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <ProfileView key={JSON.stringify(live.profile)} initial={live.profile} onOpenInformation={() => route.push(informationScreen())} onSave={(profile) => {
     const snapshot = appStore.getSnapshot();
-    const currentCompatible = !snapshot.currentPlan || inspectPlanReplay(snapshot.currentPlan, ACTIVE_RECIPES, profile).blockedMeals.length === 0;
-    const upcomingCompatible = !snapshot.upcomingPlan || inspectPlanReplay(snapshot.upcomingPlan, ACTIVE_RECIPES, profile).blockedMeals.length === 0;
+    const currentReport = snapshot.currentPlan ? inspectActivePlan(snapshot.currentPlan, ACTIVE_RECIPES, profile) : null;
+    const upcomingReport = snapshot.upcomingPlan ? inspectActivePlan(snapshot.upcomingPlan, ACTIVE_RECIPES, profile) : null;
+    const currentCompatible = !currentReport || currentReport.canActivate;
+    const upcomingCompatible = !upcomingReport || upcomingReport.canActivate;
     if (!currentCompatible || !upcomingCompatible) setAppNotice("Une semaine incompatible avec votre nouveau profil a été déplacée dans l’historique. Générez un nouveau menu pour appliquer vos critères en toute sécurité.");
     setAppState((current) => {
       const removed = [!currentCompatible ? current.currentPlan : null, !upcomingCompatible ? current.upcomingPlan : null].filter((plan): plan is WeeklyPlan => Boolean(plan));
@@ -2296,8 +2327,12 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
         ...current,
         profile,
         onboardingCompleted: true,
-        currentPlan: currentCompatible && current.currentPlan ? { ...current.currentPlan, profileSnapshot: profile } : null,
-        upcomingPlan: upcomingCompatible && current.upcomingPlan ? { ...current.upcomingPlan, profileSnapshot: profile } : null,
+        currentPlan: currentCompatible && current.currentPlan
+          ? { ...current.currentPlan, profileSnapshot: { ...profile, mealsPerDay: currentReport?.inferredMealsPerDay ?? profile.mealsPerDay } }
+          : null,
+        upcomingPlan: upcomingCompatible && current.upcomingPlan
+          ? { ...current.upcomingPlan, profileSnapshot: { ...profile, mealsPerDay: upcomingReport?.inferredMealsPerDay ?? profile.mealsPerDay } }
+          : null,
         history: [...removed, ...current.history.filter((plan) => !removedIds.has(plan.id))].slice(0, HISTORY_LIMIT),
         checkedShoppingItemIds: currentCompatible ? current.checkedShoppingItemIds : [],
       };

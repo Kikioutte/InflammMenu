@@ -718,6 +718,228 @@ test("une sauvegarde tronquée est refusée et une restauration vérifiée peut 
   await expect(page.getByTestId("backup-feedback")).toContainText("données actuelles sont conservées");
 });
 
+test("une sauvegarde active partielle ou incompatible ne peut pas remplacer les données courantes", async ({ page }) => {
+  await openFreshApp(page);
+  await generateWeek(page);
+  await page.getByRole("button", { name: "Accueil", exact: true }).click();
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByLabel("Votre prénom").fill("Gardé");
+  await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+
+  await expect.poll(() => page.evaluate(() => {
+    const raw = window.localStorage.getItem("inflamm-menu:app-state");
+    return raw ? JSON.parse(raw).profile?.firstName : null;
+  })).toBe("Gardé");
+  const raw = await page.evaluate(() => window.localStorage.getItem("inflamm-menu:app-state"));
+  expect(raw).not.toBeNull();
+  const completeState = JSON.parse(raw ?? "{}");
+  expect(completeState.currentPlan?.meals?.length).toBe(14);
+
+  await page.getByTestId("backup-import").setInputFiles({
+    name: "valide-avant-erreur.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(completeState)),
+  });
+  await expect(page.getByTestId("backup-confirmation")).toBeVisible();
+
+  const incompatibleBackups = [
+    {
+      name: "semaine-partielle.json",
+      state: {
+        ...completeState,
+        currentPlan: { ...completeState.currentPlan, meals: completeState.currentPlan.meals.slice(0, 1) },
+      },
+    },
+    {
+      name: "type-de-repas-incompatible.json",
+      state: {
+        ...completeState,
+        currentPlan: {
+          ...completeState.currentPlan,
+          meals: completeState.currentPlan.meals.map((meal: { recipeId: string }, index: number) =>
+            index === 0 ? { ...meal, recipeId: "overnight-oats-myrtilles-noix" } : meal,
+          ),
+        },
+      },
+    },
+    {
+      name: "recette-absente.json",
+      state: {
+        ...completeState,
+        currentPlan: {
+          ...completeState.currentPlan,
+          meals: completeState.currentPlan.meals.map((meal: { recipeId: string }, index: number) =>
+            index === 0 ? { ...meal, recipeId: "recette-absente-audit" } : meal,
+          ),
+        },
+      },
+    },
+    {
+      name: "creneau-en-trop.json",
+      state: {
+        ...completeState,
+        currentPlan: {
+          ...completeState.currentPlan,
+          meals: [...completeState.currentPlan.meals, {
+            ...completeState.currentPlan.meals[0],
+            id: "day-0-breakfast",
+            mealType: "breakfast",
+            recipeId: "overnight-oats-myrtilles-noix",
+          }],
+        },
+      },
+    },
+  ];
+
+  for (const backup of incompatibleBackups) {
+    await page.getByTestId("backup-import").setInputFiles({
+      name: backup.name,
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(backup.state)),
+    });
+    await expect(page.getByTestId("backup-error")).toContainText("incomplète ou incompatible");
+    await expect(page.getByTestId("backup-error")).toContainText("données actuelles sont conservées");
+    await expect(page.getByTestId("backup-confirmation")).toHaveCount(0);
+    await expect.poll(() => page.evaluate(() => {
+      const stored = window.localStorage.getItem("inflamm-menu:app-state");
+      return stored ? JSON.parse(stored).profile?.firstName : null;
+    })).toBe("Gardé");
+  }
+});
+
+test("une sauvegarde active peut restaurer une recette personnalisée qu’elle contient", async ({ page }) => {
+  await openFreshApp(page);
+  await generateWeek(page);
+  await page.locator(".meal-card__main").first().click();
+  await page.getByTestId("duplicate-recipe").click();
+  await page.getByTestId("custom-title").fill("Recette active restaurée");
+  await page.getByTestId("custom-save").click();
+
+  await expect.poll(() => page.evaluate(() => {
+    const raw = window.localStorage.getItem("inflamm-menu:app-state");
+    return raw ? JSON.parse(raw).customRecipes?.length : 0;
+  })).toBe(1);
+  const raw = await page.evaluate(() => window.localStorage.getItem("inflamm-menu:app-state"));
+  expect(raw).not.toBeNull();
+  const backup = JSON.parse(raw ?? "{}");
+  const customRecipeId = backup.customRecipes?.[0]?.id;
+  expect(customRecipeId).toMatch(/^perso-/);
+  backup.currentPlan.profileSnapshot = { ...backup.profile, allergies: ["gluten"] };
+  backup.currentPlan.meals[0] = {
+    ...backup.currentPlan.meals[0],
+    recipeId: customRecipeId,
+  };
+
+  await page.reload();
+  await expect(page.getByTestId("home-view")).toBeVisible();
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+  await page.getByTestId("backup-import").setInputFiles({
+    name: "recette-personnalisee-active.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(backup)),
+  });
+
+  await expect(page.getByTestId("backup-error")).toHaveCount(0);
+  await expect(page.getByTestId("backup-confirmation")).toBeVisible();
+  await expect(page.getByTestId("backup-feedback")).toContainText("Sauvegarde vérifiée");
+  await page.getByTestId("backup-confirm").click();
+  await expect.poll(() => page.evaluate(() => {
+    const state = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}");
+    return {
+      recipeId: state.currentPlan?.meals?.[0]?.recipeId,
+      snapshotAllergies: state.currentPlan?.profileSnapshot?.allergies,
+      profileAllergies: state.profile?.allergies,
+    };
+  })).toEqual({ recipeId: customRecipeId, snapshotAllergies: [], profileAllergies: [] });
+
+  await page.reload();
+  await expect(page.getByTestId("home-view")).toBeVisible();
+  await expect.poll(() => page.evaluate(() => {
+    const state = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}");
+    return state.currentPlan?.meals?.[0]?.recipeId;
+  })).toBe(customRecipeId);
+  await page.getByRole("button", { name: "Semaine", exact: true }).click();
+  await page.getByTestId("layout-week").click();
+  await expect(page.getByTestId("overview-day-0-lunch")).toContainText("Recette active restaurée");
+});
+
+test("une sauvegarde légitime conserve un repas hors foyer après le passage à trois repas", async ({ page }) => {
+  await openFreshApp(page);
+  await generateWeek(page);
+  const firstCard = page.locator(".meal-card").first();
+  await firstCard.getByTestId(/^meal-actions-/).click();
+  await page.getByTestId("action-skip").click();
+  await expect(firstCard).toHaveAttribute("data-skipped", "true");
+
+  await page.getByRole("button", { name: "Accueil", exact: true }).click();
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: "3 repas" }).click();
+  await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+
+  const raw = await page.evaluate(() => window.localStorage.getItem("inflamm-menu:app-state"));
+  expect(raw).not.toBeNull();
+  const state = JSON.parse(raw ?? "{}");
+  expect(state.profile.mealsPerDay).toBe(3);
+  expect(state.currentPlan.profileSnapshot.mealsPerDay).toBe(2);
+  expect(state.currentPlan.meals.some((meal: { skipped?: boolean }) => meal.skipped === true)).toBe(true);
+  state.currentPlan.profileSnapshot.mealsPerDay = 3;
+
+  await page.getByTestId("backup-import").setInputFiles({
+    name: "semaine-legitime-apres-profil.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(state)),
+  });
+  await expect(page.getByTestId("backup-error")).toHaveCount(0);
+  await expect(page.getByTestId("backup-confirmation")).toBeVisible();
+  await page.getByTestId("backup-confirm").click();
+  await expect.poll(() => page.evaluate(() => {
+    const restored = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}");
+    return {
+      mealsPerDay: restored.currentPlan?.profileSnapshot?.mealsPerDay,
+      skipped: restored.currentPlan?.meals?.some((meal: { skipped?: boolean }) => meal.skipped === true),
+    };
+  })).toEqual({ mealsPerDay: 2, skipped: true });
+});
+
+test("seule la dernière sauvegarde sélectionnée peut préparer une restauration", async ({ page }) => {
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+  const validState = await page.evaluate(() => window.localStorage.getItem("inflamm-menu:app-state"));
+  expect(validState).not.toBeNull();
+
+  await page.evaluate(() => {
+    const originalText = File.prototype.text;
+    File.prototype.text = function textWithControlledDelay() {
+      const value = originalText.call(this);
+      return this.name === "ancienne-lente.json"
+        ? new Promise<string>((resolve) => window.setTimeout(() => { void value.then(resolve); }, 150))
+        : value;
+    };
+  });
+
+  await page.getByTestId("backup-import").setInputFiles({
+    name: "ancienne-lente.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify({ format: "autre-app", state: {} })),
+  });
+  await page.getByTestId("backup-import").setInputFiles({
+    name: "derniere-valide.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(validState ?? ""),
+  });
+
+  await expect(page.getByTestId("backup-confirmation")).toBeVisible();
+  await page.waitForTimeout(250);
+  await expect(page.getByTestId("backup-error")).toHaveCount(0);
+  await expect(page.getByTestId("backup-confirmation")).toBeVisible();
+});
+
 test("l’installation et l’état hors ligne sont signalés sans être simulés", async ({ page, context }) => {
   await openFreshApp(page);
 
