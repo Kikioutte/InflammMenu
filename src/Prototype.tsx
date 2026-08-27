@@ -129,8 +129,11 @@ import {
   exportAppState,
   importAppStateFile,
   loadAppState,
+  loadRecoveryAppState,
   mergeAppStateReplicas,
+  replaceAppStateData,
   registerOfflineSupport,
+  resetAppState,
   saveAppState,
   stampAppStateChanges,
   watchForAppUpdate,
@@ -151,6 +154,7 @@ type AppStateStore = {
   getSnapshot: () => AppState;
   subscribe: (listener: () => void) => () => void;
   setState: (update: AppStateUpdate) => void;
+  replaceState: (state: AppState) => Promise<void>;
   hydrateState: (state: AppState) => void;
   mergeState: (state: AppState) => boolean;
 };
@@ -174,6 +178,14 @@ function createAppStateStore(initial: AppState): AppStateStore {
       const candidate = typeof update === "function" ? update(state) : update;
       if (Object.is(candidate, state)) return;
       publish(stampAppStateChanges(state, candidate, Date.now() * 1_000 + tabRevisionNonce));
+    },
+    replaceState: async (replacement) => {
+      const candidate = replaceAppStateData(state, replacement);
+      const result = await saveAppState(candidate);
+      if (result.state.storageGeneration !== candidate.storageGeneration) {
+        throw new Error("Une modification locale plus récente a empêché la restauration.");
+      }
+      publish(result.state);
     },
     hydrateState: publish,
     mergeState: (incoming) => {
@@ -1070,7 +1082,7 @@ function CatalogueError({ onRetry }: { onRetry: () => void }) {
   </div>;
 }
 
-function FavoritesView({ favoriteIds, history, catalogue, catalogueError, onLoadCatalogue, onRetryCatalogue, onOpenRecipe, onOpenCatalogue, onOpenHistory, onDeleteHistory }: { favoriteIds: string[]; history: WeeklyPlan[]; catalogue: CatalogueData | null; catalogueError: boolean; onLoadCatalogue: () => void; onRetryCatalogue: () => void; onOpenRecipe: (recipe: Recipe) => void; onOpenCatalogue: (recipe: CatalogueRecipe) => void; onOpenHistory: (plan: WeeklyPlan) => void; onDeleteHistory: (plan: WeeklyPlan) => void }) {
+function FavoritesView({ favoriteIds, customRecipes, history, catalogue, catalogueError, onLoadCatalogue, onRetryCatalogue, onOpenRecipe, onOpenCatalogue, onOpenHistory, onDeleteHistory }: { favoriteIds: string[]; customRecipes: Recipe[]; history: WeeklyPlan[]; catalogue: CatalogueData | null; catalogueError: boolean; onLoadCatalogue: () => void; onRetryCatalogue: () => void; onOpenRecipe: (recipe: Recipe) => void; onOpenCatalogue: (recipe: CatalogueRecipe) => void; onOpenHistory: (plan: WeeklyPlan) => void; onDeleteHistory: (plan: WeeklyPlan) => void }) {
   const [mode, setMode] = useState<"favorites" | "catalogue" | "history">("favorites");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
@@ -1079,7 +1091,11 @@ function FavoritesView({ favoriteIds, history, catalogue, catalogueError, onLoad
   const [visibleCatalogueCount, setVisibleCatalogueCount] = useState(60);
   const deferredQuery = useDeferredValue(query);
   const normalizedQuery = normalizeText(deferredQuery);
-  const allFavoriteRecipes = favoriteIds.map((id) => recipeById.get(id)).filter((item): item is Recipe => Boolean(item));
+  const customRecipeIds = new Set(customRecipes.map((recipe) => recipe.id));
+  const allFavoriteRecipes = [
+    ...customRecipes,
+    ...favoriteIds.filter((id) => !customRecipeIds.has(id)).map((id) => recipeById.get(id)).filter((item): item is Recipe => Boolean(item)),
+  ];
   const favoriteRecipes = allFavoriteRecipes.filter((recipe) => !normalizedQuery
     || normalizeText(`${recipe.title} ${recipe.ingredients.map((item) => item.name).join(" ")} ${recipe.tags.join(" ")}`).includes(normalizedQuery));
   const unresolvedFavoriteIds = favoriteIds.filter((id) => !recipeById.has(id) && id.startsWith("catalog-"));
@@ -1113,7 +1129,7 @@ function FavoritesView({ favoriteIds, history, catalogue, catalogueError, onLoad
   ].filter(Boolean).length;
   return (
     <main className="page-content favorites-page" data-testid="favorites-view">
-      <div className="page-heading"><span className="eyebrow">Ma bibliothèque</span><h1>Recettes</h1><p>Un catalogue culinaire relu recette par recette, en complément de vos favoris.</p></div>
+      <div className="page-heading"><span className="eyebrow">Ma bibliothèque</span><h1>Recettes</h1><p>Vos recettes personnelles, vos favoris et un catalogue culinaire relu recette par recette.</p></div>
       <div className="segmented-control segmented-control--three" role="tablist" aria-label="Catalogue, favoris et historique" onKeyDown={(event) => {
         const order: typeof mode[] = ["favorites", "catalogue", "history"];
         const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
@@ -1136,12 +1152,12 @@ function FavoritesView({ favoriteIds, history, catalogue, catalogueError, onLoad
       </div>
       <div id="library-panel" role="tabpanel" tabIndex={0} aria-labelledby={`library-tab-${mode}`}>
       {mode === "favorites" ? <div className="favorite-list">
-        {savedCount > 4 ? <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher dans mes favoris</span><KeyboardInput value={query} placeholder="Recette ou ingrédient" data-testid="favorites-search" onChange={(event) => setQuery(event.target.value)} /></label> : null}
+        {savedCount > 4 ? <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher dans mes recettes enregistrées</span><KeyboardInput value={query} placeholder="Recette ou ingrédient" data-testid="favorites-search" onChange={(event) => setQuery(event.target.value)} /></label> : null}
         {favoriteCount ? <>
-        {favoriteRecipes.map((recipe) => <button type="button" className="favorite-card" key={recipe.id} onClick={() => onOpenRecipe(recipe)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</small><strong>{recipe.title}</strong><em>{formatRecipeDuration(recipe.prepMinutes)} actives · {recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</em></span><HeartFilledIcon /></button>)}
+        {favoriteRecipes.map((recipe) => <button type="button" className="favorite-card" key={recipe.id} onClick={() => onOpenRecipe(recipe)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{customRecipeIds.has(recipe.id) ? "Recette personnelle" : recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</small><strong>{recipe.title}</strong><em>{formatRecipeDuration(recipe.prepMinutes)} actives · {recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</em></span>{customRecipeIds.has(recipe.id) && !favoriteIds.includes(recipe.id) ? <CopyIcon /> : <HeartFilledIcon />}</button>)}
         {catalogueFavorites.map((recipe) => <button type="button" className="favorite-card" key={recipe.id} data-testid={`favorite-catalogue-${recipe.id}`} onClick={() => onOpenCatalogue(recipe)}><img src={catalogueImageFor(recipe)} alt="" loading="lazy" onError={handleRecipeImageError} /><span><small>{catalogueCategoryName(recipe.categorie)}</small><strong>{recipe.titre}</strong><em>{formatCatalogueCardDuration(recipe)}</em></span><HeartFilledIcon /></button>)}
         {!catalogue && unresolvedFavoriteIds.length ? (catalogueError ? <CatalogueError onRetry={onRetryCatalogue} /> : <p className="inline-help" aria-live="polite">Chargement de vos recettes du catalogue…</p>) : null}
-      </> : savedCount ? <div className="empty-day"><MagnifyingGlassIcon /><h3>Aucun résultat</h3><p>Aucun de vos {savedCount} favoris ne correspond à « {query} ».</p></div> : <div className="empty-day"><HeartIcon /><h3>Aucun favori</h3><p>Ajoutez une recette depuis sa fiche pour la retrouver ici.</p></div>}</div> : mode === "catalogue" ? !catalogue ? (catalogueError ? <CatalogueError onRetry={onRetryCatalogue} /> : <div className="app-loading" aria-live="polite"><ReloadIcon className="spin" /><span>Chargement du catalogue…</span></div>) : <section className="catalogue-browser" aria-label="Catalogue vérifié">
+      </> : savedCount ? <div className="empty-day"><MagnifyingGlassIcon /><h3>Aucun résultat</h3><p>Aucune de vos {savedCount} recettes enregistrées ne correspond à « {query} ».</p></div> : <div className="empty-day"><HeartIcon /><h3>Aucune recette enregistrée</h3><p>Ajoutez un favori ou créez votre version d’une recette pour la retrouver ici.</p></div>}</div> : mode === "catalogue" ? !catalogue ? (catalogueError ? <CatalogueError onRetry={onRetryCatalogue} /> : <div className="app-loading" aria-live="polite"><ReloadIcon className="spin" /><span>Chargement du catalogue…</span></div>) : <section className="catalogue-browser" aria-label="Catalogue vérifié">
         <div className="catalogue-method"><strong>{catalogueRecipes.length} recettes uniques disponibles</strong><p>Les {catalogue.recipes.length} recettes ont été relues : {Object.keys(DUPLICATE_CATALOGUE_RECIPES).length} variantes trop proches ont été écartées du catalogue affiché.</p></div>
         <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher une recette</span><KeyboardInput value={query} placeholder="Recette ou ingrédient" onChange={(event) => setQuery(event.target.value)} /></label>
         <Carousel ariaLabel="Filtrer les catégories" className="catalogue-filters" contentClassName="catalogue-filters__track"><button type="button" className={category === "all" ? "is-selected" : ""} onClick={() => setCategory("all")}>Toutes</button>{CATALOGUE_CATEGORIES.map((item) => <button type="button" key={item.id} className={category === item.id ? "is-selected" : ""} onClick={() => setCategory(item.id)}>{item.nom}</button>)}</Carousel>
@@ -1175,7 +1191,14 @@ function FavoritesView({ favoriteIds, history, catalogue, catalogueError, onLoad
       </section> : <div className="history-list">{history.length ? <>
         {history.map((plan) => <article className="history-card" key={plan.id} data-testid={`history-card-${plan.id}`}>
           <button type="button" className="history-card__open" onClick={() => onOpenHistory(plan)}><span><small>Générée le {new Date(plan.generatedAt).toLocaleDateString("fr-FR")}</small><strong>{formatWeekRange(plan.startsOn)}</strong><ChevronRightIcon /></span><em>{plan.meals.filter((meal) => !meal.skipped).length} repas · {plan.estimatedCost.toFixed(0)} € estimés</em></button>
-          <button type="button" className="history-card__delete" data-testid={`history-delete-${plan.id}`} aria-label={`Supprimer la semaine du ${formatWeekRange(plan.startsOn)}`} onClick={() => onDeleteHistory(plan)}><Cross2Icon /></button>
+          <ConfirmActionDialog
+            title="Supprimer cette semaine ?"
+            description={`La semaine du ${formatWeekRange(plan.startsOn)} sera retirée de l’historique de cet appareil. Cette action est définitive.`}
+            confirmLabel="Supprimer la semaine"
+            testId={`history-delete-dialog-${plan.id}`}
+            onConfirm={() => onDeleteHistory(plan)}
+            trigger={<button type="button" className="history-card__delete" data-testid={`history-delete-${plan.id}`} aria-label={`Supprimer la semaine du ${formatWeekRange(plan.startsOn)}`}><Cross2Icon /></button>}
+          />
         </article>)}
         <p className="inline-help">{history.length} semaine{history.length > 1 ? "s" : ""} conservée{history.length > 1 ? "s" : ""} sur cet appareil, {HISTORY_LIMIT} au maximum : au-delà, la plus ancienne est retirée automatiquement.</p>
       </> : <div className="empty-day"><ArchiveIcon /><h3>Aucun historique</h3><p>Vos anciennes semaines seront conservées sur cet appareil.</p></div>}</div>}
@@ -1281,7 +1304,14 @@ function CustomRecipeView({ draft, onSave, onDelete }: { draft: Recipe; onSave: 
       <label className="text-field"><span>Une étape par ligne</span><KeyboardTextarea value={steps} rows={8} data-testid="custom-steps" onChange={(event) => setSteps(event.target.value)} /></label>
     </section>
     <button type="button" className="primary-button full-button" data-testid="custom-save" onClick={commit}>Enregistrer ma version</button>
-    {onDelete ? <button type="button" className="secondary-button full-button" data-testid="custom-delete" onClick={onDelete}>Supprimer cette recette</button> : null}
+    {onDelete ? <ConfirmActionDialog
+      title="Supprimer cette recette ?"
+      description="La recette personnelle, son favori, sa note et ses préférences seront retirés de cet appareil. Une recette encore utilisée dans une semaine ne pourra pas être supprimée."
+      confirmLabel="Supprimer la recette"
+      testId="custom-delete-dialog"
+      onConfirm={onDelete}
+      trigger={<button type="button" className="secondary-button full-button" data-testid="custom-delete">Supprimer cette recette</button>}
+    /> : null}
     <p className="privacy-note">Vos recettes personnelles restent sur cet appareil et entrent dans vos semaines comme les autres, filtres de sécurité compris.</p>
   </main></MobileScroll>;
 }
@@ -1364,6 +1394,70 @@ function WebSheet({ open, onOpenChange, title, description, children }: {
           </Dialog.Close>
         </header>
         <div className="web-sheet__body">{children}</div>
+      </Dialog.Content>
+    </Dialog.Portal>
+  </Dialog.Root>;
+}
+
+/** Destructive actions stay reversible until this accessible confirmation. */
+function ConfirmActionDialog({ trigger, title, description, confirmLabel, testId, onConfirm, children }: {
+  trigger: React.ReactElement;
+  title: string;
+  description: string;
+  confirmLabel: string;
+  testId: string;
+  onConfirm: () => void | Promise<void>;
+  children?: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState("");
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const changeOpen = (next: boolean) => {
+    if (pending) return;
+    setOpen(next);
+    if (next) setError("");
+  };
+  const confirm = async () => {
+    setPending(true);
+    setError("");
+    try {
+      await onConfirm();
+      setOpen(false);
+    } catch (confirmationError) {
+      setError(confirmationError instanceof Error
+        ? confirmationError.message
+        : "L’action n’a pas pu être effectuée. Vos données sont conservées.");
+    } finally {
+      setPending(false);
+    }
+  };
+  return <Dialog.Root open={open} onOpenChange={changeOpen}>
+    <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+    <Dialog.Portal>
+      <Dialog.Overlay className="confirm-dialog__overlay" />
+      <Dialog.Content
+        className="confirm-dialog__content"
+        role="alertdialog"
+        data-testid={testId}
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+          cancelRef.current?.focus();
+        }}
+        onEscapeKeyDown={(event) => { if (pending) event.preventDefault(); }}
+        onPointerDownOutside={(event) => { if (pending) event.preventDefault(); }}
+      >
+        <Cross2Icon className="confirm-dialog__icon" aria-hidden="true" />
+        <Dialog.Title>{title}</Dialog.Title>
+        <Dialog.Description>{description}</Dialog.Description>
+        {children ? <div className="confirm-dialog__extra">{children}</div> : null}
+        {error ? <p className="confirm-dialog__error" role="alert">{error}</p> : null}
+        <div className="confirm-dialog__actions">
+          <Dialog.Close asChild>
+            <button ref={cancelRef} type="button" className="secondary-button" data-testid={`${testId}-cancel`} disabled={pending}>Annuler</button>
+          </Dialog.Close>
+          <button type="button" className="danger-button" data-testid={`${testId}-confirm`} disabled={pending} onClick={() => void confirm()}>{pending ? "Traitement…" : confirmLabel}</button>
+        </div>
       </Dialog.Content>
     </Dialog.Portal>
   </Dialog.Root>;
@@ -1479,10 +1573,11 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
   </main></MobileScroll>;
 }
 
-function BackupSection({ state, onRestore }: { state: AppState; onRestore: (restored: AppState) => void }) {
+function BackupSection({ state, onRestore }: { state: AppState; onRestore: (restored: AppState) => Promise<void> }) {
   const [feedback, setFeedback] = useState("");
   const [error, setError] = useState("");
   const [pendingRestore, setPendingRestore] = useState<AppState | null>(null);
+  const [restoreSaving, setRestoreSaving] = useState(false);
   const restoreRequest = useRef(0);
   const inputId = "backup-file-input";
   const download = () => {
@@ -1534,6 +1629,25 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
       setError(importError instanceof Error ? importError.message : "Restauration impossible.");
     }
   };
+  const confirmRestore = async () => {
+    if (!pendingRestore || restoreSaving) return;
+    const restored = pendingRestore;
+    setRestoreSaving(true);
+    setFeedback("Restauration en cours…");
+    setError("");
+    try {
+      await onRestore(restored);
+      setPendingRestore(null);
+      setFeedback(`Sauvegarde restaurée : ${restored.history.length} semaine(s) archivée(s), ${restored.favoriteRecipeIds.length} favori(s).`);
+    } catch (restoreError) {
+      setFeedback("");
+      setError(restoreError instanceof Error
+        ? `${restoreError.message} Vos données actuelles sont conservées.`
+        : "Restauration impossible. Vos données actuelles sont conservées.");
+    } finally {
+      setRestoreSaving(false);
+    }
+  };
   return (
     <section className="information-card" data-testid="backup-card">
       <h2>Sauvegarder mes données</h2>
@@ -1547,15 +1661,11 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
       {pendingRestore ? <div className="backup-confirmation" data-testid="backup-confirmation" role="group" aria-label="Confirmer la restauration">
         <p><strong>Cette action remplacera toutes les données actuellement enregistrées sur cet appareil.</strong></p>
         <div className="backup-actions">
-          <button type="button" className="primary-button" data-testid="backup-confirm" onClick={() => {
-            onRestore(pendingRestore);
-            setPendingRestore(null);
-            setFeedback(`Sauvegarde restaurée : ${pendingRestore.history.length} semaine(s) archivée(s), ${pendingRestore.favoriteRecipeIds.length} favori(s).`);
-          }}>Confirmer la restauration</button>
+          <button type="button" className="primary-button" data-testid="backup-confirm" disabled={restoreSaving} onClick={() => { void confirmRestore(); }}>{restoreSaving ? "Restauration…" : "Confirmer la restauration"}</button>
           <button type="button" className="secondary-button" data-testid="backup-cancel" onClick={() => {
             setPendingRestore(null);
             setFeedback("Restauration annulée. Vos données actuelles sont conservées.");
-          }}>Annuler</button>
+          }} disabled={restoreSaving}>Annuler</button>
         </div>
       </div> : null}
       {feedback ? <p className="export-feedback" role="status" aria-live="polite" data-testid="backup-feedback">{feedback}</p> : null}
@@ -1620,7 +1730,7 @@ function ComfortSection({ state, onTextScale, onReminders }: { state: AppState; 
   );
 }
 
-function InformationView({ state, onRestore, onTextScale, onReminders }: { state: AppState; onRestore: (restored: AppState) => void; onTextScale: (scale: "normal" | "large") => void; onReminders: (enabled: boolean) => void }) {
+function InformationView({ state, onRestore, onTextScale, onReminders }: { state: AppState; onRestore: (restored: AppState) => Promise<void>; onTextScale: (scale: "normal" | "large") => void; onReminders: (enabled: boolean) => void }) {
   return <MobileScroll className="app-screen"><main className="page-content pushed-page information-page">
     <div className="page-heading"><span className="eyebrow">En toute transparence</span><h1>À propos de l’application</h1><p>Les repères essentiels sur le fonctionnement de cette V1 locale.</p></div>
     <section className="information-card"><h2>Génération locale</h2><p>Les semaines sont composées directement sur votre appareil à partir de règles déterministes, de filtres et d’une base de recettes intégrée.</p></section>
@@ -1754,7 +1864,7 @@ function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCrea
 
 export type RecipeRating = "loved" | "neutral" | "meh" | "avoided";
 
-function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onSubstitutionChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate }: { recipe: Recipe; planned?: PlannedMeal; profile: UserProfile; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onSubstitutionChange?: (ingredientId: string, substitutionId: string | null) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void }) {
+function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onSubstitutionChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate, onEdit }: { recipe: Recipe; planned?: PlannedMeal; profile: UserProfile; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onSubstitutionChange?: (ingredientId: string, substitutionId: string | null) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void; onEdit?: () => void }) {
   const [portions, setPortionsState] = useState(planned?.portions ?? initialPortions);
   const setPortions = (update: (value: number) => number) => {
     const next = Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, update(portions)));
@@ -1827,6 +1937,7 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
       <p className="inline-help">Enregistrée sur cet appareil, jamais transmise.</p>
     </section> : null}
     <section className="recipe-section nutrition-section"><h2>Repères par portion</h2><div><span><strong>{recipe.nutrition.calories}</strong> kcal</span><span><strong>{recipe.nutrition.protein}</strong> g protéines</span><span><strong>{recipe.nutrition.fiber}</strong> g fibres</span></div><small>{recipe.nutrition.note}</small></section>
+    {onEdit ? <button type="button" className="secondary-button full-button" data-testid="edit-custom-recipe" onClick={onEdit}><MixerHorizontalIcon /> Modifier ou supprimer cette recette</button> : null}
     {onDuplicate ? <button type="button" className="secondary-button full-button" data-testid="duplicate-recipe" onClick={onDuplicate}><CopyIcon /> Créer ma version de cette recette</button> : null}
     <section className="recipe-section"><div className="section-heading"><h2>Préparation</h2>{onCook ? <button type="button" className="secondary-button cooking-entry" data-testid="start-cooking" onClick={() => onCook(portions)}>Mode cuisine</button> : null}</div><ol className="steps">{recipe.steps.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{step}</span></li>)}</ol></section><aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
   </div></main></MobileScroll>;
@@ -1889,6 +2000,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     return () => root.classList.remove("is-large-text");
   }, [appState.textScale]);
   const setAppState = appStore.setState;
+  const replaceAppState = appStore.replaceState;
   const hydrateAppState = appStore.hydrateState;
   const mergeAppState = appStore.mergeState;
   const [hydrated, setHydrated] = useState(false);
@@ -2007,12 +2119,15 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     let active = true;
     void saveAppState(appState).then((result) => {
       if (!active) return;
+      if (mergeAppState(result.state)) {
+        setAppNotice("Les données locales les plus récentes ont été synchronisées.");
+      }
       setStorageWarning(result.localSaved && result.indexedSaved ? "" : "Vos données sont enregistrées dans un seul stockage local. Exportez une sauvegarde par précaution.");
     }).catch(() => {
       if (active) setStorageWarning("Impossible d’enregistrer vos changements sur cet appareil. Exportez vos données avant de fermer la page.");
     });
     return () => { active = false; };
-  }, [appState, hydrated]);
+  }, [appState, hydrated, mergeAppState]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -2224,8 +2339,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     } };
   }
 
-  function customRecipeScreen(draft: Recipe, existing = false): FlowScreen {
-    return { id: `custom-${draft.id}`, title: "Ma version", headerHeight: 56, header: (route) => <Header title="Ma version" onBack={route.pop} />, render: (route) => <CustomRecipeView draft={draft} onSave={(recipe) => { saveCustomRecipe(recipe); route.replace(recipeScreen(recipe)); }} onDelete={existing ? () => {
+  function customRecipeScreen(draft: Recipe, existing = false, planned?: PlannedMeal): FlowScreen {
+    return { id: `custom-${draft.id}`, title: "Ma version", headerHeight: 56, header: (route) => <Header title="Ma version" onBack={route.pop} />, render: (route) => <CustomRecipeView draft={draft} onSave={(recipe) => { saveCustomRecipe(recipe); route.replace(recipeScreen(recipe, planned)); }} onDelete={existing ? () => {
       const current = appStore.getSnapshot();
       const plans = [current.currentPlan, current.upcomingPlan, ...current.history].filter((plan): plan is WeeklyPlan => Boolean(plan));
       if (plans.some((plan) => plan.meals.some((meal) => meal.recipeId === draft.id))) {
@@ -2253,17 +2368,20 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
       header: (route) => <Header title="Recette" onBack={route.pop} />,
       render: (route) => <LiveAppState store={appStore}>{(live) => {
         const livePlanned = planned ? live.currentPlan?.meals.find((meal) => meal.id === planned.id) ?? planned : undefined;
+        const personalRecipe = live.customRecipes.find((item) => item.id === recipe.id);
+        const visibleRecipe = personalRecipe ?? recipe;
         return <RecipeView
-          recipe={recipe}
+          recipe={visibleRecipe}
           planned={livePlanned}
           profile={live.profile}
           initialPortions={initialPortions ?? live.profile.people}
-          favorite={live.favoriteRecipeIds.includes(recipe.id)}
-          onFavorite={() => toggleFavorite(recipe.id)}
-          rating={ratingOf(recipe.id)}
-          onRate={(rating) => rateRecipe(recipe.id, rating)}
-          note={live.recipeNotes[recipe.id] ?? ""}
-          onNoteChange={(note) => setRecipeNote(recipe.id, note)}
+          favorite={live.favoriteRecipeIds.includes(visibleRecipe.id)}
+          onFavorite={() => toggleFavorite(visibleRecipe.id)}
+          rating={ratingOf(visibleRecipe.id)}
+          onRate={(rating) => rateRecipe(visibleRecipe.id, rating)}
+          note={live.recipeNotes[visibleRecipe.id] ?? ""}
+          onNoteChange={(note) => setRecipeNote(visibleRecipe.id, note)}
+          onEdit={personalRecipe ? () => route.replace(customRecipeScreen(personalRecipe, true, livePlanned)) : undefined}
           onDuplicate={() => {
             const current = appStore.getSnapshot();
             if (current.customRecipes.length >= 200) {
@@ -2274,13 +2392,13 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
               });
               return;
             }
-            route.push(customRecipeScreen(customRecipeFrom(recipe)));
+            route.push(customRecipeScreen(customRecipeFrom(visibleRecipe)));
           }}
           onReplace={livePlanned ? () => route.replace(replacementScreen(livePlanned)) : undefined}
-          onPlan={!livePlanned ? () => route.push(planSlotScreen(recipe)) : undefined}
+          onPlan={!livePlanned ? () => route.push(planSlotScreen(visibleRecipe)) : undefined}
           onPortionsChange={livePlanned ? (portions) => setAppState((current) => (current.currentPlan ? withUpdatedPlan(current, setMealPortions(current.currentPlan, livePlanned.id, portions, ACTIVE_RECIPES)) : current)) : undefined}
           onSubstitutionChange={livePlanned ? (ingredientId, substitutionId) => setAppState((current) => (current.currentPlan ? withUpdatedPlan(current, setMealIngredientSubstitution(current.currentPlan, livePlanned.id, ingredientId, substitutionId, ACTIVE_RECIPES, current.profile)) : current)) : undefined}
-          onCook={(portions) => route.push(cookingScreen(recipe, portions, livePlanned))}
+          onCook={(portions) => route.push(cookingScreen(visibleRecipe, portions, livePlanned))}
         />;
       }}</LiveAppState>,
     };
@@ -2313,7 +2431,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView recipe={recipe} favorite={live.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} />}</LiveAppState> };
   }
 
-  const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView state={live} onRestore={(restored) => { setArchivedWeek(null); setAppState(restored); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
+  const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView state={live} onRestore={async (restored) => { await replaceAppState(restored); setArchivedWeek(null); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
   const openProfile = () => flow.push({ id: "profile", title: "Profil alimentaire", headerHeight: 56, header: (route) => <Header title="Mon profil" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <ProfileView key={JSON.stringify(live.profile)} initial={live.profile} onOpenInformation={() => route.push(informationScreen())} onSave={(profile) => {
     const snapshot = appStore.getSnapshot();
     const currentReport = snapshot.currentPlan ? inspectActivePlan(snapshot.currentPlan, ACTIVE_RECIPES, profile) : null;
@@ -2387,7 +2505,18 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const currentView = useMemo(() => {
     if (tab === "week") return <WeekView plan={appState.currentPlan} onOpenMeal={openMeal} onReplace={openReplace} onToggleLock={toggleMealLock} onToggleCompleted={toggleMealCompleted} onPlanLeftover={openLeftover} onToggleSkipped={toggleMealSkipped} onSwap={openSwap} />;
     if (tab === "courses") return <CoursesView plan={appState.currentPlan} profile={appState.profile} checkedIds={appState.checkedShoppingItemIds} pantryIds={appState.pantryIngredientIds} pantryAmounts={appState.pantryAmounts} categoryOrder={appState.shoppingCategoryOrder} spent={appState.currentPlan ? appState.actualSpend[appState.currentPlan.id] : undefined} onToggleChecked={toggleChecked} onTogglePantry={togglePantry} onSetPantryAmount={setPantryAmount} onMoveCategory={moveCategory} onSetSpent={setSpent} />;
-    if (tab === "favorites") return <FavoritesView favoriteIds={appState.favoriteRecipeIds} history={appState.history} catalogue={catalogue} catalogueError={catalogueError} onLoadCatalogue={ensureCatalogue} onRetryCatalogue={retryCatalogue} onOpenRecipe={(recipe) => flow.push(recipeScreen(recipe))} onOpenCatalogue={(recipe) => flow.push(catalogueRecipeScreen(recipe))} onOpenHistory={(plan) => flow.push(historyPlanScreen(plan))} onDeleteHistory={(plan) => setAppState((current) => ({ ...current, history: current.history.filter((item) => item.id !== plan.id) }))} />;
+    if (tab === "favorites") return <FavoritesView favoriteIds={appState.favoriteRecipeIds} customRecipes={appState.customRecipes} history={appState.history} catalogue={catalogue} catalogueError={catalogueError} onLoadCatalogue={ensureCatalogue} onRetryCatalogue={retryCatalogue} onOpenRecipe={(recipe) => flow.push(recipeScreen(recipe))} onOpenCatalogue={(recipe) => flow.push(catalogueRecipeScreen(recipe))} onOpenHistory={(plan) => flow.push(historyPlanScreen(plan))} onDeleteHistory={(plan) => {
+      setAppState((current) => {
+        const actualSpend = { ...current.actualSpend };
+        delete actualSpend[plan.id];
+        return {
+          ...current,
+          history: current.history.filter((item) => item.id !== plan.id),
+          actualSpend,
+        };
+      });
+      setAppNotice("Semaine supprimée de l’historique.");
+    }} />;
     if (!appState.onboardingCompleted) return <OnboardingView profile={appState.profile} onOpenProfile={openProfile} onSkip={() => setAppState((current) => ({ ...current, onboardingCompleted: true }))} />;
     return <HomeView profile={appState.profile} plan={appState.currentPlan} archivedWeek={archivedWeek} upcomingPlan={appState.upcomingPlan} onGenerate={openGenerate} onTonight={openTonight} onProfile={openProfile} onOpenMeal={openMeal} onOpenWeek={() => setTab("week")} />;
   }, [tab, appState, archivedWeek, catalogue, catalogueError, ensureCatalogue, retryCatalogue]);
@@ -2407,8 +2536,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   </div>;
 }
 
-class PrototypeErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
-  state: { error: Error | null } = { error: null };
+export class PrototypeErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null; recoveryError: string }> {
+  state: { error: Error | null; recoveryError: string } = { error: null, recoveryError: "" };
 
   static getDerivedStateFromError(error: Error) {
     return { error };
@@ -2418,26 +2547,31 @@ class PrototypeErrorBoundary extends Component<{ children: ReactNode }, { error:
     console.error("Inflamm’Menu render error", error, info.componentStack);
   }
 
-  private downloadRecovery = () => {
+  private downloadRecovery = async () => {
     try {
-      const raw = window.localStorage.getItem("inflamm-menu:app-state");
-      if (raw) downloadTextFile(`inflamm-menu-recuperation-${isoDate(new Date())}.json`, raw, "application/json;charset=utf-8");
+      const recovery = await loadRecoveryAppState();
+      downloadTextFile(
+        `inflamm-menu-recuperation-${isoDate(new Date())}.json`,
+        exportAppState(recovery.state),
+        "application/json;charset=utf-8",
+      );
+      this.setState({
+        recoveryError: recovery.complete
+          ? ""
+          : `Copie téléchargée depuis le stockage lisible, mais ${recovery.unreadableReplicas.join(" et ")} reste inaccessible. Ne réinitialisez pas avant d’avoir conservé cette copie.`,
+      });
     } catch {
-      // The reload and reset actions remain available.
+      this.setState({ recoveryError: "Impossible de préparer la copie de récupération. Vos données n’ont pas été supprimées." });
     }
   };
 
   private reset = async () => {
-    try { window.localStorage.removeItem("inflamm-menu:app-state"); } catch { /* ignored */ }
-    if (typeof indexedDB !== "undefined") {
-      await new Promise<void>((resolve) => {
-        const request = indexedDB.deleteDatabase("inflamm-menu");
-        request.onsuccess = () => resolve();
-        request.onerror = () => resolve();
-        request.onblocked = () => resolve();
-      });
+    try {
+      await resetAppState();
+      window.location.reload();
+    } catch {
+      throw new Error("La réinitialisation n’a pas abouti. Vos données locales sont conservées ; fermez les autres onglets Inflamm’Menu puis réessayez.");
     }
-    window.location.reload();
   };
 
   render() {
@@ -2447,8 +2581,19 @@ class PrototypeErrorBoundary extends Component<{ children: ReactNode }, { error:
       <h1>Inflamm’Menu a rencontré une erreur</h1>
       <p>Vos données locales n’ont pas été volontairement supprimées. Téléchargez une copie de récupération avant de réinitialiser.</p>
       <button type="button" className="primary-button" onClick={() => window.location.reload()}>Recharger l’application</button>
-      <button type="button" className="secondary-button" onClick={this.downloadRecovery}>Télécharger mes données brutes</button>
-      <button type="button" className="secondary-button" onClick={() => void this.reset()}>Réinitialiser les données locales</button>
+      <button type="button" className="secondary-button" data-testid="fatal-recovery" onClick={() => void this.downloadRecovery()}>Télécharger une copie de récupération</button>
+      {this.state.recoveryError ? <p className="fatal-error__feedback" role="alert" data-testid="fatal-recovery-error">{this.state.recoveryError}</p> : null}
+      <ConfirmActionDialog
+        title="Réinitialiser toutes les données ?"
+        description="Les semaines, favoris, recettes personnelles, notes et réglages de cet appareil seront supprimés. Téléchargez une copie et fermez les autres onglets Inflamm’Menu avant de continuer."
+        confirmLabel="Tout réinitialiser"
+        testId="fatal-reset-dialog"
+        onConfirm={this.reset}
+        trigger={<button type="button" className="secondary-button" data-testid="fatal-reset">Réinitialiser les données locales</button>}
+      >
+        <button type="button" className="secondary-button" data-testid="fatal-recovery-dialog" onClick={() => void this.downloadRecovery()}><DownloadIcon /> Télécharger une copie d’abord</button>
+        {this.state.recoveryError ? <p className="fatal-error__feedback" role="alert">{this.state.recoveryError}</p> : null}
+      </ConfirmActionDialog>
     </main>;
   }
 }

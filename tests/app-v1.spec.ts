@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { readFile } from "node:fs/promises";
 
 // Keep request interception deterministic. Service-worker update behaviour is
 // covered independently in storage.test.mjs.
@@ -32,6 +33,669 @@ async function generateWeek(page: Page) {
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
   await expect(page.getByTestId("week-view")).toBeVisible();
 }
+
+test("l’écran fatal exporte les deux stockages et exige une confirmation avant le reset", async ({ page }) => {
+  await page.goto("/tests/error-boundary-fixture.html");
+  await expect(page.getByRole("heading", { name: "Inflamm’Menu a rencontré une erreur" })).toBeVisible();
+
+  await page.evaluate(async () => {
+    const storedState = {
+      version: 2,
+      profile: { firstName: "Récupération IndexedDB" },
+      currentPlan: null,
+      upcomingPlan: null,
+      favoriteRecipeIds: [],
+      history: [],
+      checkedShoppingItemIds: [],
+      pantryIngredientIds: [],
+      customRecipes: [],
+      onboardingCompleted: true,
+    };
+    window.localStorage.removeItem("inflamm-menu:app-state");
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open("inflamm-menu", 1);
+      request.onupgradeneeded = () => {
+        if (!request.result.objectStoreNames.contains("app-state")) request.result.createObjectStore("app-state");
+      };
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction("app-state", "readwrite");
+        transaction.objectStore("app-state").put(storedState, "current");
+        transaction.oncomplete = () => { database.close(); resolve(); };
+        transaction.onerror = () => { database.close(); reject(transaction.error); };
+      };
+    });
+  });
+
+  const recoveryDownload = page.waitForEvent("download");
+  await page.getByTestId("fatal-recovery").click();
+  const recoveryFile = await recoveryDownload;
+  expect(recoveryFile.suggestedFilename()).toMatch(/^inflamm-menu-recuperation-\d{4}-\d{2}-\d{2}\.json$/);
+  const recoveryPath = await recoveryFile.path();
+  expect(recoveryPath).not.toBeNull();
+  const recovery = JSON.parse(await readFile(recoveryPath!, "utf8"));
+  expect(recovery.format).toBe("inflamm-menu-backup");
+  expect(recovery.state.profile.firstName).toBe("Récupération IndexedDB");
+
+  await page.evaluate(async (baseState) => {
+    const localState = {
+      ...baseState,
+      profile: { ...baseState.profile, firstName: "Profil local fusionné" },
+      favoriteRecipeIds: [],
+      stateRevision: 40,
+      fieldRevisions: { ...baseState.fieldRevisions, profile: 40 },
+      fieldMutationIds: { ...baseState.fieldMutationIds, profile: "40:local-profile" },
+    };
+    const indexedState = {
+      ...baseState,
+      favoriteRecipeIds: ["salade-lentilles-noix"],
+      stateRevision: 41,
+      fieldRevisions: { ...baseState.fieldRevisions, favoriteRecipeIds: 41 },
+      fieldMutationIds: { ...baseState.fieldMutationIds, favoriteRecipeIds: "41:indexed-favorite" },
+    };
+    window.localStorage.removeItem("inflamm-menu:reset-marker");
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify(localState));
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open("inflamm-menu", 1);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction("app-state", "readwrite");
+        transaction.objectStore("app-state").put(indexedState, "current");
+        transaction.objectStore("app-state").delete("reset-marker");
+        transaction.oncomplete = () => { database.close(); resolve(); };
+        transaction.onerror = () => { database.close(); reject(transaction.error); };
+      };
+    });
+  }, recovery.state);
+  const mergedDownload = page.waitForEvent("download");
+  await page.getByTestId("fatal-recovery").click();
+  const mergedPath = await (await mergedDownload).path();
+  expect(mergedPath).not.toBeNull();
+  const mergedRecovery = JSON.parse(await readFile(mergedPath!, "utf8"));
+  expect(mergedRecovery.state.profile.firstName).toBe("Profil local fusionné");
+  expect(mergedRecovery.state.favoriteRecipeIds).toContain("salade-lentilles-noix");
+
+  await page.evaluate(() => {
+    const testWindow = window as typeof window & { __recoveryGetItem?: Storage["getItem"] };
+    testWindow.__recoveryGetItem = Storage.prototype.getItem;
+    Object.defineProperty(Storage.prototype, "getItem", {
+      configurable: true,
+      value: () => { throw new Error("localStorage indisponible pour le test"); },
+    });
+  });
+  const localPartialDownload = page.waitForEvent("download");
+  await page.getByTestId("fatal-recovery").click();
+  await localPartialDownload;
+  await expect(page.getByTestId("fatal-recovery-error")).toContainText("localStorage reste inaccessible");
+  await page.evaluate(() => {
+    const testWindow = window as typeof window & { __recoveryGetItem?: Storage["getItem"] };
+    Object.defineProperty(Storage.prototype, "getItem", { configurable: true, value: testWindow.__recoveryGetItem });
+    delete testWindow.__recoveryGetItem;
+  });
+
+  await page.evaluate((state) => {
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify(state));
+    const factory = indexedDB as IDBFactory & { __openForRecoveryTest?: IDBFactory["open"] };
+    factory.__openForRecoveryTest = factory.open.bind(factory);
+    Object.defineProperty(factory, "open", { configurable: true, value: () => { throw new Error("IndexedDB indisponible pour le test"); } });
+  }, recovery.state);
+  const partialDownload = page.waitForEvent("download");
+  await page.getByTestId("fatal-recovery").click();
+  await partialDownload;
+  await expect(page.getByTestId("fatal-recovery-error")).toContainText("IndexedDB reste inaccessible");
+  await page.evaluate(() => {
+    const factory = indexedDB as IDBFactory & { __openForRecoveryTest?: IDBFactory["open"] };
+    Object.defineProperty(factory, "open", { configurable: true, value: factory.__openForRecoveryTest });
+    delete factory.__openForRecoveryTest;
+  });
+
+  // The isolated tab starts at the largest safe field clock. Its next edit
+  // must still lose to the reset barrier instead of creating a newer epoch
+  // from wall time and resurrecting this snapshot.
+  await page.evaluate(async () => {
+    const { APP_STATE_DATA_KEYS } = await import("/src/storage.ts");
+    const current = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "null");
+    const saturated = {
+      ...current,
+      stateRevision: Number.MAX_SAFE_INTEGER,
+      fieldRevisions: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, Number.MAX_SAFE_INTEGER])),
+      fieldMutationIds: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, `max:${key}`])),
+    };
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify(saturated));
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open("inflamm-menu", 1);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction("app-state", "readwrite");
+        transaction.objectStore("app-state").put(saturated, "current");
+        transaction.oncomplete = () => { database.close(); resolve(); };
+        transaction.onerror = () => { database.close(); reject(transaction.error); };
+      };
+    });
+  });
+
+  const peerPage = await page.context().newPage();
+  await peerPage.goto("/");
+  await expect(peerPage.getByTestId("home-view")).toBeVisible();
+
+  const stalePage = await page.context().newPage();
+  await stalePage.addInitScript(() => {
+    const nativeAddEventListener = window.addEventListener.bind(window);
+    window.addEventListener = ((type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) => {
+      if (type === "storage") return;
+      nativeAddEventListener(type, listener, options);
+    }) as typeof window.addEventListener;
+    Object.defineProperty(window, "BroadcastChannel", { configurable: true, value: undefined });
+  });
+  await stalePage.goto("/");
+  await expect(stalePage.getByTestId("home-view")).toBeVisible();
+
+  const resetTrigger = page.getByTestId("fatal-reset");
+  await resetTrigger.click();
+  const resetDialog = page.getByRole("alertdialog", { name: "Réinitialiser toutes les données ?" });
+  await expect(resetDialog).toBeVisible();
+  await expect(resetDialog.getByRole("button", { name: "Annuler" })).toBeFocused();
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem("inflamm-menu:app-state") !== null)).toBe(true);
+  await resetDialog.getByRole("button", { name: "Annuler" }).click();
+  await expect(resetTrigger).toBeFocused();
+
+  await resetTrigger.click();
+  await page.keyboard.press("Escape");
+  await expect(resetDialog).toHaveCount(0);
+  await expect(resetTrigger).toBeFocused();
+
+  await resetTrigger.click();
+  await Promise.all([
+    page.waitForNavigation(),
+    resetDialog.getByRole("button", { name: "Tout réinitialiser" }).click(),
+  ]);
+  await expect(page.getByRole("heading", { name: "Inflamm’Menu a rencontré une erreur" })).toBeVisible();
+  await expect(peerPage.getByTestId("onboarding-view")).toBeVisible();
+
+  await stalePage.waitForTimeout(30);
+  await stalePage.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await stalePage.getByLabel("Votre prénom").fill("Donnée obsolète");
+  await stalePage.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await expect(stalePage.getByTestId("onboarding-view")).toBeVisible();
+  await expect.poll(() => page.evaluate(() => {
+    const raw = window.localStorage.getItem("inflamm-menu:app-state");
+    const state = raw ? JSON.parse(raw) : null;
+    return state ? {
+      firstName: state.profile?.firstName,
+      history: state.history?.length,
+      favorites: state.favoriteRecipeIds?.length,
+      customRecipes: state.customRecipes?.length,
+      onboardingCompleted: state.onboardingCompleted,
+    } : null;
+  })).toEqual({ firstName: "", history: 0, favorites: 0, customRecipes: 0, onboardingCompleted: false });
+  await expect.poll(() => page.evaluate(async () => new Promise<Record<string, unknown> | null>((resolve, reject) => {
+    const request = indexedDB.open("inflamm-menu", 1);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const database = request.result;
+      const transaction = database.transaction("app-state", "readonly");
+      const get = transaction.objectStore("app-state").get("current");
+      get.onsuccess = () => {
+        database.close();
+        const state = get.result;
+        resolve(state ? {
+          firstName: state.profile?.firstName,
+          history: state.history?.length,
+          favorites: state.favoriteRecipeIds?.length,
+          customRecipes: state.customRecipes?.length,
+          onboardingCompleted: state.onboardingCompleted,
+        } : null);
+      };
+      get.onerror = () => { database.close(); reject(get.error); };
+    };
+  }))).toEqual({ firstName: "", history: 0, favorites: 0, customRecipes: 0, onboardingCompleted: false });
+
+  await expect.poll(() => page.evaluate(async () => {
+    const localState = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "null");
+    const localMarker = window.localStorage.getItem("inflamm-menu:reset-marker");
+    return new Promise<Record<string, unknown>>((resolve, reject) => {
+      const request = indexedDB.open("inflamm-menu", 1);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction("app-state", "readonly");
+        const stateRequest = transaction.objectStore("app-state").get("current");
+        const markerRequest = transaction.objectStore("app-state").get("reset-marker");
+        transaction.oncomplete = () => {
+          database.close();
+          resolve({
+            localMarker,
+            localGeneration: localState?.storageGeneration,
+            indexedMarker: markerRequest.result,
+            indexedGeneration: stateRequest.result?.storageGeneration,
+            generationsMatch: Boolean(localMarker)
+              && localMarker === localState?.storageGeneration
+              && localMarker === markerRequest.result
+              && localMarker === stateRequest.result?.storageGeneration,
+          });
+        };
+        transaction.onerror = () => { database.close(); reject(transaction.error); };
+      };
+    });
+  })).toEqual(expect.objectContaining({
+    localMarker: expect.stringMatching(/^\d+:/),
+    localGeneration: expect.stringMatching(/^\d+:/),
+    indexedMarker: expect.stringMatching(/^\d+:/),
+    indexedGeneration: expect.stringMatching(/^\d+:/),
+    generationsMatch: true,
+  }));
+
+  await stalePage.getByTestId("onboarding-skip").click();
+  await stalePage.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await stalePage.getByLabel("Votre prénom").fill("Après réinitialisation");
+  await stalePage.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await expect.poll(() => stalePage.evaluate(() => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").profile?.firstName)).toBe("Après réinitialisation");
+  await stalePage.reload();
+  await expect(stalePage.getByTestId("home-view")).toBeVisible();
+  await stalePage.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await expect(stalePage.getByLabel("Votre prénom")).toHaveValue("Après réinitialisation");
+  await stalePage.close();
+  await peerPage.close();
+});
+
+test("le reset dépasse une génération devenue visible après sa première lecture", async ({ page }) => {
+  await page.goto("/tests/error-boundary-fixture.html");
+  await page.evaluate(async () => {
+    const highGeneration = "9999999999999999:preexisting";
+    const highState = {
+      version: 3,
+      profile: { firstName: "Donnée à effacer" },
+      currentPlan: null,
+      upcomingPlan: null,
+      favoriteRecipeIds: ["salade-lentilles-noix"],
+      history: [],
+      checkedShoppingItemIds: [],
+      pantryIngredientIds: [],
+      customRecipes: [],
+      onboardingCompleted: true,
+      storageGeneration: highGeneration,
+    };
+    window.localStorage.removeItem("inflamm-menu:reset-marker");
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify({ ...highState, storageGeneration: undefined }));
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open("inflamm-menu", 1);
+      request.onupgradeneeded = () => {
+        if (!request.result.objectStoreNames.contains("app-state")) request.result.createObjectStore("app-state");
+      };
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction("app-state", "readwrite");
+        transaction.objectStore("app-state").put(highState, "current");
+        transaction.objectStore("app-state").put(highGeneration, "reset-marker");
+        transaction.oncomplete = () => { database.close(); resolve(); };
+        transaction.onerror = () => { database.close(); reject(transaction.error); };
+      };
+    });
+    const factory = indexedDB as IDBFactory & { __resetOpen?: IDBFactory["open"]; __failResetOpen?: boolean };
+    factory.__resetOpen = factory.open.bind(factory);
+    factory.__failResetOpen = true;
+    Object.defineProperty(factory, "open", {
+      configurable: true,
+      value: (...args: Parameters<IDBFactory["open"]>) => {
+        if (factory.__failResetOpen) {
+          factory.__failResetOpen = false;
+          throw new Error("Première lecture IndexedDB volontairement indisponible");
+        }
+        return factory.__resetOpen!(...args);
+      },
+    });
+  });
+
+  await page.getByTestId("fatal-reset").click();
+  await Promise.all([
+    page.waitForNavigation(),
+    page.getByTestId("fatal-reset-dialog-confirm").click(),
+  ]);
+  const appPage = await page.context().newPage();
+  await appPage.goto("/");
+  await expect(appPage.getByTestId("onboarding-view")).toBeVisible();
+  const generations = await appPage.evaluate(async () => {
+    const localMarker = window.localStorage.getItem("inflamm-menu:reset-marker")!;
+    const localState = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "null");
+    return new Promise<{ localMarker: string; localState: string; indexedMarker: string; indexedState: string }>((resolve, reject) => {
+      const request = indexedDB.open("inflamm-menu", 1);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction("app-state", "readonly");
+        const stateRequest = transaction.objectStore("app-state").get("current");
+        const markerRequest = transaction.objectStore("app-state").get("reset-marker");
+        transaction.oncomplete = () => {
+          database.close();
+          resolve({
+            localMarker,
+            localState: localState.storageGeneration,
+            indexedMarker: markerRequest.result,
+            indexedState: stateRequest.result.storageGeneration,
+          });
+        };
+        transaction.onerror = () => { database.close(); reject(transaction.error); };
+      };
+    });
+  });
+  expect(BigInt(generations.localMarker.split(":")[0])).toBeGreaterThan(9999999999999999n);
+  expect(new Set(Object.values(generations)).size).toBe(1);
+  await appPage.close();
+});
+
+test("un marqueur de reset reste valable si l’écriture locale de l’état atteint le quota", async ({ page }) => {
+  await page.goto("/tests/error-boundary-fixture.html");
+  await page.evaluate(async () => {
+    const oldState = {
+      version: 2,
+      profile: { firstName: "À supprimer" },
+      currentPlan: null,
+      upcomingPlan: null,
+      favoriteRecipeIds: ["salade-lentilles-noix"],
+      history: [],
+      checkedShoppingItemIds: [],
+      pantryIngredientIds: [],
+      customRecipes: [],
+      onboardingCompleted: true,
+    };
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify(oldState));
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.open("inflamm-menu", 1);
+      request.onupgradeneeded = () => {
+        if (!request.result.objectStoreNames.contains("app-state")) request.result.createObjectStore("app-state");
+      };
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction("app-state", "readwrite");
+        transaction.objectStore("app-state").put(oldState, "current");
+        transaction.oncomplete = () => { database.close(); resolve(); };
+        transaction.onerror = () => { database.close(); reject(transaction.error); };
+      };
+    });
+    const testWindow = window as typeof window & { __quotaSetItem?: Storage["setItem"] };
+    testWindow.__quotaSetItem = Storage.prototype.setItem;
+    Object.defineProperty(Storage.prototype, "setItem", {
+      configurable: true,
+      value(this: Storage, key: string, value: string) {
+        if (key === "inflamm-menu:app-state") throw new DOMException("Quota volontairement atteint", "QuotaExceededError");
+        return testWindow.__quotaSetItem!.call(this, key, value);
+      },
+    });
+    Object.defineProperty(indexedDB, "open", {
+      configurable: true,
+      value: () => { throw new Error("IndexedDB indisponible pendant le reset"); },
+    });
+  });
+
+  await page.getByTestId("fatal-reset").click();
+  await Promise.all([
+    page.waitForNavigation(),
+    page.getByTestId("fatal-reset-dialog-confirm").click(),
+  ]);
+  const appPage = await page.context().newPage();
+  await appPage.goto("/");
+  await expect(appPage.getByTestId("onboarding-view")).toBeVisible();
+  await expect.poll(() => appPage.evaluate(() => {
+    const state = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}");
+    return { firstName: state.profile?.firstName, favorites: state.favoriteRecipeIds?.length };
+  })).toEqual({ firstName: "", favorites: 0 });
+  await appPage.close();
+});
+
+test("un quota ne transforme ni une restauration ni un rollover en reset vide", async ({ page }) => {
+  await page.goto("/tests/error-boundary-fixture.html");
+  const result = await page.evaluate(async () => {
+    const storage = await import("/src/storage.ts");
+    const base = storage.migrateAppState({
+      version: 3,
+      profile: { firstName: "Profil préservé" },
+      currentPlan: null,
+      upcomingPlan: null,
+      favoriteRecipeIds: ["salade-lentilles-noix"],
+      history: [],
+      checkedShoppingItemIds: [],
+      pantryIngredientIds: [],
+      pantryAmounts: {},
+      recipeNotes: {},
+      shoppingCategoryOrder: [],
+      actualSpend: {},
+      customRecipes: [],
+      textScale: "normal",
+      remindersEnabled: false,
+      onboardingCompleted: true,
+    })!;
+    const nativeSetItem = Storage.prototype.setItem;
+    const disableWrites = () => {
+      Object.defineProperty(Storage.prototype, "setItem", {
+        configurable: true,
+        value(this: Storage, key: string, value: string) {
+          if (key === "inflamm-menu:app-state") {
+            throw new DOMException("Quota volontairement atteint", "QuotaExceededError");
+          }
+          return nativeSetItem.call(this, key, value);
+        },
+      });
+      Object.defineProperty(indexedDB, "open", {
+        configurable: true,
+        value: () => { throw new Error("IndexedDB indisponible pendant le test"); },
+      });
+    };
+    const attempt = async (candidate: Parameters<typeof storage.saveAppState>[0]) => {
+      const beforeState = window.localStorage.getItem("inflamm-menu:app-state");
+      const beforeMarker = window.localStorage.getItem("inflamm-menu:reset-marker");
+      let rejected = false;
+      try { await storage.saveAppState(candidate); } catch { rejected = true; }
+      return {
+        rejected,
+        stateUnchanged: window.localStorage.getItem("inflamm-menu:app-state") === beforeState,
+        markerUnchanged: window.localStorage.getItem("inflamm-menu:reset-marker") === beforeMarker,
+      };
+    };
+
+    window.localStorage.clear();
+    nativeSetItem.call(window.localStorage, "inflamm-menu:app-state", JSON.stringify(base));
+    disableWrites();
+    const imported = storage.replaceAppStateData(base, storage.migrateAppState({
+      ...base,
+      profile: { ...base.profile, firstName: "Camille importée" },
+    })!);
+    const restore = await attempt(imported);
+
+    nativeSetItem.call(window.localStorage, "inflamm-menu:app-state", JSON.stringify(base));
+    window.localStorage.removeItem("inflamm-menu:reset-marker");
+    const ordinaryEdit = storage.stampAppStateChanges(base, {
+      ...base,
+      profile: { ...base.profile, firstName: "Édition non persistée" },
+    }, 1);
+    const sameGeneration = await attempt(ordinaryEdit);
+
+    const maxRevisions = Object.fromEntries(storage.APP_STATE_DATA_KEYS.map((key) => [key, Number.MAX_SAFE_INTEGER]));
+    const saturated = storage.migrateAppState({
+      ...base,
+      stateRevision: Number.MAX_SAFE_INTEGER,
+      fieldRevisions: maxRevisions,
+    })!;
+    nativeSetItem.call(window.localStorage, "inflamm-menu:app-state", JSON.stringify(saturated));
+    window.localStorage.removeItem("inflamm-menu:reset-marker");
+    const rolled = storage.stampAppStateChanges(saturated, {
+      ...saturated,
+      profile: { ...saturated.profile, firstName: "Après rollover" },
+    }, Number.MAX_SAFE_INTEGER);
+    const rollover = await attempt(rolled);
+    const persisted = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}");
+    return {
+      restore,
+      sameGeneration,
+      rollover,
+      persistedName: persisted.profile?.firstName,
+      persistedGeneration: persisted.storageGeneration,
+      saturatedGeneration: saturated.storageGeneration,
+    };
+  });
+
+  expect(result.restore).toEqual({ rejected: true, stateUnchanged: true, markerUnchanged: true });
+  expect(result.sameGeneration).toEqual({ rejected: true, stateUnchanged: true, markerUnchanged: true });
+  expect(result.rollover).toEqual({ rejected: true, stateUnchanged: true, markerUnchanged: true });
+  expect(result.persistedName).toBe("Profil préservé");
+  expect(result.persistedGeneration).toBe(result.saturatedGeneration);
+});
+
+test("seul un reset peut modifier le tombstone local", async ({ page }) => {
+  await page.goto("/tests/error-boundary-fixture.html");
+  const result = await page.evaluate(async () => {
+    const storage = await import("/src/storage.ts");
+    const base = storage.migrateAppState({
+      version: 3,
+      profile: { firstName: "Avant remplacement" },
+      currentPlan: null,
+      upcomingPlan: null,
+      favoriteRecipeIds: [],
+      history: [],
+      checkedShoppingItemIds: [],
+      pantryIngredientIds: [],
+      customRecipes: [],
+      onboardingCompleted: true,
+    })!;
+    const priorReset = "1:reset:prior";
+    window.localStorage.clear();
+    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify(base));
+    window.localStorage.setItem("inflamm-menu:reset-marker", priorReset);
+    const nativeSetItem = Storage.prototype.setItem;
+    const writtenKeys: string[] = [];
+    Object.defineProperty(Storage.prototype, "setItem", {
+      configurable: true,
+      value(this: Storage, key: string, value: string) {
+        writtenKeys.push(key);
+        return nativeSetItem.call(this, key, value);
+      },
+    });
+    Object.defineProperty(indexedDB, "open", {
+      configurable: true,
+      value: () => { throw new Error("IndexedDB volontairement indisponible"); },
+    });
+    const replacement = storage.replaceAppStateData(base, storage.migrateAppState({
+      ...base,
+      profile: { ...base.profile, firstName: "Après remplacement" },
+    })!);
+    const saved = await storage.saveAppState(replacement);
+    const persisted = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "null");
+    return {
+      localSaved: saved.localSaved,
+      marker: window.localStorage.getItem("inflamm-menu:reset-marker"),
+      markerWrites: writtenKeys.filter((key) => key === "inflamm-menu:reset-marker").length,
+      persistedGeneration: persisted.storageGeneration,
+      replacementGeneration: replacement.storageGeneration,
+      persistedName: persisted.profile?.firstName,
+    };
+  });
+
+  expect(result).toEqual({
+    localSaved: true,
+    marker: "1:reset:prior",
+    markerWrites: 0,
+    persistedGeneration: result.replacementGeneration,
+    replacementGeneration: result.replacementGeneration,
+    persistedName: "Après remplacement",
+  });
+});
+
+test("deux resets concurrents convergent puis acceptent de nouvelles données", async ({ page }) => {
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByLabel("Votre prénom").fill("Avant double reset");
+  await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").profile?.firstName)).toBe("Avant double reset");
+
+  await page.goto("/tests/error-boundary-fixture.html");
+  const secondReset = await page.context().newPage();
+  await secondReset.goto("/tests/error-boundary-fixture.html");
+  await page.getByTestId("fatal-reset").click();
+  await secondReset.getByTestId("fatal-reset").click();
+  await Promise.all([
+    page.waitForNavigation(),
+    secondReset.waitForNavigation(),
+    page.getByTestId("fatal-reset-dialog-confirm").click(),
+    secondReset.getByTestId("fatal-reset-dialog-confirm").click(),
+  ]);
+
+  const verifier = await page.context().newPage();
+  await verifier.goto("/");
+  await expect(verifier.getByTestId("onboarding-view")).toBeVisible();
+  await expect.poll(() => verifier.evaluate(async () => {
+    const localMarker = window.localStorage.getItem("inflamm-menu:reset-marker");
+    const localState = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "null");
+    return new Promise<boolean>((resolve, reject) => {
+      const request = indexedDB.open("inflamm-menu", 1);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const database = request.result;
+        const transaction = database.transaction("app-state", "readonly");
+        const stateRequest = transaction.objectStore("app-state").get("current");
+        const markerRequest = transaction.objectStore("app-state").get("reset-marker");
+        transaction.oncomplete = () => {
+          database.close();
+          resolve(Boolean(localMarker)
+            && localMarker === localState?.storageGeneration
+            && localMarker === markerRequest.result
+            && localMarker === stateRequest.result?.storageGeneration
+            && stateRequest.result?.profile?.firstName === "");
+        };
+        transaction.onerror = () => { database.close(); reject(transaction.error); };
+      };
+    });
+  })).toBe(true);
+
+  await verifier.getByTestId("onboarding-skip").click();
+  await verifier.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await verifier.getByLabel("Votre prénom").fill("Après double reset");
+  await verifier.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await verifier.reload();
+  await verifier.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await expect(verifier.getByLabel("Votre prénom")).toHaveValue("Après double reset");
+  await verifier.close();
+  await secondReset.close();
+});
+
+test("deux onglets isolés fusionnent leurs sauvegardes concurrentes", async ({ page }) => {
+  await openFreshApp(page);
+  const first = await page.context().newPage();
+  const second = await page.context().newPage();
+  for (const tab of [first, second]) {
+    await tab.addInitScript(() => {
+      const nativeAddEventListener = window.addEventListener.bind(window);
+      window.addEventListener = ((type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) => {
+        if (type === "storage") return;
+        nativeAddEventListener(type, listener, options);
+      }) as typeof window.addEventListener;
+      Object.defineProperty(window, "BroadcastChannel", { configurable: true, value: undefined });
+    });
+    await tab.goto("/");
+    await expect(tab.getByTestId("home-view")).toBeVisible();
+  }
+
+  await first.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await first.getByLabel("Votre prénom").fill("Deux onglets");
+  await second.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await second.getByRole("button", { name: /Informations et confidentialité/ }).click();
+  await Promise.all([
+    first.getByRole("button", { name: "Enregistrer mon profil" }).click(),
+    second.getByTestId("text-scale-large").click(),
+  ]);
+
+  const verifier = await page.context().newPage();
+  await verifier.goto("/");
+  await expect(verifier.locator(".app-shell")).toHaveAttribute("data-text-scale", "large");
+  await verifier.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await expect(verifier.getByLabel("Votre prénom")).toHaveValue("Deux onglets");
+  await verifier.close();
+  await first.close();
+  await second.close();
+});
 
 test("l’accueil expose les repères et actions principales avec des noms accessibles", async ({ page }) => {
   await openFreshApp(page);
@@ -664,6 +1328,18 @@ test("les données locales s’exportent et se restaurent", async ({ page }) => 
   await expect(page.getByTestId("home-view")).toBeVisible();
   await expect(page.getByText("Bonjour Camille")).toHaveCount(0);
 
+  const staleTab = await page.context().newPage();
+  await staleTab.addInitScript(() => {
+    const nativeAddEventListener = window.addEventListener.bind(window);
+    window.addEventListener = ((type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) => {
+      if (type === "storage") return;
+      nativeAddEventListener(type, listener, options);
+    }) as typeof window.addEventListener;
+    Object.defineProperty(window, "BroadcastChannel", { configurable: true, value: undefined });
+  });
+  await staleTab.goto("/");
+  await expect(staleTab.getByTestId("home-view")).toBeVisible();
+
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
   await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
   await page.getByTestId("backup-import").setInputFiles(backupPath);
@@ -678,6 +1354,65 @@ test("les données locales s’exportent et se restaurent", async ({ page }) => 
   await page.getByRole("button", { name: "Semaine", exact: true }).click();
   await expect(page.getByTestId("week-view")).toBeVisible();
   await expect(page.locator(".meal-card")).not.toHaveCount(0);
+
+  await staleTab.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await staleTab.getByLabel("Votre prénom").fill("Donnée d’avant restauration");
+  await staleTab.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").profile?.firstName)).toBe("Camille");
+  await staleTab.reload();
+  await expect(staleTab.getByText("Bonjour Camille")).toBeVisible();
+  await staleTab.close();
+});
+
+test("une restauration n’annonce son succès qu’après une écriture durable", async ({ page }) => {
+  await openFreshApp(page);
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem("inflamm-menu:app-state"))).not.toBeNull();
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+  const currentState = await page.evaluate(() => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "null"));
+  const backup = {
+    format: "inflamm-menu-backup",
+    version: 3,
+    exportedAt: new Date().toISOString(),
+    state: {
+      ...currentState,
+      profile: { ...currentState.profile, firstName: "Import non durable" },
+    },
+  };
+  await page.getByTestId("backup-import").setInputFiles({
+    name: "sauvegarde-valide.json",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(backup)),
+  });
+  await expect(page.getByTestId("backup-feedback")).toContainText("Sauvegarde vérifiée");
+  const before = await page.evaluate(() => ({
+    state: window.localStorage.getItem("inflamm-menu:app-state"),
+    marker: window.localStorage.getItem("inflamm-menu:reset-marker"),
+  }));
+  await page.evaluate(() => {
+    const testWindow = window as typeof window & { __restoreSetItem?: Storage["setItem"] };
+    testWindow.__restoreSetItem = Storage.prototype.setItem;
+    Object.defineProperty(Storage.prototype, "setItem", {
+      configurable: true,
+      value(this: Storage, key: string, value: string) {
+        if (key === "inflamm-menu:app-state") throw new DOMException("Quota restauration", "QuotaExceededError");
+        return testWindow.__restoreSetItem!.call(this, key, value);
+      },
+    });
+    Object.defineProperty(indexedDB, "open", {
+      configurable: true,
+      value: () => { throw new Error("IndexedDB indisponible pendant la restauration"); },
+    });
+  });
+
+  await page.getByTestId("backup-confirm").click();
+  await expect(page.getByTestId("backup-error")).toContainText("Vos données actuelles sont conservées");
+  await expect(page.getByTestId("backup-feedback")).toHaveCount(0);
+  await expect(page.getByTestId("backup-confirmation")).toBeVisible();
+  expect(await page.evaluate(() => ({
+    state: window.localStorage.getItem("inflamm-menu:app-state"),
+    marker: window.localStorage.getItem("inflamm-menu:reset-marker"),
+  }))).toEqual(before);
 });
 
 test("une sauvegarde étrangère est refusée avec un message clair", async ({ page }) => {
@@ -1040,7 +1775,7 @@ test("les favoris et l’historique restent accessibles depuis la navigation pri
   await expect(page.getByTestId("favorites-view")).toBeVisible();
   await expect(page.getByRole("tablist", { name: "Catalogue, favoris et historique" })).toBeVisible();
   await expect(page.getByRole("tab", { name: "Favoris", selected: true })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Aucun favori" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Aucune recette enregistrée" })).toBeVisible();
   await expect(page.locator(".favorite-card")).toHaveCount(0);
 
   await page.getByRole("tab", { name: "Historique" }).click();
@@ -1132,6 +1867,11 @@ test("une semaine archivée peut être supprimée et le plafond est expliqué", 
   await openFreshApp(page);
 
   await generateWeek(page);
+  const archivedPlanId = await page.evaluate(() => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").currentPlan?.id as string | undefined);
+  expect(archivedPlanId).toBeTruthy();
+  await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await page.getByTestId("spend-input").fill("61,25");
+  await expect.poll(() => page.evaluate((planId) => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").actualSpend?.[planId], archivedPlanId)).toBe(61.25);
   await page.getByRole("button", { name: "Accueil", exact: true }).click();
   await page.getByRole("button", { name: "Créer une autre semaine" }).click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
@@ -1142,15 +1882,39 @@ test("une semaine archivée peut être supprimée et le plafond est expliqué", 
   await expect(page.locator(".history-card")).toHaveCount(1);
   await expect(page.getByText(/1 semaine conservée sur cet appareil, 12 au maximum/)).toBeVisible();
 
-  await page.locator(".history-card__delete").first().click();
+  const deleteTrigger = page.locator(".history-card__delete").first();
+  await deleteTrigger.click();
+  const deleteDialog = page.getByRole("alertdialog", { name: "Supprimer cette semaine ?" });
+  await expect(deleteDialog).toBeVisible();
+  await expect(page.locator(".history-card")).toHaveCount(1);
+  await expect(deleteDialog.getByRole("button", { name: "Annuler" })).toBeFocused();
+  await deleteDialog.getByRole("button", { name: "Annuler" }).click();
+  await expect(deleteDialog).toHaveCount(0);
+  await expect(deleteTrigger).toBeFocused();
+
+  await deleteTrigger.click();
+  await page.keyboard.press("Escape");
+  await expect(deleteDialog).toHaveCount(0);
+  await expect(deleteTrigger).toBeFocused();
+
+  await deleteTrigger.click();
+  await deleteDialog.getByRole("button", { name: "Supprimer la semaine" }).click();
   await expect(page.locator(".history-card")).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Aucun historique" })).toBeVisible();
+  await expect.poll(() => page.evaluate((planId) => Object.hasOwn(
+    JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").actualSpend ?? {},
+    planId,
+  ), archivedPlanId)).toBe(false);
 
   await page.waitForTimeout(100);
   await page.reload();
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Historique" }).click();
   await expect(page.getByRole("heading", { name: "Aucun historique" })).toBeVisible();
+  expect(await page.evaluate((planId) => Object.hasOwn(
+    JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").actualSpend ?? {},
+    planId,
+  ), archivedPlanId)).toBe(false);
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
@@ -1408,6 +2172,100 @@ test("une recette se note, s’annote et se duplique", async ({ page }) => {
   await page.getByTestId("custom-save").click();
   await expect(page.getByTestId("flow-current").locator(".recipe-content h1")).toHaveText("Ma recette du dimanche");
   expect(title.length).toBeGreaterThan(0);
+});
+
+test("une recette personnelle reste retrouvable, modifiable et ne se supprime qu’après confirmation", async ({ page }) => {
+  await openFreshApp(page);
+  await generateWeek(page);
+  await page.locator(".meal-card__main").first().click();
+  await page.getByTestId("duplicate-recipe").click();
+  await page.getByTestId("custom-title").fill("Recette personnelle à supprimer");
+  await page.getByTestId("custom-save").click();
+  await expect(page.getByRole("heading", { name: "Recette personnelle à supprimer" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Retour" }).click();
+  await page.getByRole("button", { name: "Retour" }).click();
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  const personalCard = page.getByRole("button", { name: /Recette personnelle à supprimer/ });
+  await expect(personalCard).toBeVisible();
+  await personalCard.click();
+
+  await page.getByRole("button", { name: "Ajouter", exact: true }).click();
+  await page.getByTestId("rating-meh").click();
+  await page.getByTestId("recipe-note-input").fill("Note supprimée avec la recette");
+  await page.getByTestId("edit-custom-recipe").click();
+  await page.getByTestId("custom-title").fill("Recette personnelle modifiée");
+  await page.getByTestId("custom-save").click();
+  await expect(page.getByRole("heading", { name: "Recette personnelle modifiée" })).toBeVisible();
+
+  const customRecipeId = await page.evaluate(() => {
+    const raw = window.localStorage.getItem("inflamm-menu:app-state");
+    return raw ? JSON.parse(raw).customRecipes?.[0]?.id as string | undefined : undefined;
+  });
+  expect(customRecipeId).toMatch(/^perso-/);
+
+  await page.getByTestId("edit-custom-recipe").click();
+  const deleteTrigger = page.getByTestId("custom-delete");
+  await deleteTrigger.click();
+  const deleteDialog = page.getByRole("alertdialog", { name: "Supprimer cette recette ?" });
+  await expect(deleteDialog).toBeVisible();
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").customRecipes?.length ?? 0)).toBe(1);
+  await expect(deleteDialog.getByRole("button", { name: "Annuler" })).toBeFocused();
+  await deleteDialog.getByRole("button", { name: "Annuler" }).click();
+  await expect(deleteTrigger).toBeFocused();
+
+  await deleteTrigger.click();
+  await page.keyboard.press("Escape");
+  await expect(deleteDialog).toHaveCount(0);
+  await expect(deleteTrigger).toBeFocused();
+
+  await deleteTrigger.click();
+  await deleteDialog.getByRole("button", { name: "Supprimer la recette" }).click();
+  await expect(page.getByTestId("favorites-view")).toBeVisible();
+  await expect(page.getByRole("button", { name: /Recette personnelle modifiée/ })).toHaveCount(0);
+  await expect.poll(() => page.evaluate((recipeId) => {
+    const state = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}");
+    return {
+      custom: state.customRecipes?.some((recipe: { id: string }) => recipe.id === recipeId),
+      favorite: state.favoriteRecipeIds?.includes(recipeId),
+      note: Boolean(state.recipeNotes?.[recipeId]),
+      disliked: state.profile?.dislikedRecipeIds?.includes(recipeId),
+      softDisliked: state.profile?.softDislikedRecipeIds?.includes(recipeId),
+    };
+  }, customRecipeId)).toEqual({ custom: false, favorite: false, note: false, disliked: false, softDisliked: false });
+});
+
+test("modifier une recette personnelle planifiée conserve le contexte du repas", async ({ page }) => {
+  await openFreshApp(page);
+  await generateWeek(page);
+  await page.locator(".meal-card__main").first().click();
+  await page.getByTestId("duplicate-recipe").click();
+  await page.getByTestId("custom-title").fill("Recette personnelle planifiée");
+  await page.getByTestId("custom-save").click();
+  await page.getByTestId("plan-recipe").click();
+  await expect(page.getByTestId("plan-slot-view")).toBeVisible();
+  await page.locator('button[data-testid^="plan-slot-"]:not([disabled])').first().click();
+
+  await expect(page.getByTestId("week-view")).toBeVisible();
+  await page.getByTestId("layout-week").click();
+  const plannedRecipe = page.locator(".week-overview__meal").filter({ hasText: "Recette personnelle planifiée" });
+  await expect(plannedRecipe).toHaveCount(1);
+  await plannedRecipe.click();
+  const portionsBefore = await page.getByTestId("recipe-portions").innerText();
+  await expect(page.locator(".recipe-actions").getByRole("button", { name: "Remplacer", exact: true })).toBeVisible();
+
+  await page.getByTestId("edit-custom-recipe").click();
+  await page.getByTestId("custom-title").fill("Recette personnelle planifiée modifiée");
+  await page.getByTestId("custom-save").click();
+  await expect(page.getByRole("heading", { name: "Recette personnelle planifiée modifiée" })).toBeVisible();
+  await expect(page.getByTestId("recipe-portions")).toHaveText(portionsBefore);
+  await expect(page.locator(".recipe-actions").getByRole("button", { name: "Remplacer", exact: true })).toBeVisible();
+
+  await page.getByTestId("edit-custom-recipe").click();
+  await page.getByTestId("custom-delete").click();
+  await page.getByRole("alertdialog", { name: "Supprimer cette recette ?" }).getByRole("button", { name: "Supprimer la recette" }).click();
+  await expect(page.getByRole("alert")).toContainText("Cette recette est encore utilisée dans une semaine");
+  await expect.poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").customRecipes?.length ?? 0)).toBe(1);
 });
 
 test("le garde-manger déduit les quantités et le budget réel se saisit", async ({ page }) => {

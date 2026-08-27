@@ -681,6 +681,69 @@ test("concurrent tab edits to different fields are merged without data loss", as
   assert.equal(mergeAppStateReplicas(collisionA, collisionB).profile.firstName, "aaa", "le contenu lexical ne choisit plus le gagnant");
 });
 
+test("a durable storage generation makes resets outrank stale clocks without overflow", async () => {
+  const { APP_STATE_DATA_KEYS, DEFAULT_APP_STATE, mergeAppStateReplicas, stampAppStateChanges } = await import("../src/storage.ts");
+  const maxRevisions = Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, Number.MAX_SAFE_INTEGER]));
+  const old = migrateAppState({
+    ...state({ favoriteRecipeIds: ["ancienne-recette"] }),
+    storageGeneration: "0:legacy:legacy",
+    stateRevision: Number.MAX_SAFE_INTEGER,
+    fieldRevisions: maxRevisions,
+  });
+  const staleEdit = stampAppStateChanges(old, {
+    ...old,
+    profile: { ...old.profile, firstName: "Ressuscité" },
+  }, Number.MAX_SAFE_INTEGER);
+  assert.notEqual(staleEdit.storageGeneration, old.storageGeneration, "une horloge saturée bascule dans une nouvelle génération");
+  assert.equal(staleEdit.stateRevision, 0);
+  for (const merged of [mergeAppStateReplicas(old, staleEdit), mergeAppStateReplicas(staleEdit, old)]) {
+    assert.equal(merged.profile.firstName, "Ressuscité", "la mutation post-saturation gagne dans les deux ordres");
+  }
+  assert.match(staleEdit.storageGeneration, /^1:rollover:/);
+  const tiedResetGeneration = "1:reset:tombstone";
+  const tiedResetMutationId = `reset:${tiedResetGeneration}`;
+  const tiedReset = migrateAppState({
+    ...DEFAULT_APP_STATE,
+    storageGeneration: tiedResetGeneration,
+    stateRevision: 0,
+    fieldRevisions: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, 0])),
+    fieldMutationIds: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, tiedResetMutationId])),
+  });
+  for (const merged of [mergeAppStateReplicas(staleEdit, tiedReset), mergeAppStateReplicas(tiedReset, staleEdit)]) {
+    assert.equal(merged.storageGeneration, tiedResetGeneration, "à compteur égal, le reset bat le rollover d’un onglet obsolète");
+    assert.equal(merged.profile.firstName, "");
+  }
+  const secondEdit = stampAppStateChanges(staleEdit, { ...staleEdit, textScale: "large" }, 1);
+  assert.equal(secondEdit.stateRevision, 1);
+  assert.equal(secondEdit.profile.firstName, "Ressuscité");
+  assert.equal(secondEdit.textScale, "large");
+
+  const zeroRevisions = Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, 0]));
+  const reset = migrateAppState({
+    ...state({
+      profile: { ...state().profile, firstName: "" },
+      favoriteRecipeIds: [],
+      history: [],
+      actualSpend: {},
+      customRecipes: [],
+    }),
+    storageGeneration: "9007199254740993:reset:reset-a",
+    stateRevision: 0,
+    fieldRevisions: zeroRevisions,
+  });
+  for (const merged of [mergeAppStateReplicas(staleEdit, reset), mergeAppStateReplicas(reset, staleEdit)]) {
+    assert.equal(merged.storageGeneration, "9007199254740993:reset:reset-a");
+    assert.equal(merged.profile.firstName, "");
+    assert.deepEqual(merged.favoriteRecipeIds, []);
+    assert.equal(Number.isSafeInteger(merged.stateRevision), true);
+  }
+
+  const concurrentReset = migrateAppState({ ...reset, storageGeneration: "9007199254740993:reset:reset-z" });
+  const converged = mergeAppStateReplicas(reset, concurrentReset);
+  assert.equal(converged.storageGeneration, "9007199254740993:reset:reset-z", "deux resets concurrents convergent de façon déterministe");
+  assert.equal(converged.profile.firstName, "");
+});
+
 
 test("valid imported leftovers cannot remain locked or cooked", async () => {
   const { normalizePlan } = await import("../src/storage.ts");
