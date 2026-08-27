@@ -5,6 +5,7 @@ import type { DietMode, Equipment, IngredientCategory, IngredientUnit, MealType 
 export type CatalogueReviewStatus = "validated" | "caution";
 export type CreamiProgram = "ICE CREAM" | "LITE ICE CREAM" | "SORBET" | "GELATO" | "FROZEN YOGURT";
 export type CatalogueSeason = "printemps" | "ete" | "automne" | "hiver" | "toute-annee";
+export type CatalogueWeeklyTarget = "pulse" | "finfish" | "seafood";
 
 export interface CatalogueRecipeReview {
   status: CatalogueReviewStatus;
@@ -96,6 +97,9 @@ export interface CatalogueRecipe {
       cost_per_portion_eur: number;
       equipment: Equipment[];
       allergens: string[];
+      /** Exact editorial classifications used by the weekly objectives;
+       * required in schema v2.1 and optional while reading schema v2.0. */
+      targets?: CatalogueWeeklyTarget[];
       /** Hands-on preparation time; required by schema v2.1. */
       active_minutes?: number;
     };

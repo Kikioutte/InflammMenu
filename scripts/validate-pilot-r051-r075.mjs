@@ -5,7 +5,7 @@ import { validateCatalogue } from "./validate-catalogue.mjs";
 
 const pilotUrl = new URL("../research/pilot-r051-r075.draft.json", import.meta.url);
 const catalogue = JSON.parse(await readFile(pilotUrl, "utf8"));
-const result = validateCatalogue(catalogue);
+const result = validateCatalogue(catalogue, { taxonomy: "legacy" });
 
 assert.equal(result.schemaVersion, "2.1.0");
 assert.equal(result.recipeCount, 25);

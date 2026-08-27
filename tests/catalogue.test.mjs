@@ -86,6 +86,7 @@ test("planner metadata is explicit and no longer inferred from recipe prose", ()
     assert.ok(recipe.app.planner.cost_per_portion_eur > 0);
     assert.ok(Array.isArray(recipe.app.planner.equipment));
     assert.ok(Array.isArray(recipe.app.planner.allergens));
+    assert.ok(Array.isArray(recipe.app.planner.targets));
     for (const ingredient of recipe.ingredients) {
       assert.ok(ingredient.categorie_courses);
       assert.ok(Array.isArray(ingredient.allergenes));

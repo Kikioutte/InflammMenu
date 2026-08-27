@@ -1262,7 +1262,7 @@ test("le bilan de la semaine expose les repères sans promesse médicale", async
 
   const balance = page.getByTestId("week-balance");
   await expect(balance).toBeVisible();
-  await expect(balance).toContainText("Repas avec légumineuses");
+  await expect(balance).toContainText("Repas avec légumes secs ou soja");
   await expect(balance).toContainText("/ 2 visés");
   await expect(balance).toContainText("Repas avec poisson");
   await expect(balance).toContainText("kcal");
@@ -1755,7 +1755,7 @@ test("les objectifs hebdomadaires sont visibles, réglables et suivis", async ({
   await expect(page.getByTestId("target-legume")).toHaveText("2");
   await expect(page.getByTestId("target-fish")).toHaveText("2");
 
-  await page.getByRole("button", { name: "Plus de repas avec légumineuses" }).click();
+  await page.getByRole("button", { name: "Plus de repas avec légumes secs ou soja" }).click();
   await expect(page.getByTestId("target-legume")).toHaveText("3");
   await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
 
@@ -2526,10 +2526,10 @@ test("un réglage de confort ne détruit pas le brouillon du profil", async ({ p
 test("la génération reprend les objectifs configurés sans promettre un plafond budgétaire", async ({ page }) => {
   await openFreshApp(page);
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
-  await page.getByRole("button", { name: "Plus de repas avec légumineuses" }).click();
+  await page.getByRole("button", { name: "Plus de repas avec légumes secs ou soja" }).click();
   await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
   await page.getByRole("button", { name: "Générer ma semaine" }).click();
-  await expect(page.getByText("3 repas avec légumineuses visés")).toBeVisible();
+  await expect(page.getByText("3 repas avec légumes secs ou soja visés")).toBeVisible();
   await expect(page.getByText("80 € visés")).toBeVisible();
   await expect(page.getByText(/€ max\./)).toHaveCount(0);
 });

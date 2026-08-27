@@ -66,5 +66,5 @@ assert(/pamplemousse/i.test(r071.app.review.caution) && /médicaments/i.test(r07
 
 const eligibleCount = final.recipes.filter((recipe) => recipe.app.planner.eligible).length;
 assert(eligibleCount === 22, `Nombre de recettes éligibles inattendu: ${eligibleCount}`);
-validateCatalogue(final);
+validateCatalogue(final, { taxonomy: "legacy" });
 console.log(`Lot éditorial final valide : ${final.recipes.length} recettes, ${eligibleCount} éligibles, ${nutritionCautions.size} réserves nutritionnelles conservées.`);

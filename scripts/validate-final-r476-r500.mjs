@@ -37,7 +37,7 @@ for (const entry of mapping.ingredients) {
   }
 }
 
-const result = validateCatalogue(final);
+const result = validateCatalogue(final, { taxonomy: "legacy" });
 assert.equal(result.recipeCount, 25);
 assert.equal(final.meta.status, "editorial-validated");
 assert.match(final.meta.culinary_notice, /aucune.*testée physiquement/i);

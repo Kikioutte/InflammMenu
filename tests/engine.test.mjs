@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 const engine = await import("../src/engine.ts");
 const shopping = await import("../src/shopping.ts");
+const { IMPORTED_PLAN_RECIPES } = await import("../src/planner-catalog.ts");
 
 const nutrition = {
   calories: 400,
@@ -12,7 +13,7 @@ const nutrition = {
 };
 
 function recipe(index, overrides = {}) {
-  const tags = index < 2 ? ["poisson"] : index < 4 ? ["légumineuses"] : ["céréales-complètes"];
+  const tags = index < 2 ? ["finfish"] : index < 4 ? ["pulse"] : ["céréales-complètes"];
   const fish = index < 2;
   return {
     id: `recipe-${index}`,
@@ -80,6 +81,48 @@ test("generation is deterministic, creates 14 unique slots, and meets available 
   assert.ok(summary.withinBudget);
 });
 
+test("weekly targets use exact business tags instead of lexical food prefixes", () => {
+  const summaryFor = (recipeId) => {
+    const selected = IMPORTED_PLAN_RECIPES.find((item) => item.id === `catalog-${recipeId}`);
+    assert.ok(selected, `${recipeId} absente de la projection planificateur`);
+    const plan = {
+      id: `week-${recipeId}`,
+      startsOn: "2026-08-03",
+      generatedAt: "2026-08-03T00:00:00.000Z",
+      profileSnapshot: profile,
+      version: 1,
+      estimatedCost: selected.costPerPortion,
+      meals: [{ id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: selected.id, portions: 1, source: "manual" }],
+    };
+    return { recipe: selected, summary: engine.summarizePlan(plan, IMPORTED_PLAN_RECIPES, profile) };
+  };
+
+  const greenBeans = summaryFor("r254");
+  assert.equal(greenBeans.summary.legumeMeals, 0, "les haricots verts ne sont pas une portion de légumes secs");
+
+  const mussels = summaryFor("r392");
+  assert.equal(mussels.summary.fishMeals, 0, "les mollusques ne satisfont pas l’objectif poisson");
+  assert.ok(mussels.recipe.tags.includes("seafood"));
+  assert.ok(!mussels.recipe.tags.includes("finfish"));
+
+  const pulses = summaryFor("r007");
+  assert.equal(pulses.summary.legumeMeals, 1);
+  assert.ok(pulses.recipe.tags.includes("pulse"));
+
+  const finfish = summaryFor("r355");
+  assert.equal(finfish.summary.fishMeals, 1);
+  assert.ok(finfish.recipe.tags.includes("finfish"));
+
+  const pulseSeafood = summaryFor("r399");
+  assert.equal(pulseSeafood.summary.legumeMeals, 1);
+  assert.equal(pulseSeafood.summary.fishMeals, 0);
+  assert.ok(pulseSeafood.recipe.tags.includes("seafood"));
+
+  const seafood = summaryFor("r049");
+  assert.equal(seafood.summary.fishMeals, 0);
+  assert.ok(seafood.recipe.tags.includes("seafood"));
+});
+
 test("the plan season is derived from its Monday across generation, summary and replacements", () => {
   const calendar = [
     ["2026-01-05", "winter"], ["2026-02-02", "winter"],
@@ -145,7 +188,7 @@ test("the plan season is derived from its Monday across generation, summary and 
 
 test("different seeds explore the best compatible candidates reproducibly", () => {
   const uniform = Array.from({ length: 80 }, (_, index) => recipe(index + 1_000, {
-    tags: ["poisson", "légumineuses", "céréales-complètes"],
+    tags: ["finfish", "pulse", "céréales-complètes"],
     costPerPortion: 2 + (index % 5) * 0.15,
   }));
   const plans = Array.from({ length: 30 }, (_, index) => engine.generateWeeklyPlan(uniform, {
@@ -567,7 +610,7 @@ test("locked meals are ignored when they no longer fit the requested slots", () 
 });
 
 test("the budget pass never swaps a locked meal", () => {
-  const expensive = recipe(80, { costPerPortion: 40, tags: ["poisson"], mealTypes: ["lunch", "dinner"] });
+  const expensive = recipe(80, { costPerPortion: 40, tags: ["finfish"], mealTypes: ["lunch", "dinner"] });
   const pool = [...catalogue, expensive];
   const tightProfile = { ...profile, weeklyBudget: 1 };
   const base = engine.generateWeeklyPlan(pool, tightProfile, { seed: "budget-lock" });
@@ -1125,7 +1168,7 @@ test("replacement reasons no longer contradict their label", () => {
 
 test("favourite recipes are preferred but never override the safety filters", () => {
   // Uniform tags so the legume/fish targets do not decide the order.
-  const uniform = Array.from({ length: 20 }, (_, index) => recipe(index + 300, { tags: ["poisson", "légumineuses"] }));
+  const uniform = Array.from({ length: 20 }, (_, index) => recipe(index + 300, { tags: ["finfish", "pulse"] }));
   const plain = engine.generateWeeklyPlan(uniform, profile, { seed: "favourites" });
   const ignored = plain.meals.slice(-4).map((meal) => meal.recipeId);
 
@@ -1169,8 +1212,8 @@ test("weekly targets are configurable, clamped and honoured by the generator", (
   // Le catalogue de test ne compte que deux recettes par famille : on en ajoute.
   const rich = [
     ...catalogue,
-    ...Array.from({ length: 4 }, (_, index) => recipe(400 + index, { tags: ["légumineuses"] })),
-    ...Array.from({ length: 3 }, (_, index) => recipe(410 + index, { tags: ["poisson"] })),
+    ...Array.from({ length: 4 }, (_, index) => recipe(400 + index, { tags: ["pulse"] })),
+    ...Array.from({ length: 3 }, (_, index) => recipe(410 + index, { tags: ["finfish"] })),
   ];
   const demanding = { ...profile, weeklyTargets: { legumeMeals: 4, fishMeals: 3 } };
   const summary = engine.summarizePlan(engine.generateWeeklyPlan(rich, demanding, { seed: "targets" }), rich, demanding);
@@ -1259,7 +1302,7 @@ test("a meal taken outside costs nothing and buys nothing", () => {
 
 test("a meal planned outside consumes no recipe capacity or weekly target", () => {
   const minimalCatalogue = Array.from({ length: 13 }, (_, index) => recipe(5_000 + index, {
-    tags: index === 0 ? ["poisson"] : ["céréales-complètes"],
+    tags: index === 0 ? ["finfish"] : ["céréales-complètes"],
   }));
   const outsideProfile = {
     ...profile,
@@ -1282,7 +1325,7 @@ test("a meal planned outside consumes no recipe capacity or weekly target", () =
 
 test("weekly aggregates ignore every value carried by a meal outside", () => {
   const outsideFish = recipe(5_100, {
-    tags: ["poisson", "légumineuses"],
+    tags: ["finfish", "pulse"],
     nutrition: { ...nutrition, calories: 999, protein: 99, fiber: 99 },
   });
   const activeGrain = recipe(5_101, {
@@ -1360,7 +1403,7 @@ test("cooking sessions group what really has to be cooked", () => {
 });
 
 test("a « meh » recipe is pushed down without being excluded", () => {
-  const uniform = Array.from({ length: 20 }, (_, index) => recipe(index + 500, { tags: ["poisson", "légumineuses"] }));
+  const uniform = Array.from({ length: 20 }, (_, index) => recipe(index + 500, { tags: ["finfish", "pulse"] }));
   const plain = engine.generateWeeklyPlan(uniform, profile, { seed: "meh" });
   const demoted = plain.meals.slice(0, 3).map((meal) => meal.recipeId);
   const pickyProfile = { ...profile, softDislikedRecipeIds: demoted };

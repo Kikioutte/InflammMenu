@@ -85,16 +85,10 @@ export function seasonForIsoDate(startsOn: string): PlanningSeason {
 const TONIGHT_FORM_REPEAT_PENALTY = 24;
 const TONIGHT_RECOMMENDATION_PAGE_SIZE = 6;
 const TAGS = {
-  legume: [
-    "legume", "legumes", "legumineuse", "legumineuses",
-    "lentille", "lentilles", "pois-chiche", "pois-chiches",
-    "pois-casse", "pois-casses", "haricot", "haricots",
-    "feve", "feves", "soja", "tofu", "tempeh",
-  ],
-  fish: ["fish", "poisson", "saumon", "sardine", "maquereau", "cabillaud", "thon"],
   wholeGrain: ["whole-grain", "cereale-complete", "cereales-completes", "complet"],
   nutSeed: ["nuts-seeds", "noix-graines", "noix", "graine", "graines"],
 } as const;
+const WEEKLY_TARGET_TAGS = { legume: "pulse", fish: "finfish" } as const;
 const NUT_OR_SEED_INGREDIENTS = new Set([
   "almond",
   "almond-drink",
@@ -171,6 +165,10 @@ function hasTag(recipe: Recipe, candidates: readonly string[]): boolean {
   return classificationTagsOf(recipe).some((tag) =>
     [...wanted].some((candidate) => tag === candidate || tag.startsWith(`${candidate}-`)),
   );
+}
+
+function hasWeeklyTarget(recipe: Recipe, target: (typeof WEEKLY_TARGET_TAGS)[keyof typeof WEEKLY_TARGET_TAGS]): boolean {
+  return classificationTagsOf(recipe).includes(target);
 }
 
 /** Broad serving form used only to avoid a visibly monotonous day. */
@@ -594,6 +592,13 @@ function tagCount(recipes: readonly Recipe[], candidates: readonly string[]): nu
   return recipes.reduce((total, recipe) => total + (hasTag(recipe, candidates) ? 1 : 0), 0);
 }
 
+function weeklyTargetCount(
+  recipes: readonly Recipe[],
+  target: (typeof WEEKLY_TARGET_TAGS)[keyof typeof WEEKLY_TARGET_TAGS],
+): number {
+  return recipes.reduce((total, recipe) => total + (hasWeeklyTarget(recipe, target) ? 1 : 0), 0);
+}
+
 function totalPlanCost(meals: readonly PlannedMeal[], byId: ReadonlyMap<string, Recipe>): number {
   return round(
     meals.reduce((total, meal) => {
@@ -743,8 +748,8 @@ export function generateWeeklyPlan(
       continue;
     }
 
-    const legumeDeficit = Math.max(0, targets.legumeMeals - tagCount(selected, TAGS.legume));
-    const fishDeficit = profile.diet === "classic" ? Math.max(0, targets.fishMeals - tagCount(selected, TAGS.fish)) : 0;
+    const legumeDeficit = Math.max(0, targets.legumeMeals - weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.legume));
+    const fishDeficit = profile.diet === "classic" ? Math.max(0, targets.fishMeals - weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.fish)) : 0;
     const candidates = slotCandidates
       .filter((recipe) => !used.has(recipe.id));
     const selectedIngredientIds = new Set(selected.flatMap(requiredIngredientIdsOf));
@@ -775,8 +780,8 @@ export function generateWeeklyPlan(
     const score = (recipe: Recipe): number => {
       const seasonal = recipe.seasons.includes(season) || recipe.seasons.includes("all-year");
       const targetScore =
-        (legumeDeficit > 0 && hasTag(recipe, TAGS.legume) ? 700 : 0) +
-        (fishDeficit > 0 && hasTag(recipe, TAGS.fish) ? 700 : 0);
+        (legumeDeficit > 0 && hasWeeklyTarget(recipe, WEEKLY_TARGET_TAGS.legume) ? 700 : 0) +
+        (fishDeficit > 0 && hasWeeklyTarget(recipe, WEEKLY_TARGET_TAGS.fish) ? 700 : 0);
       const qualityScore =
         (hasTag(recipe, TAGS.wholeGrain) ? 18 : 0) +
         (hasNutOrSeed(recipe) ? 14 : 0) +
@@ -825,8 +830,8 @@ export function generateWeeklyPlan(
       .filter((meal) => !meal.skipped)
       .map((meal) => byId.get(meal.recipeId))
       .filter((item): item is Recipe => Boolean(item));
-    const currentLegumes = tagCount(selectedNow, TAGS.legume);
-    const currentFish = tagCount(selectedNow, TAGS.fish);
+    const currentLegumes = weeklyTargetCount(selectedNow, WEEKLY_TARGET_TAGS.legume);
+    const currentFish = weeklyTargetCount(selectedNow, WEEKLY_TARGET_TAGS.fish);
     let best:
       | { mealIndex: number; recipe: Recipe; saving: number }
       | undefined;
@@ -840,8 +845,8 @@ export function generateWeeklyPlan(
       if (!previous) return;
       for (const candidate of eligibleBySlot.get(`${meal.dayIndex}-${meal.mealType}`) ?? []) {
         if (used.has(candidate.id)) continue;
-        const losesLegume = hasTag(previous, TAGS.legume) && !hasTag(candidate, TAGS.legume);
-        const losesFish = hasTag(previous, TAGS.fish) && !hasTag(candidate, TAGS.fish);
+        const losesLegume = hasWeeklyTarget(previous, WEEKLY_TARGET_TAGS.legume) && !hasWeeklyTarget(candidate, WEEKLY_TARGET_TAGS.legume);
+        const losesFish = hasWeeklyTarget(previous, WEEKLY_TARGET_TAGS.fish) && !hasWeeklyTarget(candidate, WEEKLY_TARGET_TAGS.fish);
         if (losesLegume && currentLegumes <= targets.legumeMeals) continue;
         if (profile.diet === "classic" && losesFish && currentFish <= targets.fishMeals) continue;
         const saving = (previous.costPerPortion - candidate.costPerPortion) * meal.portions;
@@ -1881,8 +1886,8 @@ export function summarizePlan(
     cookingSessions: cooked.length,
     estimatedCost: plan.estimatedCost,
     averagePrepMinutes,
-    legumeMeals: tagCount(selected, TAGS.legume),
-    fishMeals: tagCount(selected, TAGS.fish),
+    legumeMeals: weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.legume),
+    fishMeals: weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.fish),
     wholeGrainMeals: tagCount(selected, TAGS.wholeGrain),
     nutOrSeedMeals: selected.filter(hasNutOrSeed).length,
     seasonalMeals: selected.filter(

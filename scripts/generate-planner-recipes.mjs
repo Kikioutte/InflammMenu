@@ -43,7 +43,12 @@ const recipes = catalogue.recipes
     seasons: projectCatalogueSeasons(recipe.saisons, recipe.id),
     equipment: recipe.app.planner.equipment,
     allergens: recipe.app.planner.allergens,
-    tags: [...recipe.tags, recipe.categorie, ...recipe.ingredients.map((ingredient) => normalize(ingredient.nom))],
+    tags: [...new Set([
+      ...recipe.app.planner.targets,
+      ...recipe.tags,
+      recipe.categorie,
+      ...recipe.ingredients.map((ingredient) => normalize(ingredient.nom)),
+    ].map(normalize))],
     ingredients: recipe.ingredients.map((ingredient) => {
       const amount = normalizedAmount(ingredient);
       const id = canonicalIngredientId(ingredient.id ?? `catalog-${normalize(ingredient.nom)}`);

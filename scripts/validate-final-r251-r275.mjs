@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { validateCatalogue } from "./validate-catalogue.mjs";
 
 const catalogue = JSON.parse(await readFile("research/pilot-r251-r275.final.json", "utf8"));
-assert.equal(validateCatalogue(catalogue).recipeCount, 25);
+assert.equal(validateCatalogue(catalogue, { taxonomy: "legacy" }).recipeCount, 25);
 assert.equal(catalogue.meta.status, "editorial-validated");
 assert.deepEqual(catalogue.recipes.filter((recipe) => !recipe.app.planner.eligible).map((recipe) => recipe.id), ["r252", "r273", "r275"]);
 for (const recipe of catalogue.recipes) {

@@ -28,7 +28,7 @@ assert.equal(final.meta.status, "editorial-validated");
 assert.equal(final.meta.reviewed_at, "2026-08-05");
 assert.match(final.meta.culinary_notice, /aucune.*testée physiquement/i);
 assert.match(final.meta.cost_notice, /estimations/i);
-validateCatalogue(final);
+validateCatalogue(final, { taxonomy: "legacy" });
 
 const requiredIds = new Set(draft.recipes.flatMap((recipe) => recipe.ingredients.map(({ id }) => id)));
 const mappingById = new Map(mapping.ingredients.map((entry) => [entry.ingredient_id, entry]));

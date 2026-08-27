@@ -3,6 +3,12 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import { projectCatalogueSeasons } from "../scripts/catalogue-seasons.mjs";
+import {
+  CANONICAL_CATALOGUE_REGIMES,
+  PULSE_INGREDIENT_IDS,
+  normalizeCatalogueRecipeTaxonomy,
+  weeklyTargetsForCatalogueRecipe,
+} from "../scripts/catalogue-taxonomy.mjs";
 import { validateCatalogue } from "../scripts/validate-catalogue.mjs";
 
 const dataUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
@@ -181,6 +187,60 @@ test("catalogue seasons use the five canonical taxonomy values", () => {
   assert.throws(() => validateCatalogue(fixture), /r001: au moins une saison requise/);
   assert.throws(() => projectCatalogueSeasons(["été"], "r-test"), /r-test: saison inconnue été/);
   assert.deepEqual(projectCatalogueSeasons(["ete", "toute-annee", "ete"], "r-test"), ["summer", "all-year"]);
+});
+
+test("catalogue regimes, tags and weekly targets are closed and canonical", () => {
+  assert.equal(PULSE_INGREDIENT_IDS.length, 43, "la liste éditoriale des légumineuses doit rester explicitement revue");
+  assert.deepEqual(catalogue.taxonomie_tags.regimes, CANONICAL_CATALOGUE_REGIMES);
+
+  for (const recipe of catalogue.recipes) {
+    assert.equal(new Set(recipe.regimes).size, recipe.regimes.length, `${recipe.id}: régimes dupliqués`);
+    assert.equal(new Set(recipe.tags).size, recipe.tags.length, `${recipe.id}: tags dupliqués`);
+    assert.ok(recipe.tags.every((tag) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tag)), `${recipe.id}: tag non canonique`);
+    assert.ok(!recipe.tags.includes("brouillon"), `${recipe.id}: marqueur brouillon publié`);
+    assert.deepEqual(recipe.app.planner.targets, weeklyTargetsForCatalogueRecipe(recipe), `${recipe.id}: objectifs métier`);
+  }
+
+  for (const recipe of plannerRecipes) {
+    assert.equal(new Set(recipe.tags).size, recipe.tags.length, `${recipe.id}: tags projetés dupliqués`);
+  }
+
+  assert.deepEqual(catalogue.recipes.find((recipe) => recipe.id === "r254")?.app.planner.targets, []);
+  assert.deepEqual(catalogue.recipes.find((recipe) => recipe.id === "r392")?.app.planner.targets, ["seafood"]);
+  assert.ok(catalogue.recipes.find((recipe) => recipe.id === "r007")?.app.planner.targets.includes("pulse"));
+  assert.ok(catalogue.recipes.find((recipe) => recipe.id === "r355")?.app.planner.targets.includes("finfish"));
+  assert.deepEqual(catalogue.recipes.find((recipe) => recipe.id === "r399")?.app.planner.targets, ["pulse", "seafood"]);
+
+  for (const id of ["r048", "r201", "r231", "r257", "r269", "r272", "r287", "r313", "r327", "r341", "r420"]) {
+    assert.ok(catalogue.recipes.find((recipe) => recipe.id === id)?.app.planner.targets.includes("pulse"), `${id}: portion substantielle de fèves ou d'edamame`);
+  }
+
+  const mismatched = v21Fixture();
+  mismatched.recipes[0].app.planner.targets = ["finfish"];
+  assert.throws(() => validateCatalogue(mismatched), /classification métier incohérente/);
+
+  const draft = v21Fixture();
+  draft.recipes[0].tags.push("brouillon");
+  assert.throws(() => validateCatalogue(draft), /marqueur brouillon est interdit/);
+
+  const invalidTag = v21Fixture();
+  invalidTag.recipes[0].tags = [null];
+  assert.throws(() => validateCatalogue(invalidTag), /chaîne non vide requise/);
+  assert.throws(() => normalizeCatalogueRecipeTaxonomy(invalidTag.recipes[0]), /tag catalogue doit être une chaîne/);
+
+  const spoofedStatus = v21Fixture();
+  spoofedStatus.meta.status = "draft";
+  spoofedStatus.recipes[0].regimes = ["volaille"];
+  delete spoofedStatus.recipes[0].app.planner.targets;
+  assert.throws(
+    () => validateCatalogue(spoofedStatus),
+    /valeur inconnue volaille/,
+    "le contenu ne peut pas activer lui-même la taxonomie permissive",
+  );
+
+  const explicitLegacy = structuredClone(spoofedStatus);
+  explicitLegacy.taxonomie_tags.regimes = [...explicitLegacy.taxonomie_tags.regimes, "volaille"];
+  assert.doesNotThrow(() => validateCatalogue(explicitLegacy, { taxonomy: "legacy" }));
 });
 
 test("schema v2.1 rejects active time beyond total recipe time", () => {

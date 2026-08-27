@@ -7,7 +7,7 @@ const root = new URL("../", import.meta.url);
 const pilot = JSON.parse(await readFile(new URL("research/pilot-r176-r200.draft.json", root), "utf8"));
 const concepts = JSON.parse(await readFile(new URL("research/recipes-r051-r200.json", root), "utf8"))
   .filter(({ id }) => Number(id.slice(1)) >= 176 && Number(id.slice(1)) <= 200);
-const result = validateCatalogue(pilot);
+const result = validateCatalogue(pilot, { taxonomy: "legacy" });
 
 assert.equal(result.schemaVersion, "2.1.0");
 assert.equal(result.recipeCount, 25);

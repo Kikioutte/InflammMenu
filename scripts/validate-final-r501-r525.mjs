@@ -6,7 +6,7 @@ const [nutrition, catalogue] = await Promise.all([
   readFile("research/pilot-r501-r525.nutrition.json", "utf8").then(JSON.parse),
   readFile("research/pilot-r501-r525.final.json", "utf8").then(JSON.parse),
 ]);
-assert.equal(validateCatalogue(catalogue).recipeCount, 25);
+assert.equal(validateCatalogue(catalogue, { taxonomy: "legacy" }).recipeCount, 25);
 assert.equal(catalogue.meta.status, "editorial-validated");
 assert.equal(catalogue.recipes.filter((recipe) => recipe.app.planner.eligible).length, 18);
 assert.equal(catalogue.recipes.filter((recipe) => recipe.categorie === "boisson" && recipe.app.planner.eligible).length, 0);

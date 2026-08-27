@@ -165,9 +165,11 @@
   ],
   "taxonomie_tags": {
     "regimes": [
+      "classique",
       "vegetalien",
       "vegetarien",
       "pescetarien",
+      "sans-porc",
       "sans-gluten",
       "sans-lactose",
       "sans-fruits-a-coque",
@@ -439,7 +441,8 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 15
+          "active_minutes": 15,
+          "targets": []
         }
       },
       "provenance": {
@@ -673,7 +676,8 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 10
+          "active_minutes": 10,
+          "targets": []
         }
       },
       "provenance": {
@@ -919,7 +923,8 @@
             "blender"
           ],
           "allergens": [],
-          "active_minutes": 7
+          "active_minutes": 7,
+          "targets": []
         }
       },
       "provenance": {
@@ -1172,7 +1177,8 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 12
+          "active_minutes": 12,
+          "targets": []
         }
       },
       "provenance": {
@@ -1376,7 +1382,8 @@
           "cost_per_portion_eur": 2.1,
           "equipment": [],
           "allergens": [],
-          "active_minutes": 5
+          "active_minutes": 5,
+          "targets": []
         }
       },
       "provenance": {
@@ -1690,7 +1697,8 @@
             "blender"
           ],
           "allergens": [],
-          "active_minutes": 45
+          "active_minutes": 45,
+          "targets": []
         }
       },
       "provenance": {
@@ -2016,7 +2024,10 @@
           "allergens": [
             "celeri"
           ],
-          "active_minutes": 35
+          "active_minutes": 35,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -2296,7 +2307,10 @@
             "moutarde",
             "poisson"
           ],
-          "active_minutes": 25
+          "active_minutes": 25,
+          "targets": [
+            "finfish"
+          ]
         }
       },
       "provenance": {
@@ -2626,7 +2640,10 @@
           "allergens": [
             "sesame"
           ],
-          "active_minutes": 45
+          "active_minutes": 45,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -2907,7 +2924,8 @@
             "moutarde",
             "fruits-a-coque"
           ],
-          "active_minutes": 20
+          "active_minutes": 20,
+          "targets": []
         }
       },
       "provenance": {
@@ -3273,7 +3291,10 @@
           "allergens": [
             "moutarde"
           ],
-          "active_minutes": 50
+          "active_minutes": 50,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -3561,7 +3582,10 @@
           "allergens": [
             "poisson"
           ],
-          "active_minutes": 35
+          "active_minutes": 35,
+          "targets": [
+            "finfish"
+          ]
         }
       },
       "provenance": {
@@ -3813,7 +3837,10 @@
           "allergens": [
             "poisson"
           ],
-          "active_minutes": 23
+          "active_minutes": 23,
+          "targets": [
+            "finfish"
+          ]
         }
       },
       "provenance": {
@@ -4123,7 +4150,8 @@
             "oven"
           ],
           "allergens": [],
-          "active_minutes": 100
+          "active_minutes": 100,
+          "targets": []
         }
       },
       "provenance": {
@@ -4395,7 +4423,10 @@
             "poisson",
             "fruits-a-coque"
           ],
-          "active_minutes": 25
+          "active_minutes": 25,
+          "targets": [
+            "finfish"
+          ]
         }
       },
       "provenance": {
@@ -4765,7 +4796,10 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 65
+          "active_minutes": 65,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -5112,7 +5146,10 @@
             "soja",
             "sesame"
           ],
-          "active_minutes": 32
+          "active_minutes": 32,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -5403,7 +5440,10 @@
           "allergens": [
             "poisson"
           ],
-          "active_minutes": 33
+          "active_minutes": 33,
+          "targets": [
+            "finfish"
+          ]
         }
       },
       "provenance": {
@@ -5720,7 +5760,8 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 60
+          "active_minutes": 60,
+          "targets": []
         }
       },
       "provenance": {
@@ -6027,7 +6068,8 @@
             "sesame",
             "fruits-a-coque"
           ],
-          "active_minutes": 60
+          "active_minutes": 60,
+          "targets": []
         }
       },
       "provenance": {
@@ -6285,7 +6327,8 @@
             "moutarde",
             "fruits-a-coque"
           ],
-          "active_minutes": 32
+          "active_minutes": 32,
+          "targets": []
         }
       },
       "provenance": {
@@ -6559,7 +6602,8 @@
             "oven"
           ],
           "allergens": [],
-          "active_minutes": 45
+          "active_minutes": 45,
+          "targets": []
         }
       },
       "provenance": {
@@ -6788,7 +6832,8 @@
           "cost_per_portion_eur": 2.1,
           "equipment": [],
           "allergens": [],
-          "active_minutes": 30
+          "active_minutes": 30,
+          "targets": []
         }
       },
       "provenance": {
@@ -7068,7 +7113,10 @@
           "allergens": [
             "sesame"
           ],
-          "active_minutes": 60
+          "active_minutes": 60,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -7349,7 +7397,8 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 15
+          "active_minutes": 15,
+          "targets": []
         }
       },
       "provenance": {
@@ -7611,7 +7660,10 @@
             "oven"
           ],
           "allergens": [],
-          "active_minutes": 50
+          "active_minutes": 50,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -7891,7 +7943,8 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 15
+          "active_minutes": 15,
+          "targets": []
         }
       },
       "provenance": {
@@ -8145,7 +8198,8 @@
             "blender"
           ],
           "allergens": [],
-          "active_minutes": 35
+          "active_minutes": 35,
+          "targets": []
         }
       },
       "provenance": {
@@ -8452,7 +8506,8 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 45
+          "active_minutes": 45,
+          "targets": []
         }
       },
       "provenance": {
@@ -8730,7 +8785,8 @@
             "sesame",
             "moutarde"
           ],
-          "active_minutes": 8
+          "active_minutes": 8,
+          "targets": []
         }
       },
       "provenance": {
@@ -9010,7 +9066,8 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 12
+          "active_minutes": 12,
+          "targets": []
         }
       },
       "provenance": {
@@ -9229,7 +9286,8 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 15
+          "active_minutes": 15,
+          "targets": []
         }
       },
       "provenance": {
@@ -9518,7 +9576,8 @@
           "allergens": [
             "oeuf"
           ],
-          "active_minutes": 16
+          "active_minutes": 16,
+          "targets": []
         }
       },
       "provenance": {
@@ -9794,7 +9853,10 @@
             "gluten",
             "poisson"
           ],
-          "active_minutes": 11
+          "active_minutes": 11,
+          "targets": [
+            "finfish"
+          ]
         }
       },
       "provenance": {
@@ -10124,7 +10186,8 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 55
+          "active_minutes": 55,
+          "targets": []
         }
       },
       "provenance": {
@@ -10424,7 +10487,10 @@
             "sesame",
             "gluten"
           ],
-          "active_minutes": 27
+          "active_minutes": 27,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -10721,7 +10787,8 @@
             "blender"
           ],
           "allergens": [],
-          "active_minutes": 20
+          "active_minutes": 20,
+          "targets": []
         }
       },
       "provenance": {
@@ -11020,7 +11087,8 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 40
+          "active_minutes": 40,
+          "targets": []
         }
       },
       "provenance": {
@@ -11343,7 +11411,10 @@
             "fruits-a-coque",
             "lait"
           ],
-          "active_minutes": 60
+          "active_minutes": 60,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -11709,7 +11780,10 @@
           "allergens": [
             "poisson"
           ],
-          "active_minutes": 40
+          "active_minutes": 40,
+          "targets": [
+            "finfish"
+          ]
         }
       },
       "provenance": {
@@ -12013,7 +12087,10 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 30
+          "active_minutes": 30,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -12265,7 +12342,8 @@
             "blender"
           ],
           "allergens": [],
-          "active_minutes": 15
+          "active_minutes": 15,
+          "targets": []
         }
       },
       "provenance": {
@@ -12481,7 +12559,8 @@
             "fruits-a-coque",
             "lait"
           ],
-          "active_minutes": 8
+          "active_minutes": 8,
+          "targets": []
         }
       },
       "provenance": {
@@ -12703,7 +12782,10 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 20
+          "active_minutes": 20,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -12946,7 +13028,8 @@
             "fruits-a-coque",
             "lait"
           ],
-          "active_minutes": 12
+          "active_minutes": 12,
+          "targets": []
         }
       },
       "provenance": {
@@ -13195,7 +13278,10 @@
           "allergens": [
             "poisson"
           ],
-          "active_minutes": 35
+          "active_minutes": 35,
+          "targets": [
+            "finfish"
+          ]
         }
       },
       "provenance": {
@@ -13433,7 +13519,10 @@
           "allergens": [
             "lait"
           ],
-          "active_minutes": 35
+          "active_minutes": 35,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -13677,7 +13766,10 @@
             "soja",
             "sesame"
           ],
-          "active_minutes": 20
+          "active_minutes": 20,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -13913,7 +14005,10 @@
           "allergens": [
             "crustaces"
           ],
-          "active_minutes": 27
+          "active_minutes": 27,
+          "targets": [
+            "seafood"
+          ]
         }
       },
       "provenance": {
@@ -14144,7 +14239,8 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 17
+          "active_minutes": 17,
+          "targets": []
         }
       },
       "provenance": {
@@ -14402,7 +14498,8 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 12
+          "active_minutes": 12,
+          "targets": []
         }
       },
       "provenance": {
@@ -14651,7 +14748,8 @@
             "soja",
             "sesame"
           ],
-          "active_minutes": 18
+          "active_minutes": 18,
+          "targets": []
         }
       },
       "provenance": {
@@ -14915,7 +15013,8 @@
           "allergens": [
             "soja"
           ],
-          "active_minutes": 10
+          "active_minutes": 10,
+          "targets": []
         }
       },
       "provenance": {
@@ -15170,7 +15269,10 @@
           "allergens": [
             "gluten"
           ],
-          "active_minutes": 15
+          "active_minutes": 15,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -15423,7 +15525,10 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 33
+          "active_minutes": 33,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -15660,7 +15765,8 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 20
+          "active_minutes": 20,
+          "targets": []
         }
       },
       "provenance": {
@@ -15900,7 +16006,8 @@
             "soja",
             "sesame"
           ],
-          "active_minutes": 12
+          "active_minutes": 12,
+          "targets": []
         }
       },
       "provenance": {
@@ -16158,7 +16265,8 @@
             "gluten",
             "oeuf"
           ],
-          "active_minutes": 24
+          "active_minutes": 24,
+          "targets": []
         }
       },
       "provenance": {
@@ -16398,7 +16506,8 @@
           "allergens": [
             "soja"
           ],
-          "active_minutes": 10
+          "active_minutes": 10,
+          "targets": []
         }
       },
       "provenance": {
@@ -16644,7 +16753,8 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 20
+          "active_minutes": 20,
+          "targets": []
         }
       },
       "provenance": {
@@ -16903,7 +17013,8 @@
             "oeuf",
             "lait"
           ],
-          "active_minutes": 27
+          "active_minutes": 27,
+          "targets": []
         }
       },
       "provenance": {
@@ -17166,7 +17277,10 @@
           "allergens": [
             "soja"
           ],
-          "active_minutes": 25
+          "active_minutes": 25,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -17404,7 +17518,8 @@
             "lait",
             "fruits-a-coque"
           ],
-          "active_minutes": 12
+          "active_minutes": 12,
+          "targets": []
         }
       },
       "provenance": {
@@ -17664,7 +17779,8 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 12
+          "active_minutes": 12,
+          "targets": []
         }
       },
       "provenance": {
@@ -17925,7 +18041,8 @@
             "soja",
             "sesame"
           ],
-          "active_minutes": 25
+          "active_minutes": 25,
+          "targets": []
         }
       },
       "provenance": {
@@ -18178,7 +18295,10 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 31
+          "active_minutes": 31,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -18417,7 +18537,8 @@
             "soja",
             "fruits-a-coque"
           ],
-          "active_minutes": 25
+          "active_minutes": 25,
+          "targets": []
         }
       },
       "provenance": {
@@ -18674,7 +18795,8 @@
             "gluten",
             "lait"
           ],
-          "active_minutes": 12
+          "active_minutes": 12,
+          "targets": []
         }
       },
       "provenance": {
@@ -18933,7 +19055,8 @@
             "oeuf",
             "fruits-a-coque"
           ],
-          "active_minutes": 28
+          "active_minutes": 28,
+          "targets": []
         }
       },
       "provenance": {
@@ -19187,7 +19310,8 @@
           "allergens": [
             "lait"
           ],
-          "active_minutes": 10
+          "active_minutes": 10,
+          "targets": []
         }
       },
       "provenance": {
@@ -19440,7 +19564,8 @@
           "allergens": [
             "fruits-a-coque"
           ],
-          "active_minutes": 18
+          "active_minutes": 18,
+          "targets": []
         }
       },
       "provenance": {
@@ -19680,7 +19805,8 @@
             "gluten",
             "fruits-a-coque"
           ],
-          "active_minutes": 10
+          "active_minutes": 10,
+          "targets": []
         }
       },
       "provenance": {
@@ -19940,7 +20066,10 @@
             "hob"
           ],
           "allergens": [],
-          "active_minutes": 38
+          "active_minutes": 38,
+          "targets": [
+            "pulse"
+          ]
         }
       },
       "provenance": {
@@ -20203,7 +20332,8 @@
           "allergens": [
             "gluten"
           ],
-          "active_minutes": 28
+          "active_minutes": 28,
+          "targets": []
         }
       },
       "provenance": {
@@ -20439,7 +20569,8 @@
             "lait",
             "fruits-a-coque"
           ],
-          "active_minutes": 12
+          "active_minutes": 12,
+          "targets": []
         }
       },
       "provenance": {
@@ -20492,7 +20623,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -20725,7 +20855,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -20754,7 +20885,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -21011,7 +21141,8 @@
             "fruits-a-coque",
             "oeuf",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -21040,7 +21171,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -21275,7 +21405,8 @@
           "allergens": [
             "gluten",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -21306,7 +21437,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -21558,7 +21688,8 @@
           ],
           "allergens": [
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -21590,7 +21721,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -21815,7 +21945,10 @@
             "oven",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -21847,7 +21980,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -22060,7 +22192,8 @@
           "allergens": [
             "sesame",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -22091,7 +22224,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -22323,7 +22455,8 @@
           "allergens": [
             "fruits-a-coque",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -22354,7 +22487,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -22584,7 +22716,8 @@
           ],
           "allergens": [
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -22614,7 +22747,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -22867,6 +22999,9 @@
           "allergens": [
             "fruits-a-coque",
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -22895,7 +23030,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -23132,7 +23266,8 @@
             "fruits-a-coque",
             "gluten",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -23163,7 +23298,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -23425,7 +23559,8 @@
           "allergens": [
             "fruits-a-coque",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -23454,7 +23589,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -23711,6 +23845,9 @@
             "gluten",
             "lait",
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -23742,7 +23879,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -23990,6 +24126,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -24017,7 +24156,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -24251,7 +24389,8 @@
             "fruits-a-coque",
             "gluten",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -24283,7 +24422,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -24510,7 +24648,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -24539,7 +24680,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -24773,7 +24913,8 @@
             "fruits-a-coque",
             "gluten",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -24803,7 +24944,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -25036,7 +25176,8 @@
           "allergens": [
             "fruits-a-coque",
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -25067,7 +25208,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -25297,6 +25437,9 @@
           ],
           "allergens": [
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -25328,7 +25471,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -25539,7 +25681,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -25570,7 +25713,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -25821,7 +25963,8 @@
           ],
           "allergens": [
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -25851,7 +25994,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -26095,7 +26237,8 @@
           "allergens": [
             "fruits-a-coque",
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -26125,7 +26268,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -26378,7 +26520,8 @@
           "allergens": [
             "lait",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -26409,7 +26552,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -26628,7 +26770,8 @@
           ],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -26659,7 +26802,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -26915,7 +27057,8 @@
             "gluten",
             "sesame",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -26944,7 +27087,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -27155,7 +27297,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -27431,6 +27574,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -27716,7 +27863,8 @@
           "allergens": [
             "fruits-a-coque",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -27957,7 +28105,8 @@
           "cost_per_portion_eur": 0.65,
           "active_minutes": 8,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -28192,7 +28341,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -28432,7 +28582,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -28655,7 +28806,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -28891,7 +29043,8 @@
           "allergens": [
             "gluten",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -29108,7 +29261,8 @@
           "allergens": [
             "fruits-a-coque",
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -29342,7 +29496,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -29591,7 +29746,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -29831,7 +29987,8 @@
           "cost_per_portion_eur": 0.65,
           "active_minutes": 7,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -30044,7 +30201,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -30280,7 +30438,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -30515,7 +30674,8 @@
           ],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -30756,7 +30916,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -30991,7 +31152,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -31251,7 +31413,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -31485,7 +31648,8 @@
           ],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -31728,7 +31892,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -31983,7 +32148,8 @@
           ],
           "allergens": [
             "celeri"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -32212,7 +32378,8 @@
           "allergens": [
             "gluten",
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -32446,7 +32613,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -32680,7 +32848,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -32960,7 +33129,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -33239,7 +33409,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -33525,7 +33698,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -33807,7 +33983,8 @@
           "allergens": [
             "celeri",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -33838,7 +34015,7 @@
       ],
       "tags": [
         "soupe",
-        "rôtissage-puis-mixage",
+        "rotissage-puis-mixage",
         "panais",
         "pois-chiches",
         "cumin"
@@ -34082,7 +34259,10 @@
             "oven",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -34361,7 +34541,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -34642,7 +34823,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -34917,7 +35099,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -34947,7 +35132,7 @@
       ],
       "tags": [
         "soupe",
-        "rôtissage-puis-mixage-à-froid",
+        "rotissage-puis-mixage-a-froid",
         "tomate",
         "poivron-rouge",
         "amandes"
@@ -35201,7 +35386,8 @@
           "allergens": [
             "fruits-a-coque",
             "sulfites"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -35482,7 +35668,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -35513,7 +35700,7 @@
       ],
       "tags": [
         "soupe",
-        "poêlée-puis-mixage",
+        "poelee-puis-mixage",
         "champignons",
         "chataignes",
         "thym"
@@ -35761,7 +35948,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -36041,7 +36229,8 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -36296,7 +36485,10 @@
             "steamer",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -36578,7 +36770,8 @@
           ],
           "allergens": [
             "arachides"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -36852,7 +37045,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -37127,7 +37323,8 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -37158,7 +37355,7 @@
       ],
       "tags": [
         "soupe",
-        "rôtissage-puis-mixage",
+        "rotissage-puis-mixage",
         "potimarron",
         "pomme",
         "sauge"
@@ -37402,7 +37599,8 @@
             "oven",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -37687,7 +37885,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -37961,7 +38162,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -38241,7 +38445,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -38271,7 +38476,7 @@
       ],
       "tags": [
         "soupe",
-        "rôtissage-puis-mixage",
+        "rotissage-puis-mixage",
         "tomate",
         "fenouil",
         "orange"
@@ -38495,7 +38700,8 @@
             "oven",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -38784,6 +38990,9 @@
           ],
           "allergens": [
             "celeri"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -39059,7 +39268,8 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -39090,7 +39300,7 @@
       ],
       "tags": [
         "soupe",
-        "rôtissage-puis-mixage",
+        "rotissage-puis-mixage",
         "celeri-rave",
         "noisettes",
         "aneth"
@@ -39341,7 +39551,8 @@
           "allergens": [
             "celeri",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -39372,7 +39583,7 @@
       ],
       "tags": [
         "soupe",
-        "rôtissage-puis-mixage",
+        "rotissage-puis-mixage",
         "chou-fleur",
         "tahini",
         "sumac"
@@ -39624,7 +39835,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -39899,7 +40111,8 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -40174,7 +40387,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -40204,7 +40420,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -40459,6 +40674,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -40489,7 +40707,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -40759,7 +40976,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -40789,7 +41009,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -41077,7 +41296,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -41108,7 +41330,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -41378,7 +41599,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -41408,7 +41632,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -41684,7 +41907,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -41714,7 +41940,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -41968,7 +42193,8 @@
           ],
           "allergens": [
             "sulfites"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -41998,7 +42224,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -42268,7 +42493,8 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -42297,7 +42523,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -42543,7 +42768,8 @@
           "equipment": [
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -42572,7 +42798,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -42798,7 +43023,8 @@
           "equipment": [
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -42827,7 +43053,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -43073,7 +43298,8 @@
             "oven",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -43103,7 +43329,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -43352,7 +43577,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -43382,7 +43608,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -43628,7 +43853,10 @@
             "oven",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -43658,7 +43886,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -43909,7 +44136,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -43939,7 +44167,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -44210,7 +44437,10 @@
             "oven",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -44240,7 +44470,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -44486,7 +44715,8 @@
             "oven",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -44516,7 +44746,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -44761,7 +44990,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -44791,7 +45023,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -45017,7 +45248,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -45046,7 +45280,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -45294,7 +45527,8 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -45322,7 +45556,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -45597,6 +45830,9 @@
           ],
           "allergens": [
             "lait"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -45627,7 +45863,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -45877,7 +46112,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -45907,7 +46143,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -46184,7 +46419,8 @@
           "allergens": [
             "celeri",
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -46214,7 +46450,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -46465,7 +46700,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -46494,7 +46730,6 @@
       ],
       "tags": [
         "snack",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -46733,7 +46968,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -46762,7 +46998,6 @@
       ],
       "tags": [
         "snack",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -46990,6 +47225,9 @@
           ],
           "allergens": [
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -47019,7 +47257,6 @@
       ],
       "tags": [
         "snack",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -47252,6 +47489,9 @@
           "allergens": [
             "sesame",
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -47483,7 +47723,10 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -47720,7 +47963,8 @@
           "allergens": [
             "gluten",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -47953,7 +48197,8 @@
             "oven",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -48183,7 +48428,8 @@
           "cost_per_portion_eur": 0.95,
           "active_minutes": 12,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -48425,7 +48671,8 @@
           "allergens": [
             "fruits-a-coque",
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -48683,6 +48930,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -48935,7 +49185,10 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -49176,6 +49429,9 @@
           ],
           "allergens": [
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -49412,7 +49668,8 @@
           "allergens": [
             "lait",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -49675,7 +49932,8 @@
           "allergens": [
             "gluten",
             "sulfites"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -49922,7 +50180,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -50184,7 +50443,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -50421,7 +50681,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -50683,7 +50944,8 @@
           "allergens": [
             "fruits-a-coque",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -50933,7 +51195,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -51182,7 +51445,8 @@
           "allergens": [
             "lait",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -51422,6 +51686,9 @@
           "allergens": [
             "soja",
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -51660,7 +51927,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -51921,7 +52189,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -52171,7 +52440,8 @@
           "allergens": [
             "gluten",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -52451,7 +52721,8 @@
             "fruits-a-coque",
             "gluten",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -52709,7 +52980,8 @@
           "allergens": [
             "oeuf",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -52950,7 +53222,8 @@
           "allergens": [
             "sesame",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -53221,7 +53494,8 @@
           "allergens": [
             "gluten",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -53483,7 +53757,8 @@
           "allergens": [
             "soja",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -53512,7 +53787,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -53767,6 +54041,9 @@
           "allergens": [
             "celeri",
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -53796,7 +54073,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -54050,7 +54326,8 @@
             "hob",
             "steamer"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -54080,7 +54357,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -54309,6 +54585,9 @@
           ],
           "allergens": [
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -54339,7 +54618,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -54596,7 +54874,8 @@
           "allergens": [
             "fruits-a-coque",
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -54627,7 +54906,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -54876,7 +55154,8 @@
           ],
           "allergens": [
             "celeri"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -54905,7 +55184,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -55160,7 +55438,8 @@
           "allergens": [
             "fruits-a-coque",
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -55189,7 +55468,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -55443,7 +55721,8 @@
           ],
           "allergens": [
             "arachides"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -55472,7 +55751,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -55748,6 +56026,9 @@
           ],
           "allergens": [
             "sulfites"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -55778,7 +56059,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -56040,7 +56320,8 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -56070,7 +56351,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -56324,6 +56604,9 @@
           ],
           "allergens": [
             "lupin"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -56354,7 +56637,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -56577,7 +56859,8 @@
           "cost_per_portion_eur": 1.4,
           "active_minutes": 20,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -56605,7 +56888,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -56859,7 +57141,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -56888,7 +57171,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -57138,7 +57420,8 @@
           "equipment": [],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -57167,7 +57450,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -57417,7 +57699,8 @@
           "equipment": [],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -57447,7 +57730,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -57700,6 +57982,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -57728,7 +58013,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -57984,7 +58268,8 @@
             "fruits-a-coque",
             "lait",
             "moutarde"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -58013,7 +58298,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -58269,7 +58553,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -58298,7 +58583,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -58543,7 +58827,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -58572,7 +58859,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -58827,6 +59113,9 @@
           "allergens": [
             "sesame",
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -58856,7 +59145,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -59107,7 +59395,8 @@
           "equipment": [],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -59137,7 +59426,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -59392,6 +59680,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -59422,7 +59713,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -59678,6 +59968,9 @@
           "allergens": [
             "moutarde",
             "sulfites"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -59708,7 +60001,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -59963,6 +60255,9 @@
           "allergens": [
             "celeri",
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -59993,7 +60288,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -60248,6 +60542,9 @@
           ],
           "allergens": [
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -60276,7 +60573,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -60537,7 +60833,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -60810,7 +61107,10 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -61091,7 +61391,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -61373,6 +61674,9 @@
           ],
           "allergens": [
             "sulfites"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -61649,7 +61953,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -61923,7 +62228,10 @@
             "oven",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -62210,6 +62518,9 @@
             "gluten",
             "soja",
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -62493,6 +62804,9 @@
           "allergens": [
             "soja",
             "arachides"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -62765,7 +63079,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -63043,7 +63358,8 @@
           ],
           "allergens": [
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -63328,6 +63644,9 @@
             "gluten",
             "soja",
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -63607,7 +63926,8 @@
           ],
           "allergens": [
             "arachides"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -63871,7 +64191,8 @@
           "allergens": [
             "gluten",
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -64151,6 +64472,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -64427,6 +64751,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -64709,7 +65036,8 @@
           "allergens": [
             "gluten",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -64965,7 +65293,8 @@
           "equipment": [
             "steamer"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -65250,6 +65579,9 @@
           "allergens": [
             "soja",
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -65523,7 +65855,10 @@
           "cost_per_portion_eur": 1.55,
           "active_minutes": 18,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -65803,6 +66138,9 @@
           ],
           "allergens": [
             "moutarde"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -66082,7 +66420,8 @@
           "allergens": [
             "fruits-a-coque",
             "sulfites"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -66363,6 +66702,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -66642,6 +66984,9 @@
           "equipment": [],
           "allergens": [
             "lupin"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -66917,7 +67262,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -67191,6 +67539,9 @@
           "equipment": [],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -67472,6 +67823,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -67499,7 +67853,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -67753,6 +68106,9 @@
           "allergens": [
             "fruits-a-coque",
             "oeuf"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -67780,7 +68136,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -68035,7 +68390,8 @@
           "allergens": [
             "gluten",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -68062,7 +68418,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -68321,6 +68676,9 @@
           "allergens": [
             "gluten",
             "lait"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -68349,7 +68707,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -68602,7 +68959,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -68630,7 +68988,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -68884,6 +69241,9 @@
           ],
           "allergens": [
             "oeuf"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -68911,7 +69271,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -69164,7 +69523,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -69191,7 +69551,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -69444,6 +69803,9 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -69471,7 +69833,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -69723,6 +70084,9 @@
           ],
           "allergens": [
             "lait"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -69750,7 +70114,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -70006,7 +70369,8 @@
           ],
           "allergens": [
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -70033,7 +70397,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -70286,7 +70649,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -70316,7 +70680,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -70569,6 +70932,9 @@
           ],
           "allergens": [
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -70598,7 +70964,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -70848,7 +71213,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -70878,7 +71246,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -71131,6 +71498,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -71162,7 +71532,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -71411,7 +71780,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -71440,7 +71812,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -71693,6 +72064,9 @@
           ],
           "allergens": [
             "arachides"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -71723,7 +72097,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -71974,7 +72347,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -72004,7 +72380,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -72256,6 +72631,9 @@
           ],
           "allergens": [
             "moutarde"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -72285,7 +72663,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -72534,7 +72911,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -72563,7 +72943,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -72811,7 +73190,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -72841,7 +73223,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -73097,6 +73478,9 @@
           "allergens": [
             "lupin",
             "sulfites"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -73126,7 +73510,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -73381,6 +73764,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -73410,7 +73796,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -73664,6 +74049,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -73691,7 +74079,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -73945,7 +74332,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -73974,7 +74362,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -74229,6 +74616,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -74258,7 +74648,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -74511,7 +74900,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -74540,7 +74930,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -74789,7 +75178,10 @@
             "oven",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -74818,7 +75210,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -75063,7 +75454,10 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -75092,7 +75486,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -75343,7 +75736,8 @@
             "hob",
             "steamer"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -75373,7 +75767,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -75628,6 +76021,9 @@
           ],
           "allergens": [
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -75658,7 +76054,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -75908,7 +76303,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -75938,7 +76336,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -76194,6 +76591,9 @@
           "allergens": [
             "sesame",
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -76225,7 +76625,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -76474,7 +76873,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -76504,7 +76906,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -76760,6 +77161,9 @@
           ],
           "allergens": [
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -76789,7 +77193,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -77044,6 +77447,9 @@
           ],
           "allergens": [
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -77074,7 +77480,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -77328,7 +77733,8 @@
           ],
           "allergens": [
             "moutarde"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -77358,7 +77764,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -77612,6 +78017,9 @@
           ],
           "allergens": [
             "lupin"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -77641,7 +78049,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -77889,7 +78296,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -77919,7 +78329,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -78171,6 +78580,9 @@
           ],
           "allergens": [
             "celeri"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -78200,7 +78612,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -78451,6 +78862,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -78481,7 +78895,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -78729,7 +79142,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -78759,7 +79175,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -79007,7 +79422,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -79037,7 +79455,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -79287,7 +79704,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -79317,7 +79737,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -79576,7 +79995,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -79605,7 +80027,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -79857,6 +80278,9 @@
           ],
           "allergens": [
             "celeri"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -79887,7 +80311,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -80139,6 +80562,9 @@
           "allergens": [
             "sesame",
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -80169,7 +80595,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -80426,6 +80851,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -80455,7 +80883,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -80706,6 +81133,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -80735,7 +81165,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -80992,6 +81421,9 @@
           "allergens": [
             "sesame",
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -81022,7 +81454,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -81274,6 +81705,9 @@
           "allergens": [
             "gluten",
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -81304,7 +81738,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -81555,6 +81988,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -81855,7 +82291,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -82159,6 +82596,9 @@
             "soja",
             "moutarde",
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -82468,6 +82908,9 @@
             "soja",
             "celeri",
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -82774,6 +83217,9 @@
           "allergens": [
             "soja",
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -83075,6 +83521,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -83376,6 +83825,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -83680,6 +84132,9 @@
           "allergens": [
             "soja",
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -83984,6 +84439,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -84286,7 +84744,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -84588,6 +85047,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -84869,6 +85331,9 @@
           ],
           "allergens": [
             "celeri"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -85167,7 +85632,10 @@
             "oven",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -85471,6 +85939,9 @@
           "allergens": [
             "gluten",
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -85754,6 +86225,9 @@
           "allergens": [
             "celeri",
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -86057,7 +86531,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -86356,7 +86831,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -86657,6 +87135,9 @@
           "allergens": [
             "gluten",
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -86933,6 +87414,9 @@
           ],
           "allergens": [
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -87232,7 +87716,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -87534,6 +88021,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -87817,6 +88307,9 @@
           ],
           "allergens": [
             "moutarde"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -88094,6 +88587,9 @@
           ],
           "allergens": [
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -88372,7 +88868,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -88649,6 +89146,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -88949,7 +89449,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -88979,7 +89480,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -89239,7 +89739,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -89268,7 +89771,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -89518,6 +90020,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -89547,7 +90052,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -89799,7 +90303,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -89829,7 +90334,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -90078,7 +90582,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -90108,7 +90615,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -90356,7 +90862,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -90386,7 +90895,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -90631,7 +91139,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -90661,7 +91172,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -90918,6 +91428,9 @@
           "allergens": [
             "celeri",
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -90948,7 +91461,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -91194,7 +91706,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -91225,7 +91740,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -91480,6 +91994,9 @@
           ],
           "allergens": [
             "fruits-a-coque"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -91510,7 +92027,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -91763,6 +92279,9 @@
           "allergens": [
             "fruits-a-coque",
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -91793,7 +92312,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -92041,7 +92559,10 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -92071,7 +92592,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -92321,7 +92841,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -92351,7 +92872,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -92607,7 +93127,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -92634,7 +93157,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -92884,6 +93406,9 @@
           ],
           "allergens": [
             "oeuf"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -92911,7 +93436,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -93164,7 +93688,8 @@
           ],
           "allergens": [
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -93191,7 +93716,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -93446,6 +93970,9 @@
           "allergens": [
             "lait",
             "oeuf"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -93474,7 +94001,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -93737,6 +94263,9 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -93766,7 +94295,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -94019,7 +94547,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -94046,7 +94575,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -94302,7 +94830,8 @@
           "allergens": [
             "lait",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -94330,7 +94859,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -94583,6 +95111,9 @@
           ],
           "allergens": [
             "lait"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -94610,7 +95141,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -94867,6 +95397,9 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -94895,7 +95428,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -95146,7 +95678,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -95175,7 +95708,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -95436,7 +95968,8 @@
           "allergens": [
             "lait",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -95464,7 +95997,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -95722,7 +96254,8 @@
             "gluten",
             "moutarde",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -95749,7 +96282,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "vegetarien"
       ],
       "composes_actifs": [],
@@ -96005,7 +96537,8 @@
           "allergens": [
             "lait",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -96283,6 +96816,9 @@
           "allergens": [
             "poisson",
             "fruits-a-coque"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -96538,6 +97074,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -96822,6 +97361,9 @@
             "poisson",
             "soja",
             "gluten"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -97107,6 +97649,9 @@
           "allergens": [
             "poisson",
             "sulfites"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -97371,6 +97916,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -97649,6 +98198,9 @@
           "allergens": [
             "poisson",
             "gluten"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -97930,6 +98482,9 @@
           "allergens": [
             "poisson",
             "fruits-a-coque"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -98208,6 +98763,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -98461,6 +99019,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -98720,6 +99281,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -99000,6 +99564,9 @@
           "allergens": [
             "poisson",
             "gluten"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -99299,6 +99866,9 @@
           "allergens": [
             "poisson",
             "gluten"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -99578,6 +100148,9 @@
           "allergens": [
             "poisson",
             "sesame"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -99855,6 +100428,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -100155,6 +100731,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -100431,6 +101011,9 @@
           "allergens": [
             "poisson",
             "celeri"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -100709,6 +101292,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -100966,6 +101553,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -101245,6 +101835,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -101517,6 +102110,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -101793,6 +102390,9 @@
           "allergens": [
             "poisson",
             "gluten"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -102072,6 +102672,10 @@
           "allergens": [
             "poisson",
             "gluten"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -102348,6 +102952,9 @@
           "allergens": [
             "poisson",
             "gluten"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -102624,6 +103231,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -102905,6 +103516,9 @@
             "poisson",
             "gluten",
             "celeri"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -102933,7 +103547,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -103162,6 +103775,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -103191,7 +103808,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -103423,6 +104039,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -103451,7 +104070,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -103679,6 +104297,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -103707,7 +104329,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -103944,6 +104565,9 @@
             "fruits-a-coque",
             "gluten",
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -103973,7 +104597,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -104205,6 +104828,9 @@
           "allergens": [
             "fruits-a-coque",
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -104233,7 +104859,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -104464,6 +105089,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -104493,7 +105121,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -104722,6 +105349,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -104751,7 +105382,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -104983,6 +105613,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -105012,7 +105645,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -105250,6 +105882,9 @@
             "gluten",
             "moutarde",
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -105279,7 +105914,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -105508,6 +106142,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -105536,7 +106173,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -105772,6 +106408,9 @@
           "allergens": [
             "poisson",
             "sesame"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -105800,7 +106439,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -106029,6 +106667,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -106058,7 +106700,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -106290,6 +106931,9 @@
           "allergens": [
             "gluten",
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -106319,7 +106963,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -106547,6 +107190,9 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "finfish"
           ]
         }
       }
@@ -106575,7 +107221,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -106803,6 +107448,10 @@
           ],
           "allergens": [
             "poisson"
+          ],
+          "targets": [
+            "pulse",
+            "finfish"
           ]
         }
       }
@@ -106832,7 +107481,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -107068,6 +107716,9 @@
           "allergens": [
             "crustaces",
             "gluten"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -107097,7 +107748,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -107329,6 +107979,9 @@
           ],
           "allergens": [
             "mollusques"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -107357,7 +108010,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -107585,6 +108237,10 @@
           ],
           "allergens": [
             "mollusques"
+          ],
+          "targets": [
+            "pulse",
+            "seafood"
           ]
         }
       }
@@ -107614,7 +108270,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -107846,6 +108501,9 @@
           "allergens": [
             "fruits-a-coque",
             "mollusques"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -107875,7 +108533,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -108107,6 +108764,9 @@
           ],
           "allergens": [
             "mollusques"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -108135,7 +108795,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -108369,6 +109028,9 @@
           ],
           "allergens": [
             "crustaces"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -108398,7 +109060,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -108633,6 +109294,9 @@
           "allergens": [
             "gluten",
             "mollusques"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -108662,7 +109326,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -108897,6 +109560,9 @@
           "allergens": [
             "gluten",
             "mollusques"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -108926,7 +109592,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -109165,6 +109830,10 @@
           ],
           "allergens": [
             "mollusques"
+          ],
+          "targets": [
+            "pulse",
+            "seafood"
           ]
         }
       }
@@ -109193,7 +109862,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "poisson-fruits-de-mer"
       ],
       "composes_actifs": [],
@@ -109425,6 +110093,9 @@
           ],
           "allergens": [
             "crustaces"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -109702,6 +110373,10 @@
           ],
           "allergens": [
             "mollusques"
+          ],
+          "targets": [
+            "pulse",
+            "seafood"
           ]
         }
       }
@@ -109979,6 +110654,9 @@
           ],
           "allergens": [
             "mollusques"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -110240,6 +110918,10 @@
           "allergens": [
             "mollusques",
             "sulfites"
+          ],
+          "targets": [
+            "pulse",
+            "seafood"
           ]
         }
       }
@@ -110496,6 +111178,9 @@
           "allergens": [
             "mollusques",
             "fruits-a-coque"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -110793,6 +111478,9 @@
           ],
           "allergens": [
             "crustaces"
+          ],
+          "targets": [
+            "seafood"
           ]
         }
       }
@@ -110813,7 +111501,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -111065,7 +111754,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -111085,7 +111777,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose"
       ],
       "saisons": [
@@ -111363,7 +112056,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -111383,7 +112077,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -111639,7 +112334,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -111659,7 +112355,8 @@
       "difficulte": "facile",
       "cout": "eleve",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose"
       ],
       "saisons": [
@@ -111925,7 +112622,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -111945,7 +112643,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose"
       ],
       "saisons": [
@@ -112202,7 +112901,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -112222,7 +112922,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -112494,7 +113195,10 @@
             "blender",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -112514,7 +113218,8 @@
       "difficulte": "facile",
       "cout": "eleve",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -112768,7 +113473,10 @@
             "oven",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -112788,7 +113496,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -113065,7 +113774,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -113085,7 +113795,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -113335,7 +114046,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -113355,7 +114067,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -113608,7 +114321,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -113628,7 +114342,8 @@
       "difficulte": "facile",
       "cout": "eleve",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose"
       ],
       "saisons": [
@@ -113888,7 +114603,8 @@
           "allergens": [
             "fruits-a-coque",
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -113908,7 +114624,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -114142,7 +114859,8 @@
             "steamer",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -114162,7 +114880,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -114418,7 +115137,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -114438,7 +115160,8 @@
       "difficulte": "facile",
       "cout": "eleve",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -114691,7 +115414,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -114711,7 +115435,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -114963,7 +115688,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -114983,7 +115711,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -115212,7 +115941,10 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -115232,7 +115964,8 @@
       "difficulte": "facile",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -115482,7 +116215,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -115502,7 +116236,8 @@
       "difficulte": "facile",
       "cout": "eleve",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose"
       ],
       "saisons": [
@@ -115759,7 +116494,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -115779,7 +116515,8 @@
       "difficulte": "intermediaire",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -116059,7 +116796,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -116079,7 +116817,8 @@
       "difficulte": "intermediaire",
       "cout": "moyen",
       "regimes": [
-        "volaille",
+        "classique",
+        "sans-porc",
         "sans-lactose",
         "sans-gluten"
       ],
@@ -116333,7 +117072,8 @@
             "steamer",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -116362,7 +117102,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -116593,7 +117332,8 @@
             "oven",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -116621,7 +117361,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -116868,7 +117607,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -116897,7 +117637,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -117121,7 +117860,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -117150,7 +117892,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -117382,7 +118123,8 @@
           "allergens": [
             "sesame",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -117411,7 +118153,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -117644,7 +118385,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -117672,7 +118414,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -117919,7 +118660,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -117948,7 +118692,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -118178,7 +118921,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -118207,7 +118951,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -118436,7 +119179,10 @@
             "steamer",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -118464,7 +119210,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -118692,7 +119437,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -118721,7 +119467,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -118950,7 +119695,8 @@
             "oven",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -118979,7 +119725,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -119203,7 +119948,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -119231,7 +119979,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -119458,7 +120205,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -119487,7 +120235,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -119719,7 +120466,8 @@
           "allergens": [
             "celeri",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -119747,7 +120495,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -119980,7 +120727,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -120008,7 +120756,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "volaille"
       ],
       "composes_actifs": [],
@@ -120239,7 +120986,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -120269,7 +121017,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -120479,7 +121226,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -120509,7 +121257,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -120738,7 +121485,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -120767,7 +121517,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -120979,7 +121728,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -121009,7 +121759,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -121214,7 +121963,8 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -121244,7 +121994,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -121480,7 +122229,8 @@
           "allergens": [
             "fruits-a-coque",
             "moutarde"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -121510,7 +122260,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -121721,7 +122470,8 @@
           ],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -121750,7 +122500,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -121962,7 +122711,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -121992,7 +122742,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -122201,6 +122950,9 @@
           ],
           "allergens": [
             "celeri"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -122230,7 +122982,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -122458,7 +123209,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -122488,7 +123240,6 @@
       ],
       "tags": [
         "accompagnement",
-        "brouillon",
         "vegetal"
       ],
       "composes_actifs": [],
@@ -122705,7 +123456,8 @@
           "allergens": [
             "fruits-a-coque",
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -122939,7 +123691,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -123193,7 +123946,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -123405,7 +124159,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -123675,7 +124430,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -123916,7 +124674,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -124191,7 +124952,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -124444,7 +125206,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -124724,7 +125487,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -124975,7 +125739,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -125205,7 +125970,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -125460,7 +126228,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -125720,7 +126491,8 @@
           "allergens": [
             "gluten",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -125954,7 +126726,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -126183,7 +126956,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -126438,7 +127212,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -126676,7 +127451,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -126906,7 +127682,8 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -127146,7 +127923,10 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -127400,7 +128180,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -127630,7 +128411,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -127878,7 +128662,10 @@
           "equipment": [
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -128153,7 +128940,8 @@
           ],
           "allergens": [
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -128389,7 +129177,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -128665,7 +129454,8 @@
             "gluten",
             "fruits-a-coque",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -128876,7 +129666,8 @@
           "allergens": [
             "lait",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -129119,7 +129910,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -129334,7 +130126,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -129548,7 +130341,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -129802,7 +130596,8 @@
           "allergens": [
             "oeuf",
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -130035,7 +130830,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -130283,7 +131079,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -130518,7 +131315,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -130777,7 +131575,8 @@
             "fruits-a-coque",
             "gluten",
             "oeuf"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -131033,7 +131832,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -131275,7 +132075,10 @@
           "equipment": [
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -131483,7 +132286,8 @@
           "cost_per_portion_eur": 0.35,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -131721,7 +132525,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -131949,7 +132754,8 @@
           "cost_per_portion_eur": 0.4,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -132164,7 +132970,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -132398,7 +133205,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -132615,7 +133423,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -132853,7 +133662,8 @@
           ],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -133105,7 +133915,8 @@
           "cost_per_portion_eur": 0.45,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -133357,7 +134168,8 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -133576,7 +134388,8 @@
           "allergens": [
             "celeri",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -133814,7 +134627,8 @@
           ],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -134047,7 +134861,8 @@
           ],
           "allergens": [
             "sulfites"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -134303,7 +135118,8 @@
           "equipment": [],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -134541,7 +135357,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -134774,7 +135591,8 @@
           "equipment": [
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -134804,7 +135622,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -135070,7 +135887,8 @@
           "allergens": [
             "fruits-a-coque",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -135099,7 +135917,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -135346,7 +136163,10 @@
             "blender",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -135376,7 +136196,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -135622,7 +136441,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -135652,7 +136472,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -135909,7 +136728,8 @@
           "allergens": [
             "fruits-a-coque",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -135940,7 +136760,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -136190,7 +137009,10 @@
             "blender",
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -136220,7 +137042,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -136474,7 +137295,8 @@
           "allergens": [
             "fruits-a-coque",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -136501,7 +137323,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -136743,7 +137564,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -136773,7 +137595,6 @@
       ],
       "tags": [
         "petit-dejeuner",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -137023,7 +137844,10 @@
             "blender",
             "steamer"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -137053,7 +137877,6 @@
       ],
       "tags": [
         "boisson",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -137292,7 +138115,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -137321,7 +138145,6 @@
       ],
       "tags": [
         "boisson",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -137564,7 +138387,8 @@
           ],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -137593,7 +138417,6 @@
       ],
       "tags": [
         "boisson",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -137830,7 +138653,8 @@
           "allergens": [
             "gluten",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -137860,7 +138684,6 @@
       ],
       "tags": [
         "boisson",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -138092,7 +138915,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -138121,7 +138945,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -138380,7 +139203,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -138410,7 +139236,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -138662,7 +139487,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -138692,7 +139520,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -138940,7 +139767,10 @@
             "oven",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -138970,7 +139800,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -139219,7 +140048,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -139249,7 +140081,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -139497,7 +140328,10 @@
             "hob",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -139527,7 +140361,6 @@
       ],
       "tags": [
         "soupe",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -139778,7 +140611,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -139807,7 +140641,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -140055,7 +140888,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -140085,7 +140921,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -140332,7 +141167,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -140361,7 +141197,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -140608,7 +141443,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -140638,7 +141476,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -140886,7 +141723,8 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -140914,7 +141752,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -141180,7 +142017,8 @@
           "allergens": [
             "gluten",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -141210,7 +142048,6 @@
       ],
       "tags": [
         "salade",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -141466,6 +142303,9 @@
           ],
           "allergens": [
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -141496,7 +142336,6 @@
       ],
       "tags": [
         "plat",
-        "brouillon",
         "inspiration-indienne",
         "adaptation-originale"
       ],
@@ -141749,7 +142588,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -142027,7 +142869,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -142303,7 +143148,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -142598,7 +143446,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -142898,7 +143747,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -143197,6 +144049,9 @@
           "allergens": [
             "soja",
             "gluten"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -143484,7 +144339,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -143759,7 +144615,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -144038,6 +144897,9 @@
           ],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -144315,7 +145177,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -144592,7 +145457,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -144870,7 +145738,10 @@
             "blender",
             "steamer"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -145143,7 +146014,10 @@
             "hob",
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -145416,7 +146290,10 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -145672,7 +146549,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -145907,7 +146785,8 @@
           ],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -146174,7 +147053,8 @@
           ],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -146413,7 +147293,8 @@
           ],
           "allergens": [
             "moutarde"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -146625,7 +147506,8 @@
           "equipment": [
             "hob"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -146878,6 +147760,9 @@
           ],
           "allergens": [
             "sesame"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -147146,7 +148031,8 @@
           "allergens": [
             "gluten",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -147401,7 +148287,10 @@
             "oven",
             "blender"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -147671,7 +148560,8 @@
           "allergens": [
             "gluten",
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -147917,7 +148807,8 @@
           ],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -148161,7 +149052,8 @@
           "equipment": [
             "oven"
           ],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -148440,6 +149332,9 @@
           ],
           "allergens": [
             "moutarde"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -148638,7 +149533,8 @@
           "cost_per_portion_eur": 1.4,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -148836,7 +149732,8 @@
           "cost_per_portion_eur": 1.47,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -149033,7 +149930,8 @@
           "cost_per_portion_eur": 1.6,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -149232,7 +150130,8 @@
           "cost_per_portion_eur": 1.2,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -149429,7 +150328,8 @@
           "cost_per_portion_eur": 1.33,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -149628,7 +150528,8 @@
           "cost_per_portion_eur": 1.4,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -149825,7 +150726,8 @@
           "cost_per_portion_eur": 1.67,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -150024,7 +150926,8 @@
           "cost_per_portion_eur": 1.27,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -150222,7 +151125,8 @@
           "cost_per_portion_eur": 1.33,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -150421,7 +151325,8 @@
           "cost_per_portion_eur": 1.2,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -150619,7 +151524,8 @@
           "cost_per_portion_eur": 1.4,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -150818,7 +151724,8 @@
           "cost_per_portion_eur": 1.13,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -151016,7 +151923,8 @@
           "cost_per_portion_eur": 1.33,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -151215,7 +152123,8 @@
           "cost_per_portion_eur": 1.4,
           "active_minutes": 26,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -151413,7 +152322,8 @@
           "cost_per_portion_eur": 1.27,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -151611,7 +152521,8 @@
           "cost_per_portion_eur": 1.13,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -151810,7 +152721,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -152012,7 +152924,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -152213,7 +153126,8 @@
           "equipment": [],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -152412,7 +153326,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -152614,7 +153529,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -152817,7 +153733,8 @@
           "allergens": [
             "lait",
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -153021,7 +153938,8 @@
           "allergens": [
             "sesame",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -153220,7 +154138,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -153422,7 +154341,8 @@
           "equipment": [],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -153623,6 +154543,9 @@
           "equipment": [],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -153824,6 +154747,9 @@
           "equipment": [],
           "allergens": [
             "soja"
+          ],
+          "targets": [
+            "pulse"
           ]
         }
       }
@@ -154027,7 +154953,8 @@
           "allergens": [
             "fruits-a-coque",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -154232,7 +155159,8 @@
           "allergens": [
             "sesame",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -154429,7 +155357,8 @@
           "cost_per_portion_eur": 1.6,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -154631,7 +155560,8 @@
           "equipment": [],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -154835,7 +155765,8 @@
           "allergens": [
             "arachides",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -155048,7 +155979,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -155249,7 +156181,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -155451,7 +156384,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -155655,7 +156589,8 @@
           "allergens": [
             "lait",
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -155857,7 +156792,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -156060,7 +156996,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -156272,7 +157209,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -156473,7 +157411,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -156671,7 +157610,8 @@
           "cost_per_portion_eur": 0.88,
           "active_minutes": 40,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -156857,7 +157797,8 @@
           "cost_per_portion_eur": 0.85,
           "active_minutes": 20,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -157055,7 +157996,8 @@
           "cost_per_portion_eur": 0.85,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -157253,7 +158195,8 @@
           "cost_per_portion_eur": 0.85,
           "active_minutes": 20,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -157451,7 +158394,8 @@
           "cost_per_portion_eur": 0.82,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -157649,7 +158593,8 @@
           "cost_per_portion_eur": 0.85,
           "active_minutes": 22,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -157835,7 +158780,8 @@
           "cost_per_portion_eur": 0.88,
           "active_minutes": 20,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -158033,7 +158979,8 @@
           "cost_per_portion_eur": 0.81,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -158220,7 +159167,8 @@
           "cost_per_portion_eur": 0.8,
           "active_minutes": 23,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -158419,7 +159367,8 @@
           "cost_per_portion_eur": 0.83,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -158621,7 +159570,8 @@
           "equipment": [],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -158808,7 +159758,8 @@
           "cost_per_portion_eur": 0.83,
           "active_minutes": 23,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -159007,7 +159958,8 @@
           "cost_per_portion_eur": 0.77,
           "active_minutes": 15,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -159206,7 +160158,8 @@
           "cost_per_portion_eur": 0.84,
           "active_minutes": 20,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -159405,7 +160358,8 @@
           "cost_per_portion_eur": 0.84,
           "active_minutes": 19,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -159594,7 +160548,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -159782,7 +160737,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -159973,7 +160929,8 @@
           "equipment": [],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -160176,7 +161133,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -160380,7 +161338,8 @@
           "allergens": [
             "lait",
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -160582,7 +161541,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -160772,7 +161732,8 @@
           "equipment": [],
           "allergens": [
             "gluten"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -160975,7 +161936,8 @@
           "equipment": [],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -161173,7 +162135,8 @@
           "cost_per_portion_eur": 0.71,
           "active_minutes": 20,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -161374,7 +162337,8 @@
           "equipment": [],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -161567,7 +162531,8 @@
           "allergens": [
             "sesame",
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -161770,7 +162735,8 @@
           "equipment": [],
           "allergens": [
             "fruits-a-coque"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -161969,7 +162935,10 @@
           "cost_per_portion_eur": 0.75,
           "active_minutes": 25,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": [
+            "pulse"
+          ]
         }
       }
     },
@@ -162171,7 +163140,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -162376,7 +163346,8 @@
           "allergens": [
             "lait",
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -162590,7 +163561,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -162790,7 +163762,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -162993,7 +163966,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -163194,7 +164168,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -163411,7 +164386,8 @@
           "allergens": [
             "fruits-a-coque",
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -163612,7 +164588,8 @@
           "equipment": [],
           "allergens": [
             "lait"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -163810,7 +164787,8 @@
           "cost_per_portion_eur": 0.79,
           "active_minutes": 45,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -164009,7 +164987,8 @@
           "cost_per_portion_eur": 0.83,
           "active_minutes": 23,
           "equipment": [],
-          "allergens": []
+          "allergens": [],
+          "targets": []
         }
       }
     },
@@ -164214,7 +165193,8 @@
           "equipment": [],
           "allergens": [
             "soja"
-          ]
+          ],
+          "targets": []
         }
       }
     },
@@ -164416,7 +165396,8 @@
           "equipment": [],
           "allergens": [
             "sesame"
-          ]
+          ],
+          "targets": []
         }
       }
     }

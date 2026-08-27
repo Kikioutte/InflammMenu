@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { validateCatalogue } from "./validate-catalogue.mjs";
+import { normalizeCatalogueRecipeTaxonomy, normalizeCatalogueTaxonomy } from "./catalogue-taxonomy.mjs";
 
 const DEFAULT_EXPECTED_FINAL_COUNT = 500;
 const ORIGINAL_RECIPE_COUNT = 50;
@@ -123,7 +124,7 @@ function upgradeHistoricalRecipe(recipe, licence) {
 
 const options = parseArguments(process.argv.slice(2));
 const productionUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
-const production = JSON.parse(await readFile(productionUrl, "utf8"));
+const production = normalizeCatalogueTaxonomy(JSON.parse(await readFile(productionUrl, "utf8")));
 validateCatalogue(production);
 
 const originalRecipes = production.recipes
@@ -139,7 +140,7 @@ for (const [index, recipe] of originalRecipes.entries()) {
 
 const finalRecipes = [];
 for (const file of options.files) {
-  const catalogue = JSON.parse(await readFile(file, "utf8"));
+  const catalogue = normalizeCatalogueTaxonomy(JSON.parse(await readFile(file, "utf8")));
   validateCatalogue(catalogue);
   if (catalogue.meta.status !== "editorial-validated") {
     throw new Error(`${file}: lot non validé éditorialement`);
@@ -177,7 +178,7 @@ for (const recipe of allRecipes) {
   allSlugs.add(recipe.slug);
 }
 
-const merged = structuredClone(production);
+const merged = normalizeCatalogueTaxonomy(structuredClone(production));
 merged.recipes = allRecipes;
 merged.meta.nombre_recettes = merged.recipes.length;
 merged.meta.schema_version = "2.1.0";
@@ -185,6 +186,7 @@ merged.meta.version = "2.1.0";
 merged.meta.date_mise_a_jour = "2026-08-05";
 merged.meta.description =
   "Catalogue culinaire structuré et relu. Les valeurs nutritionnelles indiquent leur méthode et leurs réserves; l'appréciation porte sur le profil alimentaire global et ne constitue pas une promesse médicale.";
+merged.recipes = merged.recipes.map(normalizeCatalogueRecipeTaxonomy);
 
 // Validate the exact merged shape before any possible write. This also applies
 // the stricter normalized-ingredient and provenance checks from schema v2.1.
