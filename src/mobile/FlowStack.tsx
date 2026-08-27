@@ -1,11 +1,11 @@
 import {
   createContext,
   type CSSProperties,
+  type MouseEvent as ReactMouseEvent,
   type PropsWithChildren,
   type ReactNode,
   useCallback,
   useContext,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -66,9 +66,10 @@ type FlowSceneProps = {
   screenWidth: number;
   swipeX: number;
   register: (key: string, element: HTMLDivElement | null) => void;
+  onActivated: (key: string) => void;
 };
 
-function FlowScene({ entry, controls, direction, isTop, isVisible, parkedX, screenWidth, swipeX, register }: FlowSceneProps) {
+function FlowScene({ entry, controls, direction, isTop, isVisible, parkedX, screenWidth, swipeX, register, onActivated }: FlowSceneProps) {
   const isPresent = useIsPresent();
   const reduceMotion = useReducedMotion();
   const isActive = isTop && isPresent;
@@ -99,6 +100,7 @@ function FlowScene({ entry, controls, direction, isTop, isVisible, parkedX, scre
         scale: reduceMotion ? 1 : isTop ? 1 : 0.985,
       }}
       exit={reduceMotion ? { x: 0, scale: 1 } : "exit"}
+      onAnimationComplete={() => { if (isActive) onActivated(entry.key); }}
       transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 360, damping: 38, mass: 0.9 }}
       style={{
         opacity: isVisible ? 1 : 0,
@@ -121,6 +123,9 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
   const gestureStartedAtEdge = useRef(false);
   const navigationFocus = useRef<"screen" | "restore" | null>(null);
   const restoreFocusTo = useRef<HTMLElement | null>(null);
+  const lastInteractionTarget = useRef<HTMLElement | null>(null);
+  const awaitingExit = useRef(false);
+  const focusFrame = useRef(0);
   const screenElements = useRef(new Map<string, HTMLDivElement>());
   const initialEntry = useRef<FlowEntry>({ ...initial, key: `${initial.id}-0` });
   const [stack, setStack] = useState<FlowEntry[]>(() => [initialEntry.current]);
@@ -140,11 +145,61 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
     else screenElements.current.delete(key);
   }, []);
 
+  const rememberInteractionTarget = useCallback((event: ReactMouseEvent<HTMLDivElement>) => {
+    const target = event.target instanceof Element
+      ? event.target.closest<HTMLElement>("button, a[href], input, select, textarea, [tabindex]")
+      : null;
+    if (!target) return;
+    lastInteractionTarget.current = target;
+    window.setTimeout(() => {
+      if (lastInteractionTarget.current === target) lastInteractionTarget.current = null;
+    }, 0);
+  }, []);
+
+  const focusActivatedScreen = useCallback((key: string) => {
+    if (awaitingExit.current || !navigationFocus.current || stackRef.current.at(-1)?.key !== key) return;
+    window.cancelAnimationFrame(focusFrame.current);
+    let attempts = 0;
+    const applyFocus = () => {
+      if (!navigationFocus.current || stackRef.current.at(-1)?.key !== key) return;
+      attempts += 1;
+      const screen = screenElements.current.get(key);
+      if (!screen || screen.dataset.flowCurrent !== "true" || screen.hasAttribute("inert")) {
+        if (attempts < 4) focusFrame.current = window.requestAnimationFrame(applyFocus);
+        return;
+      }
+
+      const restoreTarget = navigationFocus.current === "restore" ? restoreFocusTo.current : null;
+      const restorable = restoreTarget?.isConnected
+        && screen.contains(restoreTarget)
+        && !restoreTarget.closest("[inert]")
+        ? restoreTarget
+        : null;
+      const heading = screen.querySelector<HTMLElement>("[data-flow-focus], h1, [role='heading']");
+      const target = restorable ?? heading ?? screen;
+      if (!restorable && !target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+      target.focus({ preventScroll: true });
+      if (document.activeElement !== target && attempts < 4) {
+        focusFrame.current = window.requestAnimationFrame(applyFocus);
+        return;
+      }
+      navigationFocus.current = null;
+      restoreFocusTo.current = null;
+    };
+
+    // WebKit may discard focus while an exiting transformed scene is removed.
+    // Motion reports the new scene as activated only after that transition; the
+    // next frame then applies focus against a stable, non-inert subtree.
+    focusFrame.current = window.requestAnimationFrame(applyFocus);
+  }, []);
+
   const pop = useCallback(() => {
     keyboard.hide();
+    if (stackRef.current.length <= 1) return;
     const currentEntry = stackRef.current[stackRef.current.length - 1];
     restoreFocusTo.current = currentEntry?.returnFocusTo ?? null;
     navigationFocus.current = "restore";
+    awaitingExit.current = true;
     setDirection(-1);
     setStack((currentStack) => {
       if (currentStack.length <= 1) return currentStack;
@@ -162,8 +217,14 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
       stack,
       canGoBack: stack.length > 1,
       push: (screen) => {
-        const returnFocusTo = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        // Safari does not focus buttons on pointer activation. The captured
+        // click target is therefore the reliable return point across engines.
+        const returnFocusTo = lastInteractionTarget.current?.isConnected
+          ? lastInteractionTarget.current
+          : document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        lastInteractionTarget.current = null;
         keyboard.hide();
+        awaitingExit.current = false;
         navigationFocus.current = "screen";
         setDirection(1);
         setSwipeX(0);
@@ -172,6 +233,7 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
       pop,
       replace: (screen) => {
         keyboard.hide();
+        awaitingExit.current = true;
         navigationFocus.current = "screen";
         setDirection(1);
         setSwipeX(0);
@@ -184,28 +246,11 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
     };
   }, [keyboard, pop, stack, toEntry]);
 
-  const currentKey = stack[stack.length - 1].key;
-  useLayoutEffect(() => {
-    const focusMode = navigationFocus.current;
-    if (!focusMode) return;
-    navigationFocus.current = null;
-
-    if (focusMode === "restore") {
-      const target = restoreFocusTo.current;
-      restoreFocusTo.current = null;
-      if (target?.isConnected && !target.closest("[inert]")) {
-        target.focus({ preventScroll: true });
-        return;
-      }
-    }
-
-    const screen = screenElements.current.get(currentKey);
-    if (!screen) return;
-    const heading = screen.querySelector<HTMLElement>("[data-flow-focus], h1, [role='heading']");
-    const target = heading ?? screen;
-    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
-    target.focus({ preventScroll: true });
-  }, [currentKey]);
+  const focusAfterExit = useCallback(() => {
+    awaitingExit.current = false;
+    const key = stackRef.current.at(-1)?.key;
+    if (key) focusActivatedScreen(key);
+  }, [focusActivatedScreen]);
 
   const bindEdgeSwipe = useDrag(
     (state) => {
@@ -270,6 +315,7 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
           } as CSSProperties
         }
         {...bindEdgeSwipe()}
+        onClickCapture={rememberInteractionTarget}
       >
         {header ? (
           <header className="flow-fixed-header" data-testid="flow-fixed-header">
@@ -277,12 +323,12 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
           </header>
         ) : null}
         <div className="flow-scenes">
-          <AnimatePresence initial={false} custom={direction}>
+          <AnimatePresence initial={false} custom={direction} onExitComplete={focusAfterExit}>
             {stack.map((entry, index) => {
               const isTop = index === topIndex;
               const isVisible = index >= topIndex - 1;
 
-              return <FlowScene key={entry.key} entry={entry} controls={controls} direction={direction} isTop={isTop} isVisible={isVisible} parkedX={parkedX} screenWidth={screenWidth} swipeX={swipeX} register={registerScreen} />;
+              return <FlowScene key={entry.key} entry={entry} controls={controls} direction={direction} isTop={isTop} isVisible={isVisible} parkedX={parkedX} screenWidth={screenWidth} swipeX={swipeX} register={registerScreen} onActivated={focusActivatedScreen} />;
             })}
           </AnimatePresence>
         </div>

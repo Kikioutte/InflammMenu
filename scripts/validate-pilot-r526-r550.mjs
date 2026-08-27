@@ -10,7 +10,7 @@ const concepts = JSON.parse(
 const pilot = JSON.parse(
   await readFile(new URL("research/pilot-r526-r550.draft.json", root), "utf8"),
 );
-const result = validateCatalogue(pilot);
+const result = validateCatalogue(pilot, { taxonomy: "legacy" });
 
 assert.equal(result.schemaVersion, "2.1.0");
 assert.equal(result.recipeCount, 25);

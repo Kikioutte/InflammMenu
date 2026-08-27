@@ -236,7 +236,7 @@ test("switching to Pixel keeps the composer above Android navigation", async ({ 
   expect(Math.abs(keyboardLayout.footerBottom - keyboardLayout.keyboardTop)).toBeLessThanOrEqual(1);
 });
 
-test("FlowStack pushes and pops screens while dismissing the keyboard", async ({ page }) => {
+test("FlowStack pushes and pops screens while dismissing the keyboard @webkit-smoke", async ({ page }) => {
   await page.goto("/tests/runtime-fixture.html?fixture=flow");
   await page.getByLabel("Flow message").click();
   await expect(page.getByTestId("keyboard-dock")).toHaveAttribute("data-visible", "true");
@@ -272,14 +272,14 @@ test("FlowStack pushes and pops screens while dismissing the keyboard", async ({
   await expect(rootTrigger).toBeFocused();
 });
 
-test("FlowStack replace preserves the original return focus target", async ({ page }) => {
+test("FlowStack replace preserves the original return focus target @webkit-smoke", async ({ page }) => {
   await page.goto("/tests/runtime-fixture.html?fixture=flow");
   const rootTrigger = page.getByRole("button", { name: "Push level 2" });
   await rootTrigger.click();
   await page.getByRole("button", { name: "Replace level 2" }).click();
 
   await expect(page.getByRole("heading", { name: "Nested view level 12" })).toBeFocused();
-  await expect(page.locator(".flow-screen").filter({ hasText: "Screen stacking works" })).toHaveAttribute("inert", "");
+  await expect(page.locator(".flow-screen").filter({ hasText: "Flow root" })).toHaveAttribute("inert", "");
   await page.getByRole("button", { name: "Done" }).click();
   await expect(page.getByRole("heading", { name: "Flow root" })).toBeVisible();
   await expect(rootTrigger).toBeFocused();

@@ -5,7 +5,7 @@ Le fichier `src/data/recettes-anti-inflammatoires.json` reste la source unique d
 ## Compatibilité
 
 - `meta.schema_version: "2.0.0"` : les champs v2.1 sont facultatifs, mais leur bloc complet est validé dès que l'un d'eux apparaît.
-- `meta.schema_version: "2.1.0"` : les identifiants et quantités normalisés, `facultatif`, `active_minutes` et `provenance` sont obligatoires pour chaque recette.
+- `meta.schema_version: "2.1.0"` : les identifiants et quantités normalisés, `facultatif`, `active_minutes`, `targets` et `provenance` sont obligatoires pour chaque recette.
 - `meta.nombre_recettes` doit toujours correspondre à `recipes.length`.
 - Le générateur préfère les valeurs v2.1 et conserve ses conversions historiques lorsque celles-ci sont absentes.
 
@@ -48,7 +48,8 @@ Le fichier `src/data/recettes-anti-inflammatoires.json` reste la source unique d
       "cost_per_portion_eur": 3.4,
       "active_minutes": 20,
       "equipment": ["hob", "blender"],
-      "allergens": ["sesame"]
+      "allergens": ["sesame"],
+      "targets": ["pulse"]
     }
   }
 }
@@ -57,6 +58,8 @@ Le fichier `src/data/recettes-anti-inflammatoires.json` reste la source unique d
 `active_minutes` mesure le temps réellement passé à préparer ou surveiller la recette. Il ne peut pas dépasser `temps.total`. Les équipements autorisés couvrent tout le domaine de l'application : `hob`, `oven`, `microwave`, `blender`, `toaster` et `steamer`.
 
 Les allergènes du planificateur doivent être exactement l'union des allergènes portés par les ingrédients. Le vocabulaire contrôlé couvre les 14 familles : `gluten`, `crustaces`, `oeuf`, `poisson`, `arachides`, `soja`, `lait`, `fruits-a-coque`, `celeri`, `moutarde`, `sesame`, `sulfites`, `lupin` et `mollusques`.
+
+`targets` utilise uniquement les marqueurs métier exacts `pulse`, `finfish` et `seafood`. `pulse` est attribué depuis une liste éditoriale fermée de légumes secs et dérivés de soja obligatoires. `finfish` exige un poisson à nageoires obligatoire ; `seafood` distingue mollusques et crustacés et ne satisfait jamais l'objectif poisson.
 
 ## Provenance
 

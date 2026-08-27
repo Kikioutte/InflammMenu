@@ -17,7 +17,7 @@ for(const entry of mapping.ingredients){
   assert.ok(["validated","caution"].includes(entry.review_status));
 }
 
-const result=validateCatalogue(final);
+const result=validateCatalogue(final, { taxonomy: "legacy" });
 assert.equal(result.schemaVersion,"2.1.0");assert.equal(result.recipeCount,25);
 assert.equal(final.meta.status,"editorial-validated");assert.equal(final.meta.reviewed_at,"2026-08-05");
 assert.match(final.meta.culinary_notice,/aucune.*testée physiquement/i);assert.match(final.meta.cost_notice,/estimations/i);

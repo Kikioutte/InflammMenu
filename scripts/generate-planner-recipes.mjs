@@ -2,20 +2,20 @@
 import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { canonicalIngredientId, shoppingRuleFor } from "../src/shopping.ts";
+import { projectCatalogueSeasons } from "./catalogue-seasons.mjs";
 
 const root = new URL("../", import.meta.url);
 const catalogueUrl = new URL("src/data/recettes-anti-inflammatoires.json", root);
 const imagesUrl = new URL("src/data/generated-recipe-images.json", root);
 const outputUrl = new URL("src/data/planner-recipes.json", root);
 const cautionsUrl = new URL("public/data/planner-cautions.json", root);
+const cautionIdsUrl = new URL("src/data/planner-caution-ids.json", root);
 const [catalogue, imageNames] = await Promise.all(
   [catalogueUrl, imagesUrl].map(async (url) => JSON.parse(await readFile(url, "utf8"))),
 );
 const generatedImages = new Set(imageNames);
 
 const normalize = (value) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-const seasons = { printemps: "spring", ete: "summer", automne: "autumn", hiver: "winter", "toute-annee": "all-year" };
-
 function normalizedAmount(ingredient) {
   if (ingredient.quantite_normalisee !== undefined && ingredient.unite_normalisee !== undefined) {
     return { quantity: ingredient.quantite_normalisee, unit: ingredient.unite_normalisee };
@@ -41,10 +41,15 @@ const recipes = catalogue.recipes
     // so the app can warn that a meal must be started in advance.
     ...(recipe.temps.repos > 0 ? { restMinutes: recipe.temps.repos } : {}),
     costPerPortion: recipe.app.planner.cost_per_portion_eur,
-    seasons: [...new Set(recipe.saisons.map((season) => seasons[season]).filter(Boolean))],
+    seasons: projectCatalogueSeasons(recipe.saisons, recipe.id),
     equipment: recipe.app.planner.equipment,
     allergens: recipe.app.planner.allergens,
-    tags: [...recipe.tags, recipe.categorie, ...recipe.ingredients.map((ingredient) => normalize(ingredient.nom))],
+    tags: [...new Set([
+      ...recipe.app.planner.targets,
+      ...recipe.tags,
+      recipe.categorie,
+      ...recipe.ingredients.map((ingredient) => normalize(ingredient.nom)),
+    ].map(normalize))],
     ingredients: recipe.ingredients.map((ingredient) => {
       const amount = normalizedAmount(ingredient);
       const id = canonicalIngredientId(ingredient.id ?? `catalog-${normalize(ingredient.nom)}`);
@@ -56,6 +61,7 @@ const recipes = catalogue.recipes
         category: ingredient.categorie_courses,
         ...(ingredient.allergenes.length ? { allergens: ingredient.allergenes } : {}),
         ...(ingredient.pantry_staple === true || shoppingRuleFor(id)?.pantry_staple === true ? { pantryStaple: true } : {}),
+        ...(ingredient.facultatif === true ? { optional: true } : {}),
       };
     }),
     nutrition: {
@@ -79,19 +85,23 @@ const cautions = Object.fromEntries(catalogue.recipes
   .map((recipe) => [`catalog-${recipe.id}`, recipe.app.review.caution]));
 const serialized = `${JSON.stringify(recipes)}\n`;
 const serializedCautions = `${JSON.stringify(cautions)}\n`;
+const serializedCautionIds = `${JSON.stringify(Object.keys(cautions).sort())}\n`;
 if (process.argv.includes("--check")) {
-  const [current, currentCautions] = await Promise.all([
+  const [current, currentCautions, currentCautionIds] = await Promise.all([
     readFile(outputUrl, "utf8").catch(() => ""),
     readFile(cautionsUrl, "utf8").catch(() => ""),
+    readFile(cautionIdsUrl, "utf8").catch(() => ""),
   ]);
   assert.equal(current, serialized, "planner-recipes.json n'est pas synchronisé avec le catalogue");
   assert.equal(currentCautions, serializedCautions, "planner-cautions.json n'est pas synchronisé avec le catalogue");
+  assert.equal(currentCautionIds, serializedCautionIds, "planner-caution-ids.json n'est pas synchronisé avec le catalogue");
   console.log(`Projection planificateur valide : ${recipes.length} recettes, ${Buffer.byteLength(serialized)} octets, ${Object.keys(cautions).length} précautions hors ligne.`);
 } else {
   await mkdir(new URL("./", cautionsUrl), { recursive: true });
   await Promise.all([
     writeFile(outputUrl, serialized),
     writeFile(cautionsUrl, serializedCautions),
+    writeFile(cautionIdsUrl, serializedCautionIds),
   ]);
   console.log(`Projection planificateur générée : ${recipes.length} recettes, ${Buffer.byteLength(serialized)} octets, ${Object.keys(cautions).length} précautions hors ligne.`);
 }

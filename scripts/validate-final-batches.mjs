@@ -17,7 +17,7 @@ let cautionCount = 0;
 
 for (const name of names) {
   const catalogue = JSON.parse(await readFile(new URL(name, researchUrl), "utf8"));
-  validateCatalogue(catalogue);
+  validateCatalogue(catalogue, { taxonomy: "legacy" });
   assert.equal(catalogue.meta.status, "editorial-validated", `${name}: statut éditorial final requis`);
   assert.match(catalogue.meta.culinary_notice, /aucune.*testée physiquement/i, `${name}: limite d'essai culinaire absente`);
   assert.match(catalogue.meta.cost_notice, /estimations/i, `${name}: limite tarifaire absente`);

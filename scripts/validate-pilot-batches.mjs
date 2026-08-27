@@ -36,7 +36,7 @@ for (const name of names) {
   const start = Number(match[1]);
   const end = Number(match[2]);
   const catalogue = JSON.parse(await readFile(new URL(name, researchUrl), "utf8"));
-  const result = validateCatalogue(catalogue);
+  const result = validateCatalogue(catalogue, { taxonomy: "legacy" });
 
   assert.equal(result.schemaVersion, "2.1.0", `${name}: schéma v2.1 requis`);
   assert.equal(result.recipeCount, end - start + 1, `${name}: taille de plage incohérente`);

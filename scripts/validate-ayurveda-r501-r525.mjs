@@ -23,7 +23,7 @@ const [concepts, pilot, published, ...priorConceptGroups] = await Promise.all([
   load("research/recipes-r351-r500.json"),
 ]);
 
-const result = validateCatalogue(pilot);
+const result = validateCatalogue(pilot, { taxonomy: "legacy" });
 assert.equal(result.schemaVersion, "2.1.0");
 assert.equal(result.recipeCount, 25);
 assert.equal(concepts.length, 25);

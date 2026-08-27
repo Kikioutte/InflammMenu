@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 const engine = await import("../src/engine.ts");
 const shopping = await import("../src/shopping.ts");
+const { IMPORTED_PLAN_RECIPES } = await import("../src/planner-catalog.ts");
 
 const nutrition = {
   calories: 400,
@@ -12,7 +13,7 @@ const nutrition = {
 };
 
 function recipe(index, overrides = {}) {
-  const tags = index < 2 ? ["poisson"] : index < 4 ? ["légumineuses"] : ["céréales-complètes"];
+  const tags = index < 2 ? ["finfish"] : index < 4 ? ["pulse"] : ["céréales-complètes"];
   const fish = index < 2;
   return {
     id: `recipe-${index}`,
@@ -80,9 +81,114 @@ test("generation is deterministic, creates 14 unique slots, and meets available 
   assert.ok(summary.withinBudget);
 });
 
+test("weekly targets use exact business tags instead of lexical food prefixes", () => {
+  const summaryFor = (recipeId) => {
+    const selected = IMPORTED_PLAN_RECIPES.find((item) => item.id === `catalog-${recipeId}`);
+    assert.ok(selected, `${recipeId} absente de la projection planificateur`);
+    const plan = {
+      id: `week-${recipeId}`,
+      startsOn: "2026-08-03",
+      generatedAt: "2026-08-03T00:00:00.000Z",
+      profileSnapshot: profile,
+      version: 1,
+      estimatedCost: selected.costPerPortion,
+      meals: [{ id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: selected.id, portions: 1, source: "manual" }],
+    };
+    return { recipe: selected, summary: engine.summarizePlan(plan, IMPORTED_PLAN_RECIPES, profile) };
+  };
+
+  const greenBeans = summaryFor("r254");
+  assert.equal(greenBeans.summary.legumeMeals, 0, "les haricots verts ne sont pas une portion de légumes secs");
+
+  const mussels = summaryFor("r392");
+  assert.equal(mussels.summary.fishMeals, 0, "les mollusques ne satisfont pas l’objectif poisson");
+  assert.ok(mussels.recipe.tags.includes("seafood"));
+  assert.ok(!mussels.recipe.tags.includes("finfish"));
+
+  const pulses = summaryFor("r007");
+  assert.equal(pulses.summary.legumeMeals, 1);
+  assert.ok(pulses.recipe.tags.includes("pulse"));
+
+  const finfish = summaryFor("r355");
+  assert.equal(finfish.summary.fishMeals, 1);
+  assert.ok(finfish.recipe.tags.includes("finfish"));
+
+  const pulseSeafood = summaryFor("r399");
+  assert.equal(pulseSeafood.summary.legumeMeals, 1);
+  assert.equal(pulseSeafood.summary.fishMeals, 0);
+  assert.ok(pulseSeafood.recipe.tags.includes("seafood"));
+
+  const seafood = summaryFor("r049");
+  assert.equal(seafood.summary.fishMeals, 0);
+  assert.ok(seafood.recipe.tags.includes("seafood"));
+});
+
+test("the plan season is derived from its Monday across generation, summary and replacements", () => {
+  const calendar = [
+    ["2026-01-05", "winter"], ["2026-02-02", "winter"],
+    ["2026-03-02", "spring"], ["2026-04-06", "spring"], ["2026-05-04", "spring"],
+    ["2026-06-01", "summer"], ["2026-07-06", "summer"], ["2026-08-03", "summer"],
+    ["2026-09-07", "autumn"], ["2026-10-05", "autumn"], ["2026-11-02", "autumn"],
+    ["2026-12-07", "winter"],
+  ];
+  assert.deepEqual(calendar.map(([date]) => engine.seasonForIsoDate(date)), calendar.map(([, season]) => season));
+
+  for (const [startsOn, season] of calendar.filter(([, value], index) => index === 0 || value !== calendar[index - 1][1])) {
+    const matching = recipe(700 + startsOn.charCodeAt(5), { id: `matching-${season}`, seasons: [season] });
+    const opposite = recipe(710 + startsOn.charCodeAt(6), { id: `opposite-${season}`, seasons: [season === "winter" ? "summer" : "winter"] });
+    const allYear = recipe(720 + startsOn.charCodeAt(8), { id: `all-year-${season}`, seasons: ["all-year"] });
+    const plan = {
+      id: `week-${season}`,
+      startsOn,
+      generatedAt: `${startsOn}T00:00:00.000Z`,
+      profileSnapshot: profile,
+      version: 1,
+      estimatedCost: 6,
+      meals: [matching, opposite, allYear].map((item, dayIndex) => ({
+        id: `day-${dayIndex}-dinner`, dayIndex, mealType: "dinner", recipeId: item.id, portions: 1, source: "manual",
+      })),
+    };
+    assert.equal(engine.summarizePlan(plan, [matching, opposite, allYear], profile).seasonalMeals, 2, startsOn);
+  }
+
+  const winterCandidate = recipe(790, { id: "winter-candidate", title: "Z hiver", seasons: ["winter"], tags: [] });
+  const summerCandidate = recipe(791, { id: "summer-candidate", title: "A été", seasons: ["summer"], tags: [] });
+  const current = recipe(792, { id: "current-season", seasons: ["all-year"], tags: [] });
+  const replacementPlan = {
+    id: "week-replacement-season",
+    startsOn: "2026-01-05",
+    generatedAt: "2026-01-05T00:00:00.000Z",
+    profileSnapshot: profile,
+    version: 1,
+    estimatedCost: 2,
+    meals: [{ id: "day-0-dinner", dayIndex: 0, mealType: "dinner", recipeId: current.id, portions: 1, source: "manual" }],
+  };
+  assert.equal(
+    engine.getReplacementCandidates(replacementPlan, "day-0-dinner", [current, summerCandidate, winterCandidate], profile)[0].id,
+    winterCandidate.id,
+  );
+
+  const slots = Array.from({ length: 7 }, (_, dayIndex) => ["lunch", "dinner"].map((mealType) => ({ dayIndex, mealType }))).flat();
+  const lockedRecipes = slots.slice(0, 13).map((_, index) => recipe(800 + index, { tags: [], seasons: ["all-year"] }));
+  const lockedMeals = slots.slice(0, 13).map((slot, index) => ({
+    id: `day-${slot.dayIndex}-${slot.mealType}`,
+    ...slot,
+    recipeId: lockedRecipes[index].id,
+    portions: 1,
+    source: "generated",
+    locked: true,
+  }));
+  const generationRecipes = [...lockedRecipes, winterCandidate, summerCandidate];
+  const generationProfile = { ...profile, weeklyBudget: 1_000, weeklyTargets: { legumeMeals: 0, fishMeals: 0 } };
+  const options = { seed: "derived-winter", startsOn: "2026-01-05", lockedMeals };
+  const derived = engine.generateWeeklyPlan(generationRecipes, generationProfile, options);
+  const explicit = engine.generateWeeklyPlan(generationRecipes, generationProfile, { ...options, season: "winter" });
+  assert.deepEqual(derived, explicit, "sans option explicite, janvier doit utiliser winter");
+});
+
 test("different seeds explore the best compatible candidates reproducibly", () => {
   const uniform = Array.from({ length: 80 }, (_, index) => recipe(index + 1_000, {
-    tags: ["poisson", "légumineuses", "céréales-complètes"],
+    tags: ["finfish", "pulse", "céréales-complètes"],
     costPerPortion: 2 + (index % 5) * 0.15,
   }));
   const plans = Array.from({ length: 30 }, (_, index) => engine.generateWeeklyPlan(uniform, {
@@ -207,6 +313,62 @@ test("an applied substitution recalculates ingredients, allergens, cost and shop
   const restored = engine.setMealIngredientSubstitution(updated, "day-0-lunch", "walnut", null, [walnutRecipe]);
   assert.deepEqual(restored.meals[0].substitutions, []);
   assert.deepEqual(engine.plannedMealAllergens(walnutRecipe, restored.meals[0]), ["fruits-a-coque"]);
+});
+
+test("optional ingredients stay visible and allergenic but never enter shopping", () => {
+  const dish = recipe(306, {
+    id: "optional-garnish",
+    allergens: ["fruits-a-coque"],
+    tags: ["soupe", "noix-concassees"],
+    ingredients: [
+      { id: "carrot", name: "Carotte", quantity: 100, unit: "g", category: "fruit-vegetable" },
+      { id: "walnut", name: "Noix concassées", quantity: 15, unit: "g", category: "grocery", allergens: ["fruits-a-coque"], optional: true },
+    ],
+  });
+  const plan = {
+    id: "week-optional", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: { ...profile, allergies: [], excludedIngredientIds: [] },
+    meals: [{ id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: dish.id, portions: 4, source: "generated" }],
+    estimatedCost: 8, version: 1,
+  };
+
+  const scaled = engine.scaleIngredients(dish, 4);
+  assert.equal(scaled.find((ingredient) => ingredient.id === "walnut")?.quantity, 60);
+  assert.equal(scaled.find((ingredient) => ingredient.id === "walnut")?.optional, true);
+  assert.equal(engine.ingredientsForPlannedMeal(dish, plan.meals[0])
+    .find((ingredient) => ingredient.id === "walnut")?.optional, true);
+  assert.equal(engine.recipeIsAllowed(dish, { ...profile, allergies: ["fruits-a-coque"] }), false);
+  assert.equal(engine.recipeIsAllowed(dish, { ...profile, excludedIngredientIds: ["walnut"] }), true,
+    "un aliment refusé mais facultatif est omis par défaut au lieu d'écarter toute la recette");
+  const optionalDiagnostic = engine.diagnoseRecipeCompatibility([dish], {
+    ...profile, excludedIngredientIds: ["walnut"],
+  }, { mealType: "lunch" });
+  assert.equal(optionalDiagnostic.compatibleCount, 1);
+  assert.equal(optionalDiagnostic.blockedBy.excludedIngredients, 0);
+  assert.equal(engine.mealCost(dish, 4), 8, "le budget garde volontairement l'estimation prudente de la recette complète");
+  assert.equal(engine.recommendTonight([dish], profile, {
+    mealType: "lunch", maxPrepMinutes: 30, portions: 1, pantryIngredientIds: ["walnut"],
+  })[0].pantryMatches, 0, "un ingrédient facultatif n'améliore pas artificiellement le score du garde-manger");
+  assert.deepEqual(engine.plantDiversityOf(plan, [dish]), { count: 1, ingredients: ["Carotte"] });
+  assert.equal(engine.summarizePlan(plan, [dish], profile).nutOrSeedMeals, 0);
+  const optionalFish = recipe(307, {
+    id: "optional-fish", tags: ["poisson"],
+    ingredients: [{ id: "poisson", name: "Poisson", quantity: 100, unit: "g", category: "meat-fish", optional: true }],
+  });
+  const optionalFishPlan = { ...plan, meals: [{ ...plan.meals[0], recipeId: optionalFish.id }] };
+  assert.equal(engine.summarizePlan(optionalFishPlan, [optionalFish], profile).fishMeals, 0,
+    "le tag généré d'un ingrédient facultatif ne satisfait pas un objectif hebdomadaire");
+
+  const list = engine.buildShoppingList(plan, [dish]);
+  assert.deepEqual(list.map((item) => item.ingredientId), ["carrot"]);
+  assert.deepEqual(list[0].amounts, [{ unit: "g", quantity: 400 }]);
+  const exported = engine.formatShoppingListText(list);
+  assert.match(exported, /Carotte/);
+  assert.doesNotMatch(exported, /Noix concassées/);
+  const optionalOnly = { ...dish, ingredients: dish.ingredients.filter((ingredient) => ingredient.optional) };
+  const optionalOnlyList = engine.buildShoppingList(plan, [optionalOnly]);
+  assert.deepEqual(optionalOnlyList, []);
+  assert.match(engine.formatShoppingListText(optionalOnlyList), /Aucun achat requis dans la liste générée\./);
 });
 
 test("a substitution cannot introduce an allergen excluded by the profile", () => {
@@ -448,7 +610,7 @@ test("locked meals are ignored when they no longer fit the requested slots", () 
 });
 
 test("the budget pass never swaps a locked meal", () => {
-  const expensive = recipe(80, { costPerPortion: 40, tags: ["poisson"], mealTypes: ["lunch", "dinner"] });
+  const expensive = recipe(80, { costPerPortion: 40, tags: ["finfish"], mealTypes: ["lunch", "dinner"] });
   const pool = [...catalogue, expensive];
   const tightProfile = { ...profile, weeklyBudget: 1 };
   const base = engine.generateWeeklyPlan(pool, tightProfile, { seed: "budget-lock" });
@@ -559,7 +721,7 @@ test("an entirely checked shopping list still produces a readable text", () => {
   );
   assert.match(text, /Rien à acheter : tout est coché ou déjà en réserve\./);
   assert.doesNotMatch(text, /Semaine du/);
-  assert.equal(engine.formatShoppingListText([], {}).includes("Rien à acheter"), true);
+  assert.match(engine.formatShoppingListText([], {}), /Aucun achat requis dans la liste générée\./);
 });
 
 test("the exported text mirrors the list built for the current plan", () => {
@@ -623,6 +785,57 @@ test("replaying is refused when the archived week misses the newly requested mea
 
   const twoMealsAgain = engine.inspectPlanReplay(archived, catalogue, profile);
   assert.equal(twoMealsAgain.canReplay, true);
+});
+
+test("replaying is refused when a recipe does not support its stored meal type", () => {
+  const archived = engine.generateWeeklyPlan(catalogue, profile, { seed: "archive-meal-type" });
+  const breakfastOnly = recipe(89, { mealTypes: ["breakfast"] });
+  const mismatched = {
+    ...archived,
+    meals: archived.meals.map((meal, index) => (index === 0 ? { ...meal, recipeId: breakfastOnly.id } : meal)),
+  };
+
+  const report = engine.inspectPlanReplay(mismatched, [...catalogue, breakfastOnly], profile);
+  assert.equal(report.missingSlots, 0);
+  assert.deepEqual(report.blockedMeals.map((meal) => meal.id), [mismatched.meals[0].id]);
+  assert.equal(report.canReplay, false);
+});
+
+test("an imported active plan requires its exact grid while preserving legitimate live changes", () => {
+  const active = engine.generateWeeklyPlan(catalogue, profile, { seed: "active-import" });
+  assert.deepEqual(
+    engine.inspectActivePlan(active, catalogue, profile),
+    { blockedMeals: [], missingSlots: 0, unexpectedSlots: 0, inferredMealsPerDay: 2, canActivate: true },
+  );
+
+  const missing = { ...active, meals: active.meals.slice(1) };
+  const missingReport = engine.inspectActivePlan(missing, catalogue, profile);
+  assert.equal(missingReport.missingSlots, 1);
+  assert.equal(missingReport.canActivate, false);
+
+  const breakfast = recipe(92, { mealTypes: ["breakfast"] });
+  const extra = {
+    ...active,
+    meals: [...active.meals, {
+      ...active.meals[0],
+      id: "day-0-breakfast",
+      mealType: "breakfast",
+      recipeId: breakfast.id,
+    }],
+  };
+  const extraReport = engine.inspectActivePlan(extra, [...catalogue, breakfast], profile);
+  assert.equal(extraReport.unexpectedSlots, 1);
+  assert.equal(extraReport.inferredMealsPerDay, null);
+  assert.equal(extraReport.canActivate, false);
+
+  const outside = engine.setMealSkipped(active, active.meals[0].id, true, catalogue);
+  assert.equal(engine.inspectActivePlan(outside, catalogue, profile).canActivate, true);
+
+  const expandedProfile = { ...profile, mealsPerDay: 3 };
+  const staleSnapshot = { ...active, profileSnapshot: expandedProfile };
+  const expandedReport = engine.inspectActivePlan(staleSnapshot, catalogue, expandedProfile);
+  assert.equal(expandedReport.canActivate, true);
+  assert.equal(expandedReport.inferredMealsPerDay, 2, "la grille réelle prime sur un snapshot legacy périmé");
 });
 
 test("declared allergens are merged, normalized and deduplicated per recipe", () => {
@@ -955,7 +1168,7 @@ test("replacement reasons no longer contradict their label", () => {
 
 test("favourite recipes are preferred but never override the safety filters", () => {
   // Uniform tags so the legume/fish targets do not decide the order.
-  const uniform = Array.from({ length: 20 }, (_, index) => recipe(index + 300, { tags: ["poisson", "légumineuses"] }));
+  const uniform = Array.from({ length: 20 }, (_, index) => recipe(index + 300, { tags: ["finfish", "pulse"] }));
   const plain = engine.generateWeeklyPlan(uniform, profile, { seed: "favourites" });
   const ignored = plain.meals.slice(-4).map((meal) => meal.recipeId);
 
@@ -999,8 +1212,8 @@ test("weekly targets are configurable, clamped and honoured by the generator", (
   // Le catalogue de test ne compte que deux recettes par famille : on en ajoute.
   const rich = [
     ...catalogue,
-    ...Array.from({ length: 4 }, (_, index) => recipe(400 + index, { tags: ["légumineuses"] })),
-    ...Array.from({ length: 3 }, (_, index) => recipe(410 + index, { tags: ["poisson"] })),
+    ...Array.from({ length: 4 }, (_, index) => recipe(400 + index, { tags: ["pulse"] })),
+    ...Array.from({ length: 3 }, (_, index) => recipe(410 + index, { tags: ["finfish"] })),
   ];
   const demanding = { ...profile, weeklyTargets: { legumeMeals: 4, fishMeals: 3 } };
   const summary = engine.summarizePlan(engine.generateWeeklyPlan(rich, demanding, { seed: "targets" }), rich, demanding);
@@ -1087,6 +1300,91 @@ test("a meal taken outside costs nothing and buys nothing", () => {
   assert.equal(restored.estimatedCost, plan.estimatedCost);
 });
 
+test("a meal planned outside consumes no recipe capacity or weekly target", () => {
+  const minimalCatalogue = Array.from({ length: 13 }, (_, index) => recipe(5_000 + index, {
+    tags: index === 0 ? ["finfish"] : ["céréales-complètes"],
+  }));
+  const outsideProfile = {
+    ...profile,
+    weeklyBudget: 100,
+    weeklyTargets: { legumeMeals: 0, fishMeals: 1 },
+    dayConstraints: [{ dayIndex: 0, skippedMealTypes: ["lunch"] }],
+  };
+
+  const plan = engine.generateWeeklyPlan(minimalCatalogue, outsideProfile, { seed: "outside-capacity" });
+  const activeMeals = plan.meals.filter((meal) => !meal.skipped);
+  const summary = engine.summarizePlan(plan, minimalCatalogue, outsideProfile);
+
+  assert.equal(plan.meals.length, 14, "le créneau hors foyer reste visible dans la semaine");
+  assert.equal(activeMeals.length, 13);
+  assert.equal(new Set(activeMeals.map((meal) => meal.recipeId)).size, 13, "les repas actifs restent uniques");
+  assert.ok(activeMeals.some((meal) => meal.recipeId === minimalCatalogue[0].id), "le poisson doit être servi à un repas actif");
+  assert.equal(summary.mealCount, 13);
+  assert.equal(summary.fishMeals, 1, "le repas hors foyer ne doit jamais satisfaire l’objectif poisson");
+});
+
+test("weekly aggregates ignore every value carried by a meal outside", () => {
+  const outsideFish = recipe(5_100, {
+    tags: ["finfish", "pulse"],
+    nutrition: { ...nutrition, calories: 999, protein: 99, fiber: 99 },
+  });
+  const activeGrain = recipe(5_101, {
+    tags: ["céréales-complètes"],
+    nutrition: { ...nutrition, calories: 321, protein: 12, fiber: 5 },
+  });
+  const plan = {
+    id: "week-outside-summary",
+    startsOn: "2026-08-03",
+    generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: profile,
+    version: 1,
+    estimatedCost: 2,
+    meals: [
+      { id: "outside", dayIndex: 0, mealType: "lunch", recipeId: outsideFish.id, portions: 1, source: "generated", skipped: true },
+      { id: "active", dayIndex: 0, mealType: "dinner", recipeId: activeGrain.id, portions: 1, source: "generated" },
+    ],
+  };
+
+  const summary = engine.summarizePlan(plan, [outsideFish, activeGrain], profile);
+  assert.equal(summary.mealCount, 1);
+  assert.equal(summary.fishMeals, 0);
+  assert.equal(summary.legumeMeals, 0);
+  assert.equal(summary.wholeGrainMeals, 1);
+  assert.equal(summary.averageCalories, 321);
+  assert.equal(summary.averageProtein, 12);
+  assert.equal(summary.averageFiber, 5);
+});
+
+test("a dormant outside recipe remains reusable and cannot create an active duplicate", () => {
+  const plan = engine.generateWeeklyPlan(catalogue, profile, { seed: "outside-reuse" });
+  const dormant = plan.meals[0];
+  const outside = engine.setMealSkipped(plan, dormant.id, true, catalogue);
+  const replacementTarget = outside.meals[1];
+  assert.ok(
+    engine.getReplacementCandidates(outside, replacementTarget.id, catalogue, profile)
+      .some((candidate) => candidate.id === dormant.recipeId),
+    "une recette uniquement liée à un créneau extérieur ne doit pas rester réservée",
+  );
+
+  const duplicated = {
+    ...outside,
+    meals: outside.meals.slice(0, 2).map((meal, index) => ({
+      ...meal,
+      id: index === 0 ? "outside-duplicate" : "active-duplicate",
+      recipeId: dormant.recipeId,
+      skipped: index === 0,
+    })),
+  };
+  const reactivated = engine.setMealSkipped(duplicated, "outside-duplicate", false, catalogue);
+  assert.equal(reactivated.meals.every((meal) => !meal.skipped), true);
+  assert.equal(new Set(reactivated.meals.map((meal) => meal.recipeId)).size, 2);
+
+  assert.throws(
+    () => engine.setMealSkipped(duplicated, "outside-duplicate", false, [catalogue.find((item) => item.id === dormant.recipeId)]),
+    /Aucune recette inutilisée et compatible/,
+  );
+});
+
 test("cooking sessions group what really has to be cooked", () => {
   const plan = engine.generateWeeklyPlan(catalogue, profile, { seed: "sessions" });
   const target = engine.leftoverCandidates(plan, plan.meals[0].id, catalogue)[0];
@@ -1105,7 +1403,7 @@ test("cooking sessions group what really has to be cooked", () => {
 });
 
 test("a « meh » recipe is pushed down without being excluded", () => {
-  const uniform = Array.from({ length: 20 }, (_, index) => recipe(index + 500, { tags: ["poisson", "légumineuses"] }));
+  const uniform = Array.from({ length: 20 }, (_, index) => recipe(index + 500, { tags: ["finfish", "pulse"] }));
   const plain = engine.generateWeeklyPlan(uniform, profile, { seed: "meh" });
   const demoted = plain.meals.slice(0, 3).map((meal) => meal.recipeId);
   const pickyProfile = { ...profile, softDislikedRecipeIds: demoted };

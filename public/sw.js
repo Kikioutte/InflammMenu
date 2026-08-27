@@ -3,7 +3,8 @@ const SHELL_CACHE = `${SHELL_CACHE_PREFIX}__SHELL_VERSION__`;
 const RUNTIME_CACHE_PREFIX = "inflamm-menu-runtime-";
 const RUNTIME_CACHE = `${RUNTIME_CACHE_PREFIX}v2`;
 const CATALOGUE_CACHE_PREFIX = "inflamm-menu-catalogue-";
-const CATALOGUE_CACHE = `${CATALOGUE_CACHE_PREFIX}v1`;
+const CATALOGUE_CACHE = `${CATALOGUE_CACHE_PREFIX}v2`;
+const LEGACY_CATALOGUE_CACHE = `${CATALOGUE_CACHE_PREFIX}v1`;
 const MAX_RUNTIME_IMAGES = 120;
 const APP_SHELL = [
   "/",
@@ -25,6 +26,18 @@ async function matchCached(cache, request) {
 
 function shellEntry(suffix) {
   return APP_SHELL.find((path) => path.endsWith(suffix));
+}
+
+function isHtmlResponse(response) {
+  const contentType = response.headers.get("Content-Type") ?? "";
+  return contentType.split(";", 1)[0].trim().toLowerCase() === "text/html";
+}
+
+function isCanonicalShellNavigation(request) {
+  const pathname = new URL(request.url).pathname;
+  return [shellEntry("/"), shellEntry("/index.html")]
+    .filter(Boolean)
+    .includes(pathname);
 }
 
 async function trimCache(cache, maximum) {
@@ -52,7 +65,7 @@ async function precacheShell() {
 
   const indexResponse = await matchCached(cache, shellEntry("/index.html") ?? "/index.html")
     || await matchCached(cache, shellEntry("/") ?? "/");
-  if (!indexResponse) throw new Error("Application shell index missing");
+  if (!indexResponse || !isHtmlResponse(indexResponse)) throw new Error("Application shell HTML index missing");
   const html = await indexResponse.text();
   const assetPaths = [...html.matchAll(/(?:src|href)=["']([^"']+)["']/g)]
     .map((match) => new URL(match[1], self.location.origin))
@@ -74,7 +87,7 @@ self.addEventListener("activate", (event) => {
         .filter((key) =>
           (key.startsWith(SHELL_CACHE_PREFIX) && key !== SHELL_CACHE) ||
           (key.startsWith(RUNTIME_CACHE_PREFIX) && key !== RUNTIME_CACHE) ||
-          (key.startsWith(CATALOGUE_CACHE_PREFIX) && key !== CATALOGUE_CACHE))
+          (key.startsWith(CATALOGUE_CACHE_PREFIX) && key !== CATALOGUE_CACHE && key !== LEGACY_CATALOGUE_CACHE))
         .map((key) => caches.delete(key))))
       .then(() => self.clients.claim()),
   );
@@ -89,14 +102,15 @@ async function cacheFirst(request, cacheName, maximum) {
   return response;
 }
 
-async function networkFirst(request, cacheName) {
-  const cache = await caches.open(cacheName);
+async function catalogueNetworkFirst(request) {
+  const cache = await caches.open(CATALOGUE_CACHE);
   try {
     const response = await fetch(request, { cache: "no-cache" });
-    if (response.ok && response.type === "basic") {
-      await putSafely(cache, request, response);
-      return response;
-    }
+    // Catalogue responses are only persisted by cacheCatalogueForOffline()
+    // after the page has parsed and validated the complete payload. Keeping
+    // this read-through strategy write-free prevents an unchecked HTTP 200
+    // response from replacing the last explicitly validated offline copy.
+    if (response.ok && response.type === "basic") return response;
     return await matchCached(cache, request) || response;
   } catch (error) {
     const cached = await matchCached(cache, request);
@@ -109,7 +123,7 @@ async function navigationResponse(request) {
   const cache = await caches.open(SHELL_CACHE);
   try {
     const response = await fetch(request, { cache: "no-cache" });
-    if (response.ok && response.type === "basic") {
+    if (response.ok && response.type === "basic" && isCanonicalShellNavigation(request) && isHtmlResponse(response)) {
       await putSafely(cache, shellEntry("/index.html") ?? "/index.html", response);
     }
     return response;
@@ -135,7 +149,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
   if (/\/recettes-anti-inflammatoires(?:-[^/]+)?\.json$/.test(url.pathname)) {
-    event.respondWith(networkFirst(request, CATALOGUE_CACHE));
+    event.respondWith(catalogueNetworkFirst(request));
     return;
   }
   if (url.pathname.endsWith("planner-cautions.json")) {

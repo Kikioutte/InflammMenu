@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { validateCatalogue } from "./validate-catalogue.mjs";
 
 const catalogue = JSON.parse(await readFile("research/pilot-r201-r225.final.json", "utf8"));
-const result = validateCatalogue(catalogue);
+const result = validateCatalogue(catalogue, { taxonomy: "legacy" });
 assert.equal(result.recipeCount, 25);
 assert.equal(catalogue.meta.status, "editorial-validated");
 assert.equal(catalogue.recipes.filter((recipe) => recipe.app.planner.eligible).length, 17);

@@ -28,7 +28,7 @@ assert.equal(mapped.get("quinoa").grams_per_unit.g, 3);
 assert.equal(mapped.get("quinoa-rouge").grams_per_unit.g, 3);
 assert.equal(mapped.get("chou-vert").occurrence_overrides.r425.grams_total, 400);
 
-assert.equal(validateCatalogue(final).recipeCount, 25);
+assert.equal(validateCatalogue(final, { taxonomy: "legacy" }).recipeCount, 25);
 assert.match(final.meta.culinary_notice, /aucune.*testée physiquement/i);
 assert.match(final.meta.cost_notice, /estimations.*sans relevés.*datés/i);
 const originalById = new Map(nutrition.recipes.map((recipe) => [recipe.id, recipe]));

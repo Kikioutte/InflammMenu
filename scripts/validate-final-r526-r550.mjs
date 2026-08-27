@@ -33,7 +33,7 @@ for (const entry of mapping.ingredients.filter((item) => item.batch_reuse_source
   assert.ok(source.ingredients.some((item) => item.ingredient_id === entry.ingredient_id), `${entry.ingredient_id}: réutilisation non canonique`);
 }
 
-assert.equal(validateCatalogue(catalogue).recipeCount, 25);
+assert.equal(validateCatalogue(catalogue, { taxonomy: "legacy" }).recipeCount, 25);
 assert.equal(catalogue.meta.status, "editorial-validated");
 assert.match(catalogue.meta.medical_notice, /aucun diagnostic de dosha.*prévention ou traitement/i);
 assert.match(catalogue.meta.culinary_notice, /aucune.*testée physiquement/i);

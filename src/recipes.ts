@@ -129,7 +129,7 @@ const ALL_YEAR = ["all-year"] as const;
 const VEGETARIAN = ["classic", "vegetarian", "no-pork"] as const;
 const NO_PORK = ["classic", "no-pork"] as const;
 
-const BASE_RECIPES: readonly Recipe[] = [
+const BASE_RECIPE_SOURCE: readonly Recipe[] = [
   {
     id: "overnight-oats-myrtilles-noix",
     title: "Overnight oats aux myrtilles et noix",
@@ -492,6 +492,26 @@ const BASE_RECIPES: readonly Recipe[] = [
     conservation: "À consommer le jour même; ne pas conserver les moules non ouvertes.", image: "/assets/recipes/moules-tomate-semoule-complete.jpg",
   },
 ];
+
+const BASE_PULSE_INGREDIENT_IDS = new Set([
+  "chickpea",
+  "green-lentil",
+  "kidney-bean",
+  "red-lentil",
+  "tofu",
+  "white-bean",
+]);
+
+function withWeeklyTargetTags(recipe: Recipe): Recipe {
+  const targets = [
+    ...(recipe.ingredients.some((item) => !item.optional && BASE_PULSE_INGREDIENT_IDS.has(item.id)) ? ["pulse"] : []),
+    ...(recipe.allergens.includes("poisson") ? ["finfish"] : []),
+    ...(recipe.allergens.some((allergen) => allergen === "mollusques" || allergen === "crustaces") ? ["seafood"] : []),
+  ];
+  return { ...recipe, tags: [...new Set([...targets, ...recipe.tags])] };
+}
+
+const BASE_RECIPES: readonly Recipe[] = BASE_RECIPE_SOURCE.map(withWeeklyTargetTags);
 
 /** Existing V1 recipes plus the independently reviewed catalogue entries. */
 export const RECIPES: readonly Recipe[] = [...BASE_RECIPES, ...IMPORTED_PLAN_RECIPES];

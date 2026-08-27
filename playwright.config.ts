@@ -6,6 +6,10 @@ export default defineConfig({
   testDir: "./tests",
   testMatch: "**/*.spec.ts",
   timeout: 20_000,
+  projects: [
+    { name: "chromium", use: { browserName: "chromium" } },
+    { name: "webkit-smoke", grep: /@webkit-smoke/, use: { browserName: "webkit" } },
+  ],
   use: {
     baseURL: `http://127.0.0.1:${testPort}`,
     viewport: { width: 1100, height: 1100 },

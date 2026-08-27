@@ -60,6 +60,11 @@ export interface AppState {
   textScale: "normal" | "large";
   remindersEnabled: boolean;
   onboardingCompleted: boolean;
+  /**
+   * Durable reset epoch. Revisions are only comparable inside one generation;
+   * a higher generation always replaces the complete older state.
+   */
+  storageGeneration: string;
   /** Monotonic local revision used to choose the newest replica and synchronise tabs. */
   stateRevision: number;
   /** Per-field clocks let concurrent tabs merge unrelated edits instead of overwriting them. */
@@ -78,7 +83,11 @@ const DATABASE_NAME = "inflamm-menu";
 const DATABASE_VERSION = 1;
 const STORE_NAME = "app-state";
 const STATE_KEY = "current";
+const RESET_MARKER_KEY = "reset-marker";
 const LOCAL_STORAGE_KEY = "inflamm-menu:app-state";
+const LOCAL_RESET_MARKER_KEY = "inflamm-menu:reset-marker";
+type StorageGenerationKind = "legacy" | "rollover" | "replace" | "reset";
+const LEGACY_STORAGE_GENERATION = "0:legacy:legacy";
 /** Archived weeks kept on the device; the oldest are dropped beyond this. */
 export const HISTORY_LIMIT = 12;
 
@@ -114,6 +123,7 @@ export const DEFAULT_APP_STATE: AppState = createState({
   textScale: "normal",
   remindersEnabled: false,
   onboardingCompleted: false,
+  storageGeneration: LEGACY_STORAGE_GENERATION,
   stateRevision: 0,
   fieldRevisions: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, 0])) as AppStateFieldRevisions,
   fieldMutationIds: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, "initial"])) as AppStateFieldMutationIds,
@@ -137,6 +147,7 @@ type StateInput = Pick<
   | "remindersEnabled"
   | "onboardingCompleted"
 > & {
+  storageGeneration?: string;
   stateRevision?: number;
   fieldRevisions?: Partial<AppStateFieldRevisions>;
   fieldMutationIds?: Partial<AppStateFieldMutationIds>;
@@ -146,7 +157,7 @@ function createState(input: StateInput): AppState {
   const favoriteRecipeIds = [...input.favoriteRecipeIds];
   const checkedShoppingItemIds = [...input.checkedShoppingItemIds];
   const pantryIngredientIds = [...input.pantryIngredientIds];
-  const stateRevision = Math.max(0, Math.floor(input.stateRevision ?? 0));
+  const stateRevision = normalizeRevision(input.stateRevision);
   const fieldRevisions = normalizeFieldRevisions(input.fieldRevisions, input.stateRevision);
   const fieldMutationIds = normalizeFieldMutationIds(input.fieldMutationIds, fieldRevisions, input);
 
@@ -167,6 +178,7 @@ function createState(input: StateInput): AppState {
     textScale: input.textScale,
     remindersEnabled: input.remindersEnabled,
     onboardingCompleted: input.onboardingCompleted,
+    storageGeneration: normalizeStorageGeneration(input.storageGeneration),
     stateRevision,
     fieldRevisions,
     fieldMutationIds,
@@ -413,6 +425,7 @@ function normalizeCustomRecipe(value: unknown): Recipe | null {
       category: rawIngredient.category as IngredientCategory,
       ...(stringArray(rawIngredient.allergens).length ? { allergens: stringArray(rawIngredient.allergens).slice(0, 14) } : {}),
       ...(rawIngredient.pantryStaple === true ? { pantryStaple: true } : {}),
+      ...(rawIngredient.optional === true ? { optional: true } : {}),
     }];
   });
   if (ingredients.length !== value.ingredients.length) return null;
@@ -547,6 +560,73 @@ function normalizeRevision(value: unknown): number {
   return typeof value === "number" && Number.isSafeInteger(value) && value >= 0 ? value : 0;
 }
 
+function parseStorageGeneration(value: unknown): { counter: bigint; kind: StorageGenerationKind; nonce: string; value: string } | null {
+  if (typeof value !== "string") return null;
+  const typed = /^(0|[1-9]\d{0,127}):(legacy|rollover|replace|reset):([a-zA-Z0-9._-]{1,80})$/.exec(value);
+  if (typed) {
+    const counter = BigInt(typed[1]);
+    const kind = typed[2] as StorageGenerationKind;
+    return { counter, kind, nonce: typed[3], value: `${counter.toString()}:${kind}:${typed[3]}` };
+  }
+  // Transitional builds used counter:nonce. Treat those values as a neutral
+  // legacy barrier so they remain readable without gaining reset authority.
+  const legacy = /^(0|[1-9]\d{0,127}):([a-zA-Z0-9._-]{1,80})$/.exec(value);
+  if (!legacy) return null;
+  const counter = BigInt(legacy[1]);
+  return { counter, kind: "legacy", nonce: legacy[2], value: `${counter.toString()}:legacy:${legacy[2]}` };
+}
+
+function normalizeStorageGeneration(value: unknown): string {
+  return parseStorageGeneration(value)?.value ?? LEGACY_STORAGE_GENERATION;
+}
+
+function compareStorageGenerations(left: string, right: string): number {
+  const parsedLeft = parseStorageGeneration(left) ?? parseStorageGeneration(LEGACY_STORAGE_GENERATION)!;
+  const parsedRight = parseStorageGeneration(right) ?? parseStorageGeneration(LEGACY_STORAGE_GENERATION)!;
+  if (parsedLeft.counter !== parsedRight.counter) return parsedLeft.counter > parsedRight.counter ? 1 : -1;
+  const kindPriority: Record<StorageGenerationKind, number> = {
+    rollover: 0,
+    legacy: 1,
+    replace: 2,
+    reset: 3,
+  };
+  if (parsedLeft.kind !== parsedRight.kind) {
+    return kindPriority[parsedLeft.kind] > kindPriority[parsedRight.kind] ? 1 : -1;
+  }
+  if (parsedLeft.nonce === parsedRight.nonce) return 0;
+  return parsedLeft.nonce > parsedRight.nonce ? 1 : -1;
+}
+
+function newestStorageGeneration(generations: readonly string[]): string {
+  return generations.reduce((newest, candidate) => (
+    compareStorageGenerations(candidate, newest) > 0 ? candidate : newest
+  ), LEGACY_STORAGE_GENERATION);
+}
+
+function storageGenerationNonce(): string {
+  return globalThis.crypto?.randomUUID?.()
+    ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+}
+
+function nextBarrierStorageGeneration(
+  generations: readonly string[],
+  kind: Extract<StorageGenerationKind, "replace" | "reset">,
+): string {
+  const newest = parseStorageGeneration(newestStorageGeneration(generations))!;
+  // Wall time makes a reset newer than a temporarily inaccessible marker from
+  // a previous session; BigInt keeps the ordering outside Number's limits.
+  const counter = [newest.counter + 1n, BigInt(Date.now())].reduce((left, right) => left > right ? left : right);
+  return `${counter}:${kind}:${storageGenerationNonce()}`;
+}
+
+function nextRolloverStorageGeneration(currentGeneration: string): string {
+  const current = parseStorageGeneration(currentGeneration) ?? parseStorageGeneration(LEGACY_STORAGE_GENERATION)!;
+  // Never use wall time here. A stale saturated tab may advance only one
+  // counter from the generation it actually observed, so a reset/replace
+  // barrier created elsewhere still outranks it at the same counter.
+  return `${current.counter + 1n}:rollover:${storageGenerationNonce()}`;
+}
+
 function normalizeFieldRevisions(value: unknown, fallbackValue: unknown): AppStateFieldRevisions {
   const fallback = normalizeRevision(fallbackValue);
   const record = isRecord(value) ? value : {};
@@ -631,6 +711,7 @@ export function migrateAppState(value: unknown): AppState | null {
     textScale: value.textScale === "large" ? "large" : "normal",
     remindersEnabled: value.remindersEnabled === true,
     onboardingCompleted: value.onboardingCompleted === true,
+    storageGeneration: normalizeStorageGeneration(value.storageGeneration),
     stateRevision: normalizeRevision(value.stateRevision),
     fieldRevisions: normalizeFieldRevisions(value.fieldRevisions, value.stateRevision),
     fieldMutationIds: isRecord(value.fieldMutationIds) ? value.fieldMutationIds : undefined,
@@ -639,19 +720,52 @@ export function migrateAppState(value: unknown): AppState | null {
 
 /** Adds one revision to every top-level field changed by a local action. */
 export function stampAppStateChanges(current: AppState, candidate: AppState, revision: number, mutationId?: string): AppState {
-  const safeRevision = Math.max(current.stateRevision + 1, normalizeRevision(revision));
+  const changedKeys = APP_STATE_DATA_KEYS.filter((key) => !Object.is(candidate[key], current[key]));
+  if (!changedKeys.length) return current;
+  if (current.stateRevision === Number.MAX_SAFE_INTEGER) {
+    const storageGeneration = nextRolloverStorageGeneration(current.storageGeneration);
+    const rolloverMutationId = `rollover:${storageGeneration}`;
+    return migrateAppState({
+      ...candidate,
+      storageGeneration,
+      stateRevision: 0,
+      fieldRevisions: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, 0])),
+      fieldMutationIds: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, rolloverMutationId])),
+    }) ?? current;
+  }
+  const nextRevision = current.stateRevision < Number.MAX_SAFE_INTEGER
+    ? current.stateRevision + 1
+    : Number.MAX_SAFE_INTEGER;
+  const safeRevision = Math.max(nextRevision, normalizeRevision(revision));
   const fieldRevisions = { ...current.fieldRevisions };
   const fieldMutationIds = { ...current.fieldMutationIds };
   const safeMutationId = mutationId && /^[a-zA-Z0-9:._-]{1,160}$/.test(mutationId)
     ? mutationId
     : createMutationId(safeRevision);
-  for (const key of APP_STATE_DATA_KEYS) {
-    if (!Object.is(candidate[key], current[key])) {
-      fieldRevisions[key] = safeRevision;
-      fieldMutationIds[key] = safeMutationId;
-    }
+  for (const key of changedKeys) {
+    fieldRevisions[key] = safeRevision;
+    fieldMutationIds[key] = safeMutationId;
   }
-  return migrateAppState({ ...candidate, stateRevision: safeRevision, fieldRevisions, fieldMutationIds }) ?? cloneDefaultState();
+  return migrateAppState({
+    ...candidate,
+    storageGeneration: current.storageGeneration,
+    stateRevision: safeRevision,
+    fieldRevisions,
+    fieldMutationIds,
+  }) ?? cloneDefaultState();
+}
+
+/** Replaces every user field in a fresh generation, so stale tabs cannot undo an import. */
+export function replaceAppStateData(current: AppState, replacement: AppState): AppState {
+  const storageGeneration = nextBarrierStorageGeneration([current.storageGeneration], "replace");
+  const mutationId = `replace:${storageGeneration}`;
+  return migrateAppState({
+    ...replacement,
+    storageGeneration,
+    stateRevision: 0,
+    fieldRevisions: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, 0])),
+    fieldMutationIds: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, mutationId])),
+  }) ?? current;
 }
 
 /**
@@ -660,6 +774,10 @@ export function stampAppStateChanges(current: AppState, candidate: AppState, rev
  * newest field revision.
  */
 export function mergeAppStateReplicas(left: AppState, right: AppState): AppState {
+  const generationOrder = compareStorageGenerations(right.storageGeneration, left.storageGeneration);
+  if (generationOrder > 0) return right;
+  if (generationOrder < 0) return left;
+
   const rightWins = (key: AppStateDataKey) => {
     const leftRevision = left.fieldRevisions[key];
     const rightRevision = right.fieldRevisions[key];
@@ -687,8 +805,26 @@ export function mergeAppStateReplicas(left: AppState, right: AppState): AppState
   return migrateAppState(merged) ?? left;
 }
 
-function cloneDefaultState(): AppState {
-  return createState(DEFAULT_APP_STATE);
+function cloneDefaultState(storageGeneration = LEGACY_STORAGE_GENERATION): AppState {
+  return createState({ ...DEFAULT_APP_STATE, storageGeneration });
+}
+
+interface StorageReplica {
+  state: AppState | null;
+  generation: string;
+}
+
+interface ReplicaWriteResult {
+  saved: boolean;
+  activeGeneration: string;
+  state: AppState | null;
+}
+
+function parseStoredGeneration(value: unknown): string {
+  if (value === undefined || value === null) return LEGACY_STORAGE_GENERATION;
+  const parsed = parseStorageGeneration(value);
+  if (!parsed) throw new Error("Storage reset marker is unreadable");
+  return parsed.value;
 }
 
 function localStorageAvailable(): boolean {
@@ -700,33 +836,98 @@ function localStorageAvailable(): boolean {
   }
 }
 
-function readLocalState(): AppState | null {
-  if (!localStorageAvailable()) return null;
+function readLocalReplica(): StorageReplica {
+  if (!localStorageAvailable()) throw new Error("localStorage is unavailable");
+  const markerGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+  const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (!raw) return { state: null, generation: markerGeneration };
+  const state = migrateAppState(JSON.parse(raw) as unknown);
+  if (!state) throw new Error("localStorage contains an unreadable app state");
+  // Non-reset generations live in their complete, self-describing snapshot;
+  // only a reset owns the separate tombstone marker. The newest of both wins,
+  // so a stale snapshot can never erase an already published reset barrier.
+  return {
+    state,
+    generation: newestStorageGeneration([markerGeneration, state.storageGeneration]),
+  };
+}
+
+function writeLocalReplica(state: AppState): ReplicaWriteResult {
+  if (!localStorageAvailable()) return { saved: false, activeGeneration: LEGACY_STORAGE_GENERATION, state: null };
+  let activeGeneration = LEGACY_STORAGE_GENERATION;
+  const resetTombstone = isResetTombstone(state);
   try {
+    activeGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
     const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-    return raw ? migrateAppState(JSON.parse(raw) as unknown) : null;
-  } catch {
-    return null;
-  }
-}
+    let storedState: AppState | null = null;
+    try { storedState = raw ? migrateAppState(JSON.parse(raw) as unknown) : null; } catch { storedState = null; }
+    if (storedState) {
+      activeGeneration = newestStorageGeneration([activeGeneration, storedState.storageGeneration]);
+    }
 
-function writeLocalState(state: AppState): boolean {
-  if (!localStorageAvailable()) return false;
-  try {
-    window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
-    return true;
+    const order = compareStorageGenerations(state.storageGeneration, activeGeneration);
+    if (order < 0) {
+      return {
+        saved: false,
+        activeGeneration,
+        state: storedState?.storageGeneration === activeGeneration ? storedState : null,
+      };
+    }
+    // Only a reset may publish this marker. Imports and revision rollovers
+    // persist solely as complete snapshots, so a stale writer can never
+    // overwrite a reset tombstone between two non-atomic localStorage calls.
+    if (order > 0 && resetTombstone) {
+      window.localStorage.setItem(LOCAL_RESET_MARKER_KEY, state.storageGeneration);
+      activeGeneration = state.storageGeneration;
+    }
+    const stateToWrite = order === 0
+      && storedState?.storageGeneration === state.storageGeneration
+      ? mergeAppStateReplicas(storedState, state)
+      : state;
+    window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToWrite));
+    const persistedMarker = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+    const persistedRaw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+    let persistedState: AppState | null = null;
+    try { persistedState = persistedRaw ? migrateAppState(JSON.parse(persistedRaw) as unknown) : null; } catch { persistedState = null; }
+    activeGeneration = newestStorageGeneration([
+      persistedMarker,
+      ...(persistedState ? [persistedState.storageGeneration] : []),
+    ]);
+    const markerSaved = resetTombstone
+      && compareStorageGenerations(persistedMarker, state.storageGeneration) === 0;
+    const completeStateSaved = persistedState !== null
+      && compareStorageGenerations(persistedState.storageGeneration, activeGeneration) === 0
+      && stateCovers(persistedState, state);
+    return {
+      saved: markerSaved || completeStateSaved,
+      activeGeneration,
+      state: completeStateSaved ? persistedState : (markerSaved ? state : null),
+    };
   } catch {
-    return false;
-  }
-}
-
-function removeLocalState(): boolean {
-  if (!localStorageAvailable()) return false;
-  try {
-    window.localStorage.removeItem(LOCAL_STORAGE_KEY);
-    return true;
-  } catch {
-    return false;
+    let persistedState: AppState | null = null;
+    let persistedMarker = LEGACY_STORAGE_GENERATION;
+    try {
+      persistedMarker = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+      const persistedRaw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+      try { persistedState = persistedRaw ? migrateAppState(JSON.parse(persistedRaw) as unknown) : null; } catch { persistedState = null; }
+      activeGeneration = newestStorageGeneration([
+        persistedMarker,
+        ...(persistedState ? [persistedState.storageGeneration] : []),
+      ]);
+    } catch { /* keep the last valid generation */ }
+    // If a new reset marker survived but the larger state write hit quota, the
+    // tombstone itself is the durable reset. Report that truthfully so the UI
+    // does not claim that the previous data is still active.
+    const markerSaved = resetTombstone
+      && compareStorageGenerations(persistedMarker, state.storageGeneration) === 0;
+    const completeStateSaved = persistedState !== null
+      && compareStorageGenerations(persistedState.storageGeneration, activeGeneration) === 0
+      && stateCovers(persistedState, state);
+    return {
+      saved: markerSaved || completeStateSaved,
+      activeGeneration,
+      state: completeStateSaved ? persistedState : (markerSaved ? state : null),
+    };
   }
 }
 
@@ -750,14 +951,34 @@ function openDatabase(): Promise<IDBDatabase> {
   });
 }
 
-async function readIndexedState(): Promise<AppState | null> {
+async function readIndexedReplica(): Promise<StorageReplica> {
   const database = await openDatabase();
   try {
     return await new Promise((resolve, reject) => {
       const transaction = database.transaction(STORE_NAME, "readonly");
-      const request = transaction.objectStore(STORE_NAME).get(STATE_KEY);
-      request.onsuccess = () => resolve(migrateAppState(request.result));
-      request.onerror = () => reject(request.error ?? new Error("Unable to read IndexedDB"));
+      const store = transaction.objectStore(STORE_NAME);
+      const stateRequest = store.get(STATE_KEY);
+      const markerRequest = store.get(RESET_MARKER_KEY);
+      transaction.oncomplete = () => {
+        try {
+          const state = migrateAppState(stateRequest.result);
+          if (stateRequest.result !== undefined && stateRequest.result !== null && !state) {
+            reject(new Error("IndexedDB contains an unreadable app state"));
+            return;
+          }
+          const markerGeneration = parseStoredGeneration(markerRequest.result);
+          resolve({
+            state,
+            generation: newestStorageGeneration([
+              markerGeneration,
+              ...(state ? [state.storageGeneration] : []),
+            ]),
+          });
+        } catch (error) {
+          reject(error);
+        }
+      };
+      transaction.onerror = () => reject(transaction.error ?? new Error("Unable to read IndexedDB"));
       transaction.onabort = () => reject(transaction.error ?? new Error("IndexedDB read aborted"));
     });
   } finally {
@@ -765,30 +986,48 @@ async function readIndexedState(): Promise<AppState | null> {
   }
 }
 
-async function writeIndexedState(state: AppState): Promise<void> {
+async function writeIndexedReplica(state: AppState): Promise<ReplicaWriteResult> {
   const database = await openDatabase();
   try {
-    await new Promise<void>((resolve, reject) => {
+    return await new Promise<ReplicaWriteResult>((resolve, reject) => {
       const transaction = database.transaction(STORE_NAME, "readwrite");
-      transaction.objectStore(STORE_NAME).put(state, STATE_KEY);
-      transaction.oncomplete = () => resolve();
+      const store = transaction.objectStore(STORE_NAME);
+      const markerRequest = store.get(RESET_MARKER_KEY);
+      const stateRequest = store.get(STATE_KEY);
+      let activeGeneration = LEGACY_STORAGE_GENERATION;
+      let saved = false;
+      let persistedState: AppState | null = null;
+      let handlerError: unknown;
+      stateRequest.onsuccess = () => {
+        try {
+          activeGeneration = parseStoredGeneration(markerRequest.result);
+          const storedState = migrateAppState(stateRequest.result);
+          if (storedState) {
+            activeGeneration = newestStorageGeneration([activeGeneration, storedState.storageGeneration]);
+          }
+          const order = compareStorageGenerations(state.storageGeneration, activeGeneration);
+          if (order < 0) {
+            persistedState = storedState?.storageGeneration === activeGeneration ? storedState : null;
+            return;
+          }
+          if (order > 0) {
+            store.put(state.storageGeneration, RESET_MARKER_KEY);
+            activeGeneration = state.storageGeneration;
+          }
+          persistedState = order === 0
+            && storedState?.storageGeneration === state.storageGeneration
+            ? mergeAppStateReplicas(storedState, state)
+            : state;
+          store.put(persistedState, STATE_KEY);
+          saved = true;
+        } catch (error) {
+          handlerError = error;
+          transaction.abort();
+        }
+      };
+      transaction.oncomplete = () => resolve({ saved, activeGeneration, state: persistedState });
       transaction.onerror = () => reject(transaction.error ?? new Error("Unable to save IndexedDB"));
-      transaction.onabort = () => reject(transaction.error ?? new Error("IndexedDB write aborted"));
-    });
-  } finally {
-    database.close();
-  }
-}
-
-async function removeIndexedState(): Promise<void> {
-  const database = await openDatabase();
-  try {
-    await new Promise<void>((resolve, reject) => {
-      const transaction = database.transaction(STORE_NAME, "readwrite");
-      transaction.objectStore(STORE_NAME).delete(STATE_KEY);
-      transaction.oncomplete = () => resolve();
-      transaction.onerror = () => reject(transaction.error ?? new Error("Unable to reset IndexedDB"));
-      transaction.onabort = () => reject(transaction.error ?? new Error("IndexedDB reset aborted"));
+      transaction.onabort = () => reject(handlerError ?? transaction.error ?? new Error("IndexedDB write aborted"));
     });
   } finally {
     database.close();
@@ -814,41 +1053,265 @@ function broadcastStoredState(state: AppState): void {
   }
 }
 
-export async function loadAppState(): Promise<AppState> {
-  const localState = readLocalState();
-  let indexedState: AppState | null = null;
-  try {
-    indexedState = await readIndexedState();
-  } catch {
-    // Safari private mode and embedded browsers can expose IndexedDB but reject operations.
-  }
+function stateAtGeneration(replica: StorageReplica | null, generation: string): AppState | null {
+  if (!replica?.state) return null;
+  if (compareStorageGenerations(replica.generation, generation) !== 0) return null;
+  return compareStorageGenerations(replica.state.storageGeneration, generation) === 0
+    ? replica.state
+    : null;
+}
 
-  const newest = reconcileStoredStates(indexedState, localState);
-  if (!newest) return cloneDefaultState();
-  if (newest !== localState) writeLocalState(newest);
-  if (newest !== indexedState) {
-    try { await writeIndexedState(newest); } catch { /* localStorage remains the valid replica */ }
+function resolveReplicas(
+  localReplica: StorageReplica | null,
+  indexedReplica: StorageReplica | null,
+  extraGenerations: readonly string[] = [],
+): { generation: string; state: AppState } {
+  const generation = newestStorageGeneration([
+    ...extraGenerations,
+    ...(localReplica ? [localReplica.generation] : []),
+    ...(indexedReplica ? [indexedReplica.generation] : []),
+  ]);
+  const localState = stateAtGeneration(localReplica, generation);
+  const indexedState = stateAtGeneration(indexedReplica, generation);
+  return {
+    generation,
+    state: reconcileStoredStates(indexedState, localState) ?? cloneDefaultState(generation),
+  };
+}
+
+async function readReplicasBestEffort(): Promise<{ local: StorageReplica | null; indexed: StorageReplica | null }> {
+  let local: StorageReplica | null = null;
+  let indexed: StorageReplica | null = null;
+  try { local = readLocalReplica(); } catch { /* The other replica may still be usable. */ }
+  try { indexed = await readIndexedReplica(); } catch { /* Safari private mode may reject IndexedDB. */ }
+  return { local, indexed };
+}
+
+export async function loadAppState(): Promise<AppState> {
+  const replicas = await readReplicasBestEffort();
+  const resolved = resolveReplicas(replicas.local, replicas.indexed);
+  try {
+    return (await saveAppState(resolved.state)).state;
+  } catch {
+    return resolved.state;
   }
-  return newest;
+}
+
+export interface RecoveryAppStateResult {
+  state: AppState;
+  complete: boolean;
+  unreadableReplicas: Array<"localStorage" | "IndexedDB">;
+}
+
+/**
+ * Reads both replicas for a user-requested recovery export without masking a
+ * failure as a complete backup. Unlike normal startup, this does not rewrite
+ * either storage while the application is in its fatal-error state.
+ */
+export async function loadRecoveryAppState(): Promise<RecoveryAppStateResult> {
+  const unreadableReplicas: RecoveryAppStateResult["unreadableReplicas"] = [];
+  let localReplica: StorageReplica | null = null;
+  let indexedReplica: StorageReplica | null = null;
+  try { localReplica = readLocalReplica(); } catch { unreadableReplicas.push("localStorage"); }
+  try { indexedReplica = await readIndexedReplica(); } catch { unreadableReplicas.push("IndexedDB"); }
+
+  if (!localReplica && !indexedReplica) {
+    throw new Error("No readable app-state replica is available for recovery");
+  }
+  const resolved = resolveReplicas(localReplica, indexedReplica);
+  return {
+    state: resolved.state,
+    complete: unreadableReplicas.length === 0,
+    unreadableReplicas,
+  };
 }
 
 export interface SaveAppStateResult {
   localSaved: boolean;
   indexedSaved: boolean;
+  /** State that actually won after checking durable reset markers. */
+  state: AppState;
 }
 
-export async function saveAppState(state: AppState): Promise<SaveAppStateResult> {
-  const normalized = migrateAppState(state) ?? cloneDefaultState();
-  const localSaved = writeLocalState(normalized);
-  let indexedSaved = false;
-  try {
-    await writeIndexedState(normalized);
-    indexedSaved = true;
-  } catch (error) {
-    if (!localSaved) throw error;
+function sameStateClock(left: AppState, right: AppState): boolean {
+  return left.storageGeneration === right.storageGeneration
+    && left.stateRevision === right.stateRevision
+    && APP_STATE_DATA_KEYS.every((key) => (
+      left.fieldRevisions[key] === right.fieldRevisions[key]
+      && left.fieldMutationIds[key] === right.fieldMutationIds[key]
+    ));
+}
+
+function sameStateSnapshot(left: AppState, right: AppState): boolean {
+  return sameStateClock(left, right)
+    && APP_STATE_DATA_KEYS.every((key) => (
+      stableValueFingerprint(left[key]) === stableValueFingerprint(right[key])
+    ));
+}
+
+/** True when persisting `persisted` also durably covers `requested`. */
+function stateCovers(persisted: AppState, requested: AppState): boolean {
+  const generationOrder = compareStorageGenerations(persisted.storageGeneration, requested.storageGeneration);
+  if (generationOrder !== 0) return generationOrder > 0;
+  return sameStateSnapshot(mergeAppStateReplicas(requested, persisted), persisted);
+}
+
+async function performSaveAppState(state: AppState): Promise<SaveAppStateResult> {
+  const candidate = migrateAppState(state) ?? cloneDefaultState();
+  let replicas = await readReplicasBestEffort();
+  let resolved = resolveReplicas(replicas.local, replicas.indexed, [candidate.storageGeneration]);
+  if (compareStorageGenerations(candidate.storageGeneration, resolved.generation) === 0) {
+    resolved.state = mergeAppStateReplicas(candidate, resolved.state);
   }
-  if (localSaved || indexedSaved) broadcastStoredState(normalized);
-  return { localSaved, indexedSaved };
+
+  let localResult: ReplicaWriteResult = { saved: false, activeGeneration: LEGACY_STORAGE_GENERATION, state: null };
+  let indexedResult: ReplicaWriteResult = { saved: false, activeGeneration: LEGACY_STORAGE_GENERATION, state: null };
+  let indexedError: unknown;
+
+  // A reset racing this save may advance a marker between the initial read and
+  // the write. Re-resolve a bounded number of times; markers are monotonic, so
+  // even a final losing state remains inert and cannot resurrect user data.
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    localResult = writeLocalReplica(resolved.state);
+    indexedError = undefined;
+    try {
+      indexedResult = await writeIndexedReplica(resolved.state);
+    } catch (error) {
+      indexedResult = { saved: false, activeGeneration: LEGACY_STORAGE_GENERATION, state: null };
+      indexedError = error;
+    }
+    // IndexedDB is asynchronous: another tab may replace the synchronous
+    // fallback while its transaction is pending. Re-prove local durability
+    // before treating that fallback as the successful replica.
+    if (!indexedResult.saved) localResult = writeLocalReplica(resolved.state);
+
+    const observedGeneration = newestStorageGeneration([
+      resolved.generation,
+      localResult.activeGeneration,
+      indexedResult.activeGeneration,
+    ]);
+    if (compareStorageGenerations(observedGeneration, resolved.generation) > 0) {
+      replicas = await readReplicasBestEffort();
+      resolved = resolveReplicas(replicas.local, replicas.indexed, [observedGeneration]);
+      continue;
+    }
+
+    const persistedState = reconcileStoredStates(indexedResult.state, localResult.state);
+    if (!persistedState) break;
+    const convergedState = mergeAppStateReplicas(resolved.state, persistedState);
+    if (sameStateClock(convergedState, resolved.state)) {
+      resolved.state = convergedState;
+      break;
+    }
+    resolved = { generation: convergedState.storageGeneration, state: convergedState };
+  }
+
+  if (!localResult.saved && !indexedResult.saved) {
+    throw indexedError instanceof Error ? indexedError : new Error("Unable to save local app state");
+  }
+  broadcastStoredState(resolved.state);
+  return { localSaved: localResult.saved, indexedSaved: indexedResult.saved, state: resolved.state };
+}
+
+interface PendingSaveRequest {
+  target: AppState;
+  resolve: (result: SaveAppStateResult) => void;
+  reject: (error: unknown) => void;
+}
+
+let pendingSaveState: AppState | null = null;
+let pendingSaveRequests: PendingSaveRequest[] = [];
+let saveWriterRunning = false;
+let saveDrainScheduled = false;
+
+function coalesceSaveTarget(current: AppState | null, candidate: AppState): AppState {
+  return current ? mergeAppStateReplicas(current, candidate) : candidate;
+}
+
+function settleCoveredSaveRequests(result: SaveAppStateResult): void {
+  const remaining: PendingSaveRequest[] = [];
+  for (const request of pendingSaveRequests) {
+    if (!stateCovers(result.state, request.target)) {
+      remaining.push(request);
+      continue;
+    }
+    request.resolve(result);
+  }
+  pendingSaveRequests = remaining;
+}
+
+function coalescedRequestedState(requests: readonly PendingSaveRequest[]): AppState | null {
+  let state: AppState | null = null;
+  for (const request of requests) {
+    state = coalesceSaveTarget(state, request.target);
+  }
+  return state;
+}
+
+async function drainSaveQueue(): Promise<void> {
+  if (saveWriterRunning) return;
+  saveWriterRunning = true;
+  try {
+    while (pendingSaveState) {
+      const target = pendingSaveState;
+      pendingSaveState = null;
+      try {
+        const result = await performSaveAppState(target);
+        settleCoveredSaveRequests(result);
+        if (pendingSaveState && stateCovers(result.state, pendingSaveState)) pendingSaveState = null;
+        if (pendingSaveRequests.length) {
+          const requested = coalescedRequestedState(pendingSaveRequests);
+          if (requested) pendingSaveState = coalesceSaveTarget(pendingSaveState, requested);
+        }
+      } catch (error) {
+        const arrivedWhileWriting = pendingSaveState;
+        pendingSaveState = null;
+        if (arrivedWhileWriting) {
+          const requested = coalescedRequestedState(pendingSaveRequests);
+          pendingSaveState = coalesceSaveTarget(target, arrivedWhileWriting);
+          if (requested) pendingSaveState = coalesceSaveTarget(pendingSaveState, requested);
+          continue;
+        }
+        const rejected = pendingSaveRequests;
+        pendingSaveRequests = [];
+        for (const request of rejected) request.reject(error);
+      }
+    }
+  } finally {
+    saveWriterRunning = false;
+    if (pendingSaveState) scheduleSaveDrain();
+  }
+}
+
+function scheduleSaveDrain(): void {
+  if (saveWriterRunning || saveDrainScheduled) return;
+  saveDrainScheduled = true;
+  void Promise.resolve().then(() => {
+    saveDrainScheduled = false;
+    return drainSaveQueue();
+  });
+}
+
+/**
+ * Keeps localStorage as the synchronous fallback while coalescing IndexedDB
+ * work. A caller resolves only after a durable snapshot dominates its state.
+ */
+export function saveAppState(state: AppState): Promise<SaveAppStateResult> {
+  const candidate = migrateAppState(state) ?? cloneDefaultState();
+  const localResult = writeLocalReplica(candidate);
+  const target = localResult.state
+    ? mergeAppStateReplicas(candidate, localResult.state)
+    : candidate;
+  pendingSaveState = coalesceSaveTarget(pendingSaveState, target);
+  const operation = new Promise<SaveAppStateResult>((resolve, reject) => {
+    pendingSaveRequests.push({
+      target,
+      resolve,
+      reject,
+    });
+  });
+  scheduleSaveDrain();
+  return operation;
 }
 
 /** Receives the newest state written by another tab without creating a save loop. */
@@ -859,7 +1322,12 @@ export function watchForStoredState(onState: (state: AppState) => void): () => v
     if (state) onState(state);
   };
   const onStorage = (event: StorageEvent) => {
-    if (event.key !== LOCAL_STORAGE_KEY || !event.newValue) return;
+    if (!event.newValue) return;
+    if (event.key === LOCAL_RESET_MARKER_KEY) {
+      void loadAppState().then(onState).catch(() => undefined);
+      return;
+    }
+    if (event.key !== LOCAL_STORAGE_KEY) return;
     try { deliver(JSON.parse(event.newValue) as unknown); } catch { /* ignore malformed external writes */ }
   };
   window.addEventListener("storage", onStorage);
@@ -879,13 +1347,39 @@ export function watchForStoredState(onState: (state: AppState) => void): () => v
   };
 }
 
+function isResetTombstone(state: AppState): boolean {
+  const mutationId = `reset:${state.storageGeneration}`;
+  return state.stateRevision === 0
+    && APP_STATE_DATA_KEYS.every((key) => (
+      state.fieldRevisions[key] === 0
+      && state.fieldMutationIds[key] === mutationId
+      && stableValueFingerprint(state[key]) === stableValueFingerprint(DEFAULT_APP_STATE[key])
+    ));
+}
+
 export async function resetAppState(): Promise<void> {
-  const localReset = removeLocalState();
-  try {
-    await removeIndexedState();
-  } catch (error) {
-    if (!localReset) throw error;
+  const replicas = await readReplicasBestEffort();
+  const seenGenerations = [
+    ...(replicas.local ? [replicas.local.generation] : []),
+    ...(replicas.indexed ? [replicas.indexed.generation] : []),
+  ];
+  // The separate marker is the durable tombstone. Old tabs cannot outrun it
+  // with a field clock (or MAX_SAFE_INTEGER); revisions restart safely at zero.
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const storageGeneration = nextBarrierStorageGeneration(seenGenerations, "reset");
+    const mutationId = `reset:${storageGeneration}`;
+    const resetState = createState({
+      ...DEFAULT_APP_STATE,
+      storageGeneration,
+      stateRevision: 0,
+      fieldRevisions: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, 0])) as AppStateFieldRevisions,
+      fieldMutationIds: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, mutationId])) as AppStateFieldMutationIds,
+    });
+    const result = await saveAppState(resetState);
+    if (result.state.storageGeneration === storageGeneration || isResetTombstone(result.state)) return;
+    seenGenerations.push(result.state.storageGeneration);
   }
+  throw new Error("A newer storage generation prevented the reset from converging");
 }
 
 export const BACKUP_FORMAT = "inflamm-menu-backup" as const;
@@ -908,12 +1402,12 @@ export function exportAppState(state: AppState, exportedAt = new Date().toISOStr
   return `${JSON.stringify(backup, null, 2)}\n`;
 }
 
-const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
+export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
 const RECOGNIZED_STATE_KEYS = new Set([
   "version", "profile", "currentPlan", "plan", "upcomingPlan", "favoriteRecipeIds", "favorites",
   "history", "checkedShoppingItemIds", "checkedShoppingIds", "pantryIngredientIds", "pantryIds",
   "pantryAmounts", "recipeNotes", "shoppingCategoryOrder", "actualSpend", "customRecipes",
-  "textScale", "remindersEnabled", "onboardingCompleted", "stateRevision", "fieldRevisions", "fieldMutationIds",
+  "textScale", "remindersEnabled", "onboardingCompleted", "storageGeneration", "stateRevision", "fieldRevisions", "fieldMutationIds",
 ]);
 
 const CURRENT_BACKUP_KEYS = [
@@ -979,6 +1473,7 @@ function hasCompleteCurrentStateShape(value: Record<string, unknown>): boolean {
   const preferencesAreValid = (value.textScale === "normal" || value.textScale === "large")
     && typeof value.remindersEnabled === "boolean"
     && typeof value.onboardingCompleted === "boolean"
+    && (value.storageGeneration === undefined || parseStorageGeneration(value.storageGeneration) !== null)
     && Number.isSafeInteger(value.stateRevision)
     && Number(value.stateRevision) >= 0;
   return requiredKeysArePresent
@@ -1043,6 +1538,14 @@ export function importAppState(raw: string): AppState {
   const migrated = migrateAppState(candidate);
   if (!migrated) throw new Error("Sauvegarde incomplète ou version incompatible.");
   return migrated;
+}
+
+/** Rejects oversized files before allocating and decoding their full contents. */
+export async function importAppStateFile(file: Pick<File, "size" | "text">): Promise<AppState> {
+  if (file.size > MAX_BACKUP_BYTES) {
+    throw new Error("Sauvegarde trop volumineuse : la limite est de 8 Mo.");
+  }
+  return importAppState(await file.text());
 }
 
 /**

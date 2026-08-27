@@ -24,7 +24,7 @@ for (const entry of mapping.ingredients) {
   assert.ok(["validated", "caution"].includes(entry.review_status), `${entry.ingredient_id}: mapping non relu`);
 }
 
-const result = validateCatalogue(final);
+const result = validateCatalogue(final, { taxonomy: "legacy" });
 assert.equal(result.schemaVersion, "2.1.0");
 assert.equal(result.recipeCount, 25);
 assert.equal(final.meta.status, "editorial-validated");

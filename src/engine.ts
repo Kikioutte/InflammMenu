@@ -5,6 +5,7 @@ import type {
   PantryAmount,
   PlannedMeal,
   Recipe,
+  Season,
   ShoppingItem,
   UserProfile,
   WeeklyPlan,
@@ -25,6 +26,8 @@ import {
 } from "./substitutions.ts";
 import { canonicalAllergen } from "./allergens.ts";
 
+type PlanningSeason = Exclude<Season, "all-year">;
+
 export interface GeneratePlanOptions {
   /** Stable input used to make otherwise equivalent choices reproducible. */
   seed?: string | number;
@@ -32,7 +35,7 @@ export interface GeneratePlanOptions {
   startsOn?: string;
   /** Mainly useful when importing a plan. Defaults to midnight on startsOn. */
   generatedAt?: string;
-  season?: "spring" | "summer" | "autumn" | "winter";
+  season?: PlanningSeason;
   /**
    * Meals the user asked to keep. Their slot is not regenerated, their recipe
    * stays out of the candidate pool, and the budget pass never replaces them.
@@ -67,19 +70,25 @@ export interface PlanSummary {
 }
 
 const DEFAULT_START = "2026-08-03";
+
+/** Meteorological season of the plan's Monday, read without timezone conversion. */
+export function seasonForIsoDate(startsOn: string): PlanningSeason {
+  const match = /^\d{4}-(\d{2})-\d{2}$/.exec(startsOn);
+  const parsedMonth = match ? Number(match[1]) : Number.NaN;
+  const month = parsedMonth >= 1 && parsedMonth <= 12 ? parsedMonth : 8;
+  if (month === 12 || month <= 2) return "winter";
+  if (month <= 5) return "spring";
+  if (month <= 8) return "summer";
+  return "autumn";
+}
+
 const TONIGHT_FORM_REPEAT_PENALTY = 24;
 const TONIGHT_RECOMMENDATION_PAGE_SIZE = 6;
 const TAGS = {
-  legume: [
-    "legume", "legumes", "legumineuse", "legumineuses",
-    "lentille", "lentilles", "pois-chiche", "pois-chiches",
-    "pois-casse", "pois-casses", "haricot", "haricots",
-    "feve", "feves", "soja", "tofu", "tempeh",
-  ],
-  fish: ["fish", "poisson", "saumon", "sardine", "maquereau", "cabillaud", "thon"],
   wholeGrain: ["whole-grain", "cereale-complete", "cereales-completes", "complet"],
   nutSeed: ["nuts-seeds", "noix-graines", "noix", "graine", "graines"],
 } as const;
+const WEEKLY_TARGET_TAGS = { legume: "pulse", fish: "finfish" } as const;
 const NUT_OR_SEED_INGREDIENTS = new Set([
   "almond",
   "almond-drink",
@@ -110,8 +119,9 @@ function normalize(value: string): string {
 }
 
 const NORMALIZED_TAGS = new WeakMap<Recipe, readonly string[]>();
+const CLASSIFICATION_TAGS = new WeakMap<Recipe, readonly string[]>();
 const NORMALIZED_TAG_CANDIDATES = new Map<string, ReadonlySet<string>>();
-const NORMALIZED_INGREDIENT_IDS = new WeakMap<Recipe, readonly string[]>();
+const REQUIRED_INGREDIENT_IDS = new WeakMap<Recipe, readonly string[]>();
 const NUT_OR_SEED_CACHE = new WeakMap<Recipe, boolean>();
 const RECIPE_ALLERGEN_CACHE = new WeakMap<Recipe, string[]>();
 
@@ -123,11 +133,25 @@ function normalizedTagsOf(recipe: Recipe): readonly string[] {
   return tags;
 }
 
-function ingredientIdsOf(recipe: Recipe): readonly string[] {
-  const cached = NORMALIZED_INGREDIENT_IDS.get(recipe);
+/** Recipe-level tags with mechanically generated tags from optional ingredients removed. */
+function classificationTagsOf(recipe: Recipe): readonly string[] {
+  const cached = CLASSIFICATION_TAGS.get(recipe);
   if (cached) return cached;
-  const ids = recipe.ingredients.map((ingredient) => canonicalIngredientId(ingredient.id));
-  NORMALIZED_INGREDIENT_IDS.set(recipe, ids);
+  const optionalIngredientTags = new Set(recipe.ingredients
+    .filter((ingredient) => ingredient.optional)
+    .map((ingredient) => normalize(ingredient.name)));
+  const tags = normalizedTagsOf(recipe).filter((tag) => !optionalIngredientTags.has(tag));
+  CLASSIFICATION_TAGS.set(recipe, tags);
+  return tags;
+}
+
+function requiredIngredientIdsOf(recipe: Recipe): readonly string[] {
+  const cached = REQUIRED_INGREDIENT_IDS.get(recipe);
+  if (cached) return cached;
+  const ids = recipe.ingredients
+    .filter((ingredient) => !ingredient.optional)
+    .map((ingredient) => canonicalIngredientId(ingredient.id));
+  REQUIRED_INGREDIENT_IDS.set(recipe, ids);
   return ids;
 }
 
@@ -138,9 +162,13 @@ function hasTag(recipe: Recipe, candidates: readonly string[]): boolean {
     wanted = new Set(candidates.map(normalize));
     NORMALIZED_TAG_CANDIDATES.set(key, wanted);
   }
-  return normalizedTagsOf(recipe).some((tag) =>
+  return classificationTagsOf(recipe).some((tag) =>
     [...wanted].some((candidate) => tag === candidate || tag.startsWith(`${candidate}-`)),
   );
+}
+
+function hasWeeklyTarget(recipe: Recipe, target: (typeof WEEKLY_TARGET_TAGS)[keyof typeof WEEKLY_TARGET_TAGS]): boolean {
+  return classificationTagsOf(recipe).includes(target);
 }
 
 /** Broad serving form used only to avoid a visibly monotonous day. */
@@ -169,7 +197,8 @@ export function recipeForm(recipe: Recipe): RecipeForm {
 function hasNutOrSeed(recipe: Recipe): boolean {
   const cached = NUT_OR_SEED_CACHE.get(recipe);
   if (cached !== undefined) return cached;
-  const result = hasTag(recipe, TAGS.nutSeed) || ingredientIdsOf(recipe).some((id) => NUT_OR_SEED_INGREDIENTS.has(normalize(id)));
+  const result = hasTag(recipe, TAGS.nutSeed)
+    || requiredIngredientIdsOf(recipe).some((id) => NUT_OR_SEED_INGREDIENTS.has(normalize(id)));
   NUT_OR_SEED_CACHE.set(recipe, result);
   return result;
 }
@@ -337,7 +366,7 @@ export function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
     recipe.prepMinutes <= profile.maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
     !recipeAllergens(recipe).some((allergen) => allergies.has(allergen)) &&
-    !recipe.ingredients.some((ingredient) => excluded.has(canonicalIngredientId(ingredient.id)))
+    !recipe.ingredients.some((ingredient) => !ingredient.optional && excluded.has(canonicalIngredientId(ingredient.id)))
   );
 }
 
@@ -367,11 +396,13 @@ function plannedMealIsAllowedForSlot(meal: PlannedMeal, recipe: Recipe, profile:
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
   return (
     !(profile.dislikedRecipeIds ?? []).includes(recipe.id) &&
+    recipe.mealTypes.includes(meal.mealType) &&
     recipe.diet.includes(profile.diet) &&
     recipe.prepMinutes <= maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
     !plannedMealAllergens(recipe, meal).some((allergen) => allergies.has(allergen)) &&
-    !ingredientsForPlannedMeal(recipe, meal, 1).some((ingredient) => excluded.has(canonicalIngredientId(ingredient.id)))
+    !ingredientsForPlannedMeal(recipe, meal, 1)
+      .some((ingredient) => !ingredient.optional && excluded.has(canonicalIngredientId(ingredient.id)))
   );
 }
 
@@ -393,7 +424,7 @@ export interface TonightOptions {
   portions: number;
   pantryIngredientIds?: readonly string[];
   favoriteRecipeIds?: readonly string[];
-  season?: "spring" | "summer" | "autumn" | "winter";
+  season?: PlanningSeason;
   limit?: number;
 }
 
@@ -439,7 +470,8 @@ export function diagnoseRecipeCompatibility(
     disliked: disliked.has(recipe.id),
     diet: !recipe.diet.includes(profile.diet),
     equipment: recipe.equipment.some((item) => !profile.equipment.includes(item)),
-    excludedIngredients: recipe.ingredients.some((ingredient) => excluded.has(canonicalIngredientId(ingredient.id))),
+    excludedIngredients: recipe.ingredients.some((ingredient) => !ingredient.optional
+      && excluded.has(canonicalIngredientId(ingredient.id))),
     time: recipe.prepMinutes > maxPrepMinutes,
   });
   const evaluated = candidates.map((recipe) => ({ recipe, checks: checks(recipe) }));
@@ -499,7 +531,7 @@ export function recommendTonight(
     .filter((recipe) => recipe.mealTypes.includes(options.mealType)
       && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes }))
     .map((recipe) => {
-      const pantryMatches = ingredientIdsOf(recipe).filter((id) => pantry.has(shoppingIdentityFor(id).shoppingId)).length;
+      const pantryMatches = requiredIngredientIdsOf(recipe).filter((id) => pantry.has(shoppingIdentityFor(id).shoppingId)).length;
       const seasonal = !options.season || recipe.seasons.includes(options.season) || recipe.seasons.includes("all-year");
       const score = pantryMatches * 120
         + (favorites.has(recipe.id) ? 80 : 0)
@@ -548,16 +580,23 @@ export function recommendTonight(
 }
 
 function ingredientReuseFromSet(recipe: Recipe, used: ReadonlySet<string>): number {
-  return ingredientIdsOf(recipe).reduce((total, id) => total + (used.has(id) ? 1 : 0), 0);
+  return requiredIngredientIdsOf(recipe).reduce((total, id) => total + (used.has(id) ? 1 : 0), 0);
 }
 
 function ingredientReuse(recipe: Recipe, selected: readonly Recipe[]): number {
   if (selected.length === 0) return 0;
-  return ingredientReuseFromSet(recipe, new Set(selected.flatMap(ingredientIdsOf)));
+  return ingredientReuseFromSet(recipe, new Set(selected.flatMap(requiredIngredientIdsOf)));
 }
 
 function tagCount(recipes: readonly Recipe[], candidates: readonly string[]): number {
   return recipes.reduce((total, recipe) => total + (hasTag(recipe, candidates) ? 1 : 0), 0);
+}
+
+function weeklyTargetCount(
+  recipes: readonly Recipe[],
+  target: (typeof WEEKLY_TARGET_TAGS)[keyof typeof WEEKLY_TARGET_TAGS],
+): number {
+  return recipes.reduce((total, recipe) => total + (hasWeeklyTarget(recipe, target) ? 1 : 0), 0);
 }
 
 function totalPlanCost(meals: readonly PlannedMeal[], byId: ReadonlyMap<string, Recipe>): number {
@@ -599,7 +638,7 @@ export function generateWeeklyPlan(
 ): WeeklyPlan {
   const seed = options.seed ?? "inflamm-menu-v1";
   const startsOn = options.startsOn ?? DEFAULT_START;
-  const season = options.season ?? "summer";
+  const season = options.season ?? seasonForIsoDate(startsOn);
   const mealTypes = requiredMealTypes(profile.mealsPerDay);
   const slots = Array.from({ length: 7 }, (_, dayIndex) =>
     mealTypes.map((mealType) => ({ dayIndex, mealType })),
@@ -675,12 +714,45 @@ export function generateWeeklyPlan(
       continue;
     }
 
-    const legumeDeficit = Math.max(0, targets.legumeMeals - tagCount(selected, TAGS.legume));
-    const fishDeficit = profile.diet === "classic" ? Math.max(0, targets.fishMeals - tagCount(selected, TAGS.fish)) : 0;
+    const slotKey = `${slot.dayIndex}-${slot.mealType}` as const;
+    const slotCandidates = eligibleBySlot.get(slotKey) ?? [];
     const portions = portionsForSlot(profile, slot.dayIndex, slot.mealType);
-    const candidates = (eligibleBySlot.get(`${slot.dayIndex}-${slot.mealType}`) ?? [])
+    if (slotIsSkipped(profile, slot.dayIndex, slot.mealType)) {
+      if (slotCandidates.length === 0) {
+        const diagnostic = diagnoseRecipeCompatibility(recipes, profile, {
+          mealType: slot.mealType,
+          maxPrepMinutes: dayConstraintOf(profile, slot.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes,
+        });
+        throw new RecipeCompatibilityError(
+          `Aucune recette compatible pour le jour ${slot.dayIndex + 1}.`,
+          diagnostic,
+          slot.mealType,
+          slot.dayIndex,
+        );
+      }
+      const displayRecipe = selectSeededWeeklyCandidate(
+        slotCandidates,
+        () => 0,
+        seed,
+        `${slotKey}-skipped`,
+      );
+      meals.push({
+        id: `day-${slot.dayIndex}-${slot.mealType}`,
+        dayIndex: slot.dayIndex as PlannedMeal["dayIndex"],
+        mealType: slot.mealType,
+        recipeId: displayRecipe.id,
+        portions,
+        source: "generated",
+        skipped: true,
+      });
+      continue;
+    }
+
+    const legumeDeficit = Math.max(0, targets.legumeMeals - weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.legume));
+    const fishDeficit = profile.diet === "classic" ? Math.max(0, targets.fishMeals - weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.fish)) : 0;
+    const candidates = slotCandidates
       .filter((recipe) => !used.has(recipe.id));
-    const selectedIngredientIds = new Set(selected.flatMap(ingredientIdsOf));
+    const selectedIngredientIds = new Set(selected.flatMap(requiredIngredientIdsOf));
     const formsAlreadyServedToday = new Set(
       [
         ...meals.filter((meal) => meal.dayIndex === slot.dayIndex && !meal.skipped),
@@ -708,8 +780,8 @@ export function generateWeeklyPlan(
     const score = (recipe: Recipe): number => {
       const seasonal = recipe.seasons.includes(season) || recipe.seasons.includes("all-year");
       const targetScore =
-        (legumeDeficit > 0 && hasTag(recipe, TAGS.legume) ? 700 : 0) +
-        (fishDeficit > 0 && hasTag(recipe, TAGS.fish) ? 700 : 0);
+        (legumeDeficit > 0 && hasWeeklyTarget(recipe, WEEKLY_TARGET_TAGS.legume) ? 700 : 0) +
+        (fishDeficit > 0 && hasWeeklyTarget(recipe, WEEKLY_TARGET_TAGS.fish) ? 700 : 0);
       const qualityScore =
         (hasTag(recipe, TAGS.wholeGrain) ? 18 : 0) +
         (hasNutOrSeed(recipe) ? 14 : 0) +
@@ -744,7 +816,6 @@ export function generateWeeklyPlan(
       recipeId: selectedRecipe.id,
       portions,
       source: "generated",
-      ...(slotIsSkipped(profile, slot.dayIndex, slot.mealType) ? { skipped: true } : {}),
     });
   }
 
@@ -755,9 +826,12 @@ export function generateWeeklyPlan(
   let changed = true;
   while (currentCost > profile.weeklyBudget && changed) {
     changed = false;
-    const selectedNow = meals.map((meal) => byId.get(meal.recipeId)).filter((item): item is Recipe => Boolean(item));
-    const currentLegumes = tagCount(selectedNow, TAGS.legume);
-    const currentFish = tagCount(selectedNow, TAGS.fish);
+    const selectedNow = meals
+      .filter((meal) => !meal.skipped)
+      .map((meal) => byId.get(meal.recipeId))
+      .filter((item): item is Recipe => Boolean(item));
+    const currentLegumes = weeklyTargetCount(selectedNow, WEEKLY_TARGET_TAGS.legume);
+    const currentFish = weeklyTargetCount(selectedNow, WEEKLY_TARGET_TAGS.fish);
     let best:
       | { mealIndex: number; recipe: Recipe; saving: number }
       | undefined;
@@ -766,13 +840,13 @@ export function generateWeeklyPlan(
       | undefined;
 
     meals.forEach((meal, mealIndex) => {
-      if (meal.locked) return;
+      if (meal.locked || meal.skipped) return;
       const previous = byId.get(meal.recipeId);
       if (!previous) return;
       for (const candidate of eligibleBySlot.get(`${meal.dayIndex}-${meal.mealType}`) ?? []) {
         if (used.has(candidate.id)) continue;
-        const losesLegume = hasTag(previous, TAGS.legume) && !hasTag(candidate, TAGS.legume);
-        const losesFish = hasTag(previous, TAGS.fish) && !hasTag(candidate, TAGS.fish);
+        const losesLegume = hasWeeklyTarget(previous, WEEKLY_TARGET_TAGS.legume) && !hasWeeklyTarget(candidate, WEEKLY_TARGET_TAGS.legume);
+        const losesFish = hasWeeklyTarget(previous, WEEKLY_TARGET_TAGS.fish) && !hasWeeklyTarget(candidate, WEEKLY_TARGET_TAGS.fish);
         if (losesLegume && currentLegumes <= targets.legumeMeals) continue;
         if (profile.diet === "classic" && losesFish && currentFish <= targets.fishMeals) continue;
         const saving = (previous.costPerPortion - candidate.costPerPortion) * meal.portions;
@@ -823,8 +897,9 @@ export function getReplacementCandidates(
   const meal = plan.meals.find((item) => item.id === slotId);
   if (!meal) return [];
   const current = recipes.find((recipe) => recipe.id === meal.recipeId);
-  const usedIds = new Set(plan.meals.map((item) => item.recipeId));
+  const usedIds = new Set(plan.meals.filter((item) => !item.skipped).map((item) => item.recipeId));
   const normalizedReason = normalize(reason);
+  const season = seasonForIsoDate(plan.startsOn);
 
   return recipes
     .filter(
@@ -848,7 +923,7 @@ export function getReplacementCandidates(
         if (current && (normalizedReason.includes("autre") || normalizedReason.includes("different"))) {
           value -= ingredientReuse(recipe, [current]) * 8;
         }
-        value += (recipe.seasons.includes("summer") || recipe.seasons.includes("all-year")) ? 3 : 0;
+        value += (recipe.seasons.includes(season) || recipe.seasons.includes("all-year")) ? 3 : 0;
         return value;
       };
       return score(right) - score(left) || left.title.localeCompare(right.title, "fr");
@@ -863,7 +938,6 @@ export function replacePlannedMeal(
 ): WeeklyPlan {
   const replacementId = typeof replacement === "string" ? replacement : replacement.id;
   const allRecipes = typeof replacement === "string" ? recipes : [...recipes, replacement];
-  const recipeIds = new Set(plan.meals.filter((meal) => !meal.leftoverOf).map((meal) => meal.recipeId));
   const existing = plan.meals.find((meal) => meal.id === slotId);
   if (!existing) return plan;
   const replacementRecipe = typeof replacement === "string"
@@ -872,7 +946,10 @@ export function replacePlannedMeal(
   if (replacementRecipe && !replacementRecipe.mealTypes.includes(existing.mealType)) {
     throw new Error("Cette recette ne correspond pas au type du repas remplacé.");
   }
-  if (recipeIds.has(replacementId) && existing.recipeId !== replacementId) {
+  const usedByAnotherActiveMeal = plan.meals.some((meal) =>
+    meal.id !== existing.id && !meal.leftoverOf && !meal.skipped && meal.recipeId === replacementId,
+  );
+  if (usedByAnotherActiveMeal) {
     throw new Error("Cette recette est déjà utilisée dans la semaine.");
   }
 
@@ -976,8 +1053,23 @@ export function setMealSkipped(
   if (skipped && plan.meals.some((meal) => meal.leftoverOf === slotId && !meal.skipped)) {
     throw new Error("Ce plat sert de base à des restes : retirez-les avant de le passer hors foyer.");
   }
+  const duplicateActiveRecipe = !skipped && plan.meals.some((meal) =>
+    meal.id !== target.id && !meal.leftoverOf && !meal.skipped && meal.recipeId === target.recipeId,
+  );
+  const replacement = duplicateActiveRecipe
+    ? getReplacementCandidates(plan, slotId, recipes, plan.profileSnapshot, "different")[0]
+    : undefined;
+  if (duplicateActiveRecipe && !replacement) {
+    throw new Error("Aucune recette inutilisée et compatible ne permet de remettre ce repas au menu.");
+  }
   const meals = plan.meals.map((meal) => (meal.id === slotId
-    ? { ...meal, skipped, ...(skipped ? { completed: false, locked: false } : {}) }
+    ? {
+        ...meal,
+        recipeId: replacement?.id ?? meal.recipeId,
+        skipped,
+        ...(replacement ? { source: "replacement" as const, substitutions: undefined } : {}),
+        ...(skipped ? { completed: false, locked: false } : {}),
+      }
     : meal));
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
   const canRecalculate = meals.every((meal) => byId.has(meal.recipeId));
@@ -1285,7 +1377,7 @@ export function buildShoppingList(
       const culinaryId = canonicalIngredientId(ingredient.id);
       const identity = shoppingIdentityFor(culinaryId);
       const ingredientId = identity.shoppingId;
-      if (ingredient.pantryStaple || shoppingRuleFor(culinaryId)?.pantry_staple) continue;
+      if (ingredient.optional || ingredient.pantryStaple || shoppingRuleFor(culinaryId)?.pantry_staple) continue;
       const unit = ingredient.unit === "c_soupe" || ingredient.unit === "c_cafe" ? "ml" : ingredient.unit;
       const quantity = ingredient.unit === "c_soupe"
         ? ingredient.quantity * 15
@@ -1366,6 +1458,74 @@ export interface PlanReplayReport {
   /** Slots the archived week cannot fill, e.g. after switching to 3 meals a day. */
   missingSlots: number;
   canReplay: boolean;
+}
+
+export interface ActivePlanReport {
+  /** Meals whose recipe or substitutions no longer satisfy the active profile. */
+  blockedMeals: PlannedMeal[];
+  /** Required day/type slots absent from the active week. */
+  missingSlots: number;
+  /** Slots outside the complete two- or three-meal grid inferred from the plan. */
+  unexpectedSlots: number;
+  /** Grid inferred from the complete persisted slots, independent of a stale snapshot. */
+  inferredMealsPerDay: UserProfile["mealsPerDay"] | null;
+  canActivate: boolean;
+}
+
+/**
+ * Validates a plan that will become active without rebuilding it. Unlike an
+ * archived replay, an imported active week must already match one exact grid:
+ * seven lunches and dinners, plus either zero or seven breakfasts. The grid is
+ * inferred from the slots because older profile edits could update the stored
+ * snapshot without regenerating the week. Current profile safety stays strict.
+ */
+export function inspectActivePlan(
+  plan: WeeklyPlan | null | undefined,
+  recipes: readonly Recipe[],
+  profile: UserProfile,
+): ActivePlanReport {
+  if (!plan) {
+    return { blockedMeals: [], missingSlots: 0, unexpectedSlots: 0, inferredMealsPerDay: null, canActivate: false };
+  }
+  const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+  const breakfastCount = plan.meals.filter((meal) => meal.mealType === "breakfast").length;
+  const inferredMealsPerDay: UserProfile["mealsPerDay"] | null = breakfastCount === 0
+    ? 2
+    : breakfastCount === 7
+      ? 3
+      : null;
+  const requiredSlots = new Set(
+    Array.from({ length: 7 }, (_, dayIndex) =>
+      requiredMealTypes(inferredMealsPerDay ?? 2).map((mealType) => `${dayIndex}-${mealType}`),
+    ).flat(),
+  );
+  const seenSlots = new Set<string>();
+  const blockedMeals: PlannedMeal[] = [];
+  let unexpectedSlots = 0;
+
+  for (const meal of plan.meals) {
+    const slot = `${meal.dayIndex}-${meal.mealType}`;
+    if (!requiredSlots.has(slot) || seenSlots.has(slot)) {
+      unexpectedSlots += 1;
+      continue;
+    }
+    seenSlots.add(slot);
+    const recipe = byId.get(meal.recipeId);
+    if (!recipe || !plannedMealIsAllowedForSlot(meal, recipe, profile)) blockedMeals.push(meal);
+  }
+
+  const missingSlots = [...requiredSlots].filter((slot) => !seenSlots.has(slot)).length;
+  return {
+    blockedMeals,
+    missingSlots,
+    unexpectedSlots,
+    inferredMealsPerDay,
+    canActivate:
+      blockedMeals.length === 0 &&
+      missingSlots === 0 &&
+      unexpectedSlots === 0 &&
+      inferredMealsPerDay !== null,
+  };
 }
 
 /** Checks an archived week against the current profile before reusing it. */
@@ -1640,7 +1800,9 @@ export function formatShoppingListText(
   const footer = [
     remaining.length
       ? `${remaining.length} article${remaining.length > 1 ? "s" : ""} à acheter.`
-      : "Rien à acheter : tout est coché ou déjà en réserve.",
+      : items.length
+        ? "Rien à acheter : tout est coché ou déjà en réserve."
+        : "Aucun achat requis dans la liste générée.",
     removed ? `${removed} article${removed > 1 ? "s" : ""} déjà coché${removed > 1 ? "s" : ""} ou en réserve.` : "",
     "Quantités et prix indicatifs, à ajuster selon les produits.",
   ].filter(Boolean);
@@ -1686,6 +1848,7 @@ export function plantDiversityOf(plan: WeeklyPlan, recipes: readonly Recipe[]): 
     const recipe = byId.get(meal.recipeId);
     if (!recipe) continue;
     for (const ingredient of recipe.ingredients) {
+      if (ingredient.optional) continue;
       if (ingredient.category === "meat-fish") continue;
       const id = normalize(canonicalIngredientId(ingredient.id));
       const name = normalize(ingredient.name);
@@ -1703,7 +1866,10 @@ export function summarizePlan(
   profile: UserProfile = plan.profileSnapshot,
 ): PlanSummary {
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
-  const selected = plan.meals.map((meal) => byId.get(meal.recipeId)).filter((item): item is Recipe => Boolean(item));
+  const activeMeals = plan.meals.filter((meal) => !meal.skipped);
+  const selected = activeMeals
+    .map((meal) => byId.get(meal.recipeId))
+    .filter((item): item is Recipe => Boolean(item));
   // Leftovers are eaten, not cooked: they must not lower the average session time.
   const cooked = plan.meals
     .filter((meal) => !meal.leftoverOf && !meal.skipped)
@@ -1713,18 +1879,19 @@ export function summarizePlan(
     ? round(cooked.reduce((total, recipe) => total + recipe.prepMinutes, 0) / cooked.length, 1)
     : 0;
   const plantDiversity = plantDiversityOf(plan, recipes);
+  const season = seasonForIsoDate(plan.startsOn);
 
   return {
-    mealCount: plan.meals.length,
+    mealCount: activeMeals.length,
     cookingSessions: cooked.length,
     estimatedCost: plan.estimatedCost,
     averagePrepMinutes,
-    legumeMeals: tagCount(selected, TAGS.legume),
-    fishMeals: tagCount(selected, TAGS.fish),
+    legumeMeals: weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.legume),
+    fishMeals: weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.fish),
     wholeGrainMeals: tagCount(selected, TAGS.wholeGrain),
     nutOrSeedMeals: selected.filter(hasNutOrSeed).length,
     seasonalMeals: selected.filter(
-      (recipe) => recipe.seasons.includes("summer") || recipe.seasons.includes("all-year"),
+      (recipe) => recipe.seasons.includes(season) || recipe.seasons.includes("all-year"),
     ).length,
     plantDiversity: plantDiversity.count,
     plantIngredients: plantDiversity.ingredients,

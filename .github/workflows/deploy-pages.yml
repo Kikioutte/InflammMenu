@@ -1,22 +1,24 @@
-name: Deploy GitHub Pages
+name: Validate and deploy GitHub Pages
 
 on:
+  pull_request:
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: validate-deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
+  validate-build:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -32,26 +34,45 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate recipes, prompts, images and menu engine
+      - name: Audit production dependencies
+        run: npm run audit:production
+
+      - name: Validate data and unit tests
         run: npm run test:preview
 
-      - name: Build for GitHub Pages
+      - name: Install Chromium and WebKit for Playwright
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Test application journeys and mobile runtime
+        run: npm run test:browser
+
+      - name: Build alternative worker and test it
+        run: npm run test:sites
+
+      - name: Build GitHub Pages artifact
         run: npm run build:pages
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
+      - name: Test installed PWA, offline catalogue and multi-tab sync
+        run: npm run test:pwa:built
 
       - name: Upload site artifact
+        if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
         with:
           path: dist/pages
 
   deploy:
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name != 'pull_request' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    timeout-minutes: 15
+    needs: validate-build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

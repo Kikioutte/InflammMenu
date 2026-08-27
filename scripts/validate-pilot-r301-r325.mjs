@@ -5,7 +5,7 @@ import { validateCatalogue } from "./validate-catalogue.mjs";
 const root = new URL("../", import.meta.url);
 const pilot = JSON.parse(await readFile(new URL("research/pilot-r301-r325.draft.json", root), "utf8"));
 const concepts = JSON.parse(await readFile(new URL("research/recipes-r201-r350.json", root), "utf8")).filter(({ id }) => Number(id.slice(1)) >= 301 && Number(id.slice(1)) <= 325);
-const result = validateCatalogue(pilot);
+const result = validateCatalogue(pilot, { taxonomy: "legacy" });
 assert.equal(result.schemaVersion, "2.1.0"); assert.equal(result.recipeCount, 25);
 assert.deepEqual(pilot.recipes.map(({ id }) => id), concepts.map(({ id }) => id));
 const byId = new Map(concepts.map((c) => [c.id, c]));

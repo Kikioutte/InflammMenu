@@ -11,7 +11,7 @@ const concepts = JSON.parse(
   await readFile(new URL("research/recipes-r351-r500.json", root), "utf8"),
 ).filter(({ id }) => Number(id.slice(1)) >= 476 && Number(id.slice(1)) <= 500);
 
-const result = validateCatalogue(pilot);
+const result = validateCatalogue(pilot, { taxonomy: "legacy" });
 assert.equal(result.schemaVersion, "2.1.0");
 assert.equal(result.recipeCount, 25);
 assert.deepEqual(

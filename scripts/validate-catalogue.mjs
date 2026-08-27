@@ -1,10 +1,30 @@
 import { readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 
+import { CATALOGUE_SEASONS } from "./catalogue-seasons.mjs";
+import {
+  CANONICAL_CATALOGUE_REGIMES,
+  CATALOGUE_WEEKLY_TARGETS,
+  weeklyTargetsForCatalogueRecipe,
+} from "./catalogue-taxonomy.mjs";
+
 const dataUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
 
 const allowedSchemaVersions = new Set(["2.0.0", "2.1.0"]);
 const allowedReviewStatuses = new Set(["validated", "caution"]);
+const allowedCatalogueDiets = new Set([
+  "classique",
+  "low-fodmap",
+  "pescetarien",
+  "sans-fruits-a-coque",
+  "sans-gluten",
+  "sans-lactose",
+  "sans-porc",
+  "vegetalien",
+  "vegetarien",
+]);
+const allowedLegacyCatalogueDiets = new Set([...allowedCatalogueDiets, "volaille"]);
+const allowedCatalogueSeasons = new Set(CATALOGUE_SEASONS);
 const allowedMealTypes = new Set(["breakfast", "lunch", "dinner"]);
 const allowedDiets = new Set(["classic", "vegetarian", "no-pork"]);
 const allowedEquipment = new Set(["hob", "oven", "microwave", "blender", "toaster", "steamer"]);
@@ -36,6 +56,7 @@ const allowedAllergens = new Set([
 ]);
 const allowedProvenanceKinds = new Set(["nutrition", "cost", "inspiration", "safety"]);
 const allowedCreamiPrograms = new Set(["ICE CREAM", "LITE ICE CREAM", "SORBET", "GELATO", "FROZEN YOGURT"]);
+const allowedWeeklyTargets = new Set(CATALOGUE_WEEKLY_TARGETS);
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -80,11 +101,41 @@ function assertProvenance(provenance, label) {
   }
 }
 
-export function validateCatalogue(catalogue) {
+export function validateCatalogue(catalogue, { taxonomy = "publication" } = {}) {
+  assert(
+    taxonomy === "publication" || taxonomy === "legacy",
+    "taxonomy doit valoir publication ou legacy",
+  );
   assert(allowedSchemaVersions.has(catalogue.meta?.schema_version), "meta.schema_version doit valoir 2.0.0 ou 2.1.0");
   const isV21 = catalogue.meta.schema_version === "2.1.0";
+  // Legacy validation must be explicitly selected by callers that inspect the
+  // immutable research archives. Untrusted catalogue metadata can therefore
+  // never relax the closed production taxonomy.
+  const publicationTaxonomy = taxonomy === "publication";
   assert(Array.isArray(catalogue.recipes), "recipes doit être un tableau");
   assert(catalogue.meta.nombre_recettes === catalogue.recipes.length, "meta.nombre_recettes doit correspondre au catalogue");
+  if (catalogue.taxonomie_tags?.saisons !== undefined) {
+    assertArrayValues(catalogue.taxonomie_tags.saisons, allowedCatalogueSeasons, "taxonomie_tags.saisons");
+    assert(
+      catalogue.taxonomie_tags.saisons.length === allowedCatalogueSeasons.size
+        && new Set(catalogue.taxonomie_tags.saisons).size === allowedCatalogueSeasons.size,
+      "taxonomie_tags.saisons doit déclarer exactement les cinq saisons canoniques",
+    );
+  }
+  if (catalogue.taxonomie_tags?.regimes !== undefined) {
+    assertArrayValues(
+      catalogue.taxonomie_tags.regimes,
+      publicationTaxonomy ? allowedCatalogueDiets : allowedLegacyCatalogueDiets,
+      "taxonomie_tags.regimes",
+    );
+  }
+  if (publicationTaxonomy) {
+    assert(Array.isArray(catalogue.taxonomie_tags?.regimes), "taxonomie_tags.regimes: tableau requis");
+    assert(
+      JSON.stringify(catalogue.taxonomie_tags.regimes) === JSON.stringify(CANONICAL_CATALOGUE_REGIMES),
+      "taxonomie_tags.regimes doit déclarer exactement les régimes canoniques",
+    );
+  }
 
   const ids = new Set();
   const slugs = new Set();
@@ -104,9 +155,22 @@ export function validateCatalogue(catalogue) {
     );
     assert(Array.isArray(recipe.ingredients) && recipe.ingredients.length > 0, `${label}: ingrédients requis`);
     assert(Array.isArray(recipe.etapes) && recipe.etapes.length > 0, `${label}: étapes requises`);
+    assertArrayValues(recipe.regimes, publicationTaxonomy ? allowedCatalogueDiets : allowedLegacyCatalogueDiets, `${label}.regimes`);
+    if (publicationTaxonomy) assert(new Set(recipe.regimes).size === recipe.regimes.length, `${label}.regimes: doublon interdit`);
+    assertArrayValues(recipe.saisons, allowedCatalogueSeasons, `${label}.saisons`);
+    assert(recipe.saisons.length > 0, `${label}: au moins une saison requise`);
     if (recipe.materiel !== undefined) {
       assert(Array.isArray(recipe.materiel) && recipe.materiel.length > 0, `${label}: matériel invalide`);
       for (const item of recipe.materiel) assert(nonEmptyString(item), `${label}: libellé de matériel invalide`);
+    }
+    assert(Array.isArray(recipe.tags), `${label}.tags: tableau requis`);
+    if (publicationTaxonomy) {
+      assert(new Set(recipe.tags).size === recipe.tags.length, `${label}.tags: doublon interdit`);
+      for (const tag of recipe.tags) {
+        assert(nonEmptyString(tag), `${label}.tags: chaîne non vide requise`);
+        assert(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tag), `${label}.tags: tag non canonique ${tag}`);
+        assert(tag !== "brouillon", `${label}.tags: le marqueur brouillon est interdit en production`);
+      }
     }
     if (recipe.tags.includes("ninja-creami-deluxe")) {
       assert(recipe.creami?.modele === "Ninja CREAMi Deluxe (NC501EU)", `${label}: modèle CREAMi Deluxe requis`);
@@ -129,6 +193,15 @@ export function validateCatalogue(catalogue) {
     assertArrayValues(planner.diets, allowedDiets, `${label}.app.planner.diets`);
     assertArrayValues(planner.equipment, allowedEquipment, `${label}.app.planner.equipment`);
     assertArrayValues(planner.allergens, allowedAllergens, `${label}.app.planner.allergens`);
+    if (isV21 && publicationTaxonomy) assert(planner.targets !== undefined, `${label}.app.planner.targets: valeur requise en v2.1`);
+    if (planner.targets !== undefined) {
+      assertArrayValues(planner.targets, allowedWeeklyTargets, `${label}.app.planner.targets`);
+      assert(new Set(planner.targets).size === planner.targets.length, `${label}.app.planner.targets: doublon interdit`);
+      assert(
+        JSON.stringify(planner.targets) === JSON.stringify(weeklyTargetsForCatalogueRecipe(recipe)),
+        `${label}.app.planner.targets: classification métier incohérente`,
+      );
+    }
     assert(Number.isFinite(planner.cost_per_portion_eur) && planner.cost_per_portion_eur > 0, `${label}: coût par portion invalide`);
     if (isV21) assert(planner.active_minutes !== undefined, `${label}.app.planner.active_minutes: valeur requise en v2.1`);
     if (planner.active_minutes !== undefined) {
@@ -162,10 +235,19 @@ export function validateCatalogue(catalogue) {
         assert(allowedNormalizedUnits.has(ingredient.unite_normalisee), `${ingredientLabel}: unité normalisée invalide`);
         assert(typeof ingredient.facultatif === "boolean", `${ingredientLabel}: facultatif doit être booléen`);
       }
+      if (/\b(?:facultati(?:f|fs|ve|ves)|optionnel(?:s|le|les)?)\b/i.test(ingredient.note ?? "")) {
+        assert(ingredient.facultatif === true, `${ingredientLabel}: mention facultative incohérente avec le drapeau facultatif`);
+      }
     }
 
     const ingredientAllergens = [...new Set(recipe.ingredients.flatMap((ingredient) => ingredient.allergenes))].sort();
     const plannerAllergens = [...new Set(planner.allergens)].sort();
+    if (recipe.regimes.includes("sans-lactose")) {
+      assert(
+        !recipe.ingredients.some((ingredient) => ingredient.facultatif !== true && ingredient.allergenes.includes("lait")),
+        `${label}: régime sans-lactose incompatible avec un ingrédient obligatoire contenant du lait`,
+      );
+    }
     assert(
       JSON.stringify(ingredientAllergens) === JSON.stringify(plannerAllergens),
       `${label}: les allergènes du planificateur doivent correspondre aux ingrédients`,
