@@ -36,6 +36,8 @@ export interface Ingredient {
   allergens?: readonly string[];
   /** Everyday cupboard ingredient explicitly excluded from shopping lists. */
   pantryStaple?: boolean;
+  /** Garnish or adjustment the recipe can be made without; shown in recipes but not bought automatically. */
+  optional?: boolean;
 }
 
 export interface Nutrition {

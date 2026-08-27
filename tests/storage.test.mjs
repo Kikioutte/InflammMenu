@@ -603,7 +603,10 @@ test("personal recipes survive a Pages base path and an invalid image only falls
     equipment: [],
     allergens: [],
     tags: ["maison"],
-    ingredients: [{ id: "carrot", name: "Carotte", quantity: 100, unit: "g", category: "fruit-vegetable" }],
+    ingredients: [
+      { id: "carrot", name: "Carotte", quantity: 100, unit: "g", category: "fruit-vegetable" },
+      { id: "walnut", name: "Noix", quantity: 10, unit: "g", category: "grocery", optional: true },
+    ],
     nutrition: { calories: 100, protein: 2, fiber: 3, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
     description: "Une version personnelle valide.",
     steps: ["Préparer les ingrédients."],
@@ -614,6 +617,7 @@ test("personal recipes survive a Pages base path and an invalid image only falls
   const pagesState = migrateAppState(state({ customRecipes: [customRecipe] }));
   assert.equal(pagesState.customRecipes.length, 1);
   assert.equal(pagesState.customRecipes[0].image, "/InflammMenu/assets/recipes/ma-recette.jpg");
+  assert.equal(pagesState.customRecipes[0].ingredients[1].optional, true);
 
   const unsafeState = migrateAppState(state({
     customRecipes: [{ ...customRecipe, image: "javascript:alert(1)" }],

@@ -162,6 +162,9 @@ export function validateCatalogue(catalogue) {
         assert(allowedNormalizedUnits.has(ingredient.unite_normalisee), `${ingredientLabel}: unité normalisée invalide`);
         assert(typeof ingredient.facultatif === "boolean", `${ingredientLabel}: facultatif doit être booléen`);
       }
+      if (/\b(?:facultati(?:f|fs|ve|ves)|optionnel(?:s|le|les)?)\b/i.test(ingredient.note ?? "")) {
+        assert(ingredient.facultatif === true, `${ingredientLabel}: mention facultative incohérente avec le drapeau facultatif`);
+      }
     }
 
     const ingredientAllergens = [...new Set(recipe.ingredients.flatMap((ingredient) => ingredient.allergenes))].sort();

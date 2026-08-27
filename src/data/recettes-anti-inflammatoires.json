@@ -343,7 +343,7 @@
           "id": "catalog-sirop-d-erable",
           "quantite_normalisee": 1,
           "unite_normalisee": "c_cafe",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 1,
@@ -593,7 +593,7 @@
           "id": "catalog-miel-de-thym-ou-sirop-d-agave",
           "quantite_normalisee": 1,
           "unite_normalisee": "c_cafe",
-          "facultatif": false
+          "facultatif": true
         }
       ],
       "etapes": [
@@ -1077,7 +1077,7 @@
           "id": "catalog-miel-brut",
           "quantite_normalisee": 1,
           "unite_normalisee": "c_cafe",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 1,
@@ -1298,7 +1298,7 @@
           "id": "ginger",
           "quantite_normalisee": 5,
           "unite_normalisee": "g",
-          "facultatif": false
+          "facultatif": true
         }
       ],
       "etapes": [
@@ -1897,7 +1897,7 @@
           "id": "catalog-piment-de-cayenne",
           "quantite_normalisee": 0.25,
           "unite_normalisee": "c_cafe",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 3,
@@ -3102,7 +3102,7 @@
           "id": "catalog-piment-vert",
           "quantite_normalisee": 1,
           "unite_normalisee": "piece",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 400,
@@ -4258,7 +4258,7 @@
           "id": "catalog-piment-oiseau",
           "quantite_normalisee": 1,
           "unite_normalisee": "piece",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 5,
@@ -5304,7 +5304,7 @@
           "id": "catalog-vin-blanc-sec",
           "quantite_normalisee": 2,
           "unite_normalisee": "c_soupe",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 1,
@@ -5558,7 +5558,7 @@
           "id": "catalog-vin-blanc-sec",
           "quantite_normalisee": 100,
           "unite_normalisee": "ml",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 5,
@@ -7530,7 +7530,7 @@
           "id": "catalog-piment-de-cayenne",
           "quantite_normalisee": 1,
           "unite_normalisee": "piece",
-          "facultatif": false
+          "facultatif": true
         }
       ],
       "etapes": [
@@ -7779,7 +7779,7 @@
           "id": "catalog-sirop-d-erable",
           "quantite_normalisee": 1,
           "unite_normalisee": "c_soupe",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 80,
@@ -9140,7 +9140,7 @@
           "id": "catalog-cannelle-de-ceylan",
           "quantite_normalisee": 1,
           "unite_normalisee": "c_cafe",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 1,
@@ -9152,7 +9152,7 @@
           "id": "catalog-gingembre-en-poudre",
           "quantite_normalisee": 1,
           "unite_normalisee": "c_cafe",
-          "facultatif": false
+          "facultatif": true
         }
       ],
       "etapes": [
@@ -11255,7 +11255,7 @@
           "id": "catalog-feta-ou-fromage-de-brebis",
           "quantite_normalisee": 80,
           "unite_normalisee": "g",
-          "facultatif": false
+          "facultatif": true
         }
       ],
       "etapes": [
@@ -12156,7 +12156,7 @@
           "id": "catalog-miel-brut",
           "quantite_normalisee": 1,
           "unite_normalisee": "c_soupe",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 1,
@@ -12381,7 +12381,7 @@
           "id": "catalog-miel",
           "quantite_normalisee": 1,
           "unite_normalisee": "c_cafe",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 1,
@@ -12405,7 +12405,7 @@
           "id": "catalog-feuilles-de-menthe-fraiche",
           "quantite_normalisee": 6,
           "unite_normalisee": "piece",
-          "facultatif": false
+          "facultatif": true
         }
       ],
       "etapes": [
@@ -12853,7 +12853,7 @@
           "id": "walnut",
           "quantite_normalisee": 15,
           "unite_normalisee": "g",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 1,
@@ -13600,7 +13600,7 @@
           "id": "coriandre-fraiche",
           "quantite_normalisee": 3,
           "unite_normalisee": "c_soupe",
-          "facultatif": false
+          "facultatif": true
         }
       ],
       "etapes": [
@@ -13815,7 +13815,7 @@
           "id": "catalog-piment-doux",
           "quantite_normalisee": 1,
           "unite_normalisee": "piece",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 160,
@@ -14058,7 +14058,7 @@
           "id": "catalog-sirop-d-erable",
           "quantite_normalisee": 1,
           "unite_normalisee": "c_cafe",
-          "facultatif": false
+          "facultatif": true
         },
         {
           "quantite": 1,

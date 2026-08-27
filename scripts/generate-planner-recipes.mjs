@@ -56,6 +56,7 @@ const recipes = catalogue.recipes
         category: ingredient.categorie_courses,
         ...(ingredient.allergenes.length ? { allergens: ingredient.allergenes } : {}),
         ...(ingredient.pantry_staple === true || shoppingRuleFor(id)?.pantry_staple === true ? { pantryStaple: true } : {}),
+        ...(ingredient.facultatif === true ? { optional: true } : {}),
       };
     }),
     nutrition: {

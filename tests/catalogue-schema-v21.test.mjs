@@ -7,7 +7,9 @@ import { validateCatalogue } from "../scripts/validate-catalogue.mjs";
 const dataUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
 const sourceUrl = new URL("../src/catalog.ts", import.meta.url);
 const plannerGeneratorUrl = new URL("../scripts/generate-planner-recipes.mjs", import.meta.url);
+const plannerDataUrl = new URL("../src/data/planner-recipes.json", import.meta.url);
 const catalogue = JSON.parse(await readFile(dataUrl, "utf8"));
+const plannerRecipes = JSON.parse(await readFile(plannerDataUrl, "utf8"));
 const catalogueSource = await readFile(sourceUrl, "utf8");
 const plannerGeneratorSource = await readFile(plannerGeneratorUrl, "utf8");
 
@@ -26,7 +28,7 @@ function v21Fixture() {
     id: `ingredient-${index + 1}`,
     quantite_normalisee: ingredient.quantite,
     unite_normalisee: "piece",
-    facultatif: false,
+    facultatif: ingredient.facultatif ?? false,
   }));
   recipe.provenance = {
     type: "original",
@@ -77,6 +79,56 @@ test("schema v2.1 rejects a partial normalized ingredient block", () => {
   assert.throws(() => validateCatalogue(fixture), /champs normalisés requis en v2\.1/);
 });
 
+test("explicitly optional catalogue ingredients are flagged and projected without false positives", () => {
+  const expected = [
+    "r001:catalog-sirop-d-erable",
+    "r002:catalog-miel-de-thym-ou-sirop-d-agave",
+    "r004:catalog-miel-brut",
+    "r005:ginger",
+    "r007:catalog-piment-de-cayenne",
+    "r011:catalog-piment-vert",
+    "r015:catalog-piment-oiseau",
+    "r018:catalog-vin-blanc-sec",
+    "r019:catalog-vin-blanc-sec",
+    "r026:catalog-piment-de-cayenne",
+    "r027:catalog-sirop-d-erable",
+    "r032:catalog-cannelle-de-ceylan",
+    "r032:catalog-gingembre-en-poudre",
+    "r039:catalog-feta-ou-fromage-de-brebis",
+    "r042:catalog-miel-brut",
+    "r043:catalog-miel",
+    "r043:catalog-feuilles-de-menthe-fraiche",
+    "r045:walnut",
+    "r048:coriandre-fraiche",
+    "r049:catalog-piment-doux",
+    "r050:catalog-sirop-d-erable",
+  ];
+  const actual = catalogue.recipes.flatMap((recipe) => recipe.ingredients
+    .filter((ingredient) => ingredient.facultatif)
+    .map((ingredient) => `${recipe.id}:${ingredient.id}`));
+  assert.deepEqual(actual, expected);
+
+  const projected = plannerRecipes.flatMap((recipe) => recipe.ingredients
+    .filter((ingredient) => ingredient.optional)
+    .map((ingredient) => `${recipe.id}:${ingredient.id}`));
+  assert.deepEqual(projected, expected
+    .filter((entry) => ["r002", "r007", "r011", "r015", "r043", "r045", "r048", "r049", "r050"].includes(entry.slice(0, 4)))
+    .map((entry) => `catalog-${entry}`));
+
+  const roastingOnly = catalogue.recipes.find((recipe) => recipe.id === "r031")
+    ?.ingredients.find((ingredient) => ingredient.nom === "cerneaux de noix");
+  assert.equal(roastingOnly?.facultatif, false, "« torréfiés si souhaité » ne rend pas les noix facultatives");
+});
+
+test("the validator rejects an explicit optional label without the matching flag", () => {
+  const fixture = v21Fixture();
+  fixture.recipes[0].ingredients[0].note = "Facultatif, selon le goût";
+  fixture.recipes[0].ingredients[0].facultatif = false;
+  assert.throws(() => validateCatalogue(fixture), /mention facultative incohérente/);
+  fixture.recipes[0].ingredients[0].facultatif = true;
+  assert.doesNotThrow(() => validateCatalogue(fixture));
+});
+
 test("schema v2.1 rejects active time beyond total recipe time", () => {
   const fixture = v21Fixture();
   fixture.recipes[0].app.planner.active_minutes = fixture.recipes[0].temps.total + 1;
@@ -96,6 +148,7 @@ test("the planner adapter prefers v2.1 canonical values with a v2 fallback", () 
   assert.match(plannerGeneratorSource, /ingredient\.quantite_normalisee !== undefined/);
   assert.match(plannerGeneratorSource, /active_minutes \?\? recipe\.temps\.preparation \+ recipe\.temps\.cuisson/);
   assert.match(plannerGeneratorSource, /pantry_staple === true/);
+  assert.match(plannerGeneratorSource, /ingredient\.facultatif === true/);
   assert.match(catalogueSource, /new URL\("\.\/data\/recettes-anti-inflammatoires\.json", import\.meta\.url\)/);
   assert.match(catalogueSource, /fetch\(catalogueUrl/);
 });

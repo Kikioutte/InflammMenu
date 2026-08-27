@@ -110,8 +110,9 @@ function normalize(value: string): string {
 }
 
 const NORMALIZED_TAGS = new WeakMap<Recipe, readonly string[]>();
+const CLASSIFICATION_TAGS = new WeakMap<Recipe, readonly string[]>();
 const NORMALIZED_TAG_CANDIDATES = new Map<string, ReadonlySet<string>>();
-const NORMALIZED_INGREDIENT_IDS = new WeakMap<Recipe, readonly string[]>();
+const REQUIRED_INGREDIENT_IDS = new WeakMap<Recipe, readonly string[]>();
 const NUT_OR_SEED_CACHE = new WeakMap<Recipe, boolean>();
 const RECIPE_ALLERGEN_CACHE = new WeakMap<Recipe, string[]>();
 
@@ -123,11 +124,25 @@ function normalizedTagsOf(recipe: Recipe): readonly string[] {
   return tags;
 }
 
-function ingredientIdsOf(recipe: Recipe): readonly string[] {
-  const cached = NORMALIZED_INGREDIENT_IDS.get(recipe);
+/** Recipe-level tags with mechanically generated tags from optional ingredients removed. */
+function classificationTagsOf(recipe: Recipe): readonly string[] {
+  const cached = CLASSIFICATION_TAGS.get(recipe);
   if (cached) return cached;
-  const ids = recipe.ingredients.map((ingredient) => canonicalIngredientId(ingredient.id));
-  NORMALIZED_INGREDIENT_IDS.set(recipe, ids);
+  const optionalIngredientTags = new Set(recipe.ingredients
+    .filter((ingredient) => ingredient.optional)
+    .map((ingredient) => normalize(ingredient.name)));
+  const tags = normalizedTagsOf(recipe).filter((tag) => !optionalIngredientTags.has(tag));
+  CLASSIFICATION_TAGS.set(recipe, tags);
+  return tags;
+}
+
+function requiredIngredientIdsOf(recipe: Recipe): readonly string[] {
+  const cached = REQUIRED_INGREDIENT_IDS.get(recipe);
+  if (cached) return cached;
+  const ids = recipe.ingredients
+    .filter((ingredient) => !ingredient.optional)
+    .map((ingredient) => canonicalIngredientId(ingredient.id));
+  REQUIRED_INGREDIENT_IDS.set(recipe, ids);
   return ids;
 }
 
@@ -138,7 +153,7 @@ function hasTag(recipe: Recipe, candidates: readonly string[]): boolean {
     wanted = new Set(candidates.map(normalize));
     NORMALIZED_TAG_CANDIDATES.set(key, wanted);
   }
-  return normalizedTagsOf(recipe).some((tag) =>
+  return classificationTagsOf(recipe).some((tag) =>
     [...wanted].some((candidate) => tag === candidate || tag.startsWith(`${candidate}-`)),
   );
 }
@@ -169,7 +184,8 @@ export function recipeForm(recipe: Recipe): RecipeForm {
 function hasNutOrSeed(recipe: Recipe): boolean {
   const cached = NUT_OR_SEED_CACHE.get(recipe);
   if (cached !== undefined) return cached;
-  const result = hasTag(recipe, TAGS.nutSeed) || ingredientIdsOf(recipe).some((id) => NUT_OR_SEED_INGREDIENTS.has(normalize(id)));
+  const result = hasTag(recipe, TAGS.nutSeed)
+    || requiredIngredientIdsOf(recipe).some((id) => NUT_OR_SEED_INGREDIENTS.has(normalize(id)));
   NUT_OR_SEED_CACHE.set(recipe, result);
   return result;
 }
@@ -337,7 +353,7 @@ export function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
     recipe.prepMinutes <= profile.maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
     !recipeAllergens(recipe).some((allergen) => allergies.has(allergen)) &&
-    !recipe.ingredients.some((ingredient) => excluded.has(canonicalIngredientId(ingredient.id)))
+    !recipe.ingredients.some((ingredient) => !ingredient.optional && excluded.has(canonicalIngredientId(ingredient.id)))
   );
 }
 
@@ -372,7 +388,8 @@ function plannedMealIsAllowedForSlot(meal: PlannedMeal, recipe: Recipe, profile:
     recipe.prepMinutes <= maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
     !plannedMealAllergens(recipe, meal).some((allergen) => allergies.has(allergen)) &&
-    !ingredientsForPlannedMeal(recipe, meal, 1).some((ingredient) => excluded.has(canonicalIngredientId(ingredient.id)))
+    !ingredientsForPlannedMeal(recipe, meal, 1)
+      .some((ingredient) => !ingredient.optional && excluded.has(canonicalIngredientId(ingredient.id)))
   );
 }
 
@@ -440,7 +457,8 @@ export function diagnoseRecipeCompatibility(
     disliked: disliked.has(recipe.id),
     diet: !recipe.diet.includes(profile.diet),
     equipment: recipe.equipment.some((item) => !profile.equipment.includes(item)),
-    excludedIngredients: recipe.ingredients.some((ingredient) => excluded.has(canonicalIngredientId(ingredient.id))),
+    excludedIngredients: recipe.ingredients.some((ingredient) => !ingredient.optional
+      && excluded.has(canonicalIngredientId(ingredient.id))),
     time: recipe.prepMinutes > maxPrepMinutes,
   });
   const evaluated = candidates.map((recipe) => ({ recipe, checks: checks(recipe) }));
@@ -500,7 +518,7 @@ export function recommendTonight(
     .filter((recipe) => recipe.mealTypes.includes(options.mealType)
       && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes }))
     .map((recipe) => {
-      const pantryMatches = ingredientIdsOf(recipe).filter((id) => pantry.has(shoppingIdentityFor(id).shoppingId)).length;
+      const pantryMatches = requiredIngredientIdsOf(recipe).filter((id) => pantry.has(shoppingIdentityFor(id).shoppingId)).length;
       const seasonal = !options.season || recipe.seasons.includes(options.season) || recipe.seasons.includes("all-year");
       const score = pantryMatches * 120
         + (favorites.has(recipe.id) ? 80 : 0)
@@ -549,12 +567,12 @@ export function recommendTonight(
 }
 
 function ingredientReuseFromSet(recipe: Recipe, used: ReadonlySet<string>): number {
-  return ingredientIdsOf(recipe).reduce((total, id) => total + (used.has(id) ? 1 : 0), 0);
+  return requiredIngredientIdsOf(recipe).reduce((total, id) => total + (used.has(id) ? 1 : 0), 0);
 }
 
 function ingredientReuse(recipe: Recipe, selected: readonly Recipe[]): number {
   if (selected.length === 0) return 0;
-  return ingredientReuseFromSet(recipe, new Set(selected.flatMap(ingredientIdsOf)));
+  return ingredientReuseFromSet(recipe, new Set(selected.flatMap(requiredIngredientIdsOf)));
 }
 
 function tagCount(recipes: readonly Recipe[], candidates: readonly string[]): number {
@@ -714,7 +732,7 @@ export function generateWeeklyPlan(
     const fishDeficit = profile.diet === "classic" ? Math.max(0, targets.fishMeals - tagCount(selected, TAGS.fish)) : 0;
     const candidates = slotCandidates
       .filter((recipe) => !used.has(recipe.id));
-    const selectedIngredientIds = new Set(selected.flatMap(ingredientIdsOf));
+    const selectedIngredientIds = new Set(selected.flatMap(requiredIngredientIdsOf));
     const formsAlreadyServedToday = new Set(
       [
         ...meals.filter((meal) => meal.dayIndex === slot.dayIndex && !meal.skipped),
@@ -1338,7 +1356,7 @@ export function buildShoppingList(
       const culinaryId = canonicalIngredientId(ingredient.id);
       const identity = shoppingIdentityFor(culinaryId);
       const ingredientId = identity.shoppingId;
-      if (ingredient.pantryStaple || shoppingRuleFor(culinaryId)?.pantry_staple) continue;
+      if (ingredient.optional || ingredient.pantryStaple || shoppingRuleFor(culinaryId)?.pantry_staple) continue;
       const unit = ingredient.unit === "c_soupe" || ingredient.unit === "c_cafe" ? "ml" : ingredient.unit;
       const quantity = ingredient.unit === "c_soupe"
         ? ingredient.quantity * 15
@@ -1761,7 +1779,9 @@ export function formatShoppingListText(
   const footer = [
     remaining.length
       ? `${remaining.length} article${remaining.length > 1 ? "s" : ""} à acheter.`
-      : "Rien à acheter : tout est coché ou déjà en réserve.",
+      : items.length
+        ? "Rien à acheter : tout est coché ou déjà en réserve."
+        : "Aucun achat requis dans la liste générée.",
     removed ? `${removed} article${removed > 1 ? "s" : ""} déjà coché${removed > 1 ? "s" : ""} ou en réserve.` : "",
     "Quantités et prix indicatifs, à ajuster selon les produits.",
   ].filter(Boolean);
@@ -1807,6 +1827,7 @@ export function plantDiversityOf(plan: WeeklyPlan, recipes: readonly Recipe[]): 
     const recipe = byId.get(meal.recipeId);
     if (!recipe) continue;
     for (const ingredient of recipe.ingredients) {
+      if (ingredient.optional) continue;
       if (ingredient.category === "meat-fish") continue;
       const id = normalize(canonicalIngredientId(ingredient.id));
       const name = normalize(ingredient.name);

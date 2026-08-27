@@ -1206,6 +1206,19 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
+test("le catalogue explique qu'un ingrédient facultatif reste hors des courses", async ({ page }) => {
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("tab", { name: "Catalogue" }).click();
+  await page.getByPlaceholder("Recette ou ingrédient").fill("Pudding de chia à la grenade");
+  await page.getByRole("button", { name: /Pudding de chia à la grenade/ }).click();
+
+  const optionalIngredient = page.locator(".ingredient-list li", { hasText: "miel de thym ou sirop d'agave" });
+  await expect(optionalIngredient).toContainText("Facultatif · non ajouté aux courses");
+  await expect(page.getByText(/Le coût affiché conserve l’estimation prudente/)).toBeVisible();
+  await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
+});
+
 test("une recette du catalogue peut être enregistrée en favori", async ({ page }) => {
   await openFreshApp(page);
 

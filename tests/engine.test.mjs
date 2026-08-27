@@ -209,6 +209,62 @@ test("an applied substitution recalculates ingredients, allergens, cost and shop
   assert.deepEqual(engine.plannedMealAllergens(walnutRecipe, restored.meals[0]), ["fruits-a-coque"]);
 });
 
+test("optional ingredients stay visible and allergenic but never enter shopping", () => {
+  const dish = recipe(306, {
+    id: "optional-garnish",
+    allergens: ["fruits-a-coque"],
+    tags: ["soupe", "noix-concassees"],
+    ingredients: [
+      { id: "carrot", name: "Carotte", quantity: 100, unit: "g", category: "fruit-vegetable" },
+      { id: "walnut", name: "Noix concassées", quantity: 15, unit: "g", category: "grocery", allergens: ["fruits-a-coque"], optional: true },
+    ],
+  });
+  const plan = {
+    id: "week-optional", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: { ...profile, allergies: [], excludedIngredientIds: [] },
+    meals: [{ id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: dish.id, portions: 4, source: "generated" }],
+    estimatedCost: 8, version: 1,
+  };
+
+  const scaled = engine.scaleIngredients(dish, 4);
+  assert.equal(scaled.find((ingredient) => ingredient.id === "walnut")?.quantity, 60);
+  assert.equal(scaled.find((ingredient) => ingredient.id === "walnut")?.optional, true);
+  assert.equal(engine.ingredientsForPlannedMeal(dish, plan.meals[0])
+    .find((ingredient) => ingredient.id === "walnut")?.optional, true);
+  assert.equal(engine.recipeIsAllowed(dish, { ...profile, allergies: ["fruits-a-coque"] }), false);
+  assert.equal(engine.recipeIsAllowed(dish, { ...profile, excludedIngredientIds: ["walnut"] }), true,
+    "un aliment refusé mais facultatif est omis par défaut au lieu d'écarter toute la recette");
+  const optionalDiagnostic = engine.diagnoseRecipeCompatibility([dish], {
+    ...profile, excludedIngredientIds: ["walnut"],
+  }, { mealType: "lunch" });
+  assert.equal(optionalDiagnostic.compatibleCount, 1);
+  assert.equal(optionalDiagnostic.blockedBy.excludedIngredients, 0);
+  assert.equal(engine.mealCost(dish, 4), 8, "le budget garde volontairement l'estimation prudente de la recette complète");
+  assert.equal(engine.recommendTonight([dish], profile, {
+    mealType: "lunch", maxPrepMinutes: 30, portions: 1, pantryIngredientIds: ["walnut"],
+  })[0].pantryMatches, 0, "un ingrédient facultatif n'améliore pas artificiellement le score du garde-manger");
+  assert.deepEqual(engine.plantDiversityOf(plan, [dish]), { count: 1, ingredients: ["Carotte"] });
+  assert.equal(engine.summarizePlan(plan, [dish], profile).nutOrSeedMeals, 0);
+  const optionalFish = recipe(307, {
+    id: "optional-fish", tags: ["poisson"],
+    ingredients: [{ id: "poisson", name: "Poisson", quantity: 100, unit: "g", category: "meat-fish", optional: true }],
+  });
+  const optionalFishPlan = { ...plan, meals: [{ ...plan.meals[0], recipeId: optionalFish.id }] };
+  assert.equal(engine.summarizePlan(optionalFishPlan, [optionalFish], profile).fishMeals, 0,
+    "le tag généré d'un ingrédient facultatif ne satisfait pas un objectif hebdomadaire");
+
+  const list = engine.buildShoppingList(plan, [dish]);
+  assert.deepEqual(list.map((item) => item.ingredientId), ["carrot"]);
+  assert.deepEqual(list[0].amounts, [{ unit: "g", quantity: 400 }]);
+  const exported = engine.formatShoppingListText(list);
+  assert.match(exported, /Carotte/);
+  assert.doesNotMatch(exported, /Noix concassées/);
+  const optionalOnly = { ...dish, ingredients: dish.ingredients.filter((ingredient) => ingredient.optional) };
+  const optionalOnlyList = engine.buildShoppingList(plan, [optionalOnly]);
+  assert.deepEqual(optionalOnlyList, []);
+  assert.match(engine.formatShoppingListText(optionalOnlyList), /Aucun achat requis dans la liste générée\./);
+});
+
 test("a substitution cannot introduce an allergen excluded by the profile", () => {
   const yogurtRecipe = recipe(31, {
     id: "yogurt-bowl",
@@ -559,7 +615,7 @@ test("an entirely checked shopping list still produces a readable text", () => {
   );
   assert.match(text, /Rien à acheter : tout est coché ou déjà en réserve\./);
   assert.doesNotMatch(text, /Semaine du/);
-  assert.equal(engine.formatShoppingListText([], {}).includes("Rien à acheter"), true);
+  assert.match(engine.formatShoppingListText([], {}), /Aucun achat requis dans la liste générée\./);
 });
 
 test("the exported text mirrors the list built for the current plan", () => {

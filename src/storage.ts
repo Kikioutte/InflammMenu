@@ -413,6 +413,7 @@ function normalizeCustomRecipe(value: unknown): Recipe | null {
       category: rawIngredient.category as IngredientCategory,
       ...(stringArray(rawIngredient.allergens).length ? { allergens: stringArray(rawIngredient.allergens).slice(0, 14) } : {}),
       ...(rawIngredient.pantryStaple === true ? { pantryStaple: true } : {}),
+      ...(rawIngredient.optional === true ? { optional: true } : {}),
     }];
   });
   if (ingredients.length !== value.ingredients.length) return null;

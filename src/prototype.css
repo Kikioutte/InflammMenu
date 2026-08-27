@@ -648,6 +648,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .cooking-ingredients h2 { margin: 0 0 10px; font-family: var(--serif); font-size: var(--font-21); }
 .cooking-ingredients ul { list-style: none; margin: 0; padding: 0; }
 .cooking-ingredients li { padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: var(--font-14); }
+.cooking-ingredients li small { display: block; margin-top: 3px; color: var(--terracotta); font-size: var(--font-9); }
 
 /* --- Vue semaine entière, sessions de cuisine, feuille d'actions --- */
 .layout-switch, .target-switch { margin: 0 0 16px; }

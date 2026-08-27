@@ -62,10 +62,10 @@ test("a preview output is a strict schema v2.1 catalogue with preserved historic
   );
   assert.deepEqual(
     merged.recipes.slice(0, 50).map((recipe) =>
-      recipe.ingredients.map(({ quantite, unite, nom }) => ({ quantite, unite, nom })),
+      recipe.ingredients.map(({ quantite, unite, nom, facultatif }) => ({ quantite, unite, nom, facultatif })),
     ),
     historicalBase.map((recipe) =>
-      recipe.ingredients.map(({ quantite, unite, nom }) => ({ quantite, unite, nom })),
+      recipe.ingredients.map(({ quantite, unite, nom, facultatif }) => ({ quantite, unite, nom, facultatif })),
     ),
   );
   assert.ok(
@@ -76,7 +76,7 @@ test("a preview output is a strict schema v2.1 catalogue with preserved historic
         ingredient.id &&
         ingredient.quantite_normalisee !== undefined &&
         ingredient.unite_normalisee &&
-        ingredient.facultatif === false
+        typeof ingredient.facultatif === "boolean"
       ),
     ),
   );
