@@ -2351,7 +2351,9 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
     const today = isoDate(new Date());
     const reminderStorageKey = "inflamm-menu:reminded-on";
-    if (remindedOn.current === today || window.localStorage.getItem(reminderStorageKey) === today) return;
+    if (remindedOn.current === today) return;
+    try { if (window.localStorage.getItem(reminderStorageKey) === today) return; }
+    catch { /* A blocked reminder marker must not prevent the app from opening. */ }
     const due = contextualRemindersForDate(appState.currentPlan, ACTIVE_RECIPES, today);
     if (!due.length) return;
     const showReminder = async () => {

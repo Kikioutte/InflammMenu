@@ -169,3 +169,21 @@ test('une base IndexedDB de schéma plus récent reste récupérable sans être 
   await expect(page.getByRole('alertdialog')).toContainText('version plus récente');
   expect(await page.evaluate(()=>localStorage.getItem('inflamm-menu:app-state'))).toBeNull();
 });
+
+test('un stockage de rappel refusé ne bloque pas le démarrage ni les données', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, 'Notification', { configurable: true, value: class { static permission = 'granted'; } });
+    const nativeGet = Storage.prototype.getItem;
+    Storage.prototype.getItem = function (key: string) {
+      if (key === 'inflamm-menu:reminded-on') throw new DOMException('Lecture refusée pour le test', 'SecurityError');
+      return nativeGet.call(this, key);
+    };
+  });
+  await seedLocal(page, JSON.stringify({ version: 3, onboardingCompleted: true, remindersEnabled: true, profile: { firstName: 'Camille' } }));
+  await expect(page.getByTestId('home-view')).toBeVisible();
+  await page.getByRole('button', { name: 'Ajuster mon profil' }).click();
+  await expect(page.getByLabel('Votre prénom')).toHaveValue('Camille');
+  await page.reload();
+  await expect(page.getByTestId('home-view')).toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).remindersEnabled)).toBe(true);
+});
