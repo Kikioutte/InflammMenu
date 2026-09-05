@@ -99,6 +99,8 @@ test("le vrai service worker conserve le catalogue et uniquement les polices lat
   expect(cacheState.shellUrls.some((url) => /recettes-anti-inflammatoires(?:-[^/]+)?\.json$/.test(url))).toBe(false);
   expect(cacheState.catalogueUrls.some((url) => /recettes-anti-inflammatoires(?:-[^/]+)?\.json$/.test(url))).toBe(true);
   expect(cacheState.shellUrls.filter((url) => /cyrillic|vietnamese|latin-ext/i.test(url))).toEqual([]);
+  expect(cacheState.shellUrls.some((url) => url.endsWith(".woff2"))).toBe(true);
+  expect(cacheState.shellUrls.filter((url) => url.endsWith(".woff"))).toEqual([]);
 
   await context.setOffline(true);
   await page.reload();
@@ -238,4 +240,18 @@ test("une version B est détectée puis rechargée sans effacer les données loc
   } finally {
     await writeFile(workerPath, originalWorker);
   }
+});
+
+test('le calendrier reste exportable hors ligne après découpage du JavaScript', async ({ page, context }) => {
+  await openFreshApp(page);
+  await generateWeek(page);
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) await new Promise<void>(resolve => navigator.serviceWorker.addEventListener('controllerchange',()=>resolve(),{once:true}));
+  });
+  await context.setOffline(true);
+  const download=page.waitForEvent('download');
+  await page.getByTestId('export-calendar').click();
+  const file=await (await download).path();
+  expect(await readFile(file!,'utf8')).toContain('BEGIN:VCALENDAR');
 });

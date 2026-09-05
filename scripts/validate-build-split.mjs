@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
-import { readFile, stat } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { gzipSync } from "node:zlib";
 import path from "node:path";
 
@@ -11,14 +11,19 @@ const entryPath = index.match(/<script[^>]+src=["']([^"']+)["']/)?.[1];
 assert(entryPath, "bundle d'entrée introuvable");
 assert.doesNotMatch(index, /catalogue-[A-Za-z0-9_-]+\.js/, "le catalogue complet est préchargé par index.html");
 
-const relativeEntry = entryPath.replace(/^\/(?:InflammMenu\/)?/, "");
-const entryStats = await stat(path.join(output, relativeEntry));
-const entryContents = await readFile(path.join(output, relativeEntry));
-const entryGzipSize = gzipSync(entryContents).byteLength;
-// Keep a small raw-size allowance for the durable local-recovery safeguards;
-// the compressed transfer budget below remains the release-critical ceiling.
-assert(entryStats.size < 1_370_000, `bundle initial trop lourd : ${entryStats.size} octets`);
-assert(entryGzipSize < 320_000, `bundle initial gzip trop lourd : ${entryGzipSize} octets`);
+// Count the entry AND all eagerly preloaded modules. Moving code to a shared
+// initial chunk must never bypass the existing transfer budget.
+const initialPaths = [...new Set([entryPath, ...[...index.matchAll(/<link[^>]+rel=["']modulepreload["'][^>]+href=["']([^"']+)["']/g)].map((match) => match[1])])];
+let entryBytes = 0;
+let entryGzipSize = 0;
+for (const publicPath of initialPaths) {
+  const relativePath = publicPath.replace(/^\/(?:InflammMenu\/)?/, "");
+  const contents = await readFile(path.join(output, relativePath));
+  entryBytes += contents.byteLength;
+  entryGzipSize += gzipSync(contents).byteLength;
+}
+assert(entryBytes < 1_370_000, `JavaScript initial trop lourd : ${entryBytes} octets`);
+assert(entryGzipSize < 320_000, `JavaScript initial gzip trop lourd : ${entryGzipSize} octets`);
 
 const appShell = serviceWorker.match(/const APP_SHELL = \[[\s\S]*?\];/)?.[0] ?? "";
 assert.match(appShell, /\/assets\/catalog-validation-[A-Za-z0-9_-]+\.js/, "le validateur JSON différé manque au précache hors ligne");
@@ -32,4 +37,4 @@ if (output.endsWith(path.join("dist", "pages"))) {
   assert.doesNotMatch(index, /script-src[^;]*'unsafe-inline'/, "la CSP publiée autorise encore les scripts inline");
 }
 
-console.log(`Découpage valide : bundle initial ${entryStats.size} octets (${entryGzipSize} gzip), validateur JSON précaché, catalogue et image sociale différés.`);
+console.log(`Découpage valide : bundle initial ${entryBytes} octets (${entryGzipSize} gzip), validateur JSON précaché, catalogue et image sociale différés.`);

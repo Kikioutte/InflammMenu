@@ -25,6 +25,7 @@ import {
   type IngredientSubstitutionRule,
 } from "./substitutions.ts";
 import { canonicalAllergen } from "./allergens.ts";
+import { hasAllergyConflict, unsupportedAllergies } from "./food-restrictions.ts";
 
 type PlanningSeason = Exclude<Season, "all-year">;
 
@@ -357,7 +358,6 @@ export function plannedMealCost(recipe: Recipe, meal: Pick<PlannedMeal, "portion
 }
 
 export function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
-  const allergies = new Set(profile.allergies.map(canonicalAllergen));
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
 
   return (
@@ -365,7 +365,7 @@ export function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
     recipe.diet.includes(profile.diet) &&
     recipe.prepMinutes <= profile.maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
-    !recipeAllergens(recipe).some((allergen) => allergies.has(allergen)) &&
+    !hasAllergyConflict(profile.allergies, recipeAllergens(recipe), recipe.ingredients) &&
     !recipe.ingredients.some((ingredient) => !ingredient.optional && excluded.has(canonicalIngredientId(ingredient.id)))
   );
 }
@@ -392,7 +392,6 @@ export function recipeIsAllowedForSlot(
 function plannedMealIsAllowedForSlot(meal: PlannedMeal, recipe: Recipe, profile: UserProfile): boolean {
   const constraint = dayConstraintOf(profile, meal.dayIndex);
   const maxPrepMinutes = constraint?.maxPrepMinutes ?? profile.maxPrepMinutes;
-  const allergies = new Set(profile.allergies.map(canonicalAllergen));
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
   return (
     !(profile.dislikedRecipeIds ?? []).includes(recipe.id) &&
@@ -400,7 +399,7 @@ function plannedMealIsAllowedForSlot(meal: PlannedMeal, recipe: Recipe, profile:
     recipe.diet.includes(profile.diet) &&
     recipe.prepMinutes <= maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
-    !plannedMealAllergens(recipe, meal).some((allergen) => allergies.has(allergen)) &&
+    !hasAllergyConflict(profile.allergies, plannedMealAllergens(recipe, meal), ingredientsForPlannedMeal(recipe, meal, 1)) &&
     !ingredientsForPlannedMeal(recipe, meal, 1)
       .some((ingredient) => !ingredient.optional && excluded.has(canonicalIngredientId(ingredient.id)))
   );
@@ -462,11 +461,10 @@ export function diagnoseRecipeCompatibility(
 ): RecipeCompatibilityDiagnostic {
   const candidates = recipes.filter((recipe) => recipe.mealTypes.includes(options.mealType));
   const maxPrepMinutes = options.maxPrepMinutes ?? profile.maxPrepMinutes;
-  const allergies = new Set(profile.allergies.map(canonicalAllergen));
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
   const disliked = new Set(profile.dislikedRecipeIds ?? []);
   const checks = (recipe: Recipe) => ({
-    allergies: recipeAllergens(recipe).some((allergen) => allergies.has(allergen)),
+    allergies: hasAllergyConflict(profile.allergies, recipeAllergens(recipe), recipe.ingredients),
     disliked: disliked.has(recipe.id),
     diet: !recipe.diet.includes(profile.diet),
     equipment: recipe.equipment.some((item) => !profile.equipment.includes(item)),
@@ -636,6 +634,8 @@ export function generateWeeklyPlan(
   profile: UserProfile,
   options: GeneratePlanOptions = {},
 ): WeeklyPlan {
+  const unknown = unsupportedAllergies(profile.allergies);
+  if (unknown.length) throw new Error(`Restriction non reconnue : ${unknown.join(", ")}. Corrigez votre profil avant de générer une semaine.`);
   const seed = options.seed ?? "inflamm-menu-v1";
   const startsOn = options.startsOn ?? DEFAULT_START;
   const season = options.season ?? seasonForIsoDate(startsOn);
@@ -1158,8 +1158,7 @@ export function setMealIngredientSubstitution(
     const rule = substitutionsForIngredient(sourceIngredient).find((candidate) => candidate.id === substitutionId);
     if (!rule) throw new Error("Cette substitution n’est pas disponible pour cet ingrédient.");
     const replacementId = canonicalIngredientId(rule.replacement.id);
-    const blockedAllergens = new Set(profile.allergies.map(canonicalAllergen));
-    if ((rule.replacement.allergens ?? []).map(canonicalAllergen).some((allergen) => blockedAllergens.has(allergen))) {
+    if (hasAllergyConflict(profile.allergies, rule.replacement.allergens ?? [], [rule.replacement])) {
       throw new Error("Cette substitution contient un allergène exclu par votre profil.");
     }
     if (profile.excludedIngredientIds.map(canonicalIngredientId).includes(replacementId)) {
@@ -1175,6 +1174,10 @@ export function setMealIngredientSubstitution(
   const meals = plan.meals.map((meal) => (meal.id === rootId || meal.leftoverOf === rootId
     ? { ...meal, substitutions: nextSelections(meal) }
     : meal));
+  if (meals.some((meal) => (meal.id === rootId || meal.leftoverOf === rootId)
+    && !plannedMealIsAllowedForSlot(meal, recipe, profile))) {
+    throw new Error("Cette modification ne respecte pas votre profil alimentaire.");
+  }
   const byId = new Map(recipes.map((item) => [item.id, item]));
   const canRecalculate = meals.every((meal) => byId.has(meal.recipeId));
   return { ...plan, meals, estimatedCost: canRecalculate ? totalPlanCost(meals, byId) : plan.estimatedCost };
@@ -1670,91 +1673,8 @@ function formatDurationLabel(minutes: number): string {
   return `${minutes} min`;
 }
 
-/** Minimal iCalendar export of a week, one event per meal. */
-export function planToCalendar(plan: WeeklyPlan, recipes: readonly Recipe[]): string {
-  const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
-  const times: Record<MealType, string> = { breakfast: "0800", lunch: "1230", dinner: "1930" };
-  const labels: Record<MealType, string> = { breakfast: "Petit-déjeuner", lunch: "Déjeuner", dinner: "Dîner" };
-  const escape = (value: string): string => value
-    .replace(/\\/g, "\\\\")
-    .replace(/\r\n|\r|\n/g, "\\n")
-    .replace(/([,;])/g, "\\$1");
-  const safeToken = (value: string): string => value.replace(/[\r\n\u0000-\u001f\u007f]/g, "-").slice(0, 220);
-  const dayStamp = (dayIndex: number): string => {
-    const [year, month, day] = plan.startsOn.split("-").map(Number);
-    const date = new Date(Date.UTC(year, month - 1, day + dayIndex));
-    return date.toISOString().slice(0, 10).replace(/-/g, "");
-  };
-  const generated = new Date(plan.generatedAt);
-  const stamp = (Number.isNaN(generated.getTime()) ? new Date(`${plan.startsOn}T00:00:00.000Z`) : generated)
-    .toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-
-  const events = plan.meals.filter((meal) => !meal.skipped).map((meal) => {
-    const recipe = byId.get(meal.recipeId);
-    const start = `${dayStamp(meal.dayIndex)}T${times[meal.mealType]}00`;
-    return [
-      "BEGIN:VEVENT",
-      `UID:${safeToken(`${plan.id}-${meal.id}`)}@inflamm-menu`,
-      `DTSTAMP:${stamp}`,
-      `DTSTART;TZID=Europe/Paris:${start}`,
-      "DURATION:PT45M",
-      `SUMMARY:${escape(`${labels[meal.mealType]} — ${recipe?.title ?? "Repas"}`)}`,
-      `DESCRIPTION:${escape(`${meal.portions} portions · Inflamm’Menu${meal.leftoverOf ? " · restes" : ""}`)}`,
-      "END:VEVENT",
-    ].join("\r\n");
-  });
-
-  const foldLine = (line: string): string[] => {
-    const folded: string[] = [];
-    let current = "";
-    let currentBytes = 0;
-    let limit = 75;
-    for (const character of line) {
-      const characterBytes = new TextEncoder().encode(character).byteLength;
-      if (current && currentBytes + characterBytes > limit) {
-        folded.push(folded.length ? ` ${current}` : current);
-        current = character;
-        currentBytes = characterBytes;
-        limit = 74;
-      } else {
-        current += character;
-        currentBytes += characterBytes;
-      }
-    }
-    folded.push(folded.length ? ` ${current}` : current);
-    return folded;
-  };
-
-  const calendarLines = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//InflammMenu//FR",
-    "CALSCALE:GREGORIAN",
-    "METHOD:PUBLISH",
-    "X-WR-CALNAME:Inflamm’Menu",
-    "BEGIN:VTIMEZONE",
-    "TZID:Europe/Paris",
-    "X-LIC-LOCATION:Europe/Paris",
-    "BEGIN:DAYLIGHT",
-    "TZOFFSETFROM:+0100",
-    "TZOFFSETTO:+0200",
-    "TZNAME:CEST",
-    "DTSTART:19700329T020000",
-    "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU",
-    "END:DAYLIGHT",
-    "BEGIN:STANDARD",
-    "TZOFFSETFROM:+0200",
-    "TZOFFSETTO:+0100",
-    "TZNAME:CET",
-    "DTSTART:19701025T030000",
-    "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU",
-    "END:STANDARD",
-    "END:VTIMEZONE",
-    ...events.flatMap((event) => event.split("\r\n")),
-    "END:VCALENDAR",
-  ];
-  return [...calendarLines.flatMap(foldLine), ""].join("\r\n");
-}
+// Keep the pure export API available to existing integrations and tests.
+export { planToCalendar } from "./calendar-export.ts";
 
 export interface ShoppingListTextOptions {
   /** Human readable week, e.g. "3–9 août". */

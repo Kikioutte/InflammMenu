@@ -266,7 +266,7 @@ button { -webkit-tap-highlight-color: transparent; }
 .export-feedback:empty { min-height: 0; margin: 0; }
 .empty-day { padding: 34px 20px; text-align: center; border: 1px dashed var(--line); border-radius: 18px; color: var(--muted); }
 .empty-day svg { width: 30px; height: 30px; color: var(--sage); }
-.empty-day h3 { color: var(--ink); font-family: var(--serif); font-size: var(--font-22); margin: 10px 0 4px; }
+.empty-day h2, .empty-day h3 { color: var(--ink); font-family: var(--serif); font-size: var(--font-22); margin: 10px 0 4px; }
 .empty-day p { font-size: var(--font-12); margin: 0; line-height: 1.45; }
 
 .shopping-progress { margin: 18px 0 12px; height: 6px; background: var(--sage-soft); border-radius: 8px; overflow: hidden; }
@@ -967,7 +967,11 @@ button { -webkit-tap-highlight-color: transparent; }
   color: var(--ink);
   font: inherit;
 }
-.daily-constraints .day-carousel button { position: relative; min-width: 58px; }
+.daily-constraints .day-carousel button { position: relative; flex: 0 0 58px; min-width: 58px; min-height: 44px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); color: var(--ink); font: 500 var(--font-14) var(--sans); }
+.daily-constraints .day-carousel button.is-selected { color: var(--white); background: var(--sage); border-color: var(--sage); }
+.daily-constraints .day-carousel button.is-selected i { color: inherit; }
+.catalogue-empty .secondary-button { margin-top: 18px; }
+.text-field small, .inline-help, .notice-banner { overflow-wrap: anywhere; }
 .daily-constraints .day-carousel i { color: var(--terracotta); font-style: normal; font-size: var(--font-18); line-height: 8px; }
 .outside-slots { margin: 16px 0 0; padding: 0; border: 0; }
 .meal-attendance { margin: 16px 0 0; padding: 14px 0 0; border: 0; border-top: 1px solid var(--line); }

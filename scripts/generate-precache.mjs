@@ -76,7 +76,12 @@ for (const file of outputFiles) {
   }
 }
 
+// Modern PWA browsers use WOFF2. Keep WOFF files in the build for fallback,
+// but avoid downloading both encodings during every service-worker install.
+const fontFamilyKey = (publicPath) => publicPath.match(/^(.*-(?:normal|italic))-[\w-]+\.woff2?$/)?.[1];
+const woff2Fonts = new Set([...references].filter((url) => url.endsWith(".woff2")).map(fontFamilyKey).filter(Boolean));
 const appShell = [...references]
+  .filter((publicPath) => !publicPath.endsWith(".woff") || !woff2Fonts.has(fontFamilyKey(publicPath)))
   .filter((publicPath) => !excludedPath.test(publicPath) && !socialImagePath.test(publicPath))
   .filter((publicPath) => publicPath === normalizedBase || shellExtension.test(publicPath))
   .filter((publicPath) => existsSync(outputFileFor(publicPath)))

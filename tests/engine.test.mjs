@@ -1887,3 +1887,48 @@ test("plant diversity counts distinct plants without water, oil or animal produc
   assert.deepEqual(engine.plantDiversityOf(plan, [plants]), { count: 2, ingredients: ["Carotte", "Cumin"] });
   assert.equal(engine.summarizePlan(plan, [plants], profile).plantDiversity, 2);
 });
+
+test('les allergies à un ingrédient excluent toutes ses variantes, même facultatives', async () => {
+  const { RECIPES } = await import('../src/recipes.ts');
+  const { DEFAULT_PROFILE } = await import('../src/domain.ts');
+  const safeProfile = { ...DEFAULT_PROFILE, maxPrepMinutes:90, equipment:['hob','oven','microwave','blender','toaster','steamer'] };
+  const salmon = RECIPES.find(item => item.id === 'saumon-brocoli-riz-complet');
+  assert.equal(engine.recipeIsAllowed(salmon, safeProfile), true);
+  const blockedProfile = {...safeProfile, allergies:['brocoli']};
+  assert.equal(engine.recipeIsAllowed(salmon, blockedProfile), false);
+  assert.equal(engine.recipeIsAllowed({...salmon, ingredients:salmon.ingredients.map(item=>({...item,optional:true}))}, blockedProfile), false);
+  const plan=engine.generateWeeklyPlan(RECIPES,blockedProfile,{seed:'ingredient-allergy-regression',startsOn:'2026-09-07'});
+  const byId=new Map(RECIPES.map(item=>[item.id,item]));
+  for(const meal of plan.meals) assert.ok(!byId.get(meal.recipeId).ingredients.some(item=>['broccoli','brocoli-chinois'].includes(shopping.canonicalIngredientId(item.id))));
+  assert.equal(engine.diagnoseRecipeCompatibility([salmon],blockedProfile,{mealType:salmon.mealTypes[0]}).blockedBy.allergies,1);
+  assert.throws(()=>engine.assignRecipeToSlot(plan,plan.meals.find(meal=>meal.mealType===salmon.mealTypes[0]),salmon,RECIPES,blockedProfile),/profil/);
+});
+
+test('une restriction allergique inconnue issue d’un ancien profil ne devient jamais permissive', () => {
+  const restricted={...profile,allergies:['brocolii']};
+  assert.equal(engine.recipeIsAllowed(catalogue[0],restricted),false);
+  assert.throws(()=>engine.generateWeeklyPlan(catalogue,restricted),/Restriction non reconnue/);
+});
+
+test('la résolution des exclusions conserve toutes les variantes sans confondre poire et poireau', async () => {
+  const {resolveIngredientExclusions}=await import('../src/food-restrictions.ts');
+  const pears=resolveIngredientExclusions(['poire']);
+  assert.ok(pears.ids.includes('pear'));
+  assert.ok(pears.ids.includes('poire-nashi'));
+  assert.ok(!pears.ids.includes('leek'));
+  assert.deepEqual(resolveIngredientExclusions(['brocoli']).ids.sort(),['broccoli','brocoli-chinois'].sort());
+  assert.deepEqual(resolveIngredientExclusions(['brocolii']).unknown,['brocolii']);
+  assert.deepEqual(resolveIngredientExclusions(['de']).ids,[]);
+});
+
+test('retirer une substitution ne peut pas réintroduire un allergène ou un ingrédient refusé', () => {
+  const feta=recipe(5,{allergens:['lait'],ingredients:[{id:'feta',name:'feta',quantity:20,unit:'g',category:'fresh',allergens:['lait']}]});
+  const plan=engine.generateWeeklyPlan(catalogue,profile,{seed:3});
+  const meal={...plan.meals[0],recipeId:feta.id,substitutions:[{ingredientId:'feta',substitutionId:'feta-to-tofu'}]};
+  const substituted={...plan,meals:[meal]};
+  const before=structuredClone(substituted);
+  assert.throws(()=>engine.setMealIngredientSubstitution(substituted,meal.id,'feta',null,[feta],{...profile,allergies:['lait']}),/profil alimentaire/);
+  assert.throws(()=>engine.setMealIngredientSubstitution(substituted,meal.id,'feta',null,[feta],{...profile,excludedIngredientIds:['feta']}),/profil alimentaire/);
+  assert.deepEqual(substituted,before);
+  assert.deepEqual(engine.setMealIngredientSubstitution(substituted,meal.id,'feta',null,[feta],profile).meals[0].substitutions,[]);
+});

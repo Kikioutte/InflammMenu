@@ -81,11 +81,11 @@ export interface AppState {
 
 const DATABASE_NAME = "inflamm-menu";
 const DATABASE_VERSION = 1;
-const STORE_NAME = "app-state";
-const STATE_KEY = "current";
-const RESET_MARKER_KEY = "reset-marker";
-const LOCAL_STORAGE_KEY = "inflamm-menu:app-state";
-const LOCAL_RESET_MARKER_KEY = "inflamm-menu:reset-marker";
+export const STORE_NAME = "app-state";
+export const STATE_KEY = "current";
+export const RESET_MARKER_KEY = "reset-marker";
+export const LOCAL_STORAGE_KEY = "inflamm-menu:app-state";
+export const LOCAL_RESET_MARKER_KEY = "inflamm-menu:reset-marker";
 type StorageGenerationKind = "legacy" | "rollover" | "replace" | "reset";
 const LEGACY_STORAGE_GENERATION = "0:legacy:legacy";
 /** Archived weeks kept on the device; the oldest are dropped beyond this. */
@@ -188,7 +188,7 @@ function createState(input: StateInput): AppState {
   };
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
+export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
@@ -389,7 +389,7 @@ function normalizedEnumArray(value: unknown, allowed: ReadonlySet<string>, maxim
     .slice(0, maximum);
 }
 
-function normalizeCustomRecipe(value: unknown): Recipe | null {
+export function normalizeCustomRecipe(value: unknown): Recipe | null {
   if (!isRecord(value)) return null;
   const id = cleanUserText(value.id, 160);
   const title = cleanUserText(value.title, 90);
@@ -560,7 +560,7 @@ function normalizeRevision(value: unknown): number {
   return typeof value === "number" && Number.isSafeInteger(value) && value >= 0 ? value : 0;
 }
 
-function parseStorageGeneration(value: unknown): { counter: bigint; kind: StorageGenerationKind; nonce: string; value: string } | null {
+export function parseStorageGeneration(value: unknown): { counter: bigint; kind: StorageGenerationKind; nonce: string; value: string } | null {
   if (typeof value !== "string") return null;
   const typed = /^(0|[1-9]\d{0,127}):(legacy|rollover|replace|reset):([a-zA-Z0-9._-]{1,80})$/.exec(value);
   if (typed) {
@@ -820,10 +820,30 @@ interface ReplicaWriteResult {
   state: AppState | null;
 }
 
+export class StoredStateReadError extends Error {
+  constructor() {
+    super("Une sauvegarde locale est illisible ou provient d’une version plus récente. Elle a été conservée : téléchargez une copie de récupération avant toute réinitialisation.");
+    this.name = "StoredStateReadError";
+  }
+}
+
+function migrateStoredState(value: unknown): AppState | null {
+  if (value === undefined) return null;
+  const state = migrateAppState(value);
+  if (!state) throw new StoredStateReadError();
+  return state;
+}
+
+function parseLocalState(raw: string | null): AppState | null {
+  if (raw === null) return null;
+  try { return migrateStoredState(JSON.parse(raw) as unknown); }
+  catch { throw new StoredStateReadError(); }
+}
+
 function parseStoredGeneration(value: unknown): string {
   if (value === undefined || value === null) return LEGACY_STORAGE_GENERATION;
   const parsed = parseStorageGeneration(value);
-  if (!parsed) throw new Error("Storage reset marker is unreadable");
+  if (!parsed) throw new StoredStateReadError();
   return parsed.value;
 }
 
@@ -840,9 +860,8 @@ function readLocalReplica(): StorageReplica {
   if (!localStorageAvailable()) throw new Error("localStorage is unavailable");
   const markerGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
   const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-  if (!raw) return { state: null, generation: markerGeneration };
-  const state = migrateAppState(JSON.parse(raw) as unknown);
-  if (!state) throw new Error("localStorage contains an unreadable app state");
+  const state = parseLocalState(raw);
+  if (!state) return { state: null, generation: markerGeneration };
   // Non-reset generations live in their complete, self-describing snapshot;
   // only a reset owns the separate tombstone marker. The newest of both wins,
   // so a stale snapshot can never erase an already published reset barrier.
@@ -857,10 +876,12 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
   let activeGeneration = LEGACY_STORAGE_GENERATION;
   const resetTombstone = isResetTombstone(state);
   try {
-    activeGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+    try { activeGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY)); }
+    catch (error) { if (!resetTombstone) throw error; }
     const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
     let storedState: AppState | null = null;
-    try { storedState = raw ? migrateAppState(JSON.parse(raw) as unknown) : null; } catch { storedState = null; }
+    try { storedState = parseLocalState(raw); }
+    catch (error) { if (!resetTombstone) throw error; }
     if (storedState) {
       activeGeneration = newestStorageGeneration([activeGeneration, storedState.storageGeneration]);
     }
@@ -931,14 +952,14 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
   }
 }
 
-function openDatabase(): Promise<IDBDatabase> {
+export function openDatabase(recovery = false): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     if (typeof indexedDB === "undefined") {
       reject(new Error("IndexedDB is unavailable"));
       return;
     }
 
-    const request = indexedDB.open(DATABASE_NAME, DATABASE_VERSION);
+    const request = indexedDB.open(DATABASE_NAME, recovery ? undefined : DATABASE_VERSION);
     request.onupgradeneeded = () => {
       const database = request.result;
       if (!database.objectStoreNames.contains(STORE_NAME)) {
@@ -946,7 +967,9 @@ function openDatabase(): Promise<IDBDatabase> {
       }
     };
     request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error ?? new Error("Unable to open IndexedDB"));
+    request.onerror = () => reject(request.error?.name === "VersionError"
+      ? new StoredStateReadError()
+      : request.error ?? new Error("Unable to open IndexedDB"));
     request.onblocked = () => reject(new Error("IndexedDB upgrade is blocked"));
   });
 }
@@ -961,11 +984,7 @@ async function readIndexedReplica(): Promise<StorageReplica> {
       const markerRequest = store.get(RESET_MARKER_KEY);
       transaction.oncomplete = () => {
         try {
-          const state = migrateAppState(stateRequest.result);
-          if (stateRequest.result !== undefined && stateRequest.result !== null && !state) {
-            reject(new Error("IndexedDB contains an unreadable app state"));
-            return;
-          }
+          const state = migrateStoredState(stateRequest.result);
           const markerGeneration = parseStoredGeneration(markerRequest.result);
           resolve({
             state,
@@ -1000,8 +1019,11 @@ async function writeIndexedReplica(state: AppState): Promise<ReplicaWriteResult>
       let handlerError: unknown;
       stateRequest.onsuccess = () => {
         try {
-          activeGeneration = parseStoredGeneration(markerRequest.result);
-          const storedState = migrateAppState(stateRequest.result);
+          try { activeGeneration = parseStoredGeneration(markerRequest.result); }
+          catch (error) { if (!isResetTombstone(state)) throw error; }
+          let storedState: AppState | null = null;
+          try { storedState = migrateStoredState(stateRequest.result); }
+          catch (error) { if (!isResetTombstone(state)) throw error; }
           if (storedState) {
             activeGeneration = newestStorageGeneration([activeGeneration, storedState.storageGeneration]);
           }
@@ -1079,16 +1101,18 @@ function resolveReplicas(
   };
 }
 
-async function readReplicasBestEffort(): Promise<{ local: StorageReplica | null; indexed: StorageReplica | null }> {
+async function readReplicasBestEffort(): Promise<{ local: StorageReplica | null; indexed: StorageReplica | null; unreadable: boolean }> {
   let local: StorageReplica | null = null;
   let indexed: StorageReplica | null = null;
-  try { local = readLocalReplica(); } catch { /* The other replica may still be usable. */ }
-  try { indexed = await readIndexedReplica(); } catch { /* Safari private mode may reject IndexedDB. */ }
-  return { local, indexed };
+  let unreadable = false;
+  try { local = readLocalReplica(); } catch (error) { unreadable ||= error instanceof StoredStateReadError; }
+  try { indexed = await readIndexedReplica(); } catch (error) { unreadable ||= error instanceof StoredStateReadError; }
+  return { local, indexed, unreadable };
 }
 
 export async function loadAppState(): Promise<AppState> {
   const replicas = await readReplicasBestEffort();
+  if (replicas.unreadable) throw new StoredStateReadError();
   const resolved = resolveReplicas(replicas.local, replicas.indexed);
   try {
     return (await saveAppState(resolved.state)).state;
@@ -1112,8 +1136,14 @@ export async function loadRecoveryAppState(): Promise<RecoveryAppStateResult> {
   const unreadableReplicas: RecoveryAppStateResult["unreadableReplicas"] = [];
   let localReplica: StorageReplica | null = null;
   let indexedReplica: StorageReplica | null = null;
-  try { localReplica = readLocalReplica(); } catch { unreadableReplicas.push("localStorage"); }
-  try { indexedReplica = await readIndexedReplica(); } catch { unreadableReplicas.push("IndexedDB"); }
+  try { localReplica = readLocalReplica(); } catch (error) {
+    if (error instanceof StoredStateReadError) throw error;
+    unreadableReplicas.push("localStorage");
+  }
+  try { indexedReplica = await readIndexedReplica(); } catch (error) {
+    if (error instanceof StoredStateReadError) throw error;
+    unreadableReplicas.push("IndexedDB");
+  }
 
   if (!localReplica && !indexedReplica) {
     throw new Error("No readable app-state replica is available for recovery");
@@ -1124,6 +1154,12 @@ export async function loadRecoveryAppState(): Promise<RecoveryAppStateResult> {
     complete: unreadableReplicas.length === 0,
     unreadableReplicas,
   };
+}
+
+/** Load forensic-copy code only if a damaged store actually needs recovery. */
+export async function exportRawRecovery(): Promise<string> {
+  const recovery = await import("./raw-recovery.ts");
+  return recovery.exportRawRecovery();
 }
 
 export interface SaveAppStateResult {
@@ -1159,6 +1195,7 @@ function stateCovers(persisted: AppState, requested: AppState): boolean {
 async function performSaveAppState(state: AppState): Promise<SaveAppStateResult> {
   const candidate = migrateAppState(state) ?? cloneDefaultState();
   let replicas = await readReplicasBestEffort();
+  if (replicas.unreadable && !isResetTombstone(candidate)) throw new StoredStateReadError();
   let resolved = resolveReplicas(replicas.local, replicas.indexed, [candidate.storageGeneration]);
   if (compareStorageGenerations(candidate.storageGeneration, resolved.generation) === 0) {
     resolved.state = mergeAppStateReplicas(candidate, resolved.state);
@@ -1358,6 +1395,9 @@ function isResetTombstone(state: AppState): boolean {
 }
 
 export async function resetAppState(): Promise<void> {
+  // An older app must not report a successful partial reset of a newer DB.
+  try { (await openDatabase()).close(); }
+  catch (error) { if (error instanceof StoredStateReadError) throw error; }
   const replicas = await readReplicasBestEffort();
   const seenGenerations = [
     ...(replicas.local ? [replicas.local.generation] : []),
@@ -1402,150 +1442,10 @@ export function exportAppState(state: AppState, exportedAt = new Date().toISOStr
   return `${JSON.stringify(backup, null, 2)}\n`;
 }
 
-export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
-const RECOGNIZED_STATE_KEYS = new Set([
-  "version", "profile", "currentPlan", "plan", "upcomingPlan", "favoriteRecipeIds", "favorites",
-  "history", "checkedShoppingItemIds", "checkedShoppingIds", "pantryIngredientIds", "pantryIds",
-  "pantryAmounts", "recipeNotes", "shoppingCategoryOrder", "actualSpend", "customRecipes",
-  "textScale", "remindersEnabled", "onboardingCompleted", "storageGeneration", "stateRevision", "fieldRevisions", "fieldMutationIds",
-]);
-
-const CURRENT_BACKUP_KEYS = [
-  "profile", "currentPlan", "upcomingPlan", "favoriteRecipeIds", "history",
-  "checkedShoppingItemIds", "pantryIngredientIds", "pantryAmounts", "recipeNotes",
-  "shoppingCategoryOrder", "actualSpend", "customRecipes", "textScale",
-  "remindersEnabled", "onboardingCompleted", "stateRevision",
-] as const;
-
-function hasUsableLegacyStateShape(value: Record<string, unknown>): boolean {
-  const profile = value.profile;
-  if (!isRecord(profile)) return false;
-  const profileIsUsable = typeof profile.people === "number"
-    && (profile.mealsPerDay === 2 || profile.mealsPerDay === 3)
-    && typeof profile.weeklyBudget === "number"
-    && typeof profile.maxPrepMinutes === "number"
-    && Array.isArray(profile.allergies)
-    && typeof profile.diet === "string"
-    && Array.isArray(profile.equipment);
-  const hasPlanSlot = Object.hasOwn(value, "currentPlan") || Object.hasOwn(value, "plan");
-  const hasFavorites = Array.isArray(value.favoriteRecipeIds) || Array.isArray(value.favorites);
-  const hasCheckedItems = Array.isArray(value.checkedShoppingItemIds) || Array.isArray(value.checkedShoppingIds);
-  const hasPantry = Array.isArray(value.pantryIngredientIds) || Array.isArray(value.pantryIds);
-  return profileIsUsable && hasPlanSlot && hasFavorites && Array.isArray(value.history) && hasCheckedItems && hasPantry;
-}
-
-function isStrictStringArray(value: unknown): boolean {
-  return Array.isArray(value) && value.every((item) => typeof item === "string");
-}
-
-function hasCompleteCurrentProfileShape(value: unknown): boolean {
-  if (!isRecord(value) || !isRecord(value.weeklyTargets)) return false;
-  return typeof value.firstName === "string"
-    && typeof value.people === "number" && Number.isFinite(value.people)
-    && (value.mealsPerDay === 2 || value.mealsPerDay === 3)
-    && typeof value.weeklyBudget === "number" && Number.isFinite(value.weeklyBudget)
-    && typeof value.maxPrepMinutes === "number" && Number.isFinite(value.maxPrepMinutes)
-    && Array.isArray(value.dayConstraints)
-    && isStrictStringArray(value.allergies)
-    && isStrictStringArray(value.excludedIngredientIds)
-    && isStrictStringArray(value.dislikedRecipeIds)
-    && isStrictStringArray(value.softDislikedRecipeIds)
-    && typeof value.weeklyTargets.legumeMeals === "number" && Number.isFinite(value.weeklyTargets.legumeMeals)
-    && typeof value.weeklyTargets.fishMeals === "number" && Number.isFinite(value.weeklyTargets.fishMeals)
-    && (value.diet === "classic" || value.diet === "vegetarian" || value.diet === "no-pork")
-    && isStrictStringArray(value.equipment);
-}
-
-function hasCompleteCurrentStateShape(value: Record<string, unknown>): boolean {
-  const requiredKeysArePresent = CURRENT_BACKUP_KEYS.every((key) => Object.hasOwn(value, key));
-  const plansAreValid = (value.currentPlan === null || normalizePlan(value.currentPlan) !== null)
-    && (value.upcomingPlan === null || normalizePlan(value.upcomingPlan) !== null)
-    && Array.isArray(value.history)
-    && value.history.every((plan) => normalizePlan(plan) !== null);
-  const collectionsAreValid = isStrictStringArray(value.favoriteRecipeIds)
-    && isStrictStringArray(value.checkedShoppingItemIds)
-    && isStrictStringArray(value.pantryIngredientIds)
-    && isRecord(value.pantryAmounts)
-    && isRecord(value.recipeNotes)
-    && Array.isArray(value.shoppingCategoryOrder)
-    && isRecord(value.actualSpend)
-    && Array.isArray(value.customRecipes);
-  const preferencesAreValid = (value.textScale === "normal" || value.textScale === "large")
-    && typeof value.remindersEnabled === "boolean"
-    && typeof value.onboardingCompleted === "boolean"
-    && (value.storageGeneration === undefined || parseStorageGeneration(value.storageGeneration) !== null)
-    && Number.isSafeInteger(value.stateRevision)
-    && Number(value.stateRevision) >= 0;
-  return requiredKeysArePresent
-    && hasCompleteCurrentProfileShape(value.profile)
-    && plansAreValid
-    && collectionsAreValid
-    && preferencesAreValid;
-}
-
-function assertCompleteImport(candidate: Record<string, unknown>, backupVersion?: number): void {
-  const candidateVersion = typeof candidate.version === "number" ? candidate.version : undefined;
-  const mustUseCurrentShape = backupVersion === APP_STATE_VERSION || candidateVersion === APP_STATE_VERSION;
-  const completeEnough = mustUseCurrentShape
-    ? hasCompleteCurrentStateShape(candidate)
-    : hasUsableLegacyStateShape(candidate);
-  if (!completeEnough) {
-    throw new Error("Sauvegarde incomplète : elle ne sera pas restaurée pour protéger vos données actuelles.");
-  }
-}
-
-/**
- * Reads a backup file. Older exports and raw state dumps are accepted, but the
- * content always goes through the same migration and validation as stored data.
- */
-export function importAppState(raw: string): AppState {
-  if (new TextEncoder().encode(raw).byteLength > MAX_BACKUP_BYTES) {
-    throw new Error("Sauvegarde trop volumineuse : la limite est de 8 Mo.");
-  }
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(raw);
-  } catch {
-    throw new Error("Fichier illisible : ce n’est pas une sauvegarde Inflamm’Menu.");
-  }
-
-  if (!isRecord(parsed)) throw new Error("Fichier illisible : ce n’est pas une sauvegarde Inflamm’Menu.");
-  let candidate: Record<string, unknown>;
-  if (parsed.format !== undefined) {
-    if (parsed.format !== BACKUP_FORMAT) throw new Error("Ce fichier ne provient pas d’Inflamm’Menu.");
-    if (typeof parsed.version === "number" && parsed.version > APP_STATE_VERSION) {
-      throw new Error("Cette sauvegarde provient d’une version plus récente d’Inflamm’Menu.");
-    }
-    if (typeof parsed.version !== "number") throw new Error("Sauvegarde incomplète : version absente ou invalide.");
-    if (typeof parsed.exportedAt !== "string" || Number.isNaN(Date.parse(parsed.exportedAt))) {
-      throw new Error("Sauvegarde incomplète : date d’export absente ou invalide.");
-    }
-    if (!isRecord(parsed.state)) throw new Error("Sauvegarde incomplète : aucune donnée exploitable.");
-    if (!Object.keys(parsed.state).some((key) => RECOGNIZED_STATE_KEYS.has(key))) {
-      throw new Error("Sauvegarde incomplète : aucune donnée Inflamm’Menu reconnue.");
-    }
-    candidate = parsed.state;
-    assertCompleteImport(candidate, parsed.version);
-  } else {
-    const rawCandidate = isRecord(parsed.state) ? parsed.state : parsed;
-    if (!Object.keys(rawCandidate).some((key) => RECOGNIZED_STATE_KEYS.has(key))) {
-      throw new Error("Ce fichier ne contient aucune donnée Inflamm’Menu reconnue.");
-    }
-    candidate = rawCandidate;
-    assertCompleteImport(candidate);
-  }
-
-  const migrated = migrateAppState(candidate);
-  if (!migrated) throw new Error("Sauvegarde incomplète ou version incompatible.");
-  return migrated;
-}
-
-/** Rejects oversized files before allocating and decoding their full contents. */
+/** The import validator is needed only after the user selects a backup. */
 export async function importAppStateFile(file: Pick<File, "size" | "text">): Promise<AppState> {
-  if (file.size > MAX_BACKUP_BYTES) {
-    throw new Error("Sauvegarde trop volumineuse : la limite est de 8 Mo.");
-  }
-  return importAppState(await file.text());
+  const backup = await import("./backup-import.ts");
+  return backup.importAppStateFile(file);
 }
 
 /**

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+const { importAppState, MAX_BACKUP_BYTES } = await import("../src/backup-import.ts");
 const { APP_STATE_VERSION, migrateAppState } = await import("../src/storage.ts");
 
 function state(overrides = {}) {
@@ -98,7 +99,7 @@ test("allergen aliases are canonicalized when the profile is persisted", () => {
 });
 
 test("a backup round trip preserves every local decision", async () => {
-  const { exportAppState, importAppState, BACKUP_FORMAT } = await import("../src/storage.ts");
+  const { exportAppState, BACKUP_FORMAT } = await import("../src/storage.ts");
   const source = migrateAppState(state({
     favoriteRecipeIds: ["catalog-r036", "salade-lentilles-noix"],
     profile: { ...state().profile, dislikedRecipeIds: ["catalog-r002"], firstName: "Camille" },
@@ -155,7 +156,7 @@ test("stored substitutions are kept only for an ingredient supported by the revi
 });
 
 test("restoring rejects foreign or broken files and accepts a raw state dump", async () => {
-  const { importAppState, BACKUP_FORMAT } = await import("../src/storage.ts");
+  const { BACKUP_FORMAT } = await import("../src/storage.ts");
 
   assert.throws(() => importAppState("{pas du json"), /Fichier illisible/);
   assert.throws(() => importAppState("[]"), /Fichier illisible/);
@@ -192,7 +193,6 @@ test("an oversized backup file is rejected before its contents are read", async 
   const {
     exportAppState,
     importAppStateFile,
-    MAX_BACKUP_BYTES,
   } = await import("../src/storage.ts");
   let reads = 0;
   await assert.rejects(
@@ -482,7 +482,7 @@ test("absurd profile numbers are bounded rather than trusted", () => {
 });
 
 test("an imported history cannot exceed the on-device limit", async () => {
-  const { importAppState, HISTORY_LIMIT } = await import("../src/storage.ts");
+  const { HISTORY_LIMIT } = await import("../src/storage.ts");
   const week = (index) => ({
     id: `w${index}`, startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: state().profile,
     meals: [{ id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: "r1", portions: 2, source: "generated" }],
@@ -571,7 +571,7 @@ test("historical shopping state migrates to groups without losing quantities", (
 
 
 test("audit remediation: strict imports and nested custom recipes", async () => {
-  const { importAppState, migrateAppState } = await import("../src/storage.ts");
+  const { migrateAppState } = await import("../src/storage.ts");
   assert.throws(() => importAppState("{}"), /aucune donnée Inflamm.Menu reconnue/i);
   assert.throws(() => importAppState(JSON.stringify({ hello: 1 })), /aucune donnée Inflamm.Menu reconnue/i);
   assert.throws(() => importAppState(JSON.stringify({ format: "inflamm-menu-backup", version: 999, state: {} })), /version plus récente/i);
@@ -1086,5 +1086,43 @@ test("an IndexedDB snapshot newer than its missing marker cannot be overwritten 
     if (originalWindow) Object.defineProperty(globalThis, "window", originalWindow); else delete globalThis.window;
     if (originalIndexedDb) Object.defineProperty(globalThis, "indexedDB", originalIndexedDb); else delete globalThis.indexedDB;
     if (originalBroadcastChannel) Object.defineProperty(globalThis, "BroadcastChannel", originalBroadcastChannel); else delete globalThis.BroadcastChannel;
+  }
+});
+
+const { loadAppState, saveAppState, DEFAULT_APP_STATE } = await import('../src/storage.ts');
+for (const [name, raw] of [
+ ['JSON tronqué', '{"version":3,"profile":{"firstName":"À récupérer"}'],
+ ['version future', JSON.stringify({version:999, profile:{firstName:'À récupérer'},favoriteRecipeIds:['sentinel']})],
+ ['valeur invalide', 'null'],
+]) {
+ test(`préserve ${name} au démarrage et à l’écriture`, async () => {
+  const originalWindow = globalThis.window;
+  const originalIndexedDB = globalThis.indexedDB;
+  const data = new Map([['inflamm-menu:app-state',raw]]);
+  globalThis.window = {localStorage:{getItem:key=>data.get(key)??null,setItem:(key,value)=>data.set(key,value)}};
+  delete globalThis.indexedDB;
+  try {
+   await assert.rejects(loadAppState());
+   assert.equal(data.get('inflamm-menu:app-state'),raw);
+   await assert.rejects(saveAppState(DEFAULT_APP_STATE));
+   assert.equal(data.get('inflamm-menu:app-state'),raw);
+  } finally {
+   if(originalWindow===undefined)delete globalThis.window; else globalThis.window=originalWindow;
+   if(originalIndexedDB===undefined)delete globalThis.indexedDB;else globalThis.indexedDB=originalIndexedDB;
+  }
+ });
+}
+
+test('un reset explicitement demandé peut remplacer une sauvegarde illisible', async () => {
+  const { resetAppState } = await import('../src/storage.ts');
+  const originalWindow = globalThis.window;
+  const storage = memoryLocalStorage();
+  storage.setItem('inflamm-menu:app-state', '{"version":999');
+  globalThis.window = { localStorage: storage };
+  try {
+    await resetAppState();
+    assert.equal(JSON.parse(storage.getItem('inflamm-menu:app-state')).version, APP_STATE_VERSION);
+  } finally {
+    if (originalWindow === undefined) delete globalThis.window; else globalThis.window = originalWindow;
   }
 });
