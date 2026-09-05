@@ -87,11 +87,13 @@ test('le montant réel accepte les centimes saisis caractère par caractère', a
 });
 
 test('les quarts de cuillère restent précis à l’affichage et à la sauvegarde', async ({ page }) => {
+  await page.setViewportSize({width:320,height:844});
   const source=JSON.parse(await readFile(new URL('../src/data/planner-recipes.json',import.meta.url),'utf8'));
   const recipe={...source[0],id:'perso-quantities-test',title:'Ma recette précise',ingredients:[
     {id:'salt',name:'Sel',quantity:0.25,unit:'c_cafe',category:'grocery'},
     {id:'olive-oil',name:'Huile d’olive',quantity:0.25,unit:'c_soupe',category:'grocery'},
     {id:'pepper',name:'Poivre',quantity:0.01,unit:'g',category:'grocery'},
+    {id:'water',name:'Eau',quantity:112.5,unit:'ml',category:'grocery'},
   ]};
   await seedLocal(page,JSON.stringify({version:3,onboardingCompleted:true,customRecipes:[recipe],favoriteRecipeIds:[recipe.id]}));
   await page.getByRole('button',{name:'Favoris',exact:true}).click();
@@ -101,6 +103,12 @@ test('les quarts de cuillère restent précis à l’affichage et à la sauvegar
   await expect(page.getByText('0,01 g', {exact:true})).toBeVisible();
   await page.getByTestId('edit-custom-recipe').click();
   await expect(page.getByRole('heading',{name:'Adapter la recette'})).toBeFocused();
+  const clippedValues = await page.locator('.stepper b').evaluateAll(values =>
+    values.filter(value => value.scrollWidth > value.clientWidth).map(value => value.textContent));
+  expect(clippedValues).toEqual([]);
+  const smallTargets = await page.locator('.stepper button').evaluateAll(buttons =>
+    buttons.filter(button => { const rect=button.getBoundingClientRect(); return rect.width < 44 || rect.height < 44; }).map(button => button.getAttribute('aria-label')));
+  expect(smallTargets).toEqual([]);
   const time = page.getByTestId('custom-time');
   const initialTime = await time.inputValue();
   await time.fill('');
@@ -111,7 +119,7 @@ test('les quarts de cuillère restent précis à l’affichage et à la sauvegar
   await page.getByRole('button',{name:'Augmenter Sel',exact:true}).click();
   await page.getByRole('button',{name:'Augmenter Huile d’olive',exact:true}).click();
   await page.getByTestId('custom-save').click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).customRecipes[0].ingredients.map((i:{quantity:number})=>i.quantity))).toEqual([0.5,0.5,0.01]);
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).customRecipes[0].ingredients.map((i:{quantity:number})=>i.quantity))).toEqual([0.5,0.5,0.01,112.5]);
 });
 
 test('un budget ou un temps vide ne remplace pas silencieusement le profil', async ({ page }) => {
