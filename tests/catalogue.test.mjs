@@ -353,6 +353,18 @@ test("un catalogue invalide n'est pas mémorisé et le chargement peut être ré
   assert.equal(recovered.recipes.length, 630);
 });
 
+test("la liste d’images est chargée avec le catalogue et reste une liste d’autorisation stricte", { concurrency: false }, async (t) => {
+  replaceGlobal(t, "fetch", async () => jsonResponse(catalogue));
+  const { catalogueImageFor, loadCatalogue } = await importFreshCatalogueModule("deferred-images");
+  const recipe = catalogue.recipes[0];
+  assert.equal(catalogueImageFor(recipe), "/assets/recipe-placeholder.svg", "aucun fichier n’est autorisé avant le chargement de la liste interne");
+  await loadCatalogue();
+  assert.equal(catalogueImageFor(recipe), `/assets/recipes/generated/${recipe.image.nom_fichier}`);
+  for (const filename of ["../../index.html", "https://example.test/track.png", "unreviewed.jpg"]) {
+    assert.equal(catalogueImageFor({ ...recipe, image: { ...recipe.image, nom_fichier: filename } }), "/assets/recipe-placeholder.svg");
+  }
+});
+
 test("un HTTP 200 corrompu se replie sur la dernière copie hors ligne validée", { concurrency: false }, async (t) => {
   let cacheName = "";
   let cacheDeletes = 0;
