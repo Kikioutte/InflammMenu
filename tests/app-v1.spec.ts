@@ -1273,6 +1273,10 @@ test("une recette écartée disparaît des semaines suivantes et reste réversib
 });
 
 test("une recette du catalogue peut être placée sur un créneau précis", async ({ page }) => {
+  // Week generation is seeded by Date.now(). Keep this fixture reproducible:
+  // a wall-clock seed can already put the requested soup in the week, where
+  // the deliberate duplicate-recipe protection correctly disables every slot.
+  await page.clock.setFixedTime(new Date("2026-09-02T12:00:00Z"));
   await openFreshApp(page);
 
   await generateWeek(page);
@@ -1283,12 +1287,21 @@ test("une recette du catalogue peut être placée sur un créneau précis", asyn
 
   await page.getByTestId("catalogue-plan").click();
   await expect(page.getByTestId("plan-slot-view")).toBeVisible();
+  await expect(page.getByTestId("already-planned")).toHaveCount(0);
   await page.getByTestId("plan-slot-2-dinner").click();
 
   await expect(page.getByTestId("week-view")).toBeVisible();
   await page.locator(".day-card").nth(2).click();
   await expect(page.locator(".meal-card__main strong", { hasText: "Soupe miso au wakame" })).toHaveCount(1);
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
+
+  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("tab", { name: "Catalogue" }).click();
+  await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
+  await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
+  await page.getByTestId("catalogue-plan").click();
+  await expect(page.getByTestId("already-planned")).toContainText("Cette recette est déjà au menu");
+  await expect(page.getByTestId("plan-slot-2-dinner")).toBeDisabled();
 });
 
 test("un plat peut être cuisiné en double et servi en restes", async ({ page }) => {
