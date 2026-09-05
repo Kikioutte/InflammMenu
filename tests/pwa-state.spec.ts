@@ -187,12 +187,37 @@ test("une navigation vers une ressource ne peut jamais remplacer le shell HTML h
 
   await page.goto("/InflammMenu/");
   await expect(page.getByTestId("home-view")).toBeVisible();
-  await expect.poll(shellFingerprint).toEqual(initialShell);
+  // Even a canonical online navigation must preserve the installed snapshot.
+  await expect.poll(shellFingerprint).toEqual({ ...initialShell, sentinel: `audit-shell-${resourcePaths.length - 1}` });
 
   await context.setOffline(true);
   await page.goto("/InflammMenu/");
   await expect(page.getByTestId("home-view")).toBeVisible();
   expect((await page.locator("html").evaluate((element) => element.ownerDocument.contentType))).toBe("text/html");
+});
+
+test("une mise à jour HTML interrompue conserve une application complète hors ligne", async ({ page, context }) => {
+  const indexPath = resolve("dist/pages/index.html");
+  const original = await readFile(indexPath, "utf8");
+  try {
+    await openFreshApp(page);
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.ready;
+      if (!navigator.serviceWorker.controller) await new Promise<void>(resolve => navigator.serviceWorker.addEventListener("controllerchange", () => resolve(), { once: true }));
+      localStorage.setItem("inflamm-menu:update-interrupted", "conservé");
+    });
+    const incomplete = original.replace(/(<script[^>]+src=")[^"]+/, '$1/InflammMenu/assets/not-yet-uploaded.js');
+    expect(incomplete).not.toBe(original);
+    await writeFile(indexPath, incomplete);
+    const response = await page.goto("/InflammMenu/");
+    expect(await response!.text()).toContain("not-yet-uploaded.js");
+    await context.setOffline(true);
+    await page.goto("/InflammMenu/");
+    await expect(page.getByTestId("home-view")).toBeVisible();
+    expect(await page.evaluate(() => localStorage.getItem("inflamm-menu:update-interrupted"))).toBe("conservé");
+  } finally {
+    await writeFile(indexPath, original);
+  }
 });
 
 test("une version B est détectée puis rechargée sans effacer les données locales", async ({ page }) => {

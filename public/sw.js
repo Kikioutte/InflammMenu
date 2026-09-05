@@ -71,7 +71,10 @@ async function precacheShell() {
     .map((match) => new URL(match[1], self.location.origin))
     .filter((url) => url.origin === self.location.origin)
     .map((url) => `${url.pathname}${url.search}`);
-  const uniqueAssets = [...new Set(assetPaths)];
+  // The generated manifest already contains the entry, styles and preloads.
+  // Discover extra references for development/older manifests without fetching
+  // the entire initial bundle a second time on every installation.
+  const uniqueAssets = [...new Set(assetPaths)].filter((path) => !APP_SHELL.includes(path));
   const assetResponses = await Promise.all(uniqueAssets.map((path) => fetchRequired(path)));
   await Promise.all(uniqueAssets.map((path, index) => cache.put(path, assetResponses[index].clone())));
 }
@@ -123,9 +126,10 @@ async function navigationResponse(request) {
   const cache = await caches.open(SHELL_CACHE);
   try {
     const response = await fetch(request, { cache: "no-cache" });
-    if (response.ok && response.type === "basic" && isCanonicalShellNavigation(request) && isHtmlResponse(response)) {
-      await putSafely(cache, shellEntry("/index.html") ?? "/index.html", response);
-    }
+    if (response.status >= 500 && isCanonicalShellNavigation(request)) throw new Error("Application server unavailable");
+    // Keep the versioned offline document immutable. A newer network document
+    // can refer to assets that have not arrived yet; only a complete worker
+    // installation may replace the offline shell. Online visits stay fresh.
     return response;
   } catch {
     const fallback = await matchCached(cache, shellEntry("/index.html") ?? "/index.html")
