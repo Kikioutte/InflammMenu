@@ -14,7 +14,7 @@ const indexPath = path.join(output, "index.html");
 const manifestPath = path.join(output, "manifest.webmanifest");
 const excludedPath = /\/(?:recipes|iphone|android|status|qa)\//;
 const socialImagePath = /\/og\.(?:png|jpe?g)$/i;
-const shellExtension = /\.(?:css|html|js|json|jpg|png|svg|webmanifest|woff2?)$/i;
+const shellExtension = /\.(?:css|html|js|json|jpg|png|svg|webp|avif|webmanifest|woff2?)$/i;
 
 for (const file of [serviceWorkerPath, indexPath, manifestPath]) {
   if (!existsSync(file)) throw new Error(`Fichier de build manquant : ${file}`);
@@ -46,6 +46,10 @@ const references = new Set([
 ]);
 const plannerCautionsPath = `${normalizedBase}data/planner-cautions.json`;
 if (existsSync(outputFileFor(plannerCautionsPath))) references.add(plannerCautionsPath);
+// This one image belongs to the home shell. Recipe thumbnails remain in the
+// excluded /recipes/ directory and are cached only after they are viewed.
+const responsiveImages = JSON.parse(readFileSync(path.join(root, "src/data/responsive-images.json"), "utf8"));
+references.add(`${normalizedBase}${responsiveImages.hero.path}`);
 const indexHtml = readFileSync(indexPath, "utf8");
 for (const match of indexHtml.matchAll(/(?:src|href)=["']([^"']+)["']/g)) {
   const publicPath = toPublicPath(match[1]);
@@ -67,8 +71,8 @@ for (const file of outputFiles) {
   if (!/\.(?:css|html|js)$/i.test(file)) continue;
   const contents = readFileSync(file, "utf8");
   const discovered = [
-    ...contents.matchAll(/["'`](\/[^"'`\s)]+\.(?:jpg|png|svg|woff2?))["'`]/gi),
-    ...contents.matchAll(/url\(\s*["']?([^"')\s]+\.(?:jpg|png|svg|woff2?))["']?\s*\)/gi),
+    ...contents.matchAll(/["'`](\/[^"'`\s)]+\.(?:jpg|png|svg|webp|avif|woff2?))["'`]/gi),
+    ...contents.matchAll(/url\(\s*["']?([^"')\s]+\.(?:jpg|png|svg|webp|avif|woff2?))["']?\s*\)/gi),
   ];
   for (const match of discovered) {
     const publicPath = toPublicPath(match[1]);

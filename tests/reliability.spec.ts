@@ -598,3 +598,52 @@ test('un stockage de rappel refusé ne bloque pas le démarrage ni les données'
   await expect(page.getByTestId('home-view')).toBeVisible();
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).remindersEnabled)).toBe(true);
 });
+
+
+test('les images de l’accueil utilisent leurs dérivés et conservent les JPEG si le WebP échoue', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.clock.setFixedTime(new Date('2026-09-05T12:00:00Z'));
+  await page.goto('/tests/runtime-fixture.html');
+  await page.evaluate(async () => {
+    // A real engine-generated week makes the fixture pass normal hydration,
+    // compatibility checks and shopping reconciliation.
+    // @ts-expect-error Vite serves this TypeScript module in the browser.
+    const { generateWeeklyPlan } = await import('/src/engine.ts');
+    // @ts-expect-error Vite serves this TypeScript module in the browser.
+    const { RECIPES } = await import('/src/recipes.ts');
+    // @ts-expect-error Vite serves this TypeScript module in the browser.
+    const { DEFAULT_APP_STATE } = await import('/src/storage.ts');
+    const profile = { ...DEFAULT_APP_STATE.profile, firstName: 'Camille' };
+    const currentPlan = generateWeeklyPlan(RECIPES, profile, {
+      seed: 'lh95-returning', startsOn: '2026-08-31', generatedAt: '2026-09-01T12:00:00.000Z',
+    });
+    localStorage.setItem('inflamm-menu:app-state', JSON.stringify({
+      ...DEFAULT_APP_STATE, profile, currentPlan, onboardingCompleted: true,
+      recipeNotes: { [currentPlan.meals[0].recipeId]: 'Ma note conservée 🥣' },
+    }));
+  });
+  await page.goto('/');
+  await expect(page.getByTestId('home-view')).toBeVisible();
+  const hero = page.locator('.home-hero__image');
+  const previews = page.locator('.meal-preview img');
+  await expect(hero).toHaveAttribute('src', /\/assets\/responsive\/[a-f0-9]+\/inflamm-hero-bowl\.webp$/);
+  await expect.poll(() => hero.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBe(960);
+  await expect(previews).toHaveCount(2);
+  for (const preview of await previews.all()) {
+    await expect(preview).toHaveAttribute('src', /\/assets\/recipes\/thumbnails\/[a-f0-9]+\/.*\.webp$/);
+    await expect.poll(() => preview.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBe(192);
+  }
+  const before = await deferredScreenData(page);
+  await page.route(/\/assets\/(?:responsive|recipes\/thumbnails)\/.*\.webp(?:\?.*)?$/, route => route.abort('failed'));
+  await page.reload();
+  await expect(page.getByTestId('home-view')).toBeVisible();
+  await expect(hero).toHaveAttribute('src', '/assets/inflamm-hero-bowl.jpg');
+  await expect.poll(() => hero.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBe(1200);
+  for (const preview of await previews.all()) {
+    await expect(preview).toHaveAttribute('src', /\/assets\/recipes\/generated\/.*\.jpg$/);
+    await expect.poll(() => preview.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBe(900);
+  }
+  expect(await deferredScreenData(page)).toEqual(before);
+  expect(errors).toEqual([]);
+});

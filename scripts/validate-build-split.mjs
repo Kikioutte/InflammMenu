@@ -27,6 +27,10 @@ assert(entryBytes < 1_335_000, `JavaScript initial trop lourd : ${entryBytes} oc
 assert(entryGzipSize < 302_000, `JavaScript initial gzip trop lourd : ${entryGzipSize} octets`);
 
 const appShell = serviceWorker.match(/const APP_SHELL = \[[\s\S]*?\];/)?.[0] ?? "";
+const responsiveImages = JSON.parse(await readFile(new URL("../src/data/responsive-images.json", import.meta.url), "utf8"));
+await readFile(path.join(output, responsiveImages.hero.path));
+const heroPublicPath = `${entryPath.replace(/assets\/[^/]+$/, "")}${responsiveImages.hero.path}`;
+assert(appShell.includes(JSON.stringify(heroPublicPath)), "la photo d’accueil optimisée manque au précache hors ligne");
 assert.doesNotMatch(index, /secondary-views-[A-Za-z0-9_-]+\.js/, "les écrans secondaires ne doivent pas bloquer le démarrage");
 assert.match(appShell, /\/assets\/secondary-views-[A-Za-z0-9_-]+\.js/, "les écrans secondaires manquent au précache hors ligne");
 assert.match(appShell, /\/assets\/catalog-validation-[A-Za-z0-9_-]+\.js/, "le validateur JSON différé manque au précache hors ligne");

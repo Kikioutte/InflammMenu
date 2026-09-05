@@ -11,9 +11,9 @@ export function validatePlannerRecipes(value: unknown): readonly Recipe[] {
   const recipes = arrayAt(value, "planner-recipes", true);
   const recipeIds = new Set<string>();
 
-  for (const [recipeIndex, rawRecipe] of recipes.entries()) {
+  for (let recipeIndex = 0; recipeIndex < recipes.length; recipeIndex += 1) {
     const path = `planner-recipes[${recipeIndex}]`;
-    const recipe = recordAt(rawRecipe, path);
+    const recipe = recordAt(recipes[recipeIndex], path);
     const id = stringAt(recipe.id, `${path}.id`);
     if (recipeIds.has(id)) invalidCatalogue(`${path}.id: doublon ${id}`);
     recipeIds.add(id);
@@ -29,9 +29,10 @@ export function validatePlannerRecipes(value: unknown): readonly Recipe[] {
     stringArrayAt(recipe.tags, `${path}.tags`);
 
     const ingredientAllergens = new Set<string>();
-    for (const [ingredientIndex, rawIngredient] of arrayAt(recipe.ingredients, `${path}.ingredients`, true).entries()) {
+    const ingredients = arrayAt(recipe.ingredients, `${path}.ingredients`, true);
+    for (let ingredientIndex = 0; ingredientIndex < ingredients.length; ingredientIndex += 1) {
       const ingredientPath = `${path}.ingredients[${ingredientIndex}]`;
-      const ingredient = recordAt(rawIngredient, ingredientPath);
+      const ingredient = recordAt(ingredients[ingredientIndex], ingredientPath);
       stringAt(ingredient.id, `${ingredientPath}.id`);
       stringAt(ingredient.name, `${ingredientPath}.name`);
       numberAt(ingredient.quantity, `${ingredientPath}.quantity`);

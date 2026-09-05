@@ -145,6 +145,8 @@ import "@fontsource/dm-sans/latin-500.css";
 import "@fontsource/dm-sans/latin-600.css";
 
 import { ConfirmActionDialog } from "./ConfirmActionDialog";
+import { HomeHeroImage } from "./HomeHeroImage";
+import { RecipeThumbnail } from "./RecipeThumbnail";
 import { deferredScreen } from "./deferred-screen";
 import { ALLERGEN_OPTIONS, DAY_LABELS, EQUIPMENT_OPTIONS, MEAL_LABELS, displayQuantity, downloadTextFile, formatDecimal, isoDate, normalizeText, parseDecimal } from "./view-format";
 
@@ -257,6 +259,9 @@ function subscribeRecipeRegistry(listener: () => void) {
 
 function replaceRecipeRegistry(customRecipes: readonly Recipe[]) {
   if (recipeRegistrySnapshot.customRecipes === customRecipes) return;
+  // Hydration can supply another empty array. The built-in registry is already
+  // current in that case; rebuilding it would render every subscriber again.
+  if (!customRecipes.length && !recipeRegistrySnapshot.customRecipes.length) return;
   const recipes = customRecipes.length ? [...RECIPES, ...customRecipes] : RECIPES;
   const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
   ACTIVE_RECIPES = recipes;
@@ -542,7 +547,7 @@ function MealPreview({ planned, recipe, startsOn, onOpen }: { planned: PlannedMe
   const cooked = planned.completed === true;
   return (
     <button type="button" className={`meal-preview ${cooked ? "is-cooked" : ""}`} data-completed={cooked ? "true" : "false"} onClick={onOpen}>
-      <img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span className="meal-preview__icon" aria-hidden="true">{cooked ? <CheckCircledIcon /> : <MealIcon />}</span>
+      <RecipeThumbnail source={recipe.image} /><span className="meal-preview__icon" aria-hidden="true">{cooked ? <CheckCircledIcon /> : <MealIcon />}</span>
       <span className="meal-preview__copy"><strong>{recipe.title}</strong><small>{MEAL_LABELS[planned.mealType]} · {DAY_LABELS[planned.dayIndex]} {dateAt(startsOn, planned.dayIndex).getDate()}{cooked ? " · Cuisiné" : ""}</small></span>
       <ChevronRightIcon className="meal-preview__chevron" />
     </button>
@@ -585,7 +590,7 @@ function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate, onTon
   return (
     <main className="home-view" data-testid="home-view">
       <section className="home-hero">
-        <img className="home-hero__image" src="/assets/inflamm-hero-bowl.jpg" alt="Bowl de quinoa, pois chiches et légumes rôtis" />
+        <HomeHeroImage />
         <div className="home-hero__content">
           <Wordmark /><p className="home-kicker">Bonjour{firstName ? ` ${firstName}` : ""}</p><h1>Une semaine<br />qui vous fait<br />du bien</h1>
           <button className="primary-button home-cta" type="button" onClick={onGenerate}>{plan ? "Créer une autre semaine" : "Générer ma semaine"}</button>

@@ -189,14 +189,20 @@ test("precache includes every Vite JS/CSS chunk but excludes the deferred catalo
   const output = await mkdtemp(path.join(tmpdir(), "inflamm-menu-precache-"));
   t.after(() => rm(output, { recursive: true, force: true }));
   await mkdir(path.join(output, "assets"), { recursive: true });
+  const responsiveImages = JSON.parse(await readFile(new URL("../src/data/responsive-images.json", import.meta.url), "utf8"));
+  const thumbnailPath = `${responsiveImages.thumbnail.directory}/recipe.webp`;
+  await mkdir(path.dirname(path.join(output, responsiveImages.hero.path)), { recursive: true });
+  await mkdir(path.dirname(path.join(output, thumbnailPath)), { recursive: true });
   await Promise.all([
     writeFile(path.join(output, "index.html"), '<script type="module" src="/InflammMenu/assets/index-test.js"></script>'),
     writeFile(path.join(output, "manifest.webmanifest"), JSON.stringify({ icons: [] })),
     writeFile(path.join(output, "sw.js"), worker),
-    writeFile(path.join(output, "assets/index-test.js"), 'import("./catalog-validation-test.js");'),
+    writeFile(path.join(output, "assets/index-test.js"), `import("./catalog-validation-test.js"); const image="/InflammMenu/${thumbnailPath}";`),
     writeFile(path.join(output, "assets/catalog-validation-test.js"), "export const valid = true;"),
     writeFile(path.join(output, "assets/lazy-feature-test.css"), ".lazy { display: block; }"),
     writeFile(path.join(output, "assets/recettes-anti-inflammatoires-test.json"), '{"recipes":[]}'),
+    writeFile(path.join(output, responsiveImages.hero.path), "hero fixture"),
+    writeFile(path.join(output, thumbnailPath), "thumbnail fixture"),
   ]);
 
   await execFileAsync(process.execPath, [
@@ -209,6 +215,8 @@ test("precache includes every Vite JS/CSS chunk but excludes the deferred catalo
   assert.match(generatedWorker, /\/InflammMenu\/assets\/catalog-validation-test\.js/);
   assert.match(generatedWorker, /\/InflammMenu\/assets\/lazy-feature-test\.css/);
   assert.doesNotMatch(generatedWorker, /recettes-anti-inflammatoires-test\.json/);
+  assert.ok(generatedWorker.includes(`/InflammMenu/${responsiveImages.hero.path}`), "the home WebP must work offline");
+  assert.ok(!generatedWorker.includes(thumbnailPath), "recipe thumbnails must not download during installation");
 });
 
 test("document CSP does not require HTTPS rewriting during local validation", async () => {

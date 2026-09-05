@@ -38,8 +38,13 @@ export function normalizeText(value: string): string {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/œ/g, "oe").replace(/æ/g, "ae").trim().toLowerCase();
 }
 
-export const decimalFormat = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 2, useGrouping: false });
-export const formatDecimal = (value: number) => decimalFormat.format(value);
+// Initializing ICU can be costly on a cold browser. The welcome and home
+// screens do not display decimal quantities, so create this only when needed.
+let decimalFormat: Intl.NumberFormat | undefined;
+export function formatDecimal(value: number): string {
+  decimalFormat ??= new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 2, useGrouping: false });
+  return decimalFormat.format(value);
+}
 
 export function parseDecimal(raw: string, minimum: number, maximum: number): number | null {
   const normalized = raw.trim().replace(",", ".");
@@ -70,4 +75,3 @@ export function downloadTextFile(fileName: string, text: string, type = "text/pl
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-

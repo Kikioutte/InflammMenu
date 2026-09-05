@@ -135,10 +135,15 @@ test("le vrai service worker conserve le catalogue et uniquement les polices lat
   expect(cacheState.shellUrls.filter((url) => /cyrillic|vietnamese|latin-ext/i.test(url))).toEqual([]);
   expect(cacheState.shellUrls.some((url) => url.endsWith(".woff2"))).toBe(true);
   expect(cacheState.shellUrls.filter((url) => url.endsWith(".woff"))).toEqual([]);
+  expect(cacheState.shellUrls.filter((url) => /\/assets\/responsive\/[a-f0-9]+\/inflamm-hero-bowl\.webp$/.test(url))).toHaveLength(1);
+  expect(cacheState.shellUrls.some((url) => url.includes("/recipes/thumbnails/"))).toBe(false);
 
   await context.setOffline(true);
   await page.reload();
   await expect(page.getByTestId("home-view")).toBeVisible();
+  const offlineHero = page.locator(".home-hero__image");
+  await expect(offlineHero).toHaveAttribute("src", /\/InflammMenu\/assets\/responsive\/[a-f0-9]+\/inflamm-hero-bowl\.webp$/);
+  await expect.poll(() => offlineHero.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBe(960);
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await expect(page.getByText("624 recettes uniques disponibles")).toBeVisible();

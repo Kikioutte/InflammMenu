@@ -49,8 +49,14 @@ export function enumAt(value: unknown, allowed: ReadonlySet<string>, path: strin
 }
 
 export function stringArrayAt(value: unknown, path: string, allowed?: ReadonlySet<string>, nonEmpty = false): void {
-  for (const [index, item] of arrayAt(value, path, nonEmpty).entries()) {
-    const text = stringAt(item, `${path}[${index}]`);
+  const items = arrayAt(value, path, nonEmpty);
+  for (let index = 0; index < items.length; index += 1) {
+    const item = items[index];
+    // Valid catalogue strings need no diagnostic path or iterator tuple.
+    // Keep the shared validator for failures so its exact message is preserved.
+    const text = typeof item === "string" && item.trim() !== ""
+      ? item
+      : stringAt(item, `${path}[${index}]`);
     if (allowed && !allowed.has(text)) invalidCatalogue(`${path}[${index}]: valeur inconnue ${text}`);
   }
 }
@@ -58,4 +64,3 @@ export function stringArrayAt(value: unknown, path: string, allowed?: ReadonlySe
 export function optionalStringAt(value: unknown, path: string): void {
   if (value !== undefined) stringAt(value, path);
 }
-
