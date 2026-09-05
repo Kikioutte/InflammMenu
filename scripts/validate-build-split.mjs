@@ -10,6 +10,7 @@ const serviceWorker = await readFile(path.join(output, "sw.js"), "utf8");
 const entryPath = index.match(/<script[^>]+src=["']([^"']+)["']/)?.[1];
 assert(entryPath, "bundle d'entrée introuvable");
 assert.doesNotMatch(index, /catalogue-[A-Za-z0-9_-]+\.js/, "le catalogue complet est préchargé par index.html");
+assert.doesNotMatch(index, /catalog-validation-[A-Za-z0-9_-]+\.js/, "le validateur du catalogue complet ne doit pas bloquer le démarrage");
 
 // Count the entry AND all eagerly preloaded modules. Moving code to a shared
 // initial chunk must never bypass the existing transfer budget.

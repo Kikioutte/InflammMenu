@@ -3,6 +3,25 @@ import { readFile } from 'node:fs/promises';
 
 test.use({ serviceWorkers: 'block' });
 
+test('le démarrage et la génération ne dépendent pas du validateur du catalogue complet', async ({ page }) => {
+  const errors: string[] = [];
+  const secondaryRequests: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.route('**/src/catalog-validation.ts*', route => {
+    secondaryRequests.push(route.request().url());
+    return route.abort();
+  });
+  await page.goto('/');
+  await expect(page.getByTestId('onboarding-view')).toBeVisible();
+  await page.getByTestId('onboarding-skip').click();
+  await page.getByRole('button', { name: 'Générer ma semaine' }).click();
+  await page.getByRole('button', { name: 'Créer ma semaine' }).click();
+  await page.getByRole('button', { name: 'Voir ma semaine' }).click();
+  await expect(page.getByTestId('week-view')).toBeVisible();
+  expect(secondaryRequests).toEqual([]);
+  expect(errors).toEqual([]);
+});
+
 async function seedLocal(page: Page, raw: string) {
   await page.goto('/tests/runtime-fixture.html');
   await page.evaluate(value => localStorage.setItem('inflamm-menu:app-state', value), raw);
