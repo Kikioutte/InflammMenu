@@ -1,8 +1,26 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
 const engine = await import("../src/engine.ts");
 const shopping = await import("../src/shopping.ts");
 const { IMPORTED_PLAN_RECIPES } = await import("../src/planner-catalog.ts");
+
+// Captured from the previous engine, before optimizing. These complete-plan
+// fingerprints protect seeded ordering, costs, locks, skips and profile data.
+const reference = JSON.parse(await readFile(new URL("./fixtures/planner-determinism.json", import.meta.url), "utf8"));
+for (const scenario of reference.scenarios) {
+  test(`les 20 menus de référence restent identiques : ${scenario.name}`, async () => {
+    const { RECIPES } = await import("../src/recipes.ts");
+    const before = structuredClone(scenario.profile);
+    for (const sample of scenario.cases) {
+      const plan = engine.generateWeeklyPlan(RECIPES, scenario.profile, { ...scenario.options, seed: sample.seed });
+      const actual = createHash("sha256").update(JSON.stringify(plan)).digest("hex");
+      assert.equal(actual, sample.sha256, `${scenario.name}, ${sample.seed} diffère du moteur ${reference.referenceCommit}`);
+    }
+    assert.deepEqual(scenario.profile, before, "le calcul ne modifie pas le profil fourni");
+  });
+}
 
 const nutrition = {
   calories: 400,
@@ -1946,4 +1964,17 @@ test('retirer une substitution ne peut pas réintroduire un allergène ou un ing
   assert.throws(()=>engine.setMealIngredientSubstitution(substituted,meal.id,'feta',null,[feta],{...profile,excludedIngredientIds:['feta']}),/profil alimentaire/);
   assert.deepEqual(substituted,before);
   assert.deepEqual(engine.setMealIngredientSubstitution(substituted,meal.id,'feta',null,[feta],profile).meals[0].substitutions,[]);
+});
+
+test('le cache de classement suit une recette modifiée même si son identifiant ne change pas', () => {
+  const original = recipe(0, { tags: [] });
+  const withGrain = { ...original, tags: ['céréales-complètes'] };
+  const optionalGrain = { ...withGrain, ingredients: [{ ...original.ingredients[0], name: 'Céréales complètes', optional: true }] };
+  const plan = {
+    startsOn: '2026-09-07', profileSnapshot: profile, estimatedCost: 2,
+    meals: [{ id: 'day-0-lunch', dayIndex: 0, mealType: 'lunch', recipeId: original.id, portions: 1 }],
+  };
+  for (const [version, expected] of [[original, 0], [withGrain, 1], [optionalGrain, 0], [withGrain, 1], [original, 0]]) {
+    assert.equal(engine.summarizePlan(plan, [version]).wholeGrainMeals, expected);
+  }
 });

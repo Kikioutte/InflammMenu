@@ -121,7 +121,7 @@ function normalize(value: string): string {
 
 const NORMALIZED_TAGS = new WeakMap<Recipe, readonly string[]>();
 const CLASSIFICATION_TAGS = new WeakMap<Recipe, readonly string[]>();
-const NORMALIZED_TAG_CANDIDATES = new Map<string, ReadonlySet<string>>();
+const TAG_MATCHERS = new Map<string, { wanted: ReadonlySet<string>; results: WeakMap<Recipe, boolean> }>();
 const REQUIRED_INGREDIENT_IDS = new WeakMap<Recipe, readonly string[]>();
 const NUT_OR_SEED_CACHE = new WeakMap<Recipe, boolean>();
 const RECIPE_ALLERGEN_CACHE = new WeakMap<Recipe, string[]>();
@@ -158,14 +158,25 @@ function requiredIngredientIdsOf(recipe: Recipe): readonly string[] {
 
 function hasTag(recipe: Recipe, candidates: readonly string[]): boolean {
   const key = candidates.join("\u0000");
-  let wanted = NORMALIZED_TAG_CANDIDATES.get(key);
-  if (!wanted) {
-    wanted = new Set(candidates.map(normalize));
-    NORMALIZED_TAG_CANDIDATES.set(key, wanted);
+  let matcher = TAG_MATCHERS.get(key);
+  if (!matcher) {
+    matcher = { wanted: new Set(candidates.map(normalize)), results: new WeakMap() };
+    TAG_MATCHERS.set(key, matcher);
   }
-  return classificationTagsOf(recipe).some((tag) =>
-    [...wanted].some((candidate) => tag === candidate || tag.startsWith(`${candidate}-`)),
-  );
+  // Like the normalized tags, this result belongs to the immutable recipe
+  // object, not its ID or the user's profile. An edited recipe gets a new key.
+  const cached = matcher.results.get(recipe);
+  if (cached !== undefined) return cached;
+  for (const tag of classificationTagsOf(recipe)) {
+    for (const candidate of matcher.wanted) {
+      if (tag === candidate || tag.startsWith(`${candidate}-`)) {
+        matcher.results.set(recipe, true);
+        return true;
+      }
+    }
+  }
+  matcher.results.set(recipe, false);
+  return false;
 }
 
 function hasWeeklyTarget(recipe: Recipe, target: (typeof WEEKLY_TARGET_TAGS)[keyof typeof WEEKLY_TARGET_TAGS]): boolean {
@@ -237,13 +248,14 @@ function selectSeededWeeklyCandidate(
   seed: string | number,
   slotKey: string,
 ): Recipe {
-  const ranked = [...candidates].sort((left, right) =>
-    score(right) - score(left) || left.id.localeCompare(right.id),
-  );
-  const bestScore = score(ranked[0]);
-  const pool = ranked.filter((recipe) => score(recipe) >= bestScore - WEEKLY_SELECTION_TOLERANCE);
+  // Scores depend on this slot's current selection. Compute each once, then
+  // discard them: reusing a score across slots could change the generated menu.
+  const ranked = candidates.map((recipe) => ({ recipe, score: score(recipe) }))
+    .sort((left, right) => right.score - left.score || left.recipe.id.localeCompare(right.recipe.id));
+  const bestScore = ranked[0].score;
+  const pool = ranked.filter((candidate) => candidate.score >= bestScore - WEEKLY_SELECTION_TOLERANCE);
   const index = Math.min(pool.length - 1, Math.floor(seededRank(seed, slotKey) * pool.length));
-  return pool[index];
+  return pool[index].recipe;
 }
 
 function round(value: number, digits = 2): number {
@@ -853,6 +865,10 @@ export function generateWeeklyPlan(
       if (meal.locked || meal.skipped) return;
       const previous = byId.get(meal.recipeId);
       if (!previous) return;
+      const beforeConflicts = dailyFormConflictCount(meals, meal.dayIndex, byId);
+      // Only the serving form affects this count. The meals remain unchanged
+      // during this search; discard the cache before the next budget iteration.
+      const conflictsByForm = new Map<RecipeForm, number>();
       for (const candidate of eligibleBySlot.get(`${meal.dayIndex}-${meal.mealType}`) ?? []) {
         if (used.has(candidate.id)) continue;
         const losesLegume = hasWeeklyTarget(previous, WEEKLY_TARGET_TAGS.legume) && !hasWeeklyTarget(candidate, WEEKLY_TARGET_TAGS.legume);
@@ -861,8 +877,12 @@ export function generateWeeklyPlan(
         if (profile.diet === "classic" && losesFish && currentFish <= targets.fishMeals) continue;
         const saving = (previous.costPerPortion - candidate.costPerPortion) * meal.portions;
         if (saving <= 0) continue;
-        const beforeConflicts = dailyFormConflictCount(meals, meal.dayIndex, byId);
-        const afterConflicts = dailyFormConflictCount(meals, meal.dayIndex, byId, { mealIndex, recipe: candidate });
+        const candidateForm = recipeForm(candidate);
+        let afterConflicts = conflictsByForm.get(candidateForm);
+        if (afterConflicts === undefined) {
+          afterConflicts = dailyFormConflictCount(meals, meal.dayIndex, byId, { mealIndex, recipe: candidate });
+          conflictsByForm.set(candidateForm, afterConflicts);
+        }
         const option = { mealIndex, recipe: candidate, saving };
         if (afterConflicts <= beforeConflicts) {
           if (!best || saving > best.saving) best = option;
