@@ -591,7 +591,7 @@ test("audit remediation: strict imports and nested custom recipes", async () => 
   assert.equal(malformed.customRecipes.length, 0);
 });
 
-test("personal recipes survive a Pages base path and an invalid image only falls back", () => {
+test("personal recipe images follow the current base after restore and unsafe paths only fall back", () => {
   const customRecipe = {
     id: "perso-pages",
     title: "Ma recette Pages",
@@ -616,14 +616,23 @@ test("personal recipes survive a Pages base path and an invalid image only falls
 
   const pagesState = migrateAppState(state({ customRecipes: [customRecipe] }));
   assert.equal(pagesState.customRecipes.length, 1);
-  assert.equal(pagesState.customRecipes[0].image, "/InflammMenu/assets/recipes/ma-recette.jpg");
+  assert.equal(pagesState.customRecipes[0].image, "/assets/recipes/ma-recette.jpg");
   assert.equal(pagesState.customRecipes[0].ingredients[1].optional, true);
+
+  for (const image of ["/assets/recipes/ma-recette.jpg", "/old/site/assets/recipes/ma-recette.jpg"]) {
+    const restored = migrateAppState(state({ customRecipes: [{ ...customRecipe, image }] }));
+    assert.equal(restored.customRecipes[0].image, "/assets/recipes/ma-recette.jpg");
+  }
 
   const unsafeState = migrateAppState(state({
     customRecipes: [{ ...customRecipe, image: "javascript:alert(1)" }],
   }));
   assert.equal(unsafeState.customRecipes.length, 1, "une image invalide ne détruit jamais la recette");
   assert.equal(unsafeState.customRecipes[0].image, "/assets/recipe-placeholder.svg");
+  for (const image of ["//example.com/assets/a.jpg", "/assets/../secret", "/old/../assets/a.jpg", "https://example.com/assets/a.jpg"]) {
+    const rejected = migrateAppState(state({ customRecipes: [{ ...customRecipe, image }] }));
+    assert.equal(rejected.customRecipes[0].image, "/assets/recipe-placeholder.svg");
+  }
 });
 
 test("audit remediation: plan normalization removes duplicate slots and invalid leftovers", async () => {

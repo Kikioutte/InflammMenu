@@ -379,7 +379,10 @@ function normalizeRecipeImage(value: unknown): string {
   if (!image || !SAFE_RECIPE_IMAGE.test(image)) return RECIPE_PLACEHOLDER_IMAGE;
   const segments = image.split("/");
   if (segments.some((segment) => segment === "." || segment === "..")) return RECIPE_PLACEHOLDER_IMAGE;
-  return image;
+  // Backups can move between the root site and a Pages subdirectory. Keep
+  // the validated asset path, but resolve it under the current deployment.
+  const assetPath = segments.slice(segments.indexOf("assets")).join("/");
+  return `${import.meta.env?.BASE_URL ?? "/"}${assetPath}`;
 }
 
 function normalizedEnumArray(value: unknown, allowed: ReadonlySet<string>, maximum = 30): string[] {

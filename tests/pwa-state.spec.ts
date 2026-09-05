@@ -289,13 +289,18 @@ test('une recette personnelle recalcule sa nutrition hors ligne avec les donnée
     if (!localStorage.getItem('inflamm-menu:app-state')) localStorage.setItem('inflamm-menu:app-state',JSON.stringify({version:3,onboardingCompleted:true,customRecipes:[personal],favoriteRecipeIds:[personal.id]}));
   }, recipe);
   await openFreshApp(page);
+  // A restored recipe may come from the root deployment. Its image must
+  // follow the Pages base and load successfully before entering offline mode.
+  await page.getByRole('button',{name:'Favoris',exact:true}).click();
+  await page.getByRole('button',{name:/Mes flocons hors ligne/}).click();
+  const hero = page.locator('.recipe-hero');
+  await expect(hero).toHaveAttribute('src', `/InflammMenu${original.image}`);
+  await expect.poll(() => hero.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
     if (!navigator.serviceWorker.controller) await new Promise<void>(resolve=>navigator.serviceWorker.addEventListener('controllerchange',()=>resolve(),{once:true}));
   });
   await context.setOffline(true);
-  await page.getByRole('button',{name:'Favoris',exact:true}).click();
-  await page.getByRole('button',{name:/Mes flocons hors ligne/}).click();
   await page.getByTestId('edit-custom-recipe').click();
   await page.getByRole('button',{name:`Augmenter ${recipe.ingredients[0].name}`,exact:true}).click();
   await page.getByTestId('custom-save').click();
@@ -305,4 +310,5 @@ test('une recette personnelle recalcule sa nutrition hors ligne avec les donnée
   const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).customRecipes[0]);
   expect(saved.nutritionRecalculated).toBe(true);
   expect(saved.nutrition.calories).toBeGreaterThan(original.nutrition.calories);
+  expect(saved.image).toBe(`/InflammMenu${original.image}`);
 });
