@@ -959,6 +959,7 @@ test("une substitution appliquée met à jour la recette, les allergènes et les
   await expect(substitutionOptions.getByRole("button", { name: /Ingrédient d’origine/ })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByTestId("apply-substitution-nuts-to-pumpkin-seeds")).toHaveAttribute("aria-pressed", "false");
   await page.getByTestId("apply-substitution-nuts-to-pumpkin-seeds").click();
+  await expect(page.getByText("Repères de la recette avant substitution, non recalculés pour les ingrédients de remplacement.")).toBeVisible();
   await expect(page.getByTestId("substitution-summary")).toContainText("courses ont été recalculés");
   await expect(page.locator(".ingredient-row.is-substituted")).toContainText("graines de courge");
   await page.getByTestId("ingredient-substitute-walnut").click();
