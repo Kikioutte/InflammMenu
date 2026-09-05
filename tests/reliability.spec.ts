@@ -9,6 +9,78 @@ async function seedLocal(page: Page, raw: string) {
   await page.goto('/');
 }
 
+test('le montant réel accepte les centimes saisis caractère par caractère', async ({ page }) => {
+  await page.goto('/');
+  await page.getByTestId('onboarding-skip').click();
+  await page.getByRole('button', {name:'Générer ma semaine'}).click();
+  await page.getByRole('button', {name:'Créer ma semaine'}).click();
+  await page.getByRole('button', {name:'Voir ma semaine'}).click();
+  await page.getByRole('button', {name:'Courses', exact:true}).click();
+  const amount = page.getByTestId('spend-input');
+  await amount.pressSequentially('72,50');
+  await amount.blur();
+  await expect(amount).toHaveValue('72,5');
+  const persisted = () => page.evaluate(() => { const state=JSON.parse(localStorage.getItem('inflamm-menu:app-state')!); return state.actualSpend[state.currentPlan.id]; });
+  await expect.poll(persisted).toBe(72.5);
+  await amount.fill('invalide');
+  await amount.blur();
+  await expect(amount).toHaveAttribute('aria-invalid','true');
+  expect(await persisted()).toBe(72.5);
+  await page.reload();
+  await page.getByRole('button', {name:'Courses', exact:true}).click();
+  await expect(amount).toHaveValue('72,5');
+});
+
+test('les quarts de cuillère restent précis à l’affichage et à la sauvegarde', async ({ page }) => {
+  const source=JSON.parse(await readFile(new URL('../src/data/planner-recipes.json',import.meta.url),'utf8'));
+  const recipe={...source[0],id:'perso-quantities-test',title:'Ma recette précise',ingredients:[
+    {id:'salt',name:'Sel',quantity:0.25,unit:'c_cafe',category:'grocery'},
+    {id:'olive-oil',name:'Huile d’olive',quantity:0.25,unit:'c_soupe',category:'grocery'},
+    {id:'pepper',name:'Poivre',quantity:0.01,unit:'g',category:'grocery'},
+  ]};
+  await seedLocal(page,JSON.stringify({version:3,onboardingCompleted:true,customRecipes:[recipe],favoriteRecipeIds:[recipe.id]}));
+  await page.getByRole('button',{name:'Favoris',exact:true}).click();
+  await page.getByRole('button',{name:/Ma recette précise/}).click();
+  await page.getByRole('button',{name:'Retirer une portion',exact:true}).click();
+  await expect(page.getByText('0,25 c. à café', {exact:true})).toBeVisible();
+  await expect(page.getByText('0,01 g', {exact:true})).toBeVisible();
+  await page.getByTestId('edit-custom-recipe').click();
+  await expect(page.getByRole('heading',{name:'Adapter la recette'})).toBeFocused();
+  const time = page.getByTestId('custom-time');
+  const initialTime = await time.inputValue();
+  await time.fill('');
+  await page.getByTestId('custom-save').click();
+  await expect(time).toHaveAttribute('aria-invalid','true');
+  await expect(time).toBeFocused();
+  await time.fill(initialTime);
+  await page.getByRole('button',{name:'Augmenter Sel',exact:true}).click();
+  await page.getByRole('button',{name:'Augmenter Huile d’olive',exact:true}).click();
+  await page.getByTestId('custom-save').click();
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).customRecipes[0].ingredients.map((i:{quantity:number})=>i.quantity))).toEqual([0.5,0.5,0.01]);
+});
+
+test('un budget ou un temps vide ne remplace pas silencieusement le profil', async ({ page }) => {
+  await seedLocal(page,JSON.stringify({version:3,onboardingCompleted:true,profile:{firstName:'Camille',weeklyBudget:95,maxPrepMinutes:45}}));
+  await page.getByRole('button',{name:'Ajuster mon profil'}).click();
+  await expect(page.getByRole('heading',{name:'Mon profil alimentaire'})).toBeFocused();
+  const budget=page.getByLabel('Budget hebdomadaire (€)');
+  await budget.fill('');
+  await page.getByRole('button',{name:'Enregistrer mon profil'}).click();
+  await expect(budget).toHaveAttribute('aria-invalid','true');
+  await expect(budget).toBeFocused();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).profile.weeklyBudget)).toBe(95);
+  await budget.fill('110');
+  const time=page.getByLabel('Temps actif maximum en cuisine (min)');
+  await time.fill('');
+  await page.getByRole('button',{name:'Enregistrer mon profil'}).click();
+  await expect(time).toHaveAttribute('aria-invalid','true');
+  await expect(time).toBeFocused();
+  await time.fill('50');
+  await page.getByRole('button',{name:'Enregistrer mon profil'}).click();
+  await expect(page.getByTestId('home-view')).toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).profile.weeklyBudget)).toBe(110);
+});
+
 for (const [name, raw] of [
   ['tronquée', '{"version":3,"profile":{"firstName":"À récupérer 👩‍🍳"}'],
   ['future', JSON.stringify({version:999,profile:{firstName:'À récupérer'},privateFutureField:['<img src=x onerror=alert(1)>']})],

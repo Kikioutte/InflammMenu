@@ -436,8 +436,19 @@ function parseList(value: string): string[] {
 }
 
 
+const decimalFormat = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 2, useGrouping: false });
+const formatDecimal = (value: number) => decimalFormat.format(value);
+const quantityStep: Record<IngredientUnit, number> = { g: 5, ml: 5, piece: 0.25, c_soupe: 0.25, c_cafe: 0.25 };
+
+function parseDecimal(raw: string, minimum: number, maximum: number): number | null {
+  const normalized = raw.trim().replace(",", ".");
+  if (!/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)) return null;
+  const value = Number(normalized);
+  return Number.isFinite(value) && value >= minimum && value <= maximum ? value : null;
+}
+
 function displayQuantity(quantity: number, unit: IngredientUnit): string {
-  const rounded = Number.isInteger(quantity) ? String(quantity) : quantity.toFixed(1).replace(".0", "").replace(".", ",");
+  const rounded = formatDecimal(quantity);
   const units: Record<IngredientUnit, string> = {
     g: "g",
     ml: "ml",
@@ -449,9 +460,7 @@ function displayQuantity(quantity: number, unit: IngredientUnit): string {
 }
 
 function displayCatalogueQuantity(quantity: number, unit: string): string {
-  const rounded = Number.isInteger(quantity)
-    ? String(quantity)
-    : quantity.toFixed(1).replace(".0", "").replace(".", ",");
+  const rounded = formatDecimal(quantity);
   const label = unit === "piece" ? (quantity > 1 ? "pièces" : "pièce") : unit;
   return `${rounded} ${label}`.trim();
 }
@@ -913,7 +922,7 @@ function PantryAmountInput({ ingredientId, ingredientName, unit, value, onChange
   value: number;
   onChange: (ingredientId: string, unit: PantryAmount["unit"], quantity: number | null) => void;
 }) {
-  const formattedValue = value > 0 ? String(value) : "";
+  const formattedValue = value > 0 ? String(value).replace(".", ",") : "";
   const [draft, setDraft] = useState(formattedValue);
   const editing = useRef(false);
   useEffect(() => {
@@ -935,7 +944,7 @@ function PantryAmountInput({ ingredientId, ingredientName, unit, value, onChange
     editing.current = false;
     const quantity = parsedQuantity(draft);
     if (quantity !== null) {
-      setDraft(String(quantity));
+      setDraft(String(quantity).replace(".", ","));
       onChange(ingredientId, unit, quantity);
       return;
     }
@@ -947,7 +956,7 @@ function PantryAmountInput({ ingredientId, ingredientName, unit, value, onChange
     }
     setDraft(formattedValue);
   };
-  const unitLabel = unit === "piece" ? "pièce(s)" : unit;
+  const unitLabel = displayQuantity(1, unit).replace(/^1 /, "");
 
   return <label className="pantry-amount">
     <span className="sr-only">Quantité déjà en stock pour {ingredientName}, en {unitLabel}</span>
@@ -965,7 +974,7 @@ function PantryAmountInput({ ingredientId, ingredientName, unit, value, onChange
       }}
       onBlur={finishEditing}
     />
-    <small>{unit === "piece" ? "pcs" : unit}</small>
+    <small>{unitLabel}</small>
   </label>;
 }
 
@@ -983,6 +992,28 @@ function PantryAmountFields({ item, units, valueFor, onChange }: {
     value={valueFor(item.ingredientId, unit)}
     onChange={onChange}
   />)}</div>;
+}
+
+function SpendAmountInput({ value, onChange }: { value?: number; onChange: (amount: number | null) => void }) {
+  const formatted = value === undefined ? "" : String(value).replace(".", ",");
+  const [draft, setDraft] = useState(formatted);
+  const [invalid, setInvalid] = useState(false);
+  const editing = useRef(false);
+  useEffect(() => { if (!editing.current) { setDraft(formatted); setInvalid(false); } }, [formatted]);
+  const update = (raw: string, finish = false) => {
+    const amount = parseDecimal(raw, 0, 100_000);
+    const valid = !raw.trim() || amount !== null;
+    setInvalid(!valid && finish);
+    if (valid) onChange(raw.trim() ? amount : null);
+    if (finish && valid) setDraft(amount === null ? "" : String(amount).replace(".", ","));
+  };
+  return <label className="text-field"><span className="sr-only">Montant réellement dépensé</span><KeyboardInput
+    inputMode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Montant réel" data-testid="spend-input"
+    value={draft} aria-invalid={invalid} aria-describedby={invalid ? "spend-error" : undefined}
+    onFocus={() => { editing.current = true; }}
+    onChange={(event) => { setDraft(event.target.value); setInvalid(false); update(event.target.value); }}
+    onBlur={() => { editing.current = false; update(draft, true); }}
+  />{invalid ? <small id="spend-error" role="alert">Saisissez un montant entre 0 et 100 000 €, par exemple 72,50. Le dernier montant valide est conservé.</small> : null}</label>;
 }
 
 function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, categoryOrder, spent, onToggleChecked, onTogglePantry, onSetPantryAmount, onMoveCategory, onSetSpent }: {
@@ -1111,10 +1142,7 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
       {pantryMode ? <p className="inline-help">Touchez « J’ai déjà » pour retirer un ingrédient, ou saisissez la quantité en stock pour ne racheter que le complément. Les flèches réordonnent les rayons selon votre magasin.</p> : null}
       <section className="spend-tracker" data-testid="spend-tracker">
         <div><strong>Budget de la semaine</strong><small>{plan.estimatedCost.toFixed(0)} € estimés{typeof spent === "number" ? ` · ${spent.toFixed(2).replace(".", ",")} € dépensés` : ""}</small></div>
-        <label className="text-field"><span className="sr-only">Montant réellement dépensé</span><KeyboardInput inputMode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Montant réel" data-testid="spend-input" value={typeof spent === "number" ? String(spent) : ""} onChange={(event) => {
-          const amount = Number(event.target.value.replace(",", "."));
-          onSetSpent(event.target.value.trim() && Number.isFinite(amount) && amount >= 0 ? Math.min(100_000, amount) : null);
-        }} /></label>
+        <SpendAmountInput value={spent} onChange={onSetSpent} />
         {typeof spent === "number" ? <p className={`spend-delta ${spent > plan.estimatedCost ? "is-over" : "is-under"}`}>{spent > plan.estimatedCost ? `${(spent - plan.estimatedCost).toFixed(2).replace(".", ",")} € au-dessus de l’estimation` : `${(plan.estimatedCost - spent).toFixed(2).replace(".", ",")} € sous l’estimation`}</p> : null}
         <p className="catalogue-disclaimer">Les prix affichés restent des estimations ; ce montant vous permet de mesurer l’écart réel.</p>
       </section>
@@ -1396,11 +1424,21 @@ function CustomRecipeView({ draft, onSave, onDelete }: { draft: Recipe; onSave: 
   const [steps, setSteps] = useState(draft.steps.join("\n"));
   const [ingredients, setIngredients] = useState(draft.ingredients.map((item) => ({ ...item })));
   const [error, setError] = useState("");
+  const [invalidField, setInvalidField] = useState<string | null>(null);
   const setQuantity = (index: number, delta: number) => setIngredients((current) => current.map((item, position) => (position === index
     ? { ...item, quantity: Math.max(0, Math.round((item.quantity + delta) * 100) / 100) }
     : item)));
   const commit = () => {
     keyboard.hide();
+    setInvalidField(null);
+    const minutes = parseDecimal(prepMinutes, 1, 1_440);
+    if (!title.trim() || minutes === null || !Number.isInteger(minutes)) {
+      const field = !title.trim() ? "custom-title" : "custom-time";
+      setInvalidField(field);
+      setError(!title.trim() ? "Donnez un titre à votre recette." : "Saisissez un temps actif entier entre 1 et 1 440 minutes. La recette précédente est conservée.");
+      document.getElementById(field)?.focus();
+      return;
+    }
     const cleanedSteps = steps.split("\n").map((step) => step.trim()).filter(Boolean);
     if (!ingredients.some((item) => item.quantity > 0)) {
       setError("Gardez au moins un ingrédient avec une quantité positive. Votre recette précédente est conservée.");
@@ -1412,8 +1450,8 @@ function CustomRecipeView({ draft, onSave, onDelete }: { draft: Recipe; onSave: 
     }
     try { onSave({
       ...draft,
-      title: title.trim().slice(0, 90) || draft.title,
-      prepMinutes: Math.min(600, Math.max(1, Math.round(Number(prepMinutes) || draft.prepMinutes))),
+      title: title.trim().slice(0, 90),
+      prepMinutes: minutes,
       ingredients: ingredients.filter((item) => item.quantity > 0),
       steps: cleanedSteps.length ? cleanedSteps : draft.steps,
     }); } catch {
@@ -1421,22 +1459,22 @@ function CustomRecipeView({ draft, onSave, onDelete }: { draft: Recipe; onSave: 
     }
   };
   return <MobileScroll className="app-screen"><main className="page-content pushed-page" data-testid="custom-recipe-view">
-    <div className="page-heading"><span className="eyebrow">Ma version</span><h1>Adapter la recette</h1><p>Ajustez le titre, le temps actif, les quantités et les étapes. Les ingrédients gardent leurs identifiants pour rester justes dans la liste de courses.</p></div>
+    <div className="page-heading"><span className="eyebrow">Ma version</span><h1>Adapter la recette</h1><p>Ajustez le titre, le temps actif, les quantités et les étapes. Votre liste de courses suivra les quantités choisies.</p></div>
     <section className="form-section"><h2>Intitulé</h2>
-      <label className="text-field"><span>Titre</span><KeyboardInput value={title} maxLength={90} data-testid="custom-title" onChange={(event) => setTitle(event.target.value)} onBlur={keyboard.hide} /></label>
-      <label className="text-field"><span>Temps actif (min)</span><KeyboardInput inputMode="numeric" value={prepMinutes} data-testid="custom-time" onChange={(event) => setPrepMinutes(event.target.value)} onBlur={keyboard.hide} /></label>
+      <label className="text-field"><span>Titre</span><KeyboardInput id="custom-title" aria-invalid={invalidField === "custom-title"} aria-describedby={invalidField === "custom-title" ? "custom-save-error" : undefined} value={title} maxLength={90} data-testid="custom-title" onChange={(event) => { setTitle(event.target.value); setInvalidField(null); setError(""); }} onBlur={keyboard.hide} /></label>
+      <label className="text-field"><span>Temps actif (min)</span><KeyboardInput id="custom-time" aria-invalid={invalidField === "custom-time"} aria-describedby={invalidField === "custom-time" ? "custom-save-error" : undefined} inputMode="numeric" value={prepMinutes} data-testid="custom-time" onChange={(event) => { setPrepMinutes(event.target.value); setInvalidField(null); setError(""); }} onBlur={keyboard.hide} /></label>
     </section>
     <section className="form-section"><h2>Ingrédients</h2>
       <p className="inline-help">Mettez une quantité à zéro pour retirer un ingrédient. Gardez au moins un ingrédient. Le coût et la nutrition restent des estimations héritées de la recette d’origine.</p>
       {ingredients.map((item, index) => <div className="setting-row" key={`${item.id}-${index}`}>
         <span><strong>{item.name}</strong><small>{displayQuantity(item.quantity, item.unit)} par portion</small></span>
-        <div className="stepper"><button type="button" aria-label={`Réduire ${item.name}`} onClick={() => setQuantity(index, item.unit === "piece" ? -0.5 : -5)}><MinusIcon /></button><b>{item.quantity}</b><button type="button" aria-label={`Augmenter ${item.name}`} onClick={() => setQuantity(index, item.unit === "piece" ? 0.5 : 5)}><PlusIcon /></button></div>
+        <div className="stepper"><button type="button" aria-label={`Réduire ${item.name}`} disabled={item.quantity === 0} onClick={() => setQuantity(index, -quantityStep[item.unit])}><MinusIcon /></button><b>{formatDecimal(item.quantity)}</b><button type="button" aria-label={`Augmenter ${item.name}`} onClick={() => setQuantity(index, quantityStep[item.unit])}><PlusIcon /></button></div>
       </div>)}
     </section>
     <section className="form-section"><h2>Préparation</h2>
       <label className="text-field"><span>Une étape par ligne</span><KeyboardTextarea value={steps} rows={8} data-testid="custom-steps" onChange={(event) => setSteps(event.target.value)} /></label>
     </section>
-    {error ? <p className="notice-banner" role="alert" data-testid="custom-save-error">{error}</p> : null}
+    {error ? <p id="custom-save-error" className="notice-banner" role="alert" data-testid="custom-save-error">{error}</p> : null}
     <button type="button" className="primary-button full-button" data-testid="custom-save" onClick={commit}>Enregistrer ma version</button>
     {onDelete ? <ConfirmActionDialog
       title="Supprimer cette recette ?"
@@ -1606,6 +1644,7 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
   const [profile, setProfile] = useState<UserProfile>({ ...initial });
   const [budget, setBudget] = useState(String(initial.weeklyBudget));
   const [maxPrep, setMaxPrep] = useState(String(initial.maxPrepMinutes));
+  const [numberError, setNumberError] = useState<{ id: string; message: string } | null>(null);
   const [allergies, setAllergies] = useState(initial.allergies.join(", "));
   const [excluded, setExcluded] = useState(initial.excludedIngredientIds.map((id) => ingredientNameById.get(id) ?? id).join(", "));
   const [restrictionError, setRestrictionError] = useState("");
@@ -1655,12 +1694,22 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
   };
   const commit = () => {
     keyboard.hide();
+    const weeklyBudget = parseDecimal(budget, 1, 10_000);
+    const maxPrepMinutes = parseDecimal(maxPrep, 1, 1_440);
+    if (weeklyBudget === null || !Number.isInteger(weeklyBudget) || maxPrepMinutes === null || !Number.isInteger(maxPrepMinutes)) {
+      const budgetInvalid = weeklyBudget === null || !Number.isInteger(weeklyBudget);
+      const id = budgetInvalid ? "profile-budget" : "profile-time";
+      setNumberError({ id, message: budgetInvalid ? "Saisissez un budget entier entre 1 et 10 000 €. Le profil précédent est conservé." : "Saisissez un temps actif entier entre 1 et 1 440 minutes. Le profil précédent est conservé." });
+      document.getElementById(id)?.focus();
+      return;
+    }
+    setNumberError(null);
     if (unknownAllergies.length || excludedResolution.unknown.length) {
       setRestrictionError(`Terme non reconnu : ${[...unknownAllergies, ...excludedResolution.unknown].join(", ")}. Précisez le nom d’un ingrédient ou choisissez un allergène ci-dessus. Le profil précédent est conservé.`);
       document.getElementById(unknownAllergies.length ? "profile-allergies" : "profile-exclusions")?.focus();
       return;
     }
-    onSave({ ...profile, weeklyBudget: Math.min(10_000, Math.max(1, Math.round(Number(budget) || DEFAULT_PROFILE.weeklyBudget))), maxPrepMinutes: Math.min(1_440, Math.max(1, Math.round(Number(maxPrep) || DEFAULT_PROFILE.maxPrepMinutes))), allergies: parseList(allergies), excludedIngredientIds: excludedResolution.ids });
+    onSave({ ...profile, weeklyBudget, maxPrepMinutes, allergies: parseList(allergies), excludedIngredientIds: excludedResolution.ids });
   };
   return <MobileScroll className="app-screen"><main className="page-content pushed-page profile-page">
     <div className="page-heading"><span className="eyebrow">Personnalisation</span><h1>Mon profil alimentaire</h1><p>Ces choix guident chaque menu et restent dans le stockage local de cette adresse web, sur cet appareil.</p></div>
@@ -1688,8 +1737,9 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
       </div>
     </section>
     <section className="form-section"><h2>Mes préférences</h2><div className="choice-grid">{(Object.keys(DIET_LABELS) as DietMode[]).map((item) => <button type="button" className={profile.diet === item ? "is-selected" : ""} aria-pressed={profile.diet === item} key={item} onClick={() => setProfile((current) => ({ ...current, diet: item }))}>{DIET_LABELS[item]}</button>)}</div>
-      <label className="text-field"><span>Budget hebdomadaire (€)</span><KeyboardInput type="number" inputMode="numeric" min={1} max={10_000} step={1} value={budget} onChange={(event) => setBudget(event.target.value)} onBlur={keyboard.hide} /></label>
-      <label className="text-field"><span>Temps actif maximum en cuisine (min)</span><KeyboardInput type="number" inputMode="numeric" min={1} max={1_440} step={1} value={maxPrep} onChange={(event) => setMaxPrep(event.target.value)} onBlur={keyboard.hide} /></label>
+      <label className="text-field"><span>Budget hebdomadaire (€)</span><KeyboardInput id="profile-budget" aria-invalid={numberError?.id === "profile-budget"} aria-describedby={numberError?.id === "profile-budget" ? "profile-number-error" : undefined} type="number" inputMode="numeric" min={1} max={10_000} step={1} value={budget} onChange={(event) => { setBudget(event.target.value); setNumberError(null); }} onBlur={keyboard.hide} /></label>
+      <label className="text-field"><span>Temps actif maximum en cuisine (min)</span><KeyboardInput id="profile-time" aria-invalid={numberError?.id === "profile-time"} aria-describedby={numberError?.id === "profile-time" ? "profile-number-error" : undefined} type="number" inputMode="numeric" min={1} max={1_440} step={1} value={maxPrep} onChange={(event) => { setMaxPrep(event.target.value); setNumberError(null); }} onBlur={keyboard.hide} /></label>
+      {numberError ? <p id="profile-number-error" className="inline-help" role="alert">{numberError.message}</p> : null}
       <fieldset className="allergen-field"><legend>Allergies et intolérances à exclure</legend><div className="allergen-grid">{ALLERGEN_OPTIONS.map((item) => <button type="button" className={selectedAllergies.has(item.id) ? "is-selected" : ""} aria-pressed={selectedAllergies.has(item.id)} key={item.id} onClick={() => toggleAllergy(item.id)}>{selectedAllergies.has(item.id) ? <CheckIcon /> : null}{item.label}</button>)}</div></fieldset>
       <label className="text-field"><span>Autre allergie ou ingrédient à exclure</span><KeyboardInput id="profile-allergies" aria-invalid={Boolean(restrictionError && unknownAllergies.length)} aria-describedby="allergy-help restriction-feedback" value={allergies} placeholder="Sélectionnez ci-dessus ou saisissez un terme" onChange={(event) => { setAllergies(event.target.value); setRestrictionError(""); }} onBlur={keyboard.hide} /><small id="allergy-help">Les 14 allergènes et les ingrédients reconnus sont exclus, même facultatifs. Un terme inconnu bloque l’enregistrement. Vérifiez toujours les étiquettes et les traces.</small></label>
       <p id="restriction-feedback" role={restrictionError ? "alert" : undefined} className="inline-help">{restrictionError}</p>
@@ -2090,7 +2140,7 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
       </label>
       <p className="inline-help">Enregistrée dans le stockage local de cette adresse web, jamais transmise.</p>
     </section> : null}
-    <section className="recipe-section nutrition-section"><h2>Repères par portion</h2><div><span><strong>{recipe.nutrition.calories}</strong> kcal</span><span><strong>{recipe.nutrition.protein}</strong> g protéines</span><span><strong>{recipe.nutrition.fiber}</strong> g fibres</span></div><small>{recipe.id.startsWith("perso-") ? "Estimations héritées de la recette d’origine, non recalculées après adaptation des ingrédients." : recipe.nutrition.note}</small></section>
+    <section className="recipe-section nutrition-section"><h2>Repères par portion</h2><div><span><strong>{formatDecimal(recipe.nutrition.calories)}</strong> kcal</span><span><strong>{formatDecimal(recipe.nutrition.protein)}</strong> g protéines</span><span><strong>{formatDecimal(recipe.nutrition.fiber)}</strong> g fibres</span></div><small>{recipe.id.startsWith("perso-") ? "Estimations héritées de la recette d’origine, non recalculées après adaptation des ingrédients." : recipe.nutrition.note}</small></section>
     {onEdit ? <button type="button" className="secondary-button full-button" data-testid="edit-custom-recipe" onClick={onEdit}><MixerHorizontalIcon /> Modifier ou supprimer cette recette</button> : null}
     {onDuplicate ? <button type="button" className="secondary-button full-button" data-testid="duplicate-recipe" onClick={onDuplicate}><CopyIcon /> Créer ma version de cette recette</button> : null}
     <section className="recipe-section"><div className="section-heading"><h2>Préparation</h2>{onCook ? <button type="button" className="secondary-button cooking-entry" data-testid="start-cooking" onClick={() => onCook(portions)}>Mode cuisine</button> : null}</div><ol className="steps">{recipe.steps.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{step}</span></li>)}</ol></section><aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
@@ -2118,7 +2168,7 @@ function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan }: { recipe:
       <AllergenNotice allergens={recipe.app.planner.allergens} />
       <p className="catalogue-disclaimer">Cette appréciation concerne la composition globale de la recette. Elle ne prouve pas qu'un ingrédient isolé prévient ou traite une inflammation.</p>
       <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => Math.max(1, value - 1))}><MinusIcon /></button><b>{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => Math.min(8, value + 1))}><PlusIcon /></button></div></div><ul className="ingredient-list">{recipe.ingredients.map((item, index) => <li key={`${item.nom}-${item.unite}-${index}`}><CheckCircledIcon /><span><strong>{displayCatalogueQuantity(item.quantite * ratio, item.unite)}</strong> {item.nom}{item.facultatif ? <small>{item.note || "Facultatif"} · non ajouté aux courses</small> : item.note ? <small>{item.note}</small> : null}</span></li>)}</ul>{recipe.ingredients.some((ingredient) => ingredient.facultatif) ? <p className="inline-help">Les ingrédients facultatifs restent visibles mais ne sont pas ajoutés aux courses. Le coût affiché conserve l’estimation prudente de la recette complète.</p> : null}</section>
-      <section className="recipe-section nutrition-section"><h2>Estimations par portion</h2><div><span><strong>{recipe.nutrition_par_portion.calories}</strong> kcal</span><span><strong>{recipe.nutrition_par_portion.proteines_g}</strong> g protéines</span><span><strong>{recipe.nutrition_par_portion.fibres_g}</strong> g fibres</span></div><small>Valeurs estimatives à titre indicatif; elles varient selon les produits et la préparation.</small></section>
+      <section className="recipe-section nutrition-section"><h2>Estimations par portion</h2><div><span><strong>{formatDecimal(recipe.nutrition_par_portion.calories)}</strong> kcal</span><span><strong>{formatDecimal(recipe.nutrition_par_portion.proteines_g)}</strong> g protéines</span><span><strong>{formatDecimal(recipe.nutrition_par_portion.fibres_g)}</strong> g fibres</span></div><small>Valeurs estimatives à titre indicatif; elles varient selon les produits et la préparation.</small></section>
       <section className="recipe-section"><h2>Repères présents</h2><div className="compound-list">{recipe.composes_actifs.map((item) => <span key={`${item.aliment}-${item.compose}`}><strong>{item.aliment}</strong><small>{item.compose}</small></span>)}</div><p className="catalogue-disclaimer">Ces composés sont documentés dans les aliments, mais leur présence ne garantit pas un bénéfice clinique individuel.</p></section>
       <section className="recipe-section"><h2>Préparation</h2><ol className="steps">{recipe.etapes.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{step}</span></li>)}</ol></section>
       {recipe.substitutions.length ? <section className="recipe-section"><h2>Substitutions</h2><div className="substitution-list">{recipe.substitutions.map((item) => <p key={`${item.remplacer}-${item.par}`}><strong>{item.remplacer}</strong><ChevronRightIcon /><span>{item.par}<small>{item.note}</small></span></p>)}</div></section> : null}

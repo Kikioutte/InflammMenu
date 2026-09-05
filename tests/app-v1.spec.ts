@@ -2477,7 +2477,7 @@ test("le garde-manger conserve un stock distinct pour chaque unité", async ({ p
   await page.getByRole("button", { name: "Courses", exact: true }).click();
   await page.getByRole("button", { name: "Retirer ce que j’ai déjà" }).click();
   await expect(page.getByTestId("pantry-amount-leek-g")).toHaveValue("40");
-  await expect(page.getByTestId("pantry-amount-leek-piece")).toHaveValue("0.5");
+  await expect(page.getByTestId("pantry-amount-leek-piece")).toHaveValue("0,5");
 
   await page.getByTestId("pantry-amount-leek-piece").fill("99999");
   await page.getByTestId("pantry-amount-leek-piece").blur();
