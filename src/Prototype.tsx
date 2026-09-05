@@ -148,7 +148,7 @@ import { ConfirmActionDialog } from "./ConfirmActionDialog";
 import { HomeHeroImage } from "./HomeHeroImage";
 import { RecipeThumbnail } from "./RecipeThumbnail";
 import { deferredScreen } from "./deferred-screen";
-import { ALLERGEN_OPTIONS, DAY_LABELS, EQUIPMENT_OPTIONS, MEAL_LABELS, displayQuantity, downloadTextFile, formatDecimal, isoDate, normalizeText, parseDecimal } from "./view-format";
+import { ALLERGEN_OPTIONS, DAY_LABELS, EQUIPMENT_OPTIONS, MEAL_LABELS, dateAt, displayQuantity, downloadTextFile, formatDecimal, formatWeekRange, isoDate, normalizeText, parseDecimal } from "./view-format";
 
 const ProfileView = deferredScreen(async () => ({ default: (await import("./secondary-views")).ProfileView }), "Mon profil alimentaire");
 const InformationView = deferredScreen(async () => ({ default: (await import("./secondary-views")).InformationView }), "À propos de l’application");
@@ -291,23 +291,6 @@ function mondayOf(date = new Date()): Date {
   const offset = (copy.getDay() + 6) % 7;
   copy.setDate(copy.getDate() - offset);
   return copy;
-}
-
-function dateAt(startsOn: string, dayIndex: number): Date {
-  const [year, month, day] = startsOn.split("-").map(Number);
-  const result = new Date(year, month - 1, day);
-  result.setDate(result.getDate() + dayIndex);
-  return result;
-}
-
-function formatWeekRange(startsOn: string): string {
-  const start = dateAt(startsOn, 0);
-  const end = dateAt(startsOn, 6);
-  const startMonth = start.toLocaleDateString("fr-FR", { month: "short" }).replace(".", "");
-  const endMonth = end.toLocaleDateString("fr-FR", { month: "short" }).replace(".", "");
-  return start.getMonth() === end.getMonth()
-    ? `${start.getDate()}–${end.getDate()} ${endMonth}`
-    : `${start.getDate()} ${startMonth} – ${end.getDate()} ${endMonth}`;
 }
 
 /**

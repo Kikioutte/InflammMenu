@@ -26,7 +26,7 @@
     "update:runtime-lock": "node scripts/update-mobile-runtime-lock.mjs",
     "build:pages": "npm run check:runtime && npm run validate:planner && tsc && vite build --base=/InflammMenu/ --outDir dist/pages && node scripts/prepare-github-pages.mjs && node scripts/generate-precache.mjs dist/pages /InflammMenu/ && node scripts/validate-build-split.mjs dist/pages",
     "test:runtime": "playwright test tests/mobile-runtime.spec.ts",
-    "test:engine": "node --test tests/engine.test.mjs tests/recipe-nutrition.test.mjs",
+    "test:engine": "node --test tests/engine.test.mjs tests/recipe-nutrition.test.mjs tests/week-range.test.mjs",
     "benchmark:planner": "node scripts/benchmark-planner.mjs",
     "test:storage": "node --test tests/storage.test.mjs",
     "test:catalogue": "npm run check:catalogue-taxonomy && npm run validate:catalogue && node --test tests/catalogue.test.mjs tests/catalogue-schema-v21.test.mjs",

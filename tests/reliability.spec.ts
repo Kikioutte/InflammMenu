@@ -647,3 +647,27 @@ test('les images de l’accueil utilisent leurs dérivés et conservent les JPEG
   expect(await deferredScreenData(page)).toEqual(before);
   expect(errors).toEqual([]);
 });
+
+test('les dates de semaine gardent les libellés français dans le navigateur @webkit-smoke', async ({ page }) => {
+  await page.goto('/tests/runtime-fixture.html');
+  const result = await page.evaluate(async () => {
+    // @ts-expect-error Vite serves this TypeScript module in the browser.
+    const { formatWeekRange } = await import('/src/view-format.ts');
+    const mismatches: string[] = [];
+    let checked = 0;
+    for (const year of [2024, 2026]) for (let month = 0; month < 12; month++) for (const day of [1, 25, 28]) {
+      const start = new Date(year, month, day);
+      const end = new Date(year, month, day + 6);
+      const a = start.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
+      const b = end.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
+      const expected = start.getMonth() === end.getMonth()
+        ? start.getDate() + '–' + end.getDate() + ' ' + b
+        : start.getDate() + ' ' + a + ' – ' + end.getDate() + ' ' + b;
+      const input = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+      if (formatWeekRange(input) !== expected) mismatches.push(input);
+      checked++;
+    }
+    return { mismatches, checked };
+  });
+  expect(result).toEqual({ mismatches: [], checked: 72 });
+});
