@@ -54,7 +54,6 @@ import {
   setMealSkipped,
   swapPlannedMeals,
   weeklyTargetsOf,
-  MAX_WEEKLY_TARGET,
   MAX_MEAL_PORTIONS,
   MIN_MEAL_PORTIONS,
   cookingSessionsOf,
@@ -86,12 +85,9 @@ import {
   type RecipeCompatibilityDiagnostic,
 } from "./engine";
 import { canonicalAllergen } from "./allergens";
-import { hasAllergyConflict, resolveIngredientExclusions, unsupportedAllergies } from "./food-restrictions";
+import { hasAllergyConflict } from "./food-restrictions";
 import {
   DEFAULT_PROFILE,
-  type DayConstraint,
-  type DietMode,
-  type Equipment,
   type IngredientCategory,
   type IngredientUnit,
   type MealType,
@@ -104,7 +100,6 @@ import {
 } from "./domain";
 import { RECIPES } from "./recipes";
 import { canonicalIngredientId, shoppingIdentityFor, storedShoppingItemMatches } from "./shopping.ts";
-import { usesSharedGitHubPagesOrigin } from "./privacy.ts";
 import {
   CATALOGUE_CATEGORIES,
   CATALOGUE_SUMMARY,
@@ -116,8 +111,6 @@ import {
   filterCatalogueRecipes,
   loadCatalogue,
   loadPlannerCaution,
-  cacheCatalogueForOffline,
-  catalogueAvailableOffline,
   plannerAvailabilityFor,
   reviewFor,
   visibleCatalogueRecipes,
@@ -130,7 +123,6 @@ import {
   DEFAULT_APP_STATE,
   HISTORY_LIMIT,
   exportAppState,
-  importAppStateFile,
   loadAppState,
   loadRecoveryAppState,
   exportRawRecovery,
@@ -151,6 +143,14 @@ import "@fontsource/cormorant-garamond/latin-700.css";
 import "@fontsource/dm-sans/latin-400.css";
 import "@fontsource/dm-sans/latin-500.css";
 import "@fontsource/dm-sans/latin-600.css";
+
+import { ConfirmActionDialog } from "./ConfirmActionDialog";
+import { deferredScreen } from "./deferred-screen";
+import { ALLERGEN_OPTIONS, DAY_LABELS, EQUIPMENT_OPTIONS, MEAL_LABELS, displayQuantity, downloadTextFile, formatDecimal, isoDate, normalizeText, parseDecimal } from "./view-format";
+
+const ProfileView = deferredScreen(async () => ({ default: (await import("./secondary-views")).ProfileView }), "Mon profil alimentaire");
+const InformationView = deferredScreen(async () => ({ default: (await import("./secondary-views")).InformationView }), "À propos de l’application");
+const CustomRecipeView = deferredScreen(async () => ({ default: (await import("./secondary-views")).CustomRecipeView }), "Adapter la recette");
 
 type TabId = "home" | "week" | "courses" | "favorites";
 type IconType = ComponentType<{ className?: string }>;
@@ -212,25 +212,6 @@ function popFlowToRoot(flow: FlowControls) {
   for (let depth = flow.stack.length - 1; depth > 0; depth -= 1) flow.pop();
 }
 
-const DAY_LABELS = ["Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam.", "Dim."];
-const MEAL_LABELS: Record<MealType, string> = {
-  breakfast: "Petit-déjeuner",
-  lunch: "Déjeuner",
-  dinner: "Dîner",
-};
-const DIET_LABELS: Record<DietMode, string> = {
-  classic: "Classique",
-  vegetarian: "Végétarien",
-  "no-pork": "Sans porc",
-};
-const EQUIPMENT_OPTIONS: Array<{ id: Equipment; label: string }> = [
-  { id: "hob", label: "Plaques" },
-  { id: "oven", label: "Four" },
-  { id: "microwave", label: "Micro-ondes" },
-  { id: "blender", label: "Blender" },
-  { id: "toaster", label: "Grille-pain" },
-  { id: "steamer", label: "Vapeur" },
-];
 const RECIPE_IMAGE_PLACEHOLDER = "/assets/recipe-placeholder.svg";
 
 function handleRecipeImageError(event: SyntheticEvent<HTMLImageElement>) {
@@ -239,22 +220,6 @@ function handleRecipeImageError(event: SyntheticEvent<HTMLImageElement>) {
   image.dataset.fallbackApplied = "true";
   image.src = RECIPE_IMAGE_PLACEHOLDER;
 }
-const ALLERGEN_OPTIONS = [
-  { id: "gluten", label: "Gluten" },
-  { id: "crustaces", label: "Crustacés" },
-  { id: "oeuf", label: "Œuf" },
-  { id: "poisson", label: "Poisson" },
-  { id: "arachides", label: "Arachides" },
-  { id: "soja", label: "Soja" },
-  { id: "lait", label: "Lait" },
-  { id: "fruits-a-coque", label: "Fruits à coque" },
-  { id: "celeri", label: "Céleri" },
-  { id: "moutarde", label: "Moutarde" },
-  { id: "sesame", label: "Sésame" },
-  { id: "sulfites", label: "Sulfites" },
-  { id: "lupin", label: "Lupin" },
-  { id: "mollusques", label: "Mollusques" },
-] as const;
 const ALLERGEN_LABELS = Object.fromEntries(ALLERGEN_OPTIONS.map((item) => [item.id, item.label]));
 const CATEGORY_LABELS: Record<IngredientCategory, string> = {
   "fruit-vegetable": "Fruits et légumes",
@@ -309,20 +274,12 @@ function useRecipeRegistry(customRecipes: readonly Recipe[]): readonly Recipe[] 
   useEffect(() => replaceRecipeRegistry(customRecipes), [customRecipes]);
   return snapshot.recipes;
 }
-const ingredientNameById = new Map(
-  RECIPES.flatMap((recipe) => recipe.ingredients).map((ingredient) => [ingredient.id, ingredient.name]),
-);
-
 const navItems: Array<{ id: TabId; label: string; icon: IconType }> = [
   { id: "home", label: "Accueil", icon: HomeIcon },
   { id: "week", label: "Semaine", icon: CalendarIcon },
   { id: "courses", label: "Courses", icon: ArchiveIcon },
   { id: "favorites", label: "Favoris", icon: HeartIcon },
 ];
-
-function isoDate(date: Date): string {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-}
 
 function mondayOf(date = new Date()): Date {
   const copy = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -428,38 +385,6 @@ function currentDayIndex(startsOn: string): number {
   return Math.max(0, Math.min(6, Math.round((localToday - start) / 86_400_000)));
 }
 
-function normalizeText(value: string): string {
-  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/œ/g, "oe").replace(/æ/g, "ae").trim().toLowerCase();
-}
-
-function parseList(value: string): string[] {
-  return [...new Set(value.split(/[,;\n]/).map((item) => normalizeText(item)).filter(Boolean))];
-}
-
-
-const decimalFormat = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 2, useGrouping: false });
-const formatDecimal = (value: number) => decimalFormat.format(value);
-const quantityStep: Record<IngredientUnit, number> = { g: 5, ml: 5, piece: 0.25, c_soupe: 0.25, c_cafe: 0.25 };
-
-function parseDecimal(raw: string, minimum: number, maximum: number): number | null {
-  const normalized = raw.trim().replace(",", ".");
-  if (!/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)) return null;
-  const value = Number(normalized);
-  return Number.isFinite(value) && value >= minimum && value <= maximum ? value : null;
-}
-
-function displayQuantity(quantity: number, unit: IngredientUnit): string {
-  const rounded = formatDecimal(quantity);
-  const units: Record<IngredientUnit, string> = {
-    g: "g",
-    ml: "ml",
-    piece: quantity > 1 ? "pièces" : "pièce",
-    c_soupe: "c. à soupe",
-    c_cafe: "c. à café",
-  };
-  return `${rounded} ${units[unit]}`;
-}
-
 function displayCatalogueQuantity(quantity: number, unit: string): string {
   const rounded = formatDecimal(quantity);
   const label = unit === "piece" ? (quantity > 1 ? "pièces" : "pièce") : unit;
@@ -557,17 +482,6 @@ async function copyTextToClipboard(text: string): Promise<boolean> {
   } finally {
     area.remove();
   }
-}
-
-function downloadTextFile(fileName: string, text: string, type = "text/plain;charset=utf-8"): void {
-  const url = URL.createObjectURL(new Blob([text], { type }));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function makePlan(profile: UserProfile, lockedMeals: readonly PlannedMeal[] = [], favoriteRecipeIds: readonly string[] = [], seed: string | number = Date.now(), startsOn?: string): WeeklyPlan {
@@ -1418,104 +1332,6 @@ function customRecipeFrom(recipe: Recipe): Recipe {
   };
 }
 
-function CustomRecipeView({ draft, onSave, onDelete }: { draft: Recipe; onSave: (recipe: Recipe) => void; onDelete?: () => void }) {
-  const keyboard = useKeyboard();
-  const [title, setTitle] = useState(draft.title);
-  const [prepMinutes, setPrepMinutes] = useState(String(draft.prepMinutes));
-  const [cost, setCost] = useState(String(draft.costPerPortion).replace(".", ","));
-  const [steps, setSteps] = useState(draft.steps.join("\n"));
-  const [ingredients, setIngredients] = useState(draft.ingredients.map((item) => ({ ...item })));
-  const [error, setError] = useState("");
-  const [invalidField, setInvalidField] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
-  const savePending = useRef(false);
-  const editorActive = useRef(true);
-  useEffect(() => { editorActive.current = true; return () => { editorActive.current = false; }; }, []);
-  const setQuantity = (index: number, delta: number) => setIngredients((current) => current.map((item, position) => (position === index
-    ? { ...item, quantity: Math.max(0, Math.round((item.quantity + delta) * 100) / 100) }
-    : item)));
-  const commit = async () => {
-    if (savePending.current) return;
-    keyboard.hide();
-    setInvalidField(null);
-    const minutes = parseDecimal(prepMinutes, 1, 1_440);
-    const costPerPortion = parseDecimal(cost, 0, 10_000);
-    if (!title.trim() || minutes === null || !Number.isInteger(minutes) || costPerPortion === null) {
-      const field = !title.trim() ? "custom-title" : (minutes === null || !Number.isInteger(minutes) ? "custom-time" : "custom-cost");
-      setInvalidField(field);
-      setError(field === "custom-title" ? "Donnez un titre à votre recette." : field === "custom-time" ? "Saisissez un temps actif entier entre 1 et 1 440 minutes. La recette précédente est conservée." : "Saisissez un coût par portion entre 0 et 10 000 €, par exemple 2,50. La recette précédente est conservée.");
-      document.getElementById(field)?.focus();
-      return;
-    }
-    const cleanedSteps = steps.split("\n").map((step) => step.trim()).filter(Boolean);
-    if (!ingredients.some((item) => item.quantity > 0)) {
-      setError("Gardez au moins un ingrédient avec une quantité positive. Votre recette précédente est conservée.");
-      return;
-    }
-    if (cleanedSteps.length > 100) {
-      setError("Limitez la préparation à 100 étapes. Votre recette précédente est conservée.");
-      return;
-    }
-    savePending.current = true;
-    setSaving(true);
-    const savedIngredients = ingredients.filter((item) => item.quantity > 0);
-    try {
-      let nutrition: Recipe["nutrition"] | null = null;
-      try {
-        const { recalculateCustomNutrition } = await import("./recipe-nutrition.ts");
-        nutrition = recalculateCustomNutrition(draft.id, savedIngredients);
-      } catch {
-        // An unavailable optional data chunk must not prevent saving a recipe.
-        // The detail view explicitly identifies values that were not recalculated.
-      }
-      if (!editorActive.current) return;
-      onSave({
-      ...draft,
-      title: title.trim().slice(0, 90),
-      prepMinutes: minutes,
-      costPerPortion,
-      ingredients: savedIngredients,
-      nutrition: nutrition ?? draft.nutrition,
-      nutritionRecalculated: nutrition !== null,
-      steps: cleanedSteps.length ? cleanedSteps : draft.steps,
-    }); } catch {
-      if (editorActive.current) setError("Cette recette ne peut pas être enregistrée. Vérifiez ses ingrédients et ses étapes ; la version précédente est conservée.");
-    } finally {
-      savePending.current = false;
-      if (editorActive.current) setSaving(false);
-    }
-  };
-  return <MobileScroll className="app-screen"><main className="page-content pushed-page" data-testid="custom-recipe-view">
-    <div className="page-heading"><span className="eyebrow">Ma version</span><h1>Adapter la recette</h1><p>Ajustez le titre, le temps actif, les quantités et les étapes. Votre liste de courses suivra les quantités choisies.</p></div>
-    <section className="form-section"><h2>Votre version</h2>
-      <label className="text-field"><span>Titre</span><KeyboardInput disabled={saving} id="custom-title" aria-invalid={invalidField === "custom-title"} aria-describedby={invalidField === "custom-title" ? "custom-save-error" : undefined} value={title} maxLength={90} data-testid="custom-title" onChange={(event) => { setTitle(event.target.value); setInvalidField(null); setError(""); }} onBlur={keyboard.hide} /></label>
-      <label className="text-field"><span>Temps actif (min)</span><KeyboardInput disabled={saving} id="custom-time" aria-invalid={invalidField === "custom-time"} aria-describedby={invalidField === "custom-time" ? "custom-save-error" : undefined} inputMode="numeric" value={prepMinutes} data-testid="custom-time" onChange={(event) => { setPrepMinutes(event.target.value); setInvalidField(null); setError(""); }} onBlur={keyboard.hide} /></label>
-      <label className="text-field"><span>Coût estimé par portion (€)</span><KeyboardInput disabled={saving} id="custom-cost" aria-invalid={invalidField === "custom-cost"} aria-describedby={invalidField === "custom-cost" ? "custom-save-error custom-cost-help" : "custom-cost-help"} inputMode="decimal" value={cost} data-testid="custom-cost" onChange={(event) => { setCost(event.target.value); setInvalidField(null); setError(""); }} onBlur={keyboard.hide} /><small id="custom-cost-help">Le coût n’est pas recalculé : ajustez-le selon vos achats.</small></label>
-    </section>
-    <section className="form-section"><h2>Ingrédients</h2>
-      <p className="inline-help">Mettez une quantité à zéro pour retirer un ingrédient. Gardez au moins un ingrédient. Les repères nutritionnels sont recalculés lorsque les données sont disponibles.</p>
-      {ingredients.map((item, index) => <div className="setting-row" key={`${item.id}-${index}`}>
-        <span><strong>{item.name}</strong><small>{displayQuantity(item.quantity, item.unit)} par portion</small></span>
-        <div className="stepper"><button type="button" aria-label={`Réduire ${item.name}`} disabled={saving || item.quantity === 0} onClick={() => setQuantity(index, -quantityStep[item.unit])}><MinusIcon /></button><b>{formatDecimal(item.quantity)}</b><button type="button" disabled={saving} aria-label={`Augmenter ${item.name}`} onClick={() => setQuantity(index, quantityStep[item.unit])}><PlusIcon /></button></div>
-      </div>)}
-    </section>
-    <section className="form-section"><h2>Préparation</h2>
-      <label className="text-field"><span>Une étape par ligne</span><KeyboardTextarea disabled={saving} value={steps} rows={8} data-testid="custom-steps" onChange={(event) => setSteps(event.target.value)} /></label>
-    </section>
-    {error ? <p id="custom-save-error" className="notice-banner" role="alert" data-testid="custom-save-error">{error}</p> : null}
-    <button type="button" className="primary-button full-button" data-testid="custom-save" disabled={saving} aria-busy={saving} onClick={() => void commit()}>{saving ? "Enregistrement…" : "Enregistrer ma version"}</button>
-    {onDelete ? <ConfirmActionDialog
-      title="Supprimer cette recette ?"
-      description="La recette personnelle, son favori, sa note et ses préférences seront retirés de cet appareil. Une recette encore utilisée dans une semaine ne pourra pas être supprimée."
-      confirmLabel="Supprimer la recette"
-      testId="custom-delete-dialog"
-      onConfirm={onDelete}
-      trigger={<button type="button" disabled={saving} className="secondary-button full-button" data-testid="custom-delete">Supprimer cette recette</button>}
-    /> : null}
-    <p className="privacy-note">Vos recettes personnelles restent dans le stockage local de cette adresse web, sur cet appareil, et entrent dans vos semaines comme les autres, filtres de sécurité compris.</p>
-  </main></MobileScroll>;
-}
-
 function SwapView({ plan, source, profile, onConfirm }: {
   plan: WeeklyPlan;
   source: PlannedMeal;
@@ -1599,381 +1415,8 @@ function WebSheet({ open, onOpenChange, title, description, children }: {
   </Dialog.Root>;
 }
 
-/** Destructive actions stay reversible until this accessible confirmation. */
-function ConfirmActionDialog({ trigger, title, description, confirmLabel, testId, onConfirm, children }: {
-  trigger: React.ReactElement;
-  title: string;
-  description: string;
-  confirmLabel: string;
-  testId: string;
-  onConfirm: () => void | Promise<void>;
-  children?: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(false);
-  const [pending, setPending] = useState(false);
-  const [error, setError] = useState("");
-  const cancelRef = useRef<HTMLButtonElement>(null);
-  const changeOpen = (next: boolean) => {
-    if (pending) return;
-    setOpen(next);
-    if (next) setError("");
-  };
-  const confirm = async () => {
-    setPending(true);
-    setError("");
-    try {
-      await onConfirm();
-      setOpen(false);
-    } catch (confirmationError) {
-      setError(confirmationError instanceof Error
-        ? confirmationError.message
-        : "L’action n’a pas pu être effectuée. Vos données sont conservées.");
-    } finally {
-      setPending(false);
-    }
-  };
-  return <Dialog.Root open={open} onOpenChange={changeOpen}>
-    <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
-    <Dialog.Portal>
-      <Dialog.Overlay className="confirm-dialog__overlay" />
-      <Dialog.Content
-        className="confirm-dialog__content"
-        role="alertdialog"
-        data-testid={testId}
-        onOpenAutoFocus={(event) => {
-          event.preventDefault();
-          cancelRef.current?.focus();
-        }}
-        onEscapeKeyDown={(event) => { if (pending) event.preventDefault(); }}
-        onPointerDownOutside={(event) => { if (pending) event.preventDefault(); }}
-      >
-        <Cross2Icon className="confirm-dialog__icon" aria-hidden="true" />
-        <Dialog.Title>{title}</Dialog.Title>
-        <Dialog.Description>{description}</Dialog.Description>
-        {children ? <div className="confirm-dialog__extra">{children}</div> : null}
-        {error ? <p className="confirm-dialog__error" role="alert">{error}</p> : null}
-        <div className="confirm-dialog__actions">
-          <Dialog.Close asChild>
-            <button ref={cancelRef} type="button" className="secondary-button" data-testid={`${testId}-cancel`} disabled={pending}>Annuler</button>
-          </Dialog.Close>
-          <button type="button" className="danger-button" data-testid={`${testId}-confirm`} disabled={pending} onClick={() => void confirm()}>{pending ? "Traitement…" : confirmLabel}</button>
-        </div>
-      </Dialog.Content>
-    </Dialog.Portal>
-  </Dialog.Root>;
-}
-
 function Header({ title, onBack, action }: { title: string; onBack: () => void; action?: React.ReactNode }) {
   return <div className="app-header"><button type="button" className="icon-button" aria-label="Retour" onClick={onBack}><ArrowLeftIcon /></button><strong>{title}</strong><span className="app-header__action">{action}</span></div>;
-}
-
-function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProfile; onSave: (profile: UserProfile) => void; onOpenInformation: () => void }) {
-  const keyboard = useKeyboard();
-  const [profile, setProfile] = useState<UserProfile>({ ...initial });
-  const [budget, setBudget] = useState(String(initial.weeklyBudget));
-  const [maxPrep, setMaxPrep] = useState(String(initial.maxPrepMinutes));
-  const [numberError, setNumberError] = useState<{ id: string; message: string } | null>(null);
-  const [allergies, setAllergies] = useState(initial.allergies.join(", "));
-  const [excluded, setExcluded] = useState(initial.excludedIngredientIds.map((id) => ingredientNameById.get(id) ?? id).join(", "));
-  const [restrictionError, setRestrictionError] = useState("");
-  const unknownAllergies = unsupportedAllergies(parseList(allergies));
-  const excludedResolution = resolveIngredientExclusions(parseList(excluded));
-  const [constraintDay, setConstraintDay] = useState<DayConstraint["dayIndex"]>(0);
-  const toggleEquipment = (item: Equipment) => setProfile((current) => ({ ...current, equipment: current.equipment.includes(item) ? current.equipment.filter((entry) => entry !== item) : [...current.equipment, item] }));
-  const targets = weeklyTargetsOf(profile);
-  const setTarget = (key: "legumeMeals" | "fishMeals", delta: number) => setProfile((current) => {
-    const currentTargets = weeklyTargetsOf(current);
-    return { ...current, weeklyTargets: { ...currentTargets, [key]: Math.min(MAX_WEEKLY_TARGET, Math.max(0, currentTargets[key] + delta)) } };
-  });
-  const selectedAllergies = new Set(parseList(allergies).map(canonicalAllergen));
-  const toggleAllergy = (id: string) => setAllergies((current) => {
-    const values = new Set(parseList(current).map(canonicalAllergen));
-    if (values.has(id)) values.delete(id); else values.add(id);
-    return [...values].join(", ");
-  });
-  const currentConstraint: DayConstraint = profile.dayConstraints.find((item) => item.dayIndex === constraintDay)
-    ?? { dayIndex: constraintDay, skippedMealTypes: [] };
-  const storeConstraint = (next: DayConstraint) => setProfile((current) => {
-    const empty = next.maxPrepMinutes === undefined && next.portions === undefined && !next.mealPortions?.length && next.skippedMealTypes.length === 0;
-    const others = current.dayConstraints.filter((item) => item.dayIndex !== next.dayIndex);
-    return { ...current, dayConstraints: empty ? others : [...others, next].sort((left, right) => left.dayIndex - right.dayIndex) };
-  });
-  const activeMealTypes = profile.mealsPerDay === 3
-    ? (["breakfast", "lunch", "dinner"] as MealType[])
-    : (["lunch", "dinner"] as MealType[]);
-  const portionsForConstraintMeal = (mealType: MealType) => currentConstraint.mealPortions?.find((item) => item.mealType === mealType)?.portions
-    ?? currentConstraint.portions
-    ?? profile.people;
-  const setConstraintMealPortions = (mealType: MealType, portions: number | undefined) => {
-    const others = (currentConstraint.mealPortions ?? []).filter((item) => item.mealType !== mealType);
-    storeConstraint({
-      ...currentConstraint,
-      mealPortions: portions === undefined ? others : [...others, { mealType, portions }],
-    });
-  };
-  const toggleSkippedSlot = (mealType: MealType) => {
-    const skipped = currentConstraint.skippedMealTypes.includes(mealType);
-    storeConstraint({
-      ...currentConstraint,
-      skippedMealTypes: skipped
-        ? currentConstraint.skippedMealTypes.filter((item) => item !== mealType)
-        : [...currentConstraint.skippedMealTypes, mealType],
-    });
-  };
-  const commit = () => {
-    keyboard.hide();
-    const weeklyBudget = parseDecimal(budget, 1, 10_000);
-    const maxPrepMinutes = parseDecimal(maxPrep, 1, 1_440);
-    if (weeklyBudget === null || !Number.isInteger(weeklyBudget) || maxPrepMinutes === null || !Number.isInteger(maxPrepMinutes)) {
-      const budgetInvalid = weeklyBudget === null || !Number.isInteger(weeklyBudget);
-      const id = budgetInvalid ? "profile-budget" : "profile-time";
-      setNumberError({ id, message: budgetInvalid ? "Saisissez un budget entier entre 1 et 10 000 €. Le profil précédent est conservé." : "Saisissez un temps actif entier entre 1 et 1 440 minutes. Le profil précédent est conservé." });
-      document.getElementById(id)?.focus();
-      return;
-    }
-    setNumberError(null);
-    if (unknownAllergies.length || excludedResolution.unknown.length) {
-      setRestrictionError(`Terme non reconnu : ${[...unknownAllergies, ...excludedResolution.unknown].join(", ")}. Précisez le nom d’un ingrédient ou choisissez un allergène ci-dessus. Le profil précédent est conservé.`);
-      document.getElementById(unknownAllergies.length ? "profile-allergies" : "profile-exclusions")?.focus();
-      return;
-    }
-    onSave({ ...profile, weeklyBudget, maxPrepMinutes, allergies: parseList(allergies), excludedIngredientIds: excludedResolution.ids });
-  };
-  return <MobileScroll className="app-screen"><main className="page-content pushed-page profile-page">
-    <div className="page-heading"><span className="eyebrow">Personnalisation</span><h1>Mon profil alimentaire</h1><p>Ces choix guident chaque menu et restent dans le stockage local de cette adresse web, sur cet appareil.</p></div>
-    <section className="form-section"><h2>Votre foyer</h2>
-      <label className="text-field"><span>Votre prénom</span><KeyboardInput autoComplete="given-name" maxLength={40} value={profile.firstName} placeholder="Ex. Camille" onChange={(event) => setProfile((current) => ({ ...current, firstName: event.target.value }))} onBlur={keyboard.hide} /><small>Utilisé uniquement pour personnaliser l’accueil.</small></label>
-      <div className="setting-row"><span><strong>Nombre de personnes</strong><small>Quantités adaptées, jusqu’à 8</small></span><div className="stepper"><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.max(1, current.people - 1) }))} aria-label="Retirer une personne"><MinusIcon /></button><b>{profile.people}</b><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.min(8, current.people + 1) }))} aria-label="Ajouter une personne"><PlusIcon /></button></div></div>
-      <div className="setting-row setting-row--stack"><span><strong>Repas par jour</strong><small>Ajoutez le petit-déjeuner si vous le souhaitez</small></span><div className="choice-row">{([2, 3] as const).map((value) => <button type="button" className={profile.mealsPerDay === value ? "is-selected" : ""} aria-pressed={profile.mealsPerDay === value} key={value} onClick={() => setProfile((current) => ({ ...current, mealsPerDay: value }))}>{value} repas</button>)}</div></div>
-    </section>
-    <section className="form-section daily-constraints" data-testid="daily-constraints"><h2>Organisation par jour</h2>
-      <p className="inline-help">Adaptez avant la génération le temps disponible, les portions et les repas déjà prévus à l’extérieur.</p>
-      <Carousel ariaLabel="Choisir le jour à personnaliser" className="day-carousel" contentClassName="day-carousel__track">
-        {DAY_LABELS.map((day, index) => <button type="button" key={day} className={constraintDay === index ? "is-selected" : ""} aria-pressed={constraintDay === index} data-testid={`constraint-day-${index}`} onClick={() => setConstraintDay(index as DayConstraint["dayIndex"])}><span>{day.slice(0, 3)}</span>{profile.dayConstraints.some((item) => item.dayIndex === index) ? <i aria-label="Personnalisé">•</i> : null}</button>)}
-      </Carousel>
-      <div className="daily-constraint-card">
-        <h3>{DAY_LABELS[constraintDay]}</h3>
-        <label className="text-field"><span>Temps actif maximum</span><select data-testid="constraint-time" value={currentConstraint.maxPrepMinutes ?? ""} onChange={(event) => storeConstraint({ ...currentConstraint, maxPrepMinutes: event.target.value ? Number(event.target.value) : undefined })}><option value="">Comme le profil ({profile.maxPrepMinutes} min)</option>{[15, 20, 30, 45, 60, 90].map((minutes) => <option key={minutes} value={minutes}>{minutes} minutes</option>)}</select></label>
-        <div className="setting-row"><span><strong>Tous les repas du jour</strong><small>{currentConstraint.portions === undefined ? "Comme le foyer" : "Invités ou présence réduite"}</small></span><div className="stepper"><button type="button" aria-label="Retirer une portion pour ce jour" onClick={() => storeConstraint({ ...currentConstraint, portions: Math.max(1, (currentConstraint.portions ?? profile.people) - 1), mealPortions: [] })}><MinusIcon /></button><b data-testid="constraint-portions">{currentConstraint.portions ?? profile.people}</b><button type="button" aria-label="Ajouter une portion pour ce jour" onClick={() => storeConstraint({ ...currentConstraint, portions: Math.min(8, (currentConstraint.portions ?? profile.people) + 1), mealPortions: [] })}><PlusIcon /></button></div></div>
-        {currentConstraint.portions !== undefined || currentConstraint.mealPortions?.length ? <button type="button" className="text-button" onClick={() => storeConstraint({ ...currentConstraint, portions: undefined, mealPortions: [] })}>Reprendre {profile.people} portions partout</button> : null}
-        <fieldset className="meal-attendance"><legend>Présence par repas</legend><p>Modifiez uniquement le créneau qui accueille un invité ou moins de personnes.</p>{activeMealTypes.map((mealType) => {
-          const portions = portionsForConstraintMeal(mealType);
-          const overridden = currentConstraint.mealPortions?.some((item) => item.mealType === mealType) ?? false;
-          return <div className="setting-row" key={mealType}><span><strong>{MEAL_LABELS[mealType]}</strong><small>{overridden ? "Présence personnalisée" : "Réglage du jour"}</small></span><div className="stepper"><button type="button" aria-label={`Retirer une portion pour ${MEAL_LABELS[mealType].toLocaleLowerCase("fr-FR")}`} onClick={() => setConstraintMealPortions(mealType, Math.max(1, portions - 1))}><MinusIcon /></button><b data-testid={`constraint-portions-${mealType}`}>{portions}</b><button type="button" aria-label={`Ajouter une portion pour ${MEAL_LABELS[mealType].toLocaleLowerCase("fr-FR")}`} onClick={() => setConstraintMealPortions(mealType, Math.min(8, portions + 1))}><PlusIcon /></button></div>{overridden ? <button type="button" className="text-button meal-attendance__reset" onClick={() => setConstraintMealPortions(mealType, undefined)}>Réinitialiser</button> : null}</div>;
-        })}</fieldset>
-        <fieldset className="outside-slots"><legend>Repas prévus à l’extérieur</legend><div className="choice-row">{(profile.mealsPerDay === 3 ? (["breakfast", "lunch", "dinner"] as MealType[]) : (["lunch", "dinner"] as MealType[])).map((mealType) => <button type="button" key={mealType} className={currentConstraint.skippedMealTypes.includes(mealType) ? "is-selected" : ""} aria-pressed={currentConstraint.skippedMealTypes.includes(mealType)} data-testid={`constraint-skip-${mealType}`} onClick={() => toggleSkippedSlot(mealType)}>{MEAL_LABELS[mealType]}</button>)}</div></fieldset>
-      </div>
-    </section>
-    <section className="form-section"><h2>Mes préférences</h2><div className="choice-grid">{(Object.keys(DIET_LABELS) as DietMode[]).map((item) => <button type="button" className={profile.diet === item ? "is-selected" : ""} aria-pressed={profile.diet === item} key={item} onClick={() => setProfile((current) => ({ ...current, diet: item }))}>{DIET_LABELS[item]}</button>)}</div>
-      <label className="text-field"><span>Budget hebdomadaire (€)</span><KeyboardInput id="profile-budget" aria-invalid={numberError?.id === "profile-budget"} aria-describedby={numberError?.id === "profile-budget" ? "profile-number-error" : undefined} type="number" inputMode="numeric" min={1} max={10_000} step={1} value={budget} onChange={(event) => { setBudget(event.target.value); setNumberError(null); }} onBlur={keyboard.hide} /></label>
-      <label className="text-field"><span>Temps actif maximum en cuisine (min)</span><KeyboardInput id="profile-time" aria-invalid={numberError?.id === "profile-time"} aria-describedby={numberError?.id === "profile-time" ? "profile-number-error" : undefined} type="number" inputMode="numeric" min={1} max={1_440} step={1} value={maxPrep} onChange={(event) => { setMaxPrep(event.target.value); setNumberError(null); }} onBlur={keyboard.hide} /></label>
-      {numberError ? <p id="profile-number-error" className="inline-help" role="alert">{numberError.message}</p> : null}
-      <fieldset className="allergen-field"><legend>Allergies et intolérances à exclure</legend><div className="allergen-grid">{ALLERGEN_OPTIONS.map((item) => <button type="button" className={selectedAllergies.has(item.id) ? "is-selected" : ""} aria-pressed={selectedAllergies.has(item.id)} key={item.id} onClick={() => toggleAllergy(item.id)}>{selectedAllergies.has(item.id) ? <CheckIcon /> : null}{item.label}</button>)}</div></fieldset>
-      <label className="text-field"><span>Autre allergie ou ingrédient à exclure</span><KeyboardInput id="profile-allergies" aria-invalid={Boolean(restrictionError && unknownAllergies.length)} aria-describedby="allergy-help restriction-feedback" value={allergies} placeholder="Sélectionnez ci-dessus ou saisissez un terme" onChange={(event) => { setAllergies(event.target.value); setRestrictionError(""); }} onBlur={keyboard.hide} /><small id="allergy-help">Les 14 allergènes et les ingrédients reconnus sont exclus, même facultatifs. Un terme inconnu bloque l’enregistrement. Vérifiez toujours les étiquettes et les traces.</small></label>
-      <p id="restriction-feedback" role={restrictionError ? "alert" : undefined} className="inline-help">{restrictionError}</p>
-      <label className="text-field"><span>Aliments refusés</span><KeyboardInput id="profile-exclusions" aria-invalid={Boolean(restrictionError && excludedResolution.unknown.length)} aria-describedby="restriction-feedback" value={excluded} placeholder="Ex. brocoli, saumon" onChange={(event) => { setExcluded(event.target.value); setRestrictionError(""); }} onBlur={keyboard.hide} /></label>
-    </section>
-    <section className="form-section"><h2>Équipements</h2><div className="choice-grid">{EQUIPMENT_OPTIONS.map((item) => <button type="button" className={profile.equipment.includes(item.id) ? "is-selected" : ""} aria-pressed={profile.equipment.includes(item.id)} key={item.id} onClick={() => toggleEquipment(item.id)}>{profile.equipment.includes(item.id) ? <CheckIcon /> : null}{item.label}</button>)}</div>
-      {profile.equipment.length === 0 ? <p className="notice-banner" role="alert" data-testid="no-equipment-warning">Sans aucun équipement, presque aucune recette ne reste réalisable et la génération échouera. Cochez au moins les plaques.</p> : null}
-      {profile.equipment.length > 0 && profile.equipment.length <= 1 ? <p className="inline-help" data-testid="few-equipment-warning">Avec un seul équipement, le choix de recettes devient très restreint.</p> : null}
-    </section>
-    <section className="form-section" data-testid="targets-section"><h2>Objectifs de la semaine</h2>
-      <p className="inline-help">Le générateur vise ces fréquences avant d’optimiser le budget, la saison et le réemploi. Repères issus du modèle méditerranéen, pas une prescription.</p>
-      <div className="setting-row"><span><strong>Repas avec légumes secs ou soja</strong><small>Lentilles, pois chiches, haricots, fèves, tofu ou tempeh</small></span><div className="stepper"><button type="button" aria-label="Moins de repas avec légumes secs ou soja" onClick={() => setTarget("legumeMeals", -1)}><MinusIcon /></button><b data-testid="target-legume">{targets.legumeMeals}</b><button type="button" aria-label="Plus de repas avec légumes secs ou soja" onClick={() => setTarget("legumeMeals", 1)}><PlusIcon /></button></div></div>
-      {profile.diet === "classic" ? <div className="setting-row"><span><strong>Repas avec poisson</strong><small>Dont poissons gras si possible</small></span><div className="stepper"><button type="button" aria-label="Moins de repas avec poisson" onClick={() => setTarget("fishMeals", -1)}><MinusIcon /></button><b data-testid="target-fish">{targets.fishMeals}</b><button type="button" aria-label="Plus de repas avec poisson" onClick={() => setTarget("fishMeals", 1)}><PlusIcon /></button></div></div> : <p className="inline-help">L’objectif poisson ne s’applique pas au régime sélectionné.</p>}
-    </section>
-    <section className="form-section" data-testid="disliked-section"><h2>Recettes écartées</h2>
-      {profile.dislikedRecipeIds.length
-        ? <><p className="inline-help">Ces recettes ne sont plus proposées dans vos semaines. Touchez-en une pour la réintégrer.</p>
-            <div className="disliked-grid">{profile.dislikedRecipeIds.map((id) => <button type="button" key={id} data-testid={`disliked-${id}`} onClick={() => setProfile((current) => ({ ...current, dislikedRecipeIds: current.dislikedRecipeIds.filter((entry) => entry !== id) }))}>{recipeById.get(id)?.title ?? id}<Cross2Icon /></button>)}</div></>
-        : <p className="inline-help">Aucune recette écartée. Depuis l’écran « Remplacer », vous pouvez demander à ne plus voir une recette.</p>}
-    </section>
-    <button className="information-link" type="button" onClick={onOpenInformation}><span><strong>Informations et confidentialité</strong><small>Données, estimations et avertissement santé</small></span><ChevronRightIcon /></button>
-    <p className="privacy-note">La génération repose sur des règles locales. Votre profil et vos menus restent dans le stockage local de cette adresse web, sur cet appareil.</p>
-    <button className="primary-button full-button" type="button" onClick={commit}>Enregistrer mon profil</button>
-  </main></MobileScroll>;
-}
-
-function BackupSection({ state, onRestore }: { state: AppState; onRestore: (restored: AppState) => Promise<void> }) {
-  const [feedback, setFeedback] = useState("");
-  const [error, setError] = useState("");
-  const [pendingRestore, setPendingRestore] = useState<AppState | null>(null);
-  const [restoreSaving, setRestoreSaving] = useState(false);
-  const restoreRequest = useRef(0);
-  const inputId = "backup-file-input";
-  const download = () => {
-    try {
-      downloadTextFile(`inflamm-menu-sauvegarde-${isoDate(new Date())}.json`, exportAppState(state));
-      setError("");
-      setFeedback("Sauvegarde téléchargée.");
-    } catch {
-      setFeedback("");
-      setError("Téléchargement impossible sur cet appareil.");
-    }
-  };
-  const restore = async (file: File | undefined) => {
-    if (!file) return;
-    const requestId = ++restoreRequest.current;
-    setPendingRestore(null);
-    setFeedback("");
-    setError("");
-    try {
-      const restored = await importAppStateFile(file);
-      if (requestId !== restoreRequest.current) return;
-      const restoredRecipes = [...new Map(
-        [...RECIPES, ...restored.customRecipes].map((recipe) => [recipe.id, recipe] as const),
-      ).values()];
-      const currentReport = restored.currentPlan
-        ? inspectActivePlan(restored.currentPlan, restoredRecipes, restored.profile)
-        : null;
-      const upcomingReport = restored.upcomingPlan
-        ? inspectActivePlan(restored.upcomingPlan, restoredRecipes, restored.profile)
-        : null;
-      const activePlansAreCompatible = (!currentReport || currentReport.canActivate)
-        && (!upcomingReport || upcomingReport.canActivate);
-      if (!activePlansAreCompatible) {
-        throw new Error("Sauvegarde refusée : une semaine active est incomplète ou incompatible. Vos données actuelles sont conservées.");
-      }
-      const restoredWithActiveProfile = {
-        ...restored,
-        currentPlan: restored.currentPlan
-          ? { ...restored.currentPlan, profileSnapshot: { ...restored.profile, mealsPerDay: currentReport?.inferredMealsPerDay ?? restored.profile.mealsPerDay } }
-          : null,
-        upcomingPlan: restored.upcomingPlan
-          ? { ...restored.upcomingPlan, profileSnapshot: { ...restored.profile, mealsPerDay: upcomingReport?.inferredMealsPerDay ?? restored.profile.mealsPerDay } }
-          : null,
-      };
-      setPendingRestore(restoredWithActiveProfile);
-      setFeedback(`Sauvegarde vérifiée : ${restored.history.length} semaine(s) archivée(s), ${restored.favoriteRecipeIds.length} favori(s). Confirmez pour remplacer les données de cet appareil.`);
-    } catch (importError) {
-      if (requestId !== restoreRequest.current) return;
-      setError(importError instanceof Error ? importError.message : "Restauration impossible.");
-    }
-  };
-  const confirmRestore = async () => {
-    if (!pendingRestore || restoreSaving) return;
-    const restored = pendingRestore;
-    setRestoreSaving(true);
-    setFeedback("Restauration en cours…");
-    setError("");
-    try {
-      await onRestore(restored);
-      setPendingRestore(null);
-      setFeedback(`Sauvegarde restaurée : ${restored.history.length} semaine(s) archivée(s), ${restored.favoriteRecipeIds.length} favori(s).`);
-    } catch (restoreError) {
-      setFeedback("");
-      setError(restoreError instanceof Error
-        ? `${restoreError.message} Vos données actuelles sont conservées.`
-        : "Restauration impossible. Vos données actuelles sont conservées.");
-    } finally {
-      setRestoreSaving(false);
-    }
-  };
-  return (
-    <section className="information-card" data-testid="backup-card">
-      <h2>Sauvegarder mes données</h2>
-      <p>Vos données sont stockées localement par cette adresse web, sur cet appareil : vider les données du site les efface. Exportez un fichier pour les conserver ou les transférer, puis restaurez-le quand vous le souhaitez.</p>
-      <div className="backup-actions">
-        <button type="button" className="secondary-button" data-testid="backup-export" onClick={download}><DownloadIcon /> Exporter</button>
-        <label className="secondary-button backup-import" htmlFor={inputId}><ArchiveIcon /> Restaurer
-          <input id={inputId} type="file" accept="application/json,.json" data-testid="backup-import" onChange={(event) => { void restore(event.target.files?.[0]); event.target.value = ""; }} />
-        </label>
-      </div>
-      {pendingRestore ? <div className="backup-confirmation" data-testid="backup-confirmation" role="group" aria-label="Confirmer la restauration">
-        <p><strong>Cette action remplacera toutes les données actuellement enregistrées sur cet appareil.</strong></p>
-        <div className="backup-actions">
-          <button type="button" className="primary-button" data-testid="backup-confirm" disabled={restoreSaving} onClick={() => { void confirmRestore(); }}>{restoreSaving ? "Restauration…" : "Confirmer la restauration"}</button>
-          <button type="button" className="secondary-button" data-testid="backup-cancel" onClick={() => {
-            setPendingRestore(null);
-            setFeedback("Restauration annulée. Vos données actuelles sont conservées.");
-          }} disabled={restoreSaving}>Annuler</button>
-        </div>
-      </div> : null}
-      {feedback ? <p className="export-feedback" role="status" aria-live="polite" data-testid="backup-feedback">{feedback}</p> : null}
-      {error ? <p className="notice-banner" role="alert" data-testid="backup-error">{error}</p> : null}
-      <p className="privacy-note">La restauration remplace le profil, la semaine en cours, l’historique, les favoris et la liste de courses de cet appareil.</p>
-    </section>
-  );
-}
-
-function OfflineCatalogueSection() {
-  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
-  useEffect(() => {
-    let active = true;
-    void catalogueAvailableOffline().then((available) => { if (active && available) setStatus("ready"); });
-    return () => { active = false; };
-  }, []);
-  return (
-    <section className="information-card" data-testid="offline-catalogue">
-      <h2>Catalogue hors ligne</h2>
-      <p>La semaine, les recettes planifiées et la liste de courses fonctionnent déjà sans connexion. Le catalogue complet ({CATALOGUE_SUMMARY.nombre_recettes} recettes) peut être conservé explicitement sur cet appareil.</p>
-      <button type="button" className="secondary-button full-button" data-testid="offline-catalogue-download" disabled={status === "loading" || status === "ready"} onClick={() => {
-        setStatus("loading");
-        void cacheCatalogueForOffline().then(() => setStatus("ready")).catch(() => setStatus("error"));
-      }}>
-        {status === "ready" ? <><CheckIcon /> Catalogue vérifié hors ligne</> : status === "loading" ? <><ReloadIcon className="spin" /> Téléchargement et vérification…</> : <><DownloadIcon /> Télécharger pour le hors-ligne</>}
-      </button>
-      {status === "error" ? <p className="notice-banner" role="alert">Le catalogue n’a pas pu être enregistré dans le cache de cet appareil. Libérez de l’espace puis réessayez en ligne.</p> : null}
-    </section>
-  );
-}
-
-function ComfortSection({ state, onTextScale, onReminders }: { state: AppState; onTextScale: (scale: "normal" | "large") => void; onReminders: (enabled: boolean) => void }) {
-  const [permission, setPermission] = useState(typeof Notification === "undefined" ? "unsupported" : Notification.permission);
-  const enableReminders = async () => {
-    if (typeof Notification === "undefined") { setPermission("unsupported"); return; }
-    try {
-      const result = await Notification.requestPermission();
-      setPermission(result);
-      onReminders(result === "granted");
-    } catch {
-      setPermission("default");
-      onReminders(false);
-    }
-  };
-  return (
-    <section className="information-card" data-testid="comfort-card">
-      <h2>Confort de lecture et rappels</h2>
-      <p>Taille du texte de l’application. Les repères et avertissements suivent le même réglage.</p>
-      <div className="choice-row" role="group" aria-label="Taille du texte">
-        {([["normal", "Taille normale"], ["large", "Texte agrandi"]] as const).map(([value, label]) => (
-          <button type="button" key={value} className={state.textScale === value ? "is-selected" : ""} aria-pressed={state.textScale === value} data-testid={`text-scale-${value}`} onClick={() => onTextScale(value)}>{label}</button>
-        ))}
-      </div>
-      <p style={{ marginTop: 18 }}>Un rappel peut s’afficher à l’ouverture pour lancer un repos aujourd’hui ou la veille, et pour signaler les restes prévus au menu.</p>
-      {state.remindersEnabled && permission === "granted"
-        ? <button type="button" className="secondary-button full-button" data-testid="reminders-off" onClick={() => onReminders(false)}><CheckIcon /> Rappels activés — désactiver</button>
-        : <button type="button" className="secondary-button full-button" disabled={permission === "denied" || permission === "unsupported"} data-testid="reminders-on" onClick={() => void enableReminders()}><ClockIcon /> Activer les rappels</button>}
-      {permission === "denied" ? <p className="inline-help">Les notifications sont bloquées pour ce site dans les réglages de votre navigateur.</p> : null}
-      {permission === "unsupported" ? <p className="inline-help">Cet appareil ne propose pas de notifications web.</p> : null}
-      <p className="privacy-note">Les rappels sont produits localement pendant que l’application est ouverte : aucun serveur, aucune donnée transmise.</p>
-    </section>
-  );
-}
-
-function InformationView({ state, onRestore, onTextScale, onReminders }: { state: AppState; onRestore: (restored: AppState) => Promise<void>; onTextScale: (scale: "normal" | "large") => void; onReminders: (enabled: boolean) => void }) {
-  const sharedPagesOrigin = usesSharedGitHubPagesOrigin();
-  return <MobileScroll className="app-screen"><main className="page-content pushed-page information-page">
-    <div className="page-heading"><span className="eyebrow">En toute transparence</span><h1>À propos de l’application</h1><p>Les repères essentiels sur le fonctionnement de cette V1 locale.</p></div>
-    <section className="information-card"><h2>Génération locale</h2><p>Les semaines sont composées directement sur votre appareil à partir de règles déterministes, de filtres et d’une base de recettes intégrée.</p></section>
-    <section className="information-card"><h2>Confidentialité</h2><p>Votre prénom, vos préférences, vos menus, vos favoris et votre liste de courses sont enregistrés dans le stockage local de cette adresse web, sur cet appareil. Cette V1 ne crée pas de compte et ne transmet pas ces données à un serveur.</p><p>Le navigateur sépare ce stockage par origine — protocole, domaine et port — et non par dossier. La suppression des données du site dans les réglages du navigateur efface ces informations locales.</p>{sharedPagesOrigin ? <p className="notice-banner" role="note" data-testid="shared-origin-warning">L’adresse kikioutte.github.io est partagée entre les projets GitHub Pages du compte. Un autre projet servi depuis cette même origine peut donc techniquement lire ce stockage. Avant un passage à une adresse dédiée, exportez une copie ; ne supprimez les anciennes données qu’après une restauration vérifiée.</p> : null}</section>
-    <BackupSection state={state} onRestore={onRestore} />
-    <OfflineCatalogueSection />
-    <ComfortSection state={state} onTextScale={onTextScale} onReminders={onReminders} />
-    <section className="information-card information-card--warning"><h2>Avertissement santé</h2><p>Inflamm’Menu est un outil d’organisation alimentaire et ne remplace pas l’avis d’un médecin, d’un diététicien ou d’un autre professionnel de santé. En cas d’allergie sévère, de pathologie, de grossesse ou de régime prescrit, demandez un avis professionnel.</p></section>
-    <section className="information-card"><h2>{CATALOGUE_SUMMARY.nombre_recettes} recettes comparées et relues</h2><p>{CATALOGUE_SUMMARY.nombre_recettes_visibles} recettes absentes de la base ont été ajoutées; {CATALOGUE_SUMMARY.nombre_doublons_exclus} recettes matériellement équivalentes ont été écartées. Chaque proposition a été contrôlée selon son profil alimentaire global : place des végétaux, fibres, céréales complètes, légumineuses, poissons, graisses insaturées, sucres ajoutés, sodium et graisses saturées.</p><p>Les recettes contenant notamment beaucoup de coco, des préparations concentrées au curcuma, des algues ou davantage de sucre sont conservées avec des repères explicites. L'indice numérique du fichier source reste éditorial et n'est pas présenté comme une mesure médicale.</p></section>
-    <section className="information-card"><h2>Inspirations historiques et culturelles</h2><p>Jean Seignalet nourrit la réflexion historique sur les liens entre alimentation et mode de vie; ses hypothèses ne sont pas utilisées comme preuves médicales et n'entraînent aucune exclusion automatique du gluten ou des produits laitiers.</p><p>Yuval Noah Harari inspire une lecture culturelle de l'évolution des pratiques alimentaires et l'ouverture aux cuisines du monde. Ses ouvrages ne servent pas de source nutritionnelle.</p><p>Les données officielles, la sécurité alimentaire et les recommandations actuelles restent toujours prioritaires.</p></section>
-    <section className="information-card"><h2>Estimations</h2><p>Les prix, calories, protéines, fibres et quantités sont des estimations indicatives. Ils peuvent varier selon les produits, les marques, les saisons, les magasins et la préparation réelle.</p></section>
-    <section className="information-card official-sources"><h2>Sources officielles de référence</h2><p>Ces liens permettent de consulter les repères publics qui orientent le contenu éditorial de l’application.</p>
-      <a href="https://ciqual.anses.fr/cms/fr/la-table-ciqual-2025" target="_blank" rel="noreferrer"><span><strong>Table Ciqual 2025 — ANSES</strong><small>Composition nutritionnelle des aliments</small></span><ChevronRightIcon /></a>
-      <a href="https://www.santepubliquefrance.fr/nutrition-et-activite-physique/rapportsynthese/recommandations-relatives-a-lalimentation-a-lactivite-physique-et-a-la-sedentarite-pour-les-adultes" target="_blank" rel="noreferrer"><span><strong>Santé publique France</strong><small>Recommandations pour les adultes</small></span><ChevronRightIcon /></a>
-      <a href="https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/anti-inflammatory-diet/" target="_blank" rel="noreferrer"><span><strong>Harvard — The Nutrition Source</strong><small>Alimentation anti-inflammatoire et limites des preuves</small></span><ChevronRightIcon /></a>
-      <a href="https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet" target="_blank" rel="noreferrer"><span><strong>American Heart Association</strong><small>Repères du modèle méditerranéen</small></span><ChevronRightIcon /></a>
-      <a href="https://www.anses.fr/fr/content/des-effets-indesirables-lies-la-consommation-de-complements-alimentaires-contenant-du" target="_blank" rel="noreferrer"><span><strong>ANSES — Curcuma</strong><small>Précautions et interactions</small></span><ChevronRightIcon /></a>
-      <a href="https://www.anses.fr/fr/content/consommation-dalgues-rester-vigilant-sur-le-risque-dexces-dapport-en-iode" target="_blank" rel="noreferrer"><span><strong>ANSES — Algues et iode</strong><small>Populations à risque et consommation régulière</small></span><ChevronRightIcon /></a>
-    </section>
-    <p className="information-footer">Catalogue culinaire sous {CATALOGUE_SUMMARY.licence}</p>
-  </main></MobileScroll>;
 }
 
 function AllergenNotice({ allergens }: { allergens: readonly string[] }) {
@@ -2235,6 +1678,12 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const replaceAppState = appStore.replaceState;
   const hydrateAppState = appStore.hydrateState;
   const mergeAppState = appStore.mergeState;
+  const saveBeforeReload = async () => {
+    const snapshot = appStore.getSnapshot();
+    const result = await saveAppState(snapshot);
+    if (!result.localSaved && !result.indexedSaved) throw new Error("Sauvegarde indisponible");
+    return appStore.getSnapshot() === snapshot;
+  };
   const [hydrated, setHydrated] = useState(false);
   const [hydrationError, setHydrationError] = useState<Error | null>(null);
   const [archivedWeek, setArchivedWeek] = useState<WeeklyPlan | null>(null);
@@ -2587,7 +2036,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   }
 
   function customRecipeScreen(draft: Recipe, existing = false, planned?: PlannedMeal): FlowScreen {
-    return { id: `custom-${draft.id}`, title: "Ma version", headerHeight: 56, header: (route) => <Header title="Ma version" onBack={route.pop} />, render: (route) => <CustomRecipeView draft={draft} onSave={(recipe) => { saveCustomRecipe(recipe); route.replace(recipeScreen(recipe, planned)); }} onDelete={existing ? () => {
+    return { id: `custom-${draft.id}`, title: "Ma version", headerHeight: 56, header: (route) => <Header title="Ma version" onBack={route.pop} />, render: (route) => <CustomRecipeView beforeReload={saveBeforeReload} draft={draft} onSave={(recipe) => { saveCustomRecipe(recipe); route.replace(recipeScreen(recipe, planned)); }} onDelete={existing ? () => {
       const current = appStore.getSnapshot();
       const plans = [current.currentPlan, current.upcomingPlan, ...current.history].filter((plan): plan is WeeklyPlan => Boolean(plan));
       if (plans.some((plan) => plan.meals.some((meal) => meal.recipeId === draft.id))) {
@@ -2678,8 +2127,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView recipe={recipe} favorite={live.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} />}</LiveAppState> };
   }
 
-  const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView state={live} onRestore={async (restored) => { await replaceAppState(restored); setArchivedWeek(null); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
-  const openProfile = () => flow.push({ id: "profile", title: "Profil alimentaire", headerHeight: 56, header: (route) => <Header title="Mon profil" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <ProfileView key={JSON.stringify(live.profile)} initial={live.profile} onOpenInformation={() => route.push(informationScreen())} onSave={(profile) => {
+  const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView beforeReload={saveBeforeReload} state={live} onRestore={async (restored) => { await replaceAppState(restored); setArchivedWeek(null); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
+  const openProfile = () => flow.push({ id: "profile", title: "Profil alimentaire", headerHeight: 56, header: (route) => <Header title="Mon profil" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <ProfileView beforeReload={saveBeforeReload} recipeById={recipeById} key={JSON.stringify(live.profile)} initial={live.profile} onOpenInformation={() => route.push(informationScreen())} onSave={(profile) => {
     const snapshot = appStore.getSnapshot();
     const currentReport = snapshot.currentPlan ? inspectActivePlan(snapshot.currentPlan, ACTIVE_RECIPES, profile) : null;
     const upcomingReport = snapshot.upcomingPlan ? inspectActivePlan(snapshot.upcomingPlan, ACTIVE_RECIPES, profile) : null;

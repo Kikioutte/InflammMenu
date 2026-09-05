@@ -23,10 +23,12 @@ for (const publicPath of initialPaths) {
   entryBytes += contents.byteLength;
   entryGzipSize += gzipSync(contents).byteLength;
 }
-assert(entryBytes < 1_370_000, `JavaScript initial trop lourd : ${entryBytes} octets`);
-assert(entryGzipSize < 320_000, `JavaScript initial gzip trop lourd : ${entryGzipSize} octets`);
+assert(entryBytes < 1_335_000, `JavaScript initial trop lourd : ${entryBytes} octets`);
+assert(entryGzipSize < 302_000, `JavaScript initial gzip trop lourd : ${entryGzipSize} octets`);
 
 const appShell = serviceWorker.match(/const APP_SHELL = \[[\s\S]*?\];/)?.[0] ?? "";
+assert.doesNotMatch(index, /secondary-views-[A-Za-z0-9_-]+\.js/, "les écrans secondaires ne doivent pas bloquer le démarrage");
+assert.match(appShell, /\/assets\/secondary-views-[A-Za-z0-9_-]+\.js/, "les écrans secondaires manquent au précache hors ligne");
 assert.match(appShell, /\/assets\/catalog-validation-[A-Za-z0-9_-]+\.js/, "le validateur JSON différé manque au précache hors ligne");
 assert.doesNotMatch(appShell, /catalogue-/, "le catalogue différé ne doit pas être précaché");
 assert.doesNotMatch(appShell, /recettes-anti-inflammatoires[^"']*\.json/, "le gros JSON catalogue ne doit pas être précaché");

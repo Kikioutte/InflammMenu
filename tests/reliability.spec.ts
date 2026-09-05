@@ -3,11 +3,11 @@ import { readFile } from 'node:fs/promises';
 
 test.use({ serviceWorkers: 'block' });
 
-test('le démarrage et la génération ne dépendent pas du validateur du catalogue complet', async ({ page }) => {
+test('le démarrage et la génération ne dépendent pas des écrans secondaires ni du validateur du catalogue complet', async ({ page }) => {
   const errors: string[] = [];
   const secondaryRequests: string[] = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.route('**/src/catalog-validation.ts*', route => {
+  await page.route(/\/src\/(?:catalog-validation\.ts|secondary-views\.ts|ProfileView\.tsx|InformationView\.tsx|CustomRecipeView\.tsx)(?:\?.*)?$/, route => {
     secondaryRequests.push(route.request().url());
     return route.abort();
   });
@@ -27,6 +27,241 @@ async function seedLocal(page: Page, raw: string) {
   await page.evaluate(value => localStorage.setItem('inflamm-menu:app-state', value), raw);
   await page.goto('/');
 }
+
+async function seedDeferredScreenData(page: Page) {
+  const source = JSON.parse(await readFile(new URL('../src/data/planner-recipes.json', import.meta.url), 'utf8'));
+  const original = source.find((recipe: { id: string }) => recipe.id === 'catalog-r051');
+  expect(original).toBeTruthy();
+  const recipe = { ...original, id: 'perso-deferred-preserved', title: 'Ma recette conservée' };
+  await seedLocal(page, JSON.stringify({
+    version: 3,
+    onboardingCompleted: true,
+    profile: { firstName: 'Camille', weeklyBudget: 95, maxPrepMinutes: 45 },
+    customRecipes: [recipe],
+    favoriteRecipeIds: [recipe.id],
+    recipeNotes: { [recipe.id]: 'Une note à conserver 🥣' },
+  }));
+  await expect(page.getByTestId('flow-current').getByTestId('home-view')).toBeVisible();
+  // Wait for the normalized startup state to be saved before comparing it.
+  await expect.poll(() => page.evaluate(() => Object.hasOwn(
+    JSON.parse(localStorage.getItem('inflamm-menu:app-state') ?? '{}'), 'currentPlan',
+  ))).toBe(true);
+}
+
+async function deferredScreenData(page: Page) {
+  return page.evaluate(() => {
+    const state = JSON.parse(localStorage.getItem('inflamm-menu:app-state')!);
+    return {
+      profile: state.profile,
+      currentPlan: state.currentPlan,
+      upcomingPlan: state.upcomingPlan,
+      history: state.history,
+      customRecipes: state.customRecipes,
+      favoriteRecipeIds: state.favoriteRecipeIds,
+      recipeNotes: state.recipeNotes,
+      checkedShoppingItemIds: state.checkedShoppingItemIds,
+      pantryIngredientIds: state.pantryIngredientIds,
+      pantryAmounts: state.pantryAmounts,
+      textScale: state.textScale,
+      remindersEnabled: state.remindersEnabled,
+    };
+  });
+}
+
+for (const screen of [
+  { module: 'ProfileView', title: 'Mon profil alimentaire' },
+  { module: 'CustomRecipeView', title: 'Adapter la recette' },
+] as const) {
+  test(`l’écran différé ${screen.module} se récupère par un rechargement explicite sans modifier les données`, async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', error => errors.push(error.message));
+    let attempts = 0;
+    await page.route('**/src/secondary-views.ts*', route => {
+      attempts += 1;
+      return attempts === 1 ? route.abort('failed') : route.continue();
+    });
+    await seedDeferredScreenData(page);
+    const before = await deferredScreenData(page);
+    const current = page.getByTestId('flow-current');
+    const openScreen = async () => {
+      if (screen.module === 'CustomRecipeView') {
+        await current.getByRole('button', { name: 'Favoris', exact: true }).click();
+        await current.getByRole('button', { name: /Ma recette conservée/ }).click();
+        await current.getByTestId('edit-custom-recipe').click();
+      } else {
+        await current.getByRole('button', { name: 'Ajuster mon profil' }).click();
+      }
+    };
+    await openScreen();
+    await expect(current.getByTestId('deferred-screen').getByRole('alert')).toContainText('Vos données sont conservées');
+    await expect(page.getByRole('button', { name: 'Retour', exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Inflamm’Menu a rencontré une erreur' })).toHaveCount(0);
+    expect(await deferredScreenData(page)).toEqual(before);
+    const reloaded = page.waitForEvent('domcontentloaded');
+    await current.getByRole('button', { name: 'Recharger l’application', exact: true }).click();
+    await reloaded;
+    await expect(current.getByTestId('home-view')).toBeVisible();
+    expect(await deferredScreenData(page)).toEqual(before);
+    await openScreen();
+    await expect(current.getByTestId('deferred-screen')).toHaveCount(0);
+    await expect(current.getByRole('heading', { name: screen.title, exact: true })).toBeFocused();
+    if (screen.module === 'ProfileView') await expect(current.getByLabel('Votre prénom')).toHaveValue('Camille');
+    if (screen.module === 'CustomRecipeView') await expect(current.getByTestId('custom-title')).toHaveValue('Ma recette conservée');
+    expect(attempts).toBe(2);
+    expect(await deferredScreenData(page)).toEqual(before);
+    expect(errors).toEqual([]);
+  });
+}
+
+test('un écran différé en panne conserve une note non sauvegardée si les deux stockages refusent l’écriture', async ({ page }) => {
+  await page.route('**/src/secondary-views.ts*', route => route.abort('failed'));
+  await seedDeferredScreenData(page);
+  const before = await deferredScreenData(page);
+  const current = page.getByTestId('flow-current');
+  await current.getByRole('button', { name: 'Favoris', exact: true }).click();
+  await current.getByRole('button', { name: /Ma recette conservée/ }).click();
+  await expect(current.getByTestId('recipe-note-input')).toHaveValue('Une note à conserver 🥣');
+  const storedBefore = await page.evaluate(() => ({
+    state: localStorage.getItem('inflamm-menu:app-state'),
+    marker: localStorage.getItem('inflamm-menu:reset-marker'),
+  }));
+  // Block persistence after hydration, then make a real in-memory change.
+  // An unchanged state could already have a durable copy and reload safely.
+  await page.evaluate(() => {
+    Object.defineProperty(Storage.prototype, 'setItem', {
+      configurable: true,
+      value: () => { throw new DOMException('Quota au rechargement', 'QuotaExceededError'); },
+    });
+    Object.defineProperty(indexedDB, 'open', {
+      configurable: true,
+      value: () => { throw new Error('IndexedDB indisponible au rechargement'); },
+    });
+  });
+  const unsavedNote = 'Note nouvelle conservée uniquement en mémoire 🥣';
+  await current.getByTestId('recipe-note-input').fill(unsavedNote);
+  await expect(current.getByTestId('recipe-note-input')).toHaveValue(unsavedNote);
+  expect(await deferredScreenData(page)).toEqual(before);
+  await current.getByTestId('edit-custom-recipe').click();
+  await expect(current.getByTestId('deferred-screen').getByRole('alert')).toContainText('Vos données sont conservées');
+  const navigations: string[] = [];
+  page.on('framenavigated', frame => {
+    if (frame === page.mainFrame()) navigations.push(frame.url());
+  });
+  const reload = current.getByRole('button', { name: 'Recharger l’application', exact: true });
+  await reload.click();
+  await expect(current.getByRole('alert').filter({ hasText: 'La sauvegarde n’a pas pu être vérifiée' })).toBeVisible();
+  await expect(reload).toBeEnabled();
+  expect(navigations).toEqual([]);
+  expect(await deferredScreenData(page)).toEqual(before);
+  expect(await page.evaluate(() => ({
+    state: localStorage.getItem('inflamm-menu:app-state'),
+    marker: localStorage.getItem('inflamm-menu:reset-marker'),
+  }))).toEqual(storedBefore);
+  await page.getByRole('button', { name: 'Retour', exact: true }).click();
+  // Editing replaces the recipe route. Return to the library and reopen the
+  // recipe to verify the new note still lives in the application state.
+  await expect(current.getByTestId('favorites-view')).toBeVisible();
+  await current.getByRole('button', { name: /Ma recette conservée/ }).click();
+  await expect(current.getByTestId('recipe-note-input')).toHaveValue(unsavedNote);
+  expect(navigations).toEqual([]);
+  expect(await deferredScreenData(page)).toEqual(before);
+});
+
+test('les informations réutilisent le module du profil après une coupure réseau', async ({ page, context }) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  let requests = 0;
+  await page.route('**/src/secondary-views.ts*', route => {
+    requests += 1;
+    return route.continue();
+  });
+  await seedDeferredScreenData(page);
+  const before = await deferredScreenData(page);
+  const current = page.getByTestId('flow-current');
+  await current.getByRole('button', { name: 'Ajuster mon profil' }).click();
+  await expect(current.getByLabel('Votre prénom')).toHaveValue('Camille');
+  expect(requests).toBe(1);
+  await context.setOffline(true);
+  await current.getByRole('button', { name: /Informations et confidentialité/ }).click();
+  await expect(current.getByTestId('backup-card')).toBeVisible();
+  await expect(current.getByRole('heading', { name: 'À propos de l’application' })).toBeFocused();
+  await expect(current.getByTestId('deferred-screen')).toHaveCount(0);
+  expect(requests).toBe(1);
+  expect(await deferredScreenData(page)).toEqual(before);
+  expect(errors).toEqual([]);
+});
+
+for (const focusTarget of ['loading', 'back'] as const) {
+  test(`un profil lent ${focusTarget === 'loading' ? 'transfère le focus vers son titre chargé' : 'conserve le focus sur le bouton Retour'}`, async ({ page }) => {
+    let release!: () => void;
+    const released = new Promise<void>(resolve => { release = resolve; });
+    await page.route('**/src/secondary-views.ts*', async route => {
+      await released;
+      await route.continue();
+    });
+    try {
+      await seedDeferredScreenData(page);
+      const before = await deferredScreenData(page);
+      const current = page.getByTestId('flow-current');
+      await current.getByRole('button', { name: 'Ajuster mon profil' }).click();
+      const loading = current.getByTestId('deferred-screen');
+      await expect(loading.getByRole('status')).toContainText('Chargement de l’écran');
+      // FlowStack has completed its entry animation and focused the temporary
+      // title. Only now may the delayed download finish.
+      await expect(loading.getByRole('heading', { name: 'Mon profil alimentaire' })).toBeFocused();
+      const back = page.getByRole('button', { name: 'Retour', exact: true });
+      if (focusTarget === 'back') await back.focus();
+      release();
+      await expect(loading).toHaveCount(0);
+      await expect(current.getByLabel('Votre prénom')).toHaveValue('Camille');
+      if (focusTarget === 'loading') {
+        await expect(current.getByRole('heading', { name: 'Mon profil alimentaire' })).toBeFocused();
+      } else {
+        await expect(back).toBeFocused();
+      }
+      expect(await deferredScreenData(page)).toEqual(before);
+    } finally {
+      release();
+    }
+  });
+}
+
+test('revenir pendant le chargement d’un profil empêche toute ouverture ou écriture tardive', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  let release!: () => void;
+  const released = new Promise<void>(resolve => { release = resolve; });
+  await page.route('**/src/secondary-views.ts*', async route => {
+    await released;
+    await route.continue();
+  });
+  try {
+    await seedDeferredScreenData(page);
+    const before = await deferredScreenData(page);
+    const current = page.getByTestId('flow-current');
+    const profileTrigger = current.getByRole('button', { name: 'Ajuster mon profil' });
+    await profileTrigger.click();
+    await expect(current.getByTestId('deferred-screen').getByRole('heading')).toBeFocused();
+    await page.getByRole('button', { name: 'Retour', exact: true }).click();
+    await expect(current.getByTestId('home-view')).toBeVisible();
+    await expect(profileTrigger).toBeFocused();
+    await expect(page.getByTestId('deferred-screen')).toHaveCount(0);
+    release();
+    // Await the same module's evaluation, not a guessed network delay, so the
+    // abandoned loader has had the opportunity to resolve before assertions.
+    await page.evaluate(async () => { await import('/src/secondary-views.ts'); });
+    await expect(current.getByTestId('home-view')).toBeVisible();
+    await expect(profileTrigger).toBeFocused();
+    await expect(page.getByRole('button', { name: 'Retour', exact: true })).toHaveCount(0);
+    expect(await deferredScreenData(page)).toEqual(before);
+    expect(errors).toEqual([]);
+    await profileTrigger.click();
+    await expect(current.getByLabel('Votre prénom')).toHaveValue('Camille');
+    await expect(current.getByRole('heading', { name: 'Mon profil alimentaire' })).toBeFocused();
+  } finally {
+    release();
+  }
+});
 
 test('un marqueur de reset périmé rejoint la génération de sa copie complète', async ({ page }) => {
   await page.goto('/tests/runtime-fixture.html');

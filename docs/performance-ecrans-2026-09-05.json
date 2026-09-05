@@ -1,0 +1,556 @@
+{
+  "reference": "84bfdad16f2bc25b44135597f8e2185005939fc5",
+  "method": {
+    "browser": "Chromium 149",
+    "lighthouse": "13.4.1",
+    "node": "24.19.0",
+    "runs": "3 alternating cold mobile runs per version; no concurrent local browser suite or build; same container and default Lighthouse simulated throttling. Laboratory data, not field INP.",
+    "finalSource": "Final production sources, including safe reload and live-state/navigation guards. Documentation and test-only edits do not alter the measured assets."
+  },
+  "bundle": {
+    "before": {
+      "initialRequests": 1,
+      "initialBytes": 1348294,
+      "initialGzip": 303586,
+      "allJavaScriptBytes": 1592141,
+      "allJavaScriptGzip": 335611,
+      "shellResources": 22,
+      "files": [
+        {
+          "file": "backup-import-CMCqWPTZ.js",
+          "bytes": 4543,
+          "gzip": 1550,
+          "sha256": "56bd1750233fa5ca905285633467b7bfb49562f05eedc3f5730ff17c431f2a37"
+        },
+        {
+          "file": "catalog-validation-Dg_SczIl.js",
+          "bytes": 6303,
+          "gzip": 2405,
+          "sha256": "50ad99c0ec39e944ab3e31552bff7a0fc3dfa353ad66d39b7d2dee27907e9145"
+        },
+        {
+          "file": "index-ZpDPpqmA.js",
+          "bytes": 1348294,
+          "gzip": 303586,
+          "sha256": "3dca4df6aead79f864cd8b8c7f84b15319dc88f2c4accfb8feb0362da80f39c7"
+        },
+        {
+          "file": "raw-recovery-BaCgMWgJ.js",
+          "bytes": 838,
+          "gzip": 503,
+          "sha256": "b2c642318a74d948e9596a25199201c67a9c71ffbb30cf45d0c58b7fd5747a6a"
+        },
+        {
+          "file": "recipe-image-manifest-BHRtqrso.js",
+          "bytes": 31513,
+          "gzip": 9115,
+          "sha256": "da6a3bc4410cdd60eb520778f726f4f768e43cd19412b5a3a1b46c3d01f29ac9"
+        },
+        {
+          "file": "recipe-nutrition-DZdndp_g.js",
+          "bytes": 200650,
+          "gzip": 18452,
+          "sha256": "4eb66703a5b063ecf6129aa04964b2de217c3a096090d0d8bb2bd04c43589ed3"
+        }
+      ]
+    },
+    "after": {
+      "initialRequests": 1,
+      "initialBytes": 1316192,
+      "initialGzip": 296060,
+      "allJavaScriptBytes": 1595718,
+      "allJavaScriptGzip": 338182,
+      "shellResources": 23,
+      "files": [
+        {
+          "file": "backup-import-DiImi1oZ.js",
+          "bytes": 4543,
+          "gzip": 1560,
+          "sha256": "5abb1d505f336020597e7947fa59b2a6e32dbc6fae86286ec888d65c54f8e33a"
+        },
+        {
+          "file": "catalog-validation-B__SE8Nc.js",
+          "bytes": 6303,
+          "gzip": 2397,
+          "sha256": "f7943226e4a5368061faedd86b56bd165e4493f6d2b4efd86a13120a34c85d28"
+        },
+        {
+          "file": "index-DWsk9L3C.js",
+          "bytes": 1316192,
+          "gzip": 296060,
+          "sha256": "0c308462edd95ecea7ed6bdf03a6486f87f05d9872ddef1c98f3953569fa6653"
+        },
+        {
+          "file": "raw-recovery-CvWls-a2.js",
+          "bytes": 843,
+          "gzip": 509,
+          "sha256": "8a9529589343a2ceb09cef168896efb67638e77d0c2c7d085bc6759b6dae506a"
+        },
+        {
+          "file": "recipe-image-manifest-BHRtqrso.js",
+          "bytes": 31513,
+          "gzip": 9115,
+          "sha256": "da6a3bc4410cdd60eb520778f726f4f768e43cd19412b5a3a1b46c3d01f29ac9"
+        },
+        {
+          "file": "recipe-nutrition-DZdndp_g.js",
+          "bytes": 200650,
+          "gzip": 18452,
+          "sha256": "4eb66703a5b063ecf6129aa04964b2de217c3a096090d0d8bb2bd04c43589ed3"
+        },
+        {
+          "file": "secondary-views-BFJ8h-RR.js",
+          "bytes": 35674,
+          "gzip": 10089,
+          "sha256": "ad55c54a24ea7b47b42ec2158b575048365ae2f3bf8214ae49eaf7490c0739a4"
+        }
+      ]
+    }
+  },
+  "finalCampaign": {
+    "method": "Three alternating cold mobile runs per build, no concurrent local test suite; same Chromium and container; medians. Laboratory data, not field INP.",
+    "results": [
+      {
+        "stage": "baseline",
+        "run": 1,
+        "scores": {
+          "performance": 74,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2455.846,
+          "largest-contentful-paint": 2916.7690000000002,
+          "total-blocking-time": 744.5000000000002,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2455.846
+        },
+        "warnings": []
+      },
+      {
+        "stage": "after",
+        "run": 1,
+        "scores": {
+          "performance": 81,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2451.8779999999997,
+          "largest-contentful-paint": 2911.3169999999996,
+          "total-blocking-time": 437,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2451.8779999999997
+        },
+        "warnings": []
+      },
+      {
+        "stage": "baseline",
+        "run": 2,
+        "scores": {
+          "performance": 75,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2457.188,
+          "largest-contentful-paint": 2916.985,
+          "total-blocking-time": 695.5,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2457.188
+        },
+        "warnings": []
+      },
+      {
+        "stage": "after",
+        "run": 2,
+        "scores": {
+          "performance": 78,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2461.322,
+          "largest-contentful-paint": 2924.483,
+          "total-blocking-time": 529.5,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2461.322
+        },
+        "warnings": []
+      },
+      {
+        "stage": "baseline",
+        "run": 3,
+        "scores": {
+          "performance": 70,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2493.5820000000003,
+          "largest-contentful-paint": 2961.8730000000005,
+          "total-blocking-time": 941.5,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2528.965033728196
+        },
+        "warnings": []
+      },
+      {
+        "stage": "after",
+        "run": 3,
+        "scores": {
+          "performance": 68,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2459.928,
+          "largest-contentful-paint": 2996.91,
+          "total-blocking-time": 1074,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2853.6810564831185
+        },
+        "warnings": []
+      }
+    ],
+    "comparisons": {
+      "baseline": {
+        "scores": {
+          "performance": 74,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2457.188,
+          "largest-contentful-paint": 2916.985,
+          "total-blocking-time": 744.5000000000002,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2457.188
+        }
+      },
+      "after": {
+        "scores": {
+          "performance": 78,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2459.928,
+          "largest-contentful-paint": 2924.483,
+          "total-blocking-time": 529.5,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2461.322
+        }
+      }
+    }
+  },
+  "experiments": {
+    "separateScreenChunks": {
+      "decision": "Rejected: initial shared chunks increased FCP/LCP despite smaller JavaScript.",
+      "campaign": {
+        "method": "Three alternating cold mobile runs per build, no concurrent local test suite; same Chromium and container; medians. Laboratory data, not field INP.",
+        "results": [
+          {
+            "stage": "baseline",
+            "run": 1,
+            "scores": {
+              "performance": 73,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2459.362,
+              "largest-contentful-paint": 2924.543,
+              "total-blocking-time": 776.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2459.362
+            },
+            "warnings": []
+          },
+          {
+            "stage": "after",
+            "run": 1,
+            "scores": {
+              "performance": 70,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2790.248,
+              "largest-contentful-paint": 3103.8720000000003,
+              "total-blocking-time": 832,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2790.248
+            },
+            "warnings": []
+          },
+          {
+            "stage": "baseline",
+            "run": 2,
+            "scores": {
+              "performance": 73,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2447.616,
+              "largest-contentful-paint": 2905.424,
+              "total-blocking-time": 758.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2476.2919488762445
+            },
+            "warnings": []
+          },
+          {
+            "stage": "after",
+            "run": 2,
+            "scores": {
+              "performance": 78,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2771.574,
+              "largest-contentful-paint": 3081.861,
+              "total-blocking-time": 453.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2771.574
+            },
+            "warnings": []
+          },
+          {
+            "stage": "baseline",
+            "run": 3,
+            "scores": {
+              "performance": 72,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2463.422,
+              "largest-contentful-paint": 2925.133,
+              "total-blocking-time": 824.9999999999995,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2463.422
+            },
+            "warnings": []
+          },
+          {
+            "stage": "after",
+            "run": 3,
+            "scores": {
+              "performance": 73,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2786.094,
+              "largest-contentful-paint": 3101.641,
+              "total-blocking-time": 648.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2786.094
+            },
+            "warnings": []
+          }
+        ],
+        "comparisons": {
+          "baseline": {
+            "scores": {
+              "performance": 73,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2459.362,
+              "largest-contentful-paint": 2924.543,
+              "total-blocking-time": 776.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2463.422
+            }
+          },
+          "after": {
+            "scores": {
+              "performance": 73,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2786.094,
+              "largest-contentful-paint": 3101.641,
+              "total-blocking-time": 648.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2786.094
+            }
+          }
+        }
+      }
+    },
+    "groupedBeforeReloadRecovery": {
+      "decision": "Superseded by the final production build with safe reload recovery; not the final measurement.",
+      "campaign": {
+        "method": "Three alternating cold mobile runs per build, no concurrent local test suite; same Chromium and container; medians. Laboratory data, not field INP.",
+        "results": [
+          {
+            "stage": "baseline",
+            "run": 1,
+            "scores": {
+              "performance": 71,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2461.4,
+              "largest-contentful-paint": 2920.1,
+              "total-blocking-time": 880,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2461.4
+            },
+            "warnings": []
+          },
+          {
+            "stage": "after",
+            "run": 1,
+            "scores": {
+              "performance": 74,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2463.432,
+              "largest-contentful-paint": 2922.148,
+              "total-blocking-time": 719.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2581.0062257214095
+            },
+            "warnings": []
+          },
+          {
+            "stage": "baseline",
+            "run": 2,
+            "scores": {
+              "performance": 80,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2462.818,
+              "largest-contentful-paint": 2921.727,
+              "total-blocking-time": 468.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2462.818
+            },
+            "warnings": []
+          },
+          {
+            "stage": "after",
+            "run": 2,
+            "scores": {
+              "performance": 81,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2462.37,
+              "largest-contentful-paint": 2924.555,
+              "total-blocking-time": 428.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2462.37
+            },
+            "warnings": []
+          },
+          {
+            "stage": "baseline",
+            "run": 3,
+            "scores": {
+              "performance": 73,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2452.476,
+              "largest-contentful-paint": 2914.214,
+              "total-blocking-time": 758,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2518.885409782456
+            },
+            "warnings": []
+          },
+          {
+            "stage": "after",
+            "run": 3,
+            "scores": {
+              "performance": 75,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2480.184,
+              "largest-contentful-paint": 2945.276,
+              "total-blocking-time": 655,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2480.184
+            },
+            "warnings": []
+          }
+        ],
+        "comparisons": {
+          "baseline": {
+            "scores": {
+              "performance": 73,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2461.4,
+              "largest-contentful-paint": 2920.1,
+              "total-blocking-time": 758,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2462.818
+            }
+          },
+          "after": {
+            "scores": {
+              "performance": 75,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2463.432,
+              "largest-contentful-paint": 2924.555,
+              "total-blocking-time": 655,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2480.184
+            }
+          }
+        }
+      }
+    },
+    "importRetry": {
+      "decision": "Rejected after two browser tests reproduced a cached ESM import failure. Final recovery explicitly saves and reloads; no cache-busting URLs, duplicate bundles or discarded user state."
+    }
+  }
+}

@@ -44,6 +44,40 @@ test("une recette personnelle survit au rechargement sous la base GitHub Pages",
   await expect(page.getByText("Ma recette personnelle Pages", { exact: true })).toBeVisible();
 });
 
+test("les écrans secondaires s’ouvrent pour la première fois hors ligne", async ({ page, context }) => {
+  const errors: string[] = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await openFreshApp(page);
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) {
+      await new Promise<void>(resolve => navigator.serviceWorker.addEventListener("controllerchange", () => resolve(), { once: true }));
+    }
+  });
+  const openedScreens = await page.evaluate(() => performance.getEntriesByType("resource")
+    .filter(entry => /\/secondary-views-[^/]+\.js/.test(entry.name))
+    .map(entry => entry.name));
+  expect(openedScreens).toEqual([]);
+  await context.setOffline(true);
+  await page.reload();
+  await expect(page.getByTestId("home-view")).toBeVisible();
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByLabel("Votre prénom").fill("Profil hors ligne");
+  await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await openInformation(page);
+  await page.getByTestId("text-scale-large").click();
+  const download = page.waitForEvent("download");
+  await page.getByTestId("backup-export").click();
+  const file = await (await download).path();
+  expect(await readFile(file!, "utf8")).toContain("Profil hors ligne");
+  await page.reload();
+  await expect(page.getByTestId("home-view")).toBeVisible();
+  await expect(page.locator(".app-shell")).toHaveAttribute("data-text-scale", "large");
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await expect(page.getByLabel("Votre prénom")).toHaveValue("Profil hors ligne");
+  expect(errors).toEqual([]);
+});
+
 test("deux onglets conservent des réglages différents et les synchronisent", async ({ page, context }) => {
   await openFreshApp(page);
   const secondPage = await context.newPage();
