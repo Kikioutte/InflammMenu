@@ -9,6 +9,28 @@ async function seedLocal(page: Page, raw: string) {
   await page.goto('/');
 }
 
+test('un marqueur de reset périmé rejoint la génération de sa copie complète', async ({ page }) => {
+  await page.goto('/tests/runtime-fixture.html');
+  const result = await page.evaluate(async () => {
+    const storage = await import('/src/storage.ts');
+    await storage.resetAppState();
+    const reset = JSON.parse(localStorage.getItem('inflamm-menu:app-state')!);
+    // Two resetters can interleave the separate localStorage writes, leaving
+    // an older marker beside the already durable winning reset snapshot.
+    localStorage.setItem('inflamm-menu:reset-marker', '1:reset:older-writer');
+    const saved = await storage.saveAppState(reset);
+    return {
+      expected: reset.storageGeneration,
+      marker: localStorage.getItem('inflamm-menu:reset-marker'),
+      generation: saved.state.storageGeneration,
+      localSaved: saved.localSaved,
+      indexedSaved: saved.indexedSaved,
+      profile: saved.state.profile.firstName,
+    };
+  });
+  expect(result).toEqual({expected:result.expected,marker:result.expected,generation:result.expected,localSaved:true,indexedSaved:true,profile:''});
+});
+
 for (const available of [true, false]) {
   test(`la nutrition d’une variante est ${available ? 'recalculée et persistée' : 'signalée sans recalcul si le module est indisponible'}`, async ({ page }) => {
     const source=JSON.parse(await readFile(new URL('../src/data/planner-recipes.json',import.meta.url),'utf8'));

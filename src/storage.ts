@@ -878,9 +878,13 @@ function readLocalReplica(): StorageReplica {
 function writeLocalReplica(state: AppState): ReplicaWriteResult {
   if (!localStorageAvailable()) return { saved: false, activeGeneration: LEGACY_STORAGE_GENERATION, state: null };
   let activeGeneration = LEGACY_STORAGE_GENERATION;
+  let markerGeneration = LEGACY_STORAGE_GENERATION;
   const resetTombstone = isResetTombstone(state);
   try {
-    try { activeGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY)); }
+    try {
+      markerGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+      activeGeneration = markerGeneration;
+    }
     catch (error) { if (!resetTombstone) throw error; }
     const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
     let storedState: AppState | null = null;
@@ -901,7 +905,10 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
     // Only a reset may publish this marker. Imports and revision rollovers
     // persist solely as complete snapshots, so a stale writer can never
     // overwrite a reset tombstone between two non-atomic localStorage calls.
-    if (order > 0 && resetTombstone) {
+    // Concurrent resetters can leave an older marker next to the winning
+    // complete snapshot. Repair that marker even when the snapshot already
+    // has this generation; ordinary edits/imports still cannot publish it.
+    if (resetTombstone && compareStorageGenerations(state.storageGeneration, markerGeneration) > 0) {
       window.localStorage.setItem(LOCAL_RESET_MARKER_KEY, state.storageGeneration);
       activeGeneration = state.storageGeneration;
     }

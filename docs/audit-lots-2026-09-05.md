@@ -21,6 +21,7 @@ L’architecture possède déjà de bons garde-fous : moteur déterministe, vali
 | P0 / CRITIQUE | `storage.ts`, récupération | Une donnée illisible ou future pouvait être assimilée à une absence de données | Écrasement de données locales existantes | Corrigé dans le premier lot ; protections et tests conservés |
 | P1 / ÉLEVÉ | `Prototype.tsx`, recette personnelle | Remplacement avant validation d’une recette vidée | Perte de la version précédente, incohérence avec notes/favoris | Corrigé ; nouvelles validations ajoutées |
 | P1 / ÉLEVÉ | Moteur, profil, substitutions | Restrictions libres incomplètement résolues ; retrait d’une substitution insuffisamment revalidé | Aliment exclu ou allergène réintroduit dans les repas/restes | Corrigé dans le premier audit |
+| P1 / ÉLEVÉ | `storage.ts`, resets concurrents | Le marqueur était comparé à la génération globale au lieu de sa propre génération | Marqueur périmé à côté d’une copie complète récente, défaut de convergence des barrières de reset | Corrigé par réparation du marqueur réservée à un vrai état de reset |
 | P1 / ÉLEVÉ | `Prototype.tsx`, rappels | Lecture de la date du rappel hors du garde-fou de stockage | Exception au démarrage si cette lecture est refusée | Corrigé |
 | P1 / ÉLEVÉ | `public/sw.js` | Le worker actif remplaçait son HTML hors ligne par celui d’une version dont les assets n’étaient pas encore installés | Application hors ligne cassée après mise à jour interrompue | Corrigé ; fallback ajouté pour erreur serveur sur la navigation canonique |
 | P1 / ÉLEVÉ | Courses, montant réel | Conversion/réécriture à chaque caractère saisi | « 72,50 » pouvait devenir 7 250 au lieu de 72,50 ; une valeur invalide pouvait effacer le montant antérieur | Corrigé |
@@ -53,6 +54,8 @@ Aucune nouvelle injection XSS critique n’a été confirmée. Les problèmes de
 
 8. **Images après restauration.** Le chemin validé d’une image personnelle est résolu sous la base de l’application actuelle. Une sauvegarde issue d’une adresse à la racine ou d’un ancien sous-dossier conserve ainsi ses photos sur GitHub Pages. Les protocoles externes et traversées de chemin restent rejetés ; aucune recette n’est supprimée pour une image invalide.
 
+9. **Réinitialisations concurrentes.** Lorsque la copie complète du reset gagnant est déjà enregistrée mais que le marqueur séparé est plus ancien, la sauvegarde répare désormais ce marqueur. La comparaison porte sur le marqueur lui-même. Les sauvegardes ordinaires, imports et changements d’horloge ne gagnent pas le droit de publier un marqueur de reset. Un test déterministe reproduit exactement l’état désaligné.
+
 Un commit de tests distinct rend reproductible le placement d’une recette du catalogue. Le test ne force pas le clic et ne contourne pas la protection métier : il vérifie successivement un placement autorisé, puis le refus du doublon.
 
 ## Nutrition : provenance, compatibilité et limites
@@ -69,27 +72,27 @@ Ces chiffres restent des estimations culinaires, pas un diagnostic ni une prescr
 
 Installation : `npm ci`. Développement : `npm run dev`. Builds : `npm run build` et `npm run build:pages`. Contrôle statique : TypeScript strict via les builds ; aucun script de lint dédié n’existe. Les validateurs de données, images, génération et budget de bundle restent actifs.
 
-La [CI complète du code avant le dernier correctif de chemin d’image](https://github.com/Kikioutte/InflammMenu/actions/runs/33956784051) a réussi sur `f0f7f5cadd1d4be5fdabc74bfb94d352806c10b2`. Le dernier correctif est ensuite vérifié par les 36 tests de stockage, le build Pages et le parcours PWA de restauration/recalcul hors ligne. La CI relance les mêmes gates sur le commit final ; son statut est accessible dans les [contrôles de la PR](https://github.com/Kikioutte/InflammMenu/pull/15/checks).
+La [CI complète du code avant le dernier correctif de chemin d’image](https://github.com/Kikioutte/InflammMenu/actions/runs/33956784051) a réussi sur `f0f7f5cadd1d4be5fdabc74bfb94d352806c10b2`. Le correctif de chemin est ensuite vérifié par les 36 tests de stockage, le build Pages et le parcours PWA de restauration/recalcul hors ligne. La correction des resets concurrents est vérifiée séparément par les tests de stockage, un nouveau test déterministe et quatre parcours complets successifs à deux onglets. La CI relance les mêmes gates sur le commit final ; son statut est accessible dans les [contrôles de la PR](https://github.com/Kikioutte/InflammMenu/pull/15/checks).
 
 | Vérification | Résultat confirmé |
 | --- | --- |
 | Installation verrouillée en CI | Réussie ; aucune nouvelle dépendance produit, lockfile inchangé |
 | `npm run test:release` | 197 tests Node réussis : 39 catalogue/schéma, 101 moteur/nutrition, 36 stockage, 3 fusion, 16 service worker, 2 workflows ; validateurs et 630 images réussis |
-| `npm run test:browser` | 100 parcours réussis : 94 Chromium et 6 WebKit de contrôle |
+| `npm run test:browser` | 100 parcours réussis sur la CI précédente ; un test de marqueur ajouté et réussi localement. Suite finale : 101 scénarios, 95 Chromium et 6 WebKit de contrôle |
 | `npm run test:sites` | Build alternatif réussi, 5 tests worker/confidentialité réussis |
 | `npm run build:pages` | TypeScript, validation nutritionnelle, assets et budget réussis ; 25 ressources dans le précache |
 | `npm run test:pwa:built` | 8 parcours réussis sur le vrai build Pages |
 | `npm run audit:production` | Aucune vulnérabilité signalée par npm |
 | `npm run check:runtime` | 28 fichiers protégés conformes |
-| Correctif final des images restaurées | 36 tests stockage, build Pages et parcours PWA ciblé réussis |
-| Responsive final | 36 vues : accueil, profil, catalogue, fiche, édition personnelle et courses à 320, 375, 390, 430, 768 et 1 440 px |
+| Images restaurées et resets concurrents | 36 tests stockage, build Pages, PWA ciblée, test déterministe de marqueur et quatre parcours complets de resets concurrents réussis |
+| Responsive après correction des images | 36 vues : accueil, profil, catalogue, fiche, édition personnelle et courses à 320, 375, 390, 430, 768 et 1 440 px |
 | Axe final | 12 contrôles à 390 et 1 440 px, aucune violation automatique sur les tags WCAG A/AA utilisés |
 | Réseau, console et géométrie | Aucun débordement, aucune quantité coupée, aucune cible de stepper sous 44 px ; aucune erreur JS/console, HTTP ≥ 400 ou requête échouée sur les 36 vues finales |
 | Répétabilité du build | Un asset sentinelle obsolète a été supprimé par le build suivant |
 
 Les tests ajoutés ou renforcés pendant cette suite de lots couvrent : refus du stockage du rappel ; mise à jour interrompue et fallback 5xx ; absence de double téléchargement ; maintien de la liste autorisée des images ; saisie caractère par caractère de « 72,50 » ; non-écrasement après saisie invalide ; budget/durée vides ; quarts de cuillère et valeurs affichées sans découpe ; taille tactile ; provenance nutritionnelle, correspondance des 299 recettes, changement de quantité, retrait, copies successives et valeurs malformées ; indisponibilité du module ; recalcul hors ligne ; coût courant/prochain contre historique/dépense réelle ; images restaurées entre bases et refus de chemins dangereux.
 
-Les bugs importants ont d’abord été reproduits avec des données fictives. Les tests correspondants passent après correction. Le premier passage CI de cette suite a eu **99/100** parcours réussis : le seul échec provenait du scénario à génération aléatoire déjà décrit. L’horloge est désormais fixée uniquement dans ce scénario et la protection contre les doublons y est explicitement vérifiée. Aucun test n’a été désactivé, aucun clic forcé ni seuil de sécurité abaissé.
+Les bugs importants ont d’abord été reproduits avec des données fictives. Les tests correspondants passent après correction. Le premier passage CI de cette suite a eu **99/100** parcours réussis : le seul échec provenait du scénario à génération aléatoire déjà décrit. L’horloge est désormais fixée uniquement dans ce scénario et la protection contre les doublons y est explicitement vérifiée. La relance [33957564440](https://github.com/Kikioutte/InflammMenu/actions/runs/33957564440) a ensuite révélé un vrai défaut de marqueur après deux resets concurrents (99/100 parcours réussis). Le défaut a été reproduit localement et isolé dans un test déterministe : copie complète récente, marqueur ancien. Après correction, les huit contrôles de convergence passent ; l’un de ces huit essais atteint cependant la limite de durée à la dernière navigation. Quatre parcours complets successifs exécutés ensuite passent sans relever la limite de 20 secondes. Aucun test n’a été désactivé, aucun clic forcé ni seuil de sécurité abaissé.
 
 Les tests locaux emploient un Chromium 149 d’audit ; la CI installe les versions standard de Chromium et WebKit prévues par Playwright. Les builds Sites et Pages et les mesures lourdes sont exécutés séquentiellement. Les échecs d’instrumentation ou les captures prises sur un build antérieur ne sont pas comptés comme preuves finales.
 
@@ -109,13 +112,15 @@ Trois passages mobiles à froid par version, alternés, même conteneur et même
 | LCP médian | 3,158 s | 3,193 s | +0,035 s |
 | TBT médian | 562 ms | 642 ms | Travail bloquant encore trop important |
 | CLS médian | 0,0520 | 0,0046 | Environ 91 % de décalages visuels en moins |
-| JavaScript initial Pages, entrée + modules préchargés | 1 366 931 octets | 1 339 272 octets | −27 659 octets, environ −2 % |
-| Même JavaScript, gzip Node/zlib | 309 265 octets | 301 195 octets | −8 070 octets |
+| JavaScript initial Pages, entrée + modules préchargés | 1 366 931 octets | 1 339 303 octets | −27 628 octets, environ −2 % |
+| Même JavaScript, gzip Node/zlib | 309 265 octets | 301 202 octets | −8 063 octets |
 | Polices précachées | 249 252 octets | 110 584 octets | −138 668 octets, gain du premier audit |
 
 Les scores individuels sont **75, 71, 76 avant**, puis **72, 75, 70 après**. Les distributions se recouvrent ; on ne peut pas revendiquer une accélération du rendu initial. La précédente campagne du premier audit avait donné 77 puis 73 : elle reste documentée et n’est pas mélangée à cette nouvelle série.
 
-La campagne Lighthouse porte sur `f0f7f5c`, avec les sept premiers lots applicatifs et la correction tactile. Le dernier correctif de chemin d’image ajoute seulement 76 octets initiaux, dont 35 gzip, à cette version chronométrée ; les poids du tableau portent bien sur le code final `2c92c665`.
+La campagne Lighthouse porte sur `f0f7f5c`, avec les sept premiers lots applicatifs et la correction tactile. Les deux derniers correctifs, chemin d’image et marqueur de reset, ajoutent ensemble 107 octets initiaux, dont 42 gzip, à cette version chronométrée ; les poids du tableau portent bien sur le code final de la PR.
+
+Les captures et mesures de réseau portent sur `2c92c665`, après réparation des chemins d’images. Le dernier correctif de marqueur ne change ni le HTML ni le CSS ; ses parcours de stockage sont contrôlés séparément et par la CI finale.
 
 La table nutritionnelle ajoute environ 201 ko bruts / 18 ko gzip dans un module différé et précaché, pour permettre le recalcul hors ligne. Elle n’est pas chargée comme JavaScript initial. La suppression des téléchargements en double évite sept requêtes lors de l’installation ; la mesure contrôlée avant le dernier lot correspondait à environ 1,56 Mo de corps de réponses non compressés. Ce chiffre n’est pas présenté comme un volume exact transféré sur un serveur utilisant gzip/Brotli.
 
@@ -125,6 +130,7 @@ Les gains certains concernent donc les polices, les requêtes de précache, les 
 
 | Sujet | État | Portée |
 | --- | --- | --- |
+| Resets concurrents, marqueur séparé périmé | Corrigé | Barrière réparée depuis la copie complète du reset gagnant ; autorité des sauvegardes ordinaires inchangée |
 | Écrasement de données illisibles/futures | Corrigé | Valeurs d’origine récupérables, reset explicite, schéma IndexedDB futur préservé |
 | Restrictions alimentaires et retour d’allergène | Corrigé | Contrôles centralisés, ingrédients facultatifs inclus, retrait de substitution revalidé |
 | URLs d’images externes ou traversée de chemin | Protection conservée et testée | Le changement de base intervient après validation |
@@ -185,5 +191,4 @@ Notes d’audit expert, distinctes des scores Lighthouse et sans certification.
 | `f0f7f5ca` | Valeurs entières et décimales lisibles, commandes tactiles |
 | `2c92c665` | Images restaurées sous la base actuelle |
 
-Les documents de baseline et du premier audit précèdent ces neuf commits. Les preuves supplémentaires regroupent les captures finales, relevés Axe/réseau, rapports Lighthouse et journaux de tests, en complément des logs CI accessibles depuis la PR.
-
+Le dernier commit de correction de la PR répare en plus la convergence des marqueurs de reset et ajoute son test déterministe. Les documents de baseline et du premier audit précèdent cette suite de dix commits de code/tests. Les preuves supplémentaires regroupent les captures finales, relevés Axe/réseau, rapports Lighthouse et journaux de tests, en complément des logs CI accessibles depuis la PR.
