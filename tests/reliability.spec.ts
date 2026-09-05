@@ -9,6 +9,61 @@ async function seedLocal(page: Page, raw: string) {
   await page.goto('/');
 }
 
+for (const available of [true, false]) {
+  test(`la nutrition d’une variante est ${available ? 'recalculée et persistée' : 'signalée sans recalcul si le module est indisponible'}`, async ({ page }) => {
+    const source=JSON.parse(await readFile(new URL('../src/data/planner-recipes.json',import.meta.url),'utf8'));
+    const original=source.find((recipe:{id:string})=>recipe.id==='catalog-r051');
+    const recipe={...original,id:'perso-catalog-r051-review',title:'Mes flocons personnalisés'};
+    if (!available) await page.route('**/src/recipe-nutrition.ts*',route=>route.abort());
+    await seedLocal(page,JSON.stringify({version:3,onboardingCompleted:true,customRecipes:[recipe],favoriteRecipeIds:[recipe.id],recipeNotes:{[recipe.id]:'Ma note'}}));
+    await page.getByRole('button',{name:'Favoris',exact:true}).click();
+    await page.getByRole('button',{name:/Mes flocons personnalisés/}).click();
+    await page.getByTestId('edit-custom-recipe').click();
+    await page.getByRole('button',{name:`Augmenter ${recipe.ingredients[0].name}`,exact:true}).click();
+    await page.getByTestId('custom-cost').fill('2,75');
+    await page.getByTestId('custom-save').click();
+    await expect(page.getByTestId('edit-custom-recipe')).toBeVisible();
+    const state = await page.evaluate(()=>JSON.parse(localStorage.getItem('inflamm-menu:app-state')!));
+    expect(state.customRecipes[0].ingredients[0].quantity).toBe(recipe.ingredients[0].quantity+5);
+    expect(state.customRecipes[0].costPerPortion).toBe(2.75);
+    expect(state.recipeNotes[recipe.id]).toBe('Ma note');
+    if (available) {
+      expect(state.customRecipes[0].nutritionRecalculated).toBe(true);
+      expect(state.customRecipes[0].nutrition.calories).toBeGreaterThan(recipe.nutrition.calories);
+      await expect(page.getByText(/Estimations recalculées pour les quantités/)).toBeVisible();
+    } else {
+      expect(state.customRecipes[0].nutritionRecalculated).toBeUndefined();
+      expect(state.customRecipes[0].nutrition).toEqual(recipe.nutrition);
+      await expect(page.getByText(/non recalculées après adaptation/)).toBeVisible();
+    }
+    await page.reload();
+    await page.getByRole('button',{name:'Favoris',exact:true}).click();
+    await page.getByRole('button',{name:/Mes flocons personnalisés/}).click();
+    await expect(page.getByText(available ? /Estimations recalculées pour les quantités/ : /non recalculées après adaptation/)).toBeVisible();
+  });
+}
+
+test('le coût corrigé d’une recette actualise les semaines actives et conserve l’historique', async ({ page }) => {
+  const source=JSON.parse(await readFile(new URL('../src/data/planner-recipes.json',import.meta.url),'utf8'));
+  const recipe={...source.find((item:{id:string})=>item.id==='catalog-r051'),id:'perso-catalog-r051-price',title:'Mon coût à jour',mealTypes:['lunch','dinner'],costPerPortion:2};
+  const monday=new Date(); monday.setUTCHours(12,0,0,0); monday.setUTCDate(monday.getUTCDate()-((monday.getUTCDay()+6)%7));
+  const next=new Date(monday); next.setUTCDate(next.getUTCDate()+7);
+  const previous=new Date(monday); previous.setUTCDate(previous.getUTCDate()-7);
+  const profile={people:1,maxPrepMinutes:1440};
+  const plan={id:'price-current',version:1,startsOn:monday.toISOString().slice(0,10),generatedAt:new Date().toISOString(),profileSnapshot:profile,estimatedCost:28,meals:Array.from({length:7},(_,dayIndex)=>['lunch','dinner'].map(mealType=>({id:`price-${dayIndex}-${mealType}`,recipeId:recipe.id,dayIndex,mealType,portions:1}))).flat()};
+  await seedLocal(page,JSON.stringify({version:3,onboardingCompleted:true,profile,customRecipes:[recipe],favoriteRecipeIds:[recipe.id],currentPlan:plan,upcomingPlan:{...plan,id:'price-upcoming',startsOn:next.toISOString().slice(0,10)},history:[{...plan,id:'price-history',startsOn:previous.toISOString().slice(0,10)}],actualSpend:{'price-current':25}}));
+  await expect(page.getByTestId('home-view')).toBeVisible();
+  await page.getByRole('button',{name:'Favoris',exact:true}).click();
+  await page.getByRole('button',{name:/Mon coût à jour/}).click();
+  await page.getByTestId('edit-custom-recipe').click();
+  await page.getByTestId('custom-cost').fill('3');
+  await page.getByTestId('custom-save').click();
+  await expect.poll(()=>page.evaluate(()=>{
+    const state=JSON.parse(localStorage.getItem('inflamm-menu:app-state')!);
+    return {current:state.currentPlan?.estimatedCost,upcoming:state.upcomingPlan?.estimatedCost,history:state.history[0].estimatedCost,spent:state.actualSpend['price-current']};
+  })).toEqual({current:42,upcoming:42,history:28,spent:25});
+});
+
 test('le montant réel accepte les centimes saisis caractère par caractère', async ({ page }) => {
   await page.goto('/');
   await page.getByTestId('onboarding-skip').click();

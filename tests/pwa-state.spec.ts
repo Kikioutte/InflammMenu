@@ -280,3 +280,29 @@ test('le calendrier reste exportable hors ligne après découpage du JavaScript'
   const file=await (await download).path();
   expect(await readFile(file!,'utf8')).toContain('BEGIN:VCALENDAR');
 });
+
+test('une recette personnelle recalcule sa nutrition hors ligne avec les données précachées', async ({ page, context }) => {
+  const recipes=JSON.parse(await readFile(resolve('src/data/planner-recipes.json'),'utf8'));
+  const original=recipes.find((recipe:{id:string})=>recipe.id==='catalog-r051');
+  const recipe={...original,id:'perso-catalog-r051-offline',title:'Mes flocons hors ligne'};
+  await page.addInitScript((personal) => {
+    if (!localStorage.getItem('inflamm-menu:app-state')) localStorage.setItem('inflamm-menu:app-state',JSON.stringify({version:3,onboardingCompleted:true,customRecipes:[personal],favoriteRecipeIds:[personal.id]}));
+  }, recipe);
+  await openFreshApp(page);
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) await new Promise<void>(resolve=>navigator.serviceWorker.addEventListener('controllerchange',()=>resolve(),{once:true}));
+  });
+  await context.setOffline(true);
+  await page.getByRole('button',{name:'Favoris',exact:true}).click();
+  await page.getByRole('button',{name:/Mes flocons hors ligne/}).click();
+  await page.getByTestId('edit-custom-recipe').click();
+  await page.getByRole('button',{name:`Augmenter ${recipe.ingredients[0].name}`,exact:true}).click();
+  await page.getByTestId('custom-save').click();
+  await expect(page.getByText(/Estimations recalculées pour les quantités/)).toBeVisible();
+  await page.reload();
+  await expect(page.getByTestId('home-view')).toBeVisible();
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).customRecipes[0]);
+  expect(saved.nutritionRecalculated).toBe(true);
+  expect(saved.nutrition.calories).toBeGreaterThan(original.nutrition.calories);
+});

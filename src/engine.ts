@@ -607,6 +607,16 @@ function totalPlanCost(meals: readonly PlannedMeal[], byId: ReadonlyMap<string, 
   );
 }
 
+/** Refresh active estimates after a personal recipe changes; archived totals stay snapshots. */
+export function refreshPlanEstimate(plan: WeeklyPlan, recipes: readonly Recipe[]): WeeklyPlan {
+  const byId = new Map(recipes.map(recipe => [recipe.id, recipe]));
+  if (plan.meals.some(meal => !meal.skipped && !byId.has(meal.recipeId))) return plan;
+  // Use normalizePlan's existing ceiling so persistence cannot repeatedly
+  // replace an out-of-range estimate and trigger another recalculation.
+  const estimatedCost = Math.min(100_000, totalPlanCost(plan.meals, byId));
+  return estimatedCost === plan.estimatedCost ? plan : { ...plan, estimatedCost };
+}
+
 function dailyFormConflictCount(
   meals: readonly PlannedMeal[],
   dayIndex: number,

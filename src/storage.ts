@@ -462,6 +462,7 @@ export function normalizeCustomRecipe(value: unknown): Recipe | null {
       estimated: true,
       note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif.",
     },
+    ...(value.nutritionRecalculated === true ? { nutritionRecalculated: true } : {}),
     description: cleanUserText(value.description, 2_000),
     ...(cleanUserText(value.caution, 2_000) ? { caution: cleanUserText(value.caution, 2_000) } : {}),
     steps,

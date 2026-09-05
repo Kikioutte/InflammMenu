@@ -63,6 +63,21 @@ const profile = {
   equipment: ["hob"],
 };
 
+test("refreshing a recipe price updates active estimates without mutating meal state or incomplete plans", () => {
+  const original = engine.generateWeeklyPlan(catalogue, profile, { seed: "price-change", startsOn: "2026-08-03" });
+  const changedId = original.meals[0].recipeId;
+  const changedRecipes = catalogue.map(item => item.id === changedId ? { ...item, costPerPortion: item.costPerPortion + 1 } : item);
+  const updated = engine.refreshPlanEstimate(original, changedRecipes);
+  assert.equal(updated.estimatedCost, original.estimatedCost + original.meals[0].portions);
+  assert.equal(updated.meals, original.meals, "cooked markers, locks and quantities are preserved");
+  assert.equal(engine.refreshPlanEstimate(updated, changedRecipes), updated, "unchanged totals do not trigger repeated writes");
+  assert.equal(engine.refreshPlanEstimate(original, []), original, "a missing recipe cannot silently lower the estimate");
+  const extreme = catalogue.map(item => ({ ...item, costPerPortion: 10_000 }));
+  const bounded = engine.refreshPlanEstimate(original, extreme);
+  assert.equal(bounded.estimatedCost, 100_000, "the existing persistence ceiling remains stable");
+  assert.equal(engine.refreshPlanEstimate(bounded, extreme), bounded);
+});
+
 test("generation is deterministic, creates 14 unique slots, and meets available targets", () => {
   const first = engine.generateWeeklyPlan(catalogue, profile, { seed: "stable", startsOn: "2026-08-03" });
   const second = engine.generateWeeklyPlan(catalogue, profile, { seed: "stable", startsOn: "2026-08-03" });
