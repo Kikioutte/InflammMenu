@@ -69,6 +69,8 @@ export interface Recipe {
   /** All quantities are stored per adult portion. */
   ingredients: readonly Ingredient[];
   nutrition: Nutrition;
+  /** Personal variants only: calculated from the source's reviewed ingredient data. */
+  nutritionRecalculated?: boolean;
   description: string;
   /** Reviewed safety or preparation caution, available even when the full catalogue is offline. */
   caution?: string;

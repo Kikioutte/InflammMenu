@@ -1,5 +1,4 @@
 import catalogueSummarySource from "./data/catalogue-summary.json" with { type: "json" };
-import generatedRecipeImages from "./data/generated-recipe-images.json" with { type: "json" };
 import type { DietMode, Equipment, IngredientCategory, IngredientUnit, MealType } from "./domain.ts";
 
 export type CatalogueReviewStatus = "validated" | "caution";
@@ -123,6 +122,15 @@ export const DUPLICATE_CATALOGUE_RECIPES = {
   r039: "salade-betterave-chevre-lentilles",
 } as const;
 let cataloguePromise: Promise<CatalogueData> | null = null;
+let generatedRecipeImages: ReadonlySet<string> = new Set();
+let imageManifestPromise: Promise<void> | null = null;
+
+function loadImageManifest(): Promise<void> {
+  imageManifestPromise ??= import("./recipe-image-manifest.ts")
+    .then((manifest) => { generatedRecipeImages = manifest.generatedRecipeImages; })
+    .catch((error: unknown) => { imageManifestPromise = null; throw error; });
+  return imageManifestPromise;
+}
 const catalogueUrl = new URL("./data/recettes-anti-inflammatoires.json", import.meta.url).href;
 export const CATALOGUE_CACHE_NAME = "inflamm-menu-catalogue-v2";
 const LEGACY_CATALOGUE_CACHE_NAME = "inflamm-menu-catalogue-v1";
@@ -209,7 +217,8 @@ async function fetchCatalogueWithValidatedFallback(): Promise<CatalogueData> {
 }
 
 export function loadCatalogue(): Promise<CatalogueData> {
-  cataloguePromise ??= fetchCatalogueWithValidatedFallback()
+  cataloguePromise ??= Promise.all([fetchCatalogueWithValidatedFallback(), loadImageManifest()])
+    .then(([catalogue]) => catalogue)
     .catch((error: unknown) => {
       cataloguePromise = null;
       throw error instanceof Error ? error : new Error("Catalogue indisponible");
@@ -225,6 +234,7 @@ export async function cacheCatalogueForOffline(): Promise<CatalogueData> {
   });
   const cacheable = response.clone();
   const data = await parseCatalogueResponse(response);
+  await loadImageManifest();
   if (typeof caches === "undefined") throw new Error("Le cache hors ligne n’est pas disponible sur cet appareil.");
   const cache = await caches.open(CATALOGUE_CACHE_NAME);
   await cache.put(catalogueUrl, cacheable);
@@ -250,7 +260,6 @@ export function duplicateCatalogueRecipes(catalogue: CatalogueData): Readonly<Re
 export function visibleCatalogueRecipes(catalogue: CatalogueData): CatalogueRecipe[] {
   return catalogue.recipes.filter((recipe) => !recipe.app.duplicate_of);
 }
-const GENERATED_RECIPE_IMAGES = new Set<string>(generatedRecipeImages);
 const RECIPE_IMAGE_PLACEHOLDER = "/assets/recipe-placeholder.svg";
 
 export function reviewFor(recipe: CatalogueRecipe): CatalogueRecipeReview {
@@ -272,7 +281,7 @@ export function catalogueRecipeIdOf(favoriteId: string): string {
 
 export function catalogueImageFor(recipe: CatalogueRecipe): string {
   const filename = recipe.image.nom_fichier;
-  return filename && GENERATED_RECIPE_IMAGES.has(filename)
+  return filename && generatedRecipeImages.has(filename)
     ? `/assets/recipes/generated/${filename}`
     : RECIPE_IMAGE_PLACEHOLDER;
 }

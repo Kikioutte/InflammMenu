@@ -79,3 +79,21 @@ test("l'audit de production est explicite malgré la configuration npm locale", 
   assert.match(npmrc, /CI exécute explicitement audit:production/);
   assert.match(npmrc, /^audit=false$/m);
 });
+
+test("la comparaison Lighthouse reste isolée, reproductible et sans droit de déploiement", async () => {
+  const workflow = await readFile(workflowPath, "utf8");
+  const start = workflow.indexOf("  lighthouse-compare:");
+  const end = workflow.indexOf("  deploy:", start);
+  assert.ok(start >= 0 && end > start);
+  const job = workflow.slice(start, end);
+  assert.match(job, /github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository/);
+  assert.match(job, /needs: validate-build/);
+  assert.match(job, /permissions:\n      contents: read\n    steps:/);
+  assert.doesNotMatch(job, /contents: write|pages: write|id-token: write|secrets\.|continue-on-error:/);
+  assert.match(job, /ref: \$\{\{ github.event.pull_request.head.sha \}\}/);
+  assert.match(job, /ref: 61ab40d963fcef53c25cd8f98d2ff56f73081d8e/);
+  assert.equal((job.match(/persist-credentials: false/g) || []).length, 2);
+  assert.match(job, /run: node candidate\/tools\/lighthouse\/compare.mjs baseline candidate lighthouse-results/);
+  assert.match(job, /if: \$\{\{ always\(\) \}\}[\s\S]*actions\/upload-artifact@[0-9a-f]{40}/);
+  assert.match(job, /if-no-files-found: error/);
+});

@@ -44,6 +44,40 @@ test("une recette personnelle survit au rechargement sous la base GitHub Pages",
   await expect(page.getByText("Ma recette personnelle Pages", { exact: true })).toBeVisible();
 });
 
+test("les écrans secondaires s’ouvrent pour la première fois hors ligne", async ({ page, context }) => {
+  const errors: string[] = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await openFreshApp(page);
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) {
+      await new Promise<void>(resolve => navigator.serviceWorker.addEventListener("controllerchange", () => resolve(), { once: true }));
+    }
+  });
+  const openedScreens = await page.evaluate(() => performance.getEntriesByType("resource")
+    .filter(entry => /\/secondary-views-[^/]+\.js/.test(entry.name))
+    .map(entry => entry.name));
+  expect(openedScreens).toEqual([]);
+  await context.setOffline(true);
+  await page.reload();
+  await expect(page.getByTestId("home-view")).toBeVisible();
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByLabel("Votre prénom").fill("Profil hors ligne");
+  await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await openInformation(page);
+  await page.getByTestId("text-scale-large").click();
+  const download = page.waitForEvent("download");
+  await page.getByTestId("backup-export").click();
+  const file = await (await download).path();
+  expect(await readFile(file!, "utf8")).toContain("Profil hors ligne");
+  await page.reload();
+  await expect(page.getByTestId("home-view")).toBeVisible();
+  await expect(page.locator(".app-shell")).toHaveAttribute("data-text-scale", "large");
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await expect(page.getByLabel("Votre prénom")).toHaveValue("Profil hors ligne");
+  expect(errors).toEqual([]);
+});
+
 test("deux onglets conservent des réglages différents et les synchronisent", async ({ page, context }) => {
   await openFreshApp(page);
   const secondPage = await context.newPage();
@@ -99,10 +133,17 @@ test("le vrai service worker conserve le catalogue et uniquement les polices lat
   expect(cacheState.shellUrls.some((url) => /recettes-anti-inflammatoires(?:-[^/]+)?\.json$/.test(url))).toBe(false);
   expect(cacheState.catalogueUrls.some((url) => /recettes-anti-inflammatoires(?:-[^/]+)?\.json$/.test(url))).toBe(true);
   expect(cacheState.shellUrls.filter((url) => /cyrillic|vietnamese|latin-ext/i.test(url))).toEqual([]);
+  expect(cacheState.shellUrls.some((url) => url.endsWith(".woff2"))).toBe(true);
+  expect(cacheState.shellUrls.filter((url) => url.endsWith(".woff"))).toEqual([]);
+  expect(cacheState.shellUrls.filter((url) => /\/assets\/responsive\/[a-f0-9]+\/inflamm-hero-bowl\.webp$/.test(url))).toHaveLength(1);
+  expect(cacheState.shellUrls.some((url) => url.includes("/recipes/thumbnails/"))).toBe(false);
 
   await context.setOffline(true);
   await page.reload();
   await expect(page.getByTestId("home-view")).toBeVisible();
+  const offlineHero = page.locator(".home-hero__image");
+  await expect(offlineHero).toHaveAttribute("src", /\/InflammMenu\/assets\/responsive\/[a-f0-9]+\/inflamm-hero-bowl\.webp$/);
+  await expect.poll(() => offlineHero.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBe(960);
   await page.getByRole("button", { name: "Favoris", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await expect(page.getByText("624 recettes uniques disponibles")).toBeVisible();
@@ -185,12 +226,37 @@ test("une navigation vers une ressource ne peut jamais remplacer le shell HTML h
 
   await page.goto("/InflammMenu/");
   await expect(page.getByTestId("home-view")).toBeVisible();
-  await expect.poll(shellFingerprint).toEqual(initialShell);
+  // Even a canonical online navigation must preserve the installed snapshot.
+  await expect.poll(shellFingerprint).toEqual({ ...initialShell, sentinel: `audit-shell-${resourcePaths.length - 1}` });
 
   await context.setOffline(true);
   await page.goto("/InflammMenu/");
   await expect(page.getByTestId("home-view")).toBeVisible();
   expect((await page.locator("html").evaluate((element) => element.ownerDocument.contentType))).toBe("text/html");
+});
+
+test("une mise à jour HTML interrompue conserve une application complète hors ligne", async ({ page, context }) => {
+  const indexPath = resolve("dist/pages/index.html");
+  const original = await readFile(indexPath, "utf8");
+  try {
+    await openFreshApp(page);
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.ready;
+      if (!navigator.serviceWorker.controller) await new Promise<void>(resolve => navigator.serviceWorker.addEventListener("controllerchange", () => resolve(), { once: true }));
+      localStorage.setItem("inflamm-menu:update-interrupted", "conservé");
+    });
+    const incomplete = original.replace(/(<script[^>]+src=")[^"]+/, '$1/InflammMenu/assets/not-yet-uploaded.js');
+    expect(incomplete).not.toBe(original);
+    await writeFile(indexPath, incomplete);
+    const response = await page.goto("/InflammMenu/");
+    expect(await response!.text()).toContain("not-yet-uploaded.js");
+    await context.setOffline(true);
+    await page.goto("/InflammMenu/");
+    await expect(page.getByTestId("home-view")).toBeVisible();
+    expect(await page.evaluate(() => localStorage.getItem("inflamm-menu:update-interrupted"))).toBe("conservé");
+  } finally {
+    await writeFile(indexPath, original);
+  }
 });
 
 test("une version B est détectée puis rechargée sans effacer les données locales", async ({ page }) => {
@@ -238,4 +304,50 @@ test("une version B est détectée puis rechargée sans effacer les données loc
   } finally {
     await writeFile(workerPath, originalWorker);
   }
+});
+
+test('le calendrier reste exportable hors ligne après découpage du JavaScript', async ({ page, context }) => {
+  await openFreshApp(page);
+  await generateWeek(page);
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) await new Promise<void>(resolve => navigator.serviceWorker.addEventListener('controllerchange',()=>resolve(),{once:true}));
+  });
+  await context.setOffline(true);
+  const download=page.waitForEvent('download');
+  await page.getByTestId('export-calendar').click();
+  const file=await (await download).path();
+  expect(await readFile(file!,'utf8')).toContain('BEGIN:VCALENDAR');
+});
+
+test('une recette personnelle recalcule sa nutrition hors ligne avec les données précachées', async ({ page, context }) => {
+  const recipes=JSON.parse(await readFile(resolve('src/data/planner-recipes.json'),'utf8'));
+  const original=recipes.find((recipe:{id:string})=>recipe.id==='catalog-r051');
+  const recipe={...original,id:'perso-catalog-r051-offline',title:'Mes flocons hors ligne'};
+  await page.addInitScript((personal) => {
+    if (!localStorage.getItem('inflamm-menu:app-state')) localStorage.setItem('inflamm-menu:app-state',JSON.stringify({version:3,onboardingCompleted:true,customRecipes:[personal],favoriteRecipeIds:[personal.id]}));
+  }, recipe);
+  await openFreshApp(page);
+  // A restored recipe may come from the root deployment. Its image must
+  // follow the Pages base and load successfully before entering offline mode.
+  await page.getByRole('button',{name:'Favoris',exact:true}).click();
+  await page.getByRole('button',{name:/Mes flocons hors ligne/}).click();
+  const hero = page.locator('.recipe-hero');
+  await expect(hero).toHaveAttribute('src', `/InflammMenu${original.image}`);
+  await expect.poll(() => hero.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+    if (!navigator.serviceWorker.controller) await new Promise<void>(resolve=>navigator.serviceWorker.addEventListener('controllerchange',()=>resolve(),{once:true}));
+  });
+  await context.setOffline(true);
+  await page.getByTestId('edit-custom-recipe').click();
+  await page.getByRole('button',{name:`Augmenter ${recipe.ingredients[0].name}`,exact:true}).click();
+  await page.getByTestId('custom-save').click();
+  await expect(page.getByText(/Estimations recalculées pour les quantités/)).toBeVisible();
+  await page.reload();
+  await expect(page.getByTestId('home-view')).toBeVisible();
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('inflamm-menu:app-state')!).customRecipes[0]);
+  expect(saved.nutritionRecalculated).toBe(true);
+  expect(saved.nutrition.calories).toBeGreaterThan(original.nutrition.calories);
+  expect(saved.image).toBe(`/InflammMenu${original.image}`);
 });

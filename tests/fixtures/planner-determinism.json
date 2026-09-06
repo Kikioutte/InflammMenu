@@ -1,0 +1,1084 @@
+{
+  "referenceCommit": "5d2df80c74a9eba82aab470fe28e0cc6dc95d73c",
+  "description": "Full WeeklyPlan JSON SHA-256 captured before the score and budget-search optimizations. Update only after an intentional reviewed recipe or planning-rule change.",
+  "scenarios": [
+    {
+      "name": "standard",
+      "profile": {
+        "firstName": "",
+        "people": 2,
+        "mealsPerDay": 2,
+        "weeklyBudget": 80,
+        "maxPrepMinutes": 30,
+        "dayConstraints": [],
+        "allergies": [],
+        "excludedIngredientIds": [],
+        "dislikedRecipeIds": [],
+        "softDislikedRecipeIds": [],
+        "weeklyTargets": {
+          "legumeMeals": 2,
+          "fishMeals": 2
+        },
+        "diet": "classic",
+        "equipment": [
+          "hob",
+          "oven",
+          "microwave",
+          "blender",
+          "toaster"
+        ]
+      },
+      "options": {
+        "startsOn": "2026-09-07"
+      },
+      "cases": [
+        {
+          "seed": "perf-2-0",
+          "sha256": "8c311dad91802a5c479e4c37517bd0b1f6332ef8185fb097e6487cf3739101be"
+        },
+        {
+          "seed": "perf-2-1",
+          "sha256": "ebca0900be4abdac2c0a7fb122ad6ce501a610ffa6979be6dbe217cd29b36115"
+        },
+        {
+          "seed": "perf-2-2",
+          "sha256": "a215182f7eeba0271a6b7b48ce6b22df63412898674edd71dbb5a001de3c1f86"
+        },
+        {
+          "seed": "perf-2-3",
+          "sha256": "b10e75cd4638900e4e85b17be8ae0bba836dd062e0f62a6c440fa27574d058ad"
+        },
+        {
+          "seed": "perf-2-4",
+          "sha256": "ed2456a746f500e100435c291afeb0dfd4b16c2702ebb2643c29234a1827acab"
+        },
+        {
+          "seed": "perf-2-5",
+          "sha256": "92bcc7818a45fafa1576d21cc1d637fbdd52a9f1b07167c89907173b649c972b"
+        },
+        {
+          "seed": "perf-2-6",
+          "sha256": "ba485c2b16e1c48cb953100af15f8333e3b4b3e3dfc8fe9c4f4f4585c61fdfd6"
+        },
+        {
+          "seed": "perf-2-7",
+          "sha256": "25d9495be59950eca52ad95bfe8277242acd65c1feedcc35f9a5b7b2debad576"
+        },
+        {
+          "seed": "perf-2-8",
+          "sha256": "8d8713fa816af328fe3a4fcbaaee21c310f886613cf240883d36ba6a4e33e864"
+        },
+        {
+          "seed": "perf-2-9",
+          "sha256": "e878b21bc75a457c001ead3d2e0751af8abecc5ed66565ffb91f46a003e33d32"
+        },
+        {
+          "seed": "perf-2-10",
+          "sha256": "09ad50132bf982eda957a6cdd2727ffbcb51e2cfa78f30fe4acafc98febf9fc0"
+        },
+        {
+          "seed": "perf-2-11",
+          "sha256": "1ec5d46ddc8250a5216cdb65f4c29733258bb407ea25073cb5e387c448d697aa"
+        },
+        {
+          "seed": "perf-2-12",
+          "sha256": "36b7f793a29e1ea840ac336799794ef39140790fe9c2e6bee780c5ce66a01a9c"
+        },
+        {
+          "seed": "perf-2-13",
+          "sha256": "a2da155c7e25c4804649c3ad8f4f27fd05c4ea8c23ffa0d82d7f91f6f1de8438"
+        },
+        {
+          "seed": "perf-2-14",
+          "sha256": "2d0ab0343bf60af4abfee0726eb2b9891d27c9689871ddb6b4205be778c6d718"
+        },
+        {
+          "seed": "perf-2-15",
+          "sha256": "fad759764c9455b2a03f8209ee80316de0dbea6720ef9cf674a9a337075ff858"
+        },
+        {
+          "seed": "perf-2-16",
+          "sha256": "857cb4a2becaa25ec55313d6ea069ff66c1767f6069afd50e088c52582d627af"
+        },
+        {
+          "seed": "perf-2-17",
+          "sha256": "e6b3d8333b865b596ade313a6f430751b5961174dd6481351aac94f3a9f1fd10"
+        },
+        {
+          "seed": "perf-2-18",
+          "sha256": "d18899da51b2dca12f44218529e4feda51ec0d3e6ba44b99bb104a89e2193426"
+        },
+        {
+          "seed": "perf-2-19",
+          "sha256": "e6636ecf6b68166298ee5a09dde227796829a3d2f2f5aa2cca9056d224e30331"
+        }
+      ]
+    },
+    {
+      "name": "budget-serre",
+      "profile": {
+        "firstName": "",
+        "people": 2,
+        "mealsPerDay": 2,
+        "weeklyBudget": 20,
+        "maxPrepMinutes": 30,
+        "dayConstraints": [],
+        "allergies": [],
+        "excludedIngredientIds": [],
+        "dislikedRecipeIds": [],
+        "softDislikedRecipeIds": [],
+        "weeklyTargets": {
+          "legumeMeals": 2,
+          "fishMeals": 2
+        },
+        "diet": "classic",
+        "equipment": [
+          "hob",
+          "oven",
+          "microwave",
+          "blender",
+          "toaster"
+        ]
+      },
+      "options": {
+        "startsOn": "2026-09-07"
+      },
+      "cases": [
+        {
+          "seed": "perf-2-0",
+          "sha256": "f9ef824c6db09910c08895c8337340624d737518152d15ca3878ddab848f5c16"
+        },
+        {
+          "seed": "perf-2-1",
+          "sha256": "eb6cff4efeb0be446162cd0d6d5f07b3c7f6ab540ff30b723e0719ca2e158446"
+        },
+        {
+          "seed": "perf-2-2",
+          "sha256": "36226d0224763e3e51aee415f075744f941a4ad16a82f1b866fbfe7a798f00d6"
+        },
+        {
+          "seed": "perf-2-3",
+          "sha256": "563206e3c25b4ef5ff27149400acd4ffaf18b6278881072bf4229c6fb0c21718"
+        },
+        {
+          "seed": "perf-2-4",
+          "sha256": "249033374735c763630cd06b6bda20957b3f175f8fb0d85eb3c59387fc7808aa"
+        },
+        {
+          "seed": "perf-2-5",
+          "sha256": "47d73fdc950450b9a398871fe01a5e4216ae4793542ded72dfbaa578a290df3a"
+        },
+        {
+          "seed": "perf-2-6",
+          "sha256": "927b27b8b03ec7609c7c1e84b9aefb549030fedca33a7a165f74b8d7bff47e9f"
+        },
+        {
+          "seed": "perf-2-7",
+          "sha256": "fbc6bb8d7ef6085a272a10a78fbc8ebfd7dca1371871974c082d6a7741253f25"
+        },
+        {
+          "seed": "perf-2-8",
+          "sha256": "334f96bb7385cd5f286af19bb11cce3099a9a9cf81d4441f67bb9851bf4285ae"
+        },
+        {
+          "seed": "perf-2-9",
+          "sha256": "1657cb8349e279332dbdd3f8512ea67bf8be937aab163d498f655f3cb8045674"
+        },
+        {
+          "seed": "perf-2-10",
+          "sha256": "e3c5952e7d4252c54e40c92208643cdafe3fdb0703a4ec64d5aae9d83be56eea"
+        },
+        {
+          "seed": "perf-2-11",
+          "sha256": "e95d8d9b11946fd989da849968b7dd56bd0b7351587798eab3b49bdc7e4dbdfe"
+        },
+        {
+          "seed": "perf-2-12",
+          "sha256": "1f983c5592b0ab00287ca37e52d0c78925ef27d39520359a434e5ed6620bdac1"
+        },
+        {
+          "seed": "perf-2-13",
+          "sha256": "793d6ef644f90642e66885273b188659ee80cc4acd3753f830d018531d1c4ab5"
+        },
+        {
+          "seed": "perf-2-14",
+          "sha256": "2602d26300729b4be3da119af94dbe63da5da6b7cd043228a53e925899f5e028"
+        },
+        {
+          "seed": "perf-2-15",
+          "sha256": "620aa315013cc7dcd5b02b6fb1c3a16f7948441f7849a500cdaec93ade4a2345"
+        },
+        {
+          "seed": "perf-2-16",
+          "sha256": "d2b04c570d213e921c32bd04274f043f97495d4bbceb54ea28fa2ee71021b4c8"
+        },
+        {
+          "seed": "perf-2-17",
+          "sha256": "5296b81e10b74cf8f7ddacbd46c05b6481bcc99cd003ac407a3c8f1ff882da3e"
+        },
+        {
+          "seed": "perf-2-18",
+          "sha256": "9fecefbf58fe5b735a9c9f71569eb17084489fc8de50a8779ea577fc82b0b3ab"
+        },
+        {
+          "seed": "perf-2-19",
+          "sha256": "e0b7d4b0beb7cdb0d67938e096a795873e93724fa9f7c76cfb2bc4a43843053e"
+        }
+      ]
+    },
+    {
+      "name": "trois-repas",
+      "profile": {
+        "firstName": "",
+        "people": 2,
+        "mealsPerDay": 3,
+        "weeklyBudget": 80,
+        "maxPrepMinutes": 30,
+        "dayConstraints": [],
+        "allergies": [],
+        "excludedIngredientIds": [],
+        "dislikedRecipeIds": [],
+        "softDislikedRecipeIds": [],
+        "weeklyTargets": {
+          "legumeMeals": 2,
+          "fishMeals": 2
+        },
+        "diet": "classic",
+        "equipment": [
+          "hob",
+          "oven",
+          "microwave",
+          "blender",
+          "toaster"
+        ]
+      },
+      "options": {
+        "startsOn": "2026-09-07"
+      },
+      "cases": [
+        {
+          "seed": "perf-2-0",
+          "sha256": "6de8bde616b2d0b35cfe0eb2ca1e2758ad57d5e7376b646e5a7c897c55c55d63"
+        },
+        {
+          "seed": "perf-2-1",
+          "sha256": "f9bb0af9f9ba0114cabd50b5f1e3944df0383ff1300d98f75dfe732e247fbd51"
+        },
+        {
+          "seed": "perf-2-2",
+          "sha256": "37a0b7fe9a9b76f8a2f356f0dcd3604c813093fe2a4f437e2d6de766b31564d9"
+        },
+        {
+          "seed": "perf-2-3",
+          "sha256": "25d8a44bbe9c0fa235fc0effa7a6601e6348d8a58fbfa372a612fec859ae44e7"
+        },
+        {
+          "seed": "perf-2-4",
+          "sha256": "b422a10d2c50131e17f4935efc8d6e9188d0c77adeff922bbd1fbedba80c6f0e"
+        },
+        {
+          "seed": "perf-2-5",
+          "sha256": "72ecfe70b8b194c4588c2c0697308efba2dd1bbe8379da0da7afef2a09fbeddb"
+        },
+        {
+          "seed": "perf-2-6",
+          "sha256": "99673eed6f6909724a890c941e6020dce1402fc2ceb8c62f825ecdd1229f9b9c"
+        },
+        {
+          "seed": "perf-2-7",
+          "sha256": "e47fb9c78cd428b7a22f729ecd1ed661cf8ccfe6ac629b1959ff8b57acb1c02a"
+        },
+        {
+          "seed": "perf-2-8",
+          "sha256": "e628ee4c3c1baccd83bd9dbd0c5d68fbf86b86e1591384d6bd71cd0333165594"
+        },
+        {
+          "seed": "perf-2-9",
+          "sha256": "21c6e0934147b4d501a1753d9b15ecd9415e97a0d9aa6de87757e283a7c05bac"
+        },
+        {
+          "seed": "perf-2-10",
+          "sha256": "e56185ea8ca78106064265430b0ccb65567132c535b831261abf838a84ebe549"
+        },
+        {
+          "seed": "perf-2-11",
+          "sha256": "47a224d1092d710cad0586dcc1e0da071e688adc5b648c3f0075e52c64bc7e8d"
+        },
+        {
+          "seed": "perf-2-12",
+          "sha256": "d4ad35be42f6a2f002f0a1f6b818b9c389f990688a2be495fa8195323f5abd92"
+        },
+        {
+          "seed": "perf-2-13",
+          "sha256": "1a80c54a4d2f6336be613a3aa915e17b37ffd9882e2d382f8b1e1bdd77e110cf"
+        },
+        {
+          "seed": "perf-2-14",
+          "sha256": "e4cec4fe900e7e07a338b42f482be863f22980552324992c5770a24ddf6504d3"
+        },
+        {
+          "seed": "perf-2-15",
+          "sha256": "a33c77c5f04e7c98123410875aa10f6f110ce7f17c2a663b1aed7a1be6cd669b"
+        },
+        {
+          "seed": "perf-2-16",
+          "sha256": "58a04caa069d92996d79f2805d6ea4bcb39b059fd4ca8a04eeebbf511d89f174"
+        },
+        {
+          "seed": "perf-2-17",
+          "sha256": "afbdca18ad50a61ff56253841e3b33ff1e6f3cda35ec7901eabe1b2696ddf188"
+        },
+        {
+          "seed": "perf-2-18",
+          "sha256": "7043e0ead966fe8cbc46b7d9024837e6a7ac0f52abfe63790d53f8d9cf90cab0"
+        },
+        {
+          "seed": "perf-2-19",
+          "sha256": "762fef397cdf4fe8867e9f966dc4cf6ba5453a9fc9380e26032dff544c550b32"
+        }
+      ]
+    },
+    {
+      "name": "grand-foyer",
+      "profile": {
+        "firstName": "",
+        "people": 8,
+        "mealsPerDay": 3,
+        "weeklyBudget": 80,
+        "maxPrepMinutes": 90,
+        "dayConstraints": [],
+        "allergies": [],
+        "excludedIngredientIds": [],
+        "dislikedRecipeIds": [],
+        "softDislikedRecipeIds": [],
+        "weeklyTargets": {
+          "legumeMeals": 2,
+          "fishMeals": 2
+        },
+        "diet": "classic",
+        "equipment": [
+          "hob",
+          "oven",
+          "microwave",
+          "blender",
+          "toaster"
+        ]
+      },
+      "options": {
+        "startsOn": "2026-09-07"
+      },
+      "cases": [
+        {
+          "seed": "perf-2-0",
+          "sha256": "e1a1f6f56d0ee35a86fb93a60bc177dc4bce6681bf24cd8d47826f4b3419eee5"
+        },
+        {
+          "seed": "perf-2-1",
+          "sha256": "820e45bcabd7e9b061f57ae59f20a629b2f405be088ee38489e413ff8c80cca7"
+        },
+        {
+          "seed": "perf-2-2",
+          "sha256": "04a8497d389163c381e5a7077eb9277b1edbbaf6f47d21b688405ab8eb4bc064"
+        },
+        {
+          "seed": "perf-2-3",
+          "sha256": "51fa338fb88aad6452ae730d1b9d2d2ed1e959e7fbd481b98c40c5f3f4cabed5"
+        },
+        {
+          "seed": "perf-2-4",
+          "sha256": "f7748910903f12563452854eb170eddb69199410bf542dad1e3a9efaa43fc192"
+        },
+        {
+          "seed": "perf-2-5",
+          "sha256": "907c2fdd3c8c3d95b9b39bbeeee3d760d3f02f743ff0b456aa7ba3593412b1d1"
+        },
+        {
+          "seed": "perf-2-6",
+          "sha256": "b03603dbacdfbd9c41103f2a60ccd46f66a6a1c8fd5761f7a387afaef6fcc5f1"
+        },
+        {
+          "seed": "perf-2-7",
+          "sha256": "723248042252cc6888f02947195baade0ad5bf0c28e6970f4ba38059f8446f18"
+        },
+        {
+          "seed": "perf-2-8",
+          "sha256": "f2efa8e32ee681490120e2202417d472601251776e80e79973963ef5568884ac"
+        },
+        {
+          "seed": "perf-2-9",
+          "sha256": "16ff5f33a18afe089aa78bb8e9e90d80e616f958737ec698b21fdf0c66adba3e"
+        },
+        {
+          "seed": "perf-2-10",
+          "sha256": "7ae6180d3d26ce8addf342d9a5d4fefe4e5779ecb82ebb445a6ba9b6dc947cb7"
+        },
+        {
+          "seed": "perf-2-11",
+          "sha256": "17882fcd968e806c50342a30415a3e6df66e64e99a5d6012a3a7dc483ce2b7ff"
+        },
+        {
+          "seed": "perf-2-12",
+          "sha256": "e2411632148ded0c6d0ba4fcd2bf51d39099f87076af2bbbd487178ddf38e153"
+        },
+        {
+          "seed": "perf-2-13",
+          "sha256": "a3dd4616c4687d203e3dfb9015e60e3182a6a57ef5b74f0ff7c175ae699c45ae"
+        },
+        {
+          "seed": "perf-2-14",
+          "sha256": "effde6d669a81499537d7a28f1b513682cd32193d8446f98ba7358e973ad30be"
+        },
+        {
+          "seed": "perf-2-15",
+          "sha256": "fec1f68874e9a2b205b3304cf1ab936088c15cd78328f5c3ac521fc867ed1040"
+        },
+        {
+          "seed": "perf-2-16",
+          "sha256": "882cbe618967cdcedb5ac00543d3ac278549dc331d1c722d3a1904ac87dfd7a2"
+        },
+        {
+          "seed": "perf-2-17",
+          "sha256": "50f98a9351e87a68d2a09b9996a5f196d165964e03c0cf74d994e1f8c4a81349"
+        },
+        {
+          "seed": "perf-2-18",
+          "sha256": "a50e58290699c4300cb39c44df29d421e9395ee2269ae0f9e4d8c5e544220881"
+        },
+        {
+          "seed": "perf-2-19",
+          "sha256": "b58e5a0c2abea43cf32319a78f370587f7f997776871ace3c123daeb77095d79"
+        }
+      ]
+    },
+    {
+      "name": "vegetarien",
+      "profile": {
+        "firstName": "",
+        "people": 2,
+        "mealsPerDay": 2,
+        "weeklyBudget": 35,
+        "maxPrepMinutes": 30,
+        "dayConstraints": [],
+        "allergies": [],
+        "excludedIngredientIds": [],
+        "dislikedRecipeIds": [],
+        "softDislikedRecipeIds": [],
+        "weeklyTargets": {
+          "legumeMeals": 2,
+          "fishMeals": 2
+        },
+        "diet": "vegetarian",
+        "equipment": [
+          "hob",
+          "oven",
+          "microwave",
+          "blender",
+          "toaster"
+        ]
+      },
+      "options": {
+        "startsOn": "2026-09-07"
+      },
+      "cases": [
+        {
+          "seed": "perf-2-0",
+          "sha256": "97a6bcf3e9e471f46c143e9708e13a5a9819a9d2125926782aabd827b3c1db22"
+        },
+        {
+          "seed": "perf-2-1",
+          "sha256": "fc40e0854b2ff325f588c242230d1358d58418fd1833a9c90ff826664459282c"
+        },
+        {
+          "seed": "perf-2-2",
+          "sha256": "96ae3cebb1a7d9bdcc1e5fb69023381ca5ee6c2b39241c81053e1c610a5175bc"
+        },
+        {
+          "seed": "perf-2-3",
+          "sha256": "794a3165b32a092af1a1193c769c862c4707dc098d1dda39e09231049b7b5d6e"
+        },
+        {
+          "seed": "perf-2-4",
+          "sha256": "a4937f57856cd43208ce58fc43ae49d7beb4612dd7dd9162a3ebc885067eb7a5"
+        },
+        {
+          "seed": "perf-2-5",
+          "sha256": "830fbf335bd07b7204b4c843b517a8f302797c337c45a8633e0fbb6dd9369a03"
+        },
+        {
+          "seed": "perf-2-6",
+          "sha256": "80a1feb5d5ab3100932b4f4768c6f25b1c77b3904d23d765c3ca612f574c1e85"
+        },
+        {
+          "seed": "perf-2-7",
+          "sha256": "16967df051664eface142acc67abe80b2cf65ae8eead1e62791385c4746736f2"
+        },
+        {
+          "seed": "perf-2-8",
+          "sha256": "b34a77e1dd17305b9938a1c3401eabcf91eb35c6b1d7cea1890b8406a023ac82"
+        },
+        {
+          "seed": "perf-2-9",
+          "sha256": "109add2101eee43ff8aaa92269bd81cb38cf32f0c4bf95696021b0eaad894905"
+        },
+        {
+          "seed": "perf-2-10",
+          "sha256": "896d9a017b4d1e9b5e34e55b6f14dff117d50791dbca4870b2c114d46afc0b8b"
+        },
+        {
+          "seed": "perf-2-11",
+          "sha256": "4f4f8294ec80fcd527fc53bf3410bce8b4e4da21b1fbb3ebf7ab9770c95b5a2a"
+        },
+        {
+          "seed": "perf-2-12",
+          "sha256": "f8ebfa8f38dc0186fda49721d7c12d60a0dbdc4912c7c98cffec943c914e6bcb"
+        },
+        {
+          "seed": "perf-2-13",
+          "sha256": "0e7f526537131047eb3dbe7c0373618832a894dec6692c93d85e8c1608650166"
+        },
+        {
+          "seed": "perf-2-14",
+          "sha256": "019cd850368e5de294b07465470bf35bd44c59ed79fe3c3ea9bc92dca50bc5d7"
+        },
+        {
+          "seed": "perf-2-15",
+          "sha256": "882d8e81d7789683624a0f8c5ce2148f125b16657fc3ac00a0276d285d9472ed"
+        },
+        {
+          "seed": "perf-2-16",
+          "sha256": "7e401cb4bb87b0d0cb5593f1224a73cb82ee6ce043f6d63954bf59ffa0da7ca0"
+        },
+        {
+          "seed": "perf-2-17",
+          "sha256": "4cec95b63db1d7fba25e2954025dbd34b41d2778d90a0b27c8f29a2447f72a9b"
+        },
+        {
+          "seed": "perf-2-18",
+          "sha256": "eb45842f8cf88d3400d7e72181fb071b45336eda9b16798d64961119bc0b3ed9"
+        },
+        {
+          "seed": "perf-2-19",
+          "sha256": "69cf6752f34e45caeca281997459be6a6da2391c26732d927353c5ac00bc491f"
+        }
+      ]
+    },
+    {
+      "name": "restrictions",
+      "profile": {
+        "firstName": "",
+        "people": 2,
+        "mealsPerDay": 2,
+        "weeklyBudget": 50,
+        "maxPrepMinutes": 30,
+        "dayConstraints": [],
+        "allergies": [
+          "lait",
+          "oeuf"
+        ],
+        "excludedIngredientIds": [
+          "salmon"
+        ],
+        "dislikedRecipeIds": [],
+        "softDislikedRecipeIds": [],
+        "weeklyTargets": {
+          "legumeMeals": 2,
+          "fishMeals": 2
+        },
+        "diet": "classic",
+        "equipment": [
+          "hob",
+          "oven",
+          "microwave",
+          "blender",
+          "toaster"
+        ]
+      },
+      "options": {
+        "startsOn": "2026-09-07"
+      },
+      "cases": [
+        {
+          "seed": "perf-2-0",
+          "sha256": "7ef036e3609dc5e5b840da540564d6001b7ee78b2412279d201eae6ec200ac3c"
+        },
+        {
+          "seed": "perf-2-1",
+          "sha256": "5e0c47c3213ce83b7e4d105f60bcce4c121d17c1174961419eca6ae307e9a8a6"
+        },
+        {
+          "seed": "perf-2-2",
+          "sha256": "2229b97e6d5cc02d6f03bb50ab93c025e20710605ab93d561b15f15bb8db8e1d"
+        },
+        {
+          "seed": "perf-2-3",
+          "sha256": "ea0b449c01a189b0b4fd92fb4d98dcb0158cf4fef5f05699f7687cee236f9e58"
+        },
+        {
+          "seed": "perf-2-4",
+          "sha256": "c010e5b854cd95374bcb3587e3abff1cc7437b361ce7f752d64f20b8054181b9"
+        },
+        {
+          "seed": "perf-2-5",
+          "sha256": "895c45f504225b293aa4b32a0da83b72b91ee58a9fd382fc6013b426bf43b1f2"
+        },
+        {
+          "seed": "perf-2-6",
+          "sha256": "0100c9d940620f24a9e74b03ea5bc75597bc6ddb5f90687fa90cccf5fdafa73c"
+        },
+        {
+          "seed": "perf-2-7",
+          "sha256": "633ee1db87a9e3b24a7025b5abd4e0eee0642af8fa9de2d0437f9690e06c2932"
+        },
+        {
+          "seed": "perf-2-8",
+          "sha256": "a933cd22f24da4703e91d7aa40e0044609072502a5034877296333e1058c1965"
+        },
+        {
+          "seed": "perf-2-9",
+          "sha256": "665835d7ac162959be4c34cb235b6ec9a422ca5ce88721dc0b8645d6c7beedac"
+        },
+        {
+          "seed": "perf-2-10",
+          "sha256": "c109b6c388e49794f46853041a325794a6fef328ccee9199a9298d69f0c40cc0"
+        },
+        {
+          "seed": "perf-2-11",
+          "sha256": "fd8fdfbb55ec56d1435fbf2c5073c41ed0df808a4e534b449de715f2e0d7dd78"
+        },
+        {
+          "seed": "perf-2-12",
+          "sha256": "873cd470c4da6a860378809dd09dea63979d32fffb6a5b933091923af57e11e7"
+        },
+        {
+          "seed": "perf-2-13",
+          "sha256": "fabf39493dd6f71047f6bdc15350fad423403e013f9b6effc4e7f6143c4c3d40"
+        },
+        {
+          "seed": "perf-2-14",
+          "sha256": "a715560704f30e89f546757a5cd995c20640e39313c28ee06ddb72c983171937"
+        },
+        {
+          "seed": "perf-2-15",
+          "sha256": "bd21af8fed4a78cb89c8f7ebd7348fa491d91a8ac0212f334a61c4cd583c5abf"
+        },
+        {
+          "seed": "perf-2-16",
+          "sha256": "38310a935a812acaff1124ad7caa2f01b808b5b7ad590c3bb87e4d66faa70bd2"
+        },
+        {
+          "seed": "perf-2-17",
+          "sha256": "93e01c88ca4606d8271a2000312973fd261afa59dbafc2ebff8d3c45bdf1a45d"
+        },
+        {
+          "seed": "perf-2-18",
+          "sha256": "def394f8a763a46759848850795f55af7d25c47d4f47348d0db2128cdba11043"
+        },
+        {
+          "seed": "perf-2-19",
+          "sha256": "c7206450d5dcc71e72088e569eb6a9493fb0d8c4f73f22a9f94700eddc545c67"
+        }
+      ]
+    },
+    {
+      "name": "jours-personnalises",
+      "profile": {
+        "firstName": "",
+        "people": 2,
+        "mealsPerDay": 2,
+        "weeklyBudget": 80,
+        "maxPrepMinutes": 30,
+        "dayConstraints": [
+          {
+            "dayIndex": 1,
+            "maxPrepMinutes": 15,
+            "portions": 3,
+            "skippedMealTypes": [
+              "dinner"
+            ]
+          },
+          {
+            "dayIndex": 4,
+            "mealPortions": [
+              {
+                "mealType": "lunch",
+                "portions": 5
+              }
+            ],
+            "skippedMealTypes": []
+          }
+        ],
+        "allergies": [],
+        "excludedIngredientIds": [],
+        "dislikedRecipeIds": [],
+        "softDislikedRecipeIds": [],
+        "weeklyTargets": {
+          "legumeMeals": 2,
+          "fishMeals": 2
+        },
+        "diet": "classic",
+        "equipment": [
+          "hob",
+          "oven",
+          "microwave",
+          "blender",
+          "toaster"
+        ]
+      },
+      "options": {
+        "startsOn": "2026-09-07"
+      },
+      "cases": [
+        {
+          "seed": "perf-2-0",
+          "sha256": "401a60017e585c85bf1224ebb24e4e1ce004646ea885e312cb645609520a683b"
+        },
+        {
+          "seed": "perf-2-1",
+          "sha256": "978c14c4f6ac672185b65ef8674b6bcd0fb74fd19990bcdad0f98f49ee59d987"
+        },
+        {
+          "seed": "perf-2-2",
+          "sha256": "0c2b437d2edfb55b0e1688c98ba1813bc1dcabd8839232d9d9346d77e948b90f"
+        },
+        {
+          "seed": "perf-2-3",
+          "sha256": "224e7ff6108c22c351ddf05e709c248d0227831ac7b4ea078988fb68aaf3416b"
+        },
+        {
+          "seed": "perf-2-4",
+          "sha256": "c96cbb2939799fb96eb0c409fc847b59d6b6ea327e6147c423fd43f0ff20479c"
+        },
+        {
+          "seed": "perf-2-5",
+          "sha256": "8d56b5d4ec9c36051929a36c9d285d1a19d7407995e0e7034af431f786d3c3c2"
+        },
+        {
+          "seed": "perf-2-6",
+          "sha256": "1344d6c167d1db8577dbe54cc834528bf7f55afb63a49ee953a7c0e976a47fe8"
+        },
+        {
+          "seed": "perf-2-7",
+          "sha256": "051fd3a005fafcfd09648bdefe61bcddef5fe62865fb6451690a2dccb90cdea7"
+        },
+        {
+          "seed": "perf-2-8",
+          "sha256": "85ba25f4fc307dd2616f169689cc3888a52f859e853d3acd9dbd9ac4260aedca"
+        },
+        {
+          "seed": "perf-2-9",
+          "sha256": "5ae56547bce2a66303134fe3e3382c35b071bbe0b90073246ceacb6047993a21"
+        },
+        {
+          "seed": "perf-2-10",
+          "sha256": "34a6d021bb322bbc4d7854ffcc875ab9d29e32908848081e11ea7cf9713c2c5f"
+        },
+        {
+          "seed": "perf-2-11",
+          "sha256": "773461241e3bd0908acaea59ac69f6ae89f1a32fc927ff5a7d3ca53463bec8e4"
+        },
+        {
+          "seed": "perf-2-12",
+          "sha256": "dcee6c88765547cd506b40409d13274d6d491edcde55630264a3f0cf9a3cc366"
+        },
+        {
+          "seed": "perf-2-13",
+          "sha256": "4c66b272b461b81b25ed3c6c8c427b31d66ca9e5b477025375c8c4568f9c88a1"
+        },
+        {
+          "seed": "perf-2-14",
+          "sha256": "167f04eecef145cc2eb7f2e57c5c2c18e63e18d289425924b087f0bbd0be62e1"
+        },
+        {
+          "seed": "perf-2-15",
+          "sha256": "a3c0e3fcab54872ceab9d895ba606a46cce8ad42fc84618b3e8db97964500f99"
+        },
+        {
+          "seed": "perf-2-16",
+          "sha256": "3f3d19ff8bf8ac1d47f45b990da71bc2624eb7983de9ac74b9131700cff54c78"
+        },
+        {
+          "seed": "perf-2-17",
+          "sha256": "7a93a60d90be240e3175f480c814b47057ce4aef26596326b03c90b6ac7af407"
+        },
+        {
+          "seed": "perf-2-18",
+          "sha256": "c1e3b2373a808d7998e42fb4682f0c5673e4afb5a5e89b1bb46169fef933242d"
+        },
+        {
+          "seed": "perf-2-19",
+          "sha256": "8e5d2f4be4f5921505c0d025ead6c9fc521322541b40680288d31c98022b3da8"
+        }
+      ]
+    },
+    {
+      "name": "repas-verrouilles",
+      "profile": {
+        "firstName": "",
+        "people": 2,
+        "mealsPerDay": 2,
+        "weeklyBudget": 80,
+        "maxPrepMinutes": 30,
+        "dayConstraints": [],
+        "allergies": [],
+        "excludedIngredientIds": [],
+        "dislikedRecipeIds": [],
+        "softDislikedRecipeIds": [],
+        "weeklyTargets": {
+          "legumeMeals": 2,
+          "fishMeals": 2
+        },
+        "diet": "classic",
+        "equipment": [
+          "hob",
+          "oven",
+          "microwave",
+          "blender",
+          "toaster"
+        ]
+      },
+      "options": {
+        "lockedMeals": [
+          {
+            "id": "day-0-lunch",
+            "dayIndex": 0,
+            "mealType": "lunch",
+            "recipeId": "catalog-r355",
+            "portions": 2,
+            "source": "generated",
+            "locked": true
+          },
+          {
+            "id": "day-2-dinner",
+            "dayIndex": 2,
+            "mealType": "dinner",
+            "recipeId": "catalog-r263",
+            "portions": 2,
+            "source": "generated",
+            "locked": true
+          },
+          {
+            "id": "day-6-lunch",
+            "dayIndex": 6,
+            "mealType": "lunch",
+            "recipeId": "catalog-r270",
+            "portions": 2,
+            "source": "generated",
+            "locked": true
+          }
+        ],
+        "startsOn": "2026-09-07"
+      },
+      "cases": [
+        {
+          "seed": "perf-2-0",
+          "sha256": "9d24fb243f9c0fe13164d6b0a5a30250b8ba1351cfae005d8bfbce200bf8769c"
+        },
+        {
+          "seed": "perf-2-1",
+          "sha256": "d51541e04fb1460d54c28471f39f15419fc7516115c5d6252e19ab0485749e20"
+        },
+        {
+          "seed": "perf-2-2",
+          "sha256": "2ffeab8b7ba425efc6cba4120478eb556bb6110174fbec73d9038bb012e9158b"
+        },
+        {
+          "seed": "perf-2-3",
+          "sha256": "74e9664c8e4d66964b4300d64d898fd2d3e116d95a383801a26da252a49eea07"
+        },
+        {
+          "seed": "perf-2-4",
+          "sha256": "dba91694236154458aa6fbe9c945e0b6200a209d2f6d62a31ae477ae7344196c"
+        },
+        {
+          "seed": "perf-2-5",
+          "sha256": "8dc76321afa4a0afe0ddc5d0bcbf2bb6f9df6c042e69ae680c502cf542afe0de"
+        },
+        {
+          "seed": "perf-2-6",
+          "sha256": "636e5583590215f2bf61691be0a8e4d1e6b8917d19c7aefc6546d1e4b4a44737"
+        },
+        {
+          "seed": "perf-2-7",
+          "sha256": "6abb989c608077a1916c41824a03f64251b12591991f28ff486ba4b39f02d7da"
+        },
+        {
+          "seed": "perf-2-8",
+          "sha256": "2a95e641aeae043a1bc21ec3cb165c2b728b20820ecb30c3f0609196da26bad5"
+        },
+        {
+          "seed": "perf-2-9",
+          "sha256": "16c11939124b753a39222c25776fa5c8dca00abae091c161abdc615b324d8cf0"
+        },
+        {
+          "seed": "perf-2-10",
+          "sha256": "2ef10c85bc20b346f6320715f1e01dd664c8bcbd8863c7fbe04ba7dad30124aa"
+        },
+        {
+          "seed": "perf-2-11",
+          "sha256": "dc7223af2fcde85a84dcd23da3ee19743057dec4b0410c0b73c4872c38ce0dfe"
+        },
+        {
+          "seed": "perf-2-12",
+          "sha256": "9da5cc84c8126cc0ba611ab6647d06728320c9f4a16d2f88b8e2fbdfef4ba277"
+        },
+        {
+          "seed": "perf-2-13",
+          "sha256": "0533bbf226127ac225890101690c33a4c76903fa0f79a8f1a8dee8ecf9f49e3e"
+        },
+        {
+          "seed": "perf-2-14",
+          "sha256": "51e4850cf3bb52c1f9f051b61e1cf0293e30ed7705d7e7e4dd1768a5cd32062d"
+        },
+        {
+          "seed": "perf-2-15",
+          "sha256": "2a57595e9f929edb85315ae597c91b2820c12ec803f3794700cc62a58d7dd09d"
+        },
+        {
+          "seed": "perf-2-16",
+          "sha256": "5930076728caf23af392f8e2950d1bbcbca114cc95a1936e8629026a4e20f2bf"
+        },
+        {
+          "seed": "perf-2-17",
+          "sha256": "eb0beade1d1a3b4157a36146e060a0d79ccd0ad1914ddda7f6417413773a026d"
+        },
+        {
+          "seed": "perf-2-18",
+          "sha256": "acd56d8a1f70d0e7e9e35473bf5a9b665b3efaac3eaf6d2999b0b10dac4c2228"
+        },
+        {
+          "seed": "perf-2-19",
+          "sha256": "6a90ed7bb7f95089f413698752b17ee961a3ff15ff517b0dea3be0b518b03d26"
+        }
+      ]
+    },
+    {
+      "name": "preferences",
+      "profile": {
+        "firstName": "",
+        "people": 2,
+        "mealsPerDay": 2,
+        "weeklyBudget": 80,
+        "maxPrepMinutes": 30,
+        "dayConstraints": [],
+        "allergies": [],
+        "excludedIngredientIds": [],
+        "dislikedRecipeIds": [
+          "catalog-r263",
+          "catalog-r254",
+          "catalog-r537"
+        ],
+        "softDislikedRecipeIds": [
+          "catalog-r355",
+          "catalog-r367",
+          "mijote-aubergine-pois-chiches",
+          "bowl-poulet-orge-legumes",
+          "lasagnes-completes-legumes"
+        ],
+        "weeklyTargets": {
+          "legumeMeals": 2,
+          "fishMeals": 2
+        },
+        "diet": "classic",
+        "equipment": [
+          "hob",
+          "oven",
+          "microwave",
+          "blender",
+          "toaster"
+        ]
+      },
+      "options": {
+        "favoriteRecipeIds": [
+          "catalog-r406",
+          "catalog-r221",
+          "bowl-tofu-brocoli-sesame",
+          "catalog-r409",
+          "catalog-r270"
+        ],
+        "startsOn": "2026-09-07"
+      },
+      "cases": [
+        {
+          "seed": "perf-2-0",
+          "sha256": "818e2372b672a1eb60d52a7f24ddc5f23f1fce4024222e137392e70a2a8d8665"
+        },
+        {
+          "seed": "perf-2-1",
+          "sha256": "38de98d24c5afe83abf12ea9c527f1c55c4fa348c3927217e255950697cc672f"
+        },
+        {
+          "seed": "perf-2-2",
+          "sha256": "1c99adac1738aca10bd4da191d40d95228f458b17b13dd57787f5baeefdee1c0"
+        },
+        {
+          "seed": "perf-2-3",
+          "sha256": "a0e20af1cd4a245eae322c5e681344cee332d5c9b72991e317a48370abce3f60"
+        },
+        {
+          "seed": "perf-2-4",
+          "sha256": "370bd15135506f88fead0a866c9ec96da0e764342c04b49d58db405789d14020"
+        },
+        {
+          "seed": "perf-2-5",
+          "sha256": "0927db095dce67f69c3c70233e6e43424fda8ac63f26f1c6d20fb7c5d93cb09a"
+        },
+        {
+          "seed": "perf-2-6",
+          "sha256": "3fb1ac8c760104e6c8b11da517af55146dea870e100421b3fedb37450b505ad8"
+        },
+        {
+          "seed": "perf-2-7",
+          "sha256": "f9c3202fd393d2a35ec43cd5418328d4542c93da01384ebf9cfd26ccc7322d5c"
+        },
+        {
+          "seed": "perf-2-8",
+          "sha256": "959f3827512fed469cb8ea6624b51f5113faaaa8212c63579051217ac36691c4"
+        },
+        {
+          "seed": "perf-2-9",
+          "sha256": "c2cdcf9094e7fa630b5448e832074e09d8117a843e76c6c18ee28c0b7bb07c45"
+        },
+        {
+          "seed": "perf-2-10",
+          "sha256": "552768ccd2c141b54d598fe5499047490c7297383d11fc4410d0c473b6237a20"
+        },
+        {
+          "seed": "perf-2-11",
+          "sha256": "527737f95354eadd9d152e8ba307e61ab907647209cee60f96665c30caff203d"
+        },
+        {
+          "seed": "perf-2-12",
+          "sha256": "b2e3227d776b8458efa22c6e71e506a270deade5feb52c5cffc990202684b663"
+        },
+        {
+          "seed": "perf-2-13",
+          "sha256": "dd086ca90a1c714b8c3d00db454656a57f5b9ea1709b4d5aef02c92bcc4fa16e"
+        },
+        {
+          "seed": "perf-2-14",
+          "sha256": "e8b02ad614011992d24478621b5c8138759a30ac27211c53fdee8056de5a908c"
+        },
+        {
+          "seed": "perf-2-15",
+          "sha256": "1fe0dac6e7d5a73add8bdefdb8f598849e9f16fbcdfd870d652f41e242fb924b"
+        },
+        {
+          "seed": "perf-2-16",
+          "sha256": "cca460df68cd59a1515462c1b6cff26b8fb3f67835189c56a683f0f5baf2ad72"
+        },
+        {
+          "seed": "perf-2-17",
+          "sha256": "b8ae943bfc12e2818afed8e724280d90d382a52c35e3c1ee07da008a81deb5b2"
+        },
+        {
+          "seed": "perf-2-18",
+          "sha256": "6ee5f63a1dd69caddf5eb3dc1f053f175352c28e21cffc9b57c42cc6062ca83d"
+        },
+        {
+          "seed": "perf-2-19",
+          "sha256": "bd588aaa769b0c573489712ba843cdfc80a6bd0585a13ece21a45077b1814643"
+        }
+      ]
+    }
+  ]
+}

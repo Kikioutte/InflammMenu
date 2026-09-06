@@ -1,76 +1,23 @@
 import type { CatalogueData } from "./catalog.ts";
-import type { Recipe } from "./domain.ts";
-import plannerCautionIdsSource from "./data/planner-caution-ids.json" with { type: "json" };
-
-type RuntimeRecord = Record<string, unknown>;
+import {
+  INGREDIENT_CATEGORIES, INGREDIENT_UNITS, MEAL_TYPES, DIET_MODES, EQUIPMENT, CATALOGUE_ALLERGENS, EXPECTED_PLANNER_CAUTION_IDS,
+  invalidCatalogue, recordAt, arrayAt, stringAt, numberAt, booleanAt, enumAt, stringArrayAt, optionalStringAt,
+} from "./recipe-validation.ts";
+// Preserve the existing public validator API for consumers and Node checks.
+export { validatePlannerRecipes } from "./planner-validation.ts";
 
 const CATALOGUE_SCHEMA_VERSIONS = new Set(["2.0.0", "2.1.0"]);
 const CATALOGUE_SEASONS = new Set(["printemps", "ete", "automne", "hiver", "toute-annee"]);
 const CATALOGUE_DIFFICULTIES = new Set(["facile", "intermediaire", "avance"]);
 const CATALOGUE_COSTS = new Set(["economique", "moyen", "eleve"]);
-const INGREDIENT_CATEGORIES = new Set(["fruit-vegetable", "grocery", "fresh", "meat-fish", "frozen", "bakery", "beverage"]);
-const INGREDIENT_UNITS = new Set(["g", "ml", "piece", "c_soupe", "c_cafe"]);
-const MEAL_TYPES = new Set(["breakfast", "lunch", "dinner"]);
-const DIET_MODES = new Set(["classic", "vegetarian", "no-pork"]);
-const EQUIPMENT = new Set(["hob", "oven", "microwave", "blender", "toaster", "steamer"]);
+
 const WEEKLY_TARGETS = new Set(["pulse", "finfish", "seafood"]);
 const REVIEW_STATUSES = new Set(["validated", "caution"]);
 const CREAMI_PROGRAMS = new Set(["ICE CREAM", "LITE ICE CREAM", "SORBET", "GELATO", "FROZEN YOGURT"]);
 const PROVENANCE_TYPES = new Set(["original", "adapted"]);
 const PROVENANCE_KINDS = new Set(["nutrition", "cost", "inspiration", "safety"]);
-const CATALOGUE_ALLERGENS = new Set([
-  "gluten", "crustaces", "oeuf", "poisson", "arachides", "soja", "lait",
-  "fruits-a-coque", "celeri", "moutarde", "sesame", "sulfites", "lupin", "mollusques",
-]);
-const PLANNER_SEASONS = new Set(["spring", "summer", "autumn", "winter", "all-year"]);
+
 const EXPECTED_CATALOGUE_RECIPE_COUNT = 630;
-const EXPECTED_PLANNER_CAUTION_IDS = new Set<string>(plannerCautionIdsSource);
-
-function invalidCatalogue(path: string): never {
-  throw new Error(`Catalogue invalide (${path})`);
-}
-
-function recordAt(value: unknown, path: string): RuntimeRecord {
-  if (!value || typeof value !== "object" || Array.isArray(value)) invalidCatalogue(`${path}: objet requis`);
-  return value as RuntimeRecord;
-}
-
-function arrayAt(value: unknown, path: string, nonEmpty = false): unknown[] {
-  if (!Array.isArray(value) || (nonEmpty && value.length === 0)) invalidCatalogue(`${path}: tableau${nonEmpty ? " non vide" : ""} requis`);
-  return value;
-}
-
-function stringAt(value: unknown, path: string, allowEmpty = false): string {
-  if (typeof value !== "string" || (!allowEmpty && value.trim() === "")) invalidCatalogue(`${path}: chaîne${allowEmpty ? "" : " non vide"} requise`);
-  return value;
-}
-
-function numberAt(value: unknown, path: string, minimum = 0): number {
-  if (typeof value !== "number" || !Number.isFinite(value) || value < minimum) invalidCatalogue(`${path}: nombre invalide`);
-  return value;
-}
-
-function booleanAt(value: unknown, path: string): boolean {
-  if (typeof value !== "boolean") invalidCatalogue(`${path}: booléen requis`);
-  return value;
-}
-
-function enumAt(value: unknown, allowed: ReadonlySet<string>, path: string): string {
-  const item = stringAt(value, path);
-  if (!allowed.has(item)) invalidCatalogue(`${path}: valeur inconnue ${item}`);
-  return item;
-}
-
-function stringArrayAt(value: unknown, path: string, allowed?: ReadonlySet<string>, nonEmpty = false): void {
-  for (const [index, item] of arrayAt(value, path, nonEmpty).entries()) {
-    const text = stringAt(item, `${path}[${index}]`);
-    if (allowed && !allowed.has(text)) invalidCatalogue(`${path}[${index}]: valeur inconnue ${text}`);
-  }
-}
-
-function optionalStringAt(value: unknown, path: string): void {
-  if (value !== undefined) stringAt(value, path);
-}
 
 function validateIngredient(value: unknown, path: string, schemaVersion: string): void {
   const ingredient = recordAt(value, path);
@@ -258,70 +205,4 @@ export function validatePlannerCautions(value: unknown): Record<string, string> 
     throw new Error("Précautions invalides (identifiants incohérents avec la projection planificateur)");
   }
   return cautions;
-}
-
-/** Validates the generated planner projection before the engine can consume it. */
-export function validatePlannerRecipes(value: unknown): readonly Recipe[] {
-  const recipes = arrayAt(value, "planner-recipes", true);
-  const recipeIds = new Set<string>();
-
-  for (const [recipeIndex, rawRecipe] of recipes.entries()) {
-    const path = `planner-recipes[${recipeIndex}]`;
-    const recipe = recordAt(rawRecipe, path);
-    const id = stringAt(recipe.id, `${path}.id`);
-    if (recipeIds.has(id)) invalidCatalogue(`${path}.id: doublon ${id}`);
-    recipeIds.add(id);
-    stringAt(recipe.title, `${path}.title`);
-    stringArrayAt(recipe.mealTypes, `${path}.mealTypes`, MEAL_TYPES, true);
-    stringArrayAt(recipe.diet, `${path}.diet`, DIET_MODES, true);
-    numberAt(recipe.prepMinutes, `${path}.prepMinutes`);
-    if (recipe.restMinutes !== undefined) numberAt(recipe.restMinutes, `${path}.restMinutes`);
-    numberAt(recipe.costPerPortion, `${path}.costPerPortion`, Number.EPSILON);
-    stringArrayAt(recipe.seasons, `${path}.seasons`, PLANNER_SEASONS, true);
-    stringArrayAt(recipe.equipment, `${path}.equipment`, EQUIPMENT);
-    stringArrayAt(recipe.allergens, `${path}.allergens`, CATALOGUE_ALLERGENS);
-    stringArrayAt(recipe.tags, `${path}.tags`);
-
-    const ingredientAllergens = new Set<string>();
-    for (const [ingredientIndex, rawIngredient] of arrayAt(recipe.ingredients, `${path}.ingredients`, true).entries()) {
-      const ingredientPath = `${path}.ingredients[${ingredientIndex}]`;
-      const ingredient = recordAt(rawIngredient, ingredientPath);
-      stringAt(ingredient.id, `${ingredientPath}.id`);
-      stringAt(ingredient.name, `${ingredientPath}.name`);
-      numberAt(ingredient.quantity, `${ingredientPath}.quantity`);
-      enumAt(ingredient.unit, INGREDIENT_UNITS, `${ingredientPath}.unit`);
-      enumAt(ingredient.category, INGREDIENT_CATEGORIES, `${ingredientPath}.category`);
-      if (ingredient.allergens !== undefined) {
-        stringArrayAt(ingredient.allergens, `${ingredientPath}.allergens`, CATALOGUE_ALLERGENS);
-        for (const allergen of ingredient.allergens as string[]) ingredientAllergens.add(allergen);
-      }
-      if (ingredient.pantryStaple !== undefined) booleanAt(ingredient.pantryStaple, `${ingredientPath}.pantryStaple`);
-      if (ingredient.optional !== undefined) booleanAt(ingredient.optional, `${ingredientPath}.optional`);
-    }
-
-    const declaredAllergens = [...new Set(recipe.allergens as string[])].sort();
-    const derivedAllergens = [...ingredientAllergens].sort();
-    if (declaredAllergens.length !== derivedAllergens.length
-      || declaredAllergens.some((allergen, index) => allergen !== derivedAllergens[index])) {
-      invalidCatalogue(`${path}.allergens: incohérents avec les ingrédients`);
-    }
-
-    const nutrition = recordAt(recipe.nutrition, `${path}.nutrition`);
-    for (const field of ["calories", "protein", "fiber"] as const) numberAt(nutrition[field], `${path}.nutrition.${field}`);
-    if (nutrition.estimated !== true) invalidCatalogue(`${path}.nutrition.estimated: true requis`);
-    if (nutrition.note !== "Valeurs nutritionnelles estimatives par portion, à titre indicatif.") {
-      invalidCatalogue(`${path}.nutrition.note: avertissement canonique requis`);
-    }
-    stringAt(recipe.description, `${path}.description`);
-    optionalStringAt(recipe.caution, `${path}.caution`);
-    stringArrayAt(recipe.steps, `${path}.steps`, undefined, true);
-    stringAt(recipe.conservation, `${path}.conservation`);
-    stringAt(recipe.image, `${path}.image`);
-  }
-
-  for (const cautionId of EXPECTED_PLANNER_CAUTION_IDS) {
-    if (!recipeIds.has(cautionId)) invalidCatalogue(`planner-recipes: précaution orpheline ${cautionId}`);
-  }
-
-  return value as readonly Recipe[];
 }

@@ -171,6 +171,92 @@ test("la projection JSON du planificateur franchit elle aussi une frontière run
   assert.equal(IMPORTED_PLAN_RECIPES.length, plannerRecipes.length);
 });
 
+test("les tableaux de chaînes conservent leurs rejets et le chemin exact, y compris les trous", async () => {
+  const { stringArrayAt } = await import("../src/recipe-validation.ts");
+  const allowed = new Set(["lunch", "dinner"]);
+  const cases = [
+    [null, false, "champ: tableau requis"],
+    ["lunch", true, "champ: tableau non vide requis"],
+    [{ 0: "lunch", length: 1 }, false, "champ: tableau requis"],
+    [[], true, "champ: tableau non vide requis"],
+    [["lunch", undefined], false, "champ[1]: chaîne non vide requise"],
+    [["lunch", null], false, "champ[1]: chaîne non vide requise"],
+    [["lunch", 12], false, "champ[1]: chaîne non vide requise"],
+    [["lunch", false], false, "champ[1]: chaîne non vide requise"],
+    [["lunch", {}], false, "champ[1]: chaîne non vide requise"],
+    [["lunch", ""], false, "champ[1]: chaîne non vide requise"],
+    [["lunch", " \t\n"], false, "champ[1]: chaîne non vide requise"],
+    [["lunch", , "dinner"], false, "champ[1]: chaîne non vide requise"],
+    [["lunch", "breakfast"], false, "champ[1]: valeur inconnue breakfast"],
+    [[" lunch "], false, "champ[0]: valeur inconnue  lunch "],
+    [["breakfast", null], false, "champ[0]: valeur inconnue breakfast"],
+    [[null, "breakfast"], false, "champ[0]: chaîne non vide requise"],
+  ];
+  for (const [value, nonEmpty, diagnostic] of cases) {
+    assert.throws(() => stringArrayAt(value, "champ", allowed, nonEmpty), {
+      name: "Error", message: `Catalogue invalide (${diagnostic})`,
+    });
+  }
+  assert.equal(stringArrayAt([], "champ", allowed), undefined);
+  assert.equal(stringArrayAt(["lunch", "lunch", "dinner"], "champ", allowed, true), undefined);
+  const labels = ["Épinards 🌱", "l’huile d’olive", "  texte conservé  "];
+  assert.equal(stringArrayAt(labels, "champ", undefined, true), undefined);
+  assert.deepEqual(labels, ["Épinards 🌱", "l’huile d’olive", "  texte conservé  "]);
+});
+
+test("les boucles du planificateur conservent les indices, les types et le premier diagnostic", async () => {
+  const { validatePlannerRecipes } = await import("../src/planner-validation.ts");
+  const cases = [
+    [(recipes) => { recipes[1] = null; }, "planner-recipes[1]: objet requis"],
+    [(recipes) => { delete recipes[1]; }, "planner-recipes[1]: objet requis"],
+    [(recipes) => { recipes[1].title = " \n"; recipes[1].mealTypes = []; }, "planner-recipes[1].title: chaîne non vide requise"],
+    [(recipes) => { recipes[1].mealTypes = []; }, "planner-recipes[1].mealTypes: tableau non vide requis"],
+    [(recipes) => { recipes[1].diet = ["inconnu"]; }, "planner-recipes[1].diet[0]: valeur inconnue inconnu"],
+    [(recipes) => { recipes[1].ingredients = {}; }, "planner-recipes[1].ingredients: tableau non vide requis"],
+    [(recipes) => { recipes[1].ingredients = []; }, "planner-recipes[1].ingredients: tableau non vide requis"],
+    [(recipes) => { recipes[1].ingredients[1] = null; }, "planner-recipes[1].ingredients[1]: objet requis"],
+    [(recipes) => { delete recipes[1].ingredients[1]; }, "planner-recipes[1].ingredients[1]: objet requis"],
+    [(recipes) => { recipes[1].ingredients[1].id = false; recipes[1].ingredients[1].quantity = -1; }, "planner-recipes[1].ingredients[1].id: chaîne non vide requise"],
+    [(recipes) => { recipes[1].ingredients[1].quantity = Number.NaN; }, "planner-recipes[1].ingredients[1].quantity: nombre invalide"],
+    [(recipes) => { recipes[1].ingredients[1].unit = "kg"; }, "planner-recipes[1].ingredients[1].unit: valeur inconnue kg"],
+    [(recipes) => { recipes[1].ingredients[1].optional = "oui"; }, "planner-recipes[1].ingredients[1].optional: booléen requis"],
+    [(recipes) => { recipes[1].ingredients[1].allergens = ["inconnu"]; }, "planner-recipes[1].ingredients[1].allergens[0]: valeur inconnue inconnu"],
+    [(recipes) => { recipes[1].steps = ["Préparer", , "Servir"]; }, "planner-recipes[1].steps[1]: chaîne non vide requise"],
+    [(recipes) => { recipes[1].nutrition.protein = Number.POSITIVE_INFINITY; }, "planner-recipes[1].nutrition.protein: nombre invalide"],
+  ];
+  for (const [mutate, diagnostic] of cases) {
+    const recipes = structuredClone(plannerRecipes);
+    mutate(recipes);
+    assert.throws(() => validatePlannerRecipes(recipes), {
+      name: "Error", message: `Catalogue invalide (${diagnostic})`,
+    });
+  }
+});
+
+test("la validation optimisée garde les doublons interdits, les allergènes et toutes les précautions", async () => {
+  const { validatePlannerRecipes } = await import("../src/planner-validation.ts");
+  const { EXPECTED_PLANNER_CAUTION_IDS } = await import("../src/recipe-validation.ts");
+  assert.equal(validatePlannerRecipes(plannerRecipes), plannerRecipes, "le tableau validé reste inchangé");
+
+  const duplicate = structuredClone(plannerRecipes);
+  duplicate[1].id = duplicate[0].id;
+  assert.throws(() => validatePlannerRecipes(duplicate), {
+    message: `Catalogue invalide (planner-recipes[1].id: doublon ${duplicate[0].id})`,
+  });
+
+  const mismatched = structuredClone(plannerRecipes);
+  mismatched[0].allergens = [];
+  assert.throws(() => validatePlannerRecipes(mismatched), {
+    message: "Catalogue invalide (planner-recipes[0].allergens: incohérents avec les ingrédients)",
+  });
+
+  const cautionId = [...EXPECTED_PLANNER_CAUTION_IDS][0];
+  assert.ok(cautionId);
+  assert.throws(() => validatePlannerRecipes(plannerRecipes.filter((recipe) => recipe.id !== cautionId)), {
+    message: `Catalogue invalide (planner-recipes: précaution orpheline ${cautionId})`,
+  });
+});
+
 test("every recipe carries its editorial review in the JSON source", () => {
   for (const recipe of catalogue.recipes) {
     assert.match(recipe.app.review.status, /^(validated|caution)$/);
@@ -351,6 +437,18 @@ test("un catalogue invalide n'est pas mémorisé et le chargement peut être ré
 
   assert.equal(fetchCount, 2, "le second appel doit réellement relancer fetch");
   assert.equal(recovered.recipes.length, 630);
+});
+
+test("la liste d’images est chargée avec le catalogue et reste une liste d’autorisation stricte", { concurrency: false }, async (t) => {
+  replaceGlobal(t, "fetch", async () => jsonResponse(catalogue));
+  const { catalogueImageFor, loadCatalogue } = await importFreshCatalogueModule("deferred-images");
+  const recipe = catalogue.recipes[0];
+  assert.equal(catalogueImageFor(recipe), "/assets/recipe-placeholder.svg", "aucun fichier n’est autorisé avant le chargement de la liste interne");
+  await loadCatalogue();
+  assert.equal(catalogueImageFor(recipe), `/assets/recipes/generated/${recipe.image.nom_fichier}`);
+  for (const filename of ["../../index.html", "https://example.test/track.png", "unreviewed.jpg"]) {
+    assert.equal(catalogueImageFor({ ...recipe, image: { ...recipe.image, nom_fichier: filename } }), "/assets/recipe-placeholder.svg");
+  }
 });
 
 test("un HTTP 200 corrompu se replie sur la dernière copie hors ligne validée", { concurrency: false }, async (t) => {

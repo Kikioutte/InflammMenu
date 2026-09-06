@@ -3,3 +3,5 @@ dist/
 test-results/
 playwright-report/
 research/ciqual-mapping-candidates.json
+public/assets/recipes/thumbnails/
+public/assets/responsive/

@@ -1,0 +1,758 @@
+{
+  "method": "Alternating cold Chromium 149 / Lighthouse 13.4.1 simulated mobile, same container and configuration. Returning user: real validated weekly plan in localStorage, cold app cache; no app code evaluated by seed page. Medians, laboratory only.",
+  "results": [
+    {
+      "scenario": "new",
+      "stage": "baseline",
+      "run": 1,
+      "scores": {
+        "performance": 72,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2469.058,
+        "largest-contentful-paint": 2932.087,
+        "total-blocking-time": 800,
+        "cumulative-layout-shift": 0.004611746880633519,
+        "speed-index": 2550.3147994912842
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "new",
+      "stage": "after",
+      "run": 1,
+      "scores": {
+        "performance": 72,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2463.5119999999997,
+        "largest-contentful-paint": 2932.3899999999994,
+        "total-blocking-time": 841,
+        "cumulative-layout-shift": 0.004611746880633519,
+        "speed-index": 2464.981141048416
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "returning",
+      "stage": "baseline",
+      "run": 1,
+      "scores": {
+        "performance": 63,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2480.6999,
+        "largest-contentful-paint": 6173.049849999999,
+        "total-blocking-time": 424,
+        "cumulative-layout-shift": 0.002032184990853637,
+        "speed-index": 3362.795985943426
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "returning",
+      "stage": "after",
+      "run": 1,
+      "scores": {
+        "performance": 68,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2478.9332,
+        "largest-contentful-paint": 3694.8998,
+        "total-blocking-time": 755,
+        "cumulative-layout-shift": 0.002032184990853637,
+        "speed-index": 2660.2281134473405
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "new",
+      "stage": "baseline",
+      "run": 2,
+      "scores": {
+        "performance": 77,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2454.852,
+        "largest-contentful-paint": 2913.778,
+        "total-blocking-time": 582.5,
+        "cumulative-layout-shift": 0.004611746880633519,
+        "speed-index": 2454.852
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "new",
+      "stage": "after",
+      "run": 2,
+      "scores": {
+        "performance": 81,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2468.4719999999998,
+        "largest-contentful-paint": 2932.208,
+        "total-blocking-time": 422.5,
+        "cumulative-layout-shift": 0.004611746880633519,
+        "speed-index": 2468.4719999999998
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "returning",
+      "stage": "baseline",
+      "run": 2,
+      "scores": {
+        "performance": 65,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2458.3483,
+        "largest-contentful-paint": 6293.02245,
+        "total-blocking-time": 365.5,
+        "cumulative-layout-shift": 0.002032184990853637,
+        "speed-index": 2805.5644107119706
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "returning",
+      "stage": "after",
+      "run": 2,
+      "scores": {
+        "performance": 65,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2487.9573,
+        "largest-contentful-paint": 3631.93595,
+        "total-blocking-time": 933.5,
+        "cumulative-layout-shift": 0.002032184990853637,
+        "speed-index": 2883.231448928857
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "new",
+      "stage": "baseline",
+      "run": 3,
+      "scores": {
+        "performance": 63,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2477.382,
+        "largest-contentful-paint": 3095.7275,
+        "total-blocking-time": 1673.4999999999995,
+        "cumulative-layout-shift": 0.004611746880633519,
+        "speed-index": 3118.6304047680032
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "new",
+      "stage": "after",
+      "run": 3,
+      "scores": {
+        "performance": 79,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2475.88,
+        "largest-contentful-paint": 2947.32,
+        "total-blocking-time": 479,
+        "cumulative-layout-shift": 0.004611746880633519,
+        "speed-index": 2475.88
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "returning",
+      "stage": "baseline",
+      "run": 3,
+      "scores": {
+        "performance": 52,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2471.1497,
+        "largest-contentful-paint": 6154.22455,
+        "total-blocking-time": 949.5,
+        "cumulative-layout-shift": 0.002032184990853637,
+        "speed-index": 3932.7427908111895
+      },
+      "warnings": []
+    },
+    {
+      "scenario": "returning",
+      "stage": "after",
+      "run": 3,
+      "scores": {
+        "performance": 67,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2463.6396,
+        "largest-contentful-paint": 3596.9593999999997,
+        "total-blocking-time": 808.9999999999998,
+        "cumulative-layout-shift": 0.002032184990853637,
+        "speed-index": 2713.269989891222
+      },
+      "warnings": []
+    }
+  ],
+  "comparisons": {
+    "new": {
+      "baseline": {
+        "scores": {
+          "performance": 72,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2469.058,
+          "largest-contentful-paint": 2932.087,
+          "total-blocking-time": 800,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2550.3147994912842
+        }
+      },
+      "after": {
+        "scores": {
+          "performance": 79,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2468.4719999999998,
+          "largest-contentful-paint": 2932.3899999999994,
+          "total-blocking-time": 479,
+          "cumulative-layout-shift": 0.004611746880633519,
+          "speed-index": 2468.4719999999998
+        }
+      }
+    },
+    "returning": {
+      "baseline": {
+        "scores": {
+          "performance": 63,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2471.1497,
+          "largest-contentful-paint": 6173.049849999999,
+          "total-blocking-time": 424,
+          "cumulative-layout-shift": 0.002032184990853637,
+          "speed-index": 3362.795985943426
+        }
+      },
+      "after": {
+        "scores": {
+          "performance": 67,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "metrics": {
+          "first-contentful-paint": 2478.9332,
+          "largest-contentful-paint": 3631.93595,
+          "total-blocking-time": 808.9999999999998,
+          "cumulative-layout-shift": 0.002032184990853637,
+          "speed-index": 2713.269989891222
+        }
+      }
+    }
+  },
+  "baselineCommit": "6bbd0ebb6ecc91133044921a53799eb5072523b7",
+  "pagesPrecache": "d16ed4f9718c",
+  "initialJavaScript": {
+    "before": {
+      "raw": 1316192,
+      "gzip": 296060
+    },
+    "after": {
+      "raw": 1317365,
+      "gzip": 296645
+    }
+  },
+  "images": {
+    "hero": {
+      "before": 332807,
+      "after": 96352,
+      "beforeDimensions": [
+        1200,
+        1000
+      ],
+      "afterDimensions": [
+        960,
+        800
+      ]
+    },
+    "returningExampleTotal": {
+      "before": 946699,
+      "after": 113689
+    },
+    "thumbnail": {
+      "count": 630,
+      "width": 192,
+      "height": 192,
+      "medianBytes": 7082,
+      "maxBytes": 11126
+    },
+    "additionalPrecacheBytes": 96352
+  },
+  "returningFixture": {
+    "seed": "lh95-returning",
+    "startsOn": "2026-08-31",
+    "generatedAt": "2026-09-01T12:00:00.000Z",
+    "profile": "DEFAULT_APP_STATE.profile, firstName Camille",
+    "onboardingCompleted": true,
+    "storage": "localStorage, cold browser cache, same-origin JSON document used only to seed storage"
+  },
+  "validation": {
+    "node": 216,
+    "pwa": 9,
+    "workerPrivacy": 5,
+    "responsiveViews": 12,
+    "widths": [
+      320,
+      375,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "axeRuns": 4,
+    "axeViolations": 0,
+    "responsiveErrors": 0,
+    "productionVulnerabilities": 0,
+    "browserLocalNote": "Interrupted full Chromium suite. Remaining journeys rerun; three timeouts inspected. Fatal recovery and custom deletion pass unchanged at 20 s. Import/export passes at diagnostic 45 s; repository timeout remains 20 s. GitHub CI is the full commit gate."
+  },
+  "exploratoryRejected": {
+    "bootstrap-probe-2": {
+      "method": "Alternating cold Chromium 149 / Lighthouse 13.4.1 simulated mobile, same container and configuration. Returning user: real validated weekly plan in localStorage, cold app cache; no app code evaluated by seed page. Medians, laboratory only.",
+      "results": [
+        {
+          "scenario": "new",
+          "stage": "after",
+          "run": 1,
+          "scores": {
+            "performance": 85,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 1878.931,
+            "largest-contentful-paint": 2260.1637499999997,
+            "total-blocking-time": 467,
+            "cumulative-layout-shift": 0.004611746880633519,
+            "speed-index": 1978.9300892952785
+          },
+          "warnings": []
+        },
+        {
+          "scenario": "returning",
+          "stage": "after",
+          "run": 1,
+          "scores": {
+            "performance": 50,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 1860.4781,
+            "largest-contentful-paint": 6171.4781,
+            "total-blocking-time": 1514,
+            "cumulative-layout-shift": 0,
+            "speed-index": 3421.659606622204
+          },
+          "warnings": []
+        }
+      ],
+      "comparisons": {
+        "new": {
+          "after": {
+            "scores": {
+              "performance": 85,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 1878.931,
+              "largest-contentful-paint": 2260.1637499999997,
+              "total-blocking-time": 467,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 1978.9300892952785
+            }
+          }
+        },
+        "returning": {
+          "after": {
+            "scores": {
+              "performance": 50,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 1860.4781,
+              "largest-contentful-paint": 6171.4781,
+              "total-blocking-time": 1514,
+              "cumulative-layout-shift": 0,
+              "speed-index": 3421.659606622204
+            }
+          }
+        }
+      }
+    },
+    "worker-probe": {
+      "method": "Alternating cold Chromium 149 / Lighthouse 13.4.1 simulated mobile, same container and configuration. Returning user: real validated weekly plan in localStorage, cold app cache; no app code evaluated by seed page. Medians, laboratory only.",
+      "results": [
+        {
+          "scenario": "new",
+          "stage": "after",
+          "run": 1,
+          "scores": {
+            "performance": 78,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 2187.627,
+            "largest-contentful-paint": 2536.4404999999997,
+            "total-blocking-time": 666.5,
+            "cumulative-layout-shift": 0.004611746880633519,
+            "speed-index": 2583.666703656576
+          },
+          "warnings": []
+        },
+        {
+          "scenario": "returning",
+          "stage": "after",
+          "run": 1,
+          "scores": {
+            "performance": 68,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 2242.587,
+            "largest-contentful-paint": 3319.8805,
+            "total-blocking-time": 932.0000000000005,
+            "cumulative-layout-shift": 0.002032184990853637,
+            "speed-index": 3068.275975171833
+          },
+          "warnings": []
+        }
+      ],
+      "comparisons": {
+        "new": {
+          "after": {
+            "scores": {
+              "performance": 78,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2187.627,
+              "largest-contentful-paint": 2536.4404999999997,
+              "total-blocking-time": 666.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2583.666703656576
+            }
+          }
+        },
+        "returning": {
+          "after": {
+            "scores": {
+              "performance": 68,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2242.587,
+              "largest-contentful-paint": 3319.8805,
+              "total-blocking-time": 932.0000000000005,
+              "cumulative-layout-shift": 0.002032184990853637,
+              "speed-index": 3068.275975171833
+            }
+          }
+        }
+      }
+    }
+  },
+  "intermediateComparisons": {
+    "micro-corrections": {
+      "method": "Alternating cold Chromium 149 / Lighthouse 13.4.1 simulated mobile, same container and configuration. Returning user: real validated weekly plan in localStorage, cold app cache; no app code evaluated by seed page. Medians, laboratory only.",
+      "results": [
+        {
+          "scenario": "new",
+          "stage": "baseline",
+          "run": 1,
+          "scores": {
+            "performance": 73,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 2469.99,
+            "largest-contentful-paint": 2930.985,
+            "total-blocking-time": 764.5,
+            "cumulative-layout-shift": 0.004611746880633519,
+            "speed-index": 2469.99
+          },
+          "warnings": []
+        },
+        {
+          "scenario": "new",
+          "stage": "after",
+          "run": 1,
+          "scores": {
+            "performance": 76,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 2475.344,
+            "largest-contentful-paint": 2937.516,
+            "total-blocking-time": 617,
+            "cumulative-layout-shift": 0.004611746880633519,
+            "speed-index": 2676.0188195473906
+          },
+          "warnings": []
+        },
+        {
+          "scenario": "returning",
+          "stage": "baseline",
+          "run": 1,
+          "scores": {
+            "performance": 57,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 2492.7555,
+            "largest-contentful-paint": 6177.133249999999,
+            "total-blocking-time": 641,
+            "cumulative-layout-shift": 0.002032184990853637,
+            "speed-index": 3256.7732332419855
+          },
+          "warnings": []
+        },
+        {
+          "scenario": "returning",
+          "stage": "after",
+          "run": 1,
+          "scores": {
+            "performance": 59,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 2490.2902,
+            "largest-contentful-paint": 6182.935299999999,
+            "total-blocking-time": 576.5,
+            "cumulative-layout-shift": 0.002032184990853637,
+            "speed-index": 3405.5282292521697
+          },
+          "warnings": []
+        }
+      ],
+      "comparisons": {
+        "new": {
+          "baseline": {
+            "scores": {
+              "performance": 73,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2469.99,
+              "largest-contentful-paint": 2930.985,
+              "total-blocking-time": 764.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2469.99
+            }
+          },
+          "after": {
+            "scores": {
+              "performance": 76,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2475.344,
+              "largest-contentful-paint": 2937.516,
+              "total-blocking-time": 617,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2676.0188195473906
+            }
+          }
+        },
+        "returning": {
+          "baseline": {
+            "scores": {
+              "performance": 57,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2492.7555,
+              "largest-contentful-paint": 6177.133249999999,
+              "total-blocking-time": 641,
+              "cumulative-layout-shift": 0.002032184990853637,
+              "speed-index": 3256.7732332419855
+            }
+          },
+          "after": {
+            "scores": {
+              "performance": 59,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2490.2902,
+              "largest-contentful-paint": 6182.935299999999,
+              "total-blocking-time": 576.5,
+              "cumulative-layout-shift": 0.002032184990853637,
+              "speed-index": 3405.5282292521697
+            }
+          }
+        }
+      }
+    },
+    "images-probe-2": {
+      "method": "Alternating cold Chromium 149 / Lighthouse 13.4.1 simulated mobile, same container and configuration. Returning user: real validated weekly plan in localStorage, cold app cache; no app code evaluated by seed page. Medians, laboratory only.",
+      "results": [
+        {
+          "scenario": "new",
+          "stage": "after",
+          "run": 1,
+          "scores": {
+            "performance": 74,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 2478.69,
+            "largest-contentful-paint": 2945.035,
+            "total-blocking-time": 685.5,
+            "cumulative-layout-shift": 0.004611746880633519,
+            "speed-index": 2491.2370894690926
+          },
+          "warnings": []
+        },
+        {
+          "scenario": "returning",
+          "stage": "after",
+          "run": 1,
+          "scores": {
+            "performance": 67,
+            "accessibility": 100,
+            "best-practices": 100,
+            "seo": 100
+          },
+          "metrics": {
+            "first-contentful-paint": 2476.5931,
+            "largest-contentful-paint": 3616.88965,
+            "total-blocking-time": 829,
+            "cumulative-layout-shift": 0.002032184990853637,
+            "speed-index": 2699.6105201240052
+          },
+          "warnings": []
+        }
+      ],
+      "comparisons": {
+        "new": {
+          "after": {
+            "scores": {
+              "performance": 74,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2478.69,
+              "largest-contentful-paint": 2945.035,
+              "total-blocking-time": 685.5,
+              "cumulative-layout-shift": 0.004611746880633519,
+              "speed-index": 2491.2370894690926
+            }
+          }
+        },
+        "returning": {
+          "after": {
+            "scores": {
+              "performance": 67,
+              "accessibility": 100,
+              "best-practices": 100,
+              "seo": 100
+            },
+            "metrics": {
+              "first-contentful-paint": 2476.5931,
+              "largest-contentful-paint": 3616.88965,
+              "total-blocking-time": 829,
+              "cumulative-layout-shift": 0.002032184990853637,
+              "speed-index": 2699.6105201240052
+            }
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Three laboratory mobile runs per version and journey; high CPU variability.",
+    "No field INP or physical-device validation.",
+    "Performance 95 is not reached. Returning TBT median increases despite lower LCP.",
+    "Production site is unchanged; these are branch builds."
+  ]
+}

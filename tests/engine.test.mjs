@@ -1,8 +1,26 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
 const engine = await import("../src/engine.ts");
 const shopping = await import("../src/shopping.ts");
 const { IMPORTED_PLAN_RECIPES } = await import("../src/planner-catalog.ts");
+
+// Captured from the previous engine, before optimizing. These complete-plan
+// fingerprints protect seeded ordering, costs, locks, skips and profile data.
+const reference = JSON.parse(await readFile(new URL("./fixtures/planner-determinism.json", import.meta.url), "utf8"));
+for (const scenario of reference.scenarios) {
+  test(`les 20 menus de référence restent identiques : ${scenario.name}`, async () => {
+    const { RECIPES } = await import("../src/recipes.ts");
+    const before = structuredClone(scenario.profile);
+    for (const sample of scenario.cases) {
+      const plan = engine.generateWeeklyPlan(RECIPES, scenario.profile, { ...scenario.options, seed: sample.seed });
+      const actual = createHash("sha256").update(JSON.stringify(plan)).digest("hex");
+      assert.equal(actual, sample.sha256, `${scenario.name}, ${sample.seed} diffère du moteur ${reference.referenceCommit}`);
+    }
+    assert.deepEqual(scenario.profile, before, "le calcul ne modifie pas le profil fourni");
+  });
+}
 
 const nutrition = {
   calories: 400,
@@ -62,6 +80,21 @@ const profile = {
   diet: "classic",
   equipment: ["hob"],
 };
+
+test("refreshing a recipe price updates active estimates without mutating meal state or incomplete plans", () => {
+  const original = engine.generateWeeklyPlan(catalogue, profile, { seed: "price-change", startsOn: "2026-08-03" });
+  const changedId = original.meals[0].recipeId;
+  const changedRecipes = catalogue.map(item => item.id === changedId ? { ...item, costPerPortion: item.costPerPortion + 1 } : item);
+  const updated = engine.refreshPlanEstimate(original, changedRecipes);
+  assert.equal(updated.estimatedCost, original.estimatedCost + original.meals[0].portions);
+  assert.equal(updated.meals, original.meals, "cooked markers, locks and quantities are preserved");
+  assert.equal(engine.refreshPlanEstimate(updated, changedRecipes), updated, "unchanged totals do not trigger repeated writes");
+  assert.equal(engine.refreshPlanEstimate(original, []), original, "a missing recipe cannot silently lower the estimate");
+  const extreme = catalogue.map(item => ({ ...item, costPerPortion: 10_000 }));
+  const bounded = engine.refreshPlanEstimate(original, extreme);
+  assert.equal(bounded.estimatedCost, 100_000, "the existing persistence ceiling remains stable");
+  assert.equal(engine.refreshPlanEstimate(bounded, extreme), bounded);
+});
 
 test("generation is deterministic, creates 14 unique slots, and meets available targets", () => {
   const first = engine.generateWeeklyPlan(catalogue, profile, { seed: "stable", startsOn: "2026-08-03" });
@@ -1886,4 +1919,62 @@ test("plant diversity counts distinct plants without water, oil or animal produc
   ] };
   assert.deepEqual(engine.plantDiversityOf(plan, [plants]), { count: 2, ingredients: ["Carotte", "Cumin"] });
   assert.equal(engine.summarizePlan(plan, [plants], profile).plantDiversity, 2);
+});
+
+test('les allergies à un ingrédient excluent toutes ses variantes, même facultatives', async () => {
+  const { RECIPES } = await import('../src/recipes.ts');
+  const { DEFAULT_PROFILE } = await import('../src/domain.ts');
+  const safeProfile = { ...DEFAULT_PROFILE, maxPrepMinutes:90, equipment:['hob','oven','microwave','blender','toaster','steamer'] };
+  const salmon = RECIPES.find(item => item.id === 'saumon-brocoli-riz-complet');
+  assert.equal(engine.recipeIsAllowed(salmon, safeProfile), true);
+  const blockedProfile = {...safeProfile, allergies:['brocoli']};
+  assert.equal(engine.recipeIsAllowed(salmon, blockedProfile), false);
+  assert.equal(engine.recipeIsAllowed({...salmon, ingredients:salmon.ingredients.map(item=>({...item,optional:true}))}, blockedProfile), false);
+  const plan=engine.generateWeeklyPlan(RECIPES,blockedProfile,{seed:'ingredient-allergy-regression',startsOn:'2026-09-07'});
+  const byId=new Map(RECIPES.map(item=>[item.id,item]));
+  for(const meal of plan.meals) assert.ok(!byId.get(meal.recipeId).ingredients.some(item=>['broccoli','brocoli-chinois'].includes(shopping.canonicalIngredientId(item.id))));
+  assert.equal(engine.diagnoseRecipeCompatibility([salmon],blockedProfile,{mealType:salmon.mealTypes[0]}).blockedBy.allergies,1);
+  assert.throws(()=>engine.assignRecipeToSlot(plan,plan.meals.find(meal=>meal.mealType===salmon.mealTypes[0]),salmon,RECIPES,blockedProfile),/profil/);
+});
+
+test('une restriction allergique inconnue issue d’un ancien profil ne devient jamais permissive', () => {
+  const restricted={...profile,allergies:['brocolii']};
+  assert.equal(engine.recipeIsAllowed(catalogue[0],restricted),false);
+  assert.throws(()=>engine.generateWeeklyPlan(catalogue,restricted),/Restriction non reconnue/);
+});
+
+test('la résolution des exclusions conserve toutes les variantes sans confondre poire et poireau', async () => {
+  const {resolveIngredientExclusions}=await import('../src/food-restrictions.ts');
+  const pears=resolveIngredientExclusions(['poire']);
+  assert.ok(pears.ids.includes('pear'));
+  assert.ok(pears.ids.includes('poire-nashi'));
+  assert.ok(!pears.ids.includes('leek'));
+  assert.deepEqual(resolveIngredientExclusions(['brocoli']).ids.sort(),['broccoli','brocoli-chinois'].sort());
+  assert.deepEqual(resolveIngredientExclusions(['brocolii']).unknown,['brocolii']);
+  assert.deepEqual(resolveIngredientExclusions(['de']).ids,[]);
+});
+
+test('retirer une substitution ne peut pas réintroduire un allergène ou un ingrédient refusé', () => {
+  const feta=recipe(5,{allergens:['lait'],ingredients:[{id:'feta',name:'feta',quantity:20,unit:'g',category:'fresh',allergens:['lait']}]});
+  const plan=engine.generateWeeklyPlan(catalogue,profile,{seed:3});
+  const meal={...plan.meals[0],recipeId:feta.id,substitutions:[{ingredientId:'feta',substitutionId:'feta-to-tofu'}]};
+  const substituted={...plan,meals:[meal]};
+  const before=structuredClone(substituted);
+  assert.throws(()=>engine.setMealIngredientSubstitution(substituted,meal.id,'feta',null,[feta],{...profile,allergies:['lait']}),/profil alimentaire/);
+  assert.throws(()=>engine.setMealIngredientSubstitution(substituted,meal.id,'feta',null,[feta],{...profile,excludedIngredientIds:['feta']}),/profil alimentaire/);
+  assert.deepEqual(substituted,before);
+  assert.deepEqual(engine.setMealIngredientSubstitution(substituted,meal.id,'feta',null,[feta],profile).meals[0].substitutions,[]);
+});
+
+test('le cache de classement suit une recette modifiée même si son identifiant ne change pas', () => {
+  const original = recipe(0, { tags: [] });
+  const withGrain = { ...original, tags: ['céréales-complètes'] };
+  const optionalGrain = { ...withGrain, ingredients: [{ ...original.ingredients[0], name: 'Céréales complètes', optional: true }] };
+  const plan = {
+    startsOn: '2026-09-07', profileSnapshot: profile, estimatedCost: 2,
+    meals: [{ id: 'day-0-lunch', dayIndex: 0, mealType: 'lunch', recipeId: original.id, portions: 1 }],
+  };
+  for (const [version, expected] of [[original, 0], [withGrain, 1], [optionalGrain, 0], [withGrain, 1], [original, 0]]) {
+    assert.equal(engine.summarizePlan(plan, [version]).wholeGrainMeals, expected);
+  }
 });

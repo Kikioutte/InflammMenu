@@ -57,6 +57,73 @@ test("service worker bounds runtime images", () => {
   assert.match(worker, /trimCache/);
 });
 
+function shellHarness(source = worker) {
+  const entries = new Map();
+  const requests = [];
+  const listeners = new Map();
+  let skippedWaiting = false;
+  const basicResponse = (body, status = 200, type = "text/html") => {
+    const response = new Response(body, { status, headers: { "Content-Type": type } });
+    Object.defineProperty(response, "type", { value: "basic" });
+    return response;
+  };
+  const context = {
+    URL, Response,
+    fetch: async (request) => { requests.push(request); return basicResponse('<script src="/assets/current.js"></script><link href="/assets/unlisted.css" rel="stylesheet">'); },
+    caches: { open: async () => ({
+      match: async (request) => entries.get(typeof request === "string" ? request : new URL(request.url).pathname)?.clone(),
+      put: async (request, response) => entries.set(request, response.clone()),
+    }) },
+    self: {
+      addEventListener: (type, listener) => listeners.set(type, listener),
+      skipWaiting: async () => { skippedWaiting = true; },
+      location: { origin: "https://example.test" },
+    },
+  };
+  vm.runInNewContext(source, context, { filename: "sw.js" });
+  return { context, entries, requests, listeners, basicResponse, didSkipWaiting: () => skippedWaiting };
+}
+
+test("a new online document cannot replace the complete offline shell before its assets arrive", async () => {
+  const { context, entries, basicResponse } = shellHarness();
+  const oldHtml = '<script src="/assets/installed-v1.js"></script>';
+  const newHtml = '<script src="/assets/not-yet-installed-v2.js"></script>';
+  entries.set("/index.html", basicResponse(oldHtml));
+  context.fetch = async () => basicResponse(newHtml);
+  const navigation = { url: "https://example.test/" };
+  assert.equal(await (await context.navigationResponse(navigation)).text(), newHtml, "online navigation still receives the latest version");
+  context.fetch = async () => { throw new Error("connection lost during update"); };
+  assert.equal(await (await context.navigationResponse(navigation)).text(), oldHtml, "offline startup must retain the document whose assets were installed together");
+});
+
+test("a temporary server failure keeps the installed application available", async () => {
+  const { context, entries, basicResponse } = shellHarness();
+  entries.set("/index.html", basicResponse("complete installed application"));
+  context.fetch = async () => basicResponse("temporary outage", 503);
+  assert.equal(await (await context.navigationResponse({ url: "https://example.test/" })).text(), "complete installed application");
+  assert.equal((await context.navigationResponse({ url: "https://example.test/unknown" })).status, 503, "unrelated routes retain their server response");
+});
+
+test("installation fetches each generated shell asset once and still discovers missing HTML references", async () => {
+  const source = worker.replace('/manifest.webmanifest"', '/manifest.webmanifest",\n  "/assets/current.js"');
+  const { context, requests } = shellHarness(source);
+  await context.precacheShell();
+  assert.equal(requests.filter(path => path === "/assets/current.js").length, 1);
+  assert.equal(requests.filter(path => path === "/assets/unlisted.css").length, 1);
+});
+
+test("a failed discovered asset prevents an incomplete worker from activating", async () => {
+  const { context, listeners, didSkipWaiting, basicResponse } = shellHarness();
+  context.fetch = async (request) => {
+    if (request === "/assets/missing.js") throw new Error("offline");
+    return basicResponse('<script src="/assets/missing.js"></script>');
+  };
+  let installation;
+  listeners.get("install")({ waitUntil: promise => { installation = promise; } });
+  await assert.rejects(installation, /offline/);
+  assert.equal(didSkipWaiting(), false);
+});
+
 test("service worker reserves catalogue v1 for validated page-side migration", async () => {
   const listeners = new Map();
   const deleted = [];
@@ -99,12 +166,13 @@ test("service worker reuses same-origin shell responses despite host Vary header
   assert.match(worker, /async function navigationResponse[\s\S]*fetch\(request, \{ cache: "no-cache" \}\)/);
 });
 
-test("only canonical HTML navigations may refresh the offline shell", () => {
+test("installation validates HTML and ordinary navigation never overwrites the versioned shell", () => {
   assert.match(worker, /function isHtmlResponse/);
   assert.match(worker, /response\.headers\.get\("Content-Type"\)/);
   assert.match(worker, /if \(!indexResponse \|\| !isHtmlResponse\(indexResponse\)\)/);
   assert.match(worker, /function isCanonicalShellNavigation/);
-  assert.match(worker, /isCanonicalShellNavigation\(request\) && isHtmlResponse\(response\)/);
+  const navigation = worker.slice(worker.indexOf("async function navigationResponse"), worker.indexOf('self.addEventListener("fetch"'));
+  assert.doesNotMatch(navigation, /putSafely|cache\.put/);
 });
 
 test("precache discovers unquoted CSS url references", () => {
@@ -121,14 +189,20 @@ test("precache includes every Vite JS/CSS chunk but excludes the deferred catalo
   const output = await mkdtemp(path.join(tmpdir(), "inflamm-menu-precache-"));
   t.after(() => rm(output, { recursive: true, force: true }));
   await mkdir(path.join(output, "assets"), { recursive: true });
+  const responsiveImages = JSON.parse(await readFile(new URL("../src/data/responsive-images.json", import.meta.url), "utf8"));
+  const thumbnailPath = `${responsiveImages.thumbnail.directory}/recipe.webp`;
+  await mkdir(path.dirname(path.join(output, responsiveImages.hero.path)), { recursive: true });
+  await mkdir(path.dirname(path.join(output, thumbnailPath)), { recursive: true });
   await Promise.all([
     writeFile(path.join(output, "index.html"), '<script type="module" src="/InflammMenu/assets/index-test.js"></script>'),
     writeFile(path.join(output, "manifest.webmanifest"), JSON.stringify({ icons: [] })),
     writeFile(path.join(output, "sw.js"), worker),
-    writeFile(path.join(output, "assets/index-test.js"), 'import("./catalog-validation-test.js");'),
+    writeFile(path.join(output, "assets/index-test.js"), `import("./catalog-validation-test.js"); const image="/InflammMenu/${thumbnailPath}";`),
     writeFile(path.join(output, "assets/catalog-validation-test.js"), "export const valid = true;"),
     writeFile(path.join(output, "assets/lazy-feature-test.css"), ".lazy { display: block; }"),
     writeFile(path.join(output, "assets/recettes-anti-inflammatoires-test.json"), '{"recipes":[]}'),
+    writeFile(path.join(output, responsiveImages.hero.path), "hero fixture"),
+    writeFile(path.join(output, thumbnailPath), "thumbnail fixture"),
   ]);
 
   await execFileAsync(process.execPath, [
@@ -141,6 +215,8 @@ test("precache includes every Vite JS/CSS chunk but excludes the deferred catalo
   assert.match(generatedWorker, /\/InflammMenu\/assets\/catalog-validation-test\.js/);
   assert.match(generatedWorker, /\/InflammMenu\/assets\/lazy-feature-test\.css/);
   assert.doesNotMatch(generatedWorker, /recettes-anti-inflammatoires-test\.json/);
+  assert.ok(generatedWorker.includes(`/InflammMenu/${responsiveImages.hero.path}`), "the home WebP must work offline");
+  assert.ok(!generatedWorker.includes(thumbnailPath), "recipe thumbnails must not download during installation");
 });
 
 test("document CSP does not require HTTPS rewriting during local validation", async () => {
