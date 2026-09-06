@@ -77,13 +77,13 @@ export interface CatalogueRecipe {
     calories: number;
     proteines_g: number;
     glucides_g: number;
-    sucres_g: number;
+    sucres_g: number | null;
     lipides_g: number;
-    acides_gras_satures_g: number;
+    acides_gras_satures_g: number | null;
     fibres_g: number;
-    sodium_mg: number;
+    sodium_mg: number | null;
   };
-  score_anti_inflammatoire: number;
+  score_anti_inflammatoire: number | null;
   image: { nom_fichier: string; alt: string };
   /** Required for schema v2.1 recipes; optional while reading the v2 catalogue. */
   provenance?: CatalogueProvenance;

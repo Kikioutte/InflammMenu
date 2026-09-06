@@ -54,7 +54,7 @@ test("l’accueil et la navigation restent utilisables avec le texte à 200 % @w
       expect(tab.right).toBeLessThanOrEqual(layout.viewport.right + 1);
     }
 
-    for (const name of ["Semaine", "Courses", "Favoris", "Accueil"]) {
+    for (const name of ["Semaine", "Recette", "Courses", "Accueil"]) {
       const tab = page.getByRole("button", { name, exact: true });
       await tab.focus();
       await expect(tab).toBeFocused();

@@ -1,3 +1,4 @@
+import associationRecipeIds from "../src/data/association-recipe-ids.json" with { type: "json" };
 import { readFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 
@@ -178,7 +179,7 @@ export function validateCatalogue(catalogue, { taxonomy = "publication" } = {}) 
       assert(recipe.creami?.zone === "FULL", `${label}: zone CREAMi FULL requise`);
       assert(recipe.materiel?.includes("Ninja CREAMi Deluxe (NC501EU)"), `${label}: machine absente du matériel`);
     }
-    assert(recipe.score_anti_inflammatoire >= 0 && recipe.score_anti_inflammatoire <= 10, `${label}: indice éditorial hors limites`);
+    assert((recipe.score_anti_inflammatoire === null && associationRecipeIds.includes(`catalog-${recipe.id}`)) || (Number.isFinite(recipe.score_anti_inflammatoire) && recipe.score_anti_inflammatoire >= 0 && recipe.score_anti_inflammatoire <= 10), `${label}: indice éditorial hors limites`);
 
     if (isV21 || recipe.provenance !== undefined) assertProvenance(recipe.provenance, `${label}.provenance`);
 

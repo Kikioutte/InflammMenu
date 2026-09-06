@@ -1,0 +1,2582 @@
+{
+  "quotas": {
+    "lean": 50,
+    "potato": 35,
+    "nut": 40,
+    "avocado": 25,
+    "oil": 20,
+    "soup": 25,
+    "fruit": 12
+  },
+  "selected_counts": {
+    "lean": 50,
+    "potato": 35,
+    "nut": 40,
+    "avocado": 25,
+    "oil": 20,
+    "soup": 25,
+    "fruit": 12
+  },
+  "selected": [
+    {
+      "titre": "Papillotes : poulet, brocoli, poivron",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "poulet",
+        "brocoli",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : poulet, chou-fleur, radis",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "poulet",
+        "chou_fleur",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Émincé à l’étouffée : poulet, courge, champignons",
+      "famille": "lean",
+      "methode": "etuve",
+      "ingredients": [
+        "poulet",
+        "courge",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : poulet, aubergine, fenouil",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "poulet",
+        "aubergine",
+        "fenouil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : poulet, haricots verts, cresson",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "poulet",
+        "haricot_vert",
+        "cresson"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Émincé à l’étouffée : poulet, côtes de blette, courgette",
+      "famille": "lean",
+      "methode": "etuve",
+      "ingredients": [
+        "poulet",
+        "blette",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : poulet, chou rouge, endives",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "poulet",
+        "chou_rouge",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : poulet, asperges, chou blanc",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "poulet",
+        "asperge",
+        "chou"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Émincé à l’étouffée : poulet, épinards, poivron",
+      "famille": "lean",
+      "methode": "etuve",
+      "ingredients": [
+        "poulet",
+        "epinard",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : poulet, chou-fleur, courge",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "poulet",
+        "chou_fleur",
+        "courge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : dinde, brocoli, champignons",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "dinde",
+        "brocoli",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : dinde, poivron, côtes de blette",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "dinde",
+        "poivron",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Émincé à l’étouffée : dinde, aubergine, chou blanc",
+      "famille": "lean",
+      "methode": "etuve",
+      "ingredients": [
+        "dinde",
+        "aubergine",
+        "chou"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : dinde, haricots verts, radis",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "dinde",
+        "haricot_vert",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : dinde, courge, endives",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "dinde",
+        "courge",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Émincé à l’étouffée : dinde, chou-fleur, courgette",
+      "famille": "lean",
+      "methode": "etuve",
+      "ingredients": [
+        "dinde",
+        "chou_fleur",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : dinde, asperges, cresson",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "dinde",
+        "asperge",
+        "cresson"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : dinde, fenouil, laitue",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "dinde",
+        "fenouil",
+        "laitue"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Émincé à l’étouffée : dinde, chou rouge, champignons",
+      "famille": "lean",
+      "methode": "etuve",
+      "ingredients": [
+        "dinde",
+        "chou_rouge",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : dinde, brocoli, aubergine",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "dinde",
+        "brocoli",
+        "aubergine"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : cabillaud, courgette, radis",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "cabillaud",
+        "courgette",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : cabillaud, asperges, côtes de blette",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "cabillaud",
+        "asperge",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : cabillaud, chou rouge, épinards",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "cabillaud",
+        "chou_rouge",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : cabillaud, aubergine, courge",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "cabillaud",
+        "aubergine",
+        "courge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : cabillaud, fenouil, cresson",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "cabillaud",
+        "fenouil",
+        "cresson"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : cabillaud, chou-fleur, endives",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "cabillaud",
+        "chou_fleur",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : cabillaud, brocoli, haricots verts",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "cabillaud",
+        "brocoli",
+        "haricot_vert"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : truite, poivron, épinards",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "truite",
+        "poivron",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : truite, courge, radis",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "truite",
+        "courge",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : truite, fenouil, côtes de blette",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "truite",
+        "fenouil",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : truite, chou-fleur, cresson",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "truite",
+        "chou_fleur",
+        "cresson"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : truite, chou rouge, courgette",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "truite",
+        "chou_rouge",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : truite, haricots verts, endives",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "truite",
+        "haricot_vert",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : saumon, poivron, côtes de blette",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "saumon",
+        "poivron",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : saumon, champignons, haricots verts",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "saumon",
+        "champignon",
+        "haricot_vert"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : saumon, aubergine, endives",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "saumon",
+        "aubergine",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : saumon, chou-fleur, laitue",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "saumon",
+        "chou_fleur",
+        "laitue"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : saumon, courge, brocoli",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "saumon",
+        "courge",
+        "brocoli"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : saumon, asperges, radis",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "saumon",
+        "asperge",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : sardines, brocoli, champignons",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "sardine",
+        "brocoli",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : sardines, chou-fleur, côtes de blette",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "sardine",
+        "chou_fleur",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : sardines, aubergine, épinards",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "sardine",
+        "aubergine",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : sardines, courge, chou blanc",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "sardine",
+        "courge",
+        "chou"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : sardines, endives, radis",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "sardine",
+        "endive",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : maquereau, fenouil, chou-fleur",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "maquereau",
+        "fenouil",
+        "chou_fleur"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : maquereau, poivron, haricots verts",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "maquereau",
+        "poivron",
+        "haricot_vert"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : maquereau, courge, côtes de blette",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "maquereau",
+        "courge",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : maquereau, asperges, champignons",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "maquereau",
+        "asperge",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Papillotes : maquereau, chou rouge, brocoli",
+      "famille": "lean",
+      "methode": "papillote",
+      "ingredients": [
+        "maquereau",
+        "chou_rouge",
+        "brocoli"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Vapeur : poulet, fenouil, épinards",
+      "famille": "lean",
+      "methode": "vapeur",
+      "ingredients": [
+        "poulet",
+        "fenouil",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Galettes fines : pommes de terre, panais, épinards",
+      "famille": "potato",
+      "methode": "galette",
+      "ingredients": [
+        "pomme_terre",
+        "panais",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Rosace fondante : pommes de terre, fenouil, betterave",
+      "famille": "potato",
+      "methode": "rosace",
+      "ingredients": [
+        "pomme_terre",
+        "fenouil",
+        "betterave"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Gratin de légumes sans crème : pommes de terre, chou-fleur, côtes de blette",
+      "famille": "potato",
+      "methode": "gratin",
+      "ingredients": [
+        "pomme_terre",
+        "chou_fleur",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Pommes de terre garnies : pommes de terre, aubergine, poivron",
+      "famille": "potato",
+      "methode": "farci",
+      "ingredients": [
+        "pomme_terre",
+        "aubergine",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Quartiers rôtis sous couvercle : pommes de terre, rutabaga, chou blanc",
+      "famille": "potato",
+      "methode": "quartiers",
+      "ingredients": [
+        "pomme_terre",
+        "rutabaga",
+        "chou"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Galettes fines : pommes de terre, carotte, cresson",
+      "famille": "potato",
+      "methode": "galette",
+      "ingredients": [
+        "pomme_terre",
+        "carotte",
+        "cresson"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Rosace fondante : pommes de terre, navet, courgette",
+      "famille": "potato",
+      "methode": "rosace",
+      "ingredients": [
+        "pomme_terre",
+        "navet",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Gratin de légumes sans crème : pommes de terre, choux de Bruxelles, champignons",
+      "famille": "potato",
+      "methode": "gratin",
+      "ingredients": [
+        "pomme_terre",
+        "choux_bruxelles",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Pommes de terre garnies : pommes de terre, petits pois, épinards",
+      "famille": "potato",
+      "methode": "farci",
+      "ingredients": [
+        "pomme_terre",
+        "petits_pois",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Quartiers rôtis sous couvercle : pommes de terre, céleri-rave, poivron",
+      "famille": "potato",
+      "methode": "quartiers",
+      "ingredients": [
+        "pomme_terre",
+        "celeri_rave",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Rosace fondante : pommes de terre, courge, endives",
+      "famille": "potato",
+      "methode": "rosace",
+      "ingredients": [
+        "pomme_terre",
+        "courge",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Gratin de légumes sans crème : pommes de terre, brocoli, carotte",
+      "famille": "potato",
+      "methode": "gratin",
+      "ingredients": [
+        "pomme_terre",
+        "brocoli",
+        "carotte"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Pommes de terre garnies : pommes de terre, fenouil, chou rouge",
+      "famille": "potato",
+      "methode": "farci",
+      "ingredients": [
+        "pomme_terre",
+        "fenouil",
+        "chou_rouge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Quartiers rôtis sous couvercle : pommes de terre, artichaut, champignons",
+      "famille": "potato",
+      "methode": "quartiers",
+      "ingredients": [
+        "pomme_terre",
+        "artichaut",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Galettes fines : pommes de terre, céleri-rave, persil",
+      "famille": "potato",
+      "methode": "galette",
+      "ingredients": [
+        "pomme_terre",
+        "celeri_rave",
+        "persil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Rosace fondante : pommes de terre, panais, poivron",
+      "famille": "potato",
+      "methode": "rosace",
+      "ingredients": [
+        "pomme_terre",
+        "panais",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Gratin de légumes sans crème : pommes de terre, haricots verts, courgette",
+      "famille": "potato",
+      "methode": "gratin",
+      "ingredients": [
+        "pomme_terre",
+        "haricot_vert",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Pommes de terre garnies : pommes de terre, chou-fleur, épinards",
+      "famille": "potato",
+      "methode": "farci",
+      "ingredients": [
+        "pomme_terre",
+        "chou_fleur",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Quartiers rôtis sous couvercle : pommes de terre, navet, asperges",
+      "famille": "potato",
+      "methode": "quartiers",
+      "ingredients": [
+        "pomme_terre",
+        "navet",
+        "asperge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Galettes fines : pommes de terre, rutabaga, ciboulette",
+      "famille": "potato",
+      "methode": "galette",
+      "ingredients": [
+        "pomme_terre",
+        "rutabaga",
+        "ciboulette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Rosace fondante : pommes de terre, carotte, fenouil",
+      "famille": "potato",
+      "methode": "rosace",
+      "ingredients": [
+        "pomme_terre",
+        "carotte",
+        "fenouil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Gratin de légumes sans crème : pommes de terre, courge, chou rouge",
+      "famille": "potato",
+      "methode": "gratin",
+      "ingredients": [
+        "pomme_terre",
+        "courge",
+        "chou_rouge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Pommes de terre garnies : pommes de terre, champignons, côtes de blette",
+      "famille": "potato",
+      "methode": "farci",
+      "ingredients": [
+        "pomme_terre",
+        "champignon",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Quartiers rôtis sous couvercle : pommes de terre, betterave, choux de Bruxelles",
+      "famille": "potato",
+      "methode": "quartiers",
+      "ingredients": [
+        "pomme_terre",
+        "betterave",
+        "choux_bruxelles"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Galettes fines : pommes de terre, courgette, basilic",
+      "famille": "potato",
+      "methode": "galette",
+      "ingredients": [
+        "pomme_terre",
+        "courgette",
+        "basilic"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Rosace fondante : pommes de terre, céleri-rave, navet",
+      "famille": "potato",
+      "methode": "rosace",
+      "ingredients": [
+        "pomme_terre",
+        "celeri_rave",
+        "navet"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Gratin de légumes sans crème : pommes de terre, artichaut, poivron",
+      "famille": "potato",
+      "methode": "gratin",
+      "ingredients": [
+        "pomme_terre",
+        "artichaut",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Pommes de terre garnies : pommes de terre, brocoli, petits pois",
+      "famille": "potato",
+      "methode": "farci",
+      "ingredients": [
+        "pomme_terre",
+        "brocoli",
+        "petits_pois"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Quartiers rôtis sous couvercle : pommes de terre, panais, endives",
+      "famille": "potato",
+      "methode": "quartiers",
+      "ingredients": [
+        "pomme_terre",
+        "panais",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Galettes fines : pommes de terre, carotte, persil",
+      "famille": "potato",
+      "methode": "galette",
+      "ingredients": [
+        "pomme_terre",
+        "carotte",
+        "persil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Rosace fondante : pommes de terre, betterave, courge",
+      "famille": "potato",
+      "methode": "rosace",
+      "ingredients": [
+        "pomme_terre",
+        "betterave",
+        "courge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Gratin de légumes sans crème : pommes de terre, fenouil, haricots verts",
+      "famille": "potato",
+      "methode": "gratin",
+      "ingredients": [
+        "pomme_terre",
+        "fenouil",
+        "haricot_vert"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Pommes de terre garnies : pommes de terre, aubergine, cresson",
+      "famille": "potato",
+      "methode": "farci",
+      "ingredients": [
+        "pomme_terre",
+        "aubergine",
+        "cresson"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Quartiers rôtis sous couvercle : pommes de terre, rutabaga, brocoli",
+      "famille": "potato",
+      "methode": "quartiers",
+      "ingredients": [
+        "pomme_terre",
+        "rutabaga",
+        "brocoli"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Galettes fines : pommes de terre, panais, ciboulette",
+      "famille": "potato",
+      "methode": "galette",
+      "ingredients": [
+        "pomme_terre",
+        "panais",
+        "ciboulette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : amandes, carotte, chou-fleur",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "amande",
+        "carotte",
+        "chou_fleur"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : amandes, brocoli, côtes de blette",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "amande",
+        "brocoli",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade croquante : amandes, concombre, fenouil",
+      "famille": "nut",
+      "methode": "cru",
+      "ingredients": [
+        "amande",
+        "concombre",
+        "fenouil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : amandes, courge, choux de Bruxelles",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "amande",
+        "courge",
+        "choux_bruxelles"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : amandes, artichaut, petits pois",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "amande",
+        "artichaut",
+        "petits_pois"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade croquante : amandes, chou rouge, carotte",
+      "famille": "nut",
+      "methode": "cru",
+      "ingredients": [
+        "amande",
+        "chou_rouge",
+        "carotte"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : amandes, aubergine, navet",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "amande",
+        "aubergine",
+        "navet"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : amandes, asperges, endives",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "amande",
+        "asperge",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : noisettes, panais, chou-fleur",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "noisette",
+        "panais",
+        "chou_fleur"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : noisettes, haricots verts, courgette",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "noisette",
+        "haricot_vert",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade croquante : noisettes, betterave, fenouil",
+      "famille": "nut",
+      "methode": "cru",
+      "ingredients": [
+        "noisette",
+        "betterave",
+        "fenouil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : noisettes, céleri-rave, poivron",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "noisette",
+        "celeri_rave",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : noisettes, brocoli, épinards",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "noisette",
+        "brocoli",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade croquante : noisettes, laitue, radis",
+      "famille": "nut",
+      "methode": "cru",
+      "ingredients": [
+        "noisette",
+        "laitue",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : noisettes, rutabaga, champignons",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "noisette",
+        "rutabaga",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : noisettes, artichaut, côtes de blette",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "noisette",
+        "artichaut",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : noix, carotte, endives",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "noix",
+        "carotte",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : noix, choux de Bruxelles, courgette",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "noix",
+        "choux_bruxelles",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade croquante : noix, chou rouge, céleri branche",
+      "famille": "nut",
+      "methode": "cru",
+      "ingredients": [
+        "noix",
+        "chou_rouge",
+        "celeri"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : noix, courge, fenouil",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "noix",
+        "courge",
+        "fenouil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : noix, asperges, petits pois",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "noix",
+        "asperge",
+        "petits_pois"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade croquante : noix, concombre, mâche",
+      "famille": "nut",
+      "methode": "cru",
+      "ingredients": [
+        "noix",
+        "concombre",
+        "mache"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : noix, aubergine, céleri-rave",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "noix",
+        "aubergine",
+        "celeri_rave"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : noix, navet, haricots verts",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "noix",
+        "navet",
+        "haricot_vert"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : sésame, panais, poivron",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "sesame",
+        "panais",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : sésame, chou-fleur, côtes de blette",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "sesame",
+        "chou_fleur",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade croquante : sésame, carotte, radis",
+      "famille": "nut",
+      "methode": "cru",
+      "ingredients": [
+        "sesame",
+        "carotte",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : sésame, courge, chou blanc",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "sesame",
+        "courge",
+        "chou"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : sésame, brocoli, petits pois",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "sesame",
+        "brocoli",
+        "petits_pois"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade croquante : sésame, concombre, céleri-rave",
+      "famille": "nut",
+      "methode": "cru",
+      "ingredients": [
+        "sesame",
+        "concombre",
+        "celeri_rave"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : sésame, betterave, endives",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "sesame",
+        "betterave",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : sésame, artichaut, cresson",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "sesame",
+        "artichaut",
+        "cresson"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : pignons, carotte, choux de Bruxelles",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "pignon",
+        "carotte",
+        "choux_bruxelles"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : pignons, chou-fleur, épinards",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "pignon",
+        "chou_fleur",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : pignons, aubergine, champignons",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "pignon",
+        "aubergine",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : pignons, haricots verts, côtes de blette",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "pignon",
+        "haricot_vert",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade croquante : pignons, betterave, radis",
+      "famille": "nut",
+      "methode": "cru",
+      "ingredients": [
+        "pignon",
+        "betterave",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : pignons, panais, poivron",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "pignon",
+        "panais",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes vapeur et croquant : pignons, asperges, courge",
+      "famille": "nut",
+      "methode": "vapeur",
+      "ingredients": [
+        "pignon",
+        "asperge",
+        "courge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes rôtis aux éclats : amandes, rutabaga, chou rouge",
+      "famille": "nut",
+      "methode": "roti",
+      "ingredients": [
+        "amande",
+        "rutabaga",
+        "chou_rouge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade massée à l’avocat : carotte, radis",
+      "famille": "avocado",
+      "methode": "cru",
+      "ingredients": [
+        "avocat",
+        "carotte",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes tièdes à l’avocat : chou-fleur, haricots verts",
+      "famille": "avocado",
+      "methode": "tiede",
+      "ingredients": [
+        "avocat",
+        "chou_fleur",
+        "haricot_vert"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Barquettes croquantes à l’avocat : endives, betterave",
+      "famille": "avocado",
+      "methode": "barquette",
+      "ingredients": [
+        "avocat",
+        "endive",
+        "betterave"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade massée à l’avocat : chou rouge, fenouil",
+      "famille": "avocado",
+      "methode": "cru",
+      "ingredients": [
+        "avocat",
+        "chou_rouge",
+        "fenouil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes tièdes à l’avocat : brocoli, petits pois",
+      "famille": "avocado",
+      "methode": "tiede",
+      "ingredients": [
+        "avocat",
+        "brocoli",
+        "petits_pois"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Barquettes croquantes à l’avocat : poivron, céleri branche",
+      "famille": "avocado",
+      "methode": "barquette",
+      "ingredients": [
+        "avocat",
+        "poivron",
+        "celeri"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade massée à l’avocat : mâche, concombre",
+      "famille": "avocado",
+      "methode": "cru",
+      "ingredients": [
+        "avocat",
+        "mache",
+        "concombre"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes tièdes à l’avocat : artichaut, épinards",
+      "famille": "avocado",
+      "methode": "tiede",
+      "ingredients": [
+        "avocat",
+        "artichaut",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Barquettes croquantes à l’avocat : laitue, carotte",
+      "famille": "avocado",
+      "methode": "barquette",
+      "ingredients": [
+        "avocat",
+        "laitue",
+        "carotte"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade massée à l’avocat : céleri-rave, radis",
+      "famille": "avocado",
+      "methode": "cru",
+      "ingredients": [
+        "avocat",
+        "celeri_rave",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes tièdes à l’avocat : courge, côtes de blette",
+      "famille": "avocado",
+      "methode": "tiede",
+      "ingredients": [
+        "avocat",
+        "courge",
+        "blette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Barquettes croquantes à l’avocat : endives, chou rouge",
+      "famille": "avocado",
+      "methode": "barquette",
+      "ingredients": [
+        "avocat",
+        "endive",
+        "chou_rouge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade massée à l’avocat : betterave, concombre",
+      "famille": "avocado",
+      "methode": "cru",
+      "ingredients": [
+        "avocat",
+        "betterave",
+        "concombre"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes tièdes à l’avocat : panais, cresson",
+      "famille": "avocado",
+      "methode": "tiede",
+      "ingredients": [
+        "avocat",
+        "panais",
+        "cresson"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Barquettes croquantes à l’avocat : poivron, fenouil",
+      "famille": "avocado",
+      "methode": "barquette",
+      "ingredients": [
+        "avocat",
+        "poivron",
+        "fenouil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade massée à l’avocat : laitue, céleri branche",
+      "famille": "avocado",
+      "methode": "cru",
+      "ingredients": [
+        "avocat",
+        "laitue",
+        "celeri"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes tièdes à l’avocat : rutabaga, asperges",
+      "famille": "avocado",
+      "methode": "tiede",
+      "ingredients": [
+        "avocat",
+        "rutabaga",
+        "asperge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Barquettes croquantes à l’avocat : endives, radis",
+      "famille": "avocado",
+      "methode": "barquette",
+      "ingredients": [
+        "avocat",
+        "endive",
+        "radis"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes tièdes à l’avocat : choux de Bruxelles, courgette",
+      "famille": "avocado",
+      "methode": "tiede",
+      "ingredients": [
+        "avocat",
+        "choux_bruxelles",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Barquettes croquantes à l’avocat : laitue, betterave",
+      "famille": "avocado",
+      "methode": "barquette",
+      "ingredients": [
+        "avocat",
+        "laitue",
+        "betterave"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade massée à l’avocat : mâche, fenouil",
+      "famille": "avocado",
+      "methode": "cru",
+      "ingredients": [
+        "avocat",
+        "mache",
+        "fenouil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes tièdes à l’avocat : navet, brocoli",
+      "famille": "avocado",
+      "methode": "tiede",
+      "ingredients": [
+        "avocat",
+        "navet",
+        "brocoli"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Barquettes croquantes à l’avocat : poivron, carotte",
+      "famille": "avocado",
+      "methode": "barquette",
+      "ingredients": [
+        "avocat",
+        "poivron",
+        "carotte"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade massée à l’avocat : céleri-rave, chou rouge",
+      "famille": "avocado",
+      "methode": "cru",
+      "ingredients": [
+        "avocat",
+        "celeri_rave",
+        "chou_rouge"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Légumes tièdes à l’avocat : champignons, petits pois",
+      "famille": "avocado",
+      "methode": "tiede",
+      "ingredients": [
+        "avocat",
+        "champignon",
+        "petits_pois"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio rôti à l’huile d’olive : fenouil, carotte, choux de Bruxelles",
+      "famille": "oil",
+      "methode": "roti",
+      "ingredients": [
+        "huile",
+        "fenouil",
+        "carotte",
+        "choux_bruxelles"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio vapeur, finition à l’huile d’olive : chou-fleur, petits pois, ciboulette",
+      "famille": "oil",
+      "methode": "vapeur",
+      "ingredients": [
+        "huile",
+        "chou_fleur",
+        "petits_pois",
+        "ciboulette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio cru à l’huile d’olive : betterave, concombre, persil",
+      "famille": "oil",
+      "methode": "cru",
+      "ingredients": [
+        "huile",
+        "betterave",
+        "concombre",
+        "persil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio rôti à l’huile d’olive : courge, rutabaga, poivron",
+      "famille": "oil",
+      "methode": "roti",
+      "ingredients": [
+        "huile",
+        "courge",
+        "rutabaga",
+        "poivron"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio vapeur, finition à l’huile d’olive : artichaut, haricots verts, basilic",
+      "famille": "oil",
+      "methode": "vapeur",
+      "ingredients": [
+        "huile",
+        "artichaut",
+        "haricot_vert",
+        "basilic"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio cru à l’huile d’olive : chou rouge, radis, céleri branche",
+      "famille": "oil",
+      "methode": "cru",
+      "ingredients": [
+        "huile",
+        "chou_rouge",
+        "radis",
+        "celeri"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio rôti à l’huile d’olive : aubergine, panais, champignons",
+      "famille": "oil",
+      "methode": "roti",
+      "ingredients": [
+        "huile",
+        "aubergine",
+        "panais",
+        "champignon"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio vapeur, finition à l’huile d’olive : brocoli, navet, cresson",
+      "famille": "oil",
+      "methode": "vapeur",
+      "ingredients": [
+        "huile",
+        "brocoli",
+        "navet",
+        "cresson"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio cru à l’huile d’olive : carotte, fenouil, mâche",
+      "famille": "oil",
+      "methode": "cru",
+      "ingredients": [
+        "huile",
+        "carotte",
+        "fenouil",
+        "mache"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio rôti à l’huile d’olive : chou-fleur, betterave, endives",
+      "famille": "oil",
+      "methode": "roti",
+      "ingredients": [
+        "huile",
+        "chou_fleur",
+        "betterave",
+        "endive"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio vapeur, finition à l’huile d’olive : côtes de blette, petits pois, persil",
+      "famille": "oil",
+      "methode": "vapeur",
+      "ingredients": [
+        "huile",
+        "blette",
+        "petits_pois",
+        "persil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio cru à l’huile d’olive : céleri-rave, concombre, ciboulette",
+      "famille": "oil",
+      "methode": "cru",
+      "ingredients": [
+        "huile",
+        "celeri_rave",
+        "concombre",
+        "ciboulette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio rôti à l’huile d’olive : carotte, artichaut, courgette",
+      "famille": "oil",
+      "methode": "roti",
+      "ingredients": [
+        "huile",
+        "carotte",
+        "artichaut",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio vapeur, finition à l’huile d’olive : asperges, navet, basilic",
+      "famille": "oil",
+      "methode": "vapeur",
+      "ingredients": [
+        "huile",
+        "asperge",
+        "navet",
+        "basilic"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio cru à l’huile d’olive : chou blanc, radis, mâche",
+      "famille": "oil",
+      "methode": "cru",
+      "ingredients": [
+        "huile",
+        "chou",
+        "radis",
+        "mache"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio rôti à l’huile d’olive : céleri-rave, courge, fenouil",
+      "famille": "oil",
+      "methode": "roti",
+      "ingredients": [
+        "huile",
+        "celeri_rave",
+        "courge",
+        "fenouil"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio vapeur, finition à l’huile d’olive : choux de Bruxelles, haricots verts, épinards",
+      "famille": "oil",
+      "methode": "vapeur",
+      "ingredients": [
+        "huile",
+        "choux_bruxelles",
+        "haricot_vert",
+        "epinard"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio cru à l’huile d’olive : poivron, céleri branche, laitue",
+      "famille": "oil",
+      "methode": "cru",
+      "ingredients": [
+        "huile",
+        "poivron",
+        "celeri",
+        "laitue"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio rôti à l’huile d’olive : panais, betterave, courgette",
+      "famille": "oil",
+      "methode": "roti",
+      "ingredients": [
+        "huile",
+        "panais",
+        "betterave",
+        "courgette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Trio vapeur, finition à l’huile d’olive : rutabaga, brocoli, ciboulette",
+      "famille": "oil",
+      "methode": "vapeur",
+      "ingredients": [
+        "huile",
+        "rutabaga",
+        "brocoli",
+        "ciboulette"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : carotte, fenouil, épinards",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "carotte",
+        "fenouil",
+        "epinard",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : céleri-rave, chou blanc, petits pois",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "celeri_rave",
+        "chou",
+        "petits_pois",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : courge, brocoli, navet",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "courge",
+        "brocoli",
+        "navet",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : rutabaga, poivron, côtes de blette",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "rutabaga",
+        "poivron",
+        "blette",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : panais, chou-fleur, cresson",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "panais",
+        "chou_fleur",
+        "cresson",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : betterave, carotte, haricots verts",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "betterave",
+        "carotte",
+        "haricot_vert",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : artichaut, courgette, fenouil",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "artichaut",
+        "courgette",
+        "fenouil",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : choux de Bruxelles, navet, champignons",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "choux_bruxelles",
+        "navet",
+        "champignon",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : céleri-rave, courge, épinards",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "celeri_rave",
+        "courge",
+        "epinard",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : chou rouge, carotte, courgette",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "chou_rouge",
+        "carotte",
+        "courgette",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : brocoli, petits pois, basilic",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "brocoli",
+        "petits_pois",
+        "basilic",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : endives, rutabaga, côtes de blette",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "endive",
+        "rutabaga",
+        "blette",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : poivron, panais, chou-fleur",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "poivron",
+        "panais",
+        "chou_fleur",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : asperges, carotte, céleri branche",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "asperge",
+        "carotte",
+        "celeri",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : betterave, fenouil, laitue",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "betterave",
+        "fenouil",
+        "laitue",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : chou blanc, navet, haricots verts",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "chou",
+        "navet",
+        "haricot_vert",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : courge, artichaut, persil",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "courge",
+        "artichaut",
+        "persil",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : petits pois, champignons, côtes de blette",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "petits_pois",
+        "champignon",
+        "blette",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : rutabaga, brocoli, cresson",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "rutabaga",
+        "brocoli",
+        "cresson",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : chou rouge, panais, céleri branche",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "chou_rouge",
+        "panais",
+        "celeri",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : chou-fleur, carotte, ciboulette",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "chou_fleur",
+        "carotte",
+        "ciboulette",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : fenouil, poivron, haricots verts",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "fenouil",
+        "poivron",
+        "haricot_vert",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : céleri-rave, petits pois, laitue",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "celeri_rave",
+        "petits_pois",
+        "laitue",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Soupe en petits morceaux : navet, courge, choux de Bruxelles",
+      "famille": "soup",
+      "methode": "rustique",
+      "ingredients": [
+        "navet",
+        "courge",
+        "choux_bruxelles",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Velouté : artichaut, asperges, épinards",
+      "famille": "soup",
+      "methode": "veloute",
+      "ingredients": [
+        "artichaut",
+        "asperge",
+        "epinard",
+        "eau"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Carpaccio de fruits : poire, mangue, groseilles",
+      "famille": "fruit",
+      "methode": "carpaccio",
+      "ingredients": [
+        "poire",
+        "mangue",
+        "groseille"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Fruits fondants au four : pomme acidulée, abricots, raisin doux",
+      "famille": "fruit",
+      "methode": "roti",
+      "ingredients": [
+        "pomme",
+        "abricot",
+        "raisin"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Verrines de fruits écrasés : banane, pêche, figues séchées",
+      "famille": "fruit",
+      "methode": "verrine",
+      "ingredients": [
+        "banane",
+        "peche",
+        "figue_seche"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade de fruits frais : orange, fraises, grenade",
+      "famille": "fruit",
+      "methode": "salade",
+      "ingredients": [
+        "orange",
+        "fraise",
+        "grenade"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Fruits fondants au four : prunes, mangue, figues fraîches",
+      "famille": "fruit",
+      "methode": "roti",
+      "ingredients": [
+        "prune",
+        "mangue",
+        "figue"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Carpaccio de fruits : ananas, pêche, framboises",
+      "famille": "fruit",
+      "methode": "carpaccio",
+      "ingredients": [
+        "ananas",
+        "peche",
+        "framboise"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Verrines de fruits écrasés : poire, banane, abricots secs",
+      "famille": "fruit",
+      "methode": "verrine",
+      "ingredients": [
+        "poire",
+        "banane",
+        "abricot_sec"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade de fruits frais : clémentines, cerises, groseilles",
+      "famille": "fruit",
+      "methode": "salade",
+      "ingredients": [
+        "clementine",
+        "cerise",
+        "groseille"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Fruits fondants au four : pomme acidulée, prunes, figues séchées",
+      "famille": "fruit",
+      "methode": "roti",
+      "ingredients": [
+        "pomme",
+        "prune",
+        "figue_seche"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Carpaccio de fruits : mangue, abricots, framboises",
+      "famille": "fruit",
+      "methode": "carpaccio",
+      "ingredients": [
+        "mangue",
+        "abricot",
+        "framboise"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Verrines de fruits écrasés : banane, cerises, raisin doux",
+      "famille": "fruit",
+      "methode": "verrine",
+      "ingredients": [
+        "banane",
+        "cerise",
+        "raisin"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    },
+    {
+      "titre": "Salade de fruits frais : ananas, orange, groseilles",
+      "famille": "fruit",
+      "methode": "salade",
+      "ingredients": [
+        "ananas",
+        "orange",
+        "groseille"
+      ],
+      "niveau": "verte",
+      "ancien_catalogue": 880
+    }
+  ],
+  "rejected": [
+    {
+      "composition": "cabillaud,poivron,champignon",
+      "raison": "Composition trop proche",
+      "recettes": [
+        "Cabillaud en poivrons farcis aux champignons"
+      ]
+    },
+    {
+      "composition": "pomme_terre,betterave,ciboulette",
+      "raison": "Composition trop proche",
+      "recettes": [
+        "Galettes de pomme de terre et betterave au persil"
+      ]
+    },
+    {
+      "composition": "pignon,fenouil,laitue",
+      "raison": "Composition trop proche",
+      "recettes": [
+        "Velouté de laitue aux pignons et fenouil"
+      ]
+    },
+    {
+      "composition": "avocat,chou,carotte,concombre",
+      "raison": "Composition trop proche",
+      "recettes": [
+        "Rubans de carotte et concombre à la purée d'avocat",
+        "Chou blanc massé à l'avocat et carotte"
+      ]
+    }
+  ]
+}

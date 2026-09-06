@@ -1020,3 +1020,15 @@ button { -webkit-tap-highlight-color: transparent; }
 }
 .plant-diversity-details summary { cursor: pointer; color: var(--sage); font-weight: 600; }
 .plant-diversity-details p { margin: 10px 0 0; color: var(--muted); font-size: var(--font-12); line-height: 1.55; }
+
+/* Personal food-association chart: labels accompany every color. */
+.association-notice,.meal-association-checker{padding:16px;margin:16px 0;border:1px solid #b8cabc;border-radius:14px;background:#f4f8f3;color:#28452f}
+.association-notice.is-orange{background:#fff6e8;border-color:#d7a95b;color:#69430f}
+.association-notice.is-grise,.association-notice.is-non-classee{background:#f3f1ee;border-color:#8d8379;color:#413a34}
+.association-notice p,.meal-association-checker p{margin:8px 0;line-height:1.5}
+.association-notice small,.meal-association-checker small{display:block;margin-top:10px;font-size:12px;line-height:1.5}
+.association-notice ul{padding-left:20px;line-height:1.6}
+.association-notice summary,.meal-association-checker>summary{cursor:pointer;font-weight:600;padding:8px 0;min-height:36px}
+.association-badge{display:inline-block!important;padding:5px 9px;margin:8px 0;border-radius:8px;font-size:12px!important;font-weight:700;background:#eaf3e7;color:#28452f}
+.association-badge.is-orange{background:#fff0d6;color:#69430f}
+.association-filter select,.meal-association-checker select,.profile-page select{max-width:100%;width:100%;min-height:44px;padding:10px;border:1px solid #b8cabc;border-radius:8px;background:white;color:#24372c;font:inherit}

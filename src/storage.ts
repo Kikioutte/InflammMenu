@@ -550,6 +550,7 @@ function normalizeProfile(value: unknown): UserProfile {
     dislikedRecipeIds: stringArray(value.dislikedRecipeIds),
     softDislikedRecipeIds: stringArray(value.softDislikedRecipeIds),
     weeklyTargets: normalizeWeeklyTargets(value.weeklyTargets),
+    associationMode: value.associationMode === "green" || value.associationMode === "green-orange" ? value.associationMode : "off",
     equipment: stringArray(value.equipment, DEFAULT_PROFILE.equipment) as UserProfile["equipment"],
     diet:
       value.diet === "vegetarian" || value.diet === "no-pork" ? value.diet : "classic",

@@ -1,0 +1,33 @@
+{
+  "new_recipes": 20,
+  "green": 20,
+  "orange": 0,
+  "gray": 0,
+  "unclassified": 0,
+  "ids": [
+    "r861",
+    "r862",
+    "r863",
+    "r864",
+    "r865",
+    "r866",
+    "r867",
+    "r868",
+    "r869",
+    "r870",
+    "r871",
+    "r872",
+    "r873",
+    "r874",
+    "r875",
+    "r876",
+    "r877",
+    "r878",
+    "r879",
+    "r880"
+  ],
+  "new_plannable": 14,
+  "total_green": 93,
+  "previous_230_unchanged": true,
+  "ideas_developed": "research/green-next-ideas.json"
+}

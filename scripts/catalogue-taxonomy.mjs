@@ -20,6 +20,8 @@ export const CATALOGUE_WEEKLY_TARGETS = Object.freeze(["pulse", "finfish", "seaf
  * because the catalogue uses them as the substantial protein component of a meal.
  */
 export const PULSE_INGREDIENT_IDS = Object.freeze([
+  "pois-chiches-secs",
+  "haricots-blancs-secs",
   "catalog-lentilles-corail",
   "catalog-lentilles-vertes-du-puy",
   "catalog-edamame-ecosses",

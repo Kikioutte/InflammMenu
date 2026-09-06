@@ -1,0 +1,37 @@
+{
+  "version": "user-table-2026-09-06-v1",
+  "source": "Photo fournie par l'utilisateur le 6 septembre 2026 : Tableau des associations alimentaires. Crédit visible : Désiré Mérien ; mise en forme Chris Montclar. Utilisée comme référence personnelle du programme suivi, sans certification officielle Verissimo.",
+  "semantics": {"g": "verte", "o": "orange", "x": "grise"},
+  "groups": ["fruits-acides", "fruits-mi-acides", "fruits-doux", "fruits-seches", "fruits-neutres", "miel", "sucres", "amidons", "legumes-secs", "proteines-maigres", "proteines-grasses", "laits", "lipides", "legumes-amidon-faible", "legumes-amidon-moyen", "eau", "sel"],
+  "rows": [
+    "g g o o o o x x x o x x x o x o x",
+    "g g g g o g x x x g x x x o x o x",
+    "o g g g o g o x x g x x o o x o x",
+    "o g g g o o o x x g x x o o x g x",
+    "o o o o g o o x x o x x x o x o x",
+    "o g g o o g o x x o x x o o x o x",
+    "x x o o o o g x x o x x o o x g x",
+    "x x x x x x x g o x o x o g g o g",
+    "x x x x x x x o g o o x o g o o o",
+    "o g g g o o o x o g o x o g o o x",
+    "x x x x x x x o o o o x o g g o x",
+    "x x x x x x x x x x x g x x x g x",
+    "x x o o x o o o o o o x o g g o x",
+    "o o o o o o o g g g g x g g g g o",
+    "x x x x x x x g o o g x g g g g o",
+    "o o o g o o g o o o o g o g g x x",
+    "x x x x x x x g o x x x x o o x o"
+  ],
+  "policy": {
+    "allow": ["verte", "orange"],
+    "reject": ["grise", "non-classee"],
+    "scope": "Toutes les paires d'ingrédients, y compris de même groupe ; également toutes les paires entre les composants d'un repas.",
+    "water": "L'eau incorporée ou absorbée est comptée. L'eau de lavage, de vapeur ou de cuisson explicitement jetée n'est pas un ingrédient consommé. Aucune recommandation de restriction hydrique n'est déduite de cette grille.",
+    "salt": "Le sel ajouté est compté sans exception de petite quantité. Le sodium naturellement présent n'est pas un ingrédient sel ajouté.",
+    "foodNameColors": "Les couleurs des noms ne sont pas les pastilles d'association. Elles ne sont pas converties en diagnostics ni assimilées aux exclusions demandées.",
+    "unknown": "Aucune extrapolation libre pour les épices, herbes ou aliments absents. Les sous-types explicitement rattachés à un terme générique du tableau sont documentés dans le registre.",
+    "exclusions": ["gluten", "produits-laitiers-animaux", "alcool-ajoute", "preparations-industrielles"],
+    "simpleIngredients": "Ingrédients bruts, huile d'olive vierge extra, grains et farines simples sans additifs, eau et sel non raffiné. Aucun plat préparé, bouillon industriel, sauce industrielle ni substitut laitier. Les légumineuses sont sèches ou cuites maison.",
+    "interpretation": "Conformité à une grille personnelle, distincte de l'appréciation nutritionnelle. Aucune preuve d'effet thérapeutique par recette."
+  }
+}

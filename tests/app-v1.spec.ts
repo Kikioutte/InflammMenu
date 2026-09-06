@@ -706,7 +706,7 @@ test("l’accueil expose les repères et actions principales avec des noms acces
   await expect(page.getByRole("button", { name: "Générer ma semaine" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Ajuster mon profil" })).toBeVisible();
 
-  for (const name of ["Accueil", "Semaine", "Courses", "Favoris"]) {
+  for (const name of ["Accueil", "Semaine", "Recette", "Courses"]) {
     await expect(page.getByRole("button", { name, exact: true })).toBeVisible();
   }
 
@@ -1132,7 +1132,8 @@ test("les repas à repos long sont annoncés à l’avance", async ({ page }) =>
   });
   await openFreshApp(page);
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByRole("tab", { name: "Favoris" }).click();
   const oats = page.getByRole("button", { name: /Overnight oats aux myrtilles et noix/ });
   await expect(oats).toBeVisible();
   await oats.click();
@@ -1177,7 +1178,7 @@ test("une semaine dont la date est passée est archivée au lieu d’être prés
   await page.getByRole("button", { name: "Semaine", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Aucune semaine pour le moment" })).toBeVisible();
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Historique" }).click();
   await expect(page.locator(".history-card")).toHaveCount(1);
   await expect(page.locator(".history-card").first()).toContainText("2 repas");
@@ -1275,7 +1276,7 @@ test("une recette du catalogue peut être placée sur un créneau précis", asyn
   await openFreshApp(page);
 
   await generateWeek(page);
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
   await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
@@ -1779,14 +1780,14 @@ test("un catalogue injoignable affiche une erreur et se recharge au réessai", a
 
   await openFreshApp(page);
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await expect(page.getByTestId("catalogue-error")).toBeVisible();
   await expect(page.getByTestId("catalogue-error")).toContainText("Catalogue indisponible");
 
   blocked = false;
   await page.getByTestId("catalogue-retry").click();
-  await expect(page.getByText("624 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByText("1081 recettes uniques disponibles")).toBeVisible();
   await expect(page.getByTestId("catalogue-error")).toHaveCount(0);
 });
 
@@ -1843,9 +1844,12 @@ test("les objectifs hebdomadaires sont visibles, réglables et suivis", async ({
 test("les favoris et l’historique restent accessibles depuis la navigation principale", async ({ page }) => {
   await openFreshApp(page);
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
-  await expect(page.getByTestId("favorites-view")).toBeVisible();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await expect(page.getByTestId("recipes-view")).toBeVisible();
   await expect(page.getByRole("tablist", { name: "Catalogue, favoris et historique" })).toBeVisible();
+  await expect(page.getByRole("tab", { name: "Catalogue", selected: true })).toBeVisible();
+
+  await page.getByRole("tab", { name: "Favoris" }).click();
   await expect(page.getByRole("tab", { name: "Favoris", selected: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Aucune recette enregistrée" })).toBeVisible();
   await expect(page.locator(".favorite-card")).toHaveCount(0);
@@ -1875,7 +1879,8 @@ test("les favoris se recherchent une fois la liste garnie", async ({ page }) => 
     }));
   });
   await openFreshApp(page);
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByRole("tab", { name: "Favoris" }).click();
   await expect(page.locator(".favorite-card")).toHaveCount(5);
 
   await page.getByTestId("favorites-search").fill("saumon");
@@ -1949,7 +1954,7 @@ test("une semaine archivée peut être supprimée et le plafond est expliqué", 
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Historique" }).click();
   await expect(page.locator(".history-card")).toHaveCount(1);
   await expect(page.getByText(/1 semaine conservée sur cet appareil, 12 au maximum/)).toBeVisible();
@@ -1980,7 +1985,7 @@ test("une semaine archivée peut être supprimée et le plafond est expliqué", 
 
   await page.waitForTimeout(100);
   await page.reload();
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Historique" }).click();
   await expect(page.getByRole("heading", { name: "Aucun historique" })).toBeVisible();
   expect(await page.evaluate((planId) => Object.hasOwn(
@@ -2001,7 +2006,7 @@ test("une semaine archivée s’ouvre et peut être reprise", async ({ page }) =
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Historique" }).click();
   const archived = page.locator(".history-card").first();
   await expect(archived).toBeVisible();
@@ -2023,11 +2028,11 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
 
   // The production bundle split and absence of catalogue preload are checked
   // by validate-build-split.mjs. Vite may eagerly fetch dynamic modules in dev.
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
 
-  await expect(page.getByText("624 recettes uniques disponibles")).toBeVisible();
-  await expect(page.getByText("624 résultats")).toBeVisible();
+  await expect(page.getByText("1081 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByText("1081 résultats")).toBeVisible();
 
   await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
   await expect(page.getByText("1 résultat", { exact: true })).toBeVisible();
@@ -2044,7 +2049,7 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
 
 test("le catalogue explique qu'un ingrédient facultatif reste hors des courses", async ({ page }) => {
   await openFreshApp(page);
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await page.getByPlaceholder("Recette ou ingrédient").fill("Pudding de chia à la grenade");
   await page.getByRole("button", { name: /Pudding de chia à la grenade/ }).click();
@@ -2058,7 +2063,7 @@ test("le catalogue explique qu'un ingrédient facultatif reste hors des courses"
 test("une recette du catalogue peut être enregistrée en favori", async ({ page }) => {
   await openFreshApp(page);
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
   await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
@@ -2075,7 +2080,8 @@ test("une recette du catalogue peut être enregistrée en favori", async ({ page
 
   await page.waitForTimeout(100);
   await page.reload();
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByRole("tab", { name: "Favoris" }).click();
   await expect(page.getByRole("button", { name: /Soupe miso au wakame/ })).toBeVisible();
 
   await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
@@ -2086,7 +2092,7 @@ test("une recette du catalogue peut être enregistrée en favori", async ({ page
 test("les desserts Ninja CREAMi affichent leur programme et leur congélation sans être planifiables", async ({ page }) => {
   await openFreshApp(page);
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await page.getByPlaceholder("Recette ou ingrédient").fill("Ninja CREAMi Deluxe");
   await expect(page.getByText("80 résultats")).toBeVisible();
@@ -2106,7 +2112,7 @@ test("les desserts Ninja CREAMi affichent leur programme et leur congélation sa
 test("les temps passifs sont séparés du temps de préparation", async ({ page }) => {
   await openFreshApp(page);
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
 
   const search = page.getByPlaceholder("Recette ou ingrédient");
@@ -2198,9 +2204,9 @@ test("la semaine prochaine se prépare sans toucher à la semaine en cours", asy
 test("le catalogue se filtre et se trie", async ({ page }) => {
   await openFreshApp(page);
 
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
-  await expect(page.getByText("624 résultats")).toBeVisible();
+  await expect(page.getByText("1081 résultats")).toBeVisible();
   const categoryButtons = page.locator(".catalogue-filters button");
   await expect(categoryButtons.first()).toHaveAttribute("aria-pressed", "true");
   await expect(categoryButtons.nth(1)).toHaveAttribute("aria-pressed", "false");
@@ -2223,7 +2229,7 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
 
   const filtered = await page.getByTestId("catalogue-filters-open").innerText();
   expect(filtered).toContain("(2)");
-  await expect(page.getByText("624 résultats")).toHaveCount(0);
+  await expect(page.getByText("1081 résultats")).toHaveCount(0);
 
   await page.getByTestId("catalogue-sort").selectOption("time");
   await expect(page.locator(".catalogue-card").first()).toBeVisible();
@@ -2231,7 +2237,7 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
   await page.getByTestId("catalogue-filters-open").click();
   await page.getByTestId("catalogue-filters-reset").click();
   await page.getByRole("button", { name: /^Voir \d+ recettes?$/ }).click();
-  await expect(page.getByText("624 résultats")).toBeVisible();
+  await expect(page.getByText("1081 résultats")).toBeVisible();
 });
 
 test("une recette se note, s’annote et se duplique", async ({ page }) => {
@@ -2271,7 +2277,8 @@ test("une recette personnelle reste retrouvable, modifiable et ne se supprime qu
 
   await page.getByRole("button", { name: "Retour" }).click();
   await page.getByRole("button", { name: "Retour" }).click();
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByRole("tab", { name: "Favoris" }).click();
   const personalCard = page.getByRole("button", { name: /Recette personnelle à supprimer/ });
   await expect(personalCard).toBeVisible();
   await personalCard.click();
@@ -2307,7 +2314,7 @@ test("une recette personnelle reste retrouvable, modifiable et ne se supprime qu
 
   await deleteTrigger.click();
   await deleteDialog.getByRole("button", { name: "Supprimer la recette" }).click();
-  await expect(page.getByTestId("favorites-view")).toBeVisible();
+  await expect(page.getByTestId("recipes-view")).toBeVisible();
   await expect(page.getByRole("button", { name: /Recette personnelle modifiée/ })).toHaveCount(0);
   await expect.poll(() => page.evaluate((recipeId) => {
     const state = JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}");
@@ -2585,7 +2592,8 @@ test("une recette personnelle favorite conserve les allergènes de ses ingrédie
   });
 
   await openFreshApp(page);
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByRole("tab", { name: "Favoris" }).click();
   await page.getByRole("button", { name: /Recette test allergène/ }).click();
   await expect(page.getByText("Lait", { exact: true })).toBeVisible();
   await page.getByTestId("start-cooking").click();
@@ -2593,7 +2601,8 @@ test("une recette personnelle favorite conserve les allergènes de ses ingrédie
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 
   await page.reload();
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByRole("tab", { name: "Favoris" }).click();
   await expect(page.getByRole("button", { name: /Recette test allergène/ })).toBeVisible();
 });
 

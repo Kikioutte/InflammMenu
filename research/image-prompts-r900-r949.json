@@ -1,0 +1,360 @@
+{
+  "meta": {
+    "generated_at": "2026-09-06",
+    "recipe_file": "association-collection.json",
+    "count": 50,
+    "target": "JPEG 900x900, qualité 72-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r900",
+      "title": "Papillotes : dinde, brocoli, aubergine",
+      "output_file": "public/assets/recipes/generated/r900-papillotes-dinde-brocoli-aubergine.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : dinde, brocoli, aubergine ». Ultra-photoréalisme culinaire, ingrédients autorisés : escalope de dinde crue, brocoli cru, aubergine crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : dinde, brocoli, aubergine ». Représenter papillote ouverte avec morceaux de dinde, bouquets de brocoli et cubes d'aubergine cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée, appétissante, authentique."
+    },
+    {
+      "id": "r901",
+      "title": "Vapeur : cabillaud, courgette, radis",
+      "output_file": "public/assets/recipes/generated/r901-vapeur-cabillaud-courgette-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : cabillaud, courgette, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, courgette crue, radis rouges crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : cabillaud, courgette, radis ». Représenter filet de cabillaud vapeur avec demi-rondelles de courgette et radis rouges cuits coupés en deux. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée, appétissante, authentique."
+    },
+    {
+      "id": "r902",
+      "title": "Papillotes : cabillaud, asperges, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r902-papillotes-cabillaud-asperges-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : cabillaud, asperges, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, asperges vertes crues, côtes de blette crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : cabillaud, asperges, côtes de blette ». Représenter papillote ouverte avec filet de cabillaud, asperges vertes et tronçons blancs de côtes de blette cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée, appétissante, authentique."
+    },
+    {
+      "id": "r903",
+      "title": "Vapeur : cabillaud, chou rouge, épinards",
+      "output_file": "public/assets/recipes/generated/r903-vapeur-cabillaud-chou-rouge-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : cabillaud, chou rouge, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, chou rouge cru, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : cabillaud, chou rouge, épinards ». Représenter filet de cabillaud vapeur avec lanières de chou rouge et épinards cuits vapeur. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r904",
+      "title": "Papillotes : cabillaud, aubergine, courge",
+      "output_file": "public/assets/recipes/generated/r904-papillotes-cabillaud-aubergine-courge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : cabillaud, aubergine, courge ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, aubergine crue, courge musquée pelée crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : cabillaud, aubergine, courge ». Représenter papillote ouverte avec filet de cabillaud, cubes d'aubergine et cubes de courge musquée cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r905",
+      "title": "Vapeur : cabillaud, fenouil, cresson",
+      "output_file": "public/assets/recipes/generated/r905-vapeur-cabillaud-fenouil-cresson.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : cabillaud, fenouil, cresson ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, fenouil cru, cresson de fontaine cultivé. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : cabillaud, fenouil, cresson ». Représenter filet de cabillaud vapeur avec quartiers de fenouil cuits et petites feuilles rondes de cresson frais. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r906",
+      "title": "Papillotes : cabillaud, chou-fleur, endives",
+      "output_file": "public/assets/recipes/generated/r906-papillotes-cabillaud-chou-fleur-endives.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : cabillaud, chou-fleur, endives ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, chou-fleur cru, endives crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : cabillaud, chou-fleur, endives ». Représenter papillote ouverte avec filet de cabillaud, bouquets de chou-fleur et quartiers d'endive cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r907",
+      "title": "Vapeur : cabillaud, brocoli, haricots verts",
+      "output_file": "public/assets/recipes/generated/r907-vapeur-cabillaud-brocoli-haricots-verts.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : cabillaud, brocoli, haricots verts ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, brocoli cru, haricots verts crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : cabillaud, brocoli, haricots verts ». Représenter filet de cabillaud vapeur avec bouquets de brocoli et haricots verts cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r908",
+      "title": "Papillotes : truite, poivron, épinards",
+      "output_file": "public/assets/recipes/generated/r908-papillotes-truite-poivron-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : truite, poivron, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de truite cru désarêté, poivron rouge cru, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : truite, poivron, épinards ». Représenter papillote ouverte avec filet de truite, lanières de poivron rouge et épinards cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r909",
+      "title": "Vapeur : truite, courge, radis",
+      "output_file": "public/assets/recipes/generated/r909-vapeur-truite-courge-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : truite, courge, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de truite cru désarêté, courge musquée pelée crue, radis rouges crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : truite, courge, radis ». Représenter filet de truite vapeur avec cubes de courge musquée et radis rouges cuits coupés en deux. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r910",
+      "title": "Papillotes : truite, fenouil, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r910-papillotes-truite-fenouil-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : truite, fenouil, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de truite cru désarêté, fenouil cru, côtes de blette crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : truite, fenouil, côtes de blette ». Représenter papillote ouverte avec filet de truite, quartiers de fenouil et tronçons blancs de côtes de blette. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r911",
+      "title": "Vapeur : truite, chou-fleur, cresson",
+      "output_file": "public/assets/recipes/generated/r911-vapeur-truite-chou-fleur-cresson.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : truite, chou-fleur, cresson ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de truite cru désarêté, chou-fleur cru, cresson de fontaine cultivé. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : truite, chou-fleur, cresson ». Représenter filet de truite vapeur avec bouquets de chou-fleur et petites feuilles rondes de cresson frais. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r912",
+      "title": "Papillotes : truite, chou rouge, courgette",
+      "output_file": "public/assets/recipes/generated/r912-papillotes-truite-chou-rouge-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : truite, chou rouge, courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de truite cru désarêté, chou rouge cru, courgette crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : truite, chou rouge, courgette ». Représenter papillote ouverte avec filet de truite, lanières de chou rouge et demi-rondelles de courgette. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r913",
+      "title": "Vapeur : truite, haricots verts, endives",
+      "output_file": "public/assets/recipes/generated/r913-vapeur-truite-haricots-verts-endives.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : truite, haricots verts, endives ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de truite cru désarêté, haricots verts crus, endives crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : truite, haricots verts, endives ». Représenter filet de truite vapeur rosé clair avec haricots verts et quartiers d'endive cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r914",
+      "title": "Papillotes : saumon, poivron, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r914-papillotes-saumon-poivron-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : saumon, poivron, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de saumon cru désarêté, poivron rouge cru, côtes de blette crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : saumon, poivron, côtes de blette ». Représenter papillote ouverte avec filet de saumon rose, lanières de poivron rouge et tronçons blancs de côtes de blette. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r915",
+      "title": "Vapeur : saumon, champignons, haricots verts",
+      "output_file": "public/assets/recipes/generated/r915-vapeur-saumon-champignons-haricots-verts.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : saumon, champignons, haricots verts ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de saumon cru désarêté, champignons de Paris crus, haricots verts crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : saumon, champignons, haricots verts ». Représenter filet de saumon vapeur avec champignons de Paris et haricots verts cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r916",
+      "title": "Papillotes : saumon, aubergine, endives",
+      "output_file": "public/assets/recipes/generated/r916-papillotes-saumon-aubergine-endives.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : saumon, aubergine, endives ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de saumon cru désarêté, aubergine crue, endives crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : saumon, aubergine, endives ». Représenter papillote ouverte avec filet de saumon, cubes d'aubergine et quartiers d'endive cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r917",
+      "title": "Vapeur : saumon, chou-fleur, laitue",
+      "output_file": "public/assets/recipes/generated/r917-vapeur-saumon-chou-fleur-laitue.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : saumon, chou-fleur, laitue ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de saumon cru désarêté, chou-fleur cru, laitue crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : saumon, chou-fleur, laitue ». Représenter filet de saumon vapeur avec bouquets de chou-fleur et feuilles de laitue légèrement tombées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r918",
+      "title": "Papillotes : saumon, courge, brocoli",
+      "output_file": "public/assets/recipes/generated/r918-papillotes-saumon-courge-brocoli.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : saumon, courge, brocoli ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de saumon cru désarêté, courge musquée pelée crue, brocoli cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : saumon, courge, brocoli ». Représenter CORRECTION : papillote saumon, courge et brocoli strictement sans le moindre grain noir, poivre, épice ou herbe; seulement marques naturelles de cuisson. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r919",
+      "title": "Vapeur : saumon, asperges, radis",
+      "output_file": "public/assets/recipes/generated/r919-vapeur-saumon-asperges-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : saumon, asperges, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de saumon cru désarêté, asperges vertes crues, radis rouges crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : saumon, asperges, radis ». Représenter filet de saumon vapeur avec asperges vertes et radis rouges cuits coupés en deux. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r920",
+      "title": "Papillotes : sardines, brocoli, champignons",
+      "output_file": "public/assets/recipes/generated/r920-papillotes-sardines-brocoli-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : sardines, brocoli, champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de sardine crus désarêtés, brocoli cru, champignons de Paris crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : sardines, brocoli, champignons ». Représenter papillote ouverte avec plusieurs petits filets de sardine argentés cuits, bouquets de brocoli et champignons de Paris. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r921",
+      "title": "Vapeur : sardines, chou-fleur, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r921-vapeur-sardines-chou-fleur-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : sardines, chou-fleur, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de sardine crus désarêtés, chou-fleur cru, côtes de blette crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : sardines, chou-fleur, côtes de blette ». Représenter plusieurs petits filets de sardine argentés vapeur avec bouquets de chou-fleur et tronçons blancs de côtes de blette. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r922",
+      "title": "Papillotes : sardines, aubergine, épinards",
+      "output_file": "public/assets/recipes/generated/r922-papillotes-sardines-aubergine-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : sardines, aubergine, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de sardine crus désarêtés, aubergine crue, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : sardines, aubergine, épinards ». Représenter papillote ouverte avec plusieurs petits filets de sardine argentés, cubes d'aubergine et épinards cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r923",
+      "title": "Vapeur : sardines, courge, chou blanc",
+      "output_file": "public/assets/recipes/generated/r923-vapeur-sardines-courge-chou-blanc.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : sardines, courge, chou blanc ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de sardine crus désarêtés, courge musquée pelée crue, chou blanc cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : sardines, courge, chou blanc ». Représenter filets de sardine argentés vapeur avec cubes de courge musquée et lanières de chou blanc. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r924",
+      "title": "Papillotes : sardines, endives, radis",
+      "output_file": "public/assets/recipes/generated/r924-papillotes-sardines-endives-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : sardines, endives, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de sardine crus désarêtés, endives crues, radis rouges crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : sardines, endives, radis ». Représenter papillote ouverte avec filets de sardine argentés, quartiers d'endive et radis rouges cuits coupés en deux. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r925",
+      "title": "Papillotes : maquereau, fenouil, chou-fleur",
+      "output_file": "public/assets/recipes/generated/r925-papillotes-maquereau-fenouil-chou-fleur.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : maquereau, fenouil, chou-fleur ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de maquereau crus désarêtés, fenouil cru, chou-fleur cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : maquereau, fenouil, chou-fleur ». Représenter papillote ouverte avec filets de maquereau reconnaissables à peau rayée argentée, quartiers de fenouil et bouquets de chou-fleur. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r926",
+      "title": "Vapeur : maquereau, poivron, haricots verts",
+      "output_file": "public/assets/recipes/generated/r926-vapeur-maquereau-poivron-haricots-verts.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : maquereau, poivron, haricots verts ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de maquereau crus désarêtés, poivron rouge cru, haricots verts crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : maquereau, poivron, haricots verts ». Représenter filets de maquereau vapeur à peau rayée argentée avec lanières de poivron rouge et haricots verts. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r927",
+      "title": "Papillotes : maquereau, courge, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r927-papillotes-maquereau-courge-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : maquereau, courge, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de maquereau crus désarêtés, courge musquée pelée crue, côtes de blette crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : maquereau, courge, côtes de blette ». Représenter papillote ouverte avec filets de maquereau à peau rayée argentée, cubes de courge et tronçons blancs de côtes de blette. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r928",
+      "title": "Vapeur : maquereau, asperges, champignons",
+      "output_file": "public/assets/recipes/generated/r928-vapeur-maquereau-asperges-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : maquereau, asperges, champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de maquereau crus désarêtés, asperges vertes crues, champignons de Paris crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : maquereau, asperges, champignons ». Représenter filets de maquereau vapeur à peau rayée argentée avec asperges vertes et champignons de Paris cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r929",
+      "title": "Papillotes : maquereau, chou rouge, brocoli",
+      "output_file": "public/assets/recipes/generated/r929-papillotes-maquereau-chou-rouge-brocoli.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Papillotes : maquereau, chou rouge, brocoli ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de maquereau crus désarêtés, chou rouge cru, brocoli cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Papillotes : maquereau, chou rouge, brocoli ». Représenter papillote ouverte avec filets de maquereau à peau rayée argentée, lanières de chou rouge et bouquets de brocoli. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r930",
+      "title": "Vapeur : poulet, fenouil, épinards",
+      "output_file": "public/assets/recipes/generated/r930-vapeur-poulet-fenouil-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Vapeur : poulet, fenouil, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de poulet cru sans peau, fenouil cru, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Vapeur : poulet, fenouil, épinards ». Représenter tranches de poulet vapeur avec quartiers de fenouil et épinards cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r931",
+      "title": "Galettes fines : pommes de terre, panais, épinards",
+      "output_file": "public/assets/recipes/generated/r931-galettes-fines-pommes-de-terre-panais-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Galettes fines : pommes de terre, panais, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, panais pelé cru, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Galettes fines : pommes de terre, panais, épinards ». Représenter petites galettes fines rustiques faites de pomme de terre et panais râpés avec épinards hachés, légèrement dorées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r932",
+      "title": "Rosace fondante : pommes de terre, fenouil, betterave",
+      "output_file": "public/assets/recipes/generated/r932-rosace-fondante-pommes-de-terre-fenouil-betterave.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Rosace fondante : pommes de terre, fenouil, betterave ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, fenouil cru, betterave rouge crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Rosace fondante : pommes de terre, fenouil, betterave ». Représenter rosace cuite de fines rondelles alternées de pomme de terre, fenouil et betterave rouge, sans sauce. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r933",
+      "title": "Gratin de légumes sans crème : pommes de terre, chou-fleur, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r933-gratin-de-legumes-sans-creme-pommes-de-terre-chou-fleur-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Gratin de légumes sans crème : pommes de terre, chou-fleur, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, chou-fleur cru, côtes de blette crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Gratin de légumes sans crème : pommes de terre, chou-fleur, côtes de blette ». Représenter un petit gratin maison sans crème, composé uniquement de fines rondelles de pommes de terre, petits bouquets de chou-fleur et côtes de blette, légèrement doré par la cuisson. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r934",
+      "title": "Pommes de terre garnies : pommes de terre, aubergine, poivron",
+      "output_file": "public/assets/recipes/generated/r934-pommes-de-terre-garnies-pommes-de-terre-aubergine-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pommes de terre garnies : pommes de terre, aubergine, poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, aubergine crue, poivron rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Pommes de terre garnies : pommes de terre, aubergine, poivron ». Représenter deux pommes de terre au four ouvertes et garnies uniquement de dés fondants d’aubergine et de poivron rouge. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r935",
+      "title": "Quartiers rôtis sous couvercle : pommes de terre, rutabaga, chou blanc",
+      "output_file": "public/assets/recipes/generated/r935-quartiers-rotis-sous-couvercle-pommes-de-terre-rutabaga-chou-blanc.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Quartiers rôtis sous couvercle : pommes de terre, rutabaga, chou blanc ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, rutabaga pelé cru, chou blanc cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Quartiers rôtis sous couvercle : pommes de terre, rutabaga, chou blanc ». Représenter des quartiers rôtis et fondants de pommes de terre et rutabaga avec des lanières de chou blanc cuit. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r936",
+      "title": "Galettes fines : pommes de terre, carotte, cresson",
+      "output_file": "public/assets/recipes/generated/r936-galettes-fines-pommes-de-terre-carotte-cresson.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Galettes fines : pommes de terre, carotte, cresson ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, carotte crue, cresson de fontaine cultivé. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Galettes fines : pommes de terre, carotte, cresson”. Three homemade thin grated potato and grated carrot cakes, naturally golden, with a few whole fresh watercress leaves. ONLY potato, carrot and watercress. Absolutely zero black dots, zero pepper, zero grains, zero chopped herbs, zero seasoning, zero sauce, zero visible oil. Clean golden surface with normal toasted edges only. Real 50mm camera, soft natural side light, matte ceramic plate, pale mineral background, sage green linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI, plastic, illustration or artificial gloss. Square high-quality appetizing authentic photograph."
+    },
+    {
+      "id": "r937",
+      "title": "Rosace fondante : pommes de terre, navet, courgette",
+      "output_file": "public/assets/recipes/generated/r937-rosace-fondante-pommes-de-terre-navet-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Rosace fondante : pommes de terre, navet, courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, navet pelé cru, courgette crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Rosace fondante : pommes de terre, navet, courgette ». Représenter une rosace fondante faite uniquement de fines rondelles superposées de pommes de terre, navet et courgette. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r938",
+      "title": "Gratin de légumes sans crème : pommes de terre, choux de Bruxelles, champignons",
+      "output_file": "public/assets/recipes/generated/r938-gratin-de-legumes-sans-creme-pommes-de-terre-choux-de-bruxelles-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Gratin de légumes sans crème : pommes de terre, choux de Bruxelles, champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, choux de Bruxelles crus, champignons de Paris crus. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Gratin de légumes sans crème : pommes de terre, choux de Bruxelles, champignons”. Show un petit gratin sec et maison composé uniquement de rondelles de pommes de terre, demi-choux de Bruxelles et champignons de Paris émincés, naturally cooked and lightly browned. ONLY the named vegetables. Absolutely zero black dots, zero pepper, zero grains, zero herbs, zero seasoning, zero cheese, zero cream, zero sauce, zero visible oil. Clean vegetable surfaces with normal golden toasted edges only. Real 50mm camera, soft natural side light, matte ceramic baking dish, pale mineral background, sage green linen, realistic portion, homemade imperfections, three-quarter overhead view. No text, logo, packaging or person. No CGI, plastic, illustration or artificial gloss. Square high-quality appetizing authentic photograph."
+    },
+    {
+      "id": "r939",
+      "title": "Pommes de terre garnies : pommes de terre, petits pois, épinards",
+      "output_file": "public/assets/recipes/generated/r939-pommes-de-terre-garnies-pommes-de-terre-petits-pois-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pommes de terre garnies : pommes de terre, petits pois, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, petits pois frais écossés crus, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Pommes de terre garnies : pommes de terre, petits pois, épinards ». Représenter deux pommes de terre au four ouvertes et garnies uniquement de petits pois verts et d’épinards fondants. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r940",
+      "title": "Quartiers rôtis sous couvercle : pommes de terre, céleri-rave, poivron",
+      "output_file": "public/assets/recipes/generated/r940-quartiers-rotis-sous-couvercle-pommes-de-terre-celeri-rave-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Quartiers rôtis sous couvercle : pommes de terre, céleri-rave, poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, céleri-rave pelé cru, poivron rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Quartiers rôtis sous couvercle : pommes de terre, céleri-rave, poivron ». Représenter des quartiers rôtis et fondants de pommes de terre et de céleri-rave avec des morceaux de poivron rouge. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r941",
+      "title": "Rosace fondante : pommes de terre, courge, endives",
+      "output_file": "public/assets/recipes/generated/r941-rosace-fondante-pommes-de-terre-courge-endives.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Rosace fondante : pommes de terre, courge, endives ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, courge musquée pelée crue, endives crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Rosace fondante : pommes de terre, courge, endives ». Représenter une rosace fondante faite uniquement de fines rondelles superposées de pommes de terre, courge musquée et endive cuite. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r942",
+      "title": "Gratin de légumes sans crème : pommes de terre, brocoli, carotte",
+      "output_file": "public/assets/recipes/generated/r942-gratin-de-legumes-sans-creme-pommes-de-terre-brocoli-carotte.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Gratin de légumes sans crème : pommes de terre, brocoli, carotte ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, brocoli cru, carotte crue. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Gratin de légumes sans crème : pommes de terre, brocoli, carotte”. Show un petit gratin sec et maison composé uniquement de rondelles de pommes de terre, bouquets de brocoli et rondelles de carotte, naturally cooked and lightly browned. ONLY the named vegetables. Absolutely zero black dots, zero pepper, zero grains, zero herbs, zero seasoning, zero cheese, zero cream, zero sauce, zero visible oil. Clean vegetable surfaces with normal golden toasted edges only. Real 50mm camera, soft natural side light, matte ceramic baking dish, pale mineral background, sage green linen, realistic portion, homemade imperfections, three-quarter overhead view. No text, logo, packaging or person. No CGI, plastic, illustration or artificial gloss. Square high-quality appetizing authentic photograph."
+    },
+    {
+      "id": "r943",
+      "title": "Pommes de terre garnies : pommes de terre, fenouil, chou rouge",
+      "output_file": "public/assets/recipes/generated/r943-pommes-de-terre-garnies-pommes-de-terre-fenouil-chou-rouge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pommes de terre garnies : pommes de terre, fenouil, chou rouge ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, fenouil cru, chou rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Pommes de terre garnies : pommes de terre, fenouil, chou rouge ». Représenter deux pommes de terre au four ouvertes et garnies uniquement de fines lanières de fenouil fondant et de chou rouge cuit. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r944",
+      "title": "Quartiers rôtis sous couvercle : pommes de terre, artichaut, champignons",
+      "output_file": "public/assets/recipes/generated/r944-quartiers-rotis-sous-couvercle-pommes-de-terre-artichaut-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Quartiers rôtis sous couvercle : pommes de terre, artichaut, champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, fonds d'artichaut frais crus, champignons de Paris crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Quartiers rôtis sous couvercle : pommes de terre, artichaut, champignons ». Représenter des quartiers rôtis et fondants de pommes de terre, fonds d’artichaut frais en morceaux et champignons de Paris. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r945",
+      "title": "Galettes fines : pommes de terre, céleri-rave, persil",
+      "output_file": "public/assets/recipes/generated/r945-galettes-fines-pommes-de-terre-celeri-rave-persil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Galettes fines : pommes de terre, céleri-rave, persil ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, céleri-rave pelé cru, persil frais. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Galettes fines : pommes de terre, céleri-rave, persil ». Représenter trois galettes fines maison de pommes de terre et céleri-rave râpés, avec du persil frais clairement visible. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r946",
+      "title": "Rosace fondante : pommes de terre, panais, poivron",
+      "output_file": "public/assets/recipes/generated/r946-rosace-fondante-pommes-de-terre-panais-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Rosace fondante : pommes de terre, panais, poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, panais pelé cru, poivron rouge cru. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Rosace fondante : pommes de terre, panais, poivron”. A homemade spiral rosette made only of alternating thin slices of pale yellow potato, ivory parsnip and bright red bell pepper. ONLY those three vegetables. Absolutely zero black dots, zero pepper, zero grains, zero herbs, zero seasoning, zero sauce, zero visible oil. Clean smooth vegetable surfaces with a few normal golden toasted edges. Real 50mm camera, soft natural side light, matte ceramic baking dish, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI, plastic, illustration or artificial gloss. Square high-quality appetizing authentic photograph."
+    },
+    {
+      "id": "r947",
+      "title": "Gratin de légumes sans crème : pommes de terre, haricots verts, courgette",
+      "output_file": "public/assets/recipes/generated/r947-gratin-de-legumes-sans-creme-pommes-de-terre-haricots-verts-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Gratin de légumes sans crème : pommes de terre, haricots verts, courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, haricots verts crus, courgette crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Gratin de légumes sans crème : pommes de terre, haricots verts, courgette ». Représenter un petit gratin maison sans crème composé uniquement de rondelles de pommes de terre, haricots verts et courgette, légèrement doré. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r948",
+      "title": "Pommes de terre garnies : pommes de terre, chou-fleur, épinards",
+      "output_file": "public/assets/recipes/generated/r948-pommes-de-terre-garnies-pommes-de-terre-chou-fleur-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pommes de terre garnies : pommes de terre, chou-fleur, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, chou-fleur cru, épinards crus. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Pommes de terre garnies : pommes de terre, chou-fleur, épinards”. Show two oven-baked potatoes opened and filled only with small cauliflower florets and soft cooked spinach. ONLY the named vegetables. Absolutely zero black dots, zero pepper, zero grains, zero herbs, zero seasoning, zero sauce, zero visible oil. Clean smooth vegetable surfaces with natural golden toasted edges only. Real 50mm camera, soft natural side light, matte ceramic plate or baking dish, pale mineral background, sage green linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI, plastic, illustration or artificial gloss. Square high-quality appetizing authentic photograph."
+    },
+    {
+      "id": "r949",
+      "title": "Quartiers rôtis sous couvercle : pommes de terre, navet, asperges",
+      "output_file": "public/assets/recipes/generated/r949-quartiers-rotis-sous-couvercle-pommes-de-terre-navet-asperges.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Quartiers rôtis sous couvercle : pommes de terre, navet, asperges ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, navet pelé cru, asperges vertes crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Quartiers rôtis sous couvercle : pommes de terre, navet, asperges ». Représenter des quartiers rôtis et fondants de pommes de terre et de navet, avec des asperges vertes cuites. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    }
+  ]
+}

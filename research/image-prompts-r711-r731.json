@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "generated_at": "2026-09-06",
+    "recipe_file": "association-collection.json",
+    "count": 20,
+    "target": "JPEG 900x900, qualité 72-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r711",
+      "title": "Cabillaud en papillote de chou et fenouil",
+      "output_file": "public/assets/recipes/generated/r711-cabillaud-en-papillote-de-chou-et-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Cabillaud en papillote de chou et fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, chou blanc cru, fenouil cru, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r711 — Cabillaud en papillote de chou et fenouil. filet de cabillaud blanc cuit dans une papillote ouverte en feuille de chou blanc, fenouil cuit émincé, huile d'olive. Papillote végétale sans papier visible.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r713",
+      "title": "Truite au four, poivron doux et champignons",
+      "output_file": "public/assets/recipes/generated/r713-truite-au-four-poivron-doux-et-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Truite au four, poivron doux et champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de truite cru désarêté, poivron rouge cru, champignons de Paris crus, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r713 — Truite au four, poivron doux et champignons. filet de truite cuit au four, lanières de poivron rouge rôti, champignons de Paris cuits, huile d'olive. Peau de truite naturelle, aucun citron ni herbe.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r714",
+      "title": "Sardines ouvertes sur aubergine fondante",
+      "output_file": "public/assets/recipes/generated/r714-sardines-ouvertes-sur-aubergine-fondante.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Sardines ouvertes sur aubergine fondante ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de sardine crus désarêtés, aubergine crue, ciboulette fraîche, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r714 — Sardines ouvertes sur aubergine fondante. filets de sardine cuits ouverts, tranches d'aubergine fondante, ciboulette fraîche, huile d'olive. Sardines sans arêtes visibles, aucun citron.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r715",
+      "title": "Maquereau au fenouil et quartiers d'orange",
+      "output_file": "public/assets/recipes/generated/r715-maquereau-au-fenouil-et-quartiers-d-orange.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Maquereau au fenouil et quartiers d'orange ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de maquereau crus désarêtés, fenouil cru, chair d'orange sans pépins. Consigne de génération effectivement utilisée : r715 — Maquereau au fenouil et quartiers d'orange. filets de maquereau cuits, fenouil cuit, quartiers d'orange frais sans pépins. Aucun autre ingrédient, aucune huile, aucune herbe.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r716",
+      "title": "Poulet roulé aux épinards, purée de chou-fleur",
+      "output_file": "public/assets/recipes/generated/r716-poulet-roule-aux-epinards-puree-de-chou-fleur.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Poulet roulé aux épinards, purée de chou-fleur ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de poulet cru sans peau, épinards crus, chou-fleur cru, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r716 — Poulet roulé aux épinards, purée de chou-fleur. roulé de filet de poulet cuit sans peau avec cœur d'épinards cuits, tranché pour montrer la spirale, purée de chou-fleur faite avec eau et huile d'olive. Aucun produit laitier.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r717",
+      "title": "Dinde émincée aux endives et champignons",
+      "output_file": "public/assets/recipes/generated/r717-dinde-emincee-aux-endives-et-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Dinde émincée aux endives et champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : escalope de dinde crue, endives crues, champignons de Paris crus, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r717 — Dinde émincée aux endives et champignons. lamelles d'escalope de dinde cuites, endives braisées, champignons de Paris cuits, huile d'olive et eau. Plat chaud sans herbe ni épice.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r718",
+      "title": "Cabillaud poché en soupe de courgette",
+      "output_file": "public/assets/recipes/generated/r718-cabillaud-poche-en-soupe-de-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Cabillaud poché en soupe de courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, courgette crue, fenouil cru, ciboulette fraîche, eau potable. Consigne de génération effectivement utilisée : r718 — Cabillaud poché en soupe de courgette. morceau de filet de cabillaud poché dans une soupe de courgette et fenouil à l'eau, ciboulette fraîche ciselée. Aucun produit crémeux ni huile.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r719",
+      "title": "Brochettes de poulet, courgette et poivron",
+      "output_file": "public/assets/recipes/generated/r719-brochettes-de-poulet-courgette-et-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Brochettes de poulet, courgette et poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de poulet cru sans peau, courgette crue, poivron rouge cru, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r719 — Brochettes de poulet, courgette et poivron. brochettes cuites alternant uniquement cubes de filet de poulet sans peau, courgette et poivron rouge, avec huile d'olive. Aucun oignon, aucune herbe, aucune épice.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r720",
+      "title": "Saumon émietté en barquettes de laitue et concombre",
+      "output_file": "public/assets/recipes/generated/r720-saumon-emiette-en-barquettes-de-laitue-et-concombre.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Saumon émietté en barquettes de laitue et concombre ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de saumon cru désarêté, laitue crue, concombre cru avec peau, chair d'avocat. Consigne de génération effectivement utilisée : r720 — Saumon émietté en barquettes de laitue et concombre. saumon cuit émietté, feuilles de laitue crue en barquettes, concombre cru avec peau en dés, chair d'avocat en dés. Aucun autre ingrédient ni sauce.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r721",
+      "title": "Truite et brocoli à la vapeur, huile de ciboulette",
+      "output_file": "public/assets/recipes/generated/r721-truite-et-brocoli-a-la-vapeur-huile-de-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Truite et brocoli à la vapeur, huile de ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de truite cru désarêté, brocoli cru, ciboulette fraîche, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r721 — Truite et brocoli à la vapeur, huile de ciboulette. filet de truite cuit vapeur, bouquets de brocoli vapeur, ciboulette fraîche dans un léger filet d'huile d'olive. Aucun citron ni autre garniture.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r722",
+      "title": "Poulet effiloché aux rubans de chou rouge",
+      "output_file": "public/assets/recipes/generated/r722-poulet-effiloche-aux-rubans-de-chou-rouge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Poulet effiloché aux rubans de chou rouge ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de poulet cru sans peau, chou rouge cru, fenouil cru, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r722 — Poulet effiloché aux rubans de chou rouge. filet de poulet cuit effiloché, rubans de chou rouge étuvés, fenouil cuit émincé, huile d'olive et eau. Aucun autre légume ou herbe.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r723",
+      "title": "Dinde en petits ramequins aux champignons",
+      "output_file": "public/assets/recipes/generated/r723-dinde-en-petits-ramequins-aux-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Dinde en petits ramequins aux champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : escalope de dinde crue, champignons de Paris crus, courgette crue, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r723 — Dinde en petits ramequins aux champignons. petits ramequins cuits contenant uniquement escalope de dinde en morceaux, champignons de Paris, courgette et huile d'olive. Sans fromage, sans chapelure, sans herbe.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r724",
+      "title": "Sardines en papillote aux tomates et au fenouil",
+      "output_file": "public/assets/recipes/generated/r724-sardines-en-papillote-aux-tomates-et-au-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Sardines en papillote aux tomates et au fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de sardine crus désarêtés, tomate ronde crue, fenouil cru. Consigne de génération effectivement utilisée : r724 — Sardines en papillote aux tomates et au fenouil. filets de sardine cuits en papillote ouverte avec quartiers de tomate ronde et fenouil émincé. Aucun papier visible, aucune huile, aucun citron ni herbe.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r725",
+      "title": "Maquereau au chou-fleur et crème de courgette",
+      "output_file": "public/assets/recipes/generated/r725-maquereau-au-chou-fleur-et-creme-de-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Maquereau au chou-fleur et crème de courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filets de maquereau crus désarêtés, chou-fleur cru, courgette crue, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r725 — Maquereau au chou-fleur et crème de courgette. filets de maquereau cuits, bouquets de chou-fleur cuits, crème végétale lisse faite uniquement de courgette, huile d'olive et eau. Aucun produit laitier.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r726",
+      "title": "Cabillaud au citron et aux asperges en papillote",
+      "output_file": "public/assets/recipes/generated/r726-cabillaud-au-citron-et-aux-asperges-en-papillote.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Cabillaud au citron et aux asperges en papillote ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de cabillaud cru désarêté, asperges vertes crues, chair de citron sans pépins. Consigne de génération effectivement utilisée : r726 — Cabillaud au citron et aux asperges en papillote. Photographie culinaire ultra réaliste du résultat après ouverture et retrait complet de la papillote : filet de cabillaud blanc cuit posé directement sur une assiette avec asperges vertes cuites et quelques suprêmes de citron jaune entièrement pelés, sans peau, sans zeste, sans pépins. Aucun emballage, aucune feuille, aucun papier, aucune enveloppe visible. Exclusivement cabillaud, asperges et chair de citron. Zéro huile, herbe, poivre, épice ou ingrédient supplémentaire. Fond minéral clair, assiette en céramique crème mate, textile sauge, lumière naturelle latérale, objectif 50 mm, carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, CGI."
+    },
+    {
+      "id": "r727",
+      "title": "Poulet en cocotte de fenouil à la poire",
+      "output_file": "public/assets/recipes/generated/r727-poulet-en-cocotte-de-fenouil-a-la-poire.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Poulet en cocotte de fenouil à la poire ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de poulet cru sans peau, fenouil cru, poire fraîche avec peau, eau potable. Consigne de génération effectivement utilisée : r727 — Poulet en cocotte de fenouil à la poire. morceaux de filet de poulet cuit sans peau, fenouil braisé, quartiers de poire cuite avec peau, eau. Petite cocotte crème, aucun autre ingrédient.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r728",
+      "title": "Saumon au chou rouge étuvé et pomme acidulée",
+      "output_file": "public/assets/recipes/generated/r728-saumon-au-chou-rouge-etuve-et-pomme-acidulee.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Saumon au chou rouge étuvé et pomme acidulée ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de saumon cru désarêté, chou rouge cru, pomme fraîche avec peau, eau potable. Consigne de génération effectivement utilisée : r728 — Saumon au chou rouge étuvé et pomme acidulée. filet de saumon cuit, chou rouge étuvé, fins quartiers de pomme fraîche acidulée avec peau, eau. Aucun autre ingrédient ni huile.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r729",
+      "title": "Truite aux endives vapeur et noisettes",
+      "output_file": "public/assets/recipes/generated/r729-truite-aux-endives-vapeur-et-noisettes.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Truite aux endives vapeur et noisettes ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de truite cru désarêté, endives crues, noisettes nature non salées, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r729 — Truite aux endives vapeur et noisettes. filet de truite cuit vapeur, endives vapeur, noisettes nature non salées coupées en deux, huile d'olive. Aucun citron ni herbe.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r730",
+      "title": "Dinde en roulés de chou, sauce de poivron",
+      "output_file": "public/assets/recipes/generated/r730-dinde-en-roules-de-chou-sauce-de-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Dinde en roulés de chou, sauce de poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : escalope de dinde crue, chou blanc cru, poivron rouge cru, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r730 — Dinde en roulés de chou, sauce de poivron. Photographie culinaire ultra réaliste de deux roulés de feuilles de chou blanc cuit farcis uniquement de dinde cuite à la chair claire parfaitement nette, servis avec sauce lisse de poivron rouge faite avec huile d'olive et eau. Zéro point noir dans la viande, zéro poivre, zéro épice, zéro herbe, zéro ingrédient supplémentaire. Fond minéral clair, assiette crème mate, textile sauge, lumière naturelle latérale, 50 mm, carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, CGI."
+    },
+    {
+      "id": "r731",
+      "title": "Soupe claire de poulet, brocoli et côtes de blette",
+      "output_file": "public/assets/recipes/generated/r731-soupe-claire-de-poulet-brocoli-et-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe claire de poulet, brocoli et côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : filet de poulet cru sans peau, brocoli cru, côtes de blette crues, eau potable. Consigne de génération effectivement utilisée : r731 — Soupe claire de poulet, brocoli et côtes de blette. soupe claire à l'eau avec morceaux de filet de poulet cuit sans peau, bouquets de brocoli et côtes blanches de blette coupées. Aucun autre ingrédient.. Photographie culinaire ultra réaliste, plat cuit fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    }
+  ]
+}

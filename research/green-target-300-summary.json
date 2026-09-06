@@ -1,0 +1,18 @@
+{
+  "new_recipes": 207,
+  "total_green": 300,
+  "orange_added": 0,
+  "gray_added": 0,
+  "unknown_added": 0,
+  "new_plannable": 144,
+  "total_green_plannable": 189,
+  "green_categories": {
+    "plat": 154,
+    "soupe": 39,
+    "accompagnement": 29,
+    "salade": 46,
+    "sauce": 2,
+    "dessert": 30
+  },
+  "previous_250_unchanged": true
+}

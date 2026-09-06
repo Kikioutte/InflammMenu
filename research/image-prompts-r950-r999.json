@@ -1,0 +1,360 @@
+{
+  "meta": {
+    "generated_at": "2026-09-06",
+    "recipe_file": "association-collection.json",
+    "count": 50,
+    "target": "JPEG 900x900, qualité 72-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r950",
+      "title": "Galettes fines : pommes de terre, rutabaga, ciboulette",
+      "output_file": "public/assets/recipes/generated/r950-galettes-fines-pommes-de-terre-rutabaga-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Galettes fines : pommes de terre, rutabaga, ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, rutabaga pelé cru, ciboulette fraîche. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Galettes fines : pommes de terre, rutabaga, ciboulette ». Représenter trois galettes fines maison de pommes de terre et rutabaga râpés, avec de la ciboulette fraîche clairement visible. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r951",
+      "title": "Rosace fondante : pommes de terre, carotte, fenouil",
+      "output_file": "public/assets/recipes/generated/r951-rosace-fondante-pommes-de-terre-carotte-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Rosace fondante : pommes de terre, carotte, fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, carotte crue, fenouil cru. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Rosace fondante : pommes de terre, carotte, fenouil”. Show a homemade rosette made only of alternating thin round slices of pale yellow potato and orange carrot, with distinct ivory fennel strips. ONLY the named vegetables. Absolutely zero black dots, zero pepper, zero grains, zero herbs, zero seasoning, zero sauce, zero visible oil. Clean smooth vegetable surfaces with natural golden toasted edges only. Real 50mm camera, soft natural side light, matte ceramic plate or baking dish, pale mineral background, sage green linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI, plastic, illustration or artificial gloss. Square high-quality appetizing authentic photograph."
+    },
+    {
+      "id": "r952",
+      "title": "Gratin de légumes sans crème : pommes de terre, courge, chou rouge",
+      "output_file": "public/assets/recipes/generated/r952-gratin-de-legumes-sans-creme-pommes-de-terre-courge-chou-rouge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Gratin de légumes sans crème : pommes de terre, courge, chou rouge ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, courge musquée pelée crue, chou rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Gratin de légumes sans crème : pommes de terre, courge, chou rouge ». Représenter un petit gratin maison sans crème composé uniquement de rondelles de pommes de terre, tranches de courge musquée et chou rouge cuit. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r953",
+      "title": "Pommes de terre garnies : pommes de terre, champignons, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r953-pommes-de-terre-garnies-pommes-de-terre-champignons-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pommes de terre garnies : pommes de terre, champignons, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, champignons de Paris crus, côtes de blette crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Pommes de terre garnies : pommes de terre, champignons, côtes de blette ». Représenter deux pommes de terre au four ouvertes et garnies uniquement de champignons de Paris émincés et de côtes de blette fondantes. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r954",
+      "title": "Quartiers rôtis sous couvercle : pommes de terre, betterave, choux de Bruxelles",
+      "output_file": "public/assets/recipes/generated/r954-quartiers-rotis-sous-couvercle-pommes-de-terre-betterave-choux-de-bruxelles.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Quartiers rôtis sous couvercle : pommes de terre, betterave, choux de Bruxelles ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, betterave rouge crue, choux de Bruxelles crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Quartiers rôtis sous couvercle : pommes de terre, betterave, choux de Bruxelles ». Représenter des quartiers rôtis et fondants de pommes de terre et de betterave rouge, avec des demi-choux de Bruxelles. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r955",
+      "title": "Galettes fines : pommes de terre, courgette, basilic",
+      "output_file": "public/assets/recipes/generated/r955-galettes-fines-pommes-de-terre-courgette-basilic.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Galettes fines : pommes de terre, courgette, basilic ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, courgette crue, basilic frais. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Galettes fines : pommes de terre, courgette, basilic ». Représenter trois galettes fines maison de pommes de terre et courgette râpées, avec des feuilles de basilic frais clairement visibles. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r956",
+      "title": "Rosace fondante : pommes de terre, céleri-rave, navet",
+      "output_file": "public/assets/recipes/generated/r956-rosace-fondante-pommes-de-terre-celeri-rave-navet.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Rosace fondante : pommes de terre, céleri-rave, navet ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, céleri-rave pelé cru, navet pelé cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Rosace fondante : pommes de terre, céleri-rave, navet ». Représenter une rosace fondante faite uniquement de fines rondelles superposées de pommes de terre, céleri-rave et navet, avec de légères nuances de beige. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r957",
+      "title": "Gratin de légumes sans crème : pommes de terre, artichaut, poivron",
+      "output_file": "public/assets/recipes/generated/r957-gratin-de-legumes-sans-creme-pommes-de-terre-artichaut-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Gratin de légumes sans crème : pommes de terre, artichaut, poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, fonds d'artichaut frais crus, poivron rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Gratin de légumes sans crème : pommes de terre, artichaut, poivron ». Représenter un petit gratin maison sans crème composé uniquement de rondelles de pommes de terre, fonds d’artichaut frais et lanières de poivron rouge. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r958",
+      "title": "Pommes de terre garnies : pommes de terre, brocoli, petits pois",
+      "output_file": "public/assets/recipes/generated/r958-pommes-de-terre-garnies-pommes-de-terre-brocoli-petits-pois.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pommes de terre garnies : pommes de terre, brocoli, petits pois ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, brocoli cru, petits pois frais écossés crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Pommes de terre garnies : pommes de terre, brocoli, petits pois ». Représenter deux pommes de terre au four ouvertes et garnies uniquement de petits bouquets de brocoli et de petits pois verts. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r959",
+      "title": "Quartiers rôtis sous couvercle : pommes de terre, panais, endives",
+      "output_file": "public/assets/recipes/generated/r959-quartiers-rotis-sous-couvercle-pommes-de-terre-panais-endives.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Quartiers rôtis sous couvercle : pommes de terre, panais, endives ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, panais pelé cru, endives crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Quartiers rôtis sous couvercle : pommes de terre, panais, endives ». Représenter des quartiers rôtis et fondants de pommes de terre et panais, avec des feuilles d’endive cuites. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r960",
+      "title": "Galettes fines : pommes de terre, carotte, persil",
+      "output_file": "public/assets/recipes/generated/r960-galettes-fines-pommes-de-terre-carotte-persil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Galettes fines : pommes de terre, carotte, persil ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, carotte crue, persil frais. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Galettes fines : pommes de terre, carotte, persil”. Three thin homemade grated potato and carrot cakes, pale golden with a few browned outer strands only. A few whole flat parsley leaves placed naturally beside the cakes. ONLY potato, carrot and parsley. The cake surfaces are clean and unseasoned: absolutely no black dots, no pepper, no grains, no dark flecks, no chopped herbs, no sauce and no visible oil. Real 50mm camera, soft natural side light, matte ceramic plate, pale mineral background, sage linen, realistic portion, homemade imperfections, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic food photograph."
+    },
+    {
+      "id": "r961",
+      "title": "Rosace fondante : pommes de terre, betterave, courge",
+      "output_file": "public/assets/recipes/generated/r961-rosace-fondante-pommes-de-terre-betterave-courge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Rosace fondante : pommes de terre, betterave, courge ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, betterave rouge crue, courge musquée pelée crue. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Rosace fondante : pommes de terre, betterave, courge”. Show a homemade spiral rosette made only of alternating thin slices of pale yellow potato, deep red beetroot and orange butternut squash. ONLY the named ingredients. Absolutely zero black dots, zero pepper, zero grains, zero seasoning, zero sauce, zero visible oil. Clean vegetable surfaces with natural golden toasted edges only. Real 50mm camera, soft natural side light, matte ceramic plate or baking dish, pale mineral background, sage green linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI, plastic, illustration or artificial gloss. Square high-quality appetizing authentic photograph."
+    },
+    {
+      "id": "r962",
+      "title": "Gratin de légumes sans crème : pommes de terre, fenouil, haricots verts",
+      "output_file": "public/assets/recipes/generated/r962-gratin-de-legumes-sans-creme-pommes-de-terre-fenouil-haricots-verts.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Gratin de légumes sans crème : pommes de terre, fenouil, haricots verts ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, fenouil cru, haricots verts crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Gratin de légumes sans crème : pommes de terre, fenouil, haricots verts ». Représenter un petit gratin maison sans crème composé uniquement de rondelles de pommes de terre, lamelles de fenouil et haricots verts. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r963",
+      "title": "Pommes de terre garnies : pommes de terre, aubergine, cresson",
+      "output_file": "public/assets/recipes/generated/r963-pommes-de-terre-garnies-pommes-de-terre-aubergine-cresson.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pommes de terre garnies : pommes de terre, aubergine, cresson ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, aubergine crue, cresson de fontaine cultivé. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Pommes de terre garnies : pommes de terre, aubergine, cresson ». Représenter deux pommes de terre au four ouvertes et garnies uniquement de dés d’aubergine fondante et de feuilles entières de cresson frais. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r964",
+      "title": "Quartiers rôtis sous couvercle : pommes de terre, rutabaga, brocoli",
+      "output_file": "public/assets/recipes/generated/r964-quartiers-rotis-sous-couvercle-pommes-de-terre-rutabaga-brocoli.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Quartiers rôtis sous couvercle : pommes de terre, rutabaga, brocoli ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, rutabaga pelé cru, brocoli cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Quartiers rôtis sous couvercle : pommes de terre, rutabaga, brocoli ». Représenter des quartiers rôtis et fondants de pommes de terre et rutabaga, avec de petits bouquets de brocoli. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r965",
+      "title": "Galettes fines : pommes de terre, panais, ciboulette",
+      "output_file": "public/assets/recipes/generated/r965-galettes-fines-pommes-de-terre-panais-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Galettes fines : pommes de terre, panais, ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme de terre pelée crue, panais pelé cru, ciboulette fraîche. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Galettes fines : pommes de terre, panais, ciboulette”. Show three homemade thin cakes of grated pale potato and ivory parsnip, with short bright green tubular chive pieces clearly visible. ONLY the named ingredients. No dark leafy greens unless named, no parsley, no pepper, no black dots, no grains, no other herbs, no seasoning, no sauce and no visible oil. Clean ingredient surfaces with natural cooking marks only. Real 50mm camera, soft natural side light, matte ceramic bowl or plate, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI, plastic or illustration. Square high-quality authentic food photograph."
+    },
+    {
+      "id": "r966",
+      "title": "Légumes rôtis aux éclats : amandes, carotte, chou-fleur",
+      "output_file": "public/assets/recipes/generated/r966-legumes-rotis-aux-eclats-amandes-carotte-chou-fleur.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : amandes, carotte, chou-fleur ». Ultra-photoréalisme culinaire, ingrédients autorisés : amandes nature non salées, carotte crue, chou-fleur cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : amandes, carotte, chou-fleur ». Représenter des rondelles de carotte et petits bouquets de chou-fleur rôtis, parsemés uniquement d’éclats d’amandes nature non salées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r967",
+      "title": "Légumes vapeur et croquant : amandes, brocoli, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r967-legumes-vapeur-et-croquant-amandes-brocoli-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : amandes, brocoli, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : amandes nature non salées, brocoli cru, côtes de blette crues. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Légumes vapeur et croquant : amandes, brocoli, côtes de blette”. Show a bowl of steamed green broccoli florets and chunky pale celery-like Swiss chard ribs only, topped with clearly identifiable chopped natural almonds. ONLY the named ingredients. No dark leafy greens unless named, no parsley, no pepper, no black dots, no grains, no other herbs, no seasoning, no sauce and no visible oil. Clean ingredient surfaces with natural cooking marks only. Real 50mm camera, soft natural side light, matte ceramic bowl or plate, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI, plastic or illustration. Square high-quality authentic food photograph."
+    },
+    {
+      "id": "r968",
+      "title": "Salade croquante : amandes, concombre, fenouil",
+      "output_file": "public/assets/recipes/generated/r968-salade-croquante-amandes-concombre-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade croquante : amandes, concombre, fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : amandes nature non salées, concombre cru avec peau, fenouil cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade croquante : amandes, concombre, fenouil ». Représenter une salade fraîche et croquante composée uniquement de demi-rondelles de concombre avec peau, fines lamelles de fenouil cru et amandes nature non salées concassées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r969",
+      "title": "Légumes rôtis aux éclats : amandes, courge, choux de Bruxelles",
+      "output_file": "public/assets/recipes/generated/r969-legumes-rotis-aux-eclats-amandes-courge-choux-de-bruxelles.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : amandes, courge, choux de Bruxelles ». Ultra-photoréalisme culinaire, ingrédients autorisés : amandes nature non salées, courge musquée pelée crue, choux de Bruxelles crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : amandes, courge, choux de Bruxelles ». Représenter des morceaux de courge musquée et demi-choux de Bruxelles rôtis, parsemés uniquement d’éclats d’amandes nature non salées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r970",
+      "title": "Légumes vapeur et croquant : amandes, artichaut, petits pois",
+      "output_file": "public/assets/recipes/generated/r970-legumes-vapeur-et-croquant-amandes-artichaut-petits-pois.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : amandes, artichaut, petits pois ». Ultra-photoréalisme culinaire, ingrédients autorisés : amandes nature non salées, fonds d'artichaut frais crus, petits pois frais écossés crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : amandes, artichaut, petits pois ». Représenter un bol de fonds d’artichaut frais cuits vapeur et petits pois verts, avec des amandes nature non salées grossièrement concassées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r971",
+      "title": "Salade croquante : amandes, chou rouge, carotte",
+      "output_file": "public/assets/recipes/generated/r971-salade-croquante-amandes-chou-rouge-carotte.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade croquante : amandes, chou rouge, carotte ». Ultra-photoréalisme culinaire, ingrédients autorisés : amandes nature non salées, chou rouge cru, carotte crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade croquante : amandes, chou rouge, carotte ». Représenter une salade crue composée uniquement de chou rouge finement émincé, rubans de carotte et amandes nature non salées concassées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r972",
+      "title": "Légumes rôtis aux éclats : amandes, aubergine, navet",
+      "output_file": "public/assets/recipes/generated/r972-legumes-rotis-aux-eclats-amandes-aubergine-navet.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : amandes, aubergine, navet ». Ultra-photoréalisme culinaire, ingrédients autorisés : amandes nature non salées, aubergine crue, navet pelé cru. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Légumes rôtis aux éclats : amandes, aubergine, navet”. A simple bowl of roasted purple-skinned eggplant cubes and ivory turnip wedges, topped only with clearly identifiable chopped natural almonds. ONLY eggplant, turnip and almonds. Absolutely no black dots, no pepper, no grains, no herbs, no seasoning, no sauce, no visible oil. Clean vegetable surfaces with smooth golden toasted patches and browned edges only. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r973",
+      "title": "Légumes vapeur et croquant : amandes, asperges, endives",
+      "output_file": "public/assets/recipes/generated/r973-legumes-vapeur-et-croquant-amandes-asperges-endives.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : amandes, asperges, endives ». Ultra-photoréalisme culinaire, ingrédients autorisés : amandes nature non salées, asperges vertes crues, endives crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : amandes, asperges, endives ». Représenter un bol d’asperges vertes et quartiers d’endive cuits vapeur, avec des amandes nature non salées grossièrement concassées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r974",
+      "title": "Légumes rôtis aux éclats : noisettes, panais, chou-fleur",
+      "output_file": "public/assets/recipes/generated/r974-legumes-rotis-aux-eclats-noisettes-panais-chou-fleur.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : noisettes, panais, chou-fleur ». Ultra-photoréalisme culinaire, ingrédients autorisés : noisettes nature non salées, panais pelé cru, chou-fleur cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : noisettes, panais, chou-fleur ». Représenter des bâtonnets de panais et petits bouquets de chou-fleur rôtis, parsemés uniquement d’éclats de noisettes nature non salées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r975",
+      "title": "Légumes vapeur et croquant : noisettes, haricots verts, courgette",
+      "output_file": "public/assets/recipes/generated/r975-legumes-vapeur-et-croquant-noisettes-haricots-verts-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : noisettes, haricots verts, courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : noisettes nature non salées, haricots verts crus, courgette crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : noisettes, haricots verts, courgette ». Représenter un bol de haricots verts et rondelles de courgette cuits vapeur, avec des noisettes nature non salées grossièrement concassées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r976",
+      "title": "Salade croquante : noisettes, betterave, fenouil",
+      "output_file": "public/assets/recipes/generated/r976-salade-croquante-noisettes-betterave-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade croquante : noisettes, betterave, fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : noisettes nature non salées, betterave rouge crue, fenouil cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade croquante : noisettes, betterave, fenouil ». Représenter une salade crue composée uniquement de fines tranches de betterave rouge, lamelles de fenouil et noisettes nature non salées concassées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r977",
+      "title": "Légumes rôtis aux éclats : noisettes, céleri-rave, poivron",
+      "output_file": "public/assets/recipes/generated/r977-legumes-rotis-aux-eclats-noisettes-celeri-rave-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : noisettes, céleri-rave, poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : noisettes nature non salées, céleri-rave pelé cru, poivron rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : noisettes, céleri-rave, poivron ». Représenter des cubes de céleri-rave et morceaux de poivron rouge rôtis, parsemés uniquement d’éclats de noisettes nature non salées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r978",
+      "title": "Légumes vapeur et croquant : noisettes, brocoli, épinards",
+      "output_file": "public/assets/recipes/generated/r978-legumes-vapeur-et-croquant-noisettes-brocoli-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : noisettes, brocoli, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : noisettes nature non salées, brocoli cru, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : noisettes, brocoli, épinards ». Représenter un bol de bouquets de brocoli et épinards cuits vapeur, avec des noisettes nature non salées grossièrement concassées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r979",
+      "title": "Salade croquante : noisettes, laitue, radis",
+      "output_file": "public/assets/recipes/generated/r979-salade-croquante-noisettes-laitue-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade croquante : noisettes, laitue, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : noisettes nature non salées, laitue crue, radis rouges crus. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Salade croquante : noisettes, laitue, radis”. Show a fresh salad made only of crisp lettuce leaves, thin red radish slices and clearly identifiable chopped natural hazelnuts. ONLY the named ingredients. Absolutely no black dots, no pepper, no grains, no herbs, no seasoning, no sauce and no visible oil. Clean ingredient surfaces with natural smooth golden toasted patches only when roasted. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r980",
+      "title": "Légumes rôtis aux éclats : noisettes, rutabaga, champignons",
+      "output_file": "public/assets/recipes/generated/r980-legumes-rotis-aux-eclats-noisettes-rutabaga-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : noisettes, rutabaga, champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : noisettes nature non salées, rutabaga pelé cru, champignons de Paris crus. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Légumes rôtis aux éclats : noisettes, rutabaga, champignons”. Show a bowl of roasted pale cream-yellow rutabaga cubes and sliced brown Paris mushrooms, topped only with chopped natural hazelnuts. ONLY the named ingredients. Absolutely no black dots, no pepper, no grains, no herbs, no seasoning, no sauce and no visible oil. Clean ingredient surfaces with natural smooth golden toasted patches only when roasted. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r981",
+      "title": "Légumes vapeur et croquant : noisettes, artichaut, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r981-legumes-vapeur-et-croquant-noisettes-artichaut-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : noisettes, artichaut, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : noisettes nature non salées, fonds d'artichaut frais crus, côtes de blette crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : noisettes, artichaut, côtes de blette ». Représenter un bol de fonds d’artichaut frais et côtes de blette cuits vapeur, avec des noisettes nature non salées grossièrement concassées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r982",
+      "title": "Légumes rôtis aux éclats : noix, carotte, endives",
+      "output_file": "public/assets/recipes/generated/r982-legumes-rotis-aux-eclats-noix-carotte-endives.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : noix, carotte, endives ». Ultra-photoréalisme culinaire, ingrédients autorisés : cerneaux de noix nature, carotte crue, endives crues. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Légumes rôtis aux éclats : noix, carotte, endives”. Show a bowl of roasted orange carrot rounds and ivory endive quarters, topped only with natural walnut halves. ONLY the named ingredients. Absolutely no black dots, no pepper, no grains, no herbs, no seasoning, no sauce and no visible oil. Clean ingredient surfaces with natural smooth golden toasted patches only when roasted. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r983",
+      "title": "Légumes vapeur et croquant : noix, choux de Bruxelles, courgette",
+      "output_file": "public/assets/recipes/generated/r983-legumes-vapeur-et-croquant-noix-choux-de-bruxelles-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : noix, choux de Bruxelles, courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : cerneaux de noix nature, choux de Bruxelles crus, courgette crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : noix, choux de Bruxelles, courgette ». Représenter un bol de demi-choux de Bruxelles et rondelles de courgette cuits vapeur, avec des cerneaux de noix nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r984",
+      "title": "Salade croquante : noix, chou rouge, céleri branche",
+      "output_file": "public/assets/recipes/generated/r984-salade-croquante-noix-chou-rouge-celeri-branche.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade croquante : noix, chou rouge, céleri branche ». Ultra-photoréalisme culinaire, ingrédients autorisés : cerneaux de noix nature, chou rouge cru, céleri branche cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade croquante : noix, chou rouge, céleri branche ». Représenter une salade crue composée uniquement de chou rouge finement émincé, tronçons de céleri branche et cerneaux de noix nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r985",
+      "title": "Légumes rôtis aux éclats : noix, courge, fenouil",
+      "output_file": "public/assets/recipes/generated/r985-legumes-rotis-aux-eclats-noix-courge-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : noix, courge, fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : cerneaux de noix nature, courge musquée pelée crue, fenouil cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : noix, courge, fenouil ». Représenter des morceaux de courge musquée et quartiers de fenouil rôtis, parsemés uniquement de cerneaux de noix nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r986",
+      "title": "Légumes vapeur et croquant : noix, asperges, petits pois",
+      "output_file": "public/assets/recipes/generated/r986-legumes-vapeur-et-croquant-noix-asperges-petits-pois.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : noix, asperges, petits pois ». Ultra-photoréalisme culinaire, ingrédients autorisés : cerneaux de noix nature, asperges vertes crues, petits pois frais écossés crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : noix, asperges, petits pois ». Représenter un bol d’asperges vertes et petits pois cuits vapeur, avec des cerneaux de noix nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r987",
+      "title": "Salade croquante : noix, concombre, mâche",
+      "output_file": "public/assets/recipes/generated/r987-salade-croquante-noix-concombre-mache.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade croquante : noix, concombre, mâche ». Ultra-photoréalisme culinaire, ingrédients autorisés : cerneaux de noix nature, concombre cru avec peau, mâche crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade croquante : noix, concombre, mâche ». Représenter une salade fraîche composée uniquement de rondelles de concombre avec peau, feuilles de mâche et cerneaux de noix nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r988",
+      "title": "Légumes rôtis aux éclats : noix, aubergine, céleri-rave",
+      "output_file": "public/assets/recipes/generated/r988-legumes-rotis-aux-eclats-noix-aubergine-celeri-rave.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : noix, aubergine, céleri-rave ». Ultra-photoréalisme culinaire, ingrédients autorisés : cerneaux de noix nature, aubergine crue, céleri-rave pelé cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : noix, aubergine, céleri-rave ». Représenter des dés d’aubergine et cubes de céleri-rave rôtis, parsemés uniquement de cerneaux de noix nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r989",
+      "title": "Légumes vapeur et croquant : noix, navet, haricots verts",
+      "output_file": "public/assets/recipes/generated/r989-legumes-vapeur-et-croquant-noix-navet-haricots-verts.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : noix, navet, haricots verts ». Ultra-photoréalisme culinaire, ingrédients autorisés : cerneaux de noix nature, navet pelé cru, haricots verts crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : noix, navet, haricots verts ». Représenter un bol de quartiers de navet et haricots verts cuits vapeur, avec des cerneaux de noix nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r990",
+      "title": "Légumes rôtis aux éclats : sésame, panais, poivron",
+      "output_file": "public/assets/recipes/generated/r990-legumes-rotis-aux-eclats-sesame-panais-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : sésame, panais, poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : graines de sésame nature, panais pelé cru, poivron rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : sésame, panais, poivron ». Représenter des bâtonnets de panais et morceaux de poivron rouge rôtis, parsemés uniquement de graines de sésame nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r991",
+      "title": "Légumes vapeur et croquant : sésame, chou-fleur, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r991-legumes-vapeur-et-croquant-sesame-chou-fleur-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : sésame, chou-fleur, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : graines de sésame nature, chou-fleur cru, côtes de blette crues. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Légumes vapeur et croquant : sésame, chou-fleur, côtes de blette”. Show a bowl of steamed white cauliflower florets and chunky pale green Swiss chard ribs only, sprinkled only with natural sesame seeds. ONLY the named ingredients. No dark leafy greens, no black dots, no pepper, no grains other than sesame, no herbs, no seasoning, no sauce and no visible oil. Clean fresh ingredient surfaces. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r992",
+      "title": "Salade croquante : sésame, carotte, radis",
+      "output_file": "public/assets/recipes/generated/r992-salade-croquante-sesame-carotte-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade croquante : sésame, carotte, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : graines de sésame nature, carotte crue, radis rouges crus. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Salade croquante : sésame, carotte, radis”. Show a fresh raw salad made only of orange carrot ribbons, thin red radish slices and natural sesame seeds. ONLY the named ingredients. No dark leafy greens, no black dots, no pepper, no grains other than sesame, no herbs, no seasoning, no sauce and no visible oil. Clean fresh ingredient surfaces. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r993",
+      "title": "Légumes rôtis aux éclats : sésame, courge, chou blanc",
+      "output_file": "public/assets/recipes/generated/r993-legumes-rotis-aux-eclats-sesame-courge-chou-blanc.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : sésame, courge, chou blanc ». Ultra-photoréalisme culinaire, ingrédients autorisés : graines de sésame nature, courge musquée pelée crue, chou blanc cru. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Légumes rôtis aux éclats : sésame, courge, chou blanc”. Show a bowl of roasted orange butternut squash cubes and ivory-white cabbage pieces, sprinkled only with natural pale sesame seeds. ONLY the named ingredients. Absolutely no black dots, no pepper, no dark grains, no herbs, no seasoning, no sauce and no visible oil. Clean smooth ingredient surfaces; sesame seeds are the only tiny particles. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r994",
+      "title": "Légumes vapeur et croquant : sésame, brocoli, petits pois",
+      "output_file": "public/assets/recipes/generated/r994-legumes-vapeur-et-croquant-sesame-brocoli-petits-pois.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : sésame, brocoli, petits pois ». Ultra-photoréalisme culinaire, ingrédients autorisés : graines de sésame nature, brocoli cru, petits pois frais écossés crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : sésame, brocoli, petits pois ». Représenter un bol de bouquets de brocoli et petits pois cuits vapeur, parsemés uniquement de graines de sésame nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r995",
+      "title": "Salade croquante : sésame, concombre, céleri-rave",
+      "output_file": "public/assets/recipes/generated/r995-salade-croquante-sesame-concombre-celeri-rave.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade croquante : sésame, concombre, céleri-rave ». Ultra-photoréalisme culinaire, ingrédients autorisés : graines de sésame nature, concombre cru avec peau, céleri-rave pelé cru. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Salade croquante : sésame, concombre, céleri-rave”. Show a fresh raw salad made only of green-skinned cucumber rounds, thin ivory celeriac sticks and natural pale sesame seeds. ONLY the named ingredients. Absolutely no black dots, no pepper, no dark grains, no herbs, no seasoning, no sauce and no visible oil. Clean smooth ingredient surfaces; sesame seeds are the only tiny particles. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r996",
+      "title": "Légumes rôtis aux éclats : sésame, betterave, endives",
+      "output_file": "public/assets/recipes/generated/r996-legumes-rotis-aux-eclats-sesame-betterave-endives.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : sésame, betterave, endives ». Ultra-photoréalisme culinaire, ingrédients autorisés : graines de sésame nature, betterave rouge crue, endives crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : sésame, betterave, endives ». Représenter des quartiers de betterave rouge et d’endive rôtis, parsemés uniquement de graines de sésame nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r997",
+      "title": "Légumes vapeur et croquant : sésame, artichaut, cresson",
+      "output_file": "public/assets/recipes/generated/r997-legumes-vapeur-et-croquant-sesame-artichaut-cresson.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : sésame, artichaut, cresson ». Ultra-photoréalisme culinaire, ingrédients autorisés : graines de sésame nature, fonds d'artichaut frais crus, cresson de fontaine cultivé. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : sésame, artichaut, cresson ». Représenter un bol de fonds d’artichaut frais cuits vapeur et feuilles entières de cresson, parsemés uniquement de graines de sésame nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r998",
+      "title": "Légumes rôtis aux éclats : pignons, carotte, choux de Bruxelles",
+      "output_file": "public/assets/recipes/generated/r998-legumes-rotis-aux-eclats-pignons-carotte-choux-de-bruxelles.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : pignons, carotte, choux de Bruxelles ». Ultra-photoréalisme culinaire, ingrédients autorisés : pignons de pin nature, carotte crue, choux de Bruxelles crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : pignons, carotte, choux de Bruxelles ». Représenter des rondelles de carotte et demi-choux de Bruxelles rôtis, parsemés uniquement de pignons de pin nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r999",
+      "title": "Légumes vapeur et croquant : pignons, chou-fleur, épinards",
+      "output_file": "public/assets/recipes/generated/r999-legumes-vapeur-et-croquant-pignons-chou-fleur-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : pignons, chou-fleur, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : pignons de pin nature, chou-fleur cru, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : pignons, chou-fleur, épinards ». Représenter un bol de bouquets de chou-fleur et épinards cuits vapeur, parsemés uniquement de pignons de pin nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "generated_at": "2026-09-06",
+    "recipe_file": "association-collection.json",
+    "count": 20,
+    "target": "JPEG 900x900, qualité 72-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r757",
+      "title": "Velouté de brocoli aux amandes entières mixées",
+      "output_file": "public/assets/recipes/generated/r757-veloute-de-brocoli-aux-amandes-entieres-mixees.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté de brocoli aux amandes entières mixées ». Ultra-photoréalisme culinaire, ingrédients autorisés : brocoli cru, amandes nature non salées, eau potable. Consigne de génération effectivement utilisée : r757 — Velouté de brocoli aux amandes entières mixées. velouté lisse fait uniquement de brocoli cuit, amandes nature entièrement mixées et eau. Texture crémeuse sans lait, aucun morceau ou garniture.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r766",
+      "title": "Soupe de concombre et avocat à la ciboulette",
+      "output_file": "public/assets/recipes/generated/r766-soupe-de-concombre-et-avocat-a-la-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe de concombre et avocat à la ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : concombre cru avec peau, chair d'avocat, ciboulette fraîche, eau potable. Consigne de génération effectivement utilisée : r766 — Soupe de concombre et avocat à la ciboulette. soupe froide lisse faite de concombre cru avec peau, chair d'avocat, ciboulette fraîche et eau. Quelques petits dés de concombre et ciboulette visibles, aucun autre ingrédient.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r767",
+      "title": "Crème de carotte aux noix et céleri branche",
+      "output_file": "public/assets/recipes/generated/r767-creme-de-carotte-aux-noix-et-celeri-branche.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Crème de carotte aux noix et céleri branche ». Ultra-photoréalisme culinaire, ingrédients autorisés : carotte crue, céleri branche cru, cerneaux de noix nature, eau potable. Consigne de génération effectivement utilisée : r767 — Crème de carotte aux noix et céleri branche. crème lisse faite de carotte cuite, céleri branche cuit, cerneaux de noix nature mixés et eau. Quelques noix clairement visibles, aucun produit laitier.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r768",
+      "title": "Potage d'aubergine rôtie et courgette",
+      "output_file": "public/assets/recipes/generated/r768-potage-d-aubergine-rotie-et-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Potage d'aubergine rôtie et courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : aubergine crue, courgette crue, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r768 — Potage d'aubergine rôtie et courgette. potage maison fait uniquement d'aubergine rôtie, courgette cuite, huile d'olive et eau. Texture rustique lisse, aucun topping ni herbe.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r770",
+      "title": "Velouté de laitue aux pignons et fenouil",
+      "output_file": "public/assets/recipes/generated/r770-veloute-de-laitue-aux-pignons-et-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté de laitue aux pignons et fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : laitue crue, fenouil cru, pignons de pin nature, eau potable. Consigne de génération effectivement utilisée : r770 — Velouté de laitue aux pignons et fenouil. velouté lisse fait de laitue cuite, fenouil cuit, pignons de pin nature mixés et eau. Quelques pignons visibles, aucun produit laitier ni huile.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r773",
+      "title": "Fenouil cru, radis et sésame",
+      "output_file": "public/assets/recipes/generated/r773-fenouil-cru-radis-et-sesame.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Fenouil cru, radis et sésame ». Ultra-photoréalisme culinaire, ingrédients autorisés : fenouil cru, radis rouges crus, graines de sésame nature, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r773 — Fenouil cru, radis et sésame. salade de fenouil cru finement émincé, radis rouges crus en rondelles, graines de sésame nature et huile d'olive. Aucun feuillage ni citron.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r775",
+      "title": "Carottes rôties sur une crème de noix",
+      "output_file": "public/assets/recipes/generated/r775-carottes-roties-sur-une-creme-de-noix.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Carottes rôties sur une crème de noix ». Ultra-photoréalisme culinaire, ingrédients autorisés : carotte crue, cerneaux de noix nature, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r775 — Carottes rôties sur une crème de noix. carottes rôties à l'huile d'olive, posées sur une crème faite uniquement de cerneaux de noix, huile d'olive et eau. Quelques noix visibles, aucune herbe.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r777",
+      "title": "Chou rouge cru aux poires et raisins frais",
+      "output_file": "public/assets/recipes/generated/r777-chou-rouge-cru-aux-poires-et-raisins-frais.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Chou rouge cru aux poires et raisins frais ». Ultra-photoréalisme culinaire, ingrédients autorisés : chou rouge cru, poire fraîche avec peau, grains de raisin frais. Consigne de génération effectivement utilisée : r777 — Chou rouge cru aux poires et raisins frais. salade croquante de chou rouge cru émincé, quartiers de poire fraîche avec peau et grains de raisin frais. Aucun autre ingrédient, aucune sauce ni herbe.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r778",
+      "title": "Millefeuille de courgette et fenouil au sésame",
+      "output_file": "public/assets/recipes/generated/r778-millefeuille-de-courgette-et-fenouil-au-sesame.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Millefeuille de courgette et fenouil au sésame ». Ultra-photoréalisme culinaire, ingrédients autorisés : courgette crue, fenouil cru, graines de sésame nature, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r778 — Millefeuille de courgette et fenouil au sésame. Photographie culinaire ultra réaliste d'un petit millefeuille salé en couches alternées de fines tranches cuites de courgette et fenouil, graines de sésame beige nature, huile d'olive et eau. Surfaces parfaitement nettes. Zéro point noir, zéro poivre, épice, herbe, fromage ou ingrédient supplémentaire. Fond minéral clair, assiette crème mate, textile sauge, lumière naturelle latérale, objectif 50 mm, carré éditorial. Aucun texte, logo, personne, gluten, lait, alcool, industriel, CGI."
+    },
+    {
+      "id": "r779",
+      "title": "Courgettes crues en rubans, noisettes et basilic",
+      "output_file": "public/assets/recipes/generated/r779-courgettes-crues-en-rubans-noisettes-et-basilic.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Courgettes crues en rubans, noisettes et basilic ». Ultra-photoréalisme culinaire, ingrédients autorisés : courgette crue, noisettes nature non salées, basilic frais, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r779 — Courgettes crues en rubans, noisettes et basilic. rubans fins de courgette crue, noisettes nature non salées coupées, feuilles de basilic frais et huile d'olive. Salade fraîche sans citron ni autre ingrédient.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r781",
+      "title": "Haricots verts aux pignons et lamelles de champignon",
+      "output_file": "public/assets/recipes/generated/r781-haricots-verts-aux-pignons-et-lamelles-de-champignon.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Haricots verts aux pignons et lamelles de champignon ». Ultra-photoréalisme culinaire, ingrédients autorisés : haricots verts crus, champignons de Paris crus, pignons de pin nature, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r781 — Haricots verts aux pignons et lamelles de champignon. haricots verts cuits, fines lamelles de champignons de Paris cuits, pignons de pin nature et huile d'olive. Aucun autre ingrédient ni herbe.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r783",
+      "title": "Fenouil rôti aux amandes et ciboulette",
+      "output_file": "public/assets/recipes/generated/r783-fenouil-roti-aux-amandes-et-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Fenouil rôti aux amandes et ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : fenouil cru, amandes nature non salées, huile d'olive vierge extra, ciboulette fraîche. Consigne de génération effectivement utilisée : r783 — Fenouil rôti aux amandes et ciboulette. Photographie culinaire ultra réaliste de quartiers de fenouil rôti à l'huile d'olive, amandes nature effilées et ciboulette fraîche ciselée. Caramélisation dorée naturelle mais surfaces propres. Zéro point noir, zéro poivre, épice ou autre herbe. Fond minéral clair, assiette crème mate, textile sauge, lumière naturelle latérale, objectif 50 mm, carré éditorial. Aucun texte, logo, personne, gluten, lait, alcool, industriel, CGI."
+    },
+    {
+      "id": "r784",
+      "title": "Côtes de blette à la purée de courge",
+      "output_file": "public/assets/recipes/generated/r784-cotes-de-blette-a-la-puree-de-courge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Côtes de blette à la purée de courge ». Ultra-photoréalisme culinaire, ingrédients autorisés : côtes de blette crues, courge musquée pelée crue, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r784 — Côtes de blette à la purée de courge. côtes blanches de blette cuites, purée lisse de courge musquée faite avec huile d'olive et eau. Aucun feuillage vert, aucune herbe, aucun produit laitier.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r785",
+      "title": "Poivrons doux farcis au chou-fleur et aux noix",
+      "output_file": "public/assets/recipes/generated/r785-poivrons-doux-farcis-au-chou-fleur-et-aux-noix.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Poivrons doux farcis au chou-fleur et aux noix ». Ultra-photoréalisme culinaire, ingrédients autorisés : poivron rouge cru, chou-fleur cru, cerneaux de noix nature, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r785 — Poivrons doux farcis au chou-fleur et aux noix. demi-poivrons rouges cuits farcis de chou-fleur finement haché et cerneaux de noix nature avec huile d'olive. Sans fromage, chapelure ni herbe.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r786",
+      "title": "Courge rôtie et mâche aux graines de sésame",
+      "output_file": "public/assets/recipes/generated/r786-courge-rotie-et-mache-aux-graines-de-sesame.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Courge rôtie et mâche aux graines de sésame ». Ultra-photoréalisme culinaire, ingrédients autorisés : courge musquée pelée crue, mâche crue, graines de sésame nature, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r786 — Courge rôtie et mâche aux graines de sésame. Photographie culinaire ultra réaliste de cubes de courge musquée rôtie à l'huile d'olive, feuilles de mâche crue et graines de sésame beige nature. Surfaces parfaitement propres. Zéro point noir, zéro poivre, épice, herbe ou ingrédient supplémentaire. Fond minéral clair, assiette crème mate, textile sauge, lumière naturelle latérale, objectif 50 mm, carré éditorial. Aucun texte, logo, personne, gluten, lait, alcool, industriel, CGI."
+    },
+    {
+      "id": "r787",
+      "title": "Artichauts à la vapeur et sauce de basilic aux amandes",
+      "output_file": "public/assets/recipes/generated/r787-artichauts-a-la-vapeur-et-sauce-de-basilic-aux-amandes.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Artichauts à la vapeur et sauce de basilic aux amandes ». Ultra-photoréalisme culinaire, ingrédients autorisés : fonds d'artichaut frais crus, amandes nature non salées, basilic frais, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r787 — Artichauts à la vapeur et sauce de basilic aux amandes. fonds d'artichaut frais cuits vapeur, sauce verte faite uniquement de basilic frais, amandes nature, huile d'olive et eau. Quelques amandes visibles, aucun produit laitier.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r788",
+      "title": "Choux de Bruxelles effeuillés aux noisettes",
+      "output_file": "public/assets/recipes/generated/r788-choux-de-bruxelles-effeuilles-aux-noisettes.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Choux de Bruxelles effeuillés aux noisettes ». Ultra-photoréalisme culinaire, ingrédients autorisés : choux de Bruxelles crus, noisettes nature non salées, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r788 — Choux de Bruxelles effeuillés aux noisettes. feuilles séparées de choux de Bruxelles cuits, noisettes nature non salées coupées, huile d'olive et eau. Les choux doivent être clairement effeuillés, aucun chou entier.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r789",
+      "title": "Panais écrasé, brocoli et huile de persil",
+      "output_file": "public/assets/recipes/generated/r789-panais-ecrase-brocoli-et-huile-de-persil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Panais écrasé, brocoli et huile de persil ». Ultra-photoréalisme culinaire, ingrédients autorisés : panais pelé cru, brocoli cru, persil frais, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r789 — Panais écrasé, brocoli et huile de persil. panais cuit grossièrement écrasé, bouquets de brocoli cuits, persil frais mixé dans l'huile d'olive avec eau. Aucun produit laitier ni autre ingrédient.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r790",
+      "title": "Tomates et concombre au jus de framboise",
+      "output_file": "public/assets/recipes/generated/r790-tomates-et-concombre-au-jus-de-framboise.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Tomates et concombre au jus de framboise ». Ultra-photoréalisme culinaire, ingrédients autorisés : tomate ronde crue, concombre cru avec peau, framboises fraîches, ciboulette fraîche. Consigne de génération effectivement utilisée : r790 — Tomates et concombre au jus de framboise. quartiers de tomate ronde crue, concombre cru avec peau, jus rose naturel de framboises fraîches et ciboulette fraîche. Quelques framboises visibles, aucun autre ingrédient.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r792",
+      "title": "Épinards fondants et champignons aux pignons",
+      "output_file": "public/assets/recipes/generated/r792-epinards-fondants-et-champignons-aux-pignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Épinards fondants et champignons aux pignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : épinards crus, champignons de Paris crus, pignons de pin nature, huile d'olive vierge extra. Consigne de génération effectivement utilisée : r792 — Épinards fondants et champignons aux pignons. Photographie culinaire ultra réaliste d'épinards cuits fondants, champignons de Paris cuits, pignons de pin nature et huile d'olive. Champignons dorés naturellement et surfaces nettes. Zéro point noir, zéro poivre, épice, herbe ou ingrédient supplémentaire. Fond minéral clair, assiette crème mate, textile sauge, lumière naturelle latérale, objectif 50 mm, carré éditorial. Aucun texte, logo, personne, gluten, lait, alcool, industriel, CGI."
+    }
+  ]
+}

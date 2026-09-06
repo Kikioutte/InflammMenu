@@ -190,7 +190,7 @@ test("catalogue seasons use the five canonical taxonomy values", () => {
 });
 
 test("catalogue regimes, tags and weekly targets are closed and canonical", () => {
-  assert.equal(PULSE_INGREDIENT_IDS.length, 43, "la liste éditoriale des légumineuses doit rester explicitement revue");
+  assert.equal(PULSE_INGREDIENT_IDS.length, 45, "la liste éditoriale des légumineuses doit rester explicitement revue");
   assert.deepEqual(catalogue.taxonomie_tags.regimes, CANONICAL_CATALOGUE_REGIMES);
 
   for (const recipe of catalogue.recipes) {
