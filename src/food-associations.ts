@@ -50,3 +50,10 @@ export function associationRecipeAllowed(recipe: { id: string; ingredients: read
 export function evaluateAssociationMeal(recipes: readonly { ingredients: readonly AssociationIngredient[] }[]): AssociationResult {
   return evaluateAssociations(recipes.flatMap((recipe) => recipe.ingredients));
 }
+
+/** Green and orange combinations remain usable under the reviewed chart;
+ * gray or unclassified combinations must never be offered by the meal builder. */
+export function associationMealIsCompatible(recipes: readonly { ingredients: readonly AssociationIngredient[] }[]): boolean {
+  const level = evaluateAssociationMeal(recipes).level;
+  return level === "verte" || level === "orange";
+}

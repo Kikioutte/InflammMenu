@@ -3,7 +3,7 @@ import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { canonicalIngredientId } from '../src/shopping.ts';
-import { evaluateAssociations, evaluateAssociationMeal, associationRecipeAllowed, isAssociationRecipe } from '../src/food-associations.ts';
+import { evaluateAssociations, evaluateAssociationMeal, associationMealIsCompatible, associationRecipeAllowed, isAssociationRecipe } from '../src/food-associations.ts';
 import { generateWeeklyPlan, recipeIsAllowed, scaleIngredients, buildShoppingList, diagnoseRecipeCompatibility, getReplacementCandidates, setMealIngredientSubstitution } from '../src/engine.ts';
 import { DEFAULT_PROFILE } from '../src/domain.ts';
 import { migrateAppState, DEFAULT_APP_STATE } from '../src/storage.ts';
@@ -70,6 +70,20 @@ test('the chart keeps explicit green, orange, gray and unknown outcomes', () => 
   assert.equal(evaluateAssociations(['amande','noisette'].map(ingredient)).level, 'orange');
   assert.equal(evaluateAssociations(['ingredient-inconnu','courgette'].map(ingredient)).level, 'non-classee');
   assert.equal(evaluateAssociations([]).level, 'non-classee');
+});
+
+test('the progressive meal builder keeps only complete compatible combinations', () => {
+  const recipes = new Map(catalogue.recipes.map((recipe) => [recipe.id, recipe]));
+  const main = recipes.get('r711');
+  const dessert = recipes.get('r824');
+  const compatibleStarter = recipes.get('r718');
+  const starterRejectedAfterDessert = recipes.get('r672');
+  assert.ok(main && dessert && compatibleStarter && starterRejectedAfterDessert);
+  assert.equal(associationMealIsCompatible([main, starterRejectedAfterDessert]), true);
+  assert.equal(associationMealIsCompatible([main, dessert, starterRejectedAfterDessert]), false);
+  assert.equal(evaluateAssociationMeal([main, dessert, starterRejectedAfterDessert]).level, 'grise');
+  assert.equal(associationMealIsCompatible([main, dessert, compatibleStarter]), true);
+  assert.equal(evaluateAssociationMeal([main, dessert, compatibleStarter]).level, 'orange');
 });
 
 test('the 207 additions reach 300 green recipes without changing the previous 250 or counting herb-only variants', async () => {

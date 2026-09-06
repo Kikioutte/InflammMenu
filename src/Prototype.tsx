@@ -1194,11 +1194,11 @@ function scaleAssociationStep(step: string, ratio: number): string {
   return step.replace(/(\d+(?:[.,]\d+)?)\s*(ml|g)\b/g, (_match, amount: string, unit: string) => `${(Number(amount.replace(",", ".")) * ratio).toLocaleString("fr-FR", { maximumFractionDigits: 1 })} ${unit}`);
 }
 
-function AssociationNotice({ result }: { result: AssociationResult }) {
+function AssociationNotice({ result, detailsOpen = true }: { result: AssociationResult; detailsOpen?: boolean }) {
   return <aside className={`association-notice is-${result.level}`} data-testid="association-notice">
     <strong>{ASSOCIATION_LABELS[result.level]}</strong>
     {result.level === "verte" ? <p>Toutes les associations de ces ingrédients sont vertes dans votre tableau.</p> : null}
-    {result.pairs.length ? <details open><summary>{result.pairs.length} association{result.pairs.length > 1 ? "s" : ""} à connaître</summary><ul>{result.pairs.map((pair, i) => <li key={i}><b>{pair.level === "grise" ? "À exclure" : "Orange"}</b> : {pair.a} + {pair.b}</li>)}</ul></details> : null}
+    {result.pairs.length ? <details open={detailsOpen}><summary>{result.pairs.length} association{result.pairs.length > 1 ? "s" : ""} à connaître</summary><ul>{result.pairs.map((pair, i) => <li key={i}><b>{pair.level === "grise" ? "À exclure" : "Orange"}</b> : {pair.a} + {pair.b}</li>)}</ul></details> : null}
     {result.unknown.length ? <p>Classement absent du tableau : {result.unknown.join(", ")}. Compatibilité non confirmée.</p> : null}
     <small>Si vous changez les portions, gardez les tailles de coupe et cuisez en plusieurs fournées si nécessaire ; la durée totale peut augmenter.</small><small>Lecture de votre tableau personnel, distincte d’une évaluation médicale. Ne déduit aucune restriction de boisson. Les allergies et exclusions restent à respecter.</small>
   </aside>;
@@ -1210,16 +1210,67 @@ function AssociationBadge({ recipe }: { recipe: { id: string; ingredients: reado
   return <span className={`association-badge is-${result.level}`}>{ASSOCIATION_LABELS[result.level]}</span>;
 }
 
-function MealAssociationChecker({ recipes }: { recipes: CatalogueRecipe[] }) {
-  const [selection, setSelection] = useState(["", "", ""]);
-  const reviewed = recipes.filter((recipe) => isAssociationRecipe(recipe.id));
-  const chosen = selection.map((id) => reviewed.find((recipe) => recipe.id === id)).filter((r): r is CatalogueRecipe => Boolean(r));
-  return <details className="meal-association-checker" data-testid="meal-association-checker"><summary>Vérifier les associations d’un repas complet</summary>
-    <p>Choisissez jusqu’à trois recettes : les ingrédients de toutes les fiches sont comparés ensemble, sauces et accompagnements compris.</p>
-    {selection.map((id, index) => <label className="text-field" key={index}><span>Recette {index + 1}</span><select aria-label={`Recette ${index + 1} du repas`} value={id} onChange={(event) => setSelection((current) => current.map((value, i) => i === index ? event.target.value : value))}><option value="">Aucune</option>{reviewed.map((recipe) => <option key={recipe.id} value={recipe.id}>{recipe.titre}</option>)}</select></label>)}
-    {chosen.length ? <AssociationNotice result={evaluateAssociationMeal(chosen)} /> : <p>Le résultat apparaîtra après votre sélection.</p>}
-    <small>Ce contrôle ne planifie pas les recettes et n’ajoute rien aux courses. Les quantités et l’équilibre nutritionnel du repas ne sont pas évalués ici.</small>
-  </details>;
+type MealBuilderGroupId = "starter" | "main" | "dessert";
+
+const MEAL_BUILDER_GROUPS: ReadonlyArray<{ id: MealBuilderGroupId; label: string; singular: string; categories: readonly string[] }> = [
+  { id: "starter", label: "Entrées", singular: "Entrée", categories: ["soupe", "salade"] },
+  { id: "main", label: "Plats", singular: "Plat", categories: ["plat"] },
+  { id: "dessert", label: "Desserts", singular: "Dessert", categories: ["dessert"] },
+];
+
+function mealBuilderGroupFor(recipe: CatalogueRecipe): MealBuilderGroupId | null {
+  return MEAL_BUILDER_GROUPS.find((group) => group.categories.includes(recipe.categorie))?.id ?? null;
+}
+
+function mealBuilderEligible(recipe: CatalogueRecipe): boolean {
+  if (!isAssociationRecipe(recipe.id) || !mealBuilderGroupFor(recipe)) return false;
+  const level = evaluateAssociations(recipe.ingredients).level;
+  return level === "verte" || level === "orange";
+}
+
+function MealBuilderView({ initialRecipe, recipes }: { initialRecipe: CatalogueRecipe; recipes: CatalogueRecipe[] }) {
+  const initialGroup = mealBuilderGroupFor(initialRecipe) as MealBuilderGroupId;
+  const [selection, setSelection] = useState<Partial<Record<MealBuilderGroupId, CatalogueRecipe>>>({ [initialGroup]: initialRecipe });
+  const [expandedGroups, setExpandedGroups] = useState<Partial<Record<MealBuilderGroupId, boolean>>>({});
+  const selectedRecipes = MEAL_BUILDER_GROUPS.map((group) => selection[group.id]).filter((recipe): recipe is CatalogueRecipe => Boolean(recipe));
+  const mealResult = evaluateAssociationMeal(selectedRecipes);
+  const complete = selectedRecipes.length === MEAL_BUILDER_GROUPS.length;
+  const reviewed = recipes.filter(mealBuilderEligible);
+  const candidatesFor = (groupId: MealBuilderGroupId) => {
+    const context = selectedRecipes.filter((recipe) => mealBuilderGroupFor(recipe) !== groupId);
+    return reviewed
+      .filter((recipe) => mealBuilderGroupFor(recipe) === groupId && !context.some((selected) => selected.id === recipe.id))
+      .map((recipe) => ({ recipe, result: evaluateAssociationMeal([...context, recipe]) }))
+      .filter(({ result }) => result.level === "verte" || result.level === "orange")
+      .sort((a, b) => (a.result.level === b.result.level ? a.recipe.titre.localeCompare(b.recipe.titre, "fr") : a.result.level === "verte" ? -1 : 1));
+  };
+  const choose = (groupId: MealBuilderGroupId, recipe: CatalogueRecipe) => {
+    setSelection((current) => ({ ...current, [groupId]: recipe }));
+    setExpandedGroups((current) => ({ ...current, [groupId]: false }));
+  };
+  return <MobileScroll className="app-screen"><main className="page-content pushed-page meal-builder" data-testid="meal-builder-view">
+    <div className="page-heading"><span className="eyebrow">Associations alimentaires</span><h1>Composer mon repas</h1><p>Chaque proposition reste compatible avec toutes les recettes déjà choisies, ingrédients, sauces et accompagnements compris.</p></div>
+    <section className="meal-builder-selection" aria-label="Recettes choisies">
+      {MEAL_BUILDER_GROUPS.map((group) => {
+        const recipe = selection[group.id];
+        return <article className={`meal-builder-slot ${recipe ? "is-filled" : ""}`} key={group.id} data-testid={`meal-builder-slot-${group.id}`}>
+          {recipe ? <><img src={catalogueImageFor(recipe)} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{group.singular}{group.id === initialGroup ? " · recette de départ" : ""}</small><strong>{recipe.titre}</strong></span>{group.id !== initialGroup ? <button type="button" aria-label={`Changer ${recipe.titre}`} onClick={() => setSelection((current) => ({ ...current, [group.id]: undefined }))}>Changer</button> : <CheckCircledIcon />}</> : <span className="meal-builder-slot__empty"><small>{group.singular}</small><strong>À choisir</strong></span>}
+        </article>;
+      })}
+    </section>
+    <div className={`meal-builder-status is-${mealResult.level}`} data-testid="meal-builder-status"><CheckCircledIcon /><span><strong>{complete ? "Repas complet compatible" : "Composition compatible"}</strong><small>{mealResult.level === "verte" ? "Toutes les associations sont vertes." : "Les associations orange restent clairement signalées."}</small></span></div>
+    {MEAL_BUILDER_GROUPS.filter((group) => !selection[group.id]).map((group) => {
+      const candidates = candidatesFor(group.id);
+      const visible = expandedGroups[group.id] ? candidates : candidates.slice(0, 12);
+      return <section className="meal-builder-category" key={group.id} data-testid={`meal-builder-category-${group.id}`}>
+        <div className="section-heading"><div><span className="eyebrow">{candidates.length} choix compatibles</span><h2>{group.label}</h2></div></div>
+        {candidates.length ? <div className="meal-builder-grid">{visible.map(({ recipe, result }) => <button type="button" className="meal-builder-candidate" key={recipe.id} data-testid={`meal-builder-candidate-${recipe.id}`} onClick={() => choose(group.id, recipe)}><img src={catalogueImageFor(recipe)} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{result.level === "verte" ? "Tout vert" : "Compatible · orange signalé"}</small><strong>{recipe.titre}</strong><em>{formatCatalogueCardDuration(recipe)}</em></span><PlusIcon /></button>)}</div> : <div className="empty-day"><Cross2Icon /><h3>Aucune proposition compatible</h3><p>Retirez une recette choisie pour élargir les possibilités sans contourner les règles.</p></div>}
+        {candidates.length > 12 && !expandedGroups[group.id] ? <button type="button" className="secondary-button full-button" onClick={() => setExpandedGroups((current) => ({ ...current, [group.id]: true }))}>Afficher les {candidates.length} {group.label.toLocaleLowerCase("fr")}</button> : null}
+      </section>;
+    })}
+    <AssociationNotice result={mealResult} detailsOpen={false} />
+    <p className="catalogue-disclaimer">Ce constructeur applique votre tableau personnel. Il ne mesure ni les quantités ni l’équilibre nutritionnel du repas.</p>
+  </main></MobileScroll>;
 }
 
 function CatalogueError({ onRetry }: { onRetry: () => void }) {
@@ -1309,7 +1360,6 @@ function RecipesView({ favoriteIds, customRecipes, history, catalogue, catalogue
       </> : savedCount ? <div className="empty-day"><MagnifyingGlassIcon /><h3>Aucun résultat</h3><p>Aucune de vos {savedCount} recettes enregistrées ne correspond à « {query} ».</p></div> : <div className="empty-day"><HeartIcon /><h3>Aucune recette enregistrée</h3><p>Ajoutez un favori ou créez votre version d’une recette pour la retrouver ici.</p></div>}</div> : mode === "catalogue" ? !catalogue ? (catalogueError ? <CatalogueError onRetry={onRetryCatalogue} /> : <div className="app-loading" aria-live="polite"><ReloadIcon className="spin" /><span>Chargement du catalogue…</span></div>) : <section className="catalogue-browser" aria-label="Catalogue vérifié">
         <div className="catalogue-method"><strong>{catalogueRecipes.length} recettes uniques disponibles</strong><p>Les {catalogue.recipes.length} recettes ont été relues : {Object.keys(DUPLICATE_CATALOGUE_RECIPES).length} variantes trop proches ont été écartées du catalogue affiché.</p></div>
         <label className="text-field association-filter"><span>Associations alimentaires</span><select aria-label="Filtrer les associations" value={associationFilter} onChange={(event) => setAssociationFilter(event.target.value as typeof associationFilter)}><option value="all">Tout le catalogue</option><option value="collection">Collection sans gluten, lait, alcool ni préparations industrielles</option><option value="verte">Associations vertes uniquement</option><option value="orange">Associations orange signalées</option></select></label>
-        <MealAssociationChecker recipes={catalogue.recipes} />
         <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher une recette</span><KeyboardInput value={query} placeholder="Recette ou ingrédient" onChange={(event) => setQuery(event.target.value)} /></label>
         <Carousel ariaLabel="Filtrer les catégories" className="catalogue-filters" contentClassName="catalogue-filters__track"><button type="button" className={category === "all" ? "is-selected" : ""} aria-pressed={category === "all"} onClick={() => setCategory("all")}>Toutes</button>{CATALOGUE_CATEGORIES.map((item) => <button type="button" key={item.id} className={category === item.id ? "is-selected" : ""} aria-pressed={category === item.id} onClick={() => setCategory(item.id)}>{item.nom}</button>)}</Carousel>
         <div className="catalogue-toolbar">
@@ -2098,7 +2148,7 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
   </div></main></MobileScroll>;
 }
 
-function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan }: { recipe: CatalogueRecipe; favorite: boolean; onFavorite: () => void; onPlan?: () => void }) {
+function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan, onComposeMeal }: { recipe: CatalogueRecipe; favorite: boolean; onFavorite: () => void; onPlan?: () => void; onComposeMeal?: () => void }) {
   const [portions, setPortions] = useState(recipe.portions);
   const [isFavorite, setIsFavorite] = useState(favorite);
   const toggleFavorite = () => { setIsFavorite((value) => !value); onFavorite(); };
@@ -2112,6 +2162,7 @@ function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan }: { recipe:
     <div className="recipe-content">
       <div className={`catalogue-verdict is-${review.status}`}><span>{review.status === "validated" ? "Profil cohérent" : "Validée avec repères"}</span><p>{review.summary}</p></div>
       <div className={`recipe-actions ${onPlan ? "" : "recipe-actions--single"}`}>{onPlan ? <button type="button" className="secondary-button" data-testid="catalogue-plan" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} data-testid="catalogue-favorite" aria-pressed={isFavorite} onClick={toggleFavorite}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter aux favoris"}</button></div>
+      {onComposeMeal ? <button type="button" className="primary-button full-button meal-builder-entry" data-testid="compose-meal" onClick={onComposeMeal}><PlusIcon /> Composer un repas compatible</button> : null}
       {durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}
       {recipe.materiel?.length ? <section className="recipe-section catalogue-equipment" data-testid="catalogue-equipment"><h2>Matériel</h2><ul>{recipe.materiel.map((item) => <li key={item}><CheckCircledIcon /><span>{item}</span></li>)}{recipe.creami ? <li><CheckCircledIcon /><span>Programme {recipe.creami.programme} · Zone {recipe.creami.zone}</span></li> : null}</ul></section> : null}
       {exclusion ? <aside className="planner-exclusion" data-testid="planner-exclusion"><strong>{exclusion.title}</strong><p>{exclusion.body}</p></aside> : null}
@@ -2584,7 +2635,11 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   function catalogueRecipeScreen(recipe: CatalogueRecipe): FlowScreen {
     const favoriteId = catalogueFavoriteId(recipe);
     const projected = recipeById.get(favoriteId);
-    return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView recipe={recipe} favorite={live.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} />}</LiveAppState> };
+    return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView recipe={recipe} favorite={live.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} onComposeMeal={mealBuilderEligible(recipe) ? () => route.push(mealBuilderScreen(recipe)) : undefined} />}</LiveAppState> };
+  }
+
+  function mealBuilderScreen(recipe: CatalogueRecipe): FlowScreen {
+    return { id: `meal-builder-${recipe.id}`, title: "Composer mon repas", headerHeight: 56, header: (route) => <Header title="Composer mon repas" onBack={route.pop} />, render: () => <MealBuilderView initialRecipe={recipe} recipes={catalogue ? visibleCatalogueRecipes(catalogue) : [recipe]} /> };
   }
 
   const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView state={live} onRestore={async (restored) => { await replaceAppState(restored); setArchivedWeek(null); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
