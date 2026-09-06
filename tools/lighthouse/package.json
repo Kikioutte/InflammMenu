@@ -1,0 +1,14 @@
+{
+  "name": "inflamm-menu-lighthouse",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compare": "node compare.mjs",
+    "test": "node --test report.test.mjs"
+  },
+  "dependencies": {
+    "chrome-launcher": "1.2.1",
+    "lighthouse": "13.4.1",
+    "playwright": "1.61.1"
+  }
+}
