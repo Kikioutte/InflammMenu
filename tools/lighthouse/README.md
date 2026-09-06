@@ -14,7 +14,8 @@ Le cache de l’application est froid ; son service worker n’est ni désactiv�
 
 Les rapports HTML/JSON, les résultats individuels, la fixture synthétique et la synthèse sont
 conservés dans un artefact GitHub Actions pendant 30 jours. Aucune sauvegarde utilisateur n’est utilisée.
-Les erreurs d’audit, de parcours, de console ou de réseau font échouer le job. La synthèse distingue
+Les avertissements Lighthouse et les erreurs d’audit, de parcours, de console ou de réseau font échouer le job.
+Les images visibles ou chargées immédiatement doivent avoir terminé leur chargement ; les images différées hors écran restent à la demande. La synthèse distingue
 le seuil 95 sur les médianes et son atteinte sur tous les passages. Aucun score n’est inventé
 en cas de campagne incomplète. Ce job mesure le résultat ; il ne remplace aucun test existant.
 

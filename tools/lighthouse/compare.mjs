@@ -9,6 +9,7 @@ import { pathToFileURL } from 'node:url';
 import { launch } from 'chrome-launcher';
 import lighthouse from 'lighthouse';
 import { chromium } from 'playwright';
+import puppeteer from 'puppeteer-core';
 import { markdownReport, readMeasurement, summarize } from './report.mjs';
 
 const [beforePath, afterPath, resultPath, mode] = process.argv.slice(2);
@@ -100,30 +101,37 @@ try {
           const document = await ready(server);
           assert.equal(hash(await document.text()), stage.htmlSha256, 'The exact revision must be served');
           chrome = await launch({ chromePath: chromium.executablePath(), port: 9225, chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'] });
-          connection = await chromium.connectOverCDP('http://127.0.0.1:9225');
-          metadata.browserVersion = connection.version();
+          connection = await puppeteer.connect({ browserURL: 'http://127.0.0.1:9225', defaultViewport: null });
+          metadata.browserVersion = await connection.version();
           if (scenario === 'returning') {
-            const seedPage = await connection.contexts()[0].newPage();
+            const seedPage = await connection.newPage();
             await seedPage.goto(`${url}manifest.webmanifest`, { waitUntil: 'load' });
             await seedPage.evaluate(state => localStorage.setItem('inflamm-menu:app-state', JSON.stringify(state)), fixture);
             assert.equal(await seedPage.evaluate(() => navigator.serviceWorker.getRegistrations().then(list => list.length)), 0, 'The fixture must not precache the app');
             await seedPage.close();
           }
+          // Lighthouse closes pages it creates itself. Supply an untouched
+          // about:blank page so the same measured document remains verifiable.
+          const appPage = await connection.newPage();
           console.log(`LIGHTHOUSE_START ${run}/${runs} ${scenario} ${name}`);
-          const result = await lighthouse(url, { port: chrome.port, output: ['json', 'html'], logLevel: 'error', onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'], maxWaitForLoad: 30000, disableStorageReset: scenario === 'returning' });
+          const result = await lighthouse(url, { port: chrome.port, output: ['json', 'html'], logLevel: 'error', onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'], maxWaitForLoad: 30000, disableStorageReset: scenario === 'returning' }, undefined, appPage);
           assert.ok(result?.lhr, 'Lighthouse must produce a report');
           await writeFile(`${prefix}.json`, result.report[0]);
           await writeFile(`${prefix}.html`, result.report[1]);
           const measurement = readMeasurement(result.lhr);
-          const appPage = connection.contexts()[0].pages().find(page => page.url() === url);
-          assert.ok(appPage, 'The audited page must remain inspectable');
+          assert.equal(appPage.isClosed(), false, 'The audited page must remain inspectable');
+          assert.equal(appPage.url(), url, 'The inspected page must be the measured document');
           const check = await appPage.evaluate(() => ({
             text: document.body.innerText,
             onboarding: Boolean(document.querySelector('[data-testid="onboarding-view"]')),
             state: JSON.parse(localStorage.getItem('inflamm-menu:app-state') || 'null'),
-            brokenImages: Array.from(document.images).filter(image => image.complete && image.naturalWidth === 0).map(image => image.src),
+            incompleteImages: Array.from(document.images).filter(image => {
+              const rect = image.getBoundingClientRect();
+              const visible = rect.width > 0 && rect.height > 0 && rect.top < innerHeight && rect.bottom > 0 && rect.left < innerWidth && rect.right > 0;
+              return image.complete ? image.naturalWidth === 0 : image.loading !== 'lazy' || visible;
+            }).map(image => image.src),
           }));
-          assert.equal(check.brokenImages.length, 0, 'Images must load');
+          assert.equal(check.incompleteImages.length, 0, 'Eager and visible images must finish loading');
           if (scenario === 'returning') {
             assert.ok(check.text.includes('Camille') && check.text.includes('Une semaine'), 'The returning home must render');
             assert.equal(check.onboarding, false);
@@ -133,13 +141,13 @@ try {
             assert.equal(check.onboarding, true, 'The onboarding must actually render');
             assert.equal(check.state?.onboardingCompleted ?? false, false);
           }
-          const row = { scenario, stage: name, run, date: result.lhr.fetchTime, ...measurement, verified: { htmlSha256: stage.htmlSha256, activeWeek: scenario === 'returning' ? startsOn : null, brokenImages: 0 } };
+          const row = { scenario, stage: name, run, date: result.lhr.fetchTime, ...measurement, verified: { htmlSha256: stage.htmlSha256, activeWeek: scenario === 'returning' ? startsOn : null, incompleteImages: 0 } };
           results.push(row);
           await writeFile(`${output}/results.json`, JSON.stringify({ metadata, results }, null, 2));
           console.log(`LIGHTHOUSE_RESULT ${JSON.stringify(row)}`);
         } finally {
           await writeFile(`${prefix}-server.log`, serverLog);
-          if (connection) await connection.close().catch(() => {});
+          if (connection) await connection.disconnect();
           if (chrome) await chrome.kill();
           await stop(server);
         }

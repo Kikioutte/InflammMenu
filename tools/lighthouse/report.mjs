@@ -7,6 +7,7 @@ export const STAGES = ['baseline', 'after'];
 
 export function readMeasurement(lhr) {
   assert.ok(!lhr.runtimeError, JSON.stringify(lhr.runtimeError));
+  assert.equal((lhr.runWarnings || []).length, 0, `Lighthouse warning: ${JSON.stringify(lhr.runWarnings)}`);
   assert.equal(lhr.configSettings.formFactor, 'mobile');
   assert.equal(lhr.configSettings.throttlingMethod, 'simulate');
   const scores = Object.fromEntries(CATEGORIES.map(key => {

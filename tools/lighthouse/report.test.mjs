@@ -25,6 +25,11 @@ test('les erreurs réseau et console invalident une mesure', () => {
   assert.throws(() => readMeasurement(consoleError), /Console errors/);
 });
 
+test('un rapport produit après avertissement de chargement ne devient pas une mesure valide', () => {
+  const value = report(); value.runWarnings = ['The page loaded too slowly to finish within the time limit. Results may be incomplete.'];
+  assert.throws(() => readMeasurement(value), /Lighthouse warning/);
+});
+
 test('une campagne partielle ou des passages dupliqués ne produisent pas de médiane', () => {
   assert.throws(() => summarize(campaign().slice(1), 3));
   const duplicate = campaign(); duplicate[1].run = 1;
