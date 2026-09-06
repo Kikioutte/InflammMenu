@@ -1,0 +1,83 @@
+key	nom	group	ciqual	price_per_kg	allergens	source_label
+riz	riz complet cru	amidons	9102	4		Riz complet
+sarrasin	sarrasin en grains cru	amidons	9380	6		Sarrasin
+quinoa	quinoa cru	amidons	9340	8		Quinoa
+farine_sarrasin	farine de sarrasin pure	amidons	9540	5		Sarrasin (farine simple du même grain)
+polenta	semoule de maïs nature	amidons	9614	4		Maïs (semoule simple)
+pomme_terre	pomme de terre pelée crue	amidons	4008	2		Patate
+lentille	lentilles vertes sèches	legumes-secs	20585	5		Lentilles séchées
+corail	lentilles corail sèches	legumes-secs	20535	5		Lentilles séchées (variété corail)
+pois_casses	pois cassés secs	legumes-secs	20515	4		Pois cassés
+pois_chiches	pois chiches secs	legumes-secs	20516	4		Pois chiches
+haricots_blancs	haricots blancs secs	legumes-secs	20501	5		Haricots secs
+poulet	filet de poulet cru sans peau	proteines-maigres	36017	14		Viande blanche (poulet sans peau)
+dinde	escalope de dinde crue	proteines-maigres	36304	14		Viande blanche (dinde)
+cabillaud	filet de cabillaud cru désarêté	proteines-maigres	26043	24	poisson	Poisson (cabillaud)
+saumon	filet de saumon cru désarêté	proteines-maigres	26036	22	poisson	Poisson (saumon ; classement du tableau, non sa teneur réelle en lipides)
+truite	filet de truite cru désarêté	proteines-maigres	27008	18	poisson	Poisson (truite)
+sardine	filets de sardine crus désarêtés	proteines-maigres	26065	12	poisson	Poisson (sardine)
+maquereau	filets de maquereau crus désarêtés	proteines-maigres	26051	12	poisson	Poisson (maquereau)
+amande	amandes nature non salées	proteines-grasses	15000	16	fruits-a-coque	Amandes séchées
+noisette	noisettes nature non salées	proteines-grasses	15004	18	fruits-a-coque	Noisettes
+noix	cerneaux de noix nature	proteines-grasses	15005	18	fruits-a-coque	Noix sèches
+pignon	pignons de pin nature	proteines-grasses	15025	45	fruits-a-coque	Pignons
+sesame	graines de sésame nature	proteines-grasses	15010	12	sesame	Sésame
+avocat	chair d'avocat	lipides	13004	8		Avocat
+huile	huile d'olive vierge extra	lipides	17270	14		Huiles non raffinées
+chou	chou blanc cru	legumes-amidon-faible	20116	2		Chou (blanc)
+chou_rouge	chou rouge cru	legumes-amidon-faible	20014	2		Chou (rouge)
+laitue	laitue crue	legumes-amidon-faible	20031	5		Laitue
+mache	mâche crue	legumes-amidon-faible	20099	12		Mâche
+endive	endives crues	legumes-amidon-faible	20026	4		Endive
+fenouil	fenouil cru	legumes-amidon-faible	20028	4		Fenouil
+radis	radis rouges crus	legumes-amidon-faible	20045	4		Radis
+blette	côtes de blette crues	legumes-amidon-faible	20004	4		Blette (côtes)
+haricot_vert	haricots verts crus	legumes-amidon-faible	20061	7		Haricots verts
+brocoli	brocoli cru	legumes-amidon-faible	20057	4		Brocolis
+chou_fleur	chou-fleur cru	legumes-amidon-faible	20016	3		Chou-fleur
+poivron	poivron rouge cru	legumes-amidon-faible	20087	5		Poivron doux
+champignon	champignons de Paris crus	legumes-amidon-faible	20056	6		Champignons (de Paris, cultivés)
+aubergine	aubergine crue	legumes-amidon-faible	20053	4		Aubergine
+concombre	concombre cru avec peau	legumes-amidon-faible	20019	3		Concombre
+courge	courge musquée pelée crue	legumes-amidon-faible	20128	3		Courge (musquée)
+courgette	courgette crue	legumes-amidon-faible	20020	3		Courgette
+cresson	cresson de fontaine cultivé	legumes-amidon-faible	20022	14		Cresson (cultivé)
+asperge	asperges vertes crues	legumes-amidon-faible	20279	12		Asperge
+epinard	épinards crus	legumes-amidon-faible	20059	6		Épinard
+ciboulette	ciboulette fraîche	legumes-amidon-faible	11003	35		Ciboulette
+persil	persil frais	legumes-amidon-moyen	11014	20		Persil
+carotte	carotte crue	legumes-amidon-moyen	20009	2		Carotte
+navet	navet pelé cru	legumes-amidon-moyen	20064	3		Navet
+betterave	betterave rouge crue	legumes-amidon-moyen	20091	3		Betterave
+celeri	céleri branche cru	legumes-amidon-moyen	20023	4	celeri	Céleri branche
+celeri_rave	céleri-rave pelé cru	legumes-amidon-moyen	20055	3	celeri	Céleri rave
+panais	panais pelé cru	legumes-amidon-moyen	20181	4		Panais
+petits_pois	petits pois frais écossés crus	legumes-amidon-moyen	20072	7		Petits pois frais
+rutabaga	rutabaga pelé cru	legumes-amidon-moyen	20201	3		Rutabaga
+choux_bruxelles	choux de Bruxelles crus	legumes-amidon-moyen	20058	5		Choux de Bruxelles
+artichaut	fonds d'artichaut frais crus	legumes-amidon-moyen	20052	14		Artichaut (fonds parés)
+basilic	basilic frais	legumes-amidon-moyen	11033	35		Basilic
+fraise	fraises fraîches	fruits-acides	13014	9		Fraises
+ananas	chair d'ananas frais	fruits-acides	13002	5		Ananas
+citron	chair de citron sans pépins	fruits-acides	13009	5		Citron
+clementine	quartiers de clémentine sans pépins	fruits-acides	13024	4		Clémentine
+framboise	framboises fraîches	fruits-acides	13015	18		Framboise
+grenade	grains de grenade	fruits-acides	13018	10		Grenade
+groseille	groseilles fraîches	fruits-acides	13019	18		Groseille
+orange	chair d'orange sans pépins	fruits-acides	13034	3		Orange
+tomate	tomate ronde crue	fruits-acides	20276	4		Tomate
+cerise	cerises dénoyautées	fruits-mi-acides	13008	8		Cerise
+peche	pêche fraîche dénoyautée	fruits-mi-acides	13043	5		Pêche
+poire	poire fraîche avec peau	fruits-mi-acides	13037	4		Poire (colonne mi-acides)
+pomme	pomme fraîche avec peau	fruits-mi-acides	13039	3		Pomme (colonne mi-acides ; variété acidulée)
+prune	prunes fraîches dénoyautées	fruits-mi-acides	13100	5		Prune
+abricot	abricots frais dénoyautés	fruits-mi-acides	13000	6		Abricot
+mangue	chair de mangue fraîche	fruits-mi-acides	13025	7		Mangue
+banane	chair de banane	fruits-doux	13005	3		Banane
+figue	figues fraîches	fruits-doux	13012	8		Figue
+raisin	grains de raisin frais	fruits-doux	13395	5		Raisin doux (mûr)
+abricot_sec	abricots secs sans additifs	fruits-seches	13001	12		Abricot séché (sans sulfites ajoutés)
+figue_seche	figues sèches sans additifs	fruits-seches	13013	12		Figue séchée
+melon	chair de melon	fruits-neutres	13026	4		Melon
+pasteque	chair de pastèque	fruits-neutres	13036	3		Pastèque
+eau	eau potable	eau	18066	0		Eau (minéralisation non évaluée)

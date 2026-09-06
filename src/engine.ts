@@ -1,3 +1,4 @@
+import { associationRecipeAllowed, isAssociationRecipe } from "./food-associations.ts";
 import type {
   DayConstraint,
   Ingredient,
@@ -361,6 +362,7 @@ export function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
 
   return (
+    associationRecipeAllowed(recipe, profile.associationMode) &&
     !(profile.dislikedRecipeIds ?? []).includes(recipe.id) &&
     recipe.diet.includes(profile.diet) &&
     recipe.prepMinutes <= profile.maxPrepMinutes &&
@@ -395,6 +397,7 @@ function plannedMealIsAllowedForSlot(meal: PlannedMeal, recipe: Recipe, profile:
   const allergies = new Set(profile.allergies.map(canonicalAllergen));
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
   return (
+    associationRecipeAllowed({ id: recipe.id, ingredients: ingredientsForPlannedMeal(recipe, meal, 1) }, profile.associationMode) &&
     !(profile.dislikedRecipeIds ?? []).includes(recipe.id) &&
     recipe.mealTypes.includes(meal.mealType) &&
     recipe.diet.includes(profile.diet) &&
@@ -438,6 +441,7 @@ export interface RecipeCompatibilityDiagnostic {
   compatibleCount: number;
   mealTypeCount: number;
   blockedBy: {
+    associations?: number;
     allergies: number;
     disliked: number;
     diet: number;
@@ -466,6 +470,7 @@ export function diagnoseRecipeCompatibility(
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
   const disliked = new Set(profile.dislikedRecipeIds ?? []);
   const checks = (recipe: Recipe) => ({
+    associations: !associationRecipeAllowed(recipe, profile.associationMode),
     allergies: recipeAllergens(recipe).some((allergen) => allergies.has(allergen)),
     disliked: disliked.has(recipe.id),
     diet: !recipe.diet.includes(profile.diet),
@@ -485,6 +490,7 @@ export function diagnoseRecipeCompatibility(
     compatibleCount: evaluated.filter((entry) => Object.values(entry.checks).every((blocked) => !blocked)).length,
     mealTypeCount: candidates.length,
     blockedBy: {
+      ...(profile.associationMode && profile.associationMode !== "off" ? { associations: evaluated.filter((entry) => entry.checks.associations).length } : {}),
       allergies: evaluated.filter((entry) => entry.checks.allergies).length,
       disliked: evaluated.filter((entry) => entry.checks.disliked).length,
       diet: evaluated.filter((entry) => entry.checks.diet).length,
@@ -1153,6 +1159,8 @@ export function setMealIngredientSubstitution(
   if (!target || !recipe) return plan;
   const sourceIngredient = recipe.ingredients.find((item) => canonicalIngredientId(item.id) === canonicalIngredientId(ingredientId));
   if (!sourceIngredient) return plan;
+
+  if (substitutionId && isAssociationRecipe(recipe.id)) throw new Error("Cette collection utilise des substitutions culinaires indiquées dans la fiche ; les remplacements automatiques ne sont pas encore relus pour ces recettes.");
 
   if (substitutionId) {
     const rule = substitutionsForIngredient(sourceIngredient).find((candidate) => candidate.id === substitutionId);

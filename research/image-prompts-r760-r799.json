@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "generated_at": "2026-09-06",
+    "recipe_file": "association-collection.json",
+    "count": 17,
+    "target": "JPEG 900x900, qualité 72-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r760",
+      "title": "Crème de panais aux côtes de blette",
+      "output_file": "public/assets/recipes/generated/r760-creme-de-panais-aux-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Crème de panais aux côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : panais pelé cru, côtes de blette crues, eau potable. Consigne de génération effectivement utilisée : Utilise l’image fournie uniquement comme référence stricte de style photographique du site : même lumière naturelle douce, fond minéral beige, textile sauge, céramique mate, cadrage éditorial serré, rendu d'objectif réel, grain subtil, imperfections naturelles et palette non saturée. Crée une nouvelle photographie carrée de la recette « Crème de panais aux côtes de blette ». Montrer un velouté maison ivoire-beige avec quelques fragments irréguliers de côtes de blette visibles, préparé uniquement avec panais, côtes de blette et eau. La texture doit être épaisse, imparfaite et crédible, sans brillance artificielle. Aucune crème, lait, huile, herbe, épice, pain ou garniture. Éviter absolument l'aspect CGI, plastique, trop net, trop lisse, les formes répétées et la symétrie. Photographie culinaire ultra réaliste prise au 50 mm, profondeur de champ optique, ombres cohérentes. Aucun texte, logo, personne ni cadre de téléphone."
+    },
+    {
+      "id": "r761",
+      "title": "Potage de rutabaga et carotte au persil",
+      "output_file": "public/assets/recipes/generated/r761-potage-de-rutabaga-et-carotte-au-persil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Potage de rutabaga et carotte au persil ». Ultra-photoréalisme culinaire, ingrédients autorisés : rutabaga pelé cru, carotte crue, persil frais, eau potable. Consigne de génération effectivement utilisée : Utiliser la référence seulement pour le style photographique historique : lumière douce, céramique mate, fond minéral, textile sauge, rendu objectif 50 mm. Nouvelle photo carrée ultra réaliste de « Potage de rutabaga et carotte au persil ». Potage maison moitié mixé, sans texture de riz, semoule, lentilles ou céréales. Quelques cubes irréguliers clairement identifiables de rutabaga jaune pâle et carotte orange, persil frais discret. Seulement rutabaga, carotte, persil et eau. Imperfections naturelles, couleurs douces, profondeur de champ réelle. Éviter CGI, plastique, symétrie, répétitions, brillance excessive. Aucun texte, logo, personne, produit laitier, pain ni ingrédient absent."
+    },
+    {
+      "id": "r762",
+      "title": "Soupe d'asperges aux petits pois et basilic",
+      "output_file": "public/assets/recipes/generated/r762-soupe-d-asperges-aux-petits-pois-et-basilic.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe d'asperges aux petits pois et basilic ». Ultra-photoréalisme culinaire, ingrédients autorisés : asperges vertes crues, petits pois frais écossés crus, basilic frais, eau potable. Consigne de génération effectivement utilisée : Utiliser la référence seulement pour le style photographique historique : lumière douce, céramique mate, fond minéral, textile sauge, rendu objectif 50 mm. Nouvelle photo carrée ultra réaliste de « Soupe d'asperges aux petits pois et basilic ». Velouté vert naturel rustique, trois pointes d'asperges disposées sans symétrie, quelques petits pois irrégulièrement répartis, très peu de basilic. Seulement asperges, petits pois, basilic et eau. Imperfections naturelles, couleurs douces, profondeur de champ réelle. Éviter CGI, plastique, symétrie, répétitions, brillance excessive. Aucun texte, logo, personne, produit laitier, pain ni ingrédient absent."
+    },
+    {
+      "id": "r763",
+      "title": "Velouté de betterave au chou-fleur",
+      "output_file": "public/assets/recipes/generated/r763-veloute-de-betterave-au-chou-fleur.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté de betterave au chou-fleur ». Ultra-photoréalisme culinaire, ingrédients autorisés : betterave rouge crue, chou-fleur cru, eau potable. Consigne de génération effectivement utilisée : Même style photographique réaliste que la référence, utilisée uniquement pour lumière, vaisselle, fond, grain et cadrage. Nouvelle photo carrée de « Velouté de betterave au chou-fleur, velouté grenat naturel sans garniture ». Seulement les ingrédients du titre et eau, avec persil ou basilic seulement s'il est cité. Rendu appareil photo 50 mm, aliments imparfaits, textures plausibles, palette douce, sans aspect CGI, sans ajout, texte, logo ou personne."
+    },
+    {
+      "id": "r764",
+      "title": "Soupe claire de courgette, endive et radis",
+      "output_file": "public/assets/recipes/generated/r764-soupe-claire-de-courgette-endive-et-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe claire de courgette, endive et radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : courgette crue, endives crues, radis rouges crus, eau potable. Consigne de génération effectivement utilisée : Utiliser la référence seulement pour le style photographique historique : lumière douce, céramique mate, fond minéral, textile sauge, rendu objectif 50 mm. Nouvelle photo carrée ultra réaliste de « Soupe claire de courgette, endive et radis ». Bouillon clair avec courgette, endive et radis cuits, découpes irrégulières. Absolument aucune herbe, feuille aromatique, huile ou assaisonnement visible. Seulement courgette, endive, radis et eau. Imperfections naturelles, couleurs douces, profondeur de champ réelle. Éviter CGI, plastique, symétrie, répétitions, brillance excessive. Aucun texte, logo, personne, produit laitier, pain ni ingrédient absent."
+    },
+    {
+      "id": "r765",
+      "title": "Bouillon de chou-fleur, radis et laitue",
+      "output_file": "public/assets/recipes/generated/r765-bouillon-de-chou-fleur-radis-et-laitue.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Bouillon de chou-fleur, radis et laitue ». Ultra-photoréalisme culinaire, ingrédients autorisés : chou-fleur cru, radis rouges crus, laitue crue, eau potable. Consigne de génération effectivement utilisée : Utiliser la référence seulement pour le style photographique historique : lumière douce, céramique mate, fond minéral, textile sauge, rendu objectif 50 mm. Nouvelle photo carrée ultra réaliste de « Bouillon de chou-fleur, radis et laitue ». Bouillon chaud clair, petits bouquets de chou-fleur cuits, radis ramollis et légèrement décolorés, laitue flétrie et translucide. Les légumes doivent paraître cuits, jamais crus. Seulement chou-fleur, radis, laitue et eau. Imperfections naturelles, couleurs douces, profondeur de champ réelle. Éviter CGI, plastique, symétrie, répétitions, brillance excessive. Aucun texte, logo, personne, produit laitier, pain ni ingrédient absent."
+    },
+    {
+      "id": "r769",
+      "title": "Soupe de choux de Bruxelles et céleri-rave",
+      "output_file": "public/assets/recipes/generated/r769-soupe-de-choux-de-bruxelles-et-celeri-rave.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe de choux de Bruxelles et céleri-rave ». Ultra-photoréalisme culinaire, ingrédients autorisés : choux de Bruxelles crus, céleri-rave pelé cru, persil frais, eau potable. Consigne de génération effectivement utilisée : Utiliser la référence seulement pour le style photographique historique : lumière douce, céramique mate, fond minéral, textile sauge, rendu objectif 50 mm. Nouvelle photo carrée ultra réaliste de « Soupe de choux de Bruxelles et céleri-rave ». Soupe maison simple avec choux de Bruxelles cuits coupés irrégulièrement, cubes irréguliers de céleri-rave, persil ciselé discret et eau. Aucun légume cru en décor, aucun accessoire alimentaire, aucune huile visible. Imperfections naturelles, couleurs douces, profondeur de champ réelle. Éviter CGI, plastique, symétrie, répétitions, brillance excessive. Aucun texte, logo, personne, produit laitier, pain ni ingrédient absent."
+    },
+    {
+      "id": "r771",
+      "title": "Chou-fleur rôti entier en tranches épaisses",
+      "output_file": "public/assets/recipes/generated/r771-chou-fleur-roti-entier-en-tranches-epaisses.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Chou-fleur rôti entier en tranches épaisses ». Ultra-photoréalisme culinaire, ingrédients autorisés : chou-fleur cru, huile d'olive vierge extra, persil frais. Consigne de génération effectivement utilisée : Photo culinaire carrée ultra-photoréaliste de « Chou-fleur rôti entier en tranches épaisses » épaisses tranches dorées de chou-fleur rôti, huile olive, persil. Seulement les ingrédients cités, aucune garniture absente. Vaisselle crème, fond minéral clair, textile sauge, lumière naturelle latérale, cadrage trois-quarts, textures plausibles, couleurs naturelles, sans texte, logo, lait, gluten, personne ni cadre. Format 1:1."
+    },
+    {
+      "id": "r772",
+      "title": "Rubans de carotte et concombre à la purée d'avocat",
+      "output_file": "public/assets/recipes/generated/r772-rubans-de-carotte-et-concombre-a-la-puree-d-avocat.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Rubans de carotte et concombre à la purée d'avocat ». Ultra-photoréalisme culinaire, ingrédients autorisés : carotte crue, concombre cru avec peau, chair d'avocat, ciboulette fraîche. Consigne de génération effectivement utilisée : Photo culinaire carrée ultra-photoréaliste de « Rubans de carotte et concombre à la purée d'avocat » salade de rubans carotte concombre, purée avocat, ciboulette. Seulement les ingrédients cités, aucune garniture absente. Vaisselle crème, fond minéral clair, textile sauge, lumière naturelle latérale, cadrage trois-quarts, textures plausibles, couleurs naturelles, sans texte, logo, lait, gluten, personne ni cadre. Format 1:1."
+    },
+    {
+      "id": "r774",
+      "title": "Endives farcies à l'avocat et aux champignons cuits",
+      "output_file": "public/assets/recipes/generated/r774-endives-farcies-a-l-avocat-et-aux-champignons-cuits.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Endives farcies à l'avocat et aux champignons cuits ». Ultra-photoréalisme culinaire, ingrédients autorisés : endives crues, chair d'avocat, champignons de Paris crus, ciboulette fraîche. Consigne de génération effectivement utilisée : Utiliser la référence seulement pour le style photographique historique : lumière douce, céramique mate, fond minéral, textile sauge, rendu objectif 50 mm. Nouvelle photo carrée ultra réaliste de « Endives farcies à l'avocat et aux champignons cuits ». Barquettes d'endive, avocat écrasé rustique, champignons cuits à l'eau ou vapeur, mats et tendres, jamais brunis ni lustrés. Ciboulette discrète. Seulement endive, avocat, champignons et ciboulette. Imperfections naturelles, couleurs douces, profondeur de champ réelle. Éviter CGI, plastique, symétrie, répétitions et brillance excessive. Aucun texte, logo, personne, produit laitier, pain ni ingrédient absent."
+    },
+    {
+      "id": "r776",
+      "title": "Brocoli écrasé à la fourchette et huile de basilic",
+      "output_file": "public/assets/recipes/generated/r776-brocoli-ecrase-a-la-fourchette-et-huile-de-basilic.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Brocoli écrasé à la fourchette et huile de basilic ». Ultra-photoréalisme culinaire, ingrédients autorisés : brocoli cru, basilic frais, huile d'olive vierge extra. Consigne de génération effectivement utilisée : Photo culinaire carrée ultra-photoréaliste de « Brocoli écrasé à la fourchette et huile de basilic » brocoli cuit grossièrement écrasé, basilic, léger filet huile olive. Seulement les ingrédients cités, aucune garniture absente. Vaisselle crème, fond minéral clair, textile sauge, lumière naturelle latérale, cadrage trois-quarts, textures plausibles, couleurs naturelles, sans texte, logo, produits laitiers, gluten, personne ni cadre. Format 1:1."
+    },
+    {
+      "id": "r780",
+      "title": "Navets rôtis et carottes en éventail",
+      "output_file": "public/assets/recipes/generated/r780-navets-rotis-et-carottes-en-eventail.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Navets rôtis et carottes en éventail ». Ultra-photoréalisme culinaire, ingrédients autorisés : navet pelé cru, carotte crue, huile d'olive vierge extra, persil frais. Consigne de génération effectivement utilisée : Utiliser la référence seulement pour le style photographique historique : lumière douce, céramique mate, fond minéral, textile sauge, rendu objectif 50 mm. Nouvelle photo carrée ultra réaliste de « Navets rôtis et carottes en éventail ». Morceaux rustiques de navet et carotte rôtis, disposition libre et imparfaite, léger film d'huile d'olive, quelques feuilles de persil. Aucun point noir, poivre, épice ni assaisonnement. Imperfections naturelles, couleurs douces, profondeur de champ réelle. Éviter CGI, plastique, symétrie, répétitions et brillance excessive. Aucun texte, logo, personne, produit laitier, pain ni ingrédient absent."
+    },
+    {
+      "id": "r782",
+      "title": "Betteraves râpées et céleri-rave à l'avocat",
+      "output_file": "public/assets/recipes/generated/r782-betteraves-rapees-et-celeri-rave-a-l-avocat.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Betteraves râpées et céleri-rave à l'avocat ». Ultra-photoréalisme culinaire, ingrédients autorisés : betterave rouge crue, céleri-rave pelé cru, chair d'avocat, persil frais. Consigne de génération effectivement utilisée : Même style photographique historique que la référence : photo culinaire carrée ultra réaliste, lumière douce, céramique mate, fond minéral, textile sauge, objectif 50 mm, imperfections naturelles. Nouvelle scène de « Betteraves râpées et céleri-rave à l'avocat ». Betterave et céleri-rave râpés de façon irrégulière, quelques cubes naturels d'avocat. Persil français plat finement ciselé seulement, sans feuilles entières. Aucune coriandre, aucune autre herbe, aucun grain noir. Seulement les ingrédients cités. Éviter CGI, plastique, symétrie et répétitions. Aucun texte, logo, personne ou ingrédient absent."
+    },
+    {
+      "id": "r791",
+      "title": "Laitue, avocat et quartiers de radis",
+      "output_file": "public/assets/recipes/generated/r791-laitue-avocat-et-quartiers-de-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Laitue, avocat et quartiers de radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : laitue crue, chair d'avocat, radis rouges crus, ciboulette fraîche. Consigne de génération effectivement utilisée : Photo culinaire carrée ultra-photoréaliste de « Laitue, avocat et quartiers de radis » salade laitue, avocat, quartiers radis, ciboulette. Seulement les ingrédients cités, aucune garniture absente. Vaisselle crème, fond minéral clair, textile sauge, lumière naturelle latérale, cadrage trois-quarts, textures plausibles, couleurs naturelles, sans texte, logo, produits laitiers, gluten, personne ni cadre. Format 1:1."
+    },
+    {
+      "id": "r793",
+      "title": "Carpaccio de betterave et carotte, huile de basilic",
+      "output_file": "public/assets/recipes/generated/r793-carpaccio-de-betterave-et-carotte-huile-de-basilic.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Carpaccio de betterave et carotte, huile de basilic ». Ultra-photoréalisme culinaire, ingrédients autorisés : betterave rouge crue, carotte crue, basilic frais, huile d'olive vierge extra. Consigne de génération effectivement utilisée : Même style photographique historique que la référence : photo culinaire carrée ultra réaliste, lumière douce, céramique mate, fond minéral, textile sauge, objectif 50 mm, imperfections naturelles. Nouvelle scène de « Carpaccio de betterave et carotte, huile de basilic ». Tranches taillées à la main, irrégulières, betterave et carotte superposées librement, huile d'olive légèrement teintée par du basilic finement mixé. Absolument aucun poivre, aucune poussière noire, aucune épice, aucune feuille décorative. Seulement les ingrédients cités. Éviter CGI, plastique, symétrie et répétitions. Aucun texte, logo, personne ou ingrédient absent."
+    },
+    {
+      "id": "r795",
+      "title": "Asperges et radis rôtis à la ciboulette",
+      "output_file": "public/assets/recipes/generated/r795-asperges-et-radis-rotis-a-la-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Asperges et radis rôtis à la ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : asperges vertes crues, radis rouges crus, ciboulette fraîche, huile d'olive vierge extra. Consigne de génération effectivement utilisée : Photo culinaire carrée ultra-photoréaliste de « Asperges et radis rôtis à la ciboulette » asperges vertes et radis rôtis, ciboulette, huile olive. Seulement les ingrédients cités, aucune garniture absente. Vaisselle crème, fond minéral clair, textile sauge, lumière naturelle latérale, cadrage trois-quarts, cuisson et textures plausibles, couleurs naturelles, sans texte, logo, produits laitiers, gluten, personne ni cadre. Format 1:1."
+    },
+    {
+      "id": "r797",
+      "title": "Chou blanc massé à l'avocat et carotte",
+      "output_file": "public/assets/recipes/generated/r797-chou-blanc-masse-a-l-avocat-et-carotte.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Chou blanc massé à l'avocat et carotte ». Ultra-photoréalisme culinaire, ingrédients autorisés : chou blanc cru, carotte crue, chair d'avocat. Consigne de génération effectivement utilisée : Photo culinaire carrée ultra-photoréaliste de « Chou blanc massé à l'avocat et carotte » salade chou blanc fin, carotte râpée, avocat crémeux. Seulement les ingrédients cités, aucune garniture absente. Vaisselle crème, fond minéral clair, textile sauge, lumière naturelle latérale, cadrage trois-quarts, cuisson et textures plausibles, couleurs naturelles, sans texte, logo, produits laitiers, gluten, personne ni cadre. Format 1:1."
+    }
+  ]
+}

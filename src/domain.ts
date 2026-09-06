@@ -78,6 +78,8 @@ export interface Recipe {
 }
 
 export interface UserProfile {
+  /** Optional personal association chart; independent of medical dietary advice. */
+  associationMode?: "off" | "green" | "green-orange";
   /** Optional display name used only for the local welcome message. */
   firstName: string;
   people: number;
@@ -181,6 +183,7 @@ export interface ShoppingItem {
 }
 
 export const DEFAULT_PROFILE: UserProfile = {
+  associationMode: "off",
   firstName: "",
   people: 2,
   mealsPerDay: 2,

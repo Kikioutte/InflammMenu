@@ -21,6 +21,7 @@ import {
   MinusIcon,
   PersonIcon,
   PlusIcon,
+  ReaderIcon,
   ReloadIcon,
   Share2Icon,
   SunIcon,
@@ -148,7 +149,7 @@ import "@fontsource/dm-sans/latin-400.css";
 import "@fontsource/dm-sans/latin-500.css";
 import "@fontsource/dm-sans/latin-600.css";
 
-type TabId = "home" | "week" | "courses" | "favorites";
+type TabId = "home" | "week" | "recipes" | "courses";
 type IconType = ComponentType<{ className?: string }>;
 type AppStateUpdate = AppState | ((current: AppState) => AppState);
 
@@ -312,8 +313,8 @@ const ingredientNameById = new Map(
 const navItems: Array<{ id: TabId; label: string; icon: IconType }> = [
   { id: "home", label: "Accueil", icon: HomeIcon },
   { id: "week", label: "Semaine", icon: CalendarIcon },
+  { id: "recipes", label: "Recette", icon: ReaderIcon },
   { id: "courses", label: "Courses", icon: ArchiveIcon },
-  { id: "favorites", label: "Favoris", icon: HeartIcon },
 ];
 
 function isoDate(date: Date): string {
@@ -1173,7 +1174,7 @@ function CookingView({ recipe, portions, planned }: { recipe: Recipe; portions: 
     <ol className="cooking-progress" aria-label="Progression des étapes">
       {recipe.steps.map((item, index) => <li key={item}><button type="button" className={`${index === step ? "is-current" : ""} ${done.includes(index) ? "is-done" : ""}`} aria-current={index === step ? "step" : undefined} aria-label={`Étape ${index + 1}`} onClick={() => setStep(index)} /></li>)}
     </ol>
-    <p className="cooking-step" data-testid="cooking-step">{recipe.steps[step]}</p>
+    <p className="cooking-step" data-testid="cooking-step">{isAssociationRecipe(recipe.id) ? scaleAssociationStep(recipe.steps[step], portions / 2) : recipe.steps[step]}</p>
     <button type="button" className={`cooking-done ${isDone ? "is-active" : ""}`} aria-pressed={isDone} data-testid="cooking-done" onClick={() => setDone((current) => (current.includes(step) ? current.filter((entry) => entry !== step) : [...current, step]))}>
       <CheckIcon /> {isDone ? "Étape faite" : "Marquer cette étape"}
     </button>
@@ -1187,6 +1188,40 @@ function CookingView({ recipe, portions, planned }: { recipe: Recipe; portions: 
   </main></MobileScroll>;
 }
 
+const ASSOCIATION_LABELS = { verte: "Associations vertes", orange: "Associations orange", grise: "Association à exclure", "non-classee": "Association non vérifiable" } as const;
+
+function scaleAssociationStep(step: string, ratio: number): string {
+  return step.replace(/(\d+(?:[.,]\d+)?)\s*(ml|g)\b/g, (_match, amount: string, unit: string) => `${(Number(amount.replace(",", ".")) * ratio).toLocaleString("fr-FR", { maximumFractionDigits: 1 })} ${unit}`);
+}
+
+function AssociationNotice({ result }: { result: AssociationResult }) {
+  return <aside className={`association-notice is-${result.level}`} data-testid="association-notice">
+    <strong>{ASSOCIATION_LABELS[result.level]}</strong>
+    {result.level === "verte" ? <p>Toutes les associations de ces ingrédients sont vertes dans votre tableau.</p> : null}
+    {result.pairs.length ? <details open><summary>{result.pairs.length} association{result.pairs.length > 1 ? "s" : ""} à connaître</summary><ul>{result.pairs.map((pair, i) => <li key={i}><b>{pair.level === "grise" ? "À exclure" : "Orange"}</b> : {pair.a} + {pair.b}</li>)}</ul></details> : null}
+    {result.unknown.length ? <p>Classement absent du tableau : {result.unknown.join(", ")}. Compatibilité non confirmée.</p> : null}
+    <small>Si vous changez les portions, gardez les tailles de coupe et cuisez en plusieurs fournées si nécessaire ; la durée totale peut augmenter.</small><small>Lecture de votre tableau personnel, distincte d’une évaluation médicale. Ne déduit aucune restriction de boisson. Les allergies et exclusions restent à respecter.</small>
+  </aside>;
+}
+
+function AssociationBadge({ recipe }: { recipe: { id: string; ingredients: readonly AssociationIngredient[] } }) {
+  if (!isAssociationRecipe(recipe.id)) return null;
+  const result = evaluateAssociations(recipe.ingredients);
+  return <span className={`association-badge is-${result.level}`}>{ASSOCIATION_LABELS[result.level]}</span>;
+}
+
+function MealAssociationChecker({ recipes }: { recipes: CatalogueRecipe[] }) {
+  const [selection, setSelection] = useState(["", "", ""]);
+  const reviewed = recipes.filter((recipe) => isAssociationRecipe(recipe.id));
+  const chosen = selection.map((id) => reviewed.find((recipe) => recipe.id === id)).filter((r): r is CatalogueRecipe => Boolean(r));
+  return <details className="meal-association-checker" data-testid="meal-association-checker"><summary>Vérifier les associations d’un repas complet</summary>
+    <p>Choisissez jusqu’à trois recettes : les ingrédients de toutes les fiches sont comparés ensemble, sauces et accompagnements compris.</p>
+    {selection.map((id, index) => <label className="text-field" key={index}><span>Recette {index + 1}</span><select aria-label={`Recette ${index + 1} du repas`} value={id} onChange={(event) => setSelection((current) => current.map((value, i) => i === index ? event.target.value : value))}><option value="">Aucune</option>{reviewed.map((recipe) => <option key={recipe.id} value={recipe.id}>{recipe.titre}</option>)}</select></label>)}
+    {chosen.length ? <AssociationNotice result={evaluateAssociationMeal(chosen)} /> : <p>Le résultat apparaîtra après votre sélection.</p>}
+    <small>Ce contrôle ne planifie pas les recettes et n’ajoute rien aux courses. Les quantités et l’équilibre nutritionnel du repas ne sont pas évalués ici.</small>
+  </details>;
+}
+
 function CatalogueError({ onRetry }: { onRetry: () => void }) {
   return <div className="catalogue-error" role="alert" data-testid="catalogue-error">
     <Cross2Icon /><h3>Catalogue indisponible</h3>
@@ -1195,13 +1230,14 @@ function CatalogueError({ onRetry }: { onRetry: () => void }) {
   </div>;
 }
 
-function FavoritesView({ favoriteIds, customRecipes, history, catalogue, catalogueError, onLoadCatalogue, onRetryCatalogue, onOpenRecipe, onOpenCatalogue, onOpenHistory, onDeleteHistory }: { favoriteIds: string[]; customRecipes: Recipe[]; history: WeeklyPlan[]; catalogue: CatalogueData | null; catalogueError: boolean; onLoadCatalogue: () => void; onRetryCatalogue: () => void; onOpenRecipe: (recipe: Recipe) => void; onOpenCatalogue: (recipe: CatalogueRecipe) => void; onOpenHistory: (plan: WeeklyPlan) => void; onDeleteHistory: (plan: WeeklyPlan) => void }) {
-  const [mode, setMode] = useState<"favorites" | "catalogue" | "history">("favorites");
+function RecipesView({ favoriteIds, customRecipes, history, catalogue, catalogueError, onLoadCatalogue, onRetryCatalogue, onOpenRecipe, onOpenCatalogue, onOpenHistory, onDeleteHistory }: { favoriteIds: string[]; customRecipes: Recipe[]; history: WeeklyPlan[]; catalogue: CatalogueData | null; catalogueError: boolean; onLoadCatalogue: () => void; onRetryCatalogue: () => void; onOpenRecipe: (recipe: Recipe) => void; onOpenCatalogue: (recipe: CatalogueRecipe) => void; onOpenHistory: (plan: WeeklyPlan) => void; onDeleteHistory: (plan: WeeklyPlan) => void }) {
+  const [mode, setMode] = useState<"favorites" | "catalogue" | "history">("catalogue");
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [filters, setFilters] = useState<CatalogueFilters>(EMPTY_CATALOGUE_FILTERS);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [visibleCatalogueCount, setVisibleCatalogueCount] = useState(60);
+  const [associationFilter, setAssociationFilter] = useState<"all" | "collection" | "verte" | "orange">("all");
   const deferredQuery = useDeferredValue(query);
   const normalizedQuery = normalizeText(deferredQuery);
   const customRecipeIds = new Set(customRecipes.map((recipe) => recipe.id));
@@ -1229,9 +1265,9 @@ function FavoritesView({ favoriteIds, customRecipes, history, catalogue, catalog
     catalogue ? visibleCatalogueRecipes(catalogue) : [],
     { ...filters, category },
     normalizedQuery,
-  );
+  ).filter((recipe) => associationFilter === "all" || (isAssociationRecipe(recipe.id) && (associationFilter === "collection" || evaluateAssociations(recipe.ingredients).level === associationFilter)));
   const renderedCatalogueRecipes = catalogueRecipes.slice(0, visibleCatalogueCount);
-  useEffect(() => { setVisibleCatalogueCount(60); }, [mode, normalizedQuery, category, filters]);
+  useEffect(() => { setVisibleCatalogueCount(60); }, [mode, normalizedQuery, category, filters, associationFilter]);
   const activeFilterCount = [
     filters.maxActiveMinutes > 0,
     Boolean(filters.cost),
@@ -1241,8 +1277,8 @@ function FavoritesView({ favoriteIds, customRecipes, history, catalogue, catalog
     filters.plannableOnly,
   ].filter(Boolean).length;
   return (
-    <main className="page-content favorites-page" data-testid="favorites-view">
-      <div className="page-heading"><span className="eyebrow">Ma bibliothèque</span><h1>Recettes</h1><p>Vos recettes personnelles, vos favoris et un catalogue culinaire relu recette par recette.</p></div>
+    <main className="page-content favorites-page" data-testid="recipes-view">
+      <div className="page-heading"><span className="eyebrow">Ma bibliothèque</span><h1>Recette</h1><p>Parcourez directement toutes les recettes, puis retrouvez vos favoris et votre historique.</p></div>
       <div className="segmented-control segmented-control--three" role="tablist" aria-label="Catalogue, favoris et historique" onKeyDown={(event) => {
         const order: typeof mode[] = ["favorites", "catalogue", "history"];
         const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
@@ -1272,6 +1308,8 @@ function FavoritesView({ favoriteIds, customRecipes, history, catalogue, catalog
         {!catalogue && unresolvedFavoriteIds.length ? (catalogueError ? <CatalogueError onRetry={onRetryCatalogue} /> : <p className="inline-help" aria-live="polite">Chargement de vos recettes du catalogue…</p>) : null}
       </> : savedCount ? <div className="empty-day"><MagnifyingGlassIcon /><h3>Aucun résultat</h3><p>Aucune de vos {savedCount} recettes enregistrées ne correspond à « {query} ».</p></div> : <div className="empty-day"><HeartIcon /><h3>Aucune recette enregistrée</h3><p>Ajoutez un favori ou créez votre version d’une recette pour la retrouver ici.</p></div>}</div> : mode === "catalogue" ? !catalogue ? (catalogueError ? <CatalogueError onRetry={onRetryCatalogue} /> : <div className="app-loading" aria-live="polite"><ReloadIcon className="spin" /><span>Chargement du catalogue…</span></div>) : <section className="catalogue-browser" aria-label="Catalogue vérifié">
         <div className="catalogue-method"><strong>{catalogueRecipes.length} recettes uniques disponibles</strong><p>Les {catalogue.recipes.length} recettes ont été relues : {Object.keys(DUPLICATE_CATALOGUE_RECIPES).length} variantes trop proches ont été écartées du catalogue affiché.</p></div>
+        <label className="text-field association-filter"><span>Associations alimentaires</span><select aria-label="Filtrer les associations" value={associationFilter} onChange={(event) => setAssociationFilter(event.target.value as typeof associationFilter)}><option value="all">Tout le catalogue</option><option value="collection">Collection sans gluten, lait, alcool ni préparations industrielles</option><option value="verte">Associations vertes uniquement</option><option value="orange">Associations orange signalées</option></select></label>
+        <MealAssociationChecker recipes={catalogue.recipes} />
         <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher une recette</span><KeyboardInput value={query} placeholder="Recette ou ingrédient" onChange={(event) => setQuery(event.target.value)} /></label>
         <Carousel ariaLabel="Filtrer les catégories" className="catalogue-filters" contentClassName="catalogue-filters__track"><button type="button" className={category === "all" ? "is-selected" : ""} aria-pressed={category === "all"} onClick={() => setCategory("all")}>Toutes</button>{CATALOGUE_CATEGORIES.map((item) => <button type="button" key={item.id} className={category === item.id ? "is-selected" : ""} aria-pressed={category === item.id} onClick={() => setCategory(item.id)}>{item.nom}</button>)}</Carousel>
         <div className="catalogue-toolbar">
@@ -1299,7 +1337,7 @@ function FavoritesView({ favoriteIds, customRecipes, history, catalogue, catalog
             </div>
           </div>
         </WebSheet>
-        <div className="catalogue-list">{renderedCatalogueRecipes.map((recipe) => { const review = reviewFor(recipe); const availability = plannerAvailabilityFor(recipe); const exclusion = availability.kind ? PLANNER_EXCLUSION_TEXT[availability.kind] : undefined; return <button type="button" className="catalogue-card" key={recipe.id} onClick={() => onOpenCatalogue(recipe)}><img className="catalogue-card__image" src={catalogueImageFor(recipe)} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span className={`catalogue-card__status is-${review.status}`}>{review.status === "validated" ? "Profil cohérent" : "Avec repères"}</span>{exclusion ? <span className="catalogue-card__planner">{exclusion.badge}</span> : null}<small>{catalogueCategoryName(recipe.categorie)} · {formatCatalogueCardDuration(recipe)}</small><strong>{recipe.titre}</strong><p>{review.summary}</p><span className="catalogue-card__meta">{recipe.regimes.slice(0, 2).map((item) => item.replaceAll("-", " ")).join(" · ")}<ChevronRightIcon /></span></button>; })}</div>
+        <div className="catalogue-list">{renderedCatalogueRecipes.map((recipe) => { const review = reviewFor(recipe); const availability = plannerAvailabilityFor(recipe); const exclusion = availability.kind ? PLANNER_EXCLUSION_TEXT[availability.kind] : undefined; return <button type="button" className="catalogue-card" key={recipe.id} onClick={() => onOpenCatalogue(recipe)}><img className="catalogue-card__image" src={catalogueImageFor(recipe)} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span className={`catalogue-card__status is-${review.status}`}>{review.status === "validated" ? "Profil cohérent" : "Avec repères"}</span>{exclusion ? <span className="catalogue-card__planner">{exclusion.badge}</span> : null}<small>{catalogueCategoryName(recipe.categorie)} · {formatCatalogueCardDuration(recipe)}</small><strong>{recipe.titre}</strong><AssociationBadge recipe={recipe} /><p>{review.summary}</p><span className="catalogue-card__meta">{recipe.regimes.slice(0, 2).map((item) => item.replaceAll("-", " ")).join(" · ")}<ChevronRightIcon /></span></button>; })}</div>
         {renderedCatalogueRecipes.length < catalogueRecipes.length ? <button type="button" className="secondary-button full-button catalogue-more" data-testid="catalogue-more" onClick={() => setVisibleCatalogueCount((count) => Math.min(catalogueRecipes.length, count + 60))}>Afficher 60 recettes de plus</button> : null}
       </section> : <div className="history-list">{history.length ? <>
         {history.map((plan) => <article className="history-card" key={plan.id} data-testid={`history-card-${plan.id}`}>
@@ -1635,6 +1673,7 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
   };
   return <MobileScroll className="app-screen"><main className="page-content pushed-page profile-page">
     <div className="page-heading"><span className="eyebrow">Personnalisation</span><h1>Mon profil alimentaire</h1><p>Ces choix guident chaque menu et restent dans le stockage local de cette adresse web, sur cet appareil.</p></div>
+    <section className="form-section"><h2>Associations alimentaires</h2><label className="text-field"><span>Règles pour le générateur</span><select aria-label="Règles d’association du générateur" value={profile.associationMode ?? "off"} onChange={(event) => setProfile((current) => ({ ...current, associationMode: event.target.value as AssociationMode }))}><option value="off">Catalogue habituel</option><option value="green-orange">Collection dédiée · vertes et orange signalées</option><option value="green">Collection dédiée · vertes uniquement</option></select></label><p className="inline-help">La collection dédiée utilise votre tableau et exclut gluten, produits laitiers, alcool ajouté et préparations industrielles. Les recettes non classées ne sont pas proposées. Ce réglage ne modifie pas les semaines déjà enregistrées ; régénérez pour l’appliquer.</p></section>
     <section className="form-section"><h2>Votre foyer</h2>
       <label className="text-field"><span>Votre prénom</span><KeyboardInput autoComplete="given-name" maxLength={40} value={profile.firstName} placeholder="Ex. Camille" onChange={(event) => setProfile((current) => ({ ...current, firstName: event.target.value }))} onBlur={keyboard.hide} /><small>Utilisé uniquement pour personnaliser l’accueil.</small></label>
       <div className="setting-row"><span><strong>Nombre de personnes</strong><small>Quantités adaptées, jusqu’à 8</small></span><div className="stepper"><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.max(1, current.people - 1) }))} aria-label="Retirer une personne"><MinusIcon /></button><b>{profile.people}</b><button type="button" onClick={() => setProfile((current) => ({ ...current, people: Math.min(8, current.people + 1) }))} aria-label="Ajouter une personne"><PlusIcon /></button></div></div>
@@ -1889,6 +1928,7 @@ function CompatibilityHelp({ diagnostic, selectedMinutes, onUseMinutes, onOpenPr
     {diagnostic.mealTypeCount === 0 ? <p><strong>Type de repas</strong><span>Le catalogue ne contient aucune recette pour ce créneau.</span></p> : null}
     {diagnostic.minimumCompatibleMinutes !== undefined && selectedMinutes !== undefined && diagnostic.minimumCompatibleMinutes > selectedMinutes ? <p><strong>Temps disponible</strong><span>La recette compatible la plus rapide demande {diagnostic.minimumCompatibleMinutes} minutes actives.</span>{onUseMinutes ? <button type="button" onClick={() => onUseMinutes(diagnostic.minimumCompatibleMinutes!)}>Choisir {diagnostic.minimumCompatibleMinutes} min</button> : null}</p> : null}
     {equipmentLabels.length ? <p><strong>Équipement manquant</strong><span>Des recettes deviendraient disponibles avec : {equipmentLabels.join(" ou ")}.</span>{onOpenProfile ? <button type="button" onClick={onOpenProfile}>Vérifier mes équipements</button> : null}</p> : null}
+    {diagnostic.blockedBy.associations ? <p><strong>Associations alimentaires</strong><span>{diagnostic.blockedBy.associations} recettes ne respectent pas le mode choisi ou ne font pas partie de la collection relue. Aucun assouplissement automatique.</span></p> : null}
     {diagnostic.blockedBy.diet ? <p><strong>Régime enregistré</strong><span>{diagnostic.blockedBy.diet} recette{diagnostic.blockedBy.diet > 1 ? "s ne correspondent" : " ne correspond"} pas au régime choisi.</span></p> : null}
     {safetyBlocked ? <p><strong>Allergies et exclusions</strong><span>{safetyBlocked} recette{safetyBlocked > 1 ? "s sont écartées" : " est écartée"}. Ces règles de sécurité n’ont pas été assouplies.</span></p> : null}
     {diagnostic.blockedBy.disliked ? <p><strong>Recettes écartées</strong><span>{diagnostic.blockedBy.disliked} recette{diagnostic.blockedBy.disliked > 1 ? "s restent exclues" : " reste exclue"} selon vos préférences.</span>{onOpenProfile ? <button type="button" onClick={onOpenProfile}>Voir mes recettes écartées</button> : null}</p> : null}
@@ -2026,12 +2066,13 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
   return <MobileScroll className="app-screen"><main className="recipe-page pushed-page"><img className="recipe-hero" src={recipe.image} alt={recipe.title} width={900} height={900} decoding="async" onError={handleRecipeImageError} /><div className="recipe-content"><span className="eyebrow">{planned ? MEAL_LABELS[planned.mealType] : recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</span><h1>{recipe.title}</h1><div className="recipe-meta"><span><ClockIcon /> {formatRecipeDuration(recipe.prepMinutes)} actives</span><span><PersonIcon /> {portions} portions</span><span>{recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</span></div><p className="recipe-intro">{recipe.description}</p>{durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}<div className={`recipe-actions ${onReplace || onPlan ? "" : "recipe-actions--single"}`}>{onReplace ? <button type="button" className="secondary-button" onClick={onReplace}><ReloadIcon /> Remplacer</button> : null}{onPlan ? <button type="button" className="secondary-button" data-testid="plan-recipe" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} onClick={toggle}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter"}</button></div>
     {advance ? <aside className="advance-note" data-testid="advance-note"><ClockIcon /><span><strong>{advanceHeadline(advance)}</strong>{formatRecipeDuration(advance.minutes)} de repos (trempage, prise au froid, marinade ou fermentation) en plus du temps actif.</span></aside> : null}
     <AllergenNotice allergens={plannedMealAllergens(recipe, planned)} />
+    {isAssociationRecipe(recipe.id) ? <AssociationNotice result={evaluateAssociations(ingredients)} /> : null}
     {planned?.substitutions?.length ? <p className="substitution-summary" data-testid="substitution-summary"><CheckCircledIcon /> {planned.substitutions.length} substitution{planned.substitutions.length > 1 ? "s" : ""} appliquée{planned.substitutions.length > 1 ? "s" : ""}. Allergènes, coût et courses ont été recalculés.</p> : null}
     {displayedCaution ? <aside className="catalogue-caution"><strong>Repère important</strong><p>{displayedCaution}</p></aside> : null}
     <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => value - 1)}><MinusIcon /></button><b data-testid="recipe-portions">{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => value + 1)}><PlusIcon /></button></div></div>{planned ? <p className="inline-help" data-testid="portions-help">Les portions, substitutions et la liste de courses suivent ce réglage.</p> : null}<ul className="ingredient-list">{ingredients.map((item, index) => {
       const source = recipe.ingredients[index];
       const sourceId = canonicalIngredientId(source.id);
-      const options = planned && onSubstitutionChange ? allowedSubstitutions(source) : [];
+      const options = planned && onSubstitutionChange && !isAssociationRecipe(recipe.id) ? allowedSubstitutions(source) : [];
       const selectedId = selectedSubstitutions.get(sourceId);
       const isOpen = openSubstitutionFor === sourceId;
       return <li className={`ingredient-row ${selectedId ? "is-substituted" : ""}`} key={`${source.id}-${source.unit}-${index}`}><CheckCircledIcon /><span className="ingredient-row__copy"><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}</span>{item.optional ? <small>Facultatif · non ajouté aux courses</small> : null}{selectedId ? <small>À la place de {source.name}</small> : null}</span>{options.length || selectedId ? <button type="button" className="ingredient-swap-button" aria-expanded={isOpen} data-testid={`ingredient-substitute-${sourceId}`} onClick={() => setOpenSubstitutionFor(isOpen ? null : sourceId)}>{selectedId ? "Modifier" : "Remplacer"}</button> : null}{isOpen ? <div className="ingredient-substitution-options" data-testid={`substitution-options-${sourceId}`}><button type="button" className={!selectedId ? "is-selected" : ""} aria-pressed={!selectedId} onClick={() => { onSubstitutionChange?.(sourceId, null); setOpenSubstitutionFor(null); }}><strong>Ingrédient d’origine</strong><small>{source.name}</small></button>{options.map((rule) => <button type="button" key={rule.id} className={selectedId === rule.id ? "is-selected" : ""} aria-pressed={selectedId === rule.id} data-testid={`apply-substitution-${rule.id}`} onClick={() => { onSubstitutionChange?.(sourceId, rule.id); setOpenSubstitutionFor(null); }}><strong>{rule.replacement.name}</strong><small>{rule.note}</small></button>)}</div> : null}</li>;
@@ -2053,7 +2094,7 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
     <section className="recipe-section nutrition-section"><h2>Repères par portion</h2><div><span><strong>{recipe.nutrition.calories}</strong> kcal</span><span><strong>{recipe.nutrition.protein}</strong> g protéines</span><span><strong>{recipe.nutrition.fiber}</strong> g fibres</span></div><small>{recipe.nutrition.note}</small></section>
     {onEdit ? <button type="button" className="secondary-button full-button" data-testid="edit-custom-recipe" onClick={onEdit}><MixerHorizontalIcon /> Modifier ou supprimer cette recette</button> : null}
     {onDuplicate ? <button type="button" className="secondary-button full-button" data-testid="duplicate-recipe" onClick={onDuplicate}><CopyIcon /> Créer ma version de cette recette</button> : null}
-    <section className="recipe-section"><div className="section-heading"><h2>Préparation</h2>{onCook ? <button type="button" className="secondary-button cooking-entry" data-testid="start-cooking" onClick={() => onCook(portions)}>Mode cuisine</button> : null}</div><ol className="steps">{recipe.steps.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{step}</span></li>)}</ol></section><aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
+    <section className="recipe-section"><div className="section-heading"><h2>Préparation</h2>{onCook ? <button type="button" className="secondary-button cooking-entry" data-testid="start-cooking" onClick={() => onCook(portions)}>Mode cuisine</button> : null}</div><ol className="steps">{recipe.steps.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{isAssociationRecipe(recipe.id) ? scaleAssociationStep(step, portions / 2) : step}</span></li>)}</ol></section><aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
   </div></main></MobileScroll>;
 }
 
@@ -2076,11 +2117,12 @@ function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan }: { recipe:
       {exclusion ? <aside className="planner-exclusion" data-testid="planner-exclusion"><strong>{exclusion.title}</strong><p>{exclusion.body}</p></aside> : null}
       {review.caution ? <aside className="catalogue-caution"><strong>À savoir</strong><p>{review.caution}</p></aside> : null}
       <AllergenNotice allergens={recipe.app.planner.allergens} />
+      {isAssociationRecipe(recipe.id) ? <AssociationNotice result={evaluateAssociations(recipe.ingredients)} /> : null}
       <p className="catalogue-disclaimer">Cette appréciation concerne la composition globale de la recette. Elle ne prouve pas qu'un ingrédient isolé prévient ou traite une inflammation.</p>
       <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => Math.max(1, value - 1))}><MinusIcon /></button><b>{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => Math.min(8, value + 1))}><PlusIcon /></button></div></div><ul className="ingredient-list">{recipe.ingredients.map((item, index) => <li key={`${item.nom}-${item.unite}-${index}`}><CheckCircledIcon /><span><strong>{displayCatalogueQuantity(item.quantite * ratio, item.unite)}</strong> {item.nom}{item.facultatif ? <small>{item.note || "Facultatif"} · non ajouté aux courses</small> : item.note ? <small>{item.note}</small> : null}</span></li>)}</ul>{recipe.ingredients.some((ingredient) => ingredient.facultatif) ? <p className="inline-help">Les ingrédients facultatifs restent visibles mais ne sont pas ajoutés aux courses. Le coût affiché conserve l’estimation prudente de la recette complète.</p> : null}</section>
       <section className="recipe-section nutrition-section"><h2>Estimations par portion</h2><div><span><strong>{recipe.nutrition_par_portion.calories}</strong> kcal</span><span><strong>{recipe.nutrition_par_portion.proteines_g}</strong> g protéines</span><span><strong>{recipe.nutrition_par_portion.fibres_g}</strong> g fibres</span></div><small>Valeurs estimatives à titre indicatif; elles varient selon les produits et la préparation.</small></section>
-      <section className="recipe-section"><h2>Repères présents</h2><div className="compound-list">{recipe.composes_actifs.map((item) => <span key={`${item.aliment}-${item.compose}`}><strong>{item.aliment}</strong><small>{item.compose}</small></span>)}</div><p className="catalogue-disclaimer">Ces composés sont documentés dans les aliments, mais leur présence ne garantit pas un bénéfice clinique individuel.</p></section>
-      <section className="recipe-section"><h2>Préparation</h2><ol className="steps">{recipe.etapes.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{step}</span></li>)}</ol></section>
+      {recipe.composes_actifs.length ? <section className="recipe-section"><h2>Repères présents</h2><div className="compound-list">{recipe.composes_actifs.map((item) => <span key={`${item.aliment}-${item.compose}`}><strong>{item.aliment}</strong><small>{item.compose}</small></span>)}</div><p className="catalogue-disclaimer">Ces composés sont documentés dans les aliments, mais leur présence ne garantit pas un bénéfice clinique individuel.</p></section> : null}
+      <section className="recipe-section"><h2>Préparation</h2><ol className="steps">{recipe.etapes.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{isAssociationRecipe(recipe.id) ? scaleAssociationStep(step, ratio) : step}</span></li>)}</ol></section>
       {recipe.substitutions.length ? <section className="recipe-section"><h2>Substitutions</h2><div className="substitution-list">{recipe.substitutions.map((item) => <p key={`${item.remplacer}-${item.par}`}><strong>{item.remplacer}</strong><ChevronRightIcon /><span>{item.par}<small>{item.note}</small></span></p>)}</div></section> : null}
       <aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
       <p className="catalogue-legal">{CATALOGUE_SUMMARY.avertissement}</p>
@@ -2619,7 +2661,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const currentView = useMemo(() => {
     if (tab === "week") return <WeekView plan={appState.currentPlan} onOpenMeal={openMeal} onReplace={openReplace} onToggleLock={toggleMealLock} onToggleCompleted={toggleMealCompleted} onPlanLeftover={openLeftover} onToggleSkipped={toggleMealSkipped} onSwap={openSwap} />;
     if (tab === "courses") return <CoursesView plan={appState.currentPlan} profile={appState.profile} checkedIds={appState.checkedShoppingItemIds} pantryIds={appState.pantryIngredientIds} pantryAmounts={appState.pantryAmounts} categoryOrder={appState.shoppingCategoryOrder} spent={appState.currentPlan ? appState.actualSpend[appState.currentPlan.id] : undefined} onToggleChecked={toggleChecked} onTogglePantry={togglePantry} onSetPantryAmount={setPantryAmount} onMoveCategory={moveCategory} onSetSpent={setSpent} />;
-    if (tab === "favorites") return <FavoritesView favoriteIds={appState.favoriteRecipeIds} customRecipes={appState.customRecipes} history={appState.history} catalogue={catalogue} catalogueError={catalogueError} onLoadCatalogue={ensureCatalogue} onRetryCatalogue={retryCatalogue} onOpenRecipe={(recipe) => flow.push(recipeScreen(recipe))} onOpenCatalogue={(recipe) => flow.push(catalogueRecipeScreen(recipe))} onOpenHistory={(plan) => flow.push(historyPlanScreen(plan))} onDeleteHistory={(plan) => {
+    if (tab === "recipes") return <RecipesView favoriteIds={appState.favoriteRecipeIds} customRecipes={appState.customRecipes} history={appState.history} catalogue={catalogue} catalogueError={catalogueError} onLoadCatalogue={ensureCatalogue} onRetryCatalogue={retryCatalogue} onOpenRecipe={(recipe) => flow.push(recipeScreen(recipe))} onOpenCatalogue={(recipe) => flow.push(catalogueRecipeScreen(recipe))} onOpenHistory={(plan) => flow.push(historyPlanScreen(plan))} onDeleteHistory={(plan) => {
       setAppState((current) => {
         const actualSpend = { ...current.actualSpend };
         delete actualSpend[plan.id];
@@ -2717,3 +2759,5 @@ export default function Prototype() {
   const initial = useMemo<FlowScreen>(() => ({ id: "root", render: (flow) => <AppShell flow={flow} appStore={appStore} /> }), [appStore]);
   return <PrototypeErrorBoundary><FlowStack initial={initial} /></PrototypeErrorBoundary>;
 }
+import { associationRecipeAllowed, evaluateAssociations, evaluateAssociationMeal, isAssociationRecipe } from "./food-associations.ts";
+import type { AssociationIngredient, AssociationResult, AssociationMode } from "./food-associations.ts";

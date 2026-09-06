@@ -1,0 +1,360 @@
+{
+  "meta": {
+    "generated_at": "2026-09-06",
+    "recipe_file": "association-collection.json",
+    "count": 50,
+    "target": "JPEG 900x900, qualité 72-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r1000",
+      "title": "Légumes rôtis aux éclats : pignons, aubergine, champignons",
+      "output_file": "public/assets/recipes/generated/r1000-legumes-rotis-aux-eclats-pignons-aubergine-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : pignons, aubergine, champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : pignons de pin nature, aubergine crue, champignons de Paris crus. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Légumes rôtis aux éclats : pignons, aubergine, champignons”. Show a bowl of roasted purple-skinned eggplant cubes and brown Paris mushroom slices, sprinkled with small slender ivory pine nuts clearly identifiable as pine nuts. ONLY the named ingredients. Pine nuts must be small and slender, never beans. No dark leafy greens, no black dots, no pepper, no herbs, no seasoning, no sauce and no visible oil. Clean ingredient surfaces with natural cooking marks. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r1001",
+      "title": "Légumes vapeur et croquant : pignons, haricots verts, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r1001-legumes-vapeur-et-croquant-pignons-haricots-verts-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : pignons, haricots verts, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : pignons de pin nature, haricots verts crus, côtes de blette crues. Consigne de génération effectivement utilisée : Ultra-photorealistic food photograph for InflammMenu, recipe “Légumes vapeur et croquant : pignons, haricots verts, côtes de blette”. Show a bowl of steamed green beans and chunky pale green Swiss chard ribs only, sprinkled with small slender ivory pine nuts clearly identifiable as pine nuts. ONLY the named ingredients. Pine nuts must be small and slender, never beans. No dark leafy greens, no black dots, no pepper, no herbs, no seasoning, no sauce and no visible oil. Clean ingredient surfaces with natural cooking marks. Real 50mm camera, soft natural side light, matte ceramic bowl, pale mineral background, sage linen, realistic portion and homemade imperfection, three-quarter overhead view. No text, logo, packaging or person. No CGI or illustration. Square high-quality authentic photograph."
+    },
+    {
+      "id": "r1002",
+      "title": "Salade croquante : pignons, betterave, radis",
+      "output_file": "public/assets/recipes/generated/r1002-salade-croquante-pignons-betterave-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade croquante : pignons, betterave, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : pignons de pin nature, betterave rouge crue, radis rouges crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade croquante : pignons, betterave, radis ». Représenter une salade crue composée uniquement de fines tranches de betterave rouge, rondelles de radis rouges et pignons de pin nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1003",
+      "title": "Légumes rôtis aux éclats : pignons, panais, poivron",
+      "output_file": "public/assets/recipes/generated/r1003-legumes-rotis-aux-eclats-pignons-panais-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : pignons, panais, poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : pignons de pin nature, panais pelé cru, poivron rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : pignons, panais, poivron ». Représenter des bâtonnets de panais et morceaux de poivron rouge rôtis, parsemés uniquement de pignons de pin nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1004",
+      "title": "Légumes vapeur et croquant : pignons, asperges, courge",
+      "output_file": "public/assets/recipes/generated/r1004-legumes-vapeur-et-croquant-pignons-asperges-courge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes vapeur et croquant : pignons, asperges, courge ». Ultra-photoréalisme culinaire, ingrédients autorisés : pignons de pin nature, asperges vertes crues, courge musquée pelée crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes vapeur et croquant : pignons, asperges, courge ». Représenter un bol d’asperges vertes et morceaux de courge musquée cuits vapeur, parsemés uniquement de pignons de pin nature. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1005",
+      "title": "Légumes rôtis aux éclats : amandes, rutabaga, chou rouge",
+      "output_file": "public/assets/recipes/generated/r1005-legumes-rotis-aux-eclats-amandes-rutabaga-chou-rouge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes rôtis aux éclats : amandes, rutabaga, chou rouge ». Ultra-photoréalisme culinaire, ingrédients autorisés : amandes nature non salées, rutabaga pelé cru, chou rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes rôtis aux éclats : amandes, rutabaga, chou rouge ». Représenter des cubes de rutabaga et morceaux de chou rouge rôtis, parsemés uniquement d’éclats d’amandes nature non salées. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1006",
+      "title": "Salade massée à l’avocat : carotte, radis",
+      "output_file": "public/assets/recipes/generated/r1006-salade-massee-a-lavocat-carotte-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade massée à l’avocat : carotte, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, carotte crue, radis rouges crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade massée à l’avocat : carotte, radis ». Représenter une salade crue composée uniquement de cubes d’avocat mûr, rubans de carotte et rondelles de radis rouges. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1007",
+      "title": "Légumes tièdes à l’avocat : chou-fleur, haricots verts",
+      "output_file": "public/assets/recipes/generated/r1007-legumes-tiedes-a-lavocat-chou-fleur-haricots-verts.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes tièdes à l’avocat : chou-fleur, haricots verts ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, chou-fleur cru, haricots verts crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes tièdes à l’avocat : chou-fleur, haricots verts ». Représenter un bol tiède composé uniquement de cubes d’avocat mûr, bouquets de chou-fleur et haricots verts cuits. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1008",
+      "title": "Barquettes croquantes à l’avocat : endives, betterave",
+      "output_file": "public/assets/recipes/generated/r1008-barquettes-croquantes-a-lavocat-endives-betterave.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Barquettes croquantes à l’avocat : endives, betterave ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, endives crues, betterave rouge crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Barquettes croquantes à l’avocat : endives, betterave ». Représenter des feuilles d’endive en barquettes garnies d’avocat mûr et de fins dés de betterave rouge crue. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures fraîches crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1009",
+      "title": "Salade massée à l’avocat : chou rouge, fenouil",
+      "output_file": "public/assets/recipes/generated/r1009-salade-massee-a-lavocat-chou-rouge-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade massée à l’avocat : chou rouge, fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, chou rouge cru, fenouil cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade massée à l’avocat : chou rouge, fenouil ». Représenter une salade de chou rouge finement émincé et fenouil cru avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures fraîches crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1010",
+      "title": "Légumes tièdes à l’avocat : brocoli, petits pois",
+      "output_file": "public/assets/recipes/generated/r1010-legumes-tiedes-a-lavocat-brocoli-petits-pois.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes tièdes à l’avocat : brocoli, petits pois ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, brocoli cru, petits pois frais écossés crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes tièdes à l’avocat : brocoli, petits pois ». Représenter des fleurettes de brocoli et petits pois tièdes avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures fraîches crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1011",
+      "title": "Barquettes croquantes à l’avocat : poivron, céleri branche",
+      "output_file": "public/assets/recipes/generated/r1011-barquettes-croquantes-a-lavocat-poivron-celeri-branche.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Barquettes croquantes à l’avocat : poivron, céleri branche ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, poivron rouge cru, céleri branche cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Barquettes croquantes à l’avocat : poivron, céleri branche ». Représenter des morceaux de poivron rouge en barquettes garnies d’avocat mûr et de céleri branche finement coupé. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures fraîches crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1012",
+      "title": "Salade massée à l’avocat : mâche, concombre",
+      "output_file": "public/assets/recipes/generated/r1012-salade-massee-a-lavocat-mache-concombre.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade massée à l’avocat : mâche, concombre ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, mâche crue, concombre cru avec peau. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade massée à l’avocat : mâche, concombre ». Représenter une salade de mâche et concombre cru avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures fraîches crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1013",
+      "title": "Légumes tièdes à l’avocat : artichaut, épinards",
+      "output_file": "public/assets/recipes/generated/r1013-legumes-tiedes-a-lavocat-artichaut-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes tièdes à l’avocat : artichaut, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, fonds d'artichaut frais crus, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes tièdes à l’avocat : artichaut, épinards ». Représenter des fonds d’artichaut frais et feuilles d’épinards légèrement tombées, servis tièdes avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1014",
+      "title": "Barquettes croquantes à l’avocat : laitue, carotte",
+      "output_file": "public/assets/recipes/generated/r1014-barquettes-croquantes-a-lavocat-laitue-carotte.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Barquettes croquantes à l’avocat : laitue, carotte ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, laitue crue, carotte crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Barquettes croquantes à l’avocat : laitue, carotte ». Représenter des feuilles de laitue croquantes en barquettes garnies d’avocat mûr et de carotte crue finement taillée. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1015",
+      "title": "Salade massée à l’avocat : céleri-rave, radis",
+      "output_file": "public/assets/recipes/generated/r1015-salade-massee-a-lavocat-celeri-rave-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade massée à l’avocat : céleri-rave, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, céleri-rave pelé cru, radis rouges crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade massée à l’avocat : céleri-rave, radis ». Représenter une salade de céleri-rave cru finement taillé et radis rouges avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1016",
+      "title": "Légumes tièdes à l’avocat : courge, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r1016-legumes-tiedes-a-lavocat-courge-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes tièdes à l’avocat : courge, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, courge musquée pelée crue, côtes de blette crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes tièdes à l’avocat : courge, côtes de blette ». Représenter des cubes de courge musquée et côtes de blette pâles en tronçons, servis tièdes avec morceaux d’avocat; côtes charnues seulement, aucune feuille sombre. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1017",
+      "title": "Barquettes croquantes à l’avocat : endives, chou rouge",
+      "output_file": "public/assets/recipes/generated/r1017-barquettes-croquantes-a-lavocat-endives-chou-rouge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Barquettes croquantes à l’avocat : endives, chou rouge ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, endives crues, chou rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Barquettes croquantes à l’avocat : endives, chou rouge ». Représenter des feuilles d’endive en barquettes garnies d’avocat mûr et de chou rouge cru finement émincé. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, cuisson crédible, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1018",
+      "title": "Salade massée à l’avocat : betterave, concombre",
+      "output_file": "public/assets/recipes/generated/r1018-salade-massee-a-lavocat-betterave-concombre.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade massée à l’avocat : betterave, concombre ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, betterave rouge crue, concombre cru avec peau. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade massée à l’avocat : betterave, concombre ». Représenter une salade de betterave rouge crue et concombre avec peau, finement coupés, avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1019",
+      "title": "Légumes tièdes à l’avocat : panais, cresson",
+      "output_file": "public/assets/recipes/generated/r1019-legumes-tiedes-a-lavocat-panais-cresson.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes tièdes à l’avocat : panais, cresson ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, panais pelé cru, cresson de fontaine cultivé. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes tièdes à l’avocat : panais, cresson ». Représenter des morceaux de panais cuits tendres et cresson frais, servis tièdes avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1020",
+      "title": "Barquettes croquantes à l’avocat : poivron, fenouil",
+      "output_file": "public/assets/recipes/generated/r1020-barquettes-croquantes-a-lavocat-poivron-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Barquettes croquantes à l’avocat : poivron, fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, poivron rouge cru, fenouil cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Barquettes croquantes à l’avocat : poivron, fenouil ». Représenter des morceaux de poivron rouge en barquettes garnies d’avocat mûr et de fenouil cru finement coupé. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1021",
+      "title": "Salade massée à l’avocat : laitue, céleri branche",
+      "output_file": "public/assets/recipes/generated/r1021-salade-massee-a-lavocat-laitue-celeri-branche.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade massée à l’avocat : laitue, céleri branche ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, laitue crue, céleri branche cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade massée à l’avocat : laitue, céleri branche ». Représenter une salade de laitue et céleri branche cru avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1022",
+      "title": "Légumes tièdes à l’avocat : rutabaga, asperges",
+      "output_file": "public/assets/recipes/generated/r1022-legumes-tiedes-a-lavocat-rutabaga-asperges.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes tièdes à l’avocat : rutabaga, asperges ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, rutabaga pelé cru, asperges vertes crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes tièdes à l’avocat : rutabaga, asperges ». Représenter des cubes de rutabaga cuits tendres parfaitement lisses, des tronçons d’asperges vertes et de l’avocat; absolument aucun point noir, aucune herbe, aucun assaisonnement. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1023",
+      "title": "Barquettes croquantes à l’avocat : endives, radis",
+      "output_file": "public/assets/recipes/generated/r1023-barquettes-croquantes-a-lavocat-endives-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Barquettes croquantes à l’avocat : endives, radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, endives crues, radis rouges crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Barquettes croquantes à l’avocat : endives, radis ». Représenter des feuilles d’endive en barquettes garnies d’avocat mûr et de fines rondelles de radis rouges. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1024",
+      "title": "Légumes tièdes à l’avocat : choux de Bruxelles, courgette",
+      "output_file": "public/assets/recipes/generated/r1024-legumes-tiedes-a-lavocat-choux-de-bruxelles-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes tièdes à l’avocat : choux de Bruxelles, courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, choux de Bruxelles crus, courgette crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes tièdes à l’avocat : choux de Bruxelles, courgette ». Représenter des choux de Bruxelles et morceaux de courgette cuits tendres, servis tièdes avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1025",
+      "title": "Barquettes croquantes à l’avocat : laitue, betterave",
+      "output_file": "public/assets/recipes/generated/r1025-barquettes-croquantes-a-lavocat-laitue-betterave.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Barquettes croquantes à l’avocat : laitue, betterave ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, laitue crue, betterave rouge crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Barquettes croquantes à l’avocat : laitue, betterave ». Représenter des feuilles de laitue croquantes en barquettes garnies d’avocat mûr et de dés de betterave rouge crue. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1026",
+      "title": "Salade massée à l’avocat : mâche, fenouil",
+      "output_file": "public/assets/recipes/generated/r1026-salade-massee-a-lavocat-mache-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade massée à l’avocat : mâche, fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, mâche crue, fenouil cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade massée à l’avocat : mâche, fenouil ». Représenter une salade de mâche et fenouil cru finement émincé avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1027",
+      "title": "Légumes tièdes à l’avocat : navet, brocoli",
+      "output_file": "public/assets/recipes/generated/r1027-legumes-tiedes-a-lavocat-navet-brocoli.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes tièdes à l’avocat : navet, brocoli ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, navet pelé cru, brocoli cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes tièdes à l’avocat : navet, brocoli ». Représenter des cubes de navet cuits tendres et fleurettes de brocoli, servis tièdes avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1028",
+      "title": "Barquettes croquantes à l’avocat : poivron, carotte",
+      "output_file": "public/assets/recipes/generated/r1028-barquettes-croquantes-a-lavocat-poivron-carotte.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Barquettes croquantes à l’avocat : poivron, carotte ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, poivron rouge cru, carotte crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Barquettes croquantes à l’avocat : poivron, carotte ». Représenter des demi-poivrons rouges en barquettes garnies d’avocat mûr et de carotte crue finement taillée. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1029",
+      "title": "Salade massée à l’avocat : céleri-rave, chou rouge",
+      "output_file": "public/assets/recipes/generated/r1029-salade-massee-a-lavocat-celeri-rave-chou-rouge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade massée à l’avocat : céleri-rave, chou rouge ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, céleri-rave pelé cru, chou rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade massée à l’avocat : céleri-rave, chou rouge ». Représenter une salade de céleri-rave cru et chou rouge finement taillés avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1030",
+      "title": "Légumes tièdes à l’avocat : champignons, petits pois",
+      "output_file": "public/assets/recipes/generated/r1030-legumes-tiedes-a-lavocat-champignons-petits-pois.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Légumes tièdes à l’avocat : champignons, petits pois ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'avocat, champignons de Paris crus, petits pois frais écossés crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Légumes tièdes à l’avocat : champignons, petits pois ». Représenter des champignons de Paris et petits pois cuits tendres, servis tièdes avec morceaux d’avocat. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1031",
+      "title": "Trio rôti à l’huile d’olive : fenouil, carotte, choux de Bruxelles",
+      "output_file": "public/assets/recipes/generated/r1031-trio-roti-a-lhuile-dolive-fenouil-carotte-choux-de-bruxelles.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio rôti à l’huile d’olive : fenouil, carotte, choux de Bruxelles ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, fenouil cru, carotte crue, choux de Bruxelles crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio rôti à l’huile d’olive : fenouil, carotte, choux de Bruxelles ». Représenter du fenouil, des carottes et des choux de Bruxelles rôtis avec un léger voile d’huile d’olive vierge extra. Uniquement ces ingrédients, aucun autre aliment, sauce, huile, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1032",
+      "title": "Trio vapeur, finition à l’huile d’olive : chou-fleur, petits pois, ciboulette",
+      "output_file": "public/assets/recipes/generated/r1032-trio-vapeur-finition-a-lhuile-dolive-chou-fleur-petits-pois-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio vapeur, finition à l’huile d’olive : chou-fleur, petits pois, ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, chou-fleur cru, petits pois frais écossés crus, ciboulette fraîche. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio vapeur, finition à l’huile d’olive : chou-fleur, petits pois, ciboulette ». Représenter du chou-fleur vapeur et des petits pois, avec ciboulette fraîche finement ciselée et un léger filet d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1033",
+      "title": "Trio cru à l’huile d’olive : betterave, concombre, persil",
+      "output_file": "public/assets/recipes/generated/r1033-trio-cru-a-lhuile-dolive-betterave-concombre-persil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio cru à l’huile d’olive : betterave, concombre, persil ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, betterave rouge crue, concombre cru avec peau, persil frais. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio cru à l’huile d’olive : betterave, concombre, persil ». Représenter une salade crue de betterave rouge et concombre avec persil frais et léger filet d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1034",
+      "title": "Trio rôti à l’huile d’olive : courge, rutabaga, poivron",
+      "output_file": "public/assets/recipes/generated/r1034-trio-roti-a-lhuile-dolive-courge-rutabaga-poivron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio rôti à l’huile d’olive : courge, rutabaga, poivron ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, courge musquée pelée crue, rutabaga pelé cru, poivron rouge cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio rôti à l’huile d’olive : courge, rutabaga, poivron ». Représenter des morceaux de courge musquée, rutabaga et poivron rouge rôtis avec un léger voile d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1035",
+      "title": "Trio vapeur, finition à l’huile d’olive : artichaut, haricots verts, basilic",
+      "output_file": "public/assets/recipes/generated/r1035-trio-vapeur-finition-a-lhuile-dolive-artichaut-haricots-verts-basilic.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio vapeur, finition à l’huile d’olive : artichaut, haricots verts, basilic ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, fonds d'artichaut frais crus, haricots verts crus, basilic frais. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio vapeur, finition à l’huile d’olive : artichaut, haricots verts, basilic ». Représenter des fonds d’artichaut et haricots verts vapeur, avec basilic frais et léger filet d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1036",
+      "title": "Trio cru à l’huile d’olive : chou rouge, radis, céleri branche",
+      "output_file": "public/assets/recipes/generated/r1036-trio-cru-a-lhuile-dolive-chou-rouge-radis-celeri-branche.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio cru à l’huile d’olive : chou rouge, radis, céleri branche ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, chou rouge cru, radis rouges crus, céleri branche cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio cru à l’huile d’olive : chou rouge, radis, céleri branche ». Représenter une salade crue de chou rouge, radis rouges et céleri branche avec un léger filet d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1037",
+      "title": "Trio rôti à l’huile d’olive : aubergine, panais, champignons",
+      "output_file": "public/assets/recipes/generated/r1037-trio-roti-a-lhuile-dolive-aubergine-panais-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio rôti à l’huile d’olive : aubergine, panais, champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, aubergine crue, panais pelé cru, champignons de Paris crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio rôti à l’huile d’olive : aubergine, panais, champignons ». Représenter des morceaux d’aubergine, panais et champignons de Paris rôtis avec un léger voile d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1038",
+      "title": "Trio vapeur, finition à l’huile d’olive : brocoli, navet, cresson",
+      "output_file": "public/assets/recipes/generated/r1038-trio-vapeur-finition-a-lhuile-dolive-brocoli-navet-cresson.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio vapeur, finition à l’huile d’olive : brocoli, navet, cresson ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, brocoli cru, navet pelé cru, cresson de fontaine cultivé. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio vapeur, finition à l’huile d’olive : brocoli, navet, cresson ». Représenter des fleurettes de brocoli et cubes de navet vapeur, avec cresson frais et léger filet d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1039",
+      "title": "Trio cru à l’huile d’olive : carotte, fenouil, mâche",
+      "output_file": "public/assets/recipes/generated/r1039-trio-cru-a-lhuile-dolive-carotte-fenouil-mache.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio cru à l’huile d’olive : carotte, fenouil, mâche ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, carotte crue, fenouil cru, mâche crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio cru à l’huile d’olive : carotte, fenouil, mâche ». Représenter une salade crue de carotte, fenouil et mâche avec un léger filet d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1040",
+      "title": "Trio rôti à l’huile d’olive : chou-fleur, betterave, endives",
+      "output_file": "public/assets/recipes/generated/r1040-trio-roti-a-lhuile-dolive-chou-fleur-betterave-endives.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio rôti à l’huile d’olive : chou-fleur, betterave, endives ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, chou-fleur cru, betterave rouge crue, endives crues. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio rôti à l’huile d’olive : chou-fleur, betterave, endives ». Représenter du chou-fleur, de la betterave rouge et des endives rôtis avec un léger voile d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1041",
+      "title": "Trio vapeur, finition à l’huile d’olive : côtes de blette, petits pois, persil",
+      "output_file": "public/assets/recipes/generated/r1041-trio-vapeur-finition-a-lhuile-dolive-cotes-de-blette-petits-pois-persil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio vapeur, finition à l’huile d’olive : côtes de blette, petits pois, persil ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, côtes de blette crues, petits pois frais écossés crus, persil frais. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio vapeur, finition à l’huile d’olive : côtes de blette, petits pois, persil ». Représenter des côtes de blette pâles et charnues en tronçons et petits pois vapeur, avec persil frais et léger filet d’huile d’olive; aucune feuille de blette sombre. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1042",
+      "title": "Trio cru à l’huile d’olive : céleri-rave, concombre, ciboulette",
+      "output_file": "public/assets/recipes/generated/r1042-trio-cru-a-lhuile-dolive-celeri-rave-concombre-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio cru à l’huile d’olive : céleri-rave, concombre, ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, céleri-rave pelé cru, concombre cru avec peau, ciboulette fraîche. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio cru à l’huile d’olive : céleri-rave, concombre, ciboulette ». Représenter une salade crue de céleri-rave en fins bâtonnets, concombre avec peau et ciboulette fraîche, avec léger filet d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1043",
+      "title": "Trio rôti à l’huile d’olive : carotte, artichaut, courgette",
+      "output_file": "public/assets/recipes/generated/r1043-trio-roti-a-lhuile-dolive-carotte-artichaut-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio rôti à l’huile d’olive : carotte, artichaut, courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, carotte crue, fonds d'artichaut frais crus, courgette crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio rôti à l’huile d’olive : carotte, artichaut, courgette ». Représenter des carottes, fonds d’artichaut et courgettes rôtis avec un léger voile d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1044",
+      "title": "Trio vapeur, finition à l’huile d’olive : asperges, navet, basilic",
+      "output_file": "public/assets/recipes/generated/r1044-trio-vapeur-finition-a-lhuile-dolive-asperges-navet-basilic.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio vapeur, finition à l’huile d’olive : asperges, navet, basilic ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, asperges vertes crues, navet pelé cru, basilic frais. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio vapeur, finition à l’huile d’olive : asperges, navet, basilic ». Représenter des asperges vertes et cubes de navet vapeur, avec basilic frais et léger filet d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1045",
+      "title": "Trio cru à l’huile d’olive : chou blanc, radis, mâche",
+      "output_file": "public/assets/recipes/generated/r1045-trio-cru-a-lhuile-dolive-chou-blanc-radis-mache.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio cru à l’huile d’olive : chou blanc, radis, mâche ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, chou blanc cru, radis rouges crus, mâche crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio cru à l’huile d’olive : chou blanc, radis, mâche ». Représenter une salade crue de chou blanc, radis rouges et mâche avec un léger filet d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1046",
+      "title": "Trio rôti à l’huile d’olive : céleri-rave, courge, fenouil",
+      "output_file": "public/assets/recipes/generated/r1046-trio-roti-a-lhuile-dolive-celeri-rave-courge-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio rôti à l’huile d’olive : céleri-rave, courge, fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, céleri-rave pelé cru, courge musquée pelée crue, fenouil cru. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio rôti à l’huile d’olive : céleri-rave, courge, fenouil ». Représenter des morceaux de céleri-rave, courge musquée et fenouil rôtis avec un léger voile d’huile d’olive. Uniquement ces ingrédients, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1047",
+      "title": "Trio vapeur, finition à l’huile d’olive : choux de Bruxelles, haricots verts, épinards",
+      "output_file": "public/assets/recipes/generated/r1047-trio-vapeur-finition-a-lhuile-dolive-choux-de-bruxelles-haricots-verts-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio vapeur, finition à l’huile d’olive : choux de Bruxelles, haricots verts, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, choux de Bruxelles crus, haricots verts crus, épinards crus. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio vapeur, finition à l’huile d’olive : choux de Bruxelles, haricots verts, épinards ». Représenter des choux de Bruxelles, haricots verts et feuilles d’épinards cuits vapeur, avec léger filet d’huile d’olive. Uniquement ces ingrédients et de l’eau pour le velouté, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1048",
+      "title": "Trio cru à l’huile d’olive : poivron, céleri branche, laitue",
+      "output_file": "public/assets/recipes/generated/r1048-trio-cru-a-lhuile-dolive-poivron-celeri-branche-laitue.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio cru à l’huile d’olive : poivron, céleri branche, laitue ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, poivron rouge cru, céleri branche cru, laitue crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio cru à l’huile d’olive : poivron, céleri branche, laitue ». Représenter une salade crue de poivron rouge, céleri branche et laitue avec un léger filet d’huile d’olive. Uniquement ces ingrédients et de l’eau pour le velouté, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1049",
+      "title": "Trio rôti à l’huile d’olive : panais, betterave, courgette",
+      "output_file": "public/assets/recipes/generated/r1049-trio-roti-a-lhuile-dolive-panais-betterave-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio rôti à l’huile d’olive : panais, betterave, courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, panais pelé cru, betterave rouge crue, courgette crue. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio rôti à l’huile d’olive : panais, betterave, courgette ». Représenter des morceaux de panais, betterave rouge et courgette rôtis avec un léger voile d’huile d’olive. Uniquement ces ingrédients et de l’eau pour le velouté, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    }
+  ]
+}

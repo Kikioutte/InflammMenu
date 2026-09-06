@@ -40,7 +40,8 @@ test("une recette personnelle survit au rechargement sous la base GitHub Pages",
   })).toBe(1);
 
   await page.reload();
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByRole("tab", { name: "Favoris" }).click();
   await expect(page.getByText("Ma recette personnelle Pages", { exact: true })).toBeVisible();
 });
 
@@ -103,10 +104,12 @@ test("le vrai service worker conserve le catalogue et uniquement les polices lat
   await context.setOffline(true);
   await page.reload();
   await expect(page.getByTestId("home-view")).toBeVisible();
-  await page.getByRole("button", { name: "Favoris", exact: true }).click();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
-  await expect(page.getByText("624 recettes uniques disponibles")).toBeVisible();
-  await expect(page.getByText("624 résultats")).toBeVisible();
+  await expect(page.getByText("1081 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByText("1081 résultats")).toBeVisible();
+  await page.getByLabel("Filtrer les associations").selectOption("verte");
+  await expect(page.getByText("300 résultats", { exact: true })).toBeVisible();
 });
 
 test("une navigation vers une ressource ne peut jamais remplacer le shell HTML hors ligne", async ({ page, context }) => {

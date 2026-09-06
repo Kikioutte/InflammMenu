@@ -1,0 +1,276 @@
+{
+  "meta": {
+    "generated_at": "2026-09-06",
+    "recipe_file": "association-collection.json",
+    "count": 38,
+    "target": "JPEG 900x900, qualité 72-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r1050",
+      "title": "Trio vapeur, finition à l’huile d’olive : rutabaga, brocoli, ciboulette",
+      "output_file": "public/assets/recipes/generated/r1050-trio-vapeur-finition-a-lhuile-dolive-rutabaga-brocoli-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Trio vapeur, finition à l’huile d’olive : rutabaga, brocoli, ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : huile d'olive vierge extra, rutabaga pelé cru, brocoli cru, ciboulette fraîche. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Trio vapeur, finition à l’huile d’olive : rutabaga, brocoli, ciboulette ». Représenter une assiette sèche sans bouillon de cubes jaune pâle de rutabaga et fleurettes de brocoli vapeur, avec ciboulette fraîche et un filet minimal d’huile d’olive; aucun liquide visible, aucune courge, aucun point noir. Uniquement ces ingrédients et de l’eau pour les soupes, aucun autre aliment, huile, sauce, poivre, épice ou garniture, sauf l’huile d’olive explicitement indiquée pour r1050. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1051",
+      "title": "Velouté : carotte, fenouil, épinards",
+      "output_file": "public/assets/recipes/generated/r1051-veloute-carotte-fenouil-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : carotte, fenouil, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : carotte crue, fenouil cru, épinards crus, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : carotte, fenouil, épinards ». Représenter un velouté maison lisse de carotte, fenouil et épinards, naturellement vert orangé, sans garniture en surface. Uniquement ces ingrédients et de l’eau pour le velouté, aucun autre aliment, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1052",
+      "title": "Soupe en petits morceaux : céleri-rave, chou blanc, petits pois",
+      "output_file": "public/assets/recipes/generated/r1052-soupe-en-petits-morceaux-celeri-rave-chou-blanc-petits-pois.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : céleri-rave, chou blanc, petits pois ». Ultra-photoréalisme culinaire, ingrédients autorisés : céleri-rave pelé cru, chou blanc cru, petits pois frais écossés crus, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : céleri-rave, chou blanc, petits pois ». Représenter une soupe claire maison avec petits morceaux bien visibles de céleri-rave, chou blanc et petits pois dans de l’eau de cuisson. Uniquement ces ingrédients et de l’eau pour les soupes, aucun autre aliment, huile, sauce, poivre, épice ou garniture, sauf l’huile d’olive explicitement indiquée pour r1050. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1053",
+      "title": "Velouté : courge, brocoli, navet",
+      "output_file": "public/assets/recipes/generated/r1053-veloute-courge-brocoli-navet.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : courge, brocoli, navet ». Ultra-photoréalisme culinaire, ingrédients autorisés : courge musquée pelée crue, brocoli cru, navet pelé cru, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : courge, brocoli, navet ». Représenter un velouté maison lisse de courge musquée, brocoli et navet, naturellement vert orangé, sans garniture en surface. Uniquement ces ingrédients et de l’eau pour les soupes, aucun autre aliment, huile, sauce, poivre, épice ou garniture, sauf l’huile d’olive explicitement indiquée pour r1050. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1054",
+      "title": "Soupe en petits morceaux : rutabaga, poivron, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r1054-soupe-en-petits-morceaux-rutabaga-poivron-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : rutabaga, poivron, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : rutabaga pelé cru, poivron rouge cru, côtes de blette crues, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : rutabaga, poivron, côtes de blette ». Représenter une soupe claire maison avec morceaux de rutabaga jaune pâle, poivron rouge et côtes de blette pâles charnues dans de l’eau de cuisson; aucune feuille sombre. Uniquement ces ingrédients et de l’eau pour les soupes, aucun autre aliment, huile, sauce, poivre, épice ou garniture, sauf l’huile d’olive explicitement indiquée pour r1050. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1055",
+      "title": "Velouté : panais, chou-fleur, cresson",
+      "output_file": "public/assets/recipes/generated/r1055-veloute-panais-chou-fleur-cresson.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : panais, chou-fleur, cresson ». Ultra-photoréalisme culinaire, ingrédients autorisés : panais pelé cru, chou-fleur cru, cresson de fontaine cultivé, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : panais, chou-fleur, cresson ». Représenter un velouté maison lisse de panais, chou-fleur et cresson, naturellement vert crème, sans garniture en surface. Uniquement ces ingrédients et de l’eau pour les soupes, aucun autre aliment, huile, sauce, poivre, épice ou garniture, sauf l’huile d’olive explicitement indiquée pour r1050. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1056",
+      "title": "Soupe en petits morceaux : betterave, carotte, haricots verts",
+      "output_file": "public/assets/recipes/generated/r1056-soupe-en-petits-morceaux-betterave-carotte-haricots-verts.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : betterave, carotte, haricots verts ». Ultra-photoréalisme culinaire, ingrédients autorisés : betterave rouge crue, carotte crue, haricots verts crus, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : betterave, carotte, haricots verts ». Représenter une soupe claire maison rouge rubis avec petits morceaux bien visibles de betterave rouge, carotte et haricots verts dans de l’eau de cuisson. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1057",
+      "title": "Velouté : artichaut, courgette, fenouil",
+      "output_file": "public/assets/recipes/generated/r1057-veloute-artichaut-courgette-fenouil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : artichaut, courgette, fenouil ». Ultra-photoréalisme culinaire, ingrédients autorisés : fonds d'artichaut frais crus, courgette crue, fenouil cru, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : artichaut, courgette, fenouil ». Représenter un velouté maison lisse de fonds d’artichaut, courgette et fenouil, naturellement vert crème, sans garniture en surface. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1058",
+      "title": "Soupe en petits morceaux : choux de Bruxelles, navet, champignons",
+      "output_file": "public/assets/recipes/generated/r1058-soupe-en-petits-morceaux-choux-de-bruxelles-navet-champignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : choux de Bruxelles, navet, champignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : choux de Bruxelles crus, navet pelé cru, champignons de Paris crus, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : choux de Bruxelles, navet, champignons ». Représenter une soupe claire maison avec morceaux de choux de Bruxelles, navet et champignons de Paris dans de l’eau de cuisson. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1059",
+      "title": "Velouté : céleri-rave, courge, épinards",
+      "output_file": "public/assets/recipes/generated/r1059-veloute-celeri-rave-courge-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : céleri-rave, courge, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : céleri-rave pelé cru, courge musquée pelée crue, épinards crus, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : céleri-rave, courge, épinards ». Représenter un velouté maison lisse de céleri-rave, courge musquée et épinards, naturellement vert doux, sans garniture en surface. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1060",
+      "title": "Soupe en petits morceaux : chou rouge, carotte, courgette",
+      "output_file": "public/assets/recipes/generated/r1060-soupe-en-petits-morceaux-chou-rouge-carotte-courgette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : chou rouge, carotte, courgette ». Ultra-photoréalisme culinaire, ingrédients autorisés : chou rouge cru, carotte crue, courgette crue, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : chou rouge, carotte, courgette ». Représenter une soupe claire maison avec morceaux bien visibles de chou rouge, carotte et courgette dans de l’eau de cuisson. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1061",
+      "title": "Velouté : brocoli, petits pois, basilic",
+      "output_file": "public/assets/recipes/generated/r1061-veloute-brocoli-petits-pois-basilic.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : brocoli, petits pois, basilic ». Ultra-photoréalisme culinaire, ingrédients autorisés : brocoli cru, petits pois frais écossés crus, basilic frais, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : brocoli, petits pois, basilic ». Représenter un velouté maison lisse de brocoli, petits pois et basilic, naturellement vert, sans garniture en surface. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1062",
+      "title": "Soupe en petits morceaux : endives, rutabaga, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r1062-soupe-en-petits-morceaux-endives-rutabaga-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : endives, rutabaga, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : endives crues, rutabaga pelé cru, côtes de blette crues, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : endives, rutabaga, côtes de blette ». Représenter une soupe claire maison avec morceaux d’endives, rutabaga jaune pâle et côtes de blette pâles charnues dans de l’eau de cuisson; aucune feuille sombre. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1063",
+      "title": "Velouté : poivron, panais, chou-fleur",
+      "output_file": "public/assets/recipes/generated/r1063-veloute-poivron-panais-chou-fleur.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : poivron, panais, chou-fleur ». Ultra-photoréalisme culinaire, ingrédients autorisés : poivron rouge cru, panais pelé cru, chou-fleur cru, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : poivron, panais, chou-fleur ». Représenter un velouté maison lisse de poivron rouge, panais et chou-fleur, naturellement orangé pâle, sans garniture en surface. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1064",
+      "title": "Soupe en petits morceaux : asperges, carotte, céleri branche",
+      "output_file": "public/assets/recipes/generated/r1064-soupe-en-petits-morceaux-asperges-carotte-celeri-branche.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : asperges, carotte, céleri branche ». Ultra-photoréalisme culinaire, ingrédients autorisés : asperges vertes crues, carotte crue, céleri branche cru, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : asperges, carotte, céleri branche ». Représenter une soupe claire maison avec morceaux d’asperges vertes, carotte et céleri branche dans de l’eau pure; surfaces propres, absolument aucun point noir, aucune herbe ni assaisonnement. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1065",
+      "title": "Velouté : betterave, fenouil, laitue",
+      "output_file": "public/assets/recipes/generated/r1065-veloute-betterave-fenouil-laitue.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : betterave, fenouil, laitue ». Ultra-photoréalisme culinaire, ingrédients autorisés : betterave rouge crue, fenouil cru, laitue crue, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : betterave, fenouil, laitue ». Représenter un velouté maison lisse de betterave rouge, fenouil et laitue, naturellement rouge pourpre, sans garniture en surface. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1066",
+      "title": "Soupe en petits morceaux : chou blanc, navet, haricots verts",
+      "output_file": "public/assets/recipes/generated/r1066-soupe-en-petits-morceaux-chou-blanc-navet-haricots-verts.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : chou blanc, navet, haricots verts ». Ultra-photoréalisme culinaire, ingrédients autorisés : chou blanc cru, navet pelé cru, haricots verts crus, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : chou blanc, navet, haricots verts ». Représenter une soupe claire maison avec petits morceaux de chou blanc, navet et haricots verts dans de l’eau de cuisson. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1067",
+      "title": "Velouté : courge, artichaut, persil",
+      "output_file": "public/assets/recipes/generated/r1067-veloute-courge-artichaut-persil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : courge, artichaut, persil ». Ultra-photoréalisme culinaire, ingrédients autorisés : courge musquée pelée crue, fonds d'artichaut frais crus, persil frais, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : courge, artichaut, persil ». Représenter un velouté maison lisse de courge musquée, fonds d’artichaut et persil, naturellement jaune orangé avec nuance verte, sans garniture en surface. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1068",
+      "title": "Soupe en petits morceaux : petits pois, champignons, côtes de blette",
+      "output_file": "public/assets/recipes/generated/r1068-soupe-en-petits-morceaux-petits-pois-champignons-cotes-de-blette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : petits pois, champignons, côtes de blette ». Ultra-photoréalisme culinaire, ingrédients autorisés : petits pois frais écossés crus, champignons de Paris crus, côtes de blette crues, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : petits pois, champignons, côtes de blette ». Représenter une soupe claire maison avec petits pois, champignons de Paris et côtes de blette pâles charnues dans de l’eau de cuisson; aucune feuille sombre. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1069",
+      "title": "Velouté : rutabaga, brocoli, cresson",
+      "output_file": "public/assets/recipes/generated/r1069-veloute-rutabaga-brocoli-cresson.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : rutabaga, brocoli, cresson ». Ultra-photoréalisme culinaire, ingrédients autorisés : rutabaga pelé cru, brocoli cru, cresson de fontaine cultivé, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : rutabaga, brocoli, cresson ». Représenter un velouté maison lisse de rutabaga, brocoli et cresson, naturellement vert tendre, sans garniture en surface. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1070",
+      "title": "Soupe en petits morceaux : chou rouge, panais, céleri branche",
+      "output_file": "public/assets/recipes/generated/r1070-soupe-en-petits-morceaux-chou-rouge-panais-celeri-branche.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : chou rouge, panais, céleri branche ». Ultra-photoréalisme culinaire, ingrédients autorisés : chou rouge cru, panais pelé cru, céleri branche cru, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : chou rouge, panais, céleri branche ». Représenter une soupe claire maison avec petits morceaux de chou rouge, panais et céleri branche dans de l’eau de cuisson. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1071",
+      "title": "Velouté : chou-fleur, carotte, ciboulette",
+      "output_file": "public/assets/recipes/generated/r1071-veloute-chou-fleur-carotte-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : chou-fleur, carotte, ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : chou-fleur cru, carotte crue, ciboulette fraîche, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : chou-fleur, carotte, ciboulette ». Représenter un velouté maison lisse de chou-fleur, carotte et ciboulette, naturellement orangé pâle, sans garniture en surface. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1072",
+      "title": "Soupe en petits morceaux : fenouil, poivron, haricots verts",
+      "output_file": "public/assets/recipes/generated/r1072-soupe-en-petits-morceaux-fenouil-poivron-haricots-verts.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : fenouil, poivron, haricots verts ». Ultra-photoréalisme culinaire, ingrédients autorisés : fenouil cru, poivron rouge cru, haricots verts crus, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : fenouil, poivron, haricots verts ». Représenter une soupe claire maison avec petits morceaux de fenouil, poivron rouge et haricots verts dans de l’eau de cuisson. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1073",
+      "title": "Velouté : céleri-rave, petits pois, laitue",
+      "output_file": "public/assets/recipes/generated/r1073-veloute-celeri-rave-petits-pois-laitue.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : céleri-rave, petits pois, laitue ». Ultra-photoréalisme culinaire, ingrédients autorisés : céleri-rave pelé cru, petits pois frais écossés crus, laitue crue, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : céleri-rave, petits pois, laitue ». Représenter un velouté maison lisse de céleri-rave, petits pois et laitue, naturellement vert tendre, sans garniture en surface. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1074",
+      "title": "Soupe en petits morceaux : navet, courge, choux de Bruxelles",
+      "output_file": "public/assets/recipes/generated/r1074-soupe-en-petits-morceaux-navet-courge-choux-de-bruxelles.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe en petits morceaux : navet, courge, choux de Bruxelles ». Ultra-photoréalisme culinaire, ingrédients autorisés : navet pelé cru, courge musquée pelée crue, choux de Bruxelles crus, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Soupe en petits morceaux : navet, courge, choux de Bruxelles ». Représenter une soupe claire maison avec petits morceaux de navet, courge musquée et choux de Bruxelles dans de l’eau de cuisson. Uniquement ces ingrédients et de l’eau, aucun autre aliment, huile, sauce, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1075",
+      "title": "Velouté : artichaut, asperges, épinards",
+      "output_file": "public/assets/recipes/generated/r1075-veloute-artichaut-asperges-epinards.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Velouté : artichaut, asperges, épinards ». Ultra-photoréalisme culinaire, ingrédients autorisés : fonds d'artichaut frais crus, asperges vertes crues, épinards crus, eau potable. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Velouté : artichaut, asperges, épinards ». Représenter un velouté maison lisse de fonds d’artichaut, asperges vertes et épinards, naturellement vert, sans garniture en surface. Uniquement ces ingrédients, et de l’eau seulement pour le velouté, aucun autre aliment, huile, sauce, sucre, miel, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1076",
+      "title": "Carpaccio de fruits : poire, mangue, groseilles",
+      "output_file": "public/assets/recipes/generated/r1076-carpaccio-de-fruits-poire-mangue-groseilles.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Carpaccio de fruits : poire, mangue, groseilles ». Ultra-photoréalisme culinaire, ingrédients autorisés : poire fraîche avec peau, chair de mangue fraîche, groseilles fraîches. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Carpaccio de fruits : poire, mangue, groseilles ». Représenter un carpaccio délicat de fines tranches de poire avec peau et mangue fraîche, parsemé uniquement de groseilles fraîches. Uniquement ces ingrédients, et de l’eau seulement pour le velouté, aucun autre aliment, huile, sauce, sucre, miel, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1077",
+      "title": "Fruits fondants au four : pomme acidulée, abricots, raisin doux",
+      "output_file": "public/assets/recipes/generated/r1077-fruits-fondants-au-four-pomme-acidulee-abricots-raisin-doux.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Fruits fondants au four : pomme acidulée, abricots, raisin doux ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme fraîche avec peau, abricots frais dénoyautés, grains de raisin frais. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Fruits fondants au four : pomme acidulée, abricots, raisin doux ». Représenter des quartiers de pomme avec peau, demi-abricots et grains de raisin rôtis au four jusqu’à tendreté; absolument aucun point noir, aucune épice, aucun sucre, aucun sirop, seulement le jus naturel clair des fruits. Uniquement ces ingrédients, aucun autre aliment, huile, sauce, sucre, miel, sirop, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1078",
+      "title": "Verrines de fruits écrasés : banane, pêche, figues séchées",
+      "output_file": "public/assets/recipes/generated/r1078-verrines-de-fruits-ecrases-banane-peche-figues-sechees.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Verrines de fruits écrasés : banane, pêche, figues séchées ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair de banane, pêche fraîche dénoyautée, figues sèches sans additifs. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Verrines de fruits écrasés : banane, pêche, figues séchées ». Représenter de petites verrines en verre contenant banane et pêche grossièrement écrasées avec morceaux reconnaissables de figues séchées. Uniquement ces ingrédients, et de l’eau seulement pour le velouté, aucun autre aliment, huile, sauce, sucre, miel, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1079",
+      "title": "Salade de fruits frais : orange, fraises, grenade",
+      "output_file": "public/assets/recipes/generated/r1079-salade-de-fruits-frais-orange-fraises-grenade.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade de fruits frais : orange, fraises, grenade ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'orange sans pépins, fraises fraîches, grains de grenade. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade de fruits frais : orange, fraises, grenade ». Représenter une salade fraîche de quartiers d’orange pelés, fraises coupées et grains de grenade. Uniquement ces ingrédients, et de l’eau seulement pour le velouté, aucun autre aliment, huile, sauce, sucre, miel, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1080",
+      "title": "Fruits fondants au four : prunes, mangue, figues fraîches",
+      "output_file": "public/assets/recipes/generated/r1080-fruits-fondants-au-four-prunes-mangue-figues-fraiches.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Fruits fondants au four : prunes, mangue, figues fraîches ». Ultra-photoréalisme culinaire, ingrédients autorisés : prunes fraîches dénoyautées, chair de mangue fraîche, figues fraîches. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Fruits fondants au four : prunes, mangue, figues fraîches ». Représenter des quartiers de prunes, morceaux de mangue et demi-figues fraîches rôtis au four jusqu’à tendreté, sans ajout. Uniquement ces ingrédients, aucun autre aliment, huile, sauce, sucre, miel, sirop, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1081",
+      "title": "Carpaccio de fruits : ananas, pêche, framboises",
+      "output_file": "public/assets/recipes/generated/r1081-carpaccio-de-fruits-ananas-peche-framboises.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Carpaccio de fruits : ananas, pêche, framboises ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'ananas frais, pêche fraîche dénoyautée, framboises fraîches. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Carpaccio de fruits : ananas, pêche, framboises ». Représenter un carpaccio délicat de fines tranches d’ananas frais et pêche, parsemé uniquement de framboises fraîches. Uniquement ces ingrédients, aucun autre aliment, huile, sauce, sucre, miel, sirop, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1082",
+      "title": "Verrines de fruits écrasés : poire, banane, abricots secs",
+      "output_file": "public/assets/recipes/generated/r1082-verrines-de-fruits-ecrases-poire-banane-abricots-secs.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Verrines de fruits écrasés : poire, banane, abricots secs ». Ultra-photoréalisme culinaire, ingrédients autorisés : poire fraîche avec peau, chair de banane, abricots secs sans additifs. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Verrines de fruits écrasés : poire, banane, abricots secs ». Représenter de petites verrines en verre contenant poire et banane grossièrement écrasées avec morceaux reconnaissables d’abricots secs. Uniquement ces ingrédients, aucun autre aliment, huile, sauce, sucre, miel, sirop, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1083",
+      "title": "Salade de fruits frais : clémentines, cerises, groseilles",
+      "output_file": "public/assets/recipes/generated/r1083-salade-de-fruits-frais-clementines-cerises-groseilles.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade de fruits frais : clémentines, cerises, groseilles ». Ultra-photoréalisme culinaire, ingrédients autorisés : quartiers de clémentine sans pépins, cerises dénoyautées, groseilles fraîches. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade de fruits frais : clémentines, cerises, groseilles ». Représenter une salade fraîche de quartiers de clémentine pelés, cerises dénoyautées et groseilles fraîches. Uniquement ces ingrédients, aucun autre aliment, huile, sauce, sucre, miel, sirop, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1084",
+      "title": "Fruits fondants au four : pomme acidulée, prunes, figues séchées",
+      "output_file": "public/assets/recipes/generated/r1084-fruits-fondants-au-four-pomme-acidulee-prunes-figues-sechees.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Fruits fondants au four : pomme acidulée, prunes, figues séchées ». Ultra-photoréalisme culinaire, ingrédients autorisés : pomme fraîche avec peau, prunes fraîches dénoyautées, figues sèches sans additifs. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Fruits fondants au four : pomme acidulée, prunes, figues séchées ». Représenter des quartiers de pomme avec peau, prunes fraîches dénoyautées et morceaux de figues séchées rôtis au four jusqu’à tendreté, sans ajout. Uniquement ces ingrédients, aucun autre aliment, huile, sauce, sucre, miel, sirop, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1085",
+      "title": "Carpaccio de fruits : mangue, abricots, framboises",
+      "output_file": "public/assets/recipes/generated/r1085-carpaccio-de-fruits-mangue-abricots-framboises.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Carpaccio de fruits : mangue, abricots, framboises ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair de mangue fraîche, abricots frais dénoyautés, framboises fraîches. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Carpaccio de fruits : mangue, abricots, framboises ». Représenter un carpaccio délicat de fines tranches de mangue fraîche et abricots, parsemé uniquement de framboises fraîches. Uniquement ces ingrédients, aucun autre aliment, huile, sauce, sucre, miel, sirop, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1086",
+      "title": "Verrines de fruits écrasés : banane, cerises, raisin doux",
+      "output_file": "public/assets/recipes/generated/r1086-verrines-de-fruits-ecrases-banane-cerises-raisin-doux.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Verrines de fruits écrasés : banane, cerises, raisin doux ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair de banane, cerises dénoyautées, grains de raisin frais. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Verrines de fruits écrasés : banane, cerises, raisin doux ». Représenter de petites verrines en verre contenant banane et cerises dénoyautées grossièrement écrasées avec grains de raisin frais reconnaissables. Uniquement ces ingrédients, aucun autre aliment, huile, sauce, sucre, miel, sirop, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    },
+    {
+      "id": "r1087",
+      "title": "Salade de fruits frais : ananas, orange, groseilles",
+      "output_file": "public/assets/recipes/generated/r1087-salade-de-fruits-frais-ananas-orange-groseilles.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade de fruits frais : ananas, orange, groseilles ». Ultra-photoréalisme culinaire, ingrédients autorisés : chair d'ananas frais, chair d'orange sans pépins, groseilles fraîches. Consigne de génération effectivement utilisée : Photographie culinaire Ultra-photoréalisme pour InflammMenu, recette « Salade de fruits frais : ananas, orange, groseilles ». Représenter une salade fraîche de morceaux d’ananas, quartiers d’orange pelés et groseilles fraîches. Uniquement ces ingrédients, aucun autre aliment, huile, sauce, sucre, miel, sirop, poivre, épice ou garniture. Style référence historique : vraie photo 50 mm, lumière naturelle douce, céramique mate ou verre simple pour les verrines, fond minéral clair, textile vert sauge, profondeur naturelle. Portions réalistes, textures et cuisson crédibles, imperfections maison. Vue trois-quarts plongeante. Sans texte, logo, emballage ni personne. Éviter CGI, plastique, illustration, points noirs et brillance artificielle. Image carrée haute qualité, appétissante, authentique."
+    }
+  ]
+}

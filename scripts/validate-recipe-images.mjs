@@ -1,3 +1,5 @@
+import associationRecipeIds from "../src/data/association-recipe-ids.json" with { type: "json" };
+const deferredIds = new Set(associationRecipeIds.map((id) => id.replace(/^catalog-/, "")));
 import assert from "node:assert/strict";
 import { readdir, readFile, stat } from "node:fs/promises";
 
@@ -16,7 +18,7 @@ for (const recipe of catalogue.recipes) {
 }
 
 const promptStatuses = new Map();
-for (const name of names.filter((entry) => /^image-prompts-r\d{3}-r\d{3}\.json$/.test(entry))) {
+for (const name of names.filter((entry) => /^image-prompts-r\d{3,4}-r\d{3,4}\.json$/.test(entry))) {
   const document = JSON.parse(await readFile(new URL(name, researchUrl), "utf8"));
   for (const prompt of document.prompts ?? document) {
     assert.ok(!promptStatuses.has(prompt.id), `${prompt.id}: prompt image dupliqué`);
@@ -25,7 +27,8 @@ for (const name of names.filter((entry) => /^image-prompts-r\d{3}-r\d{3}\.json$/
 }
 
 assert.ok(recipes.size > 0, "Le catalogue image ne peut pas être vide");
-assert.equal(promptStatuses.size, recipes.size, `${recipes.size} prompts image sont requis`);
+const deferred = [...recipes.values()].filter((recipe) => deferredIds.has(recipe.id) && recipe.image.statut === "differee-utilisateur");
+assert.equal(promptStatuses.size, recipes.size - deferred.length, `${recipes.size - deferred.length} prompts image sont requis hors photos différées explicitement`);
 
 const expectedByFilename = new Map(
   [...recipes.values()].map((recipe) => [recipe.image.nom_fichier, recipe]),
@@ -40,6 +43,10 @@ const manifestNames = JSON.parse(await readFile(manifestUrl, "utf8"));
 assert.deepEqual(manifestNames, [...imageNames].sort(), "Le manifeste des images disponibles doit être régénéré");
 
 for (const recipe of recipes.values()) {
+  if (deferredIds.has(recipe.id) && recipe.image.statut === "differee-utilisateur") {
+    assert.ok(!presentNames.has(recipe.image.nom_fichier) && !promptStatuses.has(recipe.id), `${recipe.id}: statut différé incohérent`);
+    continue;
+  }
   const expectedStatus = presentNames.has(recipe.image.nom_fichier)
     ? "generated_inspected_optimized"
     : "waiting_image_generation";

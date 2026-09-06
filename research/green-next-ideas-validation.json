@@ -1,0 +1,362 @@
+[
+  {
+    "titre": "Poulet rôti aux pommes acidulées et prunes",
+    "ingredients": [
+      "poulet",
+      "pomme",
+      "prune"
+    ],
+    "piste": "Cuisson en plat couvert dans le jus des fruits ; aucune huile, eau ou garniture supplémentaire.",
+    "ids": [
+      "chicken",
+      "apple",
+      "prune"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Dinde en papillote à la poire",
+    "ingredients": [
+      "dinde",
+      "poire"
+    ],
+    "piste": "Poire de la colonne mi-acides, tranchée finement sous la dinde ; cuisson couverte et contrôle à cœur.",
+    "ids": [
+      "escalope-dinde",
+      "pear"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Cabillaud à la pêche et mangue écrasées",
+    "ingredients": [
+      "cabillaud",
+      "peche",
+      "mangue"
+    ],
+    "piste": "Poisson cuit en papillote avec les fruits ; l'association gustative et les proportions restent à mettre au point.",
+    "ids": [
+      "cod",
+      "peche",
+      "mangue"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Truite aux abricots et cerises",
+    "ingredients": [
+      "truite",
+      "abricot",
+      "cerise"
+    ],
+    "piste": "Fruits dénoyautés en garniture chaude ; cuisson couverte sans sauce ni liquide ajouté.",
+    "ids": [
+      "trout",
+      "abricot",
+      "cerise"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Rosace de pommes de terre et courge au basilic",
+    "ingredients": [
+      "pomme_terre",
+      "courge",
+      "basilic"
+    ],
+    "piste": "Tranches très fines, cuisson hermétiquement couverte dans l'humidité des légumes.",
+    "ids": [
+      "potato",
+      "courge-musquee",
+      "basil"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Pommes de terre farcies au chou rouge et endive",
+    "ingredients": [
+      "pomme_terre",
+      "chou_rouge",
+      "endive"
+    ],
+    "piste": "Pommes de terre cuites au four, farce de légumes fondants sans eau ni huile incorporée.",
+    "ids": [
+      "potato",
+      "chou-rouge",
+      "endive"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Terrine de pommes de terre, artichaut et navet",
+    "ingredients": [
+      "pomme_terre",
+      "artichaut",
+      "navet"
+    ],
+    "piste": "Couches tassées sous couvercle ; tenue de la terrine à tester, sans liant supplémentaire.",
+    "ids": [
+      "potato",
+      "fonds-artichaut-frais",
+      "navet"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Galettes de pomme de terre et betterave au persil",
+    "ingredients": [
+      "pomme_terre",
+      "betterave",
+      "persil"
+    ],
+    "piste": "Légumes râpés, cuisson sur papier antiadhésif ; amidon naturel de la pomme de terre pour lier.",
+    "ids": [
+      "potato",
+      "betterave-crue",
+      "persil-plat"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Poivron et céleri croquants, éclats d'amande",
+    "ingredients": [
+      "poivron",
+      "celeri",
+      "amande"
+    ],
+    "piste": "Salade hachée finement ; les amandes remplacent une garniture croustillante, sans vinaigrette.",
+    "ids": [
+      "poivron-rouge",
+      "celeri-branche",
+      "almond"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Mâche et carotte aux noisettes",
+    "ingredients": [
+      "mache",
+      "carotte",
+      "noisette"
+    ],
+    "piste": "Carotte râpée très fine, mâche bien essorée et noisettes concassées ; pas d'huile ajoutée.",
+    "ids": [
+      "mache",
+      "carrot",
+      "noisette"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Rutabaga fondant et épinards au sésame",
+    "ingredients": [
+      "rutabaga",
+      "epinard",
+      "sesame"
+    ],
+    "piste": "Légumes cuits à couvert dans leur humidité ou à la vapeur technique ; graines écrasées ajoutées à la fin.",
+    "ids": [
+      "rutabaga",
+      "spinach",
+      "sesame"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Chou-fleur aux noix et basilic",
+    "ingredients": [
+      "chou_fleur",
+      "noix",
+      "basilic"
+    ],
+    "piste": "Chou-fleur rôti couvert, noix concassées et basilic frais ; aucune huile ni eau dans la composition.",
+    "ids": [
+      "chou-fleur",
+      "walnut",
+      "basil"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Fenouil et céleri à l'avocat",
+    "ingredients": [
+      "fenouil",
+      "celeri",
+      "avocat"
+    ],
+    "piste": "Légumes très finement émincés et massés avec l'avocat écrasé, sans citron.",
+    "ids": [
+      "fennel",
+      "celeri-branche",
+      "avocado"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Courge rôtie, chou et asperges à l'huile d'olive",
+    "ingredients": [
+      "courge",
+      "chou",
+      "asperge",
+      "huile"
+    ],
+    "piste": "Cuisson au four en deux temps selon la fermeté des légumes ; une seule source de lipides ajoutée.",
+    "ids": [
+      "courge-musquee",
+      "chou-blanc",
+      "asperge-verte",
+      "huile-olive-vierge-extra"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Artichaut et radis à la purée d'avocat",
+    "ingredients": [
+      "artichaut",
+      "radis",
+      "avocat"
+    ],
+    "piste": "Fonds cuits à la vapeur technique puis refroidis ; avocat seul pour lier, sans citron de protection.",
+    "ids": [
+      "fonds-artichaut-frais",
+      "radis-rose",
+      "avocado"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Chou rouge et navet aux épinards, huile d'olive",
+    "ingredients": [
+      "chou_rouge",
+      "navet",
+      "epinard",
+      "huile"
+    ],
+    "piste": "Étuver sous couvercle avec le jus naturel des épinards, sans bouillon ni eau ajoutée.",
+    "ids": [
+      "chou-rouge",
+      "navet",
+      "spinach",
+      "huile-olive-vierge-extra"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Poire et prune rôties, figue fraîche",
+    "ingredients": [
+      "poire",
+      "prune",
+      "figue"
+    ],
+    "piste": "Fruits mi-acides cuits dans leur jus, puis figue en quartiers ; pas de miel ni d'oléagineux.",
+    "ids": [
+      "pear",
+      "prune",
+      "figue-fraiche"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Ananas frais, fraises et cerises en dés",
+    "ingredients": [
+      "ananas",
+      "fraise",
+      "cerise"
+    ],
+    "piste": "Salade de fruits acides et mi-acides, sans eau, jus extérieur ou sucre ajouté.",
+    "ids": [
+      "ananas-frais",
+      "strawberry",
+      "cerise"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Crème froide de mangue, abricot et banane",
+    "ingredients": [
+      "mangue",
+      "abricot",
+      "banane"
+    ],
+    "piste": "Fruits seuls mixés ; la texture dépendra de leur maturité, sans lait végétal ni fruits à coque.",
+    "ids": [
+      "mangue",
+      "abricot",
+      "banana"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  },
+  {
+    "titre": "Fraises au coulis d'orange fraîche",
+    "ingredients": [
+      "fraise",
+      "orange"
+    ],
+    "piste": "Orange entière pelée et mixée en conservant la pulpe ; fraises en morceaux, sans sucre.",
+    "ids": [
+      "strawberry",
+      "orange"
+    ],
+    "niveau": "verte",
+    "paires": [],
+    "unknown": [],
+    "rapprochements": []
+  }
+]

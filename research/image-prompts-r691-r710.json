@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "generated_at": "2026-09-06",
+    "recipe_file": "association-collection.json",
+    "count": 20,
+    "target": "JPEG 900x900, qualité 72-88, <= 350 Ko"
+  },
+  "prompts": [
+    {
+      "id": "r691",
+      "title": "Timbales de lentilles vertes et courge au four",
+      "output_file": "public/assets/recipes/generated/r691-timbales-de-lentilles-vertes-et-courge-au-four.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Timbales de lentilles vertes et courge au four ». Ultra-photoréalisme culinaire, ingrédients autorisés : lentilles vertes sèches, courge musquée pelée crue, farine de sarrasin pure, persil frais, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r691 — Timbales de lentilles vertes et courge au four. Photographie culinaire ultra réaliste de deux timbales moulées composées exclusivement de lentilles vertes cuites, cubes de courge musquée rôtie, farine de sarrasin pure intégrée à la préparation, feuilles de persil frais clairement identifiables, huile d'olive et eau. Surface nette et naturelle. Zéro poivre, zéro grain noir, zéro épice, zéro assaisonnement sombre, zéro ingrédient supplémentaire. Fond minéral clair, assiette en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r692",
+      "title": "Pois chiches fondants au céleri-rave et aux noisettes",
+      "output_file": "public/assets/recipes/generated/r692-pois-chiches-fondants-au-celeri-rave-et-aux-noisettes.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pois chiches fondants au céleri-rave et aux noisettes ». Ultra-photoréalisme culinaire, ingrédients autorisés : pois chiches secs, céleri-rave pelé cru, noisettes nature non salées, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r692 — Pois chiches fondants au céleri-rave et aux noisettes. pois chiches cuits fondants, cubes de céleri-rave cuits, noisettes nature non salées, huile d'olive, eau. Plat chaud rustique, noisettes clairement reconnaissables.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r693",
+      "title": "Riz aux lentilles vertes et chou rouge étuvé",
+      "output_file": "public/assets/recipes/generated/r693-riz-aux-lentilles-vertes-et-chou-rouge-etuve.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Riz aux lentilles vertes et chou rouge étuvé ». Ultra-photoréalisme culinaire, ingrédients autorisés : lentilles vertes sèches, riz complet cru, chou rouge cru, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r693 — Riz aux lentilles vertes et chou rouge étuvé. lentilles vertes cuites, riz complet cuit, chou rouge étuvé, huile d'olive, eau. Assiette composée avec grains et lentilles distincts, chou rouge tendre.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r694",
+      "title": "Quinoa et lentilles corail en courgettes farcies",
+      "output_file": "public/assets/recipes/generated/r694-quinoa-et-lentilles-corail-en-courgettes-farcies.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Quinoa et lentilles corail en courgettes farcies ». Ultra-photoréalisme culinaire, ingrédients autorisés : quinoa cru, lentilles corail sèches, courgette crue, basilic frais, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r694 — Quinoa et lentilles corail en courgettes farcies. quinoa cuit, lentilles corail cuites, courgettes farcies, basilic frais, huile d'olive, eau. Demi-courgettes farcies, quinoa et lentilles visibles.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r695",
+      "title": "Crème de pois cassés et brocoli à la ciboulette",
+      "output_file": "public/assets/recipes/generated/r695-creme-de-pois-casses-et-brocoli-a-la-ciboulette.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Crème de pois cassés et brocoli à la ciboulette ». Ultra-photoréalisme culinaire, ingrédients autorisés : pois cassés secs, brocoli cru, ciboulette fraîche, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r695 — Crème de pois cassés et brocoli à la ciboulette. crème épaisse de pois cassés cuits et eau, bouquets de brocoli cuits, ciboulette fraîche ciselée, léger filet d'huile d'olive. Bol de soupe crémeuse sans crème laitière.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r696",
+      "title": "Lentilles vertes aux asperges et petits pois",
+      "output_file": "public/assets/recipes/generated/r696-lentilles-vertes-aux-asperges-et-petits-pois.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Lentilles vertes aux asperges et petits pois ». Ultra-photoréalisme culinaire, ingrédients autorisés : lentilles vertes sèches, asperges vertes crues, petits pois frais écossés crus, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r696 — Lentilles vertes aux asperges et petits pois. lentilles vertes cuites, asperges vertes cuites, petits pois frais cuits, huile d'olive, eau. Assiette végétale nette, ingrédients bien distincts.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r697",
+      "title": "Purée de pois chiches aux courgettes, sans citron",
+      "output_file": "public/assets/recipes/generated/r697-puree-de-pois-chiches-aux-courgettes-sans-citron.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Purée de pois chiches aux courgettes, sans citron ». Ultra-photoréalisme culinaire, ingrédients autorisés : pois chiches secs, courgette crue, graines de sésame nature, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r697 — Purée de pois chiches aux courgettes, sans citron. purée rustique de pois chiches cuits, courgettes cuites, graines de sésame nature, huile d'olive, eau. Sans citron, aucun agrume, aucune épice.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r698",
+      "title": "Haricots blancs et champignons en gratin de courge",
+      "output_file": "public/assets/recipes/generated/r698-haricots-blancs-et-champignons-en-gratin-de-courge.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Haricots blancs et champignons en gratin de courge ». Ultra-photoréalisme culinaire, ingrédients autorisés : haricots blancs secs, champignons de Paris crus, courge musquée pelée crue, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r698 — Haricots blancs et champignons en gratin de courge. haricots blancs cuits, champignons de Paris cuits, courge musquée cuite, huile d'olive, eau. Gratin doré naturellement par la courge, absolument sans fromage ni chapelure.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r699",
+      "title": "Soupe de lentilles corail aux endives et carottes",
+      "output_file": "public/assets/recipes/generated/r699-soupe-de-lentilles-corail-aux-endives-et-carottes.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe de lentilles corail aux endives et carottes ». Ultra-photoréalisme culinaire, ingrédients autorisés : lentilles corail sèches, endives crues, carotte crue, eau potable. Consigne de génération effectivement utilisée : r699 — Soupe de lentilles corail aux endives et carottes. soupe maison avec lentilles corail cuites, endives cuites émincées, carottes cuites, eau uniquement. Les trois ingrédients doivent rester reconnaissables, sans huile ni aromate.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r700",
+      "title": "Lentilles vertes sur aubergine vapeur et crème de persil",
+      "output_file": "public/assets/recipes/generated/r700-lentilles-vertes-sur-aubergine-vapeur-et-creme-de-persil.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Lentilles vertes sur aubergine vapeur et crème de persil ». Ultra-photoréalisme culinaire, ingrédients autorisés : lentilles vertes sèches, aubergine crue, persil frais, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r700 — Lentilles vertes sur aubergine vapeur et crème de persil. lentilles vertes cuites posées sur tranches d'aubergine vapeur, crème végétale obtenue uniquement avec persil frais, huile d'olive et eau. Aucun produit laitier.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r701",
+      "title": "Pois cassés en croûte tendre de sarrasin",
+      "output_file": "public/assets/recipes/generated/r701-pois-casses-en-croute-tendre-de-sarrasin.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pois cassés en croûte tendre de sarrasin ». Ultra-photoréalisme culinaire, ingrédients autorisés : pois cassés secs, carotte crue, farine de sarrasin pure, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r701 — Pois cassés en croûte tendre de sarrasin. pois cassés cuits, carotte cuite, croûte tendre faite uniquement de farine de sarrasin pure, huile d'olive et eau. Petit plat individuel, croûte brune de sarrasin sans blé.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r702",
+      "title": "Salade de haricots blancs, fenouil et radis",
+      "output_file": "public/assets/recipes/generated/r702-salade-de-haricots-blancs-fenouil-et-radis.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Salade de haricots blancs, fenouil et radis ». Ultra-photoréalisme culinaire, ingrédients autorisés : haricots blancs secs, fenouil cru, radis rouges crus, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r702 — Salade de haricots blancs, fenouil et radis. haricots blancs cuits, fenouil cru finement émincé, radis rouges crus en rondelles, huile d'olive, eau. Salade fraîche, aucun autre feuillage ni assaisonnement.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r703",
+      "title": "Lentilles corail en rubans de chou",
+      "output_file": "public/assets/recipes/generated/r703-lentilles-corail-en-rubans-de-chou.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Lentilles corail en rubans de chou ». Ultra-photoréalisme culinaire, ingrédients autorisés : lentilles corail sèches, chou blanc cru, carotte crue, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r703 — Lentilles corail en rubans de chou. lentilles corail cuites, longs rubans souples de chou blanc cuit, carotte cuite en fins rubans, huile d'olive, eau. Plat chaud minimaliste, sans herbes.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r704",
+      "title": "Pois chiches écrasés dans des feuilles de laitue",
+      "output_file": "public/assets/recipes/generated/r704-pois-chiches-ecrases-dans-des-feuilles-de-laitue.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pois chiches écrasés dans des feuilles de laitue ». Ultra-photoréalisme culinaire, ingrédients autorisés : pois chiches secs, laitue crue, concombre cru avec peau, chair d'avocat, eau potable. Consigne de génération effectivement utilisée : r704 — Pois chiches écrasés dans des feuilles de laitue. pois chiches cuits grossièrement écrasés, feuilles de laitue crue servant de coupelles, concombre cru avec peau en petits dés, chair d'avocat. Aucun autre ingrédient, ni huile, ni sauce.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r705",
+      "title": "Lentilles vertes, panais fondants et noix",
+      "output_file": "public/assets/recipes/generated/r705-lentilles-vertes-panais-fondants-et-noix.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Lentilles vertes, panais fondants et noix ». Ultra-photoréalisme culinaire, ingrédients autorisés : lentilles vertes sèches, panais pelé cru, épinards crus, cerneaux de noix nature, eau potable. Consigne de génération effectivement utilisée : r705 — Lentilles vertes, panais fondants et noix. lentilles vertes cuites, panais fondants rôtis sans huile, épinards cuits, cerneaux de noix nature. Assiette chaude, aucun autre assaisonnement.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r706",
+      "title": "Soupe complète de haricots blancs et riz",
+      "output_file": "public/assets/recipes/generated/r706-soupe-complete-de-haricots-blancs-et-riz.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Soupe complète de haricots blancs et riz ». Ultra-photoréalisme culinaire, ingrédients autorisés : haricots blancs secs, riz complet cru, carotte crue, chou blanc cru, eau potable. Consigne de génération effectivement utilisée : r706 — Soupe complète de haricots blancs et riz. soupe maison à l'eau avec haricots blancs cuits, riz complet cuit, carotte cuite et chou blanc cuit. Bouillon clair naturel, aucun aromate ni huile.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r707",
+      "title": "Lentilles corail à la courgette et aux pignons",
+      "output_file": "public/assets/recipes/generated/r707-lentilles-corail-a-la-courgette-et-aux-pignons.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Lentilles corail à la courgette et aux pignons ». Ultra-photoréalisme culinaire, ingrédients autorisés : lentilles corail sèches, courgette crue, pignons de pin nature, basilic frais, eau potable. Consigne de génération effectivement utilisée : r707 — Lentilles corail à la courgette et aux pignons. lentilles corail cuites, courgette cuite, pignons de pin nature, basilic frais, eau. Plat moelleux, pignons et basilic visibles, aucune huile.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r708",
+      "title": "Pois cassés aux choux de Bruxelles et noisettes",
+      "output_file": "public/assets/recipes/generated/r708-pois-casses-aux-choux-de-bruxelles-et-noisettes.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Pois cassés aux choux de Bruxelles et noisettes ». Ultra-photoréalisme culinaire, ingrédients autorisés : pois cassés secs, choux de Bruxelles crus, noisettes nature non salées, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r708 — Pois cassés aux choux de Bruxelles et noisettes. pois cassés cuits, choux de Bruxelles cuits coupés en deux, noisettes nature non salées, huile d'olive, eau. Plat chaud rustique, sans herbes ni épices.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r709",
+      "title": "Courge farcie aux haricots blancs et sarrasin",
+      "output_file": "public/assets/recipes/generated/r709-courge-farcie-aux-haricots-blancs-et-sarrasin.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Courge farcie aux haricots blancs et sarrasin ». Ultra-photoréalisme culinaire, ingrédients autorisés : haricots blancs secs, sarrasin en grains cru, courge musquée pelée crue, persil frais, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r709 — Courge farcie aux haricots blancs et sarrasin. demi-courge musquée rôtie et farcie de haricots blancs cuits, grains de sarrasin cuits, persil frais, huile d'olive, eau. Sans fromage ni chapelure.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    },
+    {
+      "id": "r710",
+      "title": "Lentilles vertes en salade de courgettes grillées",
+      "output_file": "public/assets/recipes/generated/r710-lentilles-vertes-en-salade-de-courgettes-grillees.jpg",
+      "status": "generated_inspected_optimized",
+      "prompt": "Photographie finale générée et inspectée pour la recette « Lentilles vertes en salade de courgettes grillées ». Ultra-photoréalisme culinaire, ingrédients autorisés : lentilles vertes sèches, courgette crue, basilic frais, huile d'olive vierge extra, eau potable. Consigne de génération effectivement utilisée : r710 — Lentilles vertes en salade de courgettes grillées. lentilles vertes cuites, courgettes grillées, basilic frais, huile d'olive, eau. Salade tiède simple, aucun autre légume ni condiment.. Photographie culinaire ultra réaliste, plat fini fidèle au titre et composé uniquement des ingrédients indiqués. Fond minéral clair, vaisselle en céramique crème mate, textile sauge discret, lumière naturelle latérale douce, objectif 50 mm, cadrage carré éditorial. Aucun texte, logo, personne, produit laitier, gluten, alcool, produit industriel, poivre, épice, herbe, sauce ou garniture supplémentaire. Aucun aspect CGI ou plastique."
+    }
+  ]
+}

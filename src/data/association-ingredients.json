@@ -1,0 +1,412 @@
+{
+  "riz-complet": {
+    "group": "amidons",
+    "name": "riz complet cru",
+    "sourceLabel": "Riz complet"
+  },
+  "sarrasin-decortique-cru": {
+    "group": "amidons",
+    "name": "sarrasin en grains cru",
+    "sourceLabel": "Sarrasin"
+  },
+  "quinoa": {
+    "group": "amidons",
+    "name": "quinoa cru",
+    "sourceLabel": "Quinoa"
+  },
+  "buckwheat-flour": {
+    "group": "amidons",
+    "name": "farine de sarrasin pure",
+    "sourceLabel": "Sarrasin (farine simple du même grain)"
+  },
+  "polenta-fine": {
+    "group": "amidons",
+    "name": "semoule de maïs nature",
+    "sourceLabel": "Maïs (semoule simple)"
+  },
+  "potato": {
+    "group": "amidons",
+    "name": "pomme de terre pelée crue",
+    "sourceLabel": "Patate"
+  },
+  "lentilles-vertes-seches": {
+    "group": "legumes-secs",
+    "name": "lentilles vertes sèches",
+    "sourceLabel": "Lentilles séchées"
+  },
+  "lentilles-corail-seches": {
+    "group": "legumes-secs",
+    "name": "lentilles corail sèches",
+    "sourceLabel": "Lentilles séchées (variété corail)"
+  },
+  "pois-casses-secs": {
+    "group": "legumes-secs",
+    "name": "pois cassés secs",
+    "sourceLabel": "Pois cassés"
+  },
+  "pois-chiches-secs": {
+    "group": "legumes-secs",
+    "name": "pois chiches secs",
+    "sourceLabel": "Pois chiches"
+  },
+  "haricots-blancs-secs": {
+    "group": "legumes-secs",
+    "name": "haricots blancs secs",
+    "sourceLabel": "Haricots secs"
+  },
+  "chicken": {
+    "group": "proteines-maigres",
+    "name": "filet de poulet cru sans peau",
+    "sourceLabel": "Viande blanche (poulet sans peau)"
+  },
+  "escalope-dinde": {
+    "group": "proteines-maigres",
+    "name": "escalope de dinde crue",
+    "sourceLabel": "Viande blanche (dinde)"
+  },
+  "cod": {
+    "group": "proteines-maigres",
+    "name": "filet de cabillaud cru désarêté",
+    "sourceLabel": "Poisson (cabillaud)"
+  },
+  "saumon-frais": {
+    "group": "proteines-maigres",
+    "name": "filet de saumon cru désarêté",
+    "sourceLabel": "Poisson (saumon ; classement du tableau, non sa teneur réelle en lipides)"
+  },
+  "trout": {
+    "group": "proteines-maigres",
+    "name": "filet de truite cru désarêté",
+    "sourceLabel": "Poisson (truite)"
+  },
+  "sardines-fraiches": {
+    "group": "proteines-maigres",
+    "name": "filets de sardine crus désarêtés",
+    "sourceLabel": "Poisson (sardine)"
+  },
+  "maquereau-filet": {
+    "group": "proteines-maigres",
+    "name": "filets de maquereau crus désarêtés",
+    "sourceLabel": "Poisson (maquereau)"
+  },
+  "almond": {
+    "group": "proteines-grasses",
+    "name": "amandes nature non salées",
+    "sourceLabel": "Amandes séchées"
+  },
+  "noisette": {
+    "group": "proteines-grasses",
+    "name": "noisettes nature non salées",
+    "sourceLabel": "Noisettes"
+  },
+  "walnut": {
+    "group": "proteines-grasses",
+    "name": "cerneaux de noix nature",
+    "sourceLabel": "Noix sèches"
+  },
+  "pignons-pin": {
+    "group": "proteines-grasses",
+    "name": "pignons de pin nature",
+    "sourceLabel": "Pignons"
+  },
+  "sesame": {
+    "group": "proteines-grasses",
+    "name": "graines de sésame nature",
+    "sourceLabel": "Sésame"
+  },
+  "avocado": {
+    "group": "lipides",
+    "name": "chair d'avocat",
+    "sourceLabel": "Avocat"
+  },
+  "huile-olive-vierge-extra": {
+    "group": "lipides",
+    "name": "huile d'olive vierge extra",
+    "sourceLabel": "Huiles non raffinées"
+  },
+  "chou-blanc": {
+    "group": "legumes-amidon-faible",
+    "name": "chou blanc cru",
+    "sourceLabel": "Chou (blanc)"
+  },
+  "chou-rouge": {
+    "group": "legumes-amidon-faible",
+    "name": "chou rouge cru",
+    "sourceLabel": "Chou (rouge)"
+  },
+  "laitue": {
+    "group": "legumes-amidon-faible",
+    "name": "laitue crue",
+    "sourceLabel": "Laitue"
+  },
+  "mache": {
+    "group": "legumes-amidon-faible",
+    "name": "mâche crue",
+    "sourceLabel": "Mâche"
+  },
+  "endive": {
+    "group": "legumes-amidon-faible",
+    "name": "endives crues",
+    "sourceLabel": "Endive"
+  },
+  "fennel": {
+    "group": "legumes-amidon-faible",
+    "name": "fenouil cru",
+    "sourceLabel": "Fenouil"
+  },
+  "radis-rose": {
+    "group": "legumes-amidon-faible",
+    "name": "radis rouges crus",
+    "sourceLabel": "Radis"
+  },
+  "cotes-blette-crues": {
+    "group": "legumes-amidon-faible",
+    "name": "côtes de blette crues",
+    "sourceLabel": "Blette (côtes)"
+  },
+  "green-bean": {
+    "group": "legumes-amidon-faible",
+    "name": "haricots verts crus",
+    "sourceLabel": "Haricots verts"
+  },
+  "broccoli": {
+    "group": "legumes-amidon-faible",
+    "name": "brocoli cru",
+    "sourceLabel": "Brocolis"
+  },
+  "chou-fleur": {
+    "group": "legumes-amidon-faible",
+    "name": "chou-fleur cru",
+    "sourceLabel": "Chou-fleur"
+  },
+  "poivron-rouge": {
+    "group": "legumes-amidon-faible",
+    "name": "poivron rouge cru",
+    "sourceLabel": "Poivron doux"
+  },
+  "champignon-paris": {
+    "group": "legumes-amidon-faible",
+    "name": "champignons de Paris crus",
+    "sourceLabel": "Champignons (de Paris, cultivés)"
+  },
+  "eggplant": {
+    "group": "legumes-amidon-faible",
+    "name": "aubergine crue",
+    "sourceLabel": "Aubergine"
+  },
+  "cucumber": {
+    "group": "legumes-amidon-faible",
+    "name": "concombre cru avec peau",
+    "sourceLabel": "Concombre"
+  },
+  "courge-musquee": {
+    "group": "legumes-amidon-faible",
+    "name": "courge musquée pelée crue",
+    "sourceLabel": "Courge (musquée)"
+  },
+  "zucchini": {
+    "group": "legumes-amidon-faible",
+    "name": "courgette crue",
+    "sourceLabel": "Courgette"
+  },
+  "cresson": {
+    "group": "legumes-amidon-faible",
+    "name": "cresson de fontaine cultivé",
+    "sourceLabel": "Cresson (cultivé)"
+  },
+  "asperge-verte": {
+    "group": "legumes-amidon-faible",
+    "name": "asperges vertes crues",
+    "sourceLabel": "Asperge"
+  },
+  "spinach": {
+    "group": "legumes-amidon-faible",
+    "name": "épinards crus",
+    "sourceLabel": "Épinard"
+  },
+  "ciboulette-fraiche": {
+    "group": "legumes-amidon-faible",
+    "name": "ciboulette fraîche",
+    "sourceLabel": "Ciboulette"
+  },
+  "persil-plat": {
+    "group": "legumes-amidon-moyen",
+    "name": "persil frais",
+    "sourceLabel": "Persil"
+  },
+  "carrot": {
+    "group": "legumes-amidon-moyen",
+    "name": "carotte crue",
+    "sourceLabel": "Carotte"
+  },
+  "navet": {
+    "group": "legumes-amidon-moyen",
+    "name": "navet pelé cru",
+    "sourceLabel": "Navet"
+  },
+  "betterave-crue": {
+    "group": "legumes-amidon-moyen",
+    "name": "betterave rouge crue",
+    "sourceLabel": "Betterave"
+  },
+  "celeri-branche": {
+    "group": "legumes-amidon-moyen",
+    "name": "céleri branche cru",
+    "sourceLabel": "Céleri branche"
+  },
+  "celeri-rave": {
+    "group": "legumes-amidon-moyen",
+    "name": "céleri-rave pelé cru",
+    "sourceLabel": "Céleri rave"
+  },
+  "panais": {
+    "group": "legumes-amidon-moyen",
+    "name": "panais pelé cru",
+    "sourceLabel": "Panais"
+  },
+  "petits-pois-frais": {
+    "group": "legumes-amidon-moyen",
+    "name": "petits pois frais écossés crus",
+    "sourceLabel": "Petits pois frais"
+  },
+  "rutabaga": {
+    "group": "legumes-amidon-moyen",
+    "name": "rutabaga pelé cru",
+    "sourceLabel": "Rutabaga"
+  },
+  "choux-bruxelles": {
+    "group": "legumes-amidon-moyen",
+    "name": "choux de Bruxelles crus",
+    "sourceLabel": "Choux de Bruxelles"
+  },
+  "fonds-artichaut-frais": {
+    "group": "legumes-amidon-moyen",
+    "name": "fonds d'artichaut frais crus",
+    "sourceLabel": "Artichaut (fonds parés)"
+  },
+  "basil": {
+    "group": "legumes-amidon-moyen",
+    "name": "basilic frais",
+    "sourceLabel": "Basilic"
+  },
+  "strawberry": {
+    "group": "fruits-acides",
+    "name": "fraises fraîches",
+    "sourceLabel": "Fraises"
+  },
+  "ananas-frais": {
+    "group": "fruits-acides",
+    "name": "chair d'ananas frais",
+    "sourceLabel": "Ananas"
+  },
+  "lemon": {
+    "group": "fruits-acides",
+    "name": "chair de citron sans pépins",
+    "sourceLabel": "Citron"
+  },
+  "clementine": {
+    "group": "fruits-acides",
+    "name": "quartiers de clémentine sans pépins",
+    "sourceLabel": "Clémentine"
+  },
+  "raspberry": {
+    "group": "fruits-acides",
+    "name": "framboises fraîches",
+    "sourceLabel": "Framboise"
+  },
+  "graines-grenade": {
+    "group": "fruits-acides",
+    "name": "grains de grenade",
+    "sourceLabel": "Grenade"
+  },
+  "groseille": {
+    "group": "fruits-acides",
+    "name": "groseilles fraîches",
+    "sourceLabel": "Groseille"
+  },
+  "orange": {
+    "group": "fruits-acides",
+    "name": "chair d'orange sans pépins",
+    "sourceLabel": "Orange"
+  },
+  "tomato": {
+    "group": "fruits-acides",
+    "name": "tomate ronde crue",
+    "sourceLabel": "Tomate"
+  },
+  "cerise": {
+    "group": "fruits-mi-acides",
+    "name": "cerises dénoyautées",
+    "sourceLabel": "Cerise"
+  },
+  "peche": {
+    "group": "fruits-mi-acides",
+    "name": "pêche fraîche dénoyautée",
+    "sourceLabel": "Pêche"
+  },
+  "pear": {
+    "group": "fruits-mi-acides",
+    "name": "poire fraîche avec peau",
+    "sourceLabel": "Poire (colonne mi-acides)"
+  },
+  "apple": {
+    "group": "fruits-mi-acides",
+    "name": "pomme fraîche avec peau",
+    "sourceLabel": "Pomme (colonne mi-acides ; variété acidulée)"
+  },
+  "prune": {
+    "group": "fruits-mi-acides",
+    "name": "prunes fraîches dénoyautées",
+    "sourceLabel": "Prune"
+  },
+  "abricot": {
+    "group": "fruits-mi-acides",
+    "name": "abricots frais dénoyautés",
+    "sourceLabel": "Abricot"
+  },
+  "mangue": {
+    "group": "fruits-mi-acides",
+    "name": "chair de mangue fraîche",
+    "sourceLabel": "Mangue"
+  },
+  "banana": {
+    "group": "fruits-doux",
+    "name": "chair de banane",
+    "sourceLabel": "Banane"
+  },
+  "figue-fraiche": {
+    "group": "fruits-doux",
+    "name": "figues fraîches",
+    "sourceLabel": "Figue"
+  },
+  "raisin-frais": {
+    "group": "fruits-doux",
+    "name": "grains de raisin frais",
+    "sourceLabel": "Raisin doux (mûr)"
+  },
+  "abricots-secs-non-sulfures": {
+    "group": "fruits-seches",
+    "name": "abricots secs sans additifs",
+    "sourceLabel": "Abricot séché (sans sulfites ajoutés)"
+  },
+  "figues-seches": {
+    "group": "fruits-seches",
+    "name": "figues sèches sans additifs",
+    "sourceLabel": "Figue séchée"
+  },
+  "melon-charentais": {
+    "group": "fruits-neutres",
+    "name": "chair de melon",
+    "sourceLabel": "Melon"
+  },
+  "pasteque": {
+    "group": "fruits-neutres",
+    "name": "chair de pastèque",
+    "sourceLabel": "Pastèque"
+  },
+  "eau": {
+    "group": "eau",
+    "name": "eau potable",
+    "sourceLabel": "Eau (minéralisation non évaluée)"
+  }
+}

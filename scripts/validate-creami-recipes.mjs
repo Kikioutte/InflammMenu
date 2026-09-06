@@ -61,6 +61,6 @@ for (const [index, recipe] of recipes.entries()) {
 for (const [program, count] of Object.entries(programCounts)) {
   assert.ok(count >= 4, `${program}: diversité insuffisante (${count})`);
 }
-assert.equal(planner.length, 327, "Les 327 recettes planifiables historiques doivent rester inchangées");
+assert.equal(planner.filter((recipe) => Number(recipe.id.replace("catalog-r", "")) <= 630).length, 327, "Les 327 recettes planifiables historiques doivent rester inchangées");
 
 console.log(`Lot CREAMi valide : 80 desserts originaux, ${Object.entries(programCounts).map(([program, count]) => `${program} ${count}`).join(" · ")}.`);

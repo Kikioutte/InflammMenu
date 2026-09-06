@@ -1,3 +1,5 @@
+import associationRecipeIds from "../src/data/association-recipe-ids.json" with { type: "json" };
+const deferredIds = new Set(associationRecipeIds.map((id) => id.replace(/^catalog-/, "")));
 import assert from "node:assert/strict";
 import { basename } from "node:path";
 import { readdir, readFile } from "node:fs/promises";
@@ -5,9 +7,9 @@ import { readdir, readFile } from "node:fs/promises";
 const rootUrl = new URL("../", import.meta.url);
 const researchUrl = new URL("research/", rootUrl);
 const catalogue = JSON.parse(await readFile(new URL("src/data/recettes-anti-inflammatoires.json", rootUrl), "utf8"));
-const recipes = new Map(catalogue.recipes.map((recipe) => [recipe.id, recipe]));
+const recipes = new Map(catalogue.recipes.filter((recipe) => !(deferredIds.has(recipe.id) && recipe.image.statut === "differee-utilisateur")).map((recipe) => [recipe.id, recipe]));
 const files = (await readdir(researchUrl))
-  .filter((name) => /^image-prompts-r\d{3}-r\d{3}\.json$/.test(name))
+  .filter((name) => /^image-prompts-r\d{3,4}-r\d{3,4}\.json$/.test(name))
   .sort();
 
 assert.ok(recipes.size > 0, "Le catalogue image ne peut pas être vide");
@@ -27,7 +29,7 @@ function normalize(value) {
 }
 
 for (const file of files) {
-  const [, firstId, lastId] = file.match(/^image-prompts-r(\d{3})-r(\d{3})\.json$/) ?? [];
+  const [, firstId, lastId] = file.match(/^image-prompts-r(\d{3,4})-r(\d{3,4})\.json$/) ?? [];
   const document = JSON.parse(await readFile(new URL(file, researchUrl), "utf8"));
   const prompts = document.prompts ?? document;
   assert.ok(Array.isArray(prompts), `${file}: liste de prompts absente`);

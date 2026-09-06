@@ -1,3 +1,4 @@
+import associationRecipeIds from "./data/association-recipe-ids.json" with { type: "json" };
 import type { CatalogueData } from "./catalog.ts";
 import type { Recipe } from "./domain.ts";
 import plannerCautionIdsSource from "./data/planner-caution-ids.json" with { type: "json" };
@@ -23,7 +24,7 @@ const CATALOGUE_ALLERGENS = new Set([
   "fruits-a-coque", "celeri", "moutarde", "sesame", "sulfites", "lupin", "mollusques",
 ]);
 const PLANNER_SEASONS = new Set(["spring", "summer", "autumn", "winter", "all-year"]);
-const EXPECTED_CATALOGUE_RECIPE_COUNT = 630;
+const EXPECTED_CATALOGUE_RECIPE_COUNT = 630 + associationRecipeIds.length;
 const EXPECTED_PLANNER_CAUTION_IDS = new Set<string>(plannerCautionIdsSource);
 
 function invalidCatalogue(path: string): never {
@@ -159,9 +160,10 @@ function validateRecipe(value: unknown, path: string, schemaVersion: string): { 
 
   const nutrition = recordAt(recipe.nutrition_par_portion, `${path}.nutrition_par_portion`);
   for (const field of ["calories", "proteines_g", "glucides_g", "sucres_g", "lipides_g", "acides_gras_satures_g", "fibres_g", "sodium_mg"] as const) {
+    if (nutrition[field] === null && ["sucres_g", "acides_gras_satures_g", "sodium_mg"].includes(field) && associationRecipeIds.includes(`catalog-${id}`)) continue;
     numberAt(nutrition[field], `${path}.nutrition_par_portion.${field}`);
   }
-  numberAt(recipe.score_anti_inflammatoire, `${path}.score_anti_inflammatoire`);
+  if (!(recipe.score_anti_inflammatoire === null && associationRecipeIds.includes(`catalog-${id}`))) numberAt(recipe.score_anti_inflammatoire, `${path}.score_anti_inflammatoire`);
 
   const image = recordAt(recipe.image, `${path}.image`);
   stringAt(image.nom_fichier, `${path}.image.nom_fichier`, true);

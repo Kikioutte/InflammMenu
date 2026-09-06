@@ -1,0 +1,3286 @@
+{
+  "meta": {
+    "source": "Anses. 2025. Table de composition nutritionnelle des aliments Ciqual 2025",
+    "doi": "https://doi.org/10.57745/RDMHWY",
+    "file_doi": "https://doi.org/10.57745/RPWYZD",
+    "version": "2025-11-03",
+    "license": "Licence Ouverte 2.0",
+    "extraction_note": "Les valeurs sous une limite de quantification utilisent la moitié de cette limite et conservent qualifier=below-limit; les traces valent 0 avec qualifier=trace."
+  },
+  "foods": [
+    {
+      "code": "13004",
+      "name": "Avocat, chair sans peau, sans noyau, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 203,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.56,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fat_g": {
+          "value": 20.6,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.4,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 3.6,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 4.51,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 6,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20004",
+      "name": "Bette ou blette, côte (sans feuille), crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 12.8,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 1.63,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 1.2,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.8,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": null,
+          "qualifier": "missing"
+        }
+      }
+    },
+    {
+      "code": "20009",
+      "name": "Carotte, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 30.2,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.78,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 5.16,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 4.85,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.9,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.075,
+          "qualifier": "below-limit",
+          "ceiling": 0.15
+        },
+        "sodium_mg": {
+          "value": 49,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20014",
+      "name": "Chou rouge, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 26.4,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.13,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 4.33,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 3.9,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.8,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 14,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20016",
+      "name": "Chou-fleur, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 24.9,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.81,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.13,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.7,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 1.7,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.2,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.24,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 6,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20019",
+      "name": "Concombre, chair et peau, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 16.8,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.65,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.87,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.11,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 1.67,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 0.5,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.037,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 4.8,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20020",
+      "name": "Courgette, chair et peau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 16.7,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.21,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 1.75,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.32,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 1.74,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.084,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 8,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20022",
+      "name": "Cresson de fontaine, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 15.5,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.3,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 1.11,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.1,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.2,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 0.5,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.027,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 41,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20023",
+      "name": "Céleri branche, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 15.4,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.63,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.41,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 1.3,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.2,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 79,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20026",
+      "name": "Endive, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 16.6,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.19,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.83,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 2.4,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.1,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "20028",
+      "name": "Fenouil, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 18.2,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.63,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 2.2,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.6,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 22,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20031",
+      "name": "Laitue, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 14.7,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.35,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 1.22,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.2,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.73,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.1,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.022,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 8.47,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20045",
+      "name": "Radis rouge, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 11,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.94,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 1.53,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 1.1,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.4,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 16,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20052",
+      "name": "Artichaut, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 45.4,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 3.27,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 4.84,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.15,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.99,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 5.4,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.036,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 94,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20053",
+      "name": "Aubergine, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 22.9,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.98,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.7,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.18,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 2.7,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 3,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.034,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20055",
+      "name": "Céleri-rave, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 26.3,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.38,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 3.98,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 1.6,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 4.5,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 34,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20056",
+      "name": "Champignon de Paris ou champignon de couche, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 21,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.11,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 1.83,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.36,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 1.55,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.067,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 39,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20057",
+      "name": "Brocoli, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 31.9,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.9,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.15,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.36,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 1.7,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.6,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.047,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 30,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20058",
+      "name": "Chou de Bruxelles, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 43.9,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 3.38,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 4.59,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.3,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 2.2,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 3.8,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.062,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 25,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20059",
+      "name": "Épinard, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 33.3,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.68,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 3.06,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.39,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.46,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.6,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.063,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 79.5,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20061",
+      "name": "Haricot vert, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 31.9,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.83,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 4.14,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.22,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 3.26,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.7,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.05,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 6,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20064",
+      "name": "Navet, pelé, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 25.6,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.9,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 4.39,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.1,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 3.71,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.8,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.011,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 67,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20072",
+      "name": "Petits pois, crus",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 81.2,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 5.42,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 11.4,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.4,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 5.67,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 5.1,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.071,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 5,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20087",
+      "name": "Poivron rouge, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 33.6,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.06,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 5.98,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 4.8,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 3.2,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "20091",
+      "name": "Betterave rouge, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 40.2,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.61,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 6.34,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.17,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 6.34,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.8,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.027,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 78,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20099",
+      "name": "Mâche, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 15,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0.5,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fiber_g": {
+          "value": 2.3,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "20116",
+      "name": "Chou blanc, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 35.2,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.38,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 4.63,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.6,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 4.2,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 3.5,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.27,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 13,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20128",
+      "name": "Courge musquée, chair sans peau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 23.5,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.55,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 4.6,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.1,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": null,
+          "qualifier": "missing"
+        },
+        "fiber_g": {
+          "value": 1,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": null,
+          "qualifier": "missing"
+        },
+        "sodium_mg": {
+          "value": null,
+          "qualifier": "missing"
+        }
+      }
+    },
+    {
+      "code": "20181",
+      "name": "Panais, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 67.9,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.2,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 12.6,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.3,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 4.8,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 4.9,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.05,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 10,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20201",
+      "name": "Rutabaga, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 33.2,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.08,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 5.7,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.16,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 4.46,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.3,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.027,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 12,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20276",
+      "name": "Tomate ronde, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 17.5,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.5,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 3.42,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 3,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "20279",
+      "name": "Asperge, verte, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 24.7,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.46,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.03,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.27,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 1.5,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.15,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.069,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 3.85,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "4008",
+      "name": "Pomme de terre, sans peau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 80,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.02,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 16.2,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.09,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.78,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.2,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.026,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 0.22,
+          "qualifier": "below-limit",
+          "ceiling": 0.44
+        }
+      }
+    },
+    {
+      "code": "20501",
+      "name": "Haricot blanc, sec",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 307,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 23.4,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 43.9,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.85,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": null,
+          "qualifier": "missing"
+        },
+        "fiber_g": {
+          "value": 15.2,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.22,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 16,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20515",
+      "name": "Pois cassé, sec",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 347,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 23.8,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 47.5,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 1.16,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 2.56,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 25.5,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.16,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 15,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20516",
+      "name": "Pois chiche, sec",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 350,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 20.5,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 47.5,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 6.04,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 2.3,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 12.2,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.6,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 24,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "20535",
+      "name": "Lentille corail, sèche",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 328,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 27.7,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 44.9,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.8,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 1.29,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 15.4,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.14,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "20585",
+      "name": "Lentille verte, sèche",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 327,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 25.1,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 44.5,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 1.8,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 1.1,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 16.4,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.24,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13000",
+      "name": "Abricot, dénoyauté, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 44.1,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.81,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 9.01,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 6.7,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.7,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13002",
+      "name": "Ananas, chair sans peau, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 51.6,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.25,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 11.7,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 10.5,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.2,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13005",
+      "name": "Banane, chair sans peau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 87.6,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.06,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 19.7,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 15.6,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.7,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13008",
+      "name": "Ceriser, chair et peau, sans noyau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 53.7,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.81,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 13,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.15,
+          "qualifier": "below-limit",
+          "ceiling": 0.3
+        },
+        "sugars_g": {
+          "value": 10,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.6,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13009",
+      "name": "Citron, chair sans peau, sans pépins, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 24.3,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.25,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 1.56,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 0.8,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13012",
+      "name": "Figue, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 67.6,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.19,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 13.5,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 12.2,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 4.1,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 5,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "13014",
+      "name": "Fraise, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 35.1,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.63,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 6.03,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 5.6,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 3.8,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13015",
+      "name": "Framboise, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 47.9,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.19,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 5.83,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.8,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 5.4,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 4.3,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.13,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13018",
+      "name": "Grenade, chair sans peau, avec pépins, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 81,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.44,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 14.3,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 1.2,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 13.3,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.3,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.07,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13019",
+      "name": "Groseille, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 67.2,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.56,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 7.06,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.7,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 6.63,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 4.6,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.21,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13024",
+      "name": "Clémentine ou mandarine, chair sans peau, sans\npépins, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 45.5,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.81,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 9.17,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 8.6,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.7,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13025",
+      "name": "Mangue, chair sans peau, sans noyau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 71.1,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.63,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 14.3,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 12.9,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.6,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13026",
+      "name": "Melon cantaloup (par ex.: Charentais), chair sans\npeau, sans pépins, cru",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 59.8,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 1.13,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 14.8,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 10.6,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.3,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 24,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "13034",
+      "name": "Orange, chair sans peau, sans pépins, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 42,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.75,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 8.03,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 7.6,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.7,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13036",
+      "name": "Pastèque, chair sans peau, sans pépins, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 35.4,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.69,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 8.33,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "below-limit",
+          "ceiling": 0.5
+        },
+        "sugars_g": {
+          "value": 7.9,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 0.5,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.005,
+          "qualifier": "below-limit",
+          "ceiling": 0.01
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13037",
+      "name": "Poire, chair et peau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 56.6,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.36,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 12.3,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.27,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 9.75,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.9,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.067,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 1.8,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "13039",
+      "name": "Pomme, chair et peau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 54,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.25,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 11.6,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 10.6,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.4,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.052,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 1.5,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "13043",
+      "name": "Pêche, chair et peau, sans noyau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 37.9,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.91,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 7.55,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 6.83,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.5,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.019,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 0.555,
+          "qualifier": "below-limit",
+          "ceiling": 1.11
+        }
+      }
+    },
+    {
+      "code": "13100",
+      "name": "Prune, sans noyau, crue",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 51.6,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.7,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 9.92,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.28,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 9.92,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.4,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.017,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 0,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "13395",
+      "name": "Raisin cru (aliment moyen)",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 71,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.7,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 16.3,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.25,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 15.4,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.11,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.025,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 1.885,
+          "qualifier": "below-limit",
+          "ceiling": 3.77
+        }
+      }
+    },
+    {
+      "code": "13001",
+      "name": "Abricot, dénoyauté, sec",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 239,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.88,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 59.1,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.5,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 34.3,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 8.3,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.19,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "13013",
+      "name": "Figue, sèche",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 261,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.9,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 55,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 1.22,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 48.4,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 8.15,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.57,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 86.3,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "15000",
+      "name": "Amande, avec peau, sans sel ajouté",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 615,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 18.8,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 9.51,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 51.3,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 4.2,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 12.5,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 4.11,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "15004",
+      "name": "Noisette, sans sel ajouté",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 632,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 14.4,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 7.16,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 56.9,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 4.9,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 11.6,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 4.75,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "15005",
+      "name": "Noix, cerneau, séchée",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 709,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 13.3,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 6.88,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 67.3,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 3,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 6.7,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 6.45,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "15010",
+      "name": "Sésame, graine",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 606,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 17.7,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 12.8,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 49.7,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.3,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 11.8,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 6.96,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.31,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "15025",
+      "name": "Pignon de pin",
+      "group": "fruits, légumes,\nlégumineuses et\noléagineux",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 712,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 13.7,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.93,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 68.4,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 1.83,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 10,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 4.9,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 9,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "9102",
+      "name": "Riz complet, cru",
+      "group": "produits\ncéréaliers",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 350,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 7.02,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 71.4,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 2.8,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 5,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.56,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 4.1,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "9340",
+      "name": "Quinoa, cru",
+      "group": "produits\ncéréaliers",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 358,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 13.2,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 58.1,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 6.07,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": null,
+          "qualifier": "missing"
+        },
+        "fiber_g": {
+          "value": 7,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.71,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 5,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "9380",
+      "name": "Sarrasin complet, cru",
+      "group": "produits\ncéréaliers",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 362,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 13.3,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 67.5,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 3.4,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": null,
+          "qualifier": "missing"
+        },
+        "fiber_g": {
+          "value": 4,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.74,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 1,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "9614",
+      "name": "Polenta ou semoule de maïs, précuite, à cuire",
+      "group": "produits\ncéréaliers",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 350,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 7.88,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 74,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 1.8,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fiber_g": {
+          "value": 3.2,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": null,
+          "qualifier": "missing"
+        },
+        "sodium_mg": {
+          "value": 1.7,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "9540",
+      "name": "Farine de sarrasin",
+      "group": "produits\ncéréaliers",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 348,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 11.5,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 68.4,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 2.19,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.03,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 4.2,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.58,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 24,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "36017",
+      "name": "Poulet, filet sans peau cru",
+      "group": "viandes, oeufs,\npoissons",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 110,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 23.4,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 1.5,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fiber_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.44,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 43,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "36304",
+      "name": "Dinde, escalope crue",
+      "group": "viandes, oeufs,\npoissons",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 108,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 23.7,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 1.48,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.29,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 113,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "26036",
+      "name": "Saumon, élevage, cru",
+      "group": "viandes, oeufs,\npoissons",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 193,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 20.5,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fat_g": {
+          "value": 12.4,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fiber_g": {
+          "value": 0.125,
+          "qualifier": "below-limit",
+          "ceiling": 0.25
+        },
+        "saturated_fat_g": {
+          "value": 2.15,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 45.4,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "26043",
+      "name": "Cabillaud, cru",
+      "group": "viandes, oeufs,\npoissons",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 77.4,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 18.1,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fat_g": {
+          "value": 0.57,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fiber_g": {
+          "value": 0.1,
+          "qualifier": "below-limit",
+          "ceiling": 0.2
+        },
+        "saturated_fat_g": {
+          "value": 0.1,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 65.2,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "26051",
+      "name": "Maquereau, cru",
+      "group": "viandes, oeufs,\npoissons",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 198,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 18.1,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0.93,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 13.5,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fiber_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 3.22,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 64,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "26065",
+      "name": "Sardine, crue",
+      "group": "viandes, oeufs,\npoissons",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 160,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 19.5,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 9.17,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fiber_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 2.66,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 101,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "27008",
+      "name": "Truite ou truite fario, élevage, crue",
+      "group": "viandes, oeufs,\npoissons",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 133,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 19.3,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 6.22,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 1.25,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 41.8,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "18066",
+      "name": "Eau du robinet",
+      "group": "eaux et autres\nboissons",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.4,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "17270",
+      "name": "Huile d'olive vierge extra",
+      "group": "matières grasses",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 899,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 0.25,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 0,
+          "qualifier": "trace"
+        },
+        "fat_g": {
+          "value": 99.9,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 0,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 15.2,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 2.5,
+          "qualifier": "below-limit",
+          "ceiling": 5
+        }
+      }
+    },
+    {
+      "code": "11003",
+      "name": "Ciboule ou ciboulette, fraîche",
+      "group": "aides culinaires et\ningrédients divers",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 30.8,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.55,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 2.85,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.46,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 2.09,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 2.55,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.089,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 9.5,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "11014",
+      "name": "Persil, frais",
+      "group": "aides culinaires et\ningrédients divers",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 42.5,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 2.97,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 4.1,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.63,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.85,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 4.3,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.1,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 51.5,
+          "qualifier": "exact"
+        }
+      }
+    },
+    {
+      "code": "11033",
+      "name": "Basilic, frais",
+      "group": "aides culinaires et\ningrédients divers",
+      "nutrients_per_100g": {
+        "energy_kcal": {
+          "value": 35.2,
+          "qualifier": "exact"
+        },
+        "protein_g": {
+          "value": 3.15,
+          "qualifier": "exact"
+        },
+        "carbohydrate_g": {
+          "value": 3.4,
+          "qualifier": "exact"
+        },
+        "fat_g": {
+          "value": 0.64,
+          "qualifier": "exact"
+        },
+        "sugars_g": {
+          "value": 0.3,
+          "qualifier": "exact"
+        },
+        "fiber_g": {
+          "value": 1.6,
+          "qualifier": "exact"
+        },
+        "saturated_fat_g": {
+          "value": 0.041,
+          "qualifier": "exact"
+        },
+        "sodium_mg": {
+          "value": 4,
+          "qualifier": "exact"
+        }
+      }
+    }
+  ]
+}
