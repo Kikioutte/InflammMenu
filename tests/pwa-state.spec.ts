@@ -106,7 +106,7 @@ test("le vrai service worker conserve le catalogue et uniquement les polices lat
   await expect(page.getByTestId("home-view")).toBeVisible();
   await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
-  await expect(page.getByText("1081 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByTestId("recipes-view").locator(".page-heading p")).toHaveText(/1\s?081 recettes à découvrir, à votre rythme\./);
   await expect(page.getByText("1081 résultats")).toBeVisible();
   await page.getByLabel("Filtrer les associations").selectOption("verte");
   await expect(page.getByText("300 résultats", { exact: true })).toBeVisible();
