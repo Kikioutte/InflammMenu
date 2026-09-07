@@ -1069,3 +1069,163 @@ button { -webkit-tap-highlight-color: transparent; }
   .meal-builder-slot > button { margin-left: 70px; }
   .meal-builder-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* Direction fusion validée : cuisine éditoriale, ivoire et olive, photos existantes. */
+:root { --ivory: #faf7f1; --cream: #f2eee4; --line: #d9d2c4; --sage: #4e5b32; --sage-dark: #29351f; --white: #fffdf9; }
+.bottom-nav { min-height: calc(68px + var(--device-safe-area-bottom, 0px)); }
+.bottom-nav__item { min-height: 48px; font-size: var(--font-13); gap: 4px; }
+.bottom-nav__icon { box-sizing: content-box; width: 23px; height: 23px; padding: 5px 15px; border-radius: 14px; }
+.bottom-nav__item.is-active .bottom-nav__icon { background: var(--sage); color: var(--white); transform: none; }
+.catalogue-search { min-height: 48px; border-radius: 14px; }
+.catalogue-search input { font-size: 1rem; }
+.catalogue-search:focus-within { outline: 3px solid var(--terracotta); outline-offset: 2px; }
+.catalogue-search > svg { width: 22px; height: 22px; flex: none; }
+.favorites-page .page-heading { margin-bottom: 18px; }
+.favorites-page .page-heading h1 { font-size: 46px; line-height: 1; margin: 6px 0; }
+.favorites-page .page-heading p { font-size: var(--font-14); line-height: 1.5; }
+.catalogue-browser .association-filter { margin: 12px 0; }
+.catalogue-browser .association-filter > span { font-size: var(--font-13); }
+.catalogue-browser .association-filter select { background: var(--white); border-color: var(--line); font-size: var(--font-14); border-radius: 12px; }
+.catalogue-filters button { min-height: 44px; font-size: var(--font-14); }
+.catalogue-toolbar .secondary-button, .catalogue-sort select { min-height: 44px; font-size: var(--font-14); }
+.catalogue-count { font-size: var(--font-14); margin: 18px 0 12px; }
+.catalogue-list { gap: 24px 16px; }
+.catalogue-card { border: 0; box-shadow: none; padding: 0; border-radius: 0; background: transparent; gap: 8px; cursor: pointer; }
+.catalogue-card__image { width: 100%; height: auto; aspect-ratio: 1.18; margin: 0 0 4px; border-radius: 14px; }
+.catalogue-card > strong { font-size: 25px; line-height: 1.08; }
+.catalogue-card > small, .catalogue-card__meta { font-size: var(--font-13); line-height: 1.5; }
+.catalogue-card__meta { margin-top: auto; }
+.catalogue-card .association-badge { margin: 0; font-size: var(--font-13)!important; }
+.catalogue-card__planner { font-size: var(--font-12); text-transform: none; }
+.catalogue-review-details { margin-top: 28px; color: var(--muted); font-size: var(--font-14); line-height: 1.6; }
+.catalogue-review-details summary { cursor: pointer; min-height: 44px; padding: 10px 0; }
+.catalogue-detail__hero-copy > h1 { line-height: 1.05; }
+.catalogue-detail .recipe-content { font-size: var(--font-15); }
+.catalogue-detail .ingredient-list, .catalogue-detail .steps { font-size: var(--font-15); line-height: 1.6; }
+.meal-builder-entry { min-height: 52px; font-size: var(--font-16); border-radius: 14px; }
+.meal-builder-shell { height: 100%; min-height: 0; display: flex; flex-direction: column; background: var(--ivory); color: var(--ink); font-family: var(--sans); }
+.meal-builder-shell > .mobile-page { position: relative; inset: auto; flex: 1; min-height: 0; height: auto; }
+.meal-builder-header { border: 0; background: var(--ivory); max-width: 1120px; margin: auto; }
+.meal-builder-header .wordmark { justify-content: center; font-size: 25px; }
+.meal-builder-header .wordmark img { width: 28px; object-fit: contain; }
+.meal-builder { padding: 10px 20px 28px; max-width: 1120px; margin: auto; }
+.meal-builder .page-heading { margin: 0 0 18px; }
+.meal-builder .page-heading h1 { margin: 0 0 4px; font-size: 38px; line-height: 1.05; }
+.meal-builder .page-heading p { margin: 0; font-size: var(--font-16); line-height: 1.5; }
+.meal-builder-hero { display: grid; grid-template-columns: 1.1fr 1fr; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; min-height: 134px; margin-bottom: 16px; }
+.meal-builder-hero > div { padding: 16px; min-width: 0; }
+.meal-builder-hero .eyebrow { font-size: var(--font-12); letter-spacing: .09em; }
+.meal-builder-hero h2 { font-family: var(--serif); font-size: 25px; line-height: 1.03; margin: 10px 0 12px; }
+.meal-builder-hero small { color: var(--terracotta); display: flex; align-items: center; gap: 6px; font-size: var(--font-13); }
+.meal-builder-hero small svg { flex: none; width: 16px; height: 16px; }
+.meal-builder-hero > img { width: 100%; height: 100%; object-fit: cover; min-height: 134px; }
+.meal-builder-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); border: 1px solid var(--line); border-radius: 13px; overflow: hidden; margin: 0 0 18px; }
+.meal-builder-tabs button { min-width: 0; min-height: 46px; border: 0; border-right: 1px solid var(--line); color: var(--sage-dark); background: transparent; font-size: var(--font-16); display: flex; gap: 8px; align-items: center; justify-content: center; cursor: pointer; }
+.meal-builder-tabs button:last-child { border-right: 0; }
+.meal-builder-tabs button[aria-selected="true"] { background: var(--sage); color: var(--white); }
+.meal-builder-tabs button:focus-visible { outline-offset: -4px; }
+.meal-builder-search-row { display: flex; align-items: stretch; gap: 10px; margin: 0 0 18px; }
+.meal-builder-search-row .catalogue-search { flex: 1; min-width: 0; margin: 0; height: 46px; background: transparent; }
+.meal-builder-search-row .catalogue-search input { font-size: var(--font-14); }
+.meal-builder-search-row > button { padding: 0 12px; background: transparent; font-size: var(--font-14); min-height: 46px; }
+.meal-builder-category { margin: 0 0 24px; }
+.meal-builder-category h2 { font-size: 25px; line-height: 1.1; margin: 0 0 6px; }
+.meal-builder-associations { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; border: 0; padding: 4px 0; min-height: 36px; background: transparent; color: #365038; text-align: left; font-size: var(--font-13); cursor: pointer; }
+.meal-builder-associations.is-orange { color: var(--terracotta); }
+.meal-builder-associations > svg { width: 17px; height: 17px; flex: none; }
+.meal-builder-associations > span { text-decoration: underline; text-underline-offset: 3px; }
+.meal-builder-result-count { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.meal-builder-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px 16px; }
+.meal-builder-candidate { min-width: 0; display: flex; flex-direction: column; align-items: stretch; gap: 8px; border: 0; border-radius: 0; overflow: visible; background: transparent; padding: 0; }
+.meal-builder-candidate img { width: 100%; height: auto; min-height: 0; aspect-ratio: 1.1; object-fit: cover; border-radius: 9px; }
+.meal-builder-candidate h3 { font-family: var(--serif); font-size: 21px; line-height: 1.12; margin: 0; font-weight: 600; }
+.meal-builder-candidate .meal-builder-candidate-level { display: flex; gap: 4px; align-items: center; font-size: var(--font-12); font-weight: 500; color: #365038; margin-top: auto; }
+.meal-builder-candidate-level.is-orange { color: var(--terracotta)!important; }
+.meal-builder-candidate-level svg { width: 14px; height: 14px; flex: none; }
+.meal-builder-candidate > button { color: var(--sage-dark); border: 1px solid var(--sage); background: transparent; border-radius: 11px; min-height: 44px; font-family: var(--serif); font-size: 21px; font-weight: 600; cursor: pointer; }
+.meal-builder-candidate > button:hover { background: var(--sage-soft); }
+.meal-builder-footer { flex: none; background: var(--ivory); padding-top: 8px; }
+.meal-builder-progress { display: flex; align-items: center; gap: 10px; width: calc(100% - 24px); max-width: 1080px; margin: 0 auto 8px; padding: 10px 12px; border: 1px solid #e5ddce; border-radius: 14px; background: var(--cream); color: var(--sage-dark); text-align: left; cursor: pointer; min-height: 60px; }
+.meal-builder-progress > svg:first-child { width: 28px; height: 28px; flex: none; }
+.meal-builder-progress > span:nth-child(2) { margin-right: auto; display: grid; gap: 4px; }
+.meal-builder-progress strong { font-family: var(--serif); font-size: 20px; line-height: 1.1; }
+.meal-builder-progress > span:nth-child(3) { font-size: var(--font-13); }
+.meal-builder-progress-marks { display: flex; gap: 6px; color: #b0aa97; }
+.meal-builder-progress-marks svg { width: 13px; height: 13px; }
+.meal-builder-progress-marks .is-filled { color: var(--sage); }
+.meal-builder-footer .bottom-nav { position: static; height: auto; }
+.meal-builder-selection { grid-template-columns: 1fr; }
+.meal-builder-slot { flex-wrap: nowrap; }
+.meal-builder-slot > span { min-width: 0; }
+.meal-builder-slot > button { min-height: 44px; margin: 0; font-size: var(--font-13); }
+.meal-builder-slot strong { font-size: 21px; line-height: 1.1; }
+.meal-builder-slot small { font-size: var(--font-12); }
+.meal-builder-status small { font-size: var(--font-14); }
+@media (min-width: 380px) { .catalogue-list { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (min-width: 760px) {
+  .favorites-page { max-width: 1120px; margin: auto; }
+  .catalogue-list { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 30px 24px; }
+  .meal-builder { padding: 18px 40px 36px; }
+  .meal-builder .page-heading h1 { font-size: 48px; }
+  .meal-builder-hero { grid-template-columns: 1fr 1fr; max-height: 235px; }
+  .meal-builder-hero > div { padding: 24px; }
+  .meal-builder-hero h2 { font-size: 34px; max-width: 400px; }
+  .meal-builder-tabs { max-width: 560px; }
+  .meal-builder-grid { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 24px; }
+  .meal-builder-candidate h3 { font-size: 24px; }
+  .meal-builder-search-row { max-width: 680px; }
+}
+@media (max-width: 359px) {
+  .meal-builder { padding-inline: 14px; }
+  .meal-builder-hero h2 { font-size: 22px; }
+  .meal-builder-search-row { flex-wrap: wrap; }
+  .meal-builder-search-row .catalogue-search { flex-basis: 100%; }
+  .meal-builder-progress > svg:first-child { display: none; }
+  .meal-builder-slot img { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) { .catalogue-card__image { transition: opacity .18s; } .catalogue-card:hover .catalogue-card__image { opacity: .9; } }
+
+/* Keep offscreen catalogue card names available to assistive technology. */
+.catalogue-card { content-visibility: visible; contain-intrinsic-size: none; }
+
+@media (max-width: 759px) {
+  .meal-builder .page-heading { margin-bottom: 14px; }
+  .meal-builder .page-heading h1 { font-size: 35px; }
+  .meal-builder-hero { margin-bottom: 14px; }
+  .meal-builder-hero > div { padding: 12px; }
+  .meal-builder-hero h2 { font-size: 23px; margin: 8px 0; }
+  .meal-builder-hero > img { min-height: 0; max-height: 170px; }
+  .meal-builder-tabs { margin-bottom: 14px; }
+  .meal-builder-search-row { margin-bottom: 14px; }
+  .meal-builder-associations { margin-bottom: 12px; }
+}
+@media (max-width: 759px) {
+  .meal-builder-hero > img { height: 134px; min-height: 100%; }
+  .meal-builder-hero h2 { font-size: 22px; }
+  .meal-builder-candidate img { aspect-ratio: 1.25; }
+  .meal-builder-candidate h3 { font-size: 18px; line-height: 1.12; }
+  .meal-builder-candidate { gap: 6px; }
+  .meal-builder .page-heading { margin-bottom: 12px; }
+  .meal-builder-search-row { margin-bottom: 10px; }
+  .meal-builder-associations { margin-bottom: 8px; }
+}
+
+.meal-builder-candidate > button { margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; padding: 5px 8px; }
+.meal-builder-candidate > button .meal-builder-candidate-level { margin: 0; }
+@media (max-width: 759px) {
+  .meal-builder-candidate > button { flex-direction: column; gap: 1px; font-size: 18px; }
+  .meal-builder-candidate > button .meal-builder-candidate-level { font-size: 11px; line-height: 1.1; }
+  .meal-builder-candidate > button .meal-builder-candidate-level svg { width: 12px; height: 12px; }
+  .meal-builder-hero > img { height: 126px; }
+  .meal-builder-hero h2 { line-height: 1; }
+  .meal-builder-associations { margin-bottom: 2px; min-height: 32px; }
+  .meal-builder-footer { padding-top: 6px; }
+  .meal-builder-progress { margin-bottom: 6px; min-height: 56px; padding-block: 8px; }
+  .meal-builder-footer .bottom-nav { min-height: 62px; padding-top: 4px; padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 759px) {
+  .meal-builder-hero > div { padding-block: 10px; }
+  .meal-builder-tabs button { min-height: 44px; }
+  .meal-builder-search-row .catalogue-search, .meal-builder-search-row > button { min-height: 44px; height: 44px; }
+  .meal-builder-candidate > button { line-height: 1.1; }
+}

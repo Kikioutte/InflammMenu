@@ -31,6 +31,8 @@
 
 ### Catalogue, favoris et préférences durables
 
+- Direction visuelle fusion validée le 7 septembre 2026 : fond ivoire, titres éditoriaux olive, photographies existantes généreuses, cartes aérées et navigation explicite. Le constructeur « À votre table » conserve une recherche par catégorie Entrée–Plat–Dessert et un récapitulatif visible, avec recalcul de la compatibilité globale. Les données, photographies et règles existantes restent inchangées. Toute intégration passe par une branche et une pull request vérifiée.
+
 - Le constructeur de repas part d’une recette du catalogue et complète progressivement les trois catégories « Entrée », « Plat » et « Dessert ». Après chaque choix, toutes les propositions restantes sont recalculées à partir des ingrédients de l’ensemble déjà choisi, sauces et accompagnements compris. Une combinaison verte est prioritaire ; une combinaison orange peut rester proposée avec un signalement explicite. Une combinaison grise ou non classée n’est jamais proposée et le repas final ne peut être annoncé compatible que si les trois recettes ont été vérifiées ensemble.
 - `app.planner.eligible: false` est une décision de relecture par recette (sodium élevé, interaction connue, brouillon, ou catégorie d'appoint). Elle se rend visible via `plannerAvailabilityFor` — recette d'appoint ou exclusion éditoriale — et ne se contourne jamais, y compris pour la planification manuelle.
 - Les favoris couvrent tout le catalogue. L'identifiant d'un favori de catalogue est `catalog-<id>`, identique à celui de la projection du planificateur, et les favoris non résolus sont conservés jusqu'au chargement du chunk catalogue.

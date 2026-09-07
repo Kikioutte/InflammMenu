@@ -1787,7 +1787,7 @@ test("un catalogue injoignable affiche une erreur et se recharge au réessai", a
 
   blocked = false;
   await page.getByTestId("catalogue-retry").click();
-  await expect(page.getByText("1081 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByTestId("recipes-view").locator(".page-heading p")).toHaveText(/1\s?081 recettes à découvrir, à votre rythme\./);
   await expect(page.getByTestId("catalogue-error")).toHaveCount(0);
 });
 
@@ -2031,7 +2031,7 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
   await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
 
-  await expect(page.getByText("1081 recettes uniques disponibles")).toBeVisible();
+  await expect(page.getByTestId("recipes-view").locator(".page-heading p")).toHaveText(/1\s?081 recettes à découvrir, à votre rythme\./);
   await expect(page.getByText("1081 résultats")).toBeVisible();
 
   await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
