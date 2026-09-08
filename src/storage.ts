@@ -1,3 +1,4 @@
+import { normalizeCollections, normalizeManualItems, type RecipeCollection, type ShoppingRecipe, type ManualShoppingItem } from "./personal-library.ts";
 import { normalizeSavedMeals, type SavedMeal } from "./saved-meals.ts";
 import {
   DEFAULT_PROFILE,
@@ -31,6 +32,10 @@ export const APP_STATE_DATA_KEYS = [
   "customRecipes",
   "savedMeals",
   "composedRecipes",
+  "recipeCollections",
+  "shoppingRecipes",
+  "shoppingItems",
+  "extraShoppingCheckedIds",
   "textScale",
   "remindersEnabled",
   "onboardingCompleted",
@@ -62,6 +67,10 @@ export interface AppState {
   customRecipes: Recipe[];
   savedMeals: SavedMeal[];
   composedRecipes: Recipe[];
+  recipeCollections: RecipeCollection[];
+  shoppingRecipes: ShoppingRecipe[];
+  shoppingItems: ManualShoppingItem[];
+  extraShoppingCheckedIds: string[];
   textScale: "normal" | "large";
   remindersEnabled: boolean;
   onboardingCompleted: boolean;
@@ -127,6 +136,10 @@ export const DEFAULT_APP_STATE: AppState = createState({
   customRecipes: [],
   savedMeals: [],
   composedRecipes: [],
+  recipeCollections: [],
+  shoppingRecipes: [],
+  shoppingItems: [],
+  extraShoppingCheckedIds: [],
   textScale: "normal",
   remindersEnabled: false,
   onboardingCompleted: false,
@@ -152,6 +165,10 @@ type StateInput = Pick<
   | "customRecipes"
   | "savedMeals"
   | "composedRecipes"
+  | "recipeCollections"
+  | "shoppingRecipes"
+  | "shoppingItems"
+  | "extraShoppingCheckedIds"
   | "textScale"
   | "remindersEnabled"
   | "onboardingCompleted"
@@ -186,6 +203,10 @@ function createState(input: StateInput): AppState {
     customRecipes: [...input.customRecipes],
     savedMeals: normalizeSavedMeals(input.savedMeals),
     composedRecipes: [...input.composedRecipes],
+    recipeCollections: normalizeCollections(input.recipeCollections),
+    shoppingRecipes: normalizeShoppingRecipes(input.shoppingRecipes),
+    shoppingItems: normalizeManualItems(input.shoppingItems),
+    extraShoppingCheckedIds: stringArray(input.extraShoppingCheckedIds),
     textScale: input.textScale,
     remindersEnabled: input.remindersEnabled,
     onboardingCompleted: input.onboardingCompleted,
@@ -384,6 +405,18 @@ const CUSTOM_EQUIPMENT = new Set(["hob", "oven", "microwave", "blender", "toaste
 const CUSTOM_CATEGORIES = new Set(DEFAULT_CATEGORY_ORDER);
 const SAFE_RECIPE_IMAGE = /^\/(?:[a-zA-Z0-9_-]+\/)*assets\/[a-zA-Z0-9_./-]+$/;
 const RECIPE_PLACEHOLDER_IMAGE = "/assets/recipe-placeholder.svg";
+
+function normalizeShoppingRecipes(value: unknown): ShoppingRecipe[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<string>();
+  return value.flatMap((entry) => {
+    if (!isRecord(entry) || !isRecord(entry.recipe) || typeof entry.recipe.id !== "string" || !/^(catalog-r\d+|r\d+|perso-[a-zA-Z0-9._-]+)$/.test(entry.recipe.id) || seen.has(entry.recipe.id)) return [];
+    const recipe = normalizeCustomRecipe({ ...entry.recipe, id: `perso-stock-${entry.recipe.id}` });
+    if (!recipe || typeof entry.portions !== "number" || !Number.isFinite(entry.portions) || entry.portions < 1) return [];
+    seen.add(entry.recipe.id);
+    return [{ recipe: { ...recipe, id: entry.recipe.id }, portions: Math.min(8, Math.floor(entry.portions)) }];
+  }).slice(0, 100);
+}
 
 function normalizeRecipeImage(value: unknown): string {
   const image = cleanUserText(value, 500);
@@ -723,6 +756,10 @@ export function migrateAppState(value: unknown): AppState | null {
     shoppingCategoryOrder: normalizeCategoryOrder(value.shoppingCategoryOrder),
     actualSpend: normalizeSpend(value.actualSpend),
     customRecipes: normalizeCustomRecipes(value.customRecipes),
+    recipeCollections: normalizeCollections(value.recipeCollections),
+    shoppingRecipes: normalizeShoppingRecipes(value.shoppingRecipes),
+    shoppingItems: normalizeManualItems(value.shoppingItems),
+    extraShoppingCheckedIds: stringArray(value.extraShoppingCheckedIds).map(legacyShoppingItemKeyToCanonical),
     savedMeals: normalizeSavedMeals(value.savedMeals),
     composedRecipes: normalizeCustomRecipes(value.composedRecipes).filter((recipe) => recipe.composition),
     textScale: value.textScale === "large" ? "large" : "normal",
@@ -1423,7 +1460,7 @@ export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
 const RECOGNIZED_STATE_KEYS = new Set([
   "version", "profile", "currentPlan", "plan", "upcomingPlan", "favoriteRecipeIds", "favorites",
   "history", "checkedShoppingItemIds", "checkedShoppingIds", "pantryIngredientIds", "pantryIds",
-  "pantryAmounts", "recipeNotes", "shoppingCategoryOrder", "actualSpend", "customRecipes", "savedMeals", "composedRecipes",
+  "pantryAmounts", "recipeNotes", "shoppingCategoryOrder", "actualSpend", "customRecipes", "savedMeals", "composedRecipes", "recipeCollections", "shoppingRecipes", "shoppingItems", "extraShoppingCheckedIds",
   "textScale", "remindersEnabled", "onboardingCompleted", "storageGeneration", "stateRevision", "fieldRevisions", "fieldMutationIds",
 ]);
 

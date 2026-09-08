@@ -1,3 +1,5 @@
+import { matchesRecipeSearch } from "./recipe-search";
+import { shoppingContext, shoppingConflict, catalogueShoppingRecipe, cleanLabel, type RecipeCollection, type ShoppingRecipe, type ManualShoppingItem } from "./personal-library";
 import { composeMeal, scaleAssociationStep, compositionTitlesFor, updatePlannedComposition, type CompositionTarget } from "./composed-meal";
 import type { SavedMeal } from "./saved-meals";
 import { Component, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ComponentType, type ErrorInfo, type ReactNode, type SyntheticEvent } from "react";
@@ -991,7 +993,72 @@ function PantryAmountFields({ item, units, valueFor, onChange }: {
   />)}</div>;
 }
 
-function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, categoryOrder, spent, onToggleChecked, onTogglePantry, onSetPantryAmount, onMoveCategory, onSetSpent }: {
+function availabilityForShopping(recipe: CatalogueRecipe): boolean {
+  const availability = plannerAvailabilityFor(recipe);
+  return availability.plannable || availability.kind === "side-dish";
+}
+
+function CollectionNameForm({ initial = "", onSave }: { initial?: string; onSave: (name: string) => string | null }) {
+  const [name, setName] = useState(initial);
+  const [error, setError] = useState("");
+  return <form className="personal-form" onSubmit={(event) => { event.preventDefault(); setError(onSave(cleanLabel(name)) ?? ""); }}><label className="text-field"><span>Nom de la collection</span><KeyboardInput value={name} maxLength={80} onChange={(event) => setName(event.target.value)} placeholder="Par exemple : À essayer" /></label>{error ? <p role="alert">{error}</p> : null}<button className="primary-button" type="submit" disabled={!name.trim()}>Enregistrer la collection</button></form>;
+}
+
+function saveCollection(store: AppStateStore, name: string, id?: string, recipeId?: string): string | null {
+  const live = store.getSnapshot();
+  if (!name) return "Donnez un nom à la collection.";
+  if (live.recipeCollections.some((item) => item.id !== id && normalizeText(item.name) === normalizeText(name))) return "Une collection porte déjà ce nom.";
+  if (id && !live.recipeCollections.some((item) => item.id === id)) return "Cette collection a été supprimée.";
+  if (!id && live.recipeCollections.length >= 100) return "Vous avez atteint la limite de 100 collections.";
+  store.setState((current) => ({ ...current, recipeCollections: id ? current.recipeCollections.map((item) => item.id === id ? { ...item, name } : item) : [...current.recipeCollections, { id: `collection-${crypto.randomUUID()}`, name, recipeIds: recipeId ? [recipeId] : [] }] }));
+  return null;
+}
+
+function RecipeTools({ store, recipeId, recipe, portions, shoppingAllowed = true }: { store: AppStateStore; recipeId: string; recipe?: Recipe; portions: number; shoppingAllowed?: boolean }) {
+  const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const keyboard = useKeyboard();
+  const existing = state.shoppingRecipes.find((entry) => entry.recipe.id === recipeId);
+  const add = () => {
+    const live = store.getSnapshot();
+    if (!recipe || !shoppingAllowed) { setMessage("Cette recette ne peut pas être ajoutée automatiquement aux courses."); return; }
+    if (shoppingConflict(recipe, live.profile)) { setMessage("Cette recette contient un ingrédient exclu ou ne correspond pas au régime de votre profil. Vérifiez votre profil."); return; }
+    if (!existing && live.shoppingRecipes.length >= 100) { setMessage("Retirez une recette des courses avant d’en ajouter une autre."); return; }
+    const ids = new Set(recipe.ingredients.map((item) => shoppingIdentityFor(item.id).shoppingId));
+    store.setState((current) => ({ ...current, shoppingRecipes: [...current.shoppingRecipes.filter((item) => item.recipe.id !== recipeId), { recipe, portions }], extraShoppingCheckedIds: current.extraShoppingCheckedIds.filter((id) => !ids.has(shoppingIdentityFor(id).shoppingId)), checkedShoppingItemIds: current.checkedShoppingItemIds.filter((id) => !ids.has(shoppingIdentityFor(id).shoppingId)) }));
+    setMessage(`Courses mises à jour pour ${portions} personne${portions > 1 ? "s" : ""}. Votre semaine est conservée.`);
+  };
+  return <section className="personal-recipe-tools"><div className="recipe-actions"><button className="secondary-button" type="button" onClick={() => { keyboard.hide(); setOpen(true); }}>Classer dans une collection</button>{recipe && shoppingAllowed ? <button className="secondary-button" type="button" onClick={add}>{existing ? "Mettre à jour les courses" : "Ajouter aux courses"}</button> : null}</div>{message ? <p role="status">{message}</p> : null}
+    <WebSheet open={open} onOpenChange={setOpen} title="Classer cette recette"><div className="personal-form">{state.recipeCollections.length ? state.recipeCollections.map((collection) => <label className="collection-choice" key={collection.id}><input type="checkbox" checked={collection.recipeIds.includes(recipeId)} onChange={(event) => { const checked = event.target.checked; store.setState((current) => ({ ...current, recipeCollections: current.recipeCollections.map((item) => item.id === collection.id ? { ...item, recipeIds: checked ? [...new Set([...item.recipeIds, recipeId])] : item.recipeIds.filter((id) => id !== recipeId) } : item) })); }} />{collection.name}</label>) : <p>Aucune collection. Créez la première ci-dessous.</p>}<CollectionNameForm onSave={(name) => { const error = saveCollection(store, name, undefined, recipeId); if (!error) { setOpen(false); setMessage("Recette classée dans votre nouvelle collection."); } return error; }} /><button className="secondary-button" type="button" onClick={() => setOpen(false)}>Terminer</button></div></WebSheet>
+  </section>;
+}
+
+function CollectionsView({ store, catalogue, onLoad, onOpen }: { store: AppStateStore; catalogue: CatalogueData | null; onLoad: () => void; onOpen: (id: string) => void }) {
+  const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
+  const [selected, setSelected] = useState("");
+  const [query, setQuery] = useState("");
+  const [editing, setEditing] = useState<string | null>(null);
+  const [removed, setRemoved] = useState<RecipeCollection | null>(null);
+  const [notice, setNotice] = useState("");
+  const keyboard = useKeyboard();
+  const collection = state.recipeCollections.find((item) => item.id === selected);
+  const resolve = (id: string) => catalogue?.recipes.find((item) => catalogueFavoriteId(item) === id)?.titre ?? ACTIVE_RECIPES.find((item) => item.id === id)?.title;
+  return <details className="personal-collections"><summary>Mes collections · {state.recipeCollections.length}</summary><div className="personal-form"><button className="secondary-button" type="button" onClick={() => { keyboard.hide(); setEditing(""); }}>Nouvelle collection</button>
+    {state.recipeCollections.length ? <label className="text-field"><span>Choisir une collection</span><select aria-label="Choisir une collection" value={selected} onChange={(event) => { setSelected(event.target.value); setQuery(""); onLoad(); }}><option value="">Choisir…</option>{state.recipeCollections.map((item) => <option key={item.id} value={item.id}>{item.name} ({item.recipeIds.length})</option>)}</select></label> : <p>Rangez vos recettes par envie : « À essayer », « Rapides »…</p>}
+    {collection ? <section><h2>{collection.name}</h2><div className="recipe-actions"><button className="text-button" type="button" onClick={() => { keyboard.hide(); setEditing(collection.id); }}>Renommer la collection</button><button className="text-button" type="button" onClick={() => { setRemoved(collection); store.setState((current) => ({ ...current, recipeCollections: current.recipeCollections.filter((item) => item.id !== collection.id) })); setSelected(""); }}>Supprimer la collection</button></div>
+    <label className="text-field"><span>Rechercher dans cette collection</span><KeyboardInput value={query} onChange={(event) => setQuery(event.target.value)} /></label>
+    {!collection.recipeIds.length ? <p>Ouvrez une recette puis choisissez « Classer dans une collection ».</p> : null}
+    {collection.recipeIds.filter((id) => !query || matchesRecipeSearch(resolve(id) ?? "", query)).map((id) => <div className="collection-recipe-row" key={id}><button className="text-button" type="button" disabled={!resolve(id)} onClick={() => onOpen(id)}>{resolve(id) ?? "Recette à charger ou indisponible"}</button><button className="text-button" type="button" aria-label={`Retirer ${resolve(id) ?? "la recette"} de la collection`} onClick={() => store.setState((current) => ({ ...current, recipeCollections: current.recipeCollections.map((item) => item.id === collection.id ? { ...item, recipeIds: item.recipeIds.filter((entry) => entry !== id) } : item) }))}><Cross2Icon /></button></div>)}
+    {query && !collection.recipeIds.some((id) => matchesRecipeSearch(resolve(id) ?? "", query)) ? <p>Aucune recette ne correspond à votre recherche.</p> : null}
+    {!catalogue && collection.recipeIds.some((id) => !resolve(id)) ? <button className="secondary-button" type="button" onClick={onLoad}>Charger les recettes de la collection</button> : null}</section> : null}
+    {removed ? <div role="status">Collection supprimée. Les recettes sont conservées. <button className="text-button" type="button" onClick={() => { const live = store.getSnapshot(); if (live.recipeCollections.length >= 100) { setNotice("Libérez une place pour restaurer cette collection."); return; } store.setState((current) => ({ ...current, recipeCollections: current.recipeCollections.some((item) => item.id === removed.id) ? current.recipeCollections : [...current.recipeCollections, removed] })); setSelected(removed.id); setRemoved(null); }}>Annuler la suppression de la collection</button></div> : null}{notice ? <p role="status">{notice}</p> : null}
+    </div><WebSheet open={editing !== null} onOpenChange={(open) => !open && setEditing(null)} title={editing ? "Renommer la collection" : "Nouvelle collection"}><CollectionNameForm key={editing} initial={state.recipeCollections.find((item) => item.id === editing)?.name} onSave={(name) => { const error = saveCollection(store, name, editing || undefined); if (!error) setEditing(null); return error; }} /></WebSheet></details>;
+}
+
+function CoursesView({ store, onRecipes, plan, profile, checkedIds, pantryIds, pantryAmounts, categoryOrder, spent, onToggleChecked, onTogglePantry, onSetPantryAmount, onMoveCategory, onSetSpent }: {
+  store: AppStateStore;
+  onRecipes: () => void;
   plan: WeeklyPlan | null;
   profile: UserProfile;
   checkedIds: string[];
@@ -1005,25 +1072,40 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
   onMoveCategory: (category: IngredientCategory, direction: -1 | 1) => void;
   onSetSpent: (amount: number | null) => void;
 }) {
+  const extras = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
+  const [newItem, setNewItem] = useState("");
+  const [removedItem, setRemovedItem] = useState<ManualShoppingItem | null>(null);
+  const [cartMessage, setCartMessage] = useState("");
+  const context = shoppingContext(plan, ACTIVE_RECIPES, extras.shoppingRecipes, profile);
+  const combinedChecked = [...new Set([...checkedIds, ...extras.extraShoppingCheckedIds])];
+  const toggleItem = (id: string) => {
+    if (id.startsWith("article-")) store.setState((current) => ({ ...current, shoppingItems: current.shoppingItems.map((item) => item.id === id ? { ...item, checked: !item.checked } : item) }));
+    else onToggleChecked(id);
+  };
+  const changeExtra = (id: string, portions: number | null) => {
+    store.setState((current) => {
+      const affected = new Set(current.shoppingRecipes.find((entry) => entry.recipe.id === id)?.recipe.ingredients.map((item) => shoppingIdentityFor(item.id).shoppingId) ?? []);
+      return { ...current, shoppingRecipes: portions === null ? current.shoppingRecipes.filter((entry) => entry.recipe.id !== id) : current.shoppingRecipes.map((entry) => entry.recipe.id === id ? { ...entry, portions } : entry), extraShoppingCheckedIds: current.extraShoppingCheckedIds.filter((key) => !affected.has(shoppingIdentityFor(key).shoppingId)), checkedShoppingItemIds: current.checkedShoppingItemIds.filter((key) => !affected.has(shoppingIdentityFor(key).shoppingId)) };
+    });
+  };
   const [pantryMode, setPantryMode] = useState(false);
   const [storeMode, setStoreMode] = useState(false);
   const [storeCategoryIndex, setStoreCategoryIndex] = useState(0);
   const [exportFeedback, setExportFeedback] = useState("");
   const feedbackTimer = useRef<number | undefined>(undefined);
   useEffect(() => () => window.clearTimeout(feedbackTimer.current), []);
-  if (!plan) return <EmptyRoot icon={ArchiveIcon} title="Liste encore vide" body="Les ingrédients apparaîtront après la génération de votre semaine." />;
-  const requiredItems = buildShoppingList(plan, ACTIVE_RECIPES, {
-    checkedShoppingItemIds: checkedIds,
+  const requiredItems = buildShoppingList(context.plan, context.recipes, {
+    checkedShoppingItemIds: combinedChecked,
     pantryIngredientIds: pantryIds,
   });
-  const shoppingItems = buildShoppingList(plan, ACTIVE_RECIPES, {
-    checkedShoppingItemIds: checkedIds,
+  const shoppingItems = buildShoppingList(context.plan, context.recipes, {
+    checkedShoppingItemIds: combinedChecked,
     pantryIngredientIds: pantryIds,
     pantryAmounts,
   });
   const shoppingById = new Map(shoppingItems.map((item) => [item.ingredientId, item]));
   const requiredById = new Map(requiredItems.map((item) => [item.ingredientId, item]));
-  const items = pantryMode
+  const recipeItems = pantryMode
     ? requiredItems.map((required) => {
       const remaining = shoppingById.get(required.ingredientId);
       return {
@@ -1039,15 +1121,16 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
       stockUnits: (requiredById.get(item.ingredientId) ?? item).amounts.map(({ unit }) => unit),
       fullyCovered: false,
     }));
+  const items = [...recipeItems, ...extras.shoppingItems.map((item) => ({ ingredientId: item.id, name: item.name, category: "grocery" as const, amounts: [], purchaseSuggestion: "Ajout libre", checked: item.checked, inPantry: false, stockUnits: [], fullyCovered: false }))];
   const pantryAmountFor = (ingredientId: string, unit: PantryAmount["unit"]): number => Object.entries(pantryAmounts)
     .filter(([storedId, amount]) => storedShoppingItemMatches(storedId, ingredientId) && amount.unit === unit)
     .reduce((total, [, amount]) => total + amount.quantity, 0);
   const listText = formatShoppingListText(shoppingItems, {
-    week: formatWeekRange(plan.startsOn),
+    week: plan ? formatWeekRange(plan.startsOn) : undefined,
     people: profile.people,
     categoryLabels: CATEGORY_LABELS,
-  });
-  const listFileName = `liste-courses-${plan.startsOn}.txt`;
+  }) + (extras.shoppingItems.length ? "\n\nAJOUTS LIBRES\n" + extras.shoppingItems.filter((item) => !item.checked).map((item) => `- ${item.name}`).join("\n") : "");
+  const listFileName = `liste-courses-${plan?.startsOn ?? "libres"}.txt`;
   const announce = (message: string) => {
     setExportFeedback(message);
     window.clearTimeout(feedbackTimer.current);
@@ -1096,16 +1179,25 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
         </nav>
         <div className="store-mode__items">{storeGroup.items.map((item) => {
           const isRemoved = item.checked || item.inPantry || item.fullyCovered;
-          return <button key={item.ingredientId} type="button" className={`store-item ${isRemoved ? "is-checked" : ""}`} aria-pressed={isRemoved} aria-label={item.inPantry ? `${item.name}, en réserve` : `${item.checked ? "Décocher" : "Cocher"} ${item.name}`} disabled={item.inPantry} data-testid={`store-item-${item.ingredientId}`} onClick={() => onToggleChecked(item.ingredientId)}><span className="store-item__check" aria-hidden="true">{isRemoved ? <CheckIcon /> : null}</span><span><strong>{item.name}</strong><small>{item.inPantry ? "En réserve" : item.purchaseSuggestion}</small></span></button>;
+          return <button key={item.ingredientId} type="button" className={`store-item ${isRemoved ? "is-checked" : ""}`} aria-pressed={isRemoved} aria-label={item.inPantry ? `${item.name}, en réserve` : `${item.checked ? "Décocher" : "Cocher"} ${item.name}`} disabled={item.inPantry} data-testid={`store-item-${item.ingredientId}`} onClick={() => toggleItem(item.ingredientId)}><span className="store-item__check" aria-hidden="true">{isRemoved ? <CheckIcon /> : null}</span><span><strong>{item.name}</strong><small>{item.inPantry ? "En réserve" : item.purchaseSuggestion}</small></span></button>;
         })}</div>
       </main>
     );
   }
   return (
     <main className="page-content courses-page" data-testid="courses-view">
-      <div className="page-heading"><span className="eyebrow">Semaine du {formatWeekRange(plan.startsOn)}</span><h1>Liste de courses</h1><p>{checkedCount} sur {items.length} articles retirés ou cochés</p></div>
+      <div className="page-heading"><span className="eyebrow">{plan ? `Semaine du ${formatWeekRange(plan.startsOn)}` : "À votre rythme"}</span><h1>Liste de courses</h1><p>{checkedCount} sur {items.length} articles retirés ou cochés</p></div>
+      <section className="personal-shopping" aria-label="Compléter les courses">
+        <form className="personal-form" onSubmit={(event) => { event.preventDefault(); const name = cleanLabel(newItem, 160); if (!name) return; if (store.getSnapshot().shoppingItems.length >= 200) { setCartMessage("Retirez un article avant d’en ajouter un autre."); return; } store.setState((current) => ({ ...current, shoppingItems: [...current.shoppingItems, { id: `article-${crypto.randomUUID()}`, name, checked: false }] })); setNewItem(""); setCartMessage("Article ajouté."); }}>
+          <label className="text-field"><span>Ajouter un article</span><KeyboardInput placeholder="Par exemple : papier cuisson" maxLength={160} value={newItem} onChange={(event) => setNewItem(event.target.value)} /></label><button className="secondary-button" type="submit" disabled={!newItem.trim()}>Ajouter l’article</button>
+        </form><button type="button" className="secondary-button" onClick={onRecipes}>Choisir une recette pour les courses</button>
+        {!plan && !items.length ? <p>Votre liste est vide. Ajoutez un article ou ouvrez une recette et choisissez « Ajouter aux courses ».</p> : null}
+        {extras.shoppingRecipes.length ? <details><summary>Recettes ajoutées aux courses · {extras.shoppingRecipes.length}</summary><p>Ces achats s’ajoutent à ceux de la semaine. Ils ne composent pas un repas et ne valident pas d’associations entre recettes.</p>{extras.shoppingRecipes.map((entry) => <div className="shopping-extra" key={entry.recipe.id}><strong>{entry.recipe.title}</strong><label>Personnes pour {entry.recipe.title}<select aria-label={`Personnes pour les courses de ${entry.recipe.title}`} value={entry.portions} onChange={(event) => changeExtra(entry.recipe.id, Number(event.target.value))}>{[1,2,3,4,5,6,7,8].map((value) => <option key={value}>{value}</option>)}</select></label><button type="button" className="text-button" onClick={() => changeExtra(entry.recipe.id, null)}>Retirer cette recette des courses</button>{shoppingConflict(entry.recipe, profile) ? <p role="alert">Cette recette ajoutée ne correspond plus au régime ou aux exclusions de votre profil.</p> : null}</div>)}</details> : null}
+        {cartMessage ? <p role="status">{cartMessage}</p> : null}
+        {removedItem ? <p role="status">Article supprimé. <button className="text-button" type="button" onClick={() => { if (store.getSnapshot().shoppingItems.length >= 200) { setCartMessage("Retirez un article pour libérer une place."); return; } store.setState((current) => ({ ...current, shoppingItems: current.shoppingItems.some((item) => item.id === removedItem.id) ? current.shoppingItems : [...current.shoppingItems, removedItem] })); setRemovedItem(null); }}>Annuler la suppression de l’article</button></p> : null}
+      </section>
       <div className="shopping-progress"><span style={{ width: `${items.length ? (checkedCount / items.length) * 100 : 0}%` }} /></div>
-      <button className="primary-button full-button store-mode-entry" type="button" data-testid="enter-store-mode" onClick={() => { setStoreCategoryIndex(0); setPantryMode(false); setStoreMode(true); }}><ArchiveIcon /> Mode magasin simplifié</button>
+      <button className="primary-button full-button store-mode-entry" type="button" data-testid="enter-store-mode" disabled={!items.length} onClick={() => { setStoreCategoryIndex(0); setPantryMode(false); setStoreMode(true); }}><ArchiveIcon /> Mode magasin simplifié</button>
       <div className="courses-actions">
         <button className="secondary-button" type="button" data-testid="share-list" onClick={() => void share()}><Share2Icon /> Partager</button>
         <button className="secondary-button" type="button" data-testid="copy-list" onClick={() => void copy()}><CopyIcon /> Copier</button>
@@ -1115,7 +1207,7 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
       <p className="export-feedback" role="status" aria-live="polite" data-testid="export-feedback">{exportFeedback}</p>
       <button className={`secondary-button pantry-button ${pantryMode ? "is-active" : ""}`} type="button" onClick={() => setPantryMode((value) => !value)}><CheckIcon /> {pantryMode ? "Terminer l’inventaire" : "Retirer ce que j’ai déjà"}</button>
       {pantryMode ? <p className="inline-help">Touchez « J’ai déjà » pour retirer un ingrédient, ou saisissez la quantité en stock pour ne racheter que le complément. Les flèches réordonnent les rayons selon votre magasin.</p> : null}
-      <section className="spend-tracker" data-testid="spend-tracker">
+      {plan ? <section className="spend-tracker" data-testid="spend-tracker">
         <div><strong>Budget de la semaine</strong><small>{plan.estimatedCost.toFixed(0)} € estimés{typeof spent === "number" ? ` · ${spent.toFixed(2).replace(".", ",")} € dépensés` : ""}</small></div>
         <label className="text-field"><span className="sr-only">Montant réellement dépensé</span><KeyboardInput inputMode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Montant réel" data-testid="spend-input" value={typeof spent === "number" ? String(spent) : ""} onChange={(event) => {
           const amount = Number(event.target.value.replace(",", "."));
@@ -1123,10 +1215,10 @@ function CoursesView({ plan, profile, checkedIds, pantryIds, pantryAmounts, cate
         }} /></label>
         {typeof spent === "number" ? <p className={`spend-delta ${spent > plan.estimatedCost ? "is-over" : "is-under"}`}>{spent > plan.estimatedCost ? `${(spent - plan.estimatedCost).toFixed(2).replace(".", ",")} € au-dessus de l’estimation` : `${(plan.estimatedCost - spent).toFixed(2).replace(".", ",")} € sous l’estimation`}</p> : null}
         <p className="catalogue-disclaimer">Les prix affichés restent des estimations ; ce montant vous permet de mesurer l’écart réel.</p>
-      </section>
+      </section> : null}
       <div className="shopping-groups">{groups.map((group, groupIndex) => <section key={group.category} className="shopping-group"><h2>{group.label}<span>{group.items.length}</span>{pantryMode ? <span className="aisle-order"><button type="button" aria-label={`Monter le rayon ${group.label}`} disabled={groupIndex === 0} data-testid={`aisle-up-${group.category}`} onClick={() => onMoveCategory(group.category, -1)}>↑</button><button type="button" aria-label={`Descendre le rayon ${group.label}`} disabled={groupIndex === groups.length - 1} data-testid={`aisle-down-${group.category}`} onClick={() => onMoveCategory(group.category, 1)}>↓</button></span> : null}</h2>{group.items.map((item) => {
         const isRemoved = item.checked || item.inPantry || item.fullyCovered;
-        return <div key={item.ingredientId} className={`shopping-item ${isRemoved ? "is-checked" : ""}`}><button className="shopping-toggle" type="button" aria-label={`${item.checked ? "Décocher" : "Cocher"} ${item.name}`} onClick={() => onToggleChecked(item.ingredientId)}><span className="shopping-check" aria-hidden="true">{isRemoved ? <CheckIcon /> : null}</span><span><strong>{item.name}</strong><small>{item.purchaseSuggestion}</small></span></button>{pantryMode ? <div className="pantry-controls"><button type="button" className={`pantry-chip ${item.inPantry ? "is-selected" : ""}`} onClick={() => onTogglePantry(item.ingredientId)}>{item.inPantry ? "Retiré" : "J’ai déjà"}</button><PantryAmountFields item={item} units={item.stockUnits} valueFor={pantryAmountFor} onChange={onSetPantryAmount} /></div> : null}</div>;
+        return <div key={item.ingredientId} className={`shopping-item ${isRemoved ? "is-checked" : ""}`}><button className="shopping-toggle" type="button" aria-label={`${item.checked ? "Décocher" : "Cocher"} ${item.name}`} onClick={() => toggleItem(item.ingredientId)}><span className="shopping-check" aria-hidden="true">{isRemoved ? <CheckIcon /> : null}</span><span><strong>{item.name}</strong><small>{item.purchaseSuggestion}</small></span></button>{item.ingredientId.startsWith("article-") ? <button type="button" className="text-button" aria-label={`Supprimer ${item.name}`} onClick={() => { setRemovedItem(extras.shoppingItems.find((entry) => entry.id === item.ingredientId) ?? null); store.setState((current) => ({ ...current, shoppingItems: current.shoppingItems.filter((entry) => entry.id !== item.ingredientId) })); }}><Cross2Icon /></button> : null}{pantryMode && !item.ingredientId.startsWith("article-") ? <div className="pantry-controls"><button type="button" className={`pantry-chip ${item.inPantry ? "is-selected" : ""}`} onClick={() => onTogglePantry(item.ingredientId)}>{item.inPantry ? "Retiré" : "J’ai déjà"}</button><PantryAmountFields item={item} units={item.stockUnits} valueFor={pantryAmountFor} onChange={onSetPantryAmount} /></div> : null}</div>;
       })}</section>)}</div>
     </main>
   );
@@ -1265,7 +1357,7 @@ function MealBuilderView({ initialRecipe, initialSelection, initialName = "", pl
   const normalizedQuery = normalizeText(useDeferredValue(query));
   const filtered = candidates.filter(({ recipe, result }) => (!greenOnly || result.level === "verte")
     && (!maxMinutes || (recipe.app.planner.active_minutes ?? recipe.temps.preparation + recipe.temps.cuisson) <= maxMinutes)
-    && (!normalizedQuery || normalizeText(`${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")}`).includes(normalizedQuery)));
+    && (!normalizedQuery || matchesRecipeSearch(`${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")}`, normalizedQuery)));
   useEffect(() => { setVisibleCount(12); }, [activeGroup, normalizedQuery, maxMinutes, greenOnly, selection]);
   const group = MEAL_BUILDER_GROUPS.find((item) => item.id === activeGroup)!;
   const anchor = selection[initialGroup] ?? initialRecipe;
@@ -1358,7 +1450,7 @@ function SavedMealsView({ meals, catalogue, onLoad, onOpen, onDelete, onRestore,
   </details>;
 }
 
-function RecipesView({ savedMeals, onOpenSavedMeal, onDeleteSavedMeal, onRestoreSavedMeal, onRenameSavedMeal, favoriteIds, customRecipes, history, catalogue, catalogueError, onLoadCatalogue, onRetryCatalogue, onOpenRecipe, onOpenCatalogue, onOpenHistory, onDeleteHistory }: { savedMeals: SavedMeal[]; onOpenSavedMeal: (meal: SavedMeal) => void; onDeleteSavedMeal: (meal: SavedMeal) => void; onRestoreSavedMeal: (meal: SavedMeal, index: number) => string | null; onRenameSavedMeal: (meal: SavedMeal, name: string) => string | null; favoriteIds: string[]; customRecipes: Recipe[]; history: WeeklyPlan[]; catalogue: CatalogueData | null; catalogueError: boolean; onLoadCatalogue: () => void; onRetryCatalogue: () => void; onOpenRecipe: (recipe: Recipe) => void; onOpenCatalogue: (recipe: CatalogueRecipe) => void; onOpenHistory: (plan: WeeklyPlan) => void; onDeleteHistory: (plan: WeeklyPlan) => void }) {
+function RecipesView({ libraryTools, savedMeals, onOpenSavedMeal, onDeleteSavedMeal, onRestoreSavedMeal, onRenameSavedMeal, favoriteIds, customRecipes, history, catalogue, catalogueError, onLoadCatalogue, onRetryCatalogue, onOpenRecipe, onOpenCatalogue, onOpenHistory, onDeleteHistory }: { libraryTools?: ReactNode; savedMeals: SavedMeal[]; onOpenSavedMeal: (meal: SavedMeal) => void; onDeleteSavedMeal: (meal: SavedMeal) => void; onRestoreSavedMeal: (meal: SavedMeal, index: number) => string | null; onRenameSavedMeal: (meal: SavedMeal, name: string) => string | null; favoriteIds: string[]; customRecipes: Recipe[]; history: WeeklyPlan[]; catalogue: CatalogueData | null; catalogueError: boolean; onLoadCatalogue: () => void; onRetryCatalogue: () => void; onOpenRecipe: (recipe: Recipe) => void; onOpenCatalogue: (recipe: CatalogueRecipe) => void; onOpenHistory: (plan: WeeklyPlan) => void; onDeleteHistory: (plan: WeeklyPlan) => void }) {
   const keyboard = useKeyboard();
   const [mode, setMode] = useState<"favorites" | "catalogue" | "history">("catalogue");
   const [query, setQuery] = useState("");
@@ -1375,7 +1467,7 @@ function RecipesView({ savedMeals, onOpenSavedMeal, onDeleteSavedMeal, onRestore
     ...favoriteIds.filter((id) => !customRecipeIds.has(id)).map((id) => recipeById.get(id)).filter((item): item is Recipe => Boolean(item)),
   ];
   const favoriteRecipes = allFavoriteRecipes.filter((recipe) => !normalizedQuery
-    || normalizeText(`${recipe.title} ${recipe.ingredients.map((item) => item.name).join(" ")} ${recipe.tags.join(" ")}`).includes(normalizedQuery));
+    || matchesRecipeSearch(`${recipe.title} ${recipe.ingredients.map((item) => item.name).join(" ")} ${recipe.tags.join(" ")}`, normalizedQuery));
   const unresolvedFavoriteIds = favoriteIds.filter((id) => !recipeById.has(id) && id.startsWith("catalog-"));
   const allCatalogueFavorites = catalogue
     ? unresolvedFavoriteIds
@@ -1383,7 +1475,7 @@ function RecipesView({ savedMeals, onOpenSavedMeal, onDeleteSavedMeal, onRestore
         .filter((item): item is CatalogueRecipe => Boolean(item))
     : [];
   const catalogueFavorites = allCatalogueFavorites.filter((recipe) => !normalizedQuery
-    || normalizeText(`${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")} ${recipe.tags.join(" ")}`).includes(normalizedQuery));
+    || matchesRecipeSearch(`${recipe.titre} ${recipe.ingredients.map((item) => item.nom).join(" ")} ${recipe.tags.join(" ")}`, normalizedQuery));
   const savedCount = allFavoriteRecipes.length + (catalogue ? allCatalogueFavorites.length : unresolvedFavoriteIds.length);
   const favoriteCount = favoriteRecipes.length + (catalogue ? catalogueFavorites.length : unresolvedFavoriteIds.length);
   // Catalogue-only favourites need the lazy catalogue chunk to be readable.
@@ -1408,6 +1500,7 @@ function RecipesView({ savedMeals, onOpenSavedMeal, onDeleteSavedMeal, onRestore
   return (
     <main className="page-content favorites-page" data-testid="recipes-view">
       <div className="page-heading"><span className="eyebrow">Le plaisir de choisir</span><h1>Recette</h1><p>{catalogue ? `${visibleCatalogueRecipes(catalogue).length.toLocaleString("fr-FR")} recettes à découvrir, à votre rythme.` : "Trouvez votre prochaine envie."}</p></div>
+      {libraryTools}
       <SavedMealsView meals={savedMeals} catalogue={catalogue} onLoad={onRetryCatalogue} onOpen={onOpenSavedMeal} onDelete={onDeleteSavedMeal} onRestore={onRestoreSavedMeal} onRename={onRenameSavedMeal} />
       <div className="segmented-control segmented-control--three" role="tablist" aria-label="Catalogue, favoris et historique" onKeyDown={(event) => {
         const order: typeof mode[] = ["favorites", "catalogue", "history"];
@@ -2158,7 +2251,7 @@ function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCrea
 
 export type RecipeRating = "loved" | "neutral" | "meh" | "avoided";
 
-function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onSubstitutionChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate, onEdit, onRecompose }: { recipe: Recipe; planned?: PlannedMeal; profile: UserProfile; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onSubstitutionChange?: (ingredientId: string, substitutionId: string | null) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void; onEdit?: () => void; onRecompose?: () => Promise<void> }) {
+function RecipeView({ tools, recipe, planned, profile, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onSubstitutionChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate, onEdit, onRecompose }: { tools?: (portions: number) => ReactNode; recipe: Recipe; planned?: PlannedMeal; profile: UserProfile; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onSubstitutionChange?: (ingredientId: string, substitutionId: string | null) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void; onEdit?: () => void; onRecompose?: () => Promise<void> }) {
   const [compositionMessage, setCompositionMessage] = useState("");
   const [portions, setPortionsState] = useState(planned?.portions ?? initialPortions);
   const setPortions = (update: (value: number) => number) => {
@@ -2205,6 +2298,7 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
   const durationItems = catalogueRecipe ? catalogueDurationItems(catalogueRecipe) : [];
   const toggle = () => { setIsFavorite((value) => !value); onFavorite(); };
   return <MobileScroll className="app-screen"><main className="recipe-page pushed-page"><img className="recipe-hero" src={recipe.image} alt={recipe.title} width={900} height={900} decoding="async" onError={handleRecipeImageError} /><div className="recipe-content"><span className="eyebrow">{planned ? MEAL_LABELS[planned.mealType] : recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</span><h1>{recipe.title}</h1><div className="recipe-meta"><span><ClockIcon /> {formatRecipeDuration(recipe.prepMinutes)} actives</span><span><PersonIcon /> {portions} portions</span><span>{recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</span></div><p className="recipe-intro">{recipe.description}</p>{durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}<div className={`recipe-actions ${onReplace || onPlan ? "" : "recipe-actions--single"}`}>{onReplace ? <button type="button" className="secondary-button" onClick={onReplace}><ReloadIcon /> Remplacer</button> : null}{onPlan ? <button type="button" className="secondary-button" data-testid="plan-recipe" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} onClick={toggle}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter"}</button></div>
+    {tools?.(portions)}
     {advance ? <aside className="advance-note" data-testid="advance-note"><ClockIcon /><span><strong>{advanceHeadline(advance)}</strong>{formatRecipeDuration(advance.minutes)} de repos (trempage, prise au froid, marinade ou fermentation) en plus du temps actif.</span></aside> : null}
     <AllergenNotice allergens={plannedMealAllergens(recipe, planned)} />
     {isAssociationRecipe(recipe.id) || recipe.composition ? <AssociationNotice result={evaluateAssociations(ingredients)} /> : null}
@@ -2250,7 +2344,7 @@ function RecipeFeedback({ id, title }: { id: string; title: string }) {
   return <><button type="button" className="text-button" onClick={() => { keyboard.hide(); setOpen(true); }}><InfoCircledIcon /> Signaler un problème sur cette recette</button><WebSheet open={open} onOpenChange={setOpen} title="Préparer un signalement" description={title}><label className="text-field">Le problème concerne<select aria-label="Type de problème" value={reason} onChange={(event) => setReason(event.target.value)}>{["Quantité", "Étape", "Durée", "Photo", "Association", "Autre"].map((value) => <option key={value}>{value}</option>)}</select></label><label className="text-field">Votre observation<KeyboardTextarea value={note} maxLength={2000} rows={4} onChange={(event) => setNote(event.target.value)} /></label><p className="inline-help">Téléchargez le signalement pour le transmettre à la personne qui gère Inflamm’Menu. Aucun envoi automatique.</p><button type="button" className="primary-button full-button" disabled={!note.trim()} onClick={() => { downloadTextFile(`signalement-${id}.txt`, `Inflamm’Menu — signalement\nRecette : ${title} (${id})\nMotif : ${reason}\n\n${note.trim()}\n`); setMessage("Signalement téléchargé. Il reste à le transmettre."); }}>Télécharger le signalement</button><p role="status">{message}</p></WebSheet></>;
 }
 
-function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan, onComposeMeal }: { recipe: CatalogueRecipe; favorite: boolean; onFavorite: () => void; onPlan?: () => void; onComposeMeal?: () => void }) {
+function CatalogueRecipeView({ tools, recipe, favorite, onFavorite, onPlan, onComposeMeal }: { tools?: (portions: number) => ReactNode; recipe: CatalogueRecipe; favorite: boolean; onFavorite: () => void; onPlan?: () => void; onComposeMeal?: () => void }) {
   const [portions, setPortions] = useState(recipe.portions);
   const [isFavorite, setIsFavorite] = useState(favorite);
   const toggleFavorite = () => { setIsFavorite((value) => !value); onFavorite(); };
@@ -2264,6 +2358,7 @@ function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan, onComposeMe
     <div className="recipe-content">
       <div className={`catalogue-verdict is-${review.status}`}><span>{review.status === "validated" ? "Profil cohérent" : "Validée avec repères"}</span><p>{review.summary}</p></div>
       <div className={`recipe-actions ${onPlan ? "" : "recipe-actions--single"}`}>{onPlan ? <button type="button" className="secondary-button" data-testid="catalogue-plan" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} data-testid="catalogue-favorite" aria-pressed={isFavorite} onClick={toggleFavorite}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter aux favoris"}</button></div>
+      {tools?.(portions)}
       {onComposeMeal ? <button type="button" className="primary-button full-button meal-builder-entry" data-testid="compose-meal" onClick={onComposeMeal}><PlusIcon /> Composer un repas compatible</button> : null}
       {durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}
       {recipe.materiel?.length ? <section className="recipe-section catalogue-equipment" data-testid="catalogue-equipment"><h2>Matériel</h2><ul>{recipe.materiel.map((item) => <li key={item}><CheckCircledIcon /><span>{item}</span></li>)}{recipe.creami ? <li><CheckCircledIcon /><span>Programme {recipe.creami.programme} · Zone {recipe.creami.zone}</span></li> : null}</ul></section> : null}
@@ -2526,9 +2621,11 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
 
   const toggleFavorite = (id: string) => setAppState((current) => ({ ...current, favoriteRecipeIds: current.favoriteRecipeIds.includes(id) ? current.favoriteRecipeIds.filter((entry) => entry !== id) : [...current.favoriteRecipeIds, id] }));
   const toggleChecked = (id: string) => setAppState((current) => {
-    const checked = current.checkedShoppingItemIds.some((entry) => storedShoppingItemMatches(entry, id));
+    const checked = [...current.checkedShoppingItemIds, ...current.extraShoppingCheckedIds].some((entry) => storedShoppingItemMatches(entry, id));
     const withoutIngredient = current.checkedShoppingItemIds.filter((entry) => !storedShoppingItemMatches(entry, id));
-    return { ...current, checkedShoppingItemIds: checked ? withoutIngredient : [...withoutIngredient, shoppingIdentityFor(id).shoppingId] };
+    const belongsToExtras = current.shoppingRecipes.some((entry) => entry.recipe.ingredients.some((item) => storedShoppingItemMatches(item.id, id)));
+    const extraWithout = current.extraShoppingCheckedIds.filter((entry) => !storedShoppingItemMatches(entry, id));
+    return { ...current, extraShoppingCheckedIds: !checked && belongsToExtras ? [...extraWithout, shoppingIdentityFor(id).shoppingId] : extraWithout, checkedShoppingItemIds: checked ? withoutIngredient : [...withoutIngredient, shoppingIdentityFor(id).shoppingId] };
   });
   const togglePantry = (id: string) => setAppState((current) => {
     const shoppingId = shoppingIdentityFor(id).shoppingId;
@@ -2685,7 +2782,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
         const livePlanned = planned ? live.currentPlan?.meals.find((meal) => meal.id === planned.id) ?? planned : undefined;
         const personalRecipe = live.customRecipes.find((item) => item.id === recipe.id);
         const visibleRecipe = personalRecipe ?? recipe;
-        return <RecipeView
+        return <RecipeView tools={(portions) => <RecipeTools store={appStore} recipeId={visibleRecipe.id} recipe={{ ...visibleRecipe, ingredients: ingredientsForPlannedMeal(visibleRecipe, livePlanned, 1) }} portions={portions} />}
           recipe={visibleRecipe}
           planned={livePlanned}
           profile={live.profile}
@@ -2755,7 +2852,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   function catalogueRecipeScreen(recipe: CatalogueRecipe): FlowScreen {
     const favoriteId = catalogueFavoriteId(recipe);
     const projected = recipeById.get(favoriteId);
-    return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView recipe={recipe} favorite={live.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} onComposeMeal={mealBuilderEligible(recipe) ? () => route.push(mealBuilderScreen(recipe)) : undefined} />}</LiveAppState> };
+    return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView tools={(portions) => <RecipeTools store={appStore} recipeId={favoriteId} recipe={catalogueShoppingRecipe(recipe, catalogueImageFor(recipe)) ?? undefined} portions={portions} shoppingAllowed={availabilityForShopping(recipe)} />} recipe={recipe} favorite={live.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} onComposeMeal={mealBuilderEligible(recipe) ? () => route.push(mealBuilderScreen(recipe)) : undefined} />}</LiveAppState> };
   }
 
   function mealBuilderScreen(recipe: CatalogueRecipe, saved?: SavedMeal, availableCatalogue = catalogue, target?: CompositionTarget): FlowScreen {
@@ -2868,8 +2965,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const openReplace = (planned: PlannedMeal) => flow.push(replacementScreen(planned));
   const currentView = useMemo(() => {
     if (tab === "week") return <WeekView plan={appState.currentPlan} onOpenMeal={openMeal} onReplace={openReplace} onToggleLock={toggleMealLock} onToggleCompleted={toggleMealCompleted} onPlanLeftover={openLeftover} onToggleSkipped={toggleMealSkipped} onSwap={openSwap} />;
-    if (tab === "courses") return <CoursesView plan={appState.currentPlan} profile={appState.profile} checkedIds={appState.checkedShoppingItemIds} pantryIds={appState.pantryIngredientIds} pantryAmounts={appState.pantryAmounts} categoryOrder={appState.shoppingCategoryOrder} spent={appState.currentPlan ? appState.actualSpend[appState.currentPlan.id] : undefined} onToggleChecked={toggleChecked} onTogglePantry={togglePantry} onSetPantryAmount={setPantryAmount} onMoveCategory={moveCategory} onSetSpent={setSpent} />;
-    if (tab === "recipes") return <RecipesView onRestoreSavedMeal={(meal, index) => {
+    if (tab === "courses") return <CoursesView store={appStore} onRecipes={() => setTab("recipes")} plan={appState.currentPlan} profile={appState.profile} checkedIds={appState.checkedShoppingItemIds} pantryIds={appState.pantryIngredientIds} pantryAmounts={appState.pantryAmounts} categoryOrder={appState.shoppingCategoryOrder} spent={appState.currentPlan ? appState.actualSpend[appState.currentPlan.id] : undefined} onToggleChecked={toggleChecked} onTogglePantry={togglePantry} onSetPantryAmount={setPantryAmount} onMoveCategory={moveCategory} onSetSpent={setSpent} />;
+    if (tab === "recipes") return <RecipesView libraryTools={<CollectionsView store={appStore} catalogue={catalogue} onLoad={ensureCatalogue} onOpen={(id) => { const personal = ACTIVE_RECIPES.find((item) => item.id === id); const source = catalogue?.recipes.find((item) => catalogueFavoriteId(item) === id); if (source) flow.push(catalogueRecipeScreen(source)); else if (personal) flow.push(recipeScreen(personal)); }} />} onRestoreSavedMeal={(meal, index) => {
       const live = appStore.getSnapshot();
       if (live.savedMeals.some((item) => item.id === meal.id)) return "Ce repas est déjà présent.";
       if (live.savedMeals.length >= 200) return "Libérez une place avant de restaurer ce repas.";

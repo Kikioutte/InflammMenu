@@ -1,4 +1,5 @@
 import { composeMeal } from "../src/composed-meal";
+import { catalogueShoppingRecipe } from "../src/personal-library";
 import { DEFAULT_PROFILE } from "../src/domain";
 import { DEFAULT_APP_STATE, migrateAppState } from "../src/storage";
 import { assignRecipeToSlot, generateWeeklyPlan } from "../src/engine";
@@ -29,6 +30,30 @@ async function generateWeek(page: Page) {
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
   await expect(page.getByTestId("week-view")).toBeVisible();
 }
+
+test("courses autonomes et collections restent utilisables hors ligne après rechargement", async ({ page, context }) => {
+  const catalogue = JSON.parse(await readFile(resolve("src/data/recettes-anti-inflammatoires.json"), "utf8")).recipes;
+  const source = catalogue.find((item: any) => item.id === "r711");
+  const recipe = catalogueShoppingRecipe(source, "/assets/recipe-placeholder.svg")!;
+  const state = migrateAppState({ ...DEFAULT_APP_STATE, onboardingCompleted: true, shoppingRecipes: [{ recipe, portions: 3 }], shoppingItems: [{ id: "article-pwa", name: "Papier cuisson", checked: false }], recipeCollections: [{ id: "collection-pwa", name: "À essayer", recipeIds: ["catalog-r711"] }] });
+  await page.addInitScript((value) => { if (!localStorage.getItem("inflamm-menu:app-state")) localStorage.setItem("inflamm-menu:app-state", JSON.stringify(value)); }, state);
+  await openFreshApp(page);
+  await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
+  await context.setOffline(true); await page.reload();
+  await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await expect(page.getByTestId("courses-view")).toContainText("Papier cuisson");
+  await expect(page.getByTestId("courses-view")).toContainText(/cabillaud/i);
+  await page.getByRole("button", { name: "Cocher Papier cuisson", exact: true }).click();
+  await page.reload(); await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Décocher Papier cuisson", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByText("Mes collections · 1", { exact: true }).click();
+  await page.getByLabel("Choisir une collection", { exact: true }).selectOption("collection-pwa");
+  await expect(page.locator(".collection-recipe-row")).toContainText("Cabillaud en papillote de chou et fenouil");
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem("inflamm-menu:app-state")!).currentPlan)).toBeNull();
+  await context.setOffline(false);
+});
 
 test("une recette personnelle survit au rechargement sous la base GitHub Pages", async ({ page }) => {
   await openFreshApp(page);
