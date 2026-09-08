@@ -1,3 +1,4 @@
+import { matchesRecipeSearch } from "./recipe-search.ts";
 import catalogueSummarySource from "./data/catalogue-summary.json" with { type: "json" };
 import generatedRecipeImages from "./data/generated-recipe-images.json" with { type: "json" };
 import type { DietMode, Equipment, IngredientCategory, IngredientUnit, MealType } from "./domain.ts";
@@ -356,7 +357,7 @@ export function filterCatalogueRecipes(
     if (filters.withoutAllergen && recipe.app.planner.allergens.includes(filters.withoutAllergen)) return false;
     if (filters.plannableOnly && !plannerAvailabilityFor(recipe).plannable) return false;
     if (!normalizedQuery) return true;
-    return searchableCatalogueText(recipe).includes(normalizedQuery);
+    return matchesRecipeSearch(searchableCatalogueText(recipe), normalizedQuery);
   });
 
   const costRank = { economique: 0, moyen: 1, eleve: 2 } as const;
