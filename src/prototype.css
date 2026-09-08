@@ -1229,3 +1229,19 @@ button { -webkit-tap-highlight-color: transparent; }
   .meal-builder-search-row .catalogue-search, .meal-builder-search-row > button { min-height: 44px; height: 44px; }
   .meal-builder-candidate > button { line-height: 1.1; }
 }
+
+.home-shortcuts { padding: 20px 24px 0; display: grid; gap: 10px; }
+.home-shortcuts p { color: var(--text-muted, #59604f); font-size: 14px; line-height: 1.5; margin: 0; }
+.plan-slot-page select { display: block; min-height: 44px; width: 100%; margin: 8px 0; padding: 8px 12px; font: inherit; border: 1px solid #d9d1c1; border-radius: 12px; background: #fffdf8; color: #29351f; }
+
+.meal-composition { display: grid !important; gap: 7px; width: 100%; flex-basis: 100%; text-align: left; white-space: normal; }
+.meal-composition > span { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 8px; padding: 0 !important; background: transparent !important; border: 0 !important; }
+.meal-composition b { font: 600 11px/1.5 "DM Sans", sans-serif; color: #735438; }
+.meal-composition > span > span { font: 400 13px/1.45 "DM Sans", sans-serif; color: #29351f; overflow-wrap: anywhere; }
+.week-overview__meal .meal-composition > span { grid-template-columns: 1fr; gap: 1px; }
+.saved-meals summary { cursor: pointer; min-height: 44px; align-content: center; }
+.saved-meal-card { padding: 16px 0; border-bottom: 1px solid #ded7c8; }
+.saved-meal-card h3 { margin: 0; overflow-wrap: anywhere; }
+.saved-meal-card p { font-size: 13px; line-height: 1.5; color: #59604f; }
+.saved-meal-card > div { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.saved-meals-undo { padding: 12px; border-radius: 12px; background: #eef1e8; }

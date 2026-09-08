@@ -1,3 +1,5 @@
+import { composeMeal, scaleAssociationStep, compositionTitlesFor, updatePlannedComposition, type CompositionTarget } from "./composed-meal";
+import type { SavedMeal } from "./saved-meals";
 import { Component, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ComponentType, type ErrorInfo, type ReactNode, type SyntheticEvent } from "react";
 import {
   ArchiveIcon,
@@ -626,7 +628,7 @@ function MealPreview({ planned, recipe, startsOn, onOpen }: { planned: PlannedMe
   return (
     <button type="button" className={`meal-preview ${cooked ? "is-cooked" : ""}`} data-completed={cooked ? "true" : "false"} onClick={onOpen}>
       <img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span className="meal-preview__icon" aria-hidden="true">{cooked ? <CheckCircledIcon /> : <MealIcon />}</span>
-      <span className="meal-preview__copy"><strong>{recipe.title}</strong><small>{MEAL_LABELS[planned.mealType]} · {DAY_LABELS[planned.dayIndex]} {dateAt(startsOn, planned.dayIndex).getDate()}{cooked ? " · Cuisiné" : ""}</small></span>
+      <span className="meal-preview__copy"><strong>{recipe.title}</strong><CompositionSummary recipe={recipe} /><small>{MEAL_LABELS[planned.mealType]} · {DAY_LABELS[planned.dayIndex]} {dateAt(startsOn, planned.dayIndex).getDate()}{cooked ? " · Cuisiné" : ""}</small></span>
       <ChevronRightIcon className="meal-preview__chevron" />
     </button>
   );
@@ -650,7 +652,7 @@ function OnboardingView({ profile, onOpenProfile, onSkip }: { profile: UserProfi
   );
 }
 
-function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate, onTonight, onProfile, onOpenMeal, onOpenWeek }: {
+function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate, onTonight, onProfile, onOpenMeal, onOpenWeek, onRecipes, onInformation }: {
   profile: UserProfile;
   plan: WeeklyPlan | null;
   archivedWeek?: WeeklyPlan | null;
@@ -660,6 +662,8 @@ function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate, onTon
   onProfile: () => void;
   onOpenMeal: (planned: PlannedMeal, recipe: Recipe) => void;
   onOpenWeek: () => void;
+  onRecipes: () => void;
+  onInformation: () => void;
 }) {
   const todayIndex = plan ? currentDayIndex(plan.startsOn) : 0;
   const todayMeals = plan?.meals.filter((meal) => meal.dayIndex === todayIndex) ?? [];
@@ -676,6 +680,7 @@ function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate, onTon
           <p className="home-meta">{profile.mealsPerDay * 7} repas · {profile.people} personne{profile.people > 1 ? "s" : ""} · {profile.weeklyBudget} € de budget cible</p>
         </div>
       </section>
+      <section className="home-shortcuts" aria-label="Pour commencer"><button type="button" className="secondary-button" onClick={onRecipes}><ReaderIcon /> Trouver une recette</button><p>Pour composer un repas : ouvrez un plat qui vous plaît, puis « Composer un repas compatible ».</p><button type="button" className="text-button" onClick={onInformation}><DownloadIcon /> Sauvegarde et hors-ligne</button></section>
       <section className="week-preview" aria-labelledby="week-preview-title">
         <button className="week-preview__header" type="button" onClick={onOpenWeek}>
           <CalendarIcon /><h2 id="week-preview-title">{plan ? formatWeekRange(plan.startsOn) : "Votre semaine"}</h2><span>{plan ? "Voir tout" : "À créer"}</span>
@@ -717,6 +722,12 @@ function advanceHeadline(prep: AdvancePrep): string {
   return prep.level === "day-before" ? "À lancer la veille" : "Repos à prévoir";
 }
 
+function CompositionSummary({ recipe }: { recipe: Recipe }) {
+  const titles = compositionTitlesFor(recipe);
+  if (!titles) return null;
+  return <span className="meal-composition" aria-label="Composition du repas">{(["starter", "main", "dessert"] as const).map((key, index) => <span key={key}><b>{["Entrée", "Plat", "Dessert"][index]}</b><span>{titles[key]}</span></span>)}</span>;
+}
+
 /** Estimated cost and declared allergens, read before opening the recipe. */
 function MealFacts({ recipe, planned }: { recipe: Recipe; planned: PlannedMeal }) {
   const allergens = plannedMealAllergens(recipe, planned);
@@ -724,6 +735,7 @@ function MealFacts({ recipe, planned }: { recipe: Recipe; planned: PlannedMeal }
   const advance = advancePrepFor(recipe);
   return (
     <span className="meal-facts" data-testid={`meal-facts-${recipe.id}`}>
+      <CompositionSummary recipe={recipe} />
       <span className="meal-facts__cost">{formatEuros(cost)} estimés</span>
       {advance ? <span className="meal-facts__advance">{advanceHeadline(advance)} · {formatRecipeDuration(advance.minutes)}</span> : null}
       {allergens.length
@@ -800,7 +812,7 @@ function WeekOverview({ plan, onOpenMeal, onFocusDay }: { plan: WeeklyPlan; onOp
               {meals.map((meal) => { const recipe = recipeById.get(meal.recipeId); return (
                 <button type="button" key={meal.id} className={`week-overview__meal ${meal.completed ? "is-cooked" : ""} ${meal.skipped ? "is-skipped" : ""}`} data-testid={`overview-${meal.id}`} disabled={!recipe} onClick={() => recipe && onOpenMeal(meal, recipe)}>
                   <small>{MEAL_LABELS[meal.mealType].slice(0, 4)}.</small>
-                  <span>{meal.skipped ? "Hors foyer" : recipe?.title ?? "Indisponible"}</span>
+                  <span>{meal.skipped ? "Hors foyer" : recipe?.title ?? "Indisponible"}</span>{recipe && !meal.skipped ? <CompositionSummary recipe={recipe} /> : null}
                   {meal.leftoverOf ? <i aria-label="Restes"><ArchiveIcon /></i> : null}
                   {meal.locked ? <i aria-label="Conservé"><LockClosedIcon /></i> : null}
                 </button>
@@ -1175,7 +1187,7 @@ function CookingView({ recipe, portions, planned }: { recipe: Recipe; portions: 
     <ol className="cooking-progress" aria-label="Progression des étapes">
       {recipe.steps.map((item, index) => <li key={item}><button type="button" className={`${index === step ? "is-current" : ""} ${done.includes(index) ? "is-done" : ""}`} aria-current={index === step ? "step" : undefined} aria-label={`Étape ${index + 1}`} onClick={() => setStep(index)} /></li>)}
     </ol>
-    <p className="cooking-step" data-testid="cooking-step">{isAssociationRecipe(recipe.id) ? scaleAssociationStep(recipe.steps[step], portions / 2) : recipe.steps[step]}</p>
+    <p className="cooking-step" data-testid="cooking-step">{(isAssociationRecipe(recipe.id) || recipe.composition) ? scaleAssociationStep(recipe.steps[step], portions / 2) : recipe.steps[step]}</p>
     <button type="button" className={`cooking-done ${isDone ? "is-active" : ""}`} aria-pressed={isDone} data-testid="cooking-done" onClick={() => setDone((current) => (current.includes(step) ? current.filter((entry) => entry !== step) : [...current, step]))}>
       <CheckIcon /> {isDone ? "Étape faite" : "Marquer cette étape"}
     </button>
@@ -1191,9 +1203,6 @@ function CookingView({ recipe, portions, planned }: { recipe: Recipe; portions: 
 
 const ASSOCIATION_LABELS = { verte: "Associations vertes", orange: "Associations orange", grise: "Association à exclure", "non-classee": "Association non vérifiable" } as const;
 
-function scaleAssociationStep(step: string, ratio: number): string {
-  return step.replace(/(\d+(?:[.,]\d+)?)\s*(ml|g)\b/g, (_match, amount: string, unit: string) => `${(Number(amount.replace(",", ".")) * ratio).toLocaleString("fr-FR", { maximumFractionDigits: 1 })} ${unit}`);
-}
 
 function AssociationNotice({ result, detailsOpen = true }: { result: AssociationResult; detailsOpen?: boolean }) {
   return <aside className={`association-notice is-${result.level}`} data-testid="association-notice">
@@ -1229,10 +1238,10 @@ function mealBuilderEligible(recipe: CatalogueRecipe): boolean {
   return level === "verte" || level === "orange";
 }
 
-function MealBuilderView({ initialRecipe, recipes, onNavigate }: { initialRecipe: CatalogueRecipe; recipes: CatalogueRecipe[]; onNavigate: (tab: TabId) => void }) {
+function MealBuilderView({ initialRecipe, initialSelection, initialName = "", planLabel = "Planifier ce repas", planningContext, recipes, onSave, onPlan, onNavigate }: { initialRecipe: CatalogueRecipe; initialSelection?: Partial<Record<MealBuilderGroupId, CatalogueRecipe>>; initialName?: string; planLabel?: string; planningContext?: string; recipes: CatalogueRecipe[]; onSave: (selection: Partial<Record<MealBuilderGroupId, CatalogueRecipe>>, name: string) => string; onPlan: (selection: Partial<Record<MealBuilderGroupId, CatalogueRecipe>>) => string | null; onNavigate: (tab: TabId) => void }) {
   const keyboard = useKeyboard();
   const initialGroup = mealBuilderGroupFor(initialRecipe) as MealBuilderGroupId;
-  const [selection, setSelection] = useState<Partial<Record<MealBuilderGroupId, CatalogueRecipe>>>({ [initialGroup]: initialRecipe });
+  const [selection, setSelection] = useState<Partial<Record<MealBuilderGroupId, CatalogueRecipe>>>(initialSelection ?? { [initialGroup]: initialRecipe });
   const [activeGroup, setActiveGroup] = useState<MealBuilderGroupId>(initialGroup === "main" ? "dessert" : "main");
   const [query, setQuery] = useState("");
   const [maxMinutes, setMaxMinutes] = useState(0);
@@ -1240,6 +1249,8 @@ function MealBuilderView({ initialRecipe, recipes, onNavigate }: { initialRecipe
   const [visibleCount, setVisibleCount] = useState(12);
   const [sheet, setSheet] = useState<"filters" | "summary" | "associations" | null>(null);
   const [announcement, setAnnouncement] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [mealName, setMealName] = useState(initialName);
   const selectedRecipes = useMemo(() => MEAL_BUILDER_GROUPS.map((group) => selection[group.id]).filter((recipe): recipe is CatalogueRecipe => Boolean(recipe)), [selection]);
   const mealResult = useMemo(() => evaluateAssociationMeal(selectedRecipes), [selectedRecipes]);
   const complete = selectedRecipes.length === MEAL_BUILDER_GROUPS.length;
@@ -1263,6 +1274,7 @@ function MealBuilderView({ initialRecipe, recipes, onNavigate }: { initialRecipe
   const choose = (recipe: CatalogueRecipe) => {
     const next = { ...selection, [activeGroup]: recipe };
     setSelection(next);
+    setFeedback("");
     setQuery("");
     const missing = MEAL_BUILDER_GROUPS.find((item) => !next[item.id]);
     setAnnouncement(`${group.singular} ajouté${activeGroup === "starter" ? "e" : ""} : ${recipe.titre}. ${missing ? `Choisissez maintenant votre ${missing.singular.toLocaleLowerCase("fr")}.` : "Votre repas complet a été vérifié."}`);
@@ -1273,7 +1285,7 @@ function MealBuilderView({ initialRecipe, recipes, onNavigate }: { initialRecipe
   };
   return <div className="meal-builder-shell">
     <MobileScroll className="app-screen"><main className="page-content pushed-page meal-builder" data-testid="meal-builder-view">
-      <div className="page-heading"><h1>À votre table</h1><p>Complétez votre repas</p></div>
+      <div className="page-heading"><h1>À votre table</h1><p>{planningContext ?? "Complétez votre repas"}</p></div>
       <article className="meal-builder-hero" data-testid="meal-builder-anchor">
         <div><span className="eyebrow">{MEAL_BUILDER_GROUPS.find((item) => item.id === initialGroup)!.singular} {initialGroup === "starter" ? "choisie" : "choisi"}</span><h2>{anchor.titre}</h2><small><ClockIcon />{formatRecipeDuration(anchor.temps.total)} au total</small></div>
         <img src={catalogueImageFor(anchor)} alt="" width={900} height={900} onError={handleRecipeImageError} />
@@ -1303,9 +1315,10 @@ function MealBuilderView({ initialRecipe, recipes, onNavigate }: { initialRecipe
     <WebSheet open={sheet === "filters"} onOpenChange={(open) => !open && openSheet(null)} title="Affiner les propositions" description="Chaque résultat reste vérifié avec votre repas."><div className="catalogue-filter-sheet"><fieldset><legend>Temps actif maximum</legend><div className="choice-row">{[0, 15, 30, 45].map((minutes) => <button type="button" key={minutes} aria-pressed={maxMinutes === minutes} className={maxMinutes === minutes ? "is-selected" : ""} onClick={() => setMaxMinutes(minutes)}>{minutes ? `${minutes} min` : "Peu importe"}</button>)}</div></fieldset><fieldset><legend>Associations du repas</legend><div className="choice-row"><button type="button" aria-pressed={!greenOnly} className={!greenOnly ? "is-selected" : ""} onClick={() => setGreenOnly(false)}>Vertes et orange signalées</button><button type="button" aria-pressed={greenOnly} className={greenOnly ? "is-selected" : ""} onClick={() => setGreenOnly(true)}>Tout vert uniquement</button></div></fieldset><button type="button" className="primary-button full-button" onClick={() => openSheet(null)}>Voir {filtered.length} propositions</button></div></WebSheet>
     <WebSheet open={sheet === "associations"} onOpenChange={(open) => !open && openSheet(null)} title="Les associations de votre repas" description="Lecture du tableau personnel pour les recettes déjà choisies."><AssociationNotice result={mealResult} /><p className="inline-help">Le repère sur chaque proposition indique le résultat si vous l’ajoutez à votre sélection.</p></WebSheet>
     <WebSheet open={sheet === "summary"} onOpenChange={(open) => !open && openSheet(null)} title="Votre repas" description={complete ? "Entrée, plat et dessert vérifiés ensemble." : "Choisissez une recette dans chaque catégorie pour compléter votre repas."}>
-      <div className={`meal-builder-status is-${mealResult.level}`} data-testid="meal-builder-status"><CheckCircledIcon /><span><strong>{complete ? "Repas complet compatible" : "Repas à compléter"}</strong><small>{ASSOCIATION_LABELS[mealResult.level]}{!complete ? " pour la sélection actuelle" : ""}</small></span></div>
-      <section className="meal-builder-selection" aria-label="Recettes choisies">{MEAL_BUILDER_GROUPS.map((item) => { const recipe = selection[item.id]; return <article className={`meal-builder-slot ${recipe ? "is-filled" : ""}`} key={item.id} data-testid={`meal-builder-slot-${item.id}`}>{recipe ? <img src={catalogueImageFor(recipe)} alt="" width={900} height={900} onError={handleRecipeImageError} /> : null}<span><small>{item.singular}</small><strong>{recipe?.titre ?? "À choisir"}</strong></span><button type="button" aria-label={`${recipe ? "Changer" : "Choisir"} ${item.singular.toLocaleLowerCase("fr")}`} onClick={() => { changeGroup(item.id); openSheet(null); }}>{recipe ? "Changer" : "Choisir"}</button>{recipe && item.id !== initialGroup ? <button type="button" aria-label={`Retirer ${recipe.titre}`} onClick={() => { setSelection((current) => ({ ...current, [item.id]: undefined })); setAnnouncement(`${item.singular} retiré.`); }}><Cross2Icon /></button> : null}</article>; })}</section>
-      <AssociationNotice result={mealResult} detailsOpen={false} /><p className="inline-help">Cette composition reste ouverte ici. Elle n’est pas enregistrée dans votre semaine et n’ajoute rien aux courses.</p><button type="button" className="primary-button full-button" onClick={() => openSheet(null)}>{complete ? "Revenir aux recettes compatibles" : "Continuer mon repas"}</button>
+      <div className={`meal-builder-status is-${mealResult.level}`} data-testid="meal-builder-status"><CheckCircledIcon /><span><strong>{complete ? mealResult.level === "verte" ? "Tout vert selon votre tableau" : mealResult.level === "orange" ? "Associations orange présentes" : "Repas à revoir" : "Repas à compléter"}</strong><small>{ASSOCIATION_LABELS[mealResult.level]}{!complete ? " pour la sélection actuelle" : ""}</small></span></div>
+      <section className="meal-builder-selection" aria-label="Recettes choisies">{MEAL_BUILDER_GROUPS.map((item) => { const recipe = selection[item.id]; return <article className={`meal-builder-slot ${recipe ? "is-filled" : ""}`} key={item.id} data-testid={`meal-builder-slot-${item.id}`}>{recipe ? <img src={catalogueImageFor(recipe)} alt="" width={900} height={900} onError={handleRecipeImageError} /> : null}<span><small>{item.singular}</small><strong>{recipe?.titre ?? "À choisir"}</strong></span><button type="button" aria-label={`${recipe ? "Changer" : "Choisir"} ${item.singular.toLocaleLowerCase("fr")}`} onClick={() => { changeGroup(item.id); openSheet(null); }}>{recipe ? "Changer" : "Choisir"}</button>{recipe && item.id !== initialGroup ? <button type="button" aria-label={`Retirer ${recipe.titre}`} onClick={() => { setSelection((current) => ({ ...current, [item.id]: undefined })); setAnnouncement(`${item.singular} retiré.`); setFeedback(""); }}><Cross2Icon /></button> : null}</article>; })}</section>
+      {complete ? <label className="text-field">Nom du repas (facultatif)<KeyboardInput value={mealName} maxLength={80} placeholder="Ex. Mon dîner du dimanche" onChange={(event) => setMealName(event.target.value)} /></label> : null}
+      <AssociationNotice result={mealResult} detailsOpen={false} /><p className="inline-help">Enregistrez cette composition pour la retrouver dans « Mes repas ». Cet enregistrement ne modifie ni la semaine ni les courses.</p>{complete && (mealResult.level === "verte" || mealResult.level === "orange") ? <button type="button" className="secondary-button full-button" onClick={() => setFeedback(onSave(selection, mealName))}><HeartIcon /> Enregistrer mon repas</button> : null}<p role="status">{feedback}</p>{complete ? <button type="button" className="primary-button full-button" onClick={() => { const error = onPlan(selection); if (error) setFeedback(error); else openSheet(null); }}><CalendarIcon /> {planLabel}</button> : null}<button type="button" className="secondary-button full-button" onClick={() => openSheet(null)}>{complete ? "Revenir aux recettes compatibles" : "Continuer mon repas"}</button>
     </WebSheet>
   </div>;
 }
@@ -1318,7 +1331,34 @@ function CatalogueError({ onRetry }: { onRetry: () => void }) {
   </div>;
 }
 
-function RecipesView({ favoriteIds, customRecipes, history, catalogue, catalogueError, onLoadCatalogue, onRetryCatalogue, onOpenRecipe, onOpenCatalogue, onOpenHistory, onDeleteHistory }: { favoriteIds: string[]; customRecipes: Recipe[]; history: WeeklyPlan[]; catalogue: CatalogueData | null; catalogueError: boolean; onLoadCatalogue: () => void; onRetryCatalogue: () => void; onOpenRecipe: (recipe: Recipe) => void; onOpenCatalogue: (recipe: CatalogueRecipe) => void; onOpenHistory: (plan: WeeklyPlan) => void; onDeleteHistory: (plan: WeeklyPlan) => void }) {
+function SavedMealsView({ meals, catalogue, onLoad, onOpen, onDelete, onRestore, onRename }: {
+  meals: SavedMeal[]; catalogue: CatalogueData | null; onLoad: () => void;
+  onOpen: (meal: SavedMeal) => void; onDelete: (meal: SavedMeal) => void;
+  onRestore: (meal: SavedMeal, index: number) => string | null;
+  onRename: (meal: SavedMeal, name: string) => string | null;
+}) {
+  const keyboard = useKeyboard();
+  const [query, setQuery] = useState("");
+  const [removed, setRemoved] = useState<{ meal: SavedMeal; index: number } | null>(null);
+  const [editing, setEditing] = useState<SavedMeal | null>(null);
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+  const titlesFor = (meal: SavedMeal) => Object.values(meal.recipeIds).map((id) => catalogue?.recipes.find((recipe) => recipe.id === id)?.titre ?? "");
+  const titleFor = (meal: SavedMeal) => meal.name || titlesFor(meal)[1] || "Repas enregistré";
+  const results = meals.filter((meal) => normalizeText([meal.name ?? "", ...titlesFor(meal)].join(" ")).includes(normalizeText(query)));
+  const close = () => { keyboard.hide(); setEditing(null); };
+  return <details className="information-card saved-meals"><summary>Mes repas enregistrés · {meals.length}</summary>
+    {removed ? <div className="saved-meals-undo"><p role="status">« {titleFor(removed.meal)} » supprimé.</p><button type="button" className="secondary-button" onClick={() => { const error = onRestore(removed.meal, removed.index); if (error) setMessage(error); else { setRemoved(null); setMessage("Repas restauré."); setQuery(""); } }}>Annuler la suppression</button></div> : null}
+    <p role="status">{message}</p>
+    {meals.length ? <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher dans mes repas</span><KeyboardInput value={query} placeholder="Nom du repas ou d’une recette" onChange={(event) => setQuery(event.target.value)} /></label> : <p>Composez une entrée, un plat et un dessert, puis choisissez « Enregistrer mon repas ».</p>}
+    {!catalogue && meals.length ? <button type="button" className="secondary-button" onClick={onLoad}>Charger les recettes de mes repas</button> : null}
+    {meals.length && !results.length ? <p>Aucun repas trouvé. <button type="button" className="text-button" onClick={() => setQuery("")}>Effacer la recherche</button></p> : null}
+    {results.map((meal) => { const main = catalogue?.recipes.find((recipe) => recipe.id === meal.recipeIds.main && mealBuilderGroupFor(recipe) === "main" && mealBuilderEligible(recipe)); return <article className="saved-meal-card" key={meal.id} data-testid={`saved-meal-${meal.id}`}><h3>{titleFor(meal)}</h3><p>{titlesFor(meal).filter(Boolean).join(" · ") || "Les recettes seront affichées après chargement du catalogue."}</p><div><button type="button" className="secondary-button" disabled={!main} onClick={() => onOpen(meal)}>Ouvrir</button><button type="button" className="text-button" onClick={() => { keyboard.hide(); setName(meal.name ?? ""); setEditing(meal); setMessage(""); }}>Nommer</button><button type="button" className="icon-button" aria-label={`Supprimer le repas ${titleFor(meal)}`} onClick={() => { setRemoved({ meal, index: meals.findIndex((item) => item.id === meal.id) }); onDelete(meal); setMessage(""); }}><Cross2Icon /></button></div></article>; })}
+    <WebSheet open={Boolean(editing)} onOpenChange={(open) => !open && close()} title="Nommer mon repas"><label className="text-field">Nom du repas<KeyboardInput value={name} maxLength={80} placeholder="Ex. Dîner du dimanche" onChange={(event) => setName(event.target.value)} /></label><p className="inline-help">Laissez vide pour utiliser le nom du plat.</p><button type="button" className="primary-button full-button" onClick={() => { if (!editing) return; const error = onRename(editing, name); setMessage(error ?? "Nom enregistré."); if (!error) close(); }}>Enregistrer le nom</button>{message ? <p role="status">{message}</p> : null}</WebSheet>
+  </details>;
+}
+
+function RecipesView({ savedMeals, onOpenSavedMeal, onDeleteSavedMeal, onRestoreSavedMeal, onRenameSavedMeal, favoriteIds, customRecipes, history, catalogue, catalogueError, onLoadCatalogue, onRetryCatalogue, onOpenRecipe, onOpenCatalogue, onOpenHistory, onDeleteHistory }: { savedMeals: SavedMeal[]; onOpenSavedMeal: (meal: SavedMeal) => void; onDeleteSavedMeal: (meal: SavedMeal) => void; onRestoreSavedMeal: (meal: SavedMeal, index: number) => string | null; onRenameSavedMeal: (meal: SavedMeal, name: string) => string | null; favoriteIds: string[]; customRecipes: Recipe[]; history: WeeklyPlan[]; catalogue: CatalogueData | null; catalogueError: boolean; onLoadCatalogue: () => void; onRetryCatalogue: () => void; onOpenRecipe: (recipe: Recipe) => void; onOpenCatalogue: (recipe: CatalogueRecipe) => void; onOpenHistory: (plan: WeeklyPlan) => void; onDeleteHistory: (plan: WeeklyPlan) => void }) {
   const keyboard = useKeyboard();
   const [mode, setMode] = useState<"favorites" | "catalogue" | "history">("catalogue");
   const [query, setQuery] = useState("");
@@ -1368,6 +1408,7 @@ function RecipesView({ favoriteIds, customRecipes, history, catalogue, catalogue
   return (
     <main className="page-content favorites-page" data-testid="recipes-view">
       <div className="page-heading"><span className="eyebrow">Le plaisir de choisir</span><h1>Recette</h1><p>{catalogue ? `${visibleCatalogueRecipes(catalogue).length.toLocaleString("fr-FR")} recettes à découvrir, à votre rythme.` : "Trouvez votre prochaine envie."}</p></div>
+      <SavedMealsView meals={savedMeals} catalogue={catalogue} onLoad={onRetryCatalogue} onOpen={onOpenSavedMeal} onDelete={onDeleteSavedMeal} onRestore={onRestoreSavedMeal} onRename={onRenameSavedMeal} />
       <div className="segmented-control segmented-control--three" role="tablist" aria-label="Catalogue, favoris et historique" onKeyDown={(event) => {
         const order: typeof mode[] = ["favorites", "catalogue", "history"];
         const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
@@ -1425,6 +1466,7 @@ function RecipesView({ favoriteIds, customRecipes, history, catalogue, catalogue
             </div>
           </div>
         </WebSheet>
+        <div className="choice-row" aria-label="Raccourcis de recherche"><button type="button" aria-pressed={filters.maxActiveMinutes === 20} onClick={() => setFilters((current) => ({ ...current, maxActiveMinutes: current.maxActiveMinutes === 20 ? 0 : 20 }))}>20 min actives maximum</button><button type="button" aria-pressed={associationFilter === "verte"} onClick={() => setAssociationFilter((current) => current === "verte" ? "all" : "verte")}>Tout vert</button></div>
         <div className="catalogue-list">{renderedCatalogueRecipes.map((recipe) => { const availability = plannerAvailabilityFor(recipe); const exclusion = availability.kind ? PLANNER_EXCLUSION_TEXT[availability.kind] : undefined; return <button type="button" className="catalogue-card" key={recipe.id} onClick={() => onOpenCatalogue(recipe)}><img className="catalogue-card__image" src={catalogueImageFor(recipe)} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><strong>{recipe.titre}</strong><small>{catalogueCategoryName(recipe.categorie)} · {formatCatalogueCardDuration(recipe)}</small><AssociationBadge recipe={recipe} />{exclusion ? <span className="catalogue-card__planner">{exclusion.badge}</span> : null}<span className="catalogue-card__meta">{recipe.regimes.slice(0, 2).map((item) => item.replaceAll("-", " ")).join(" · ")}<ChevronRightIcon /></span></button>; })}</div>
         {!catalogueRecipes.length ? <div className="empty-day" data-testid="catalogue-empty"><MagnifyingGlassIcon /><h3>Aucune recette trouvée</h3><p>Essayez un autre ingrédient ou effacez vos critères pour retrouver tout le catalogue.</p><button type="button" className="secondary-button" onClick={() => { setQuery(""); setCategory("all"); setFilters(EMPTY_CATALOGUE_FILTERS); setAssociationFilter("all"); }}>Effacer tous les critères</button></div> : null}
         <details className="catalogue-review-details"><summary>À propos de ce catalogue</summary><p>Les {catalogue.recipes.length} recettes ont été relues : {Object.keys(DUPLICATE_CATALOGUE_RECIPES).length} variantes trop proches sont écartées. Les repères et précautions restent disponibles dans chaque fiche.</p></details>
@@ -1585,26 +1627,34 @@ function SwapView({ plan, source, profile, onConfirm }: {
   </main></MobileScroll>;
 }
 
-function PlanSlotView({ plan, recipe, profile, onConfirm }: {
+function PrepareWeekForMeal({ onCreate, onProfile }: { onCreate: () => void; onProfile: () => void }) {
+  const [error, setError] = useState("");
+  return <MobileScroll className="app-screen"><main className="page-content pushed-page"><h1>Une semaine pour votre repas</h1><p>Préparez les autres repas de la semaine selon votre profil, puis choisissez le jour où placer votre entrée, votre plat et votre dessert.</p><button type="button" className="primary-button full-button" onClick={() => { try { onCreate(); } catch (failure) { setError(failure instanceof Error ? failure.message : "La semaine n’a pas pu être créée."); } }}>Créer la semaine et choisir le jour</button>{error ? <p role="alert">{error}</p> : null}<button type="button" className="text-button" onClick={onProfile}>Ajuster mon profil</button></main></MobileScroll>;
+}
+
+function PlanSlotView({ plan, recipe, profile, onConfirm, onProfile }: {
   plan: WeeklyPlan;
   recipe: Recipe;
   profile: UserProfile;
-  onConfirm: (slot: PlanSlot) => string | null;
+  onConfirm: (slot: PlanSlot, portions: number) => string | null;
+  onProfile: () => void;
 }) {
   const slots = assignableSlots(plan, recipe, profile);
+  const [portions, setPortions] = useState(profile.people);
   const [error, setError] = useState("");
   const alreadyPlanned = plan.meals.find((meal) => !meal.skipped && meal.recipeId === recipe.id);
   return <MobileScroll className="app-screen"><main className="page-content pushed-page plan-slot-page" data-testid="plan-slot-view">
     <div className="page-heading"><span className="eyebrow">Planifier</span><h1>{recipe.title}</h1><p>Choisissez le repas à remplacer. Les allergies, le régime, l’équipement et le temps actif restent respectés.</p></div>
+    {recipe.composition ? <><p>{recipe.description}</p><p className="inline-help">{recipe.prepMinutes} min de préparation active cumulée. Le temps maximum de votre profil s’applique au repas entier.</p><label>Personnes pour ce repas<select aria-label="Personnes pour ce repas" value={portions} onChange={(event) => setPortions(Number(event.target.value))}>{[1,2,3,4,5,6,7,8].map((value) => <option key={value} value={value}>{value}</option>)}</select></label><p>Les courses comprendront l’entrée, le plat et le dessert pour {portions} personne{portions > 1 ? "s" : ""}.</p></> : null}
     {alreadyPlanned ? <p className="notice-banner" data-testid="already-planned">Cette recette est déjà au menu ({DAY_LABELS[alreadyPlanned.dayIndex]}, {MEAL_LABELS[alreadyPlanned.mealType].toLocaleLowerCase("fr-FR")}). Une même recette n’est pas répétée dans la semaine.</p> : null}
     {error ? <p className="notice-banner" role="alert">{error}</p> : null}
-    {!slots.length ? <p className="notice-banner">Aucun créneau compatible : cette recette ne correspond pas à vos critères ou aux repas générés.</p> : null}
+    {!slots.length ? <><p className="notice-banner">Aucun créneau compatible : cette recette ne correspond pas à vos critères ou aux repas générés.</p><button type="button" className="secondary-button" onClick={onProfile}>Vérifier les critères de mon profil</button></> : null}
     {DAY_LABELS.map((day, dayIndex) => {
       const daySlots = slots.filter((slot) => slot.dayIndex === dayIndex);
       if (!daySlots.length) return null;
       return <section className="plan-slot-day" key={day}>
         <h2>{day} {dateAt(plan.startsOn, dayIndex).getDate()}</h2>
-        {daySlots.map((slot) => { const replaced = recipeById.get(slot.taken); return <button type="button" className="plan-slot" key={`${slot.dayIndex}-${slot.mealType}`} disabled={Boolean(alreadyPlanned)} data-testid={`plan-slot-${slot.dayIndex}-${slot.mealType}`} onClick={() => setError(onConfirm({ dayIndex: slot.dayIndex, mealType: slot.mealType }) ?? "")}>
+        {daySlots.map((slot) => { const replaced = recipeById.get(slot.taken); return <button type="button" className="plan-slot" key={`${slot.dayIndex}-${slot.mealType}`} disabled={Boolean(alreadyPlanned)} data-testid={`plan-slot-${slot.dayIndex}-${slot.mealType}`} onClick={() => setError(onConfirm({ dayIndex: slot.dayIndex, mealType: slot.mealType }, portions) ?? "")}>
           <span><small>{MEAL_LABELS[slot.mealType]}</small><strong>À la place de {replaced?.title ?? "ce repas"}</strong></span><ChevronRightIcon />
         </button>; })}
       </section>;
@@ -1842,7 +1892,7 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
       const restored = await importAppStateFile(file);
       if (requestId !== restoreRequest.current) return;
       const restoredRecipes = [...new Map(
-        [...RECIPES, ...restored.customRecipes].map((recipe) => [recipe.id, recipe] as const),
+        [...RECIPES, ...restored.customRecipes, ...restored.composedRecipes].map((recipe) => [recipe.id, recipe] as const),
       ).values()];
       const currentReport = restored.currentPlan
         ? inspectActivePlan(restored.currentPlan, restoredRecipes, restored.profile)
@@ -1865,7 +1915,7 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
           : null,
       };
       setPendingRestore(restoredWithActiveProfile);
-      setFeedback(`Sauvegarde vérifiée : ${restored.history.length} semaine(s) archivée(s), ${restored.favoriteRecipeIds.length} favori(s). Confirmez pour remplacer les données de cet appareil.`);
+      setFeedback(`Sauvegarde vérifiée : ${restored.history.length} semaine(s) archivée(s), ${restored.favoriteRecipeIds.length} favori(s). ${restored.savedMeals.length} repas enregistrés. Confirmez pour remplacer les données de cet appareil.`);
     } catch (importError) {
       if (requestId !== restoreRequest.current) return;
       setError(importError instanceof Error ? importError.message : "Restauration impossible.");
@@ -2108,7 +2158,8 @@ function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCrea
 
 export type RecipeRating = "loved" | "neutral" | "meh" | "avoided";
 
-function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onSubstitutionChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate, onEdit }: { recipe: Recipe; planned?: PlannedMeal; profile: UserProfile; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onSubstitutionChange?: (ingredientId: string, substitutionId: string | null) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void; onEdit?: () => void }) {
+function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onSubstitutionChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate, onEdit, onRecompose }: { recipe: Recipe; planned?: PlannedMeal; profile: UserProfile; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onSubstitutionChange?: (ingredientId: string, substitutionId: string | null) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void; onEdit?: () => void; onRecompose?: () => Promise<void> }) {
+  const [compositionMessage, setCompositionMessage] = useState("");
   const [portions, setPortionsState] = useState(planned?.portions ?? initialPortions);
   const setPortions = (update: (value: number) => number) => {
     const next = Math.min(MAX_MEAL_PORTIONS, Math.max(MIN_MEAL_PORTIONS, update(portions)));
@@ -2156,13 +2207,13 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
   return <MobileScroll className="app-screen"><main className="recipe-page pushed-page"><img className="recipe-hero" src={recipe.image} alt={recipe.title} width={900} height={900} decoding="async" onError={handleRecipeImageError} /><div className="recipe-content"><span className="eyebrow">{planned ? MEAL_LABELS[planned.mealType] : recipe.mealTypes.map((type) => MEAL_LABELS[type]).join(" · ")}</span><h1>{recipe.title}</h1><div className="recipe-meta"><span><ClockIcon /> {formatRecipeDuration(recipe.prepMinutes)} actives</span><span><PersonIcon /> {portions} portions</span><span>{recipe.diet.includes("vegetarian") ? "Végétarien" : "Classique"}</span></div><p className="recipe-intro">{recipe.description}</p>{durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}<div className={`recipe-actions ${onReplace || onPlan ? "" : "recipe-actions--single"}`}>{onReplace ? <button type="button" className="secondary-button" onClick={onReplace}><ReloadIcon /> Remplacer</button> : null}{onPlan ? <button type="button" className="secondary-button" data-testid="plan-recipe" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} onClick={toggle}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter"}</button></div>
     {advance ? <aside className="advance-note" data-testid="advance-note"><ClockIcon /><span><strong>{advanceHeadline(advance)}</strong>{formatRecipeDuration(advance.minutes)} de repos (trempage, prise au froid, marinade ou fermentation) en plus du temps actif.</span></aside> : null}
     <AllergenNotice allergens={plannedMealAllergens(recipe, planned)} />
-    {isAssociationRecipe(recipe.id) ? <AssociationNotice result={evaluateAssociations(ingredients)} /> : null}
+    {isAssociationRecipe(recipe.id) || recipe.composition ? <AssociationNotice result={evaluateAssociations(ingredients)} /> : null}
     {planned?.substitutions?.length ? <p className="substitution-summary" data-testid="substitution-summary"><CheckCircledIcon /> {planned.substitutions.length} substitution{planned.substitutions.length > 1 ? "s" : ""} appliquée{planned.substitutions.length > 1 ? "s" : ""}. Allergènes, coût et courses ont été recalculés.</p> : null}
     {displayedCaution ? <aside className="catalogue-caution"><strong>Repère important</strong><p>{displayedCaution}</p></aside> : null}
     <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => value - 1)}><MinusIcon /></button><b data-testid="recipe-portions">{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => value + 1)}><PlusIcon /></button></div></div>{planned ? <p className="inline-help" data-testid="portions-help">Les portions, substitutions et la liste de courses suivent ce réglage.</p> : null}<ul className="ingredient-list">{ingredients.map((item, index) => {
       const source = recipe.ingredients[index];
       const sourceId = canonicalIngredientId(source.id);
-      const options = planned && onSubstitutionChange && !isAssociationRecipe(recipe.id) ? allowedSubstitutions(source) : [];
+      const options = planned && onSubstitutionChange && !isAssociationRecipe(recipe.id) && !recipe.composition ? allowedSubstitutions(source) : [];
       const selectedId = selectedSubstitutions.get(sourceId);
       const isOpen = openSubstitutionFor === sourceId;
       return <li className={`ingredient-row ${selectedId ? "is-substituted" : ""}`} key={`${source.id}-${source.unit}-${index}`}><CheckCircledIcon /><span className="ingredient-row__copy"><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}</span>{item.optional ? <small>Facultatif · non ajouté aux courses</small> : null}{selectedId ? <small>À la place de {source.name}</small> : null}</span>{options.length || selectedId ? <button type="button" className="ingredient-swap-button" aria-expanded={isOpen} data-testid={`ingredient-substitute-${sourceId}`} onClick={() => setOpenSubstitutionFor(isOpen ? null : sourceId)}>{selectedId ? "Modifier" : "Remplacer"}</button> : null}{isOpen ? <div className="ingredient-substitution-options" data-testid={`substitution-options-${sourceId}`}><button type="button" className={!selectedId ? "is-selected" : ""} aria-pressed={!selectedId} onClick={() => { onSubstitutionChange?.(sourceId, null); setOpenSubstitutionFor(null); }}><strong>Ingrédient d’origine</strong><small>{source.name}</small></button>{options.map((rule) => <button type="button" key={rule.id} className={selectedId === rule.id ? "is-selected" : ""} aria-pressed={selectedId === rule.id} data-testid={`apply-substitution-${rule.id}`} onClick={() => { onSubstitutionChange?.(sourceId, rule.id); setOpenSubstitutionFor(null); }}><strong>{rule.replacement.name}</strong><small>{rule.note}</small></button>)}</div> : null}</li>;
@@ -2181,11 +2232,22 @@ function RecipeView({ recipe, planned, profile, initialPortions = 2, favorite, o
       </label>
       <p className="inline-help">Enregistrée dans le stockage local de cette adresse web, jamais transmise.</p>
     </section> : null}
+    <RecipeFeedback id={recipe.id} title={recipe.title} />
     <section className="recipe-section nutrition-section"><h2>Repères par portion</h2><div><span><strong>{recipe.nutrition.calories}</strong> kcal</span><span><strong>{recipe.nutrition.protein}</strong> g protéines</span><span><strong>{recipe.nutrition.fiber}</strong> g fibres</span></div><small>{recipe.nutrition.note}</small></section>
+    {onRecompose ? <><button type="button" className="secondary-button full-button" onClick={() => { setCompositionMessage("Chargement des recettes…"); void onRecompose().then(() => setCompositionMessage("")).catch(() => setCompositionMessage("Le catalogue n’est pas disponible. Connectez-vous ou téléchargez-le pour le hors-ligne, puis réessayez.")); }}><MixerHorizontalIcon /> Modifier l’entrée, le plat ou le dessert</button><p role="status">{compositionMessage}</p></> : null}
     {onEdit ? <button type="button" className="secondary-button full-button" data-testid="edit-custom-recipe" onClick={onEdit}><MixerHorizontalIcon /> Modifier ou supprimer cette recette</button> : null}
     {onDuplicate ? <button type="button" className="secondary-button full-button" data-testid="duplicate-recipe" onClick={onDuplicate}><CopyIcon /> Créer ma version de cette recette</button> : null}
-    <section className="recipe-section"><div className="section-heading"><h2>Préparation</h2>{onCook ? <button type="button" className="secondary-button cooking-entry" data-testid="start-cooking" onClick={() => onCook(portions)}>Mode cuisine</button> : null}</div><ol className="steps">{recipe.steps.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{isAssociationRecipe(recipe.id) ? scaleAssociationStep(step, portions / 2) : step}</span></li>)}</ol></section><aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
+    <section className="recipe-section"><div className="section-heading"><h2>Préparation</h2>{onCook ? <button type="button" className="secondary-button cooking-entry" data-testid="start-cooking" onClick={() => onCook(portions)}>Mode cuisine</button> : null}</div><ol className="steps">{recipe.steps.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{(isAssociationRecipe(recipe.id) || recipe.composition) ? scaleAssociationStep(step, portions / 2) : step}</span></li>)}</ol></section><aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
   </div></main></MobileScroll>;
+}
+
+function RecipeFeedback({ id, title }: { id: string; title: string }) {
+  const keyboard = useKeyboard();
+  const [open, setOpen] = useState(false);
+  const [reason, setReason] = useState("Quantité");
+  const [note, setNote] = useState("");
+  const [message, setMessage] = useState("");
+  return <><button type="button" className="text-button" onClick={() => { keyboard.hide(); setOpen(true); }}><InfoCircledIcon /> Signaler un problème sur cette recette</button><WebSheet open={open} onOpenChange={setOpen} title="Préparer un signalement" description={title}><label className="text-field">Le problème concerne<select aria-label="Type de problème" value={reason} onChange={(event) => setReason(event.target.value)}>{["Quantité", "Étape", "Durée", "Photo", "Association", "Autre"].map((value) => <option key={value}>{value}</option>)}</select></label><label className="text-field">Votre observation<KeyboardTextarea value={note} maxLength={2000} rows={4} onChange={(event) => setNote(event.target.value)} /></label><p className="inline-help">Téléchargez le signalement pour le transmettre à la personne qui gère Inflamm’Menu. Aucun envoi automatique.</p><button type="button" className="primary-button full-button" disabled={!note.trim()} onClick={() => { downloadTextFile(`signalement-${id}.txt`, `Inflamm’Menu — signalement\nRecette : ${title} (${id})\nMotif : ${reason}\n\n${note.trim()}\n`); setMessage("Signalement téléchargé. Il reste à le transmettre."); }}>Télécharger le signalement</button><p role="status">{message}</p></WebSheet></>;
 }
 
 function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan, onComposeMeal }: { recipe: CatalogueRecipe; favorite: boolean; onFavorite: () => void; onPlan?: () => void; onComposeMeal?: () => void }) {
@@ -2213,6 +2275,7 @@ function CatalogueRecipeView({ recipe, favorite, onFavorite, onPlan, onComposeMe
       <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => Math.max(1, value - 1))}><MinusIcon /></button><b>{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => Math.min(8, value + 1))}><PlusIcon /></button></div></div><ul className="ingredient-list">{recipe.ingredients.map((item, index) => <li key={`${item.nom}-${item.unite}-${index}`}><CheckCircledIcon /><span><strong>{displayCatalogueQuantity(item.quantite * ratio, item.unite)}</strong> {item.nom}{item.facultatif ? <small>{item.note || "Facultatif"} · non ajouté aux courses</small> : item.note ? <small>{item.note}</small> : null}</span></li>)}</ul>{recipe.ingredients.some((ingredient) => ingredient.facultatif) ? <p className="inline-help">Les ingrédients facultatifs restent visibles mais ne sont pas ajoutés aux courses. Le coût affiché conserve l’estimation prudente de la recette complète.</p> : null}</section>
       <section className="recipe-section nutrition-section"><h2>Estimations par portion</h2><div><span><strong>{recipe.nutrition_par_portion.calories}</strong> kcal</span><span><strong>{recipe.nutrition_par_portion.proteines_g}</strong> g protéines</span><span><strong>{recipe.nutrition_par_portion.fibres_g}</strong> g fibres</span></div><small>Valeurs estimatives à titre indicatif; elles varient selon les produits et la préparation.</small></section>
       {recipe.composes_actifs.length ? <section className="recipe-section"><h2>Repères présents</h2><div className="compound-list">{recipe.composes_actifs.map((item) => <span key={`${item.aliment}-${item.compose}`}><strong>{item.aliment}</strong><small>{item.compose}</small></span>)}</div><p className="catalogue-disclaimer">Ces composés sont documentés dans les aliments, mais leur présence ne garantit pas un bénéfice clinique individuel.</p></section> : null}
+      <RecipeFeedback id={recipe.id} title={recipe.titre} />
       <section className="recipe-section"><h2>Préparation</h2><ol className="steps">{recipe.etapes.map((step, index) => <li key={`${index}-${step}`}><b>{index + 1}</b><span>{isAssociationRecipe(recipe.id) ? scaleAssociationStep(step, ratio) : step}</span></li>)}</ol></section>
       {recipe.substitutions.length ? <section className="recipe-section"><h2>Substitutions</h2><div className="substitution-list">{recipe.substitutions.map((item) => <p key={`${item.remplacer}-${item.par}`}><strong>{item.remplacer}</strong><ChevronRightIcon /><span>{item.par}<small>{item.note}</small></span></p>)}</div></section> : null}
       <aside className="conservation-note"><ClockIcon /><span><strong>Conservation</strong>{recipe.conservation}</span></aside>
@@ -2255,7 +2318,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const [appNotice, setAppNotice] = useState("");
   const [storageWarning, setStorageWarning] = useState("");
   const { offline, canInstall, install, updateReady, reload } = useInstallAndConnectivity();
-  useRecipeRegistry(appState.customRecipes);
+  const registeredPersonalRecipes = useMemo(() => [...appState.customRecipes, ...appState.composedRecipes], [appState.customRecipes, appState.composedRecipes]);
+  const activeRecipeSnapshot = useRecipeRegistry(registeredPersonalRecipes);
 
   const rateRecipe = (recipeId: string, rating: RecipeRating) => setAppState((current) => {
     const favorites = current.favoriteRecipeIds.filter((id) => id !== recipeId);
@@ -2427,7 +2491,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
         checkedShoppingItemIds: currentSafe ? current.checkedShoppingItemIds : [],
       };
     });
-  }, [hydrated, appState.currentPlan, appState.upcomingPlan, appState.profile, appState.customRecipes]);
+  }, [hydrated, appState.currentPlan, appState.upcomingPlan, appState.profile, appState.customRecipes, appState.composedRecipes]);
 
   // Local contextual digest. Fires once per day while the app is open: nothing
   // is scheduled on a server and failure never blocks the application.
@@ -2566,16 +2630,20 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   }
 
   function planSlotScreen(recipe: Recipe): FlowScreen {
-    return { id: `plan-${recipe.id}`, title: "Planifier", headerHeight: 56, header: (route) => <Header title="Planifier" onBack={route.pop} />, render: (route) => {
-      const liveState = appStore.getSnapshot();
+    return { id: `plan-${recipe.id}`, title: "Planifier", headerHeight: 56, header: (route) => <Header title="Planifier" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(liveState) => {
       const plan = liveState.currentPlan;
+      if (!plan && recipe.composition) return <PrepareWeekForMeal onProfile={openProfile} onCreate={() => { if (!appStore.getSnapshot().currentPlan) createPlan("current"); }} />;
       if (!plan) return <EmptyRoot icon={CalendarIcon} title="Aucune semaine" body="Générez une semaine avant d’y placer une recette." />;
-      return <PlanSlotView plan={plan} recipe={recipe} profile={liveState.profile} onConfirm={(slot) => {
+      return <PlanSlotView onProfile={openProfile} plan={plan} recipe={recipe} profile={liveState.profile} onConfirm={(slot, portions) => {
         const live = appStore.getSnapshot();
         if (!live.currentPlan) return "Cette semaine n’est plus disponible.";
         try {
-          const updated = assignRecipeToSlot(live.currentPlan, slot, recipe, ACTIVE_RECIPES, live.profile);
-          setAppState((current) => withUpdatedPlan(current, updated));
+          if (recipe.composition && live.composedRecipes.length >= 200 && !live.composedRecipes.some((item) => item.id === recipe.id)) return "La limite de 200 repas planifiés enregistrés est atteinte.";
+          const registry = recipe.composition ? [...ACTIVE_RECIPES.filter((item) => item.id !== recipe.id), recipe] : ACTIVE_RECIPES;
+          let updated = assignRecipeToSlot(live.currentPlan, slot, recipe, registry, live.profile);
+          const target = updated.meals.find((meal) => meal.dayIndex === slot.dayIndex && meal.mealType === slot.mealType)!;
+          if (recipe.composition) updated = setMealPortions(updated, target.id, portions, registry);
+          setAppState((current) => ({ ...current, currentPlan: updated, checkedShoppingItemIds: reconcileCheckedItems(updated, registry, current.checkedShoppingItemIds), composedRecipes: recipe.composition ? [...current.composedRecipes.filter((item) => item.id !== recipe.id), recipe] : current.composedRecipes }));
           setTab("week");
           popFlowToRoot(route);
           return null;
@@ -2583,7 +2651,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
           return error instanceof Error ? error.message : "Impossible de planifier cette recette.";
         }
       }} />;
-    } };
+    }}</LiveAppState> };
   }
 
   function customRecipeScreen(draft: Recipe, existing = false, planned?: PlannedMeal): FlowScreen {
@@ -2628,8 +2696,20 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
           onRate={(rating) => rateRecipe(visibleRecipe.id, rating)}
           note={live.recipeNotes[visibleRecipe.id] ?? ""}
           onNoteChange={(note) => setRecipeNote(visibleRecipe.id, note)}
+          onRecompose={visibleRecipe.composition ? async () => {
+            const currentPlan = appStore.getSnapshot().currentPlan;
+            const currentMeal = currentPlan?.meals.find((meal) => meal.id === livePlanned?.id);
+            const source = currentMeal?.leftoverOf ? currentPlan?.meals.find((meal) => meal.id === currentMeal.leftoverOf) : currentMeal;
+            const target = currentPlan && source ? { planId: currentPlan.id, slotId: source.id, recipeId: source.recipeId, dayIndex: source.dayIndex, mealType: source.mealType } : undefined;
+            if (livePlanned && (!target || target.recipeId !== visibleRecipe.id)) throw new Error("Le repas a changé.");
+            const data = await loadCatalogue();
+            const main = data.recipes.find((item) => item.id === visibleRecipe.composition!.main);
+            if (!main || mealBuilderGroupFor(main) !== "main" || !mealBuilderEligible(main)) throw new Error("Recette indisponible");
+            setCatalogue(data);
+            route.push(mealBuilderScreen(main, { id: `meal-${crypto.randomUUID()}`, recipeIds: visibleRecipe.composition! }, data, target));
+          } : undefined}
           onEdit={personalRecipe ? () => route.replace(customRecipeScreen(personalRecipe, true, livePlanned)) : undefined}
-          onDuplicate={() => {
+          onDuplicate={visibleRecipe.composition ? undefined : () => {
             const current = appStore.getSnapshot();
             if (current.customRecipes.length >= 200) {
               route.push({
@@ -2678,8 +2758,41 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView recipe={recipe} favorite={live.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} onComposeMeal={mealBuilderEligible(recipe) ? () => route.push(mealBuilderScreen(recipe)) : undefined} />}</LiveAppState> };
   }
 
-  function mealBuilderScreen(recipe: CatalogueRecipe): FlowScreen {
-    return { id: `meal-builder-${recipe.id}`, title: "Composer mon repas", headerHeight: 56, header: (route) => <div className="app-header meal-builder-header"><button type="button" className="icon-button" aria-label="Retour" onClick={route.pop}><ArrowLeftIcon /></button><Wordmark /><span /></div>, render: (route) => <MealBuilderView initialRecipe={recipe} recipes={catalogue ? visibleCatalogueRecipes(catalogue) : [recipe]} onNavigate={(next) => { setTab(next); for (let index = 1; index < route.stack.length; index++) route.pop(); }} /> };
+  function mealBuilderScreen(recipe: CatalogueRecipe, saved?: SavedMeal, availableCatalogue = catalogue, target?: CompositionTarget): FlowScreen {
+    const recipes = availableCatalogue ? visibleCatalogueRecipes(availableCatalogue) : [recipe];
+    const initialSelection = saved ? Object.fromEntries(MEAL_BUILDER_GROUPS.map(({ id }) => [id, recipes.find((item) => item.id === saved.recipeIds[id] && mealBuilderGroupFor(item) === id && mealBuilderEligible(item))])) : undefined;
+    return { id: `meal-builder-${recipe.id}`, title: "Composer mon repas", headerHeight: 56, header: (route) => <div className="app-header meal-builder-header"><button type="button" className="icon-button" aria-label="Retour" onClick={route.pop}><ArrowLeftIcon /></button><Wordmark /><span /></div>, render: (route) => <MealBuilderView initialRecipe={recipe} initialSelection={initialSelection} initialName={saved?.name} planLabel={target ? "Enregistrer les modifications du repas" : "Planifier ce repas"} planningContext={target ? `Modifier le ${MEAL_LABELS[target.mealType].toLocaleLowerCase("fr")} du ${DAY_LABELS[target.dayIndex]} — le créneau et les portions seront conservés.` : undefined} recipes={recipes} onSave={(selection, name) => {
+      const { starter, main, dessert } = selection;
+      if (!starter || !main || !dessert) return "Complétez les trois catégories.";
+      const result = evaluateAssociationMeal([starter, main, dessert]);
+      if (result.level !== "verte" && result.level !== "orange") return "Les associations de ce repas doivent être revues.";
+      const recipeIds = { starter: starter.id, main: main.id, dessert: dessert.id };
+      const current = appStore.getSnapshot();
+      const duplicate = current.savedMeals.find((meal) => MEAL_BUILDER_GROUPS.every(({ id }) => meal.recipeIds[id] === recipeIds[id]));
+      const cleanName = name.trim().slice(0, 80);
+      if (duplicate && (duplicate.name ?? "") === cleanName) return "Ce repas est déjà enregistré dans Mes repas.";
+      if (current.savedMeals.length >= 200 && !saved) return "Vos 200 repas sont enregistrés. Supprimez-en un pour libérer une place.";
+      const id = duplicate?.id ?? saved?.id ?? `meal-${crypto.randomUUID()}`;
+      setAppState((live) => ({ ...live, savedMeals: [{ id, ...(cleanName ? { name: cleanName } : {}), recipeIds }, ...live.savedMeals.filter((meal) => meal.id !== id)].slice(0, 200) }));
+      return "Repas enregistré sur cet appareil dans Mes repas.";
+    }} onPlan={(selection) => {
+      const { starter, main, dessert } = selection;
+      if (!starter || !main || !dessert) return "Complétez les trois catégories.";
+      try {
+        const composed = composeMeal(starter, main, dessert, catalogueImageFor(main));
+        if (target) {
+          const live = appStore.getSnapshot();
+          if (!live.currentPlan) return "La semaine a changé. Rouvrez votre repas depuis la semaine.";
+          const registry = [...ACTIVE_RECIPES.filter((item) => item.id !== composed.id), composed];
+          const updated = updatePlannedComposition(live.currentPlan, target, composed, registry, live.profile);
+          if (live.composedRecipes.length >= 200 && !live.composedRecipes.some((item) => item.id === composed.id)) return "La limite des repas planifiés enregistrés est atteinte.";
+          setAppState((current) => ({ ...current, currentPlan: updated, composedRecipes: [...current.composedRecipes.filter((item) => item.id !== composed.id), composed], checkedShoppingItemIds: reconcileCheckedItems(updated, registry, current.checkedShoppingItemIds) }));
+          setAppNotice("Repas modifié au même créneau. Les portions sont conservées et les courses ont été mises à jour.");
+          setTab("week"); popFlowToRoot(route);
+        } else route.push(planSlotScreen(composed));
+        return null;
+      } catch (error) { return error instanceof Error ? error.message : "Ce repas ne peut pas être planifié."; }
+    }} onNavigate={(next) => { setTab(next); for (let index = 1; index < route.stack.length; index++) route.pop(); }} /> };
   }
 
   const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView state={live} onRestore={async (restored) => { await replaceAppState(restored); setArchivedWeek(null); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
@@ -2756,7 +2869,17 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const currentView = useMemo(() => {
     if (tab === "week") return <WeekView plan={appState.currentPlan} onOpenMeal={openMeal} onReplace={openReplace} onToggleLock={toggleMealLock} onToggleCompleted={toggleMealCompleted} onPlanLeftover={openLeftover} onToggleSkipped={toggleMealSkipped} onSwap={openSwap} />;
     if (tab === "courses") return <CoursesView plan={appState.currentPlan} profile={appState.profile} checkedIds={appState.checkedShoppingItemIds} pantryIds={appState.pantryIngredientIds} pantryAmounts={appState.pantryAmounts} categoryOrder={appState.shoppingCategoryOrder} spent={appState.currentPlan ? appState.actualSpend[appState.currentPlan.id] : undefined} onToggleChecked={toggleChecked} onTogglePantry={togglePantry} onSetPantryAmount={setPantryAmount} onMoveCategory={moveCategory} onSetSpent={setSpent} />;
-    if (tab === "recipes") return <RecipesView favoriteIds={appState.favoriteRecipeIds} customRecipes={appState.customRecipes} history={appState.history} catalogue={catalogue} catalogueError={catalogueError} onLoadCatalogue={ensureCatalogue} onRetryCatalogue={retryCatalogue} onOpenRecipe={(recipe) => flow.push(recipeScreen(recipe))} onOpenCatalogue={(recipe) => flow.push(catalogueRecipeScreen(recipe))} onOpenHistory={(plan) => flow.push(historyPlanScreen(plan))} onDeleteHistory={(plan) => {
+    if (tab === "recipes") return <RecipesView onRestoreSavedMeal={(meal, index) => {
+      const live = appStore.getSnapshot();
+      if (live.savedMeals.some((item) => item.id === meal.id)) return "Ce repas est déjà présent.";
+      if (live.savedMeals.length >= 200) return "Libérez une place avant de restaurer ce repas.";
+      setAppState((current) => ({ ...current, savedMeals: [...current.savedMeals.slice(0, index), meal, ...current.savedMeals.slice(index)] }));
+      return null;
+    }} onRenameSavedMeal={(meal, name) => {
+      if (!appStore.getSnapshot().savedMeals.some((item) => item.id === meal.id)) return "Ce repas a été supprimé. Fermez cette fenêtre pour actualiser la liste.";
+      setAppState((current) => ({ ...current, savedMeals: current.savedMeals.map((item) => item.id === meal.id ? { ...item, name: name.trim().slice(0, 80) || undefined } : item) }));
+      return null;
+    }} savedMeals={appState.savedMeals} onOpenSavedMeal={(meal) => { const recipe = catalogue?.recipes.find((item) => item.id === meal.recipeIds.main && mealBuilderGroupFor(item) === "main" && mealBuilderEligible(item)); if (recipe) flow.push(mealBuilderScreen(recipe, meal)); }} onDeleteSavedMeal={(meal) => setAppState((current) => ({ ...current, savedMeals: current.savedMeals.filter((item) => item.id !== meal.id) }))} favoriteIds={appState.favoriteRecipeIds} customRecipes={appState.customRecipes} history={appState.history} catalogue={catalogue} catalogueError={catalogueError} onLoadCatalogue={ensureCatalogue} onRetryCatalogue={retryCatalogue} onOpenRecipe={(recipe) => flow.push(recipeScreen(recipe))} onOpenCatalogue={(recipe) => flow.push(catalogueRecipeScreen(recipe))} onOpenHistory={(plan) => flow.push(historyPlanScreen(plan))} onDeleteHistory={(plan) => {
       setAppState((current) => {
         const actualSpend = { ...current.actualSpend };
         delete actualSpend[plan.id];
@@ -2769,8 +2892,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
       setAppNotice("Semaine supprimée de l’historique.");
     }} />;
     if (!appState.onboardingCompleted) return <OnboardingView profile={appState.profile} onOpenProfile={openProfile} onSkip={() => setAppState((current) => ({ ...current, onboardingCompleted: true }))} />;
-    return <HomeView profile={appState.profile} plan={appState.currentPlan} archivedWeek={archivedWeek} upcomingPlan={appState.upcomingPlan} onGenerate={openGenerate} onTonight={openTonight} onProfile={openProfile} onOpenMeal={openMeal} onOpenWeek={() => setTab("week")} />;
-  }, [tab, appState, archivedWeek, catalogue, catalogueError, ensureCatalogue, retryCatalogue]);
+    return <HomeView onRecipes={() => setTab("recipes")} onInformation={() => flow.push(informationScreen())} profile={appState.profile} plan={appState.currentPlan} archivedWeek={archivedWeek} upcomingPlan={appState.upcomingPlan} onGenerate={openGenerate} onTonight={openTonight} onProfile={openProfile} onOpenMeal={openMeal} onOpenWeek={() => setTab("week")} />;
+  }, [tab, appState, activeRecipeSnapshot, archivedWeek, catalogue, catalogueError, ensureCatalogue, retryCatalogue]);
 
   return <div className={`app-shell ${appState.textScale === "large" ? "is-large-text" : ""}`} data-text-scale={appState.textScale}>
     {offline ? <p className="offline-strip" role="status" data-testid="offline-strip">Hors ligne : votre semaine, vos recettes planifiées et vos courses restent disponibles. Le catalogue complet demande une connexion s’il n’a pas été téléchargé.</p> : null}

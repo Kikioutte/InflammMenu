@@ -1088,3 +1088,21 @@ test("an IndexedDB snapshot newer than its missing marker cannot be overwritten 
     if (originalBroadcastChannel) Object.defineProperty(globalThis, "BroadcastChannel", originalBroadcastChannel); else delete globalThis.BroadcastChannel;
   }
 });
+
+test("saved meals survive backup and reject malformed references", async () => {
+  const { exportAppState, importAppState } = await import("../src/storage.ts");
+  const meal = { id: "meal-test", recipeIds: { starter: "r1017", main: "r711", dessert: "r824" } };
+  const migrated = migrateAppState(state({ savedMeals: [meal, meal, { id: "meal-invalid", recipeIds: { starter: "r1" } }] }));
+  assert.deepEqual(migrated.savedMeals, [meal]);
+  const restored = importAppState(exportAppState(migrated));
+  assert.deepEqual(restored.savedMeals, [meal]);
+  assert.deepEqual(migrateAppState(state()).savedMeals, []);
+});
+
+test("saved meal names survive backup, and are bounded on import", async () => {
+ const { exportAppState, importAppState } = await import("../src/storage.ts");
+ const meal={id:"meal-named",name:"  Dîner du dimanche  ",recipeIds:{starter:"r1017",main:"r711",dessert:"r824"}};
+ const migrated=migrateAppState(state({savedMeals:[meal]}));
+ assert.equal(importAppState(exportAppState(migrated)).savedMeals[0].name,"Dîner du dimanche");
+ assert.equal(migrateAppState(state({savedMeals:[{...meal,name:"a".repeat(200)}]})).savedMeals[0].name.length,80);
+});

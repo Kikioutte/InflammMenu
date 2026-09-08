@@ -50,6 +50,9 @@ export interface Nutrition {
 }
 
 export interface Recipe {
+  /** A complete meal chosen manually, never drawn automatically. */
+  composition?: { starter: string; main: string; dessert: string };
+  compositionTitles?: { starter: string; main: string; dessert: string };
   id: string;
   title: string;
   mealTypes: readonly MealType[];
