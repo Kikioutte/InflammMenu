@@ -11,6 +11,7 @@
 
 - 200 tests unitaires et contrôles de données passent : recherche, calculs des quantités, ancien format de sauvegarde, export/import et fusion de changements de deux onglets inclus.
 - 85 scénarios navigateur existants passent.
+- Le premier passage GitHub a révélé un ciblage ambigu du test des durées pendant une transition entre deux fiches (84 autres scénarios réussis). Le test cible désormais la fiche active, avec les mêmes assertions. Le scénario corrigé et les trois nouveaux parcours Chromium passent ensemble. Les nouveaux parcours sont ajoutés à `test:browser`, soit 88 scénarios dans cette commande.
 - 24 scénarios d’associations et des nouvelles fonctions passent sur Chromium ordinateur, Chromium mobile et WebKit. Les 9 nouveaux scénarios ont aussi été relancés après ajustement des cibles tactiles ; ils couvrent désormais la création d’une semaine après des courses libres et l’absence de débordement à 320 px.
 - 7 scénarios PWA avec service worker réel passent, dont courses libres et collection après rechargement sans connexion.
 - TypeScript, construction Pages et intégrité des 28 fichiers du runtime passent.

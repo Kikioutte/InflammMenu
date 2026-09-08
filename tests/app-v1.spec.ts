@@ -2121,7 +2121,7 @@ test("les temps passifs sont séparés du temps de préparation", async ({ page 
   await expect(infusionCard).toContainText("5 min de préparation · 8 h d’infusion");
   await infusionCard.click();
 
-  const infusionDurations = page.getByRole("region", { name: "Durées de la recette" });
+  const infusionDurations = page.getByTestId("flow-current").getByRole("region", { name: "Durées de la recette" });
   await expect(infusionDurations).toContainText("Préparation5 min");
   await expect(infusionDurations).toContainText("Infusion8 h");
   await expect(infusionDurations).toContainText("Total8 h 5 min");
@@ -2132,7 +2132,7 @@ test("les temps passifs sont séparés du temps de préparation", async ({ page 
   await expect(fermentedCard).toContainText("30 min de préparation · 7 j de fermentation");
   await fermentedCard.click();
 
-  const fermentedDurations = page.getByRole("region", { name: "Durées de la recette" });
+  const fermentedDurations = page.getByTestId("flow-current").getByRole("region", { name: "Durées de la recette" });
   await expect(fermentedDurations).toContainText("Préparation30 min");
   await expect(fermentedDurations).toContainText("Fermentation7 j");
   await expect(fermentedDurations).toContainText("Total7 j 30 min");
