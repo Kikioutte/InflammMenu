@@ -16,7 +16,7 @@ async function recipe(page: Page) {
   await page.locator(".catalogue-card").click();
 }
 
-test("typos and reordered words keep the selected food filters", async ({ page }) => {
+test("typos and reordered words keep the selected food filters @webkit-smoke", async ({ page }) => {
   await fresh(page); await nav(page, "Recette");
   await page.getByLabel("Filtrer les associations").selectOption("verte");
   await page.getByLabel("Rechercher une recette", { exact: true }).fill("courgete");
@@ -29,7 +29,7 @@ test("typos and reordered words keep the selected food filters", async ({ page }
   await expect(page.getByRole("heading", { name: "Aucune recette trouvée" })).toBeVisible();
 });
 
-test("standalone shopping adds, updates, exports and restores without creating a week", async ({ page }, info) => {
+test("standalone shopping adds, updates, exports and restores without creating a week @webkit-smoke", async ({ page }, info) => {
   const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message));
   await fresh(page); await nav(page, "Courses");
   await page.getByLabel("Ajouter un article", { exact: true }).fill("Papier cuisson");
@@ -67,7 +67,7 @@ test("standalone shopping adds, updates, exports and restores without creating a
   expect(withWeek.currentPlan).not.toBeNull(); expect(withWeek.shoppingRecipes[0].portions).toBe(4);
 });
 
-test("collections keep recipes independently of favorites and support rename and undo", async ({ page }, info) => {
+test("collections keep recipes independently of favorites and support rename and undo @webkit-smoke", async ({ page }, info) => {
   await fresh(page); await recipe(page);
   await page.getByRole("button", { name: "Classer dans une collection", exact: true }).click();
   await page.getByLabel("Nom de la collection", { exact: true }).fill("À essayer");

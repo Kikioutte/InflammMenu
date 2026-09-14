@@ -103,7 +103,7 @@ test("saved association profile governs generation and shopping", async ({ page 
 });
 
 
-test("a complete meal is saved, restored and deleted without modifying the week", async ({ page }) => {
+test("a complete meal is saved, restored and deleted without modifying the week @webkit-smoke", async ({ page }) => {
   await fresh(page); await library(page);
   await page.getByLabel("Rechercher une recette", { exact: true }).fill("Cabillaud en papillote de chou et fenouil");
   await expect(page.locator(".catalogue-card")).toHaveCount(1);
@@ -146,7 +146,7 @@ test("a complete meal is saved, restored and deleted without modifying the week"
   expect(state.currentPlan).toBeNull();
 });
 
-test("plan a complete meal and keep its dessert in shopping after reload", async ({ page }, info) => {
+test("plan a complete meal and keep its dessert in shopping after reload @webkit-smoke", async ({ page }, info) => {
   await fresh(page);
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
   await page.getByLabel("Temps actif maximum en cuisine (min)", { exact: true }).fill("90");

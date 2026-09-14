@@ -2994,7 +2994,9 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
 
   return <div className={`app-shell ${appState.textScale === "large" ? "is-large-text" : ""}`} data-text-scale={appState.textScale}>
     {offline ? <p className="offline-strip" role="status" data-testid="offline-strip">Hors ligne : votre semaine, vos recettes planifiées et vos courses restent disponibles. Le catalogue complet demande une connexion s’il n’a pas été téléchargé.</p> : null}
-    <MobileScroll className="app-screen"><div className="root-scroll-content">
+    {/* A new root tab starts at the top and discards the previous tab's inertia.
+        Updates within that tab keep the same scroll container. */}
+    <MobileScroll key={tab} className="app-screen"><div className="root-scroll-content">
       {!hydrated ? <div className="app-loading"><ReloadIcon className="spin" /><span>Chargement local…</span></div> : <>
         {storageWarning ? <div className="notice-banner app-status-banner" role="alert"><span>{storageWarning}</span><button type="button" aria-label="Fermer l’avertissement de stockage" onClick={() => setStorageWarning("")}><Cross2Icon /></button></div> : null}
         {appNotice ? <div className="notice-banner app-status-banner" role="status"><span>{appNotice}</span><button type="button" aria-label="Fermer le message" onClick={() => setAppNotice("")}><Cross2Icon /></button></div> : null}
