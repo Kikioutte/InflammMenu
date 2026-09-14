@@ -656,7 +656,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Dessert calculé à environ 174 kcal et 6.9 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient lait et fruits à coque; maturité et coût saisonnier à vérifier. Contient lait et fruits à coque; conserver le yaourt au froid jusqu'au service. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient lait et fruits à coque; maturité et coût saisonnier à vérifier. Conserver le yaourt au froid jusqu'au service. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -910,7 +910,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Dessert calculé à environ 162 kcal et 4.6 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient œuf et gluten; cuisson à cœur et certification du sarrasin à vérifier. Contient œuf et gluten; cuire le centre à cœur puis refroidir rapidement avant réfrigération. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient œuf et gluten; cuisson à cœur et certification du sarrasin à vérifier. Cuire le centre à cœur puis refroidir rapidement avant réfrigération. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -1388,7 +1388,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Dessert calculé à environ 229 kcal et 5.9 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient lait et fruits à coque; fruits concentrés et dosage du romarin à tester. Réserve de calcul nutritionnel : romarin-frais: Romarin frais USDA SR exact; sucres totaux non renseignés dans Ciqual 2025 ni USDA SR Legacy, valeur technique à 0 susceptible de les sous-estimer légèrement. romarin-frais.sugars_g: Sucres totaux non renseignés dans Ciqual 2025 ni USDA SR Legacy; valeur technique à 0 faute de donnée, susceptible de sous-estimer légèrement les sucres. Contient lait et fruits à coque; conserver le yaourt au froid et laisser la vapeur s'échapper au mixage. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient lait et fruits à coque; fruits concentrés et dosage du romarin à tester. Réserve de calcul nutritionnel : romarin-frais: Romarin frais USDA SR exact; sucres totaux non renseignés dans Ciqual 2025 ni USDA SR Legacy, valeur technique à 0 susceptible de les sous-estimer légèrement. romarin-frais.sugars_g: Sucres totaux non renseignés dans Ciqual 2025 ni USDA SR Legacy; valeur technique à 0 faute de donnée, susceptible de sous-estimer légèrement les sucres. Conserver le yaourt au froid et laisser la vapeur s'échapper au mixage. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -2825,7 +2825,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Sauce ou condiment calculé à environ 113 kcal et 2.6 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient fruits à coque; mixage chaud et rendement à vérifier. Réserve de calcul nutritionnel : vinaigre-cidre: Vinaigre de cidre; 15 g par cuillère à soupe. vinaigre-cidre.energy_kcal: Énergie absente de la fiche Ciqual du vinaigre de cidre; valeur du vinaigre générique Ciqual utilisée. Contient fruits à coque; laisser la vapeur s'échapper avant tout mixage chaud. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient fruits à coque; mixage chaud et rendement à vérifier. Réserve de calcul nutritionnel : vinaigre-cidre: Vinaigre de cidre; 15 g par cuillère à soupe. vinaigre-cidre.energy_kcal: Énergie absente de la fiche Ciqual du vinaigre de cidre; valeur du vinaigre générique Ciqual utilisée. Laisser la vapeur s'échapper avant tout mixage chaud. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -3269,7 +3269,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Sauce ou condiment calculé à environ 40 kcal et 2.1 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient lait; chaîne du froid et texture à vérifier. Réserve de calcul nutritionnel : betterave-jaune-cuite: Betterave rouge cuite utilisée comme proxy de la variété jaune cuite. Contient lait; refroidir la betterave avant ajout du yaourt et maintenir la sauce au froid. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient lait; chaîne du froid et texture à vérifier. Réserve de calcul nutritionnel : betterave-jaune-cuite: Betterave rouge cuite utilisée comme proxy de la variété jaune cuite. Refroidir la betterave avant ajout du yaourt et maintenir la sauce au froid. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -3502,7 +3502,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Sauce ou condiment calculé à environ 127 kcal et 3.4 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient fruits à coque; refroidissement et texture à vérifier. Contient fruits à coque; refroidir le brocoli avant l'ajout des herbes et réfrigérer rapidement. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient fruits à coque; refroidissement et texture à vérifier. Refroidir le brocoli avant l'ajout des herbes et réfrigérer rapidement. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -3720,7 +3720,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Sauce ou condiment calculé à environ 47 kcal et 0.9 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient sésame; acidité et concentration du fruit à vérifier. Réserve de calcul nutritionnel : vinaigre-riz: Vinaigre générique; proxy du vinaigre de riz, 15 g par cuillère à soupe. Contient sésame; ajuster le vinaigre selon l'acidité du fruit et conserver au froid. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient sésame; acidité et concentration du fruit à vérifier. Réserve de calcul nutritionnel : vinaigre-riz: Vinaigre générique; proxy du vinaigre de riz, 15 g par cuillère à soupe. Ajuster le vinaigre selon l'acidité du fruit et conserver au froid. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -3956,7 +3956,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Sauce ou condiment calculé à environ 113 kcal et 5.5 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient fruits à coque; trempage, froid et texture à vérifier. Réserve de calcul nutritionnel : petits-pois: Petits pois surgelés crus, pesés avant cuisson; les recettes autorisent aussi des petits pois frais, proches mais non identiques. Contient fruits à coque; réaliser le trempage au réfrigérateur et maintenir la préparation au froid. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient fruits à coque; trempage, froid et texture à vérifier. Réserve de calcul nutritionnel : petits-pois: Petits pois surgelés crus, pesés avant cuisson; les recettes autorisent aussi des petits pois frais, proches mais non identiques. Réaliser le trempage au réfrigérateur et maintenir la préparation au froid. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -4680,7 +4680,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Sauce ou condiment calculé à environ 76 kcal et 1.2 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient céleri et fruits à coque; cru, oxydation et froid à contrôler. Réserve de calcul nutritionnel : vinaigre-cidre: Vinaigre de cidre; 15 g par cuillère à soupe. vinaigre-cidre.energy_kcal: Énergie absente de la fiche Ciqual du vinaigre de cidre; valeur du vinaigre générique Ciqual utilisée. Contient céleri et fruits à coque; préparation crue à maintenir au froid et à consommer sous 24 heures. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient céleri et fruits à coque; cru, oxydation et froid à contrôler. Réserve de calcul nutritionnel : vinaigre-cidre: Vinaigre de cidre; 15 g par cuillère à soupe. vinaigre-cidre.energy_kcal: Énergie absente de la fiche Ciqual du vinaigre de cidre; valeur du vinaigre générique Ciqual utilisée. Préparation crue à maintenir au froid et à consommer sous 24 heures. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -4916,7 +4916,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Sauce ou condiment calculé à environ 54 kcal et 1.6 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient soja; miso fermenté salé et mixage chaud à vérifier. Réserve de calcul nutritionnel : miso-blanc: Miso générique utilisé pour le miso blanc; sodium à contrôler sur l'étiquette. Contient soja; le sodium du miso dépend du produit, vérifier l'étiquette et ne pas ajouter de sel avant dégustation. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient soja; miso fermenté salé et mixage chaud à vérifier. Réserve de calcul nutritionnel : miso-blanc: Miso générique utilisé pour le miso blanc; sodium à contrôler sur l'étiquette. Le sodium du miso dépend du produit, vérifier l'étiquette et ne pas ajouter de sel avant dégustation. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -5408,7 +5408,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Sauce ou condiment calculé à environ 103 kcal et 2 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient fruits à coque; sodium des câpres et hygiène des herbes à vérifier. Réserve de calcul nutritionnel : capres: Câpres au vinaigre, pesées égouttées; sodium à confirmer sur l'étiquette. capres.energy_kcal: Énergie non renseignée; valeur technique à zéro susceptible de sous-estimer de quelques kcal. Contient fruits à coque; le sodium des câpres dépend du produit, les rincer et vérifier l'étiquette. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient fruits à coque; sodium des câpres et hygiène des herbes à vérifier. Réserve de calcul nutritionnel : capres: Câpres au vinaigre, pesées égouttées; sodium à confirmer sur l'étiquette. capres.energy_kcal: Énergie non renseignée; valeur technique à zéro susceptible de sous-estimer de quelques kcal. Le sodium des câpres dépend du produit, les rincer et vérifier l'étiquette. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,
@@ -5642,7 +5642,7 @@
           "status": "caution",
           "stage": "editorial-validated",
           "summary": "Sauce ou condiment calculé à environ 72 kcal et 2.1 g de protéines par portion. Ne constitue pas seul un repas complet.",
-          "caution": "Contient lait; mixage tiède, raifort et chaîne du froid à vérifier. Réserve de calcul nutritionnel : raifort-rape: Raifort frais; 2,5 g par cuillère à café. raifort-rape.sugars_g: Sucres non renseignés; valeur technique à zéro. Contient lait; ajouter le raifort progressivement, refroidir avant le yaourt et conserver au froid. Recette non testée physiquement; coût et rendement restent estimés."
+          "caution": "Contient lait; mixage tiède, raifort et chaîne du froid à vérifier. Réserve de calcul nutritionnel : raifort-rape: Raifort frais; 2,5 g par cuillère à café. raifort-rape.sugars_g: Sucres non renseignés; valeur technique à zéro. Ajouter le raifort progressivement, refroidir avant le yaourt et conserver au froid. Recette non testée physiquement; coût et rendement restent estimés."
         },
         "planner": {
           "eligible": false,

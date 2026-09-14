@@ -1,6 +1,7 @@
 import aliasSource from "./data/ingredient-id-aliases.json" with { type: "json" };
 import ruleSource from "./data/ingredient-shopping-rules.json" with { type: "json" };
 import type { IngredientCategory, IngredientUnit, ShoppingAmount } from "./domain.ts";
+import { formatIngredientQuantity } from "./presentation.ts";
 
 type PurchaseRule =
   | { kind: "pieces" }
@@ -174,21 +175,8 @@ export function storedShoppingItemMatches(storedKey: string, ingredientId: strin
   return legacyShoppingItemKeyToCanonical(storedKey) === shoppingIdentityFor(ingredientId).shoppingId;
 }
 
-function numberLabel(value: number): string {
-  return (Number.isInteger(value) ? String(value) : value.toFixed(1))
-    .replace(".0", "")
-    .replace(".", ",");
-}
-
 export function formatShoppingAmount(amount: ShoppingAmount): string {
-  const unitLabel = amount.unit === "piece"
-    ? amount.quantity > 1 ? "pièces" : "pièce"
-    : amount.unit === "c_soupe"
-      ? "c. à soupe"
-      : amount.unit === "c_cafe"
-        ? "c. à café"
-        : amount.unit;
-  return `${numberLabel(amount.quantity)} ${unitLabel}`;
+  return formatIngredientQuantity(amount.quantity, amount.unit);
 }
 
 export function formatShoppingAmounts(amounts: readonly ShoppingAmount[]): string {
