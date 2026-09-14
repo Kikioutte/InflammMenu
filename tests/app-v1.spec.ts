@@ -1,5 +1,9 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { DEFAULT_PROFILE } from "../src/domain";
+import { DEFAULT_APP_STATE } from "../src/storage";
+import { generateWeeklyPlan } from "../src/engine";
+import { IMPORTED_PLAN_RECIPES } from "../src/planner-catalog";
 
 // Keep request interception deterministic. Service-worker update behaviour is
 // covered independently in storage.test.mjs.
@@ -1273,9 +1277,19 @@ test("une recette écartée disparaît des semaines suivantes et reste réversib
 });
 
 test("une recette du catalogue peut être placée sur un créneau précis", async ({ page }) => {
+  // The fixture deliberately leaves this recipe out; random generation can
+  // otherwise select it and correctly disable every slot as a duplicate.
+  const recipe = IMPORTED_PLAN_RECIPES.find((item) => item.title.startsWith("Soupe miso au wakame"))!;
+  const plan = generateWeeklyPlan(IMPORTED_PLAN_RECIPES.filter((item) => item.id !== recipe.id), DEFAULT_PROFILE, {
+    seed: "catalogue-plan-slot",
+    startsOn: "2026-09-14",
+  });
+  await page.clock.setFixedTime(new Date("2026-09-14T12:00:00Z"));
+  await page.addInitScript((state) => {
+    localStorage.setItem("inflamm-menu:app-state", JSON.stringify(state));
+  }, { ...DEFAULT_APP_STATE, onboardingCompleted: true, currentPlan: plan });
   await openFreshApp(page);
 
-  await generateWeek(page);
   await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
   await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
@@ -1289,6 +1303,13 @@ test("une recette du catalogue peut être placée sur un créneau précis", asyn
   await page.locator(".day-card").nth(2).click();
   await expect(page.locator(".meal-card__main strong", { hasText: "Soupe miso au wakame" })).toHaveCount(1);
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
+
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
+  await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
+  await page.getByTestId("catalogue-plan").click();
+  await expect(page.getByTestId("already-planned")).toContainText("Cette recette est déjà au menu");
+  await expect(page.getByTestId("plan-slot-2-dinner")).toBeDisabled();
 });
 
 test("un plat peut être cuisiné en double et servi en restes", async ({ page }) => {
@@ -2121,7 +2142,7 @@ test("les temps passifs sont séparés du temps de préparation", async ({ page 
   await expect(infusionCard).toContainText("5 min de préparation · 8 h d’infusion");
   await infusionCard.click();
 
-  const infusionDurations = page.getByRole("region", { name: "Durées de la recette" });
+  const infusionDurations = page.getByTestId("flow-current").getByRole("region", { name: "Durées de la recette" });
   await expect(infusionDurations).toContainText("Préparation5 min");
   await expect(infusionDurations).toContainText("Infusion8 h");
   await expect(infusionDurations).toContainText("Total8 h 5 min");
@@ -2132,7 +2153,7 @@ test("les temps passifs sont séparés du temps de préparation", async ({ page 
   await expect(fermentedCard).toContainText("30 min de préparation · 7 j de fermentation");
   await fermentedCard.click();
 
-  const fermentedDurations = page.getByRole("region", { name: "Durées de la recette" });
+  const fermentedDurations = page.getByTestId("flow-current").getByRole("region", { name: "Durées de la recette" });
   await expect(fermentedDurations).toContainText("Préparation30 min");
   await expect(fermentedDurations).toContainText("Fermentation7 j");
   await expect(fermentedDurations).toContainText("Total7 j 30 min");

@@ -1229,3 +1229,38 @@ button { -webkit-tap-highlight-color: transparent; }
   .meal-builder-search-row .catalogue-search, .meal-builder-search-row > button { min-height: 44px; height: 44px; }
   .meal-builder-candidate > button { line-height: 1.1; }
 }
+
+.home-shortcuts { padding: 20px 24px 0; display: grid; gap: 10px; }
+.home-shortcuts p { color: var(--text-muted, #59604f); font-size: 14px; line-height: 1.5; margin: 0; }
+.plan-slot-page select { display: block; min-height: 44px; width: 100%; margin: 8px 0; padding: 8px 12px; font: inherit; border: 1px solid #d9d1c1; border-radius: 12px; background: #fffdf8; color: #29351f; }
+
+.meal-composition { display: grid !important; gap: 7px; width: 100%; flex-basis: 100%; text-align: left; white-space: normal; }
+.meal-composition > span { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 8px; padding: 0 !important; background: transparent !important; border: 0 !important; }
+.meal-composition b { font: 600 11px/1.5 "DM Sans", sans-serif; color: #735438; }
+.meal-composition > span > span { font: 400 13px/1.45 "DM Sans", sans-serif; color: #29351f; overflow-wrap: anywhere; }
+.week-overview__meal .meal-composition > span { grid-template-columns: 1fr; gap: 1px; }
+.saved-meals summary { cursor: pointer; min-height: 44px; align-content: center; }
+.saved-meal-card { padding: 16px 0; border-bottom: 1px solid #ded7c8; }
+.saved-meal-card h3 { margin: 0; overflow-wrap: anywhere; }
+.saved-meal-card p { font-size: 13px; line-height: 1.5; color: #59604f; }
+.saved-meal-card > div { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.saved-meals-undo { padding: 12px; border-radius: 12px; background: #eef1e8; }
+
+.personal-collections { margin: 18px 0; padding: 14px 0; border-block: 1px solid var(--line, #ddd8cc); }
+.personal-collections summary { min-height: 44px; cursor: pointer; display: list-item; padding-block: 12px; }
+.personal-form { display: grid; gap: 12px; margin-block: 12px; }
+.personal-form .text-field, .personal-shopping .text-field { min-width: 0; }
+.collection-choice { display: flex; gap: 12px; align-items: center; min-height: 44px; overflow-wrap: anywhere; }
+.collection-choice input { width: 20px; height: 20px; }
+.collection-recipe-row { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #ddd8cc; }
+.collection-recipe-row > :first-child { flex: 1; text-align: left; overflow-wrap: anywhere; min-width: 0; }
+.collection-recipe-row button, .personal-collections .text-button, .personal-shopping .text-button { min-height: 44px; }
+.personal-shopping { margin-block: 18px; padding: 16px; border: 1px solid #ddd8cc; border-radius: 16px; }
+.personal-shopping summary { cursor: pointer; padding-block: 14px; }
+.shopping-extra { display: grid; gap: 10px; padding-block: 14px; border-top: 1px solid #ddd8cc; overflow-wrap: anywhere; }
+.shopping-extra label { display: grid; gap: 6px; }
+.shopping-extra select { min-height: 44px; }
+.personal-recipe-tools { margin-block: 14px; }
+.personal-recipe-tools button { white-space: normal; }
+
+.personal-collections select { width: 100%; min-height: 44px; padding: 10px; border: 1px solid #ddd8cc; border-radius: 10px; background: #faf8f2; color: inherit; font: inherit; }

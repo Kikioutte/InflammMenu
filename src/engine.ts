@@ -1,4 +1,4 @@
-import { associationRecipeAllowed, isAssociationRecipe } from "./food-associations.ts";
+import { evaluateAssociations, associationRecipeAllowed, isAssociationRecipe } from "./food-associations.ts";
 import type {
   DayConstraint,
   Ingredient,
@@ -362,7 +362,9 @@ export function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
   const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
 
   return (
-    associationRecipeAllowed(recipe, profile.associationMode) &&
+    (recipe.composition
+      ? Object.values(recipe.composition).every((id) => isAssociationRecipe(id)) && !Object.values(recipe.composition).some((id) => profile.dislikedRecipeIds.includes(`catalog-${id}`)) && (evaluateAssociations(recipe.ingredients).level === "verte" || (profile.associationMode !== "green" && evaluateAssociations(recipe.ingredients).level === "orange"))
+      : associationRecipeAllowed(recipe, profile.associationMode)) &&
     !(profile.dislikedRecipeIds ?? []).includes(recipe.id) &&
     recipe.diet.includes(profile.diet) &&
     recipe.prepMinutes <= profile.maxPrepMinutes &&
@@ -650,7 +652,7 @@ export function generateWeeklyPlan(
     mealTypes.map((mealType) => ({ dayIndex, mealType })),
   ).flat();
   // Time is evaluated per slot below; all other profile safeguards are shared.
-  const eligible = recipes.filter((recipe) => recipeIsAllowed(recipe, { ...profile, maxPrepMinutes: 24 * 60 }));
+  const eligible = recipes.filter((recipe) => !recipe.composition && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes: 24 * 60 }));
   const eligibleBySlot = new Map(slots.map((slot) => {
     const maxPrepMinutes = dayConstraintOf(profile, slot.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes;
     return [
@@ -1160,7 +1162,7 @@ export function setMealIngredientSubstitution(
   const sourceIngredient = recipe.ingredients.find((item) => canonicalIngredientId(item.id) === canonicalIngredientId(ingredientId));
   if (!sourceIngredient) return plan;
 
-  if (substitutionId && isAssociationRecipe(recipe.id)) throw new Error("Cette collection utilise des substitutions culinaires indiquées dans la fiche ; les remplacements automatiques ne sont pas encore relus pour ces recettes.");
+  if (substitutionId && (isAssociationRecipe(recipe.id) || recipe.composition)) throw new Error("Cette collection utilise des substitutions culinaires indiquées dans la fiche ; les remplacements automatiques ne sont pas encore relus pour ces recettes.");
 
   if (substitutionId) {
     const rule = substitutionsForIngredient(sourceIngredient).find((candidate) => candidate.id === substitutionId);

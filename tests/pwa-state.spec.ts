@@ -1,3 +1,9 @@
+import { composeMeal } from "../src/composed-meal";
+import { catalogueShoppingRecipe } from "../src/personal-library";
+import { DEFAULT_PROFILE } from "../src/domain";
+import { DEFAULT_APP_STATE, migrateAppState } from "../src/storage";
+import { assignRecipeToSlot, generateWeeklyPlan } from "../src/engine";
+import { IMPORTED_PLAN_RECIPES } from "../src/planner-catalog";
 import { expect, test, type Page } from "@playwright/test";
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -24,6 +30,100 @@ async function generateWeek(page: Page) {
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
   await expect(page.getByTestId("week-view")).toBeVisible();
 }
+
+test("courses autonomes et collections restent utilisables hors ligne après rechargement", async ({ page, context }) => {
+  const catalogue = JSON.parse(await readFile(resolve("src/data/recettes-anti-inflammatoires.json"), "utf8")).recipes;
+  const source = catalogue.find((item: any) => item.id === "r711");
+  const recipe = catalogueShoppingRecipe(source, "/assets/recipe-placeholder.svg")!;
+  const state = migrateAppState({ ...DEFAULT_APP_STATE, onboardingCompleted: true, shoppingRecipes: [{ recipe, portions: 3 }], shoppingItems: [{ id: "article-pwa", name: "Papier cuisson", checked: false }], recipeCollections: [{ id: "collection-pwa", name: "À essayer", recipeIds: ["catalog-r711"] }] });
+  await page.addInitScript((value) => { if (!localStorage.getItem("inflamm-menu:app-state")) localStorage.setItem("inflamm-menu:app-state", JSON.stringify(value)); }, state);
+  await openFreshApp(page);
+  await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
+  await context.setOffline(true); await page.reload();
+  await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await expect(page.getByTestId("courses-view")).toContainText("Papier cuisson");
+  await expect(page.getByTestId("courses-view")).toContainText(/cabillaud/i);
+  await page.getByRole("button", { name: "Cocher Papier cuisson", exact: true }).click();
+  await page.reload(); await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Décocher Papier cuisson", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByText("Mes collections · 1", { exact: true }).click();
+  await page.getByLabel("Choisir une collection", { exact: true }).selectOption("collection-pwa");
+  await expect(page.locator(".collection-recipe-row")).toContainText("Cabillaud en papillote de chou et fenouil");
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem("inflamm-menu:app-state")!).currentPlan)).toBeNull();
+  await context.setOffline(false);
+});
+
+test("recherche, collection, repas et courses créés ensemble survivent hors ligne", async ({ page, context }) => {
+  await openFreshApp(page);
+  await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
+  const current = page.getByTestId("flow-current");
+  const nav = (name: string) => current.getByRole("navigation", { name: "Navigation principale" }).getByRole("button", { name, exact: true }).click();
+
+  await nav("Courses");
+  await page.getByLabel("Ajouter un article", { exact: true }).fill("Papier cuisson");
+  await page.getByRole("button", { name: "Ajouter l’article", exact: true }).click();
+  await nav("Accueil");
+  await page.getByRole("button", { name: "Ajuster mon profil" }).click();
+  await page.getByLabel("Temps actif maximum en cuisine (min)", { exact: true }).fill("90");
+  await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
+  await openInformation(page);
+  await page.getByTestId("offline-catalogue-download").click();
+  await expect(page.getByTestId("offline-catalogue-download")).toContainText("Catalogue vérifié hors ligne");
+  await page.reload();
+  await nav("Recette");
+  await page.getByLabel("Filtrer les associations").selectOption("all");
+  await page.getByLabel("Rechercher une recette", { exact: true }).fill("fenouil cabilllaud papillote");
+  await expect(page.locator(".catalogue-card")).toHaveCount(1);
+  await page.locator(".catalogue-card").click();
+  await page.getByRole("button", { name: "Classer dans une collection", exact: true }).click();
+  await page.getByLabel("Nom de la collection", { exact: true }).fill("Menus du week-end");
+  await page.getByRole("button", { name: "Enregistrer la collection", exact: true }).click();
+  await current.getByRole("button", { name: "Ajouter aux courses", exact: true }).click();
+  await expect(page.getByRole("status").filter({ hasText: "Courses mises à jour" })).toBeVisible();
+  await current.getByTestId("compose-meal").click();
+  await current.getByTestId("meal-builder-candidate-r824").click();
+  await current.getByTestId("meal-builder-candidate-r1017").click();
+  const summary = page.getByRole("dialog", { name: "Votre repas", exact: true });
+  await summary.getByRole("button", { name: "Enregistrer mon repas", exact: true }).click();
+  await expect(summary).toContainText("Repas enregistré sur cet appareil");
+  await summary.getByRole("button", { name: "Planifier ce repas", exact: true }).click();
+  await page.getByRole("button", { name: "Créer la semaine et choisir le jour", exact: true }).click();
+  await page.getByLabel("Personnes pour ce repas", { exact: true }).selectOption("3");
+  await page.getByTestId("plan-slot-0-lunch").click();
+  await expect(page.getByTestId("week-view")).toBeVisible();
+
+  await context.setOffline(true);
+  await page.reload();
+  await nav("Semaine");
+  await page.getByRole("button", { name: /^Lun\. / }).click();
+  await expect(page.getByTestId("week-view").getByLabel("Composition du repas")).toContainText("Cabillaud en papillote de chou et fenouil");
+  await nav("Courses");
+  await expect(page.getByTestId("courses-view")).toContainText(/banane/i);
+  await expect(page.getByText("Recettes ajoutées aux courses · 1", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Cocher Papier cuisson", exact: true }).click();
+  await nav("Recette");
+  await page.getByText("Mes collections · 1", { exact: true }).click();
+  await page.getByLabel("Choisir une collection", { exact: true }).selectOption({ label: "Menus du week-end (1)" });
+  await page.getByLabel("Rechercher dans cette collection", { exact: true }).fill("cabilllaud");
+  await expect(page.locator(".collection-recipe-row")).toContainText("Cabillaud en papillote de chou et fenouil");
+  await page.getByText("Mes repas enregistrés · 1", { exact: true }).click();
+  await page.getByRole("button", { name: "Ouvrir", exact: true }).click();
+  await current.getByRole("button", { name: "Voir mon repas, 3 recettes sur 3", exact: true }).click();
+  await expect(summary.getByTestId("meal-builder-slot-dessert")).toContainText("avocat et banane");
+  await page.reload();
+  await nav("Courses");
+  await expect(page.getByRole("button", { name: "Décocher Papier cuisson", exact: true })).toBeVisible();
+  const state = await page.evaluate(() => JSON.parse(localStorage.getItem("inflamm-menu:app-state")!));
+  expect(state.savedMeals).toHaveLength(1);
+  expect(state.recipeCollections).toHaveLength(1);
+  expect(state.shoppingRecipes).toHaveLength(1);
+  const planned = state.currentPlan.meals.find((meal: any) => meal.recipeId === state.composedRecipes[0].id);
+  expect(planned.portions).toBe(3);
+  await context.setOffline(false);
+});
 
 test("une recette personnelle survit au rechargement sous la base GitHub Pages", async ({ page }) => {
   await openFreshApp(page);
@@ -241,4 +341,30 @@ test("une version B est détectée puis rechargée sans effacer les données loc
   } finally {
     await writeFile(workerPath, originalWorker);
   }
+});
+
+
+test("le repas complet et ses courses restent disponibles sans le catalogue en ligne", async ({ page, context }) => {
+  const catalogue = JSON.parse(await readFile(resolve("src/data/recettes-anti-inflammatoires.json"), "utf8")).recipes;
+  const find = (id: string) => catalogue.find((recipe: any) => recipe.id === id);
+  const composed = composeMeal(find("r1017"), find("r711"), find("r824"), "/assets/recipe-placeholder.svg");
+  const profile = { ...DEFAULT_PROFILE, maxPrepMinutes: 90, weeklyBudget: 500 };
+  const now = new Date(); now.setDate(now.getDate() - (now.getDay() + 6) % 7);
+  const startsOn = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+  const registry = [...IMPORTED_PLAN_RECIPES, composed];
+  const base = generateWeeklyPlan(IMPORTED_PLAN_RECIPES, profile, { startsOn });
+  const plan = assignRecipeToSlot(base, { dayIndex: 0, mealType: "lunch" }, composed, registry, profile);
+  const state = migrateAppState({ ...DEFAULT_APP_STATE, profile, currentPlan: plan, composedRecipes: [composed], onboardingCompleted: true });
+  await page.addInitScript((value) => { if (!localStorage.getItem("inflamm-menu:app-state")) localStorage.setItem("inflamm-menu:app-state", JSON.stringify(value)); }, state);
+  await openFreshApp(page);
+  await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
+  await context.setOffline(true);
+  await page.reload();
+  await page.getByRole("button", { name: "Semaine", exact: true }).click();
+  await page.getByRole("button", { name: /^Lun\. / }).click();
+  await expect(page.getByTestId("week-view")).toContainText("Barquettes croquantes à l’avocat");
+  await page.getByRole("button", { name: "Courses", exact: true }).click();
+  await expect(page.getByTestId("courses-view")).toContainText(/banane/i);
+  await context.setOffline(false);
 });

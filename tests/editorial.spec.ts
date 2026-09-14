@@ -1,0 +1,32 @@
+import { expect, test } from "@playwright/test";
+
+test("French catalogue labels, scaled units and unique cautions @webkit-smoke", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByTestId("onboarding-view").or(page.getByTestId("home-view"))).toBeVisible();
+  if (await page.getByTestId("onboarding-view").isVisible()) await page.getByTestId("onboarding-skip").click();
+  await page.getByTestId("flow-current").getByRole("navigation", { name: "Navigation principale" }).getByRole("button", { name: "Recette", exact: true }).click();
+  await page.getByLabel("Filtrer les associations").selectOption("all");
+  await page.getByLabel("Rechercher une recette", { exact: true }).fill("Abricots rôtis au thym et pistaches");
+  const card = page.locator(".catalogue-card");
+  await expect(card).toHaveCount(1);
+  await expect(card.locator(".catalogue-card__meta")).toHaveText("Végétarien · Sans gluten");
+  await card.click();
+  const current = page.getByTestId("flow-current");
+  await expect(current.locator(".catalogue-detail__hero-copy small")).toContainText("Facile · Coût moyen");
+  await expect(current.locator(".ingredient-list")).toContainText("8 pièces");
+  await expect(current.locator(".ingredient-list")).toContainText("0,5 c. à café");
+  await current.getByRole("button", { name: "Ajouter une portion", exact: true }).click();
+  await expect(current.locator(".ingredient-list")).toContainText("10 pièces");
+  await expect(current.locator(".ingredient-list")).toContainText("75 g");
+  const text = await current.innerText();
+  expect(text.match(/Contient lait et fruits à coque/g)).toHaveLength(1);
+  expect(text).toContain("Conserver le yaourt au froid jusqu'au service.");
+  expect(text).toContain("Recette non testée physiquement");
+  expect(text).not.toMatch(/\bpiece\b|c_soupe|c_cafe|\bvegetarien\b|\beconomique\b/);
+  await page.getByRole("button", { name: "Retour", exact: true }).click();
+  await page.getByLabel("Rechercher une recette", { exact: true }).fill("Flan de sarrasin à la poire et vanille");
+  await page.locator(".catalogue-card").click();
+  await expect(current.locator(".catalogue-detail__hero-copy small")).toContainText("Facile · Économique");
+  await expect(current.locator(".ingredient-list")).toContainText("1 c. à soupe");
+  await expect(current.locator(".ingredient-list")).toContainText("1 c. à café");
+});
