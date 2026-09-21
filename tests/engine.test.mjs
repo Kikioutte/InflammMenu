@@ -1887,3 +1887,81 @@ test("plant diversity counts distinct plants without water, oil or animal produc
   assert.deepEqual(engine.plantDiversityOf(plan, [plants]), { count: 2, ingredients: ["Carotte", "Cumin"] });
   assert.equal(engine.summarizePlan(plan, [plants], profile).plantDiversity, 2);
 });
+
+test("removing a substitution revalidates the resulting source and every leftover before changing anything", () => {
+  const dish = recipe(920, {
+    id: "audit-nut-bowl", allergens: ["fruits-a-coque"],
+    ingredients: [{ id: "walnut", name: "Noix", quantity: 20, unit: "g", category: "grocery", allergens: ["fruits-a-coque"] }],
+  });
+  const substitutions = [{ ingredientId: "walnut", substitutionId: "nuts-to-pumpkin-seeds" }];
+  const plan = { id: "audit-remove", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: profile, estimatedCost: 3.8, version: 1,
+    meals: [
+      { id: "source", dayIndex: 0, mealType: "lunch", recipeId: dish.id, portions: 1, source: "generated", substitutions },
+      { id: "leftover", dayIndex: 1, mealType: "lunch", recipeId: dish.id, portions: 1, source: "manual", leftoverOf: "source", substitutions },
+    ],
+  };
+  const before = structuredClone(plan);
+  for (const changedProfile of [
+    { ...profile, allergies: ["fruits-a-coque"] },
+    { ...profile, allergies: ["aliment-inconnu-audit"] },
+    { ...profile, excludedIngredientIds: ["walnut"] },
+    { ...profile, diet: "vegetarian" },
+    { ...profile, equipment: [] },
+    { ...profile, dayConstraints: [{ dayIndex: 1, maxPrepMinutes: 5, skippedMealTypes: [] }] },
+    { ...profile, associationMode: "green" },
+  ]) {
+    const evaluated = changedProfile.diet === "vegetarian" ? { ...dish, diet: ["classic"] } : dish;
+    for (const slotId of ["source", "leftover"]) {
+      assert.throws(() => engine.setMealIngredientSubstitution(plan, slotId, "walnut", null, [evaluated], changedProfile), /profil|critères/);
+      assert.deepEqual(plan, before);
+    }
+  }
+  const updated = engine.setMealIngredientSubstitution(plan, "leftover", "walnut", null, [dish], profile);
+  assert.ok(updated.meals.every((meal) => meal.substitutions.length === 0));
+  assert.equal(updated.estimatedCost, 4);
+  assert.deepEqual(plan, before);
+});
+
+test("adding a valid replacement cannot preserve another forbidden ingredient in the resulting meal", () => {
+  const dish = recipe(921, { ingredients: [
+    { id: "yogurt", name: "Yaourt", quantity: 100, unit: "g", category: "fresh", allergens: ["lait"] },
+    { id: "pear", name: "Poire", quantity: 50, unit: "g", category: "fruit-vegetable" },
+  ] });
+  const plan = { id: "audit-whole-meal", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: profile, estimatedCost: 2, version: 1,
+    meals: [{ id: "source", dayIndex: 0, mealType: "lunch", recipeId: dish.id, portions: 1, source: "generated" }],
+  };
+  assert.throws(() => engine.setMealIngredientSubstitution(plan, "source", "yogurt", "yogurt-to-soy-yogurt", [dish], { ...profile, allergies: ["poire"] }), /allergène/);
+  assert.equal(plan.meals[0].substitutions, undefined);
+});
+
+test("refreshing recipe estimates preserves plan dates, meals, shopping-relevant state and history metadata", () => {
+  const dish = recipe(922, { costPerPortion: 3 });
+  const plan = { id: "audit-estimate", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: profile, estimatedCost: 100, version: 1,
+    meals: [
+      { id: "source", dayIndex: 0, mealType: "lunch", recipeId: dish.id, portions: 2, source: "manual", locked: true, completed: true },
+      { id: "leftover", dayIndex: 1, mealType: "lunch", recipeId: dish.id, portions: 2, source: "manual", leftoverOf: "source" },
+      { id: "outside", dayIndex: 1, mealType: "dinner", recipeId: "missing-skipped", portions: 2, source: "manual", skipped: true },
+    ],
+  };
+  const updated = engine.refreshPlanEstimate(plan, [dish]);
+  assert.equal(updated.estimatedCost, 12);
+  assert.strictEqual(updated.meals, plan.meals);
+  assert.deepEqual({ ...updated, estimatedCost: 100 }, plan);
+  assert.strictEqual(engine.refreshPlanEstimate(plan, []), plan, "an unresolved active recipe must not silently lower a full estimate");
+  assert.equal(plan.estimatedCost, 100);
+});
+
+test("weekly summary marks stale custom or substituted nutrition and costs as incomplete", () => {
+  const dish = recipe(923);
+  const plan = { id: "audit-nutrition", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z", profileSnapshot: profile, estimatedCost: 2, version: 1,
+    meals: [{ id: "source", dayIndex: 0, mealType: "lunch", recipeId: dish.id, portions: 1, source: "manual" }],
+  };
+  assert.equal(engine.summarizePlan(plan, [dish]).nutritionComplete, true);
+  const stale = engine.summarizePlan(plan, [{ ...dish, nutritionRecalculated: false, costRecalculated: false }]);
+  assert.equal(stale.nutritionComplete, false);
+  assert.equal(stale.nutritionUnavailableMeals, 1);
+  assert.equal(stale.averageCalories, 0);
+  assert.equal(stale.costComplete, false);
+  const substituted = { ...plan, meals: [{ ...plan.meals[0], substitutions: [{ ingredientId: "yogurt", substitutionId: "yogurt-to-soy-yogurt" }] }] };
+  assert.equal(engine.summarizePlan(substituted, [dish]).nutritionComplete, false);
+});

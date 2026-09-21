@@ -15,6 +15,11 @@ const APP_SHELL = [
 async function fetchRequired(request) {
   const response = await fetch(request, { cache: "reload" });
   if (!response.ok || response.type !== "basic") throw new Error(`Unable to precache ${request}: ${response.status}`);
+  // Static hosts may answer a missing JS/CSS URL with their HTML fallback.
+  // Such a response is HTTP 200, but cannot form a working installed shell.
+  if (/\.(?:m?js|css)(?:\?|$)/.test(request) && isHtmlResponse(response)) {
+    throw new Error(`Application asset returned HTML: ${request}`);
+  }
   return response;
 }
 
@@ -59,20 +64,22 @@ async function putSafely(cache, request, response, maximum) {
 }
 
 async function precacheShell() {
-  const cache = await caches.open(SHELL_CACHE);
   const responses = await Promise.all(APP_SHELL.map((path) => fetchRequired(path)));
-  await Promise.all(APP_SHELL.map((path, index) => cache.put(path, responses[index].clone())));
-
-  const indexResponse = await matchCached(cache, shellEntry("/index.html") ?? "/index.html")
-    || await matchCached(cache, shellEntry("/") ?? "/");
+  const indexResponse = responses[APP_SHELL.indexOf(shellEntry("/index.html") ?? "/index.html")]
+    || responses[APP_SHELL.indexOf(shellEntry("/") ?? "/")];
   if (!indexResponse || !isHtmlResponse(indexResponse)) throw new Error("Application shell HTML index missing");
-  const html = await indexResponse.text();
+  const html = await indexResponse.clone().text();
   const assetPaths = [...html.matchAll(/(?:src|href)=["']([^"']+)["']/g)]
     .map((match) => new URL(match[1], self.location.origin))
     .filter((url) => url.origin === self.location.origin)
     .map((url) => `${url.pathname}${url.search}`);
-  const uniqueAssets = [...new Set(assetPaths)];
+  // The generated manifest already contains the bundle and its chunks. Keep
+  // discovering additional references without fetching listed assets twice.
+  const uniqueAssets = [...new Set(assetPaths)].filter((path) => !APP_SHELL.includes(path));
   const assetResponses = await Promise.all(uniqueAssets.map((path) => fetchRequired(path)));
+  // Do not write even the document until every required download has succeeded.
+  const cache = await caches.open(SHELL_CACHE);
+  await Promise.all(APP_SHELL.map((path, index) => cache.put(path, responses[index].clone())));
   await Promise.all(uniqueAssets.map((path, index) => cache.put(path, assetResponses[index].clone())));
 }
 
@@ -123,9 +130,9 @@ async function navigationResponse(request) {
   const cache = await caches.open(SHELL_CACHE);
   try {
     const response = await fetch(request, { cache: "no-cache" });
-    if (response.ok && response.type === "basic" && isCanonicalShellNavigation(request) && isHtmlResponse(response)) {
-      await putSafely(cache, shellEntry("/index.html") ?? "/index.html", response);
-    }
+    if (response.status >= 500 && isCanonicalShellNavigation(request)) throw new Error("Application server unavailable");
+    // Preserve the document whose complete assets were installed together.
+    // A newer online document must not replace it until its worker installs.
     return response;
   } catch {
     const fallback = await matchCached(cache, shellEntry("/index.html") ?? "/index.html")

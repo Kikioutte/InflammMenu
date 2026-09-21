@@ -19,10 +19,10 @@ export function canonicalAllergen(value: string): string {
   const normalized = value
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
     .replace(/œ/g, "oe")
     .replace(/æ/g, "ae")
     .trim()
-    .toLowerCase()
     .replace(/[ _]+/g, "-");
   return ALLERGEN_ALIASES[normalized] ?? normalized;
 }

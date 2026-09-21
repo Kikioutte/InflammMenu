@@ -1,5 +1,8 @@
 import { formatIngredientQuantity as displayQuantity, formatIngredientQuantity as displayCatalogueQuantity, formatIngredientUnit, formatDietLabel, DIFFICULTY_LABELS, COST_LABELS } from "./presentation";
 import { matchesRecipeSearch } from "./recipe-search";
+import { parseNumericInput } from "./numeric-input";
+import { resolveIngredientExclusions, unsupportedAllergies, hasAllergyConflict, hasIngredientExclusionConflict } from "./food-restrictions";
+import { recalculateRecipeEstimates, recalculateCustomNutrition } from "./recipe-nutrition";
 import { shoppingContext, shoppingConflict, catalogueShoppingRecipe, cleanLabel, type RecipeCollection, type ShoppingRecipe, type ManualShoppingItem } from "./personal-library";
 import { composeMeal, scaleAssociationStep, compositionTitlesFor, updatePlannedComposition, type CompositionTarget } from "./composed-meal";
 import type { SavedMeal } from "./saved-meals";
@@ -56,6 +59,7 @@ import {
   leftoverCandidates,
   planLeftover,
   reconcileCheckedItems,
+  refreshPlanEstimate,
   setMealPortions,
   setMealSkipped,
   swapPlannedMeals,
@@ -92,7 +96,6 @@ import {
   type PlanSummary,
   type RecipeCompatibilityDiagnostic,
 } from "./engine";
-import { canonicalAllergen } from "./allergens";
 import {
   DEFAULT_PROFILE,
   type DayConstraint,
@@ -139,6 +142,7 @@ import {
   importAppStateFile,
   loadAppState,
   loadRecoveryAppState,
+  normalizeCustomRecipe,
   mergeAppStateReplicas,
   replaceAppStateData,
   registerOfflineSupport,
@@ -267,7 +271,7 @@ const EQUIPMENT_OPTIONS: Array<{ id: Equipment; label: string }> = [
   { id: "toaster", label: "Grille-pain" },
   { id: "steamer", label: "Vapeur" },
 ];
-const RECIPE_IMAGE_PLACEHOLDER = "/assets/recipe-placeholder.svg";
+const RECIPE_IMAGE_PLACEHOLDER = `${import.meta.env.BASE_URL}assets/recipe-placeholder.svg`;
 
 function handleRecipeImageError(event: SyntheticEvent<HTMLImageElement>) {
   const image = event.currentTarget;
@@ -476,16 +480,6 @@ function normalizeText(value: string): string {
 
 function parseList(value: string): string[] {
   return [...new Set(value.split(/[,;\n]/).map((item) => normalizeText(item)).filter(Boolean))];
-}
-
-function resolveExcludedIngredients(value: string): string[] {
-  const terms = parseList(value);
-  const entries = [...ingredientNameById.entries()];
-  return terms.map((term) => {
-    const exact = entries.find(([id, name]) => normalizeText(id) === term || normalizeText(name) === term);
-    const partial = entries.find(([, name]) => normalizeText(name).includes(term));
-    return exact?.[0] ?? partial?.[0] ?? term.replace(/\s+/g, "_");
-  });
 }
 
 interface InstallPromptEvent extends Event {
@@ -925,7 +919,8 @@ function WeekBalance({ summary, profile }: { summary: PlanSummary; profile: User
         ))}
       </ul>
       {summary.plantIngredients.length ? <details className="plant-diversity-details" data-testid="plant-diversity"><summary>Voir les {summary.plantDiversity} végétaux comptés</summary><p>{summary.plantIngredients.join(" · ")}</p></details> : null}
-      <div className="week-balance__nutrition"><span><strong>{summary.averageCalories.toFixed(0)}</strong> kcal</span><span><strong>{summary.averageProtein.toFixed(0)}</strong> g protéines</span><span><strong>{summary.averageFiber.toFixed(0)}</strong> g fibres</span></div>
+      {summary.nutritionComplete ? <div className="week-balance__nutrition"><span><strong>{summary.averageCalories.toFixed(0)}</strong> kcal</span><span><strong>{summary.averageProtein.toFixed(0)}</strong> g protéines</span><span><strong>{summary.averageFiber.toFixed(0)}</strong> g fibres</span></div> : <p className="inline-help" data-testid="nutrition-incomplete">Moyennes nutritionnelles non disponibles : certaines recettes modifiées ou substitutions ne disposent pas d’une estimation recalculée.</p>}
+      {!summary.costComplete ? <p className="inline-help">Certains coûts n’ont pas pu être recalculés après modification des ingrédients ; le total conserve ces estimations antérieures.</p> : null}
       <p className="catalogue-disclaimer">Moyennes estimatives par portion, à titre indicatif. Ces repères décrivent l’organisation de vos repas selon un modèle méditerranéen ; ils ne constituent ni une évaluation nutritionnelle ni un avis médical.</p>
     </section>
   );
@@ -944,37 +939,35 @@ function PantryAmountInput({ ingredientId, ingredientName, unit, value, onChange
 }) {
   const formattedValue = value > 0 ? String(value) : "";
   const [draft, setDraft] = useState(formattedValue);
+  const [error, setError] = useState("");
   const editing = useRef(false);
   useEffect(() => {
     if (!editing.current) setDraft(formattedValue);
   }, [formattedValue]);
 
   const parsedQuantity = (raw: string): number | null => {
-    const normalized = raw.trim().replace(",", ".");
-    if (!/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)) return null;
-    const quantity = Number(normalized);
-    return Number.isFinite(quantity) && quantity > 0 ? Math.min(1_000_000, quantity) : null;
+    return parseNumericInput(raw, { min: 0, max: 1_000_000 });
   };
   const commit = (raw: string) => {
     const quantity = parsedQuantity(raw);
-    if (quantity !== null) onChange(ingredientId, unit, quantity);
-    else if (!raw.trim()) onChange(ingredientId, unit, null);
+    if (quantity !== null) onChange(ingredientId, unit, quantity || null);
   };
   const finishEditing = () => {
     editing.current = false;
-    const quantity = parsedQuantity(draft);
+    const quantity = parsedQuantity(draft.trim().replace(/[.,]$/, ""));
     if (quantity !== null) {
-      setDraft(String(quantity));
-      onChange(ingredientId, unit, quantity);
+      setDraft(quantity ? String(quantity) : "");
+      setError("");
+      onChange(ingredientId, unit, quantity || null);
       return;
     }
-    const numeric = Number(draft.trim().replace(",", "."));
-    if (!draft.trim() || (Number.isFinite(numeric) && numeric <= 0)) {
+    if (!draft.trim()) {
       setDraft("");
+      setError("");
       onChange(ingredientId, unit, null);
       return;
     }
-    setDraft(formattedValue);
+    setError("Saisissez une quantité entre 0 et 1 000 000. Le stock précédent est conservé.");
   };
   const unitLabel = formatIngredientUnit(unit, 2);
 
@@ -986,15 +979,19 @@ function PantryAmountInput({ ingredientId, ingredientName, unit, value, onChange
       placeholder="0"
       data-testid={`pantry-amount-${ingredientId}-${unit}`}
       value={draft}
+      aria-invalid={Boolean(error)}
+      aria-describedby={error ? `pantry-error-${ingredientId}-${unit}` : undefined}
       onFocus={() => { editing.current = true; }}
       onChange={(event) => {
         const raw = event.target.value;
         setDraft(raw);
+        setError("");
         commit(raw);
       }}
       onBlur={finishEditing}
     />
     <small>{formatIngredientUnit(unit, parsedQuantity(draft) ?? 1)}</small>
+    {error ? <small id={`pantry-error-${ingredientId}-${unit}`} role="alert">{error}</small> : null}
   </label>;
 }
 
@@ -1044,7 +1041,7 @@ function RecipeTools({ store, recipeId, recipe, portions, shoppingAllowed = true
   const add = () => {
     const live = store.getSnapshot();
     if (!recipe || !shoppingAllowed) { setMessage("Cette recette ne peut pas être ajoutée automatiquement aux courses."); return; }
-    if (shoppingConflict(recipe, live.profile)) { setMessage("Cette recette contient un ingrédient exclu ou ne correspond pas au régime de votre profil. Vérifiez votre profil."); return; }
+    if (shoppingConflict(recipe, live.profile, recipesForState(live).flatMap((item) => item.ingredients))) { setMessage("Cette recette contient un ingrédient exclu ou ne correspond pas au régime de votre profil. Vérifiez votre profil."); return; }
     if (!existing && live.shoppingRecipes.length >= 100) { setMessage("Retirez une recette des courses avant d’en ajouter une autre."); return; }
     const ids = new Set(recipe.ingredients.map((item) => shoppingIdentityFor(item.id).shoppingId));
     store.setState((current) => ({ ...current, shoppingRecipes: [...current.shoppingRecipes.filter((item) => item.recipe.id !== recipeId), { recipe, portions }], extraShoppingCheckedIds: current.extraShoppingCheckedIds.filter((id) => !ids.has(shoppingIdentityFor(id).shoppingId)), checkedShoppingItemIds: current.checkedShoppingItemIds.filter((id) => !ids.has(shoppingIdentityFor(id).shoppingId)) }));
@@ -1075,6 +1072,38 @@ function CollectionsView({ store, catalogue, onLoad, onOpen }: { store: AppState
     {!catalogue && collection.recipeIds.some((id) => !resolve(id)) ? <button className="secondary-button" type="button" onClick={onLoad}>Charger les recettes de la collection</button> : null}</section> : null}
     {removed ? <div role="status">Collection supprimée. Les recettes sont conservées. <button className="text-button" type="button" onClick={() => { const live = store.getSnapshot(); if (live.recipeCollections.length >= 100) { setNotice("Libérez une place pour restaurer cette collection."); return; } store.setState((current) => ({ ...current, recipeCollections: current.recipeCollections.some((item) => item.id === removed.id) ? current.recipeCollections : [...current.recipeCollections, removed] })); setSelected(removed.id); setRemoved(null); }}>Annuler la suppression de la collection</button></div> : null}{notice ? <p role="status">{notice}</p> : null}
     </div><WebSheet open={editing !== null} onOpenChange={(open) => !open && setEditing(null)} title={editing ? "Renommer la collection" : "Nouvelle collection"}><CollectionNameForm key={editing} initial={state.recipeCollections.find((item) => item.id === editing)?.name} onSave={(name) => { const error = saveCollection(store, name, editing || undefined); if (!error) setEditing(null); return error; }} /></WebSheet></details>;
+}
+
+function SpendAmountInput({ value, onChange }: { value?: number; onChange: (value: number | null) => void }) {
+  const [draft, setDraft] = useState(value === undefined ? "" : String(value));
+  const [error, setError] = useState("");
+  const editing = useRef(false);
+  useEffect(() => {
+    if (!editing.current) setDraft(value === undefined ? "" : String(value));
+  }, [value]);
+  const parse = (raw: string) => parseNumericInput(raw, { min: 0, max: 100_000, decimals: 2 });
+  return <label className="text-field"><span className="sr-only">Montant réellement dépensé</span>
+    <KeyboardInput inputMode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Montant réel" data-testid="spend-input" value={draft}
+      aria-invalid={Boolean(error)} aria-describedby={error ? "spend-input-error" : undefined}
+      onFocus={() => { editing.current = true; }}
+      onChange={(event) => {
+        const raw = event.target.value;
+        setDraft(raw);
+        setError("");
+        const amount = parse(raw);
+        if (amount !== null) onChange(amount);
+      }}
+      onBlur={() => {
+        editing.current = false;
+        if (!draft.trim()) { onChange(null); setError(""); return; }
+        const amount = parse(draft.trim().replace(/[.,]$/, ""));
+        if (amount === null) { setError("Saisissez un montant de 0 à 100 000 €, avec au maximum deux décimales. Le montant précédent est conservé."); return; }
+        onChange(amount);
+        setDraft(String(amount).replace(".", ","));
+        setError("");
+      }} />
+    {error ? <small id="spend-input-error" role="alert">{error}</small> : null}
+  </label>;
 }
 
 function CoursesView({ store, onRecipes, plan, profile, checkedIds, pantryIds, pantryAmounts, categoryOrder, spent, onToggleChecked, onTogglePantry, onSetPantryAmount, onMoveCategory, onSetSpent }: {
@@ -1213,7 +1242,7 @@ function CoursesView({ store, onRecipes, plan, profile, checkedIds, pantryIds, p
           <label className="text-field"><span>Ajouter un article</span><KeyboardInput placeholder="Par exemple : papier cuisson" maxLength={160} value={newItem} onChange={(event) => setNewItem(event.target.value)} /></label><button className="secondary-button" type="submit" disabled={!newItem.trim()}>Ajouter l’article</button>
         </form><button type="button" className="secondary-button" onClick={onRecipes}>Choisir une recette pour les courses</button>
         {!plan && !items.length ? <p>Votre liste est vide. Ajoutez un article ou ouvrez une recette et choisissez « Ajouter aux courses ».</p> : null}
-        {extras.shoppingRecipes.length ? <details><summary>Recettes ajoutées aux courses · {extras.shoppingRecipes.length}</summary><p>Ces achats s’ajoutent à ceux de la semaine. Ils ne composent pas un repas et ne valident pas d’associations entre recettes.</p>{extras.shoppingRecipes.map((entry) => <div className="shopping-extra" key={entry.recipe.id}><strong>{entry.recipe.title}</strong><label>Personnes pour {entry.recipe.title}<select aria-label={`Personnes pour les courses de ${entry.recipe.title}`} value={entry.portions} onChange={(event) => changeExtra(entry.recipe.id, Number(event.target.value))}>{[1,2,3,4,5,6,7,8].map((value) => <option key={value}>{value}</option>)}</select></label><button type="button" className="text-button" onClick={() => changeExtra(entry.recipe.id, null)}>Retirer cette recette des courses</button>{shoppingConflict(entry.recipe, profile) ? <p role="alert">Cette recette ajoutée ne correspond plus au régime ou aux exclusions de votre profil.</p> : null}</div>)}</details> : null}
+        {extras.shoppingRecipes.length ? <details><summary>Recettes ajoutées aux courses · {extras.shoppingRecipes.length}</summary><p>Ces achats s’ajoutent à ceux de la semaine. Ils ne composent pas un repas et ne valident pas d’associations entre recettes.</p>{extras.shoppingRecipes.map((entry) => <div className="shopping-extra" key={entry.recipe.id}><strong>{entry.recipe.title}</strong><label>Personnes pour {entry.recipe.title}<select aria-label={`Personnes pour les courses de ${entry.recipe.title}`} value={entry.portions} onChange={(event) => changeExtra(entry.recipe.id, Number(event.target.value))}>{[1,2,3,4,5,6,7,8].map((value) => <option key={value}>{value}</option>)}</select></label><button type="button" className="text-button" onClick={() => changeExtra(entry.recipe.id, null)}>Retirer cette recette des courses</button>{shoppingConflict(entry.recipe, profile, ACTIVE_RECIPES.flatMap((item) => item.ingredients)) ? <p role="alert">Cette recette ajoutée ne correspond plus au régime ou aux exclusions de votre profil.</p> : null}</div>)}</details> : null}
         {cartMessage ? <p role="status">{cartMessage}</p> : null}
         {removedItem ? <p role="status">Article supprimé. <button className="text-button" type="button" onClick={() => { if (store.getSnapshot().shoppingItems.length >= 200) { setCartMessage("Retirez un article pour libérer une place."); return; } store.setState((current) => ({ ...current, shoppingItems: current.shoppingItems.some((item) => item.id === removedItem.id) ? current.shoppingItems : [...current.shoppingItems, removedItem] })); setRemovedItem(null); }}>Annuler la suppression de l’article</button></p> : null}
       </section>
@@ -1230,10 +1259,8 @@ function CoursesView({ store, onRecipes, plan, profile, checkedIds, pantryIds, p
       {pantryMode ? <p className="inline-help">Touchez « J’ai déjà » pour retirer un ingrédient, ou saisissez la quantité en stock pour ne racheter que le complément. Les flèches réordonnent les rayons selon votre magasin.</p> : null}
       {plan ? <section className="spend-tracker" data-testid="spend-tracker">
         <div><strong>Budget de la semaine</strong><small>{plan.estimatedCost.toFixed(0)} € estimés{typeof spent === "number" ? ` · ${spent.toFixed(2).replace(".", ",")} € dépensés` : ""}</small></div>
-        <label className="text-field"><span className="sr-only">Montant réellement dépensé</span><KeyboardInput inputMode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="Montant réel" data-testid="spend-input" value={typeof spent === "number" ? String(spent) : ""} onChange={(event) => {
-          const amount = Number(event.target.value.replace(",", "."));
-          onSetSpent(event.target.value.trim() && Number.isFinite(amount) && amount >= 0 ? Math.min(100_000, amount) : null);
-        }} /></label>
+        <SpendAmountInput key={plan.id} value={spent} onChange={onSetSpent} />
+        {plan.meals.some((meal) => !meal.skipped && recipeById.get(meal.recipeId)?.costRecalculated === false) ? <p className="inline-help">Estimation partielle : le coût de certaines recettes modifiées n’a pas pu être recalculé. Le montant réellement dépensé reste indépendant.</p> : null}
         {typeof spent === "number" ? <p className={`spend-delta ${spent > plan.estimatedCost ? "is-over" : "is-under"}`}>{spent > plan.estimatedCost ? `${(spent - plan.estimatedCost).toFixed(2).replace(".", ",")} € au-dessus de l’estimation` : `${(plan.estimatedCost - spent).toFixed(2).replace(".", ",")} € sous l’estimation`}</p> : null}
         <p className="catalogue-disclaimer">Les prix affichés restent des estimations ; ce montant vous permet de mesurer l’écart réel.</p>
       </section> : null}
@@ -1664,50 +1691,78 @@ function customRecipeFrom(recipe: Recipe): Recipe {
   };
 }
 
-function CustomRecipeView({ draft, onSave, onDelete }: { draft: Recipe; onSave: (recipe: Recipe) => void; onDelete?: () => void }) {
+function CustomRecipeView({ draft, signal, onSave, onDelete }: { draft: Recipe; signal: AbortSignal; onSave: (recipe: Recipe) => Promise<void>; onDelete?: () => void }) {
   const keyboard = useKeyboard();
   const [title, setTitle] = useState(draft.title);
   const [prepMinutes, setPrepMinutes] = useState(String(draft.prepMinutes));
   const [steps, setSteps] = useState(draft.steps.join("\n"));
   const [ingredients, setIngredients] = useState(draft.ingredients.map((item) => ({ ...item })));
+  const [error, setError] = useState("");
+  const [invalidField, setInvalidField] = useState("");
+  const [saving, setSaving] = useState(false);
+  const editorRef = useRef<HTMLElement>(null);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const setQuantity = (index: number, delta: number) => setIngredients((current) => current.map((item, position) => (position === index
     ? { ...item, quantity: Math.max(0, Math.round((item.quantity + delta) * 100) / 100) }
     : item)));
-  const commit = () => {
-    keyboard.hide();
+  const commit = async () => {
+    if (saving) return;
     const cleanedSteps = steps.split("\n").map((step) => step.trim()).filter(Boolean);
-    onSave({
+    const minutes = parseNumericInput(prepMinutes, { min: 1, max: 600, integer: true });
+    const chosenIngredients = ingredients.filter((item) => item.quantity > 0);
+    const field = !title.trim() ? "custom-title" : minutes === null ? "custom-time" : !cleanedSteps.length ? "custom-steps" : "";
+    if (field || !chosenIngredients.length) {
+      setInvalidField(field);
+      setError(field === "custom-title" ? "Donnez un titre à votre recette." : field === "custom-time" ? "Saisissez un temps entier entre 1 et 600 minutes." : field === "custom-steps" ? "Conservez au moins une étape de préparation." : "Conservez au moins un ingrédient avec une quantité positive. Votre recette précédente est conservée.");
+      if (field) requestAnimationFrame(() => document.getElementById(field)?.focus());
+      return;
+    }
+    const candidate = normalizeCustomRecipe({
       ...draft,
-      title: title.trim().slice(0, 90) || draft.title,
-      prepMinutes: Math.min(600, Math.max(1, Math.round(Number(prepMinutes) || draft.prepMinutes))),
-      ingredients: ingredients.filter((item) => item.quantity > 0),
-      steps: cleanedSteps.length ? cleanedSteps : draft.steps,
+      title: title.trim().slice(0, 90),
+      prepMinutes: minutes,
+      ingredients: chosenIngredients,
+      steps: cleanedSteps,
     });
+    if (!candidate) { setError("Cette recette contient une valeur invalide. Vérifiez les quantités et les champs ; la version précédente est conservée."); return; }
+    keyboard.hide();
+    setError("");
+    setInvalidField("");
+    setSaving(true);
+    try {
+      const estimates = await recalculateRecipeEstimates(draft, chosenIngredients);
+      if (signal.aborted || !mounted.current || !editorRef.current?.closest('[data-flow-current="true"]')) return;
+      await onSave({ ...candidate, ...estimates });
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : "Impossible d’enregistrer cette recette. La version précédente est conservée.");
+    } finally { if (mounted.current) setSaving(false); }
   };
-  return <MobileScroll className="app-screen"><main className="page-content pushed-page" data-testid="custom-recipe-view">
+  return <MobileScroll className="app-screen"><main ref={editorRef} className="page-content pushed-page" data-testid="custom-recipe-view">
     <div className="page-heading"><span className="eyebrow">Ma version</span><h1>Adapter la recette</h1><p>Ajustez le titre, le temps actif, les quantités et les étapes. Les ingrédients gardent leurs identifiants pour rester justes dans la liste de courses.</p></div>
+    {error ? <p className="notice-banner" role="alert" id="custom-error">{error}</p> : null}
     <section className="form-section"><h2>Intitulé</h2>
-      <label className="text-field"><span>Titre</span><KeyboardInput value={title} maxLength={90} data-testid="custom-title" onChange={(event) => setTitle(event.target.value)} onBlur={keyboard.hide} /></label>
-      <label className="text-field"><span>Temps actif (min)</span><KeyboardInput inputMode="numeric" value={prepMinutes} data-testid="custom-time" onChange={(event) => setPrepMinutes(event.target.value)} onBlur={keyboard.hide} /></label>
+      <label className="text-field"><span>Titre</span><KeyboardInput disabled={saving} value={title} maxLength={90} id="custom-title" data-testid="custom-title" aria-invalid={invalidField === "custom-title"} aria-describedby={error ? "custom-error" : undefined} onChange={(event) => setTitle(event.target.value)} onBlur={keyboard.hide} /></label>
+      <label className="text-field"><span>Temps actif (min)</span><KeyboardInput disabled={saving} inputMode="numeric" value={prepMinutes} id="custom-time" data-testid="custom-time" aria-invalid={invalidField === "custom-time"} aria-describedby={error ? "custom-error" : undefined} onChange={(event) => setPrepMinutes(event.target.value)} onBlur={keyboard.hide} /></label>
     </section>
     <section className="form-section"><h2>Ingrédients</h2>
       <p className="inline-help">Mettez une quantité à zéro pour retirer un ingrédient.</p>
       {ingredients.map((item, index) => <div className="setting-row" key={`${item.id}-${index}`}>
         <span><strong>{item.name}</strong><small>{displayQuantity(item.quantity, item.unit)} par portion</small></span>
-        <div className="stepper"><button type="button" aria-label={`Réduire ${item.name}`} onClick={() => setQuantity(index, item.unit === "piece" ? -0.5 : -5)}><MinusIcon /></button><b>{item.quantity}</b><button type="button" aria-label={`Augmenter ${item.name}`} onClick={() => setQuantity(index, item.unit === "piece" ? 0.5 : 5)}><PlusIcon /></button></div>
+        <div className="stepper"><button type="button" disabled={saving} aria-label={`Réduire ${item.name}`} onClick={() => setQuantity(index, item.unit === "piece" ? -0.5 : -5)}><MinusIcon /></button><b>{item.quantity}</b><button type="button" disabled={saving} aria-label={`Augmenter ${item.name}`} onClick={() => setQuantity(index, item.unit === "piece" ? 0.5 : 5)}><PlusIcon /></button></div>
       </div>)}
     </section>
     <section className="form-section"><h2>Préparation</h2>
-      <label className="text-field"><span>Une étape par ligne</span><KeyboardTextarea value={steps} rows={8} data-testid="custom-steps" onChange={(event) => setSteps(event.target.value)} /></label>
+      <label className="text-field"><span>Une étape par ligne</span><KeyboardTextarea disabled={saving} value={steps} rows={8} id="custom-steps" data-testid="custom-steps" aria-invalid={invalidField === "custom-steps"} aria-describedby={error ? "custom-error" : undefined} onChange={(event) => setSteps(event.target.value)} /></label>
     </section>
-    <button type="button" className="primary-button full-button" data-testid="custom-save" onClick={commit}>Enregistrer ma version</button>
+    <button type="button" className="primary-button full-button" data-testid="custom-save" disabled={saving} onClick={() => void commit()}>{saving ? "Enregistrement…" : "Enregistrer ma version"}</button>
     {onDelete ? <ConfirmActionDialog
       title="Supprimer cette recette ?"
       description="La recette personnelle, son favori, sa note et ses préférences seront retirés de cet appareil. Une recette encore utilisée dans une semaine ne pourra pas être supprimée."
       confirmLabel="Supprimer la recette"
       testId="custom-delete-dialog"
       onConfirm={onDelete}
-      trigger={<button type="button" className="secondary-button full-button" data-testid="custom-delete">Supprimer cette recette</button>}
+      trigger={<button type="button" className="secondary-button full-button" data-testid="custom-delete" disabled={saving}>Supprimer cette recette</button>}
     /> : null}
     <p className="privacy-note">Vos recettes personnelles restent dans le stockage local de cette adresse web, sur cet appareil, et entrent dans vos semaines comme les autres, filtres de sécurité compris.</p>
   </main></MobileScroll>;
@@ -1753,7 +1808,7 @@ function PlanSlotView({ plan, recipe, profile, onConfirm, onProfile }: {
   onConfirm: (slot: PlanSlot, portions: number) => string | null;
   onProfile: () => void;
 }) {
-  const slots = assignableSlots(plan, recipe, profile);
+  const slots = assignableSlots(plan, recipe, profile, ACTIVE_RECIPES.flatMap((item) => item.ingredients));
   const [portions, setPortions] = useState(profile.people);
   const [error, setError] = useState("");
   const alreadyPlanned = plan.meals.find((meal) => !meal.skipped && meal.recipeId === recipe.id);
@@ -1879,6 +1934,7 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
   const [maxPrep, setMaxPrep] = useState(String(initial.maxPrepMinutes));
   const [allergies, setAllergies] = useState(initial.allergies.join(", "));
   const [excluded, setExcluded] = useState(initial.excludedIngredientIds.map((id) => ingredientNameById.get(id) ?? id).join(", "));
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [constraintDay, setConstraintDay] = useState<DayConstraint["dayIndex"]>(0);
   const toggleEquipment = (item: Equipment) => setProfile((current) => ({ ...current, equipment: current.equipment.includes(item) ? current.equipment.filter((entry) => entry !== item) : [...current.equipment, item] }));
   const targets = weeklyTargetsOf(profile);
@@ -1922,9 +1978,24 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
     });
   };
   const commit = () => {
+    const weeklyBudget = parseNumericInput(budget, { min: 1, max: 10_000, decimals: 2 });
+    const maxPrepMinutes = parseNumericInput(maxPrep, { min: 1, max: 1_440, integer: true });
+    const knownIngredients = ACTIVE_RECIPES.flatMap((recipe) => recipe.ingredients);
+    const allergyTerms = parseList(allergies);
+    const unknownAllergies = unsupportedAllergies(allergyTerms, knownIngredients);
+    const exclusions = resolveIngredientExclusions(parseList(excluded), knownIngredients);
+    const nextErrors: Record<string, string> = {};
+    if (weeklyBudget === null) nextErrors["profile-budget"] = "Saisissez un budget entre 1 et 10 000 €, avec au maximum deux décimales.";
+    if (maxPrepMinutes === null) nextErrors["profile-time"] = "Saisissez un temps entier entre 1 et 1 440 minutes.";
+    if (unknownAllergies.length) nextErrors["profile-allergies"] = `Restriction non reconnue : ${unknownAllergies.join(", ")}. Choisissez un allergène proposé ou le nom exact d’un ingrédient.`;
+    if (exclusions.unknown.length) nextErrors["profile-exclusions"] = `Aliment non reconnu : ${exclusions.unknown.join(", ")}. Utilisez le nom exact d’un ingrédient du catalogue.`;
+    setErrors(nextErrors);
+    const firstError = Object.keys(nextErrors)[0];
+    if (firstError) { requestAnimationFrame(() => document.getElementById(firstError)?.focus()); return; }
     keyboard.hide();
-    onSave({ ...profile, weeklyBudget: Math.min(10_000, Math.max(1, Math.round(Number(budget) || DEFAULT_PROFILE.weeklyBudget))), maxPrepMinutes: Math.min(1_440, Math.max(1, Math.round(Number(maxPrep) || DEFAULT_PROFILE.maxPrepMinutes))), allergies: parseList(allergies), excludedIngredientIds: resolveExcludedIngredients(excluded) });
+    onSave({ ...profile, weeklyBudget: weeklyBudget!, maxPrepMinutes: maxPrepMinutes!, allergies: allergyTerms, excludedIngredientIds: exclusions.ids });
   };
+  const errorFor = (field: string) => errors[field] ? <small id={`${field}-error`} role="alert">{errors[field]}</small> : null;
   return <MobileScroll className="app-screen"><main className="page-content pushed-page profile-page">
     <div className="page-heading"><span className="eyebrow">Personnalisation</span><h1>Mon profil alimentaire</h1><p>Ces choix guident chaque menu et restent dans le stockage local de cette adresse web, sur cet appareil.</p></div>
     <section className="form-section"><h2>Associations alimentaires</h2><label className="text-field"><span>Règles pour le générateur</span><select aria-label="Règles d’association du générateur" value={profile.associationMode ?? "off"} onChange={(event) => setProfile((current) => ({ ...current, associationMode: event.target.value as AssociationMode }))}><option value="off">Catalogue habituel</option><option value="green-orange">Collection dédiée · vertes et orange signalées</option><option value="green">Collection dédiée · vertes uniquement</option></select></label><p className="inline-help">La collection dédiée utilise votre tableau et exclut gluten, produits laitiers, alcool ajouté et préparations industrielles. Les recettes non classées ne sont pas proposées. Ce réglage ne modifie pas les semaines déjà enregistrées ; régénérez pour l’appliquer.</p></section>
@@ -1952,11 +2023,11 @@ function ProfileView({ initial, onSave, onOpenInformation }: { initial: UserProf
       </div>
     </section>
     <section className="form-section"><h2>Mes préférences</h2><div className="choice-grid">{(Object.keys(DIET_LABELS) as DietMode[]).map((item) => <button type="button" className={profile.diet === item ? "is-selected" : ""} aria-pressed={profile.diet === item} key={item} onClick={() => setProfile((current) => ({ ...current, diet: item }))}>{DIET_LABELS[item]}</button>)}</div>
-      <label className="text-field"><span>Budget hebdomadaire (€)</span><KeyboardInput type="number" inputMode="numeric" min={1} max={10_000} step={1} value={budget} onChange={(event) => setBudget(event.target.value)} onBlur={keyboard.hide} /></label>
-      <label className="text-field"><span>Temps actif maximum en cuisine (min)</span><KeyboardInput type="number" inputMode="numeric" min={1} max={1_440} step={1} value={maxPrep} onChange={(event) => setMaxPrep(event.target.value)} onBlur={keyboard.hide} /></label>
+      <label className="text-field"><span>Budget hebdomadaire (€)</span><KeyboardInput id="profile-budget" inputMode="decimal" value={budget} aria-invalid={Boolean(errors["profile-budget"])} aria-describedby={errors["profile-budget"] ? "profile-budget-error" : undefined} onChange={(event) => { setBudget(event.target.value); setErrors((current) => ({ ...current, "profile-budget": "" })); }} onBlur={keyboard.hide} />{errorFor("profile-budget")}</label>
+      <label className="text-field"><span>Temps actif maximum en cuisine (min)</span><KeyboardInput id="profile-time" inputMode="numeric" value={maxPrep} aria-invalid={Boolean(errors["profile-time"])} aria-describedby={errors["profile-time"] ? "profile-time-error" : undefined} onChange={(event) => { setMaxPrep(event.target.value); setErrors((current) => ({ ...current, "profile-time": "" })); }} onBlur={keyboard.hide} />{errorFor("profile-time")}</label>
       <fieldset className="allergen-field"><legend>Allergies et intolérances à exclure</legend><div className="allergen-grid">{ALLERGEN_OPTIONS.map((item) => <button type="button" className={selectedAllergies.has(item.id) ? "is-selected" : ""} aria-pressed={selectedAllergies.has(item.id)} key={item.id} onClick={() => toggleAllergy(item.id)}>{selectedAllergies.has(item.id) ? <CheckIcon /> : null}{item.label}</button>)}</div></fieldset>
-      <label className="text-field"><span>Autre allergie ou ingrédient à exclure</span><KeyboardInput value={allergies} placeholder="Sélectionnez ci-dessus ou saisissez un terme" onChange={(event) => setAllergies(event.target.value)} onBlur={keyboard.hide} /><small>Les 14 allergènes réglementaires sont normalisés automatiquement.</small></label>
-      <label className="text-field"><span>Aliments refusés</span><KeyboardInput value={excluded} placeholder="Ex. brocoli, saumon" onChange={(event) => setExcluded(event.target.value)} onBlur={keyboard.hide} /></label>
+      <label className="text-field"><span>Autre allergie ou ingrédient à exclure</span><KeyboardInput id="profile-allergies" value={allergies} placeholder="Sélectionnez ci-dessus ou saisissez un terme" aria-invalid={Boolean(errors["profile-allergies"])} aria-describedby={errors["profile-allergies"] ? "profile-allergies-error" : undefined} onChange={(event) => { setAllergies(event.target.value); setErrors((current) => ({ ...current, "profile-allergies": "" })); }} onBlur={keyboard.hide} /><small>Les 14 allergènes sont normalisés ; les autres ingrédients sont reconnus par leur nom exact. Une restriction inconnue doit être corrigée avant l’enregistrement.</small>{errorFor("profile-allergies")}</label>
+      <label className="text-field"><span>Aliments refusés</span><KeyboardInput id="profile-exclusions" value={excluded} placeholder="Ex. brocoli, saumon" aria-invalid={Boolean(errors["profile-exclusions"])} aria-describedby={errors["profile-exclusions"] ? "profile-exclusions-error" : undefined} onChange={(event) => { setExcluded(event.target.value); setErrors((current) => ({ ...current, "profile-exclusions": "" })); }} onBlur={keyboard.hide} />{errorFor("profile-exclusions")}</label>
     </section>
     <section className="form-section"><h2>Équipements</h2><div className="choice-grid">{EQUIPMENT_OPTIONS.map((item) => <button type="button" className={profile.equipment.includes(item.id) ? "is-selected" : ""} aria-pressed={profile.equipment.includes(item.id)} key={item.id} onClick={() => toggleEquipment(item.id)}>{profile.equipment.includes(item.id) ? <CheckIcon /> : null}{item.label}</button>)}</div>
       {profile.equipment.length === 0 ? <p className="notice-banner" role="alert" data-testid="no-equipment-warning">Sans aucun équipement, presque aucune recette ne reste réalisable et la génération échouera. Cochez au moins les plaques.</p> : null}
@@ -2178,6 +2249,7 @@ function CompatibilityHelp({ diagnostic, selectedMinutes, onUseMinutes, onOpenPr
   );
   const safetyBlocked = diagnostic.blockedBy.allergies + diagnostic.blockedBy.excludedIngredients;
   return <div className="empty-guidance" data-testid="compatibility-help">
+    {diagnostic.unresolvedRestrictions?.length ? <p role="alert"><strong>Restrictions non reconnues</strong><span>{diagnostic.unresolvedRestrictions.join(", ")}. Corrigez ces termes dans le profil avant de poursuivre ; ils ne sont pas ignorés.</span>{onOpenProfile ? <button type="button" onClick={onOpenProfile}>Corriger mon profil</button> : null}</p> : null}
     {allCompatibleAlreadyUsed ? <p><strong>Variété de la semaine</strong><span>Toutes les recettes compatibles sont déjà présentes dans votre menu.</span></p> : null}
     {diagnostic.mealTypeCount === 0 ? <p><strong>Type de repas</strong><span>Le catalogue ne contient aucune recette pour ce créneau.</span></p> : null}
     {diagnostic.minimumCompatibleMinutes !== undefined && selectedMinutes !== undefined && diagnostic.minimumCompatibleMinutes > selectedMinutes ? <p><strong>Temps disponible</strong><span>La recette compatible la plus rapide demande {diagnostic.minimumCompatibleMinutes} minutes actives.</span>{onUseMinutes ? <button type="button" onClick={() => onUseMinutes(diagnostic.minimumCompatibleMinutes!)}>Choisir {diagnostic.minimumCompatibleMinutes} min</button> : null}</p> : null}
@@ -2272,7 +2344,7 @@ function GenerateView({ profile, lockedCount = 0, canPrepareNext = false, onCrea
 
 export type RecipeRating = "loved" | "neutral" | "meh" | "avoided";
 
-function RecipeView({ tools, recipe, planned, profile, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onSubstitutionChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate, onEdit, onRecompose }: { tools?: (portions: number) => ReactNode; recipe: Recipe; planned?: PlannedMeal; profile: UserProfile; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onSubstitutionChange?: (ingredientId: string, substitutionId: string | null) => void; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void; onEdit?: () => void; onRecompose?: () => Promise<void> }) {
+function RecipeView({ tools, recipe, planned, profile, initialPortions = 2, favorite, onFavorite, onReplace, onPlan, onPortionsChange, onSubstitutionChange, onCook, rating = "neutral", onRate, note = "", onNoteChange, onDuplicate, onEdit, onRecompose }: { tools?: (portions: number) => ReactNode; recipe: Recipe; planned?: PlannedMeal; profile: UserProfile; initialPortions?: number; favorite: boolean; onFavorite: () => void; onReplace?: () => void; onPlan?: () => void; onPortionsChange?: (portions: number) => void; onSubstitutionChange?: (ingredientId: string, substitutionId: string | null) => string | null; onCook?: (portions: number) => void; rating?: RecipeRating; onRate?: (rating: RecipeRating) => void; note?: string; onNoteChange?: (note: string) => void; onDuplicate?: () => void; onEdit?: () => void; onRecompose?: () => Promise<void> }) {
   const [compositionMessage, setCompositionMessage] = useState("");
   const [portions, setPortionsState] = useState(planned?.portions ?? initialPortions);
   const setPortions = (update: (value: number) => number) => {
@@ -2287,13 +2359,30 @@ function RecipeView({ tools, recipe, planned, profile, initialPortions = 2, favo
   useEffect(() => { setIsFavorite(favorite); }, [favorite]);
   const ingredients = ingredientsForPlannedMeal(recipe, planned, portions);
   const selectedSubstitutions = new Map((planned?.substitutions ?? []).map((selection) => [canonicalIngredientId(selection.ingredientId), selection.substitutionId]));
-  const blockedAllergens = new Set(profile.allergies.map(canonicalAllergen));
-  const allowedSubstitutions = (ingredient: Recipe["ingredients"][number]) => ingredientSubstitutionsFor(ingredient).filter((rule) => {
-    const replacementId = canonicalIngredientId(rule.replacement.id);
-    const blockedByIngredient = profile.excludedIngredientIds.map(canonicalIngredientId).includes(replacementId);
-    const blockedByAllergen = (rule.replacement.allergens ?? []).map(canonicalAllergen).some((allergen) => blockedAllergens.has(allergen));
-    return !blockedByIngredient && !blockedByAllergen;
-  });
+  const [substitutionError, setSubstitutionError] = useState("");
+  const applySubstitution = (ingredientId: string, substitutionId: string | null) => {
+    const error = onSubstitutionChange?.(ingredientId, substitutionId) ?? null;
+    setSubstitutionError(error ?? "");
+    if (!error) setOpenSubstitutionFor(null);
+  };
+  const knownIngredients = ACTIVE_RECIPES.flatMap((item) => item.ingredients);
+  const allowedSubstitutions = (ingredient: Recipe["ingredients"][number]) => ingredientSubstitutionsFor(ingredient).filter((rule) =>
+    !hasIngredientExclusionConflict(profile.excludedIngredientIds, [rule.replacement], knownIngredients)
+    && !hasAllergyConflict(profile.allergies, rule.replacement.allergens ?? [], [rule.replacement], knownIngredients));
+  const nutritionKey = JSON.stringify([recipe.id, recipe.ingredients, planned?.substitutions]);
+  const hasSubstitutions = Boolean(planned?.substitutions?.length);
+  const [variantNutrition, setVariantNutrition] = useState<{ key: string; value: Recipe["nutrition"] | null } | null>(null);
+  useEffect(() => {
+    if (!hasSubstitutions) return;
+    let active = true;
+    void recalculateCustomNutrition(recipe.id, ingredientsForPlannedMeal(recipe, planned, 1)).then((value) => {
+      if (active) setVariantNutrition({ key: nutritionKey, value });
+    });
+    return () => { active = false; };
+  }, [nutritionKey, hasSubstitutions]);
+  const visibleNutrition = hasSubstitutions
+    ? variantNutrition?.key === nutritionKey ? variantNutrition.value : null
+    : recipe.nutritionRecalculated === false ? null : recipe.nutrition;
   const advance = advancePrepFor(recipe);
   const [catalogueRecipe, setCatalogueRecipe] = useState<CatalogueRecipe | undefined>();
   const [offlineCaution, setOfflineCaution] = useState<string | undefined>(recipe.caution);
@@ -2323,7 +2412,8 @@ function RecipeView({ tools, recipe, planned, profile, initialPortions = 2, favo
     {advance ? <aside className="advance-note" data-testid="advance-note"><ClockIcon /><span><strong>{advanceHeadline(advance)}</strong>{formatRecipeDuration(advance.minutes)} de repos (trempage, prise au froid, marinade ou fermentation) en plus du temps actif.</span></aside> : null}
     <AllergenNotice allergens={plannedMealAllergens(recipe, planned)} />
     {isAssociationRecipe(recipe.id) || recipe.composition ? <AssociationNotice result={evaluateAssociations(ingredients)} /> : null}
-    {planned?.substitutions?.length ? <p className="substitution-summary" data-testid="substitution-summary"><CheckCircledIcon /> {planned.substitutions.length} substitution{planned.substitutions.length > 1 ? "s" : ""} appliquée{planned.substitutions.length > 1 ? "s" : ""}. Allergènes, coût et courses ont été recalculés.</p> : null}
+    {planned?.substitutions?.length ? <p className="substitution-summary" data-testid="substitution-summary"><CheckCircledIcon /> {planned.substitutions.length} substitution{planned.substitutions.length > 1 ? "s" : ""} appliquée{planned.substitutions.length > 1 ? "s" : ""}. {recipe.costRecalculated === false ? "Allergènes et courses actualisés ; coût partiellement estimé." : "Allergènes, coût et courses ont été recalculés."}</p> : null}
+    {substitutionError ? <p className="notice-banner" role="alert">{substitutionError}</p> : null}
     {displayedCaution ? <aside className="catalogue-caution"><strong>Repère important</strong><p>{displayedCaution}</p></aside> : null}
     <section className="recipe-section"><div className="section-heading"><h2>Ingrédients</h2><div className="stepper portions-stepper"><button type="button" aria-label="Retirer une portion" onClick={() => setPortions((value) => value - 1)}><MinusIcon /></button><b data-testid="recipe-portions">{portions}</b><button type="button" aria-label="Ajouter une portion" onClick={() => setPortions((value) => value + 1)}><PlusIcon /></button></div></div>{planned ? <p className="inline-help" data-testid="portions-help">Les portions, substitutions et la liste de courses suivent ce réglage.</p> : null}<ul className="ingredient-list">{ingredients.map((item, index) => {
       const source = recipe.ingredients[index];
@@ -2331,7 +2421,7 @@ function RecipeView({ tools, recipe, planned, profile, initialPortions = 2, favo
       const options = planned && onSubstitutionChange && !isAssociationRecipe(recipe.id) && !recipe.composition ? allowedSubstitutions(source) : [];
       const selectedId = selectedSubstitutions.get(sourceId);
       const isOpen = openSubstitutionFor === sourceId;
-      return <li className={`ingredient-row ${selectedId ? "is-substituted" : ""}`} key={`${source.id}-${source.unit}-${index}`}><CheckCircledIcon /><span className="ingredient-row__copy"><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}</span>{item.optional ? <small>Facultatif · non ajouté aux courses</small> : null}{selectedId ? <small>À la place de {source.name}</small> : null}</span>{options.length || selectedId ? <button type="button" className="ingredient-swap-button" aria-expanded={isOpen} data-testid={`ingredient-substitute-${sourceId}`} onClick={() => setOpenSubstitutionFor(isOpen ? null : sourceId)}>{selectedId ? "Modifier" : "Remplacer"}</button> : null}{isOpen ? <div className="ingredient-substitution-options" data-testid={`substitution-options-${sourceId}`}><button type="button" className={!selectedId ? "is-selected" : ""} aria-pressed={!selectedId} onClick={() => { onSubstitutionChange?.(sourceId, null); setOpenSubstitutionFor(null); }}><strong>Ingrédient d’origine</strong><small>{source.name}</small></button>{options.map((rule) => <button type="button" key={rule.id} className={selectedId === rule.id ? "is-selected" : ""} aria-pressed={selectedId === rule.id} data-testid={`apply-substitution-${rule.id}`} onClick={() => { onSubstitutionChange?.(sourceId, rule.id); setOpenSubstitutionFor(null); }}><strong>{rule.replacement.name}</strong><small>{rule.note}</small></button>)}</div> : null}</li>;
+      return <li className={`ingredient-row ${selectedId ? "is-substituted" : ""}`} key={`${source.id}-${source.unit}-${index}`}><CheckCircledIcon /><span className="ingredient-row__copy"><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}</span>{item.optional ? <small>Facultatif · non ajouté aux courses</small> : null}{selectedId ? <small>À la place de {source.name}</small> : null}</span>{options.length || selectedId ? <button type="button" className="ingredient-swap-button" aria-expanded={isOpen} data-testid={`ingredient-substitute-${sourceId}`} onClick={() => setOpenSubstitutionFor(isOpen ? null : sourceId)}>{selectedId ? "Modifier" : "Remplacer"}</button> : null}{isOpen ? <div className="ingredient-substitution-options" data-testid={`substitution-options-${sourceId}`}><button type="button" className={!selectedId ? "is-selected" : ""} aria-pressed={!selectedId} onClick={() => applySubstitution(sourceId, null)}><strong>Ingrédient d’origine</strong><small>{source.name}</small></button>{options.map((rule) => <button type="button" key={rule.id} className={selectedId === rule.id ? "is-selected" : ""} aria-pressed={selectedId === rule.id} data-testid={`apply-substitution-${rule.id}`} onClick={() => applySubstitution(sourceId, rule.id)}><strong>{rule.replacement.name}</strong><small>{rule.note}</small></button>)}</div> : null}</li>;
     })}</ul>{recipe.ingredients.some((ingredient) => ingredient.optional) ? <p className="inline-help">Les ingrédients facultatifs restent visibles mais ne sont pas ajoutés aux courses. Le coût affiché conserve l’estimation prudente de la recette complète.</p> : null}{planned ? <p className="catalogue-disclaimer">Les allergènes déclarés sont recalculés à partir des ingrédients choisis. Vérifiez toujours les étiquettes et les traces éventuelles.</p> : null}</section>
     {onRate ? <section className="recipe-section rating-section" data-testid="recipe-rating"><h2>Mon avis</h2>
       <div className="rating-row">
@@ -2348,7 +2438,7 @@ function RecipeView({ tools, recipe, planned, profile, initialPortions = 2, favo
       <p className="inline-help">Enregistrée dans le stockage local de cette adresse web, jamais transmise.</p>
     </section> : null}
     <RecipeFeedback id={recipe.id} title={recipe.title} />
-    <section className="recipe-section nutrition-section"><h2>Repères par portion</h2><div><span><strong>{recipe.nutrition.calories}</strong> kcal</span><span><strong>{recipe.nutrition.protein}</strong> g protéines</span><span><strong>{recipe.nutrition.fiber}</strong> g fibres</span></div><small>{recipe.nutrition.note}</small></section>
+    <section className="recipe-section nutrition-section"><h2>Repères par portion</h2>{visibleNutrition ? <><div><span><strong>{visibleNutrition.calories}</strong> kcal</span><span><strong>{visibleNutrition.protein}</strong> g protéines</span><span><strong>{visibleNutrition.fiber}</strong> g fibres</span></div><small>{visibleNutrition.note}</small></> : <p>Valeurs nutritionnelles non disponibles : les données sont insuffisantes pour recalculer cette variante.</p>}{recipe.costRecalculated === false ? <p>Coût non recalculé pour cette variante : les totaux conservent une estimation partielle.</p> : null}</section>
     {onRecompose ? <><button type="button" className="secondary-button full-button" onClick={() => { setCompositionMessage("Chargement des recettes…"); void onRecompose().then(() => setCompositionMessage("")).catch(() => setCompositionMessage("Le catalogue n’est pas disponible. Connectez-vous ou téléchargez-le pour le hors-ligne, puis réessayez.")); }}><MixerHorizontalIcon /> Modifier l’entrée, le plat ou le dessert</button><p role="status">{compositionMessage}</p></> : null}
     {onEdit ? <button type="button" className="secondary-button full-button" data-testid="edit-custom-recipe" onClick={onEdit}><MixerHorizontalIcon /> Modifier ou supprimer cette recette</button> : null}
     {onDuplicate ? <button type="button" className="secondary-button full-button" data-testid="duplicate-recipe" onClick={onDuplicate}><CopyIcon /> Créer ma version de cette recette</button> : null}
@@ -2470,10 +2560,26 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     if (note.trim()) notes[recipeId] = note.slice(0, 2000); else delete notes[recipeId];
     return { ...current, recipeNotes: notes };
   });
-  const saveCustomRecipe = (recipe: Recipe) => setAppState((current) => ({
-    ...current,
-    customRecipes: [...current.customRecipes.filter((item) => item.id !== recipe.id), recipe],
-  }));
+  const saveCustomRecipe = (recipe: Recipe, generation: string, previous?: Recipe) => {
+    const normalized = normalizeCustomRecipe(recipe);
+    if (!normalized) throw new Error("Cette recette est invalide. La version précédente est conservée.");
+    setAppState((current) => {
+      const existing = current.customRecipes.find((item) => item.id === recipe.id);
+      if (current.storageGeneration !== generation || JSON.stringify(existing) !== JSON.stringify(previous)) {
+        throw new Error("Cette recette ou vos données ont changé. Rouvrez la recette avant de l’enregistrer.");
+      }
+      if (!existing && current.customRecipes.length >= 200) throw new Error("La limite de 200 recettes personnelles est atteinte.");
+      const next = { ...current, customRecipes: [...current.customRecipes.filter((item) => item.id !== recipe.id), normalized] };
+      const recipes = recipesForState(next);
+      return {
+        ...next,
+        currentPlan: next.currentPlan ? refreshPlanEstimate(next.currentPlan, recipes) : null,
+        upcomingPlan: next.upcomingPlan ? refreshPlanEstimate(next.upcomingPlan, recipes) : null,
+        checkedShoppingItemIds: next.currentPlan ? reconcileCheckedItems(next.currentPlan, recipes, next.checkedShoppingItemIds) : next.checkedShoppingItemIds,
+      };
+    });
+    return normalized;
+  };
   const deleteCustomRecipe = (recipeId: string) => setAppState((current) => {
     const recipeNotes = { ...current.recipeNotes };
     delete recipeNotes[recipeId];
@@ -2603,17 +2709,21 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   useEffect(() => {
     if (!hydrated) return;
     setAppState((current) => {
-      const currentSafe = !current.currentPlan || inspectActivePlan(current.currentPlan, ACTIVE_RECIPES, current.profile).canActivate;
-      const upcomingSafe = !current.upcomingPlan || inspectActivePlan(current.upcomingPlan, ACTIVE_RECIPES, current.profile).canActivate;
-      if (currentSafe && upcomingSafe) return current;
+      const recipes = recipesForState(current);
+      const currentSafe = !current.currentPlan || inspectActivePlan(current.currentPlan, recipes, current.profile).canActivate;
+      const upcomingSafe = !current.upcomingPlan || inspectActivePlan(current.upcomingPlan, recipes, current.profile).canActivate;
+      const currentPlan = currentSafe && current.currentPlan ? refreshPlanEstimate(current.currentPlan, recipes) : null;
+      const upcomingPlan = upcomingSafe && current.upcomingPlan ? refreshPlanEstimate(current.upcomingPlan, recipes) : null;
+      if (currentSafe && upcomingSafe) return currentPlan === current.currentPlan && upcomingPlan === current.upcomingPlan
+        ? current : { ...current, currentPlan, upcomingPlan };
       const removed = [!currentSafe ? current.currentPlan : null, !upcomingSafe ? current.upcomingPlan : null]
         .filter((plan): plan is WeeklyPlan => Boolean(plan));
       const removedIds = new Set(removed.map((plan) => plan.id));
       setAppNotice("Une semaine incompatible avec votre profil a été déplacée dans l’historique.");
       return {
         ...current,
-        currentPlan: currentSafe ? current.currentPlan : null,
-        upcomingPlan: upcomingSafe ? current.upcomingPlan : null,
+        currentPlan,
+        upcomingPlan,
         history: [...removed, ...current.history.filter((plan) => !removedIds.has(plan.id))].slice(0, HISTORY_LIMIT),
         checkedShoppingItemIds: currentSafe ? current.checkedShoppingItemIds : [],
       };
@@ -2628,9 +2738,11 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
     const today = isoDate(new Date());
     const reminderStorageKey = "inflamm-menu:reminded-on";
-    if (remindedOn.current === today || window.localStorage.getItem(reminderStorageKey) === today) return;
+    if (remindedOn.current === today) return;
+    try { if (window.localStorage.getItem(reminderStorageKey) === today) return; } catch { /* Storage access may be denied; the in-memory guard remains available. */ }
     const due = contextualRemindersForDate(appState.currentPlan, ACTIVE_RECIPES, today);
     if (!due.length) return;
+    remindedOn.current = today;
     const showReminder = async () => {
       const options = {
         body: due.map((item) => `${item.title} — ${item.body}`).join("\n"),
@@ -2645,6 +2757,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
         remindedOn.current = today;
         try { window.localStorage.setItem(reminderStorageKey, today); } catch { /* In-memory guard still prevents repeats. */ }
       } catch {
+        remindedOn.current = "";
         // A revoked or platform-level permission must not break the application.
       }
     };
@@ -2801,7 +2914,9 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   }
 
   function customRecipeScreen(draft: Recipe, existing = false, planned?: PlannedMeal): FlowScreen {
-    return { id: `custom-${draft.id}`, title: "Ma version", headerHeight: 56, header: (route) => <Header title="Ma version" onBack={route.pop} />, render: (route) => <CustomRecipeView draft={draft} onSave={(recipe) => { saveCustomRecipe(recipe); route.replace(recipeScreen(recipe, planned)); }} onDelete={existing ? () => {
+    const generation = appStore.getSnapshot().storageGeneration;
+    const cancellation = new AbortController();
+    return { id: `custom-${draft.id}`, title: "Ma version", headerHeight: 56, header: (route) => <Header title="Ma version" onBack={() => { cancellation.abort(); route.pop(); }} />, render: (route) => <CustomRecipeView draft={draft} signal={cancellation.signal} onSave={async (recipe) => { const saved = saveCustomRecipe(recipe, generation, existing ? draft : undefined); route.replace(recipeScreen(saved, planned)); }} onDelete={existing ? () => {
       const current = appStore.getSnapshot();
       const plans = [current.currentPlan, current.upcomingPlan, ...current.history].filter((plan): plan is WeeklyPlan => Boolean(plan));
       if (plans.some((plan) => plan.meals.some((meal) => meal.recipeId === draft.id))) {
@@ -2870,7 +2985,18 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
           onReplace={livePlanned ? () => route.replace(replacementScreen(livePlanned)) : undefined}
           onPlan={!livePlanned ? () => route.push(planSlotScreen(visibleRecipe)) : undefined}
           onPortionsChange={livePlanned ? (portions) => setAppState((current) => (current.currentPlan ? withUpdatedPlan(current, setMealPortions(current.currentPlan, livePlanned.id, portions, ACTIVE_RECIPES)) : current)) : undefined}
-          onSubstitutionChange={livePlanned ? (ingredientId, substitutionId) => setAppState((current) => (current.currentPlan ? withUpdatedPlan(current, setMealIngredientSubstitution(current.currentPlan, livePlanned.id, ingredientId, substitutionId, ACTIVE_RECIPES, current.profile)) : current)) : undefined}
+          onSubstitutionChange={livePlanned ? (ingredientId, substitutionId) => {
+            const target = mealActionTarget(live.currentPlan, livePlanned, live.storageGeneration);
+            try {
+              setAppState((current) => {
+                const meal = matchingActionMeal(current.currentPlan, target, current.storageGeneration);
+                if (!meal || meal.recipeId !== visibleRecipe.id || !current.currentPlan) throw new Error(STALE_MEAL_ACTION);
+                const recipes = recipesForState(current);
+                return withUpdatedPlan(current, setMealIngredientSubstitution(current.currentPlan, meal.id, ingredientId, substitutionId, recipes, current.profile), recipes);
+              });
+              return null;
+            } catch (error) { return error instanceof Error ? error.message : "Cette substitution est incompatible avec votre profil."; }
+          } : undefined}
           onCook={(portions) => route.push(cookingScreen(visibleRecipe, portions, livePlanned))}
         />;
       }}</LiveAppState>,

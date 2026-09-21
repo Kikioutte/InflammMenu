@@ -1,16 +1,15 @@
-import type { Recipe, WeeklyPlan, UserProfile } from "./domain.ts";
+import type { Ingredient, Recipe, WeeklyPlan, UserProfile } from "./domain.ts";
 import type { CatalogueRecipe } from "./catalog.ts";
-import { canonicalIngredientId } from "./shopping.ts";
-import { canonicalAllergen } from "./allergens.ts";
+import { hasAllergyConflict, hasIngredientExclusionConflict } from "./food-restrictions.ts";
 
 export interface RecipeCollection { id: string; name: string; recipeIds: string[] }
 export interface ShoppingRecipe { recipe: Recipe; portions: number }
 export interface ManualShoppingItem { id: string; name: string; checked: boolean }
 
-export function shoppingConflict(recipe: Recipe, profile: UserProfile): boolean {
-  const allergens = new Set([...recipe.allergens, ...recipe.ingredients.flatMap((item) => item.allergens ?? [])].map(canonicalAllergen));
-  return profile.allergies.some((item) => allergens.has(canonicalAllergen(item)))
-    || profile.excludedIngredientIds.some((id) => recipe.ingredients.some((item) => canonicalIngredientId(item.id) === canonicalIngredientId(id)))
+export function shoppingConflict(recipe: Recipe, profile: UserProfile, knownIngredients: readonly Pick<Ingredient, "id" | "name">[] = recipe.ingredients): boolean {
+  const allergens = [...recipe.allergens, ...recipe.ingredients.flatMap((item) => item.allergens ?? [])];
+  return hasAllergyConflict(profile.allergies, allergens, recipe.ingredients, knownIngredients)
+    || hasIngredientExclusionConflict(profile.excludedIngredientIds, recipe.ingredients, knownIngredients)
     || !recipe.diet.includes(profile.diet);
 }
 

@@ -57,6 +57,99 @@ test("service worker bounds runtime images", () => {
   assert.match(worker, /trimCache/);
 });
 
+function shellHarness(source = worker) {
+  const entries = new Map();
+  const requests = [];
+  const writes = [];
+  const listeners = new Map();
+  let skippedWaiting = false;
+  const basicResponse = (body, status = 200, type = "text/html") => {
+    const response = new Response(body, { status, headers: { "Content-Type": type } });
+    Object.defineProperty(response, "type", { value: "basic" });
+    return response;
+  };
+  const context = {
+    URL, Response,
+    fetch: async (request) => {
+      requests.push(request);
+      if (request.endsWith(".js")) return basicResponse("export const ready = true;", 200, "application/javascript");
+      if (request.endsWith(".css")) return basicResponse("body { color: green; }", 200, "text/css");
+      return basicResponse('<script src="/assets/current.js"></script><link href="/assets/unlisted.css" rel="stylesheet">');
+    },
+    caches: { open: async () => ({
+      match: async (request) => entries.get(typeof request === "string" ? request : new URL(request.url).pathname)?.clone(),
+      put: async (request, response) => { writes.push(request); entries.set(request, response.clone()); },
+    }) },
+    self: {
+      addEventListener: (type, listener) => listeners.set(type, listener),
+      skipWaiting: async () => { skippedWaiting = true; },
+      location: { origin: "https://example.test" },
+    },
+  };
+  vm.runInNewContext(source, context, { filename: "sw.js" });
+  return { context, entries, requests, writes, listeners, basicResponse, didSkipWaiting: () => skippedWaiting };
+}
+
+test("a newer online document never replaces the complete installed offline shell", async () => {
+  const { context, entries, writes, basicResponse } = shellHarness();
+  const oldHtml = '<script src="/assets/installed-v1.js"></script>';
+  const newHtml = '<script src="/assets/not-yet-installed-v2.js"></script>';
+  entries.set("/index.html", basicResponse(oldHtml));
+  context.fetch = async () => basicResponse(newHtml);
+  const navigation = { url: "https://example.test/" };
+  assert.equal(await (await context.navigationResponse(navigation)).text(), newHtml, "online visits remain fresh");
+  context.fetch = async () => { throw new Error("connection lost during update"); };
+  assert.equal(await (await context.navigationResponse(navigation)).text(), oldHtml);
+  assert.deepEqual(writes, [], "navigation must never mutate the installed snapshot");
+});
+
+test("a server outage falls back to the installed shell only for canonical navigation", async () => {
+  const { context, entries, basicResponse } = shellHarness();
+  entries.set("/index.html", basicResponse("complete installed application"));
+  context.fetch = async () => basicResponse("temporary outage", 503);
+  for (const pathname of ["/", "/index.html"]) {
+    assert.equal(await (await context.navigationResponse({ url: `https://example.test${pathname}` })).text(), "complete installed application");
+  }
+  assert.equal((await context.navigationResponse({ url: "https://example.test/unknown" })).status, 503);
+});
+
+test("installation fetches listed assets once and discovers additional HTML references", async () => {
+  const source = worker.replace('/manifest.webmanifest"', '/manifest.webmanifest",\n  "/assets/current.js"');
+  const { context, requests, listeners, didSkipWaiting, entries } = shellHarness(source);
+  let installation;
+  listeners.get("install")({ waitUntil: promise => { installation = promise; } });
+  await installation;
+  assert.equal(requests.filter(path => path === "/assets/current.js").length, 1);
+  assert.equal(requests.filter(path => path === "/assets/unlisted.css").length, 1);
+  assert.ok(entries.has("/assets/unlisted.css"));
+  assert.equal(didSkipWaiting(), true);
+});
+
+test("an interrupted asset download cannot modify the existing shell or activate a worker", async () => {
+  const { context, entries, writes, listeners, didSkipWaiting, basicResponse } = shellHarness();
+  const installedHtml = '<script src="/assets/installed.js"></script>';
+  entries.set("/index.html", basicResponse(installedHtml));
+  context.fetch = async (request) => {
+    if (request === "/assets/missing.js") throw new Error("connection interrupted");
+    return basicResponse('<script src="/assets/missing.js"></script>');
+  };
+  let installation;
+  listeners.get("install")({ waitUntil: promise => { installation = promise; } });
+  await assert.rejects(installation, /connection interrupted/);
+  assert.equal(didSkipWaiting(), false);
+  assert.deepEqual(writes, []);
+  assert.equal(await entries.get("/index.html").text(), installedHtml);
+});
+
+test("an HTML fallback for a missing JavaScript or stylesheet is not a valid shell asset", async () => {
+  for (const missingAsset of ["/assets/missing.js", "/assets/missing.css"]) {
+    const { context, writes, basicResponse } = shellHarness();
+    context.fetch = async () => basicResponse(`<script src="${missingAsset}"></script>`);
+    await assert.rejects(context.precacheShell(), /Application asset returned HTML/);
+    assert.deepEqual(writes, []);
+  }
+});
+
 test("service worker reserves catalogue v1 for validated page-side migration", async () => {
   const listeners = new Map();
   const deleted = [];
@@ -99,12 +192,13 @@ test("service worker reuses same-origin shell responses despite host Vary header
   assert.match(worker, /async function navigationResponse[\s\S]*fetch\(request, \{ cache: "no-cache" \}\)/);
 });
 
-test("only canonical HTML navigations may refresh the offline shell", () => {
+test("installation validates HTML and navigation preserves its versioned shell", () => {
   assert.match(worker, /function isHtmlResponse/);
   assert.match(worker, /response\.headers\.get\("Content-Type"\)/);
   assert.match(worker, /if \(!indexResponse \|\| !isHtmlResponse\(indexResponse\)\)/);
   assert.match(worker, /function isCanonicalShellNavigation/);
-  assert.match(worker, /isCanonicalShellNavigation\(request\) && isHtmlResponse\(response\)/);
+  const navigation = worker.slice(worker.indexOf("async function navigationResponse"), worker.indexOf('self.addEventListener("fetch"'));
+  assert.doesNotMatch(navigation, /putSafely|cache\.put/);
 });
 
 test("precache discovers unquoted CSS url references", () => {

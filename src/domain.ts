@@ -72,6 +72,10 @@ export interface Recipe {
   /** All quantities are stored per adult portion. */
   ingredients: readonly Ingredient[];
   nutrition: Nutrition;
+  /** False means the retained source figures no longer describe this variant. */
+  nutritionRecalculated?: boolean;
+  /** False means the source cost is retained without a reliable ingredient-price calculation. */
+  costRecalculated?: boolean;
   description: string;
   /** Reviewed safety or preparation caution, available even when the full catalogue is offline. */
   caution?: string;
