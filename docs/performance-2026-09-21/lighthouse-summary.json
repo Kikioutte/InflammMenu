@@ -1,0 +1,478 @@
+{
+  "metadata": {
+    "startedAt": "2026-09-21T16:02:23.083Z",
+    "node": "v24.19.0",
+    "lighthouse": "13.4.1",
+    "runs": 3,
+    "stages": {
+      "baseline": {
+        "sha": "cfe5f46f319c854db80586cd3efe008bdbb2822b",
+        "source": "committed-baseline",
+        "htmlSha256": "62afce04e82c6f414f8ec289840e27829432abe5f950d0895c322098ecc5bd8e",
+        "manifestSha256": "1b1d8f8507da8b07e9fb6e4e92ed2c20896611b9045fe0b1d315d3e991f32b4e",
+        "entry": "/InflammMenu/assets/index-BskcBho-.js",
+        "shellVersion": "8595bb76f0f4",
+        "fixtureSha256": "5685be0e42398ee72cccbe279cad3c43510cd6f11a7297583a34931fe60469e9"
+      },
+      "after": {
+        "sha": "aa7bd697ef5e331be8be9888e32ac08d1e1d4139",
+        "source": "working-tree-build",
+        "htmlSha256": "6607e48cf4c3792e98a71f322692e6085177eeca5807f49b66e4d5ae485e1de7",
+        "manifestSha256": "c4619c306a11d6267ff56248dbc5c4959905bdf8e1295ce30f774288fdf67bbe",
+        "entry": "/InflammMenu/assets/index-BdaJpHE4.js",
+        "shellVersion": "d4f8bc32d4e2",
+        "fixtureSha256": "5685be0e42398ee72cccbe279cad3c43510cd6f11a7297583a34931fe60469e9"
+      }
+    },
+    "sourceHashes": {
+      "src/domain.ts": "fec8d87c95dd5278c3b027de5aad237eeca98b68d60ef6b3a339572450959f13",
+      "src/engine.ts": "dd450cae27416265cbf3436ce3d97c1092f7365bc3df1e05ddf6a26e87844ab9",
+      "src/recipes.ts": "d52cd22fa6cb4018d4f25bb897aecc80d66c71d1b39fac053cee6b8cfa508b03",
+      "src/data/planner-recipes.json": "3d8a8e8f2c54fd408c1cd042d319297c4bf128876898877b5edbce67dcbd5b6f",
+      "src/data/recettes-anti-inflammatoires.json": "768892e98213548bd67d70d5596a1fd45fcca00d968ef7805928412058ab70f2"
+    },
+    "sourceManifestSha256": "131bafe1d0b777ab34e59c358de01b092def6c8693c3b3dfdd863c7cdcf3700b",
+    "sourceWorkingDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceWorkingTreeModified": false,
+    "fixtureSource": "current generator and catalogue checked byte-identical to baseline",
+    "planOptions": {
+      "seed": "lh95-returning",
+      "startsOn": "2026-09-21",
+      "generatedAt": "2026-09-21T16:02:23.083Z"
+    },
+    "prepareOnly": false,
+    "serving": "same local static server; Pages base; real service worker; deterministic gzip level6 precomputed before timing",
+    "compression": {
+      "algorithm": "gzip",
+      "level": 6,
+      "precomputed": true,
+      "productionComparison": "Pages serves gzip; CDN compression bytes and latency are not reproduced exactly"
+    },
+    "chromeExecutable": "chrome-headless-shell",
+    "browserVersion": "HeadlessChrome/149.0.7827.55"
+  },
+  "medians": [
+    {
+      "scenario": "new",
+      "stage": "baseline",
+      "scores": {
+        "performance": 76,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2821.696,
+        "largest-contentful-paint": 3655.304,
+        "total-blocking-time": 341.5,
+        "cumulative-layout-shift": 0.05202647610627536,
+        "speed-index": 2823.9000000000005
+      },
+      "performanceRange": [
+        60,
+        82
+      ],
+      "cpuBenchmarkRange": [
+        1309.5,
+        2188
+      ],
+      "medianTargetReached": false,
+      "everyRunReachedTarget": false
+    },
+    {
+      "scenario": "new",
+      "stage": "after",
+      "scores": {
+        "performance": 85,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2795.0675,
+        "largest-contentful-paint": 3483.853,
+        "total-blocking-time": 135.5,
+        "cumulative-layout-shift": 0.05201962844145366,
+        "speed-index": 2795.0675
+      },
+      "performanceRange": [
+        83,
+        85
+      ],
+      "cpuBenchmarkRange": [
+        1492.5,
+        2170.5
+      ],
+      "medianTargetReached": false,
+      "everyRunReachedTarget": false
+    },
+    {
+      "scenario": "returning",
+      "stage": "baseline",
+      "scores": {
+        "performance": 46,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2935.3044,
+        "largest-contentful-paint": 7887.9566,
+        "total-blocking-time": 1183.788975,
+        "cumulative-layout-shift": 0.00961917263891648,
+        "speed-index": 3708.2271142216077
+      },
+      "performanceRange": [
+        42,
+        67
+      ],
+      "cpuBenchmarkRange": [
+        1566,
+        1918.5
+      ],
+      "medianTargetReached": false,
+      "everyRunReachedTarget": false
+    },
+    {
+      "scenario": "returning",
+      "stage": "after",
+      "scores": {
+        "performance": 55,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2731.808125,
+        "largest-contentful-paint": 7976.36975,
+        "total-blocking-time": 639,
+        "cumulative-layout-shift": 0.00961917263891648,
+        "speed-index": 2731.808125
+      },
+      "performanceRange": [
+        51,
+        64
+      ],
+      "cpuBenchmarkRange": [
+        1832.5,
+        2221
+      ],
+      "medianTargetReached": false,
+      "everyRunReachedTarget": false
+    }
+  ],
+  "results": [
+    {
+      "scenario": "new",
+      "stage": "baseline",
+      "run": 1,
+      "date": "2026-09-21T16:02:28.401Z",
+      "scores": {
+        "performance": 82,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2795.304,
+        "largest-contentful-paint": 3655.304,
+        "total-blocking-time": 199.5,
+        "cumulative-layout-shift": 0.05201962844145366,
+        "speed-index": 2795.304
+      },
+      "warnings": [],
+      "cpuBenchmark": 2141,
+      "verified": {
+        "htmlSha256": "62afce04e82c6f414f8ec289840e27829432abe5f950d0895c322098ecc5bd8e",
+        "activeWeek": null,
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "new",
+      "stage": "after",
+      "run": 1,
+      "date": "2026-09-21T16:02:37.308Z",
+      "scores": {
+        "performance": 85,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2727.8975,
+        "largest-contentful-paint": 3486.0769999999998,
+        "total-blocking-time": 132.5,
+        "cumulative-layout-shift": 0.052024224066775177,
+        "speed-index": 2727.8975
+      },
+      "warnings": [],
+      "cpuBenchmark": 2110,
+      "verified": {
+        "htmlSha256": "6607e48cf4c3792e98a71f322692e6085177eeca5807f49b66e4d5ae485e1de7",
+        "activeWeek": null,
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "returning",
+      "stage": "baseline",
+      "run": 1,
+      "date": "2026-09-21T16:02:45.878Z",
+      "scores": {
+        "performance": 46,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2948.1559,
+        "largest-contentful-paint": 7903.7338500000005,
+        "total-blocking-time": 1183.788975,
+        "cumulative-layout-shift": 0.009572227685432932,
+        "speed-index": 3708.2271142216077
+      },
+      "warnings": [],
+      "cpuBenchmark": 1566,
+      "verified": {
+        "htmlSha256": "62afce04e82c6f414f8ec289840e27829432abe5f950d0895c322098ecc5bd8e",
+        "activeWeek": "2026-09-21",
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "returning",
+      "stage": "after",
+      "run": 1,
+      "date": "2026-09-21T16:02:55.628Z",
+      "scores": {
+        "performance": 55,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2721.4734999999996,
+        "largest-contentful-paint": 7967.768199999999,
+        "total-blocking-time": 639,
+        "cumulative-layout-shift": 0.006494582811228521,
+        "speed-index": 2721.4734999999996
+      },
+      "warnings": [],
+      "cpuBenchmark": 1832.5,
+      "verified": {
+        "htmlSha256": "6607e48cf4c3792e98a71f322692e6085177eeca5807f49b66e4d5ae485e1de7",
+        "activeWeek": "2026-09-21",
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "new",
+      "stage": "after",
+      "run": 2,
+      "date": "2026-09-21T16:03:06.619Z",
+      "scores": {
+        "performance": 83,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2800.3775,
+        "largest-contentful-paint": 3483.853,
+        "total-blocking-time": 189,
+        "cumulative-layout-shift": 0.05201962844145366,
+        "speed-index": 2800.3775
+      },
+      "warnings": [],
+      "cpuBenchmark": 1492.5,
+      "verified": {
+        "htmlSha256": "6607e48cf4c3792e98a71f322692e6085177eeca5807f49b66e4d5ae485e1de7",
+        "activeWeek": null,
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "new",
+      "stage": "baseline",
+      "run": 2,
+      "date": "2026-09-21T16:03:16.667Z",
+      "scores": {
+        "performance": 60,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2821.696,
+        "largest-contentful-paint": 3648.044,
+        "total-blocking-time": 1306.5,
+        "cumulative-layout-shift": 0.05202647610627536,
+        "speed-index": 2867.4047645515484
+      },
+      "warnings": [],
+      "cpuBenchmark": 1309.5,
+      "verified": {
+        "htmlSha256": "62afce04e82c6f414f8ec289840e27829432abe5f950d0895c322098ecc5bd8e",
+        "activeWeek": null,
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "returning",
+      "stage": "after",
+      "run": 2,
+      "date": "2026-09-21T16:03:25.450Z",
+      "scores": {
+        "performance": 64,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2731.808125,
+        "largest-contentful-paint": 7976.36975,
+        "total-blocking-time": 324,
+        "cumulative-layout-shift": 0.009621186657981687,
+        "speed-index": 2731.808125
+      },
+      "warnings": [],
+      "cpuBenchmark": 2221,
+      "verified": {
+        "htmlSha256": "6607e48cf4c3792e98a71f322692e6085177eeca5807f49b66e4d5ae485e1de7",
+        "activeWeek": "2026-09-21",
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "returning",
+      "stage": "baseline",
+      "run": 2,
+      "date": "2026-09-21T16:03:33.707Z",
+      "scores": {
+        "performance": 42,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2935.3044,
+        "largest-contentful-paint": 7887.9566,
+        "total-blocking-time": 1587.3260999999993,
+        "cumulative-layout-shift": 0.00961917263891648,
+        "speed-index": 4327.276957994868
+      },
+      "warnings": [],
+      "cpuBenchmark": 1918.5,
+      "verified": {
+        "htmlSha256": "62afce04e82c6f414f8ec289840e27829432abe5f950d0895c322098ecc5bd8e",
+        "activeWeek": "2026-09-21",
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "new",
+      "stage": "baseline",
+      "run": 3,
+      "date": "2026-09-21T16:03:43.122Z",
+      "scores": {
+        "performance": 76,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2823.9000000000005,
+        "largest-contentful-paint": 3801.8500000000004,
+        "total-blocking-time": 341.5,
+        "cumulative-layout-shift": 0.05202647610627536,
+        "speed-index": 2823.9000000000005
+      },
+      "warnings": [],
+      "cpuBenchmark": 2188,
+      "verified": {
+        "htmlSha256": "62afce04e82c6f414f8ec289840e27829432abe5f950d0895c322098ecc5bd8e",
+        "activeWeek": null,
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "new",
+      "stage": "after",
+      "run": 3,
+      "date": "2026-09-21T16:03:51.194Z",
+      "scores": {
+        "performance": 85,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2795.0675,
+        "largest-contentful-paint": 3476.681,
+        "total-blocking-time": 135.5,
+        "cumulative-layout-shift": 0.05201962844145366,
+        "speed-index": 2795.0675
+      },
+      "warnings": [],
+      "cpuBenchmark": 2170.5,
+      "verified": {
+        "htmlSha256": "6607e48cf4c3792e98a71f322692e6085177eeca5807f49b66e4d5ae485e1de7",
+        "activeWeek": null,
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "returning",
+      "stage": "baseline",
+      "run": 3,
+      "date": "2026-09-21T16:04:00.800Z",
+      "scores": {
+        "performance": 67,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2789.0866,
+        "largest-contentful-paint": 7142.6299,
+        "total-blocking-time": 243.5,
+        "cumulative-layout-shift": 0.00961917263891648,
+        "speed-index": 2789.0866
+      },
+      "warnings": [],
+      "cpuBenchmark": 1765,
+      "verified": {
+        "htmlSha256": "62afce04e82c6f414f8ec289840e27829432abe5f950d0895c322098ecc5bd8e",
+        "activeWeek": "2026-09-21",
+        "incompleteImages": 0
+      }
+    },
+    {
+      "scenario": "returning",
+      "stage": "after",
+      "run": 3,
+      "date": "2026-09-21T16:04:09.385Z",
+      "scores": {
+        "performance": 51,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 2896.8798749999996,
+        "largest-contentful-paint": 8015.45585,
+        "total-blocking-time": 784,
+        "cumulative-layout-shift": 0.00961917263891648,
+        "speed-index": 3102.471587670203
+      },
+      "warnings": [],
+      "cpuBenchmark": 1861,
+      "verified": {
+        "htmlSha256": "6607e48cf4c3792e98a71f322692e6085177eeca5807f49b66e4d5ae485e1de7",
+        "activeWeek": "2026-09-21",
+        "incompleteImages": 0
+      }
+    }
+  ]
+}

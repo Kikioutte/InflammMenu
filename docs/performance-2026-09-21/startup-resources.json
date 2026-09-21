@@ -1,0 +1,77 @@
+{
+  "method": "Page script requests observed identically in all six Lighthouse audits per build; includes HTML modulepreloads and awaited planner/validator imports; excludes separate service-worker precache traffic. Gzip level 6, transferred bytes include local response headers.",
+  "stages": {
+    "baseline": {
+      "scripts": [
+        {
+          "path": "/InflammMenu/assets/association-recipe-ids-e5J8EBg7.js",
+          "rawBytes": 6063,
+          "transferBytesIncludingHeaders": 1261
+        },
+        {
+          "path": "/InflammMenu/assets/catalog-validation-XU_lbbqv.js",
+          "rawBytes": 17446,
+          "transferBytesIncludingHeaders": 5445
+        },
+        {
+          "path": "/InflammMenu/assets/index-BskcBho-.js",
+          "rawBytes": 731059,
+          "transferBytesIncludingHeaders": 217553
+        },
+        {
+          "path": "/InflammMenu/assets/planner-source-DlqFbrpb.js",
+          "rawBytes": 1317900,
+          "transferBytesIncludingHeaders": 151074
+        },
+        {
+          "path": "/InflammMenu/assets/storage-DaiwZAib.js",
+          "rawBytes": 98347,
+          "transferBytesIncludingHeaders": 27136
+        }
+      ],
+      "rawBytes": 2170815,
+      "transferBytesIncludingHeaders": 402469
+    },
+    "after": {
+      "scripts": [
+        {
+          "path": "/InflammMenu/assets/ConfirmActionDialog-B05Akbk7.js",
+          "rawBytes": 358148,
+          "transferBytesIncludingHeaders": 113344
+        },
+        {
+          "path": "/InflammMenu/assets/association-recipe-ids-e5J8EBg7.js",
+          "rawBytes": 6063,
+          "transferBytesIncludingHeaders": 1261
+        },
+        {
+          "path": "/InflammMenu/assets/catalog-validation-XU_lbbqv.js",
+          "rawBytes": 17446,
+          "transferBytesIncludingHeaders": 5445
+        },
+        {
+          "path": "/InflammMenu/assets/index-BdaJpHE4.js",
+          "rawBytes": 343140,
+          "transferBytesIncludingHeaders": 99366
+        },
+        {
+          "path": "/InflammMenu/assets/planner-source-DlqFbrpb.js",
+          "rawBytes": 1317900,
+          "transferBytesIncludingHeaders": 151074
+        },
+        {
+          "path": "/InflammMenu/assets/rolldown-runtime-CNC7AqOf.js",
+          "rawBytes": 879,
+          "transferBytesIncludingHeaders": 746
+        },
+        {
+          "path": "/InflammMenu/assets/storage-CO-k0ICr.js",
+          "rawBytes": 98360,
+          "transferBytesIncludingHeaders": 27150
+        }
+      ],
+      "rawBytes": 2141936,
+      "transferBytesIncludingHeaders": 398386
+    }
+  }
+}

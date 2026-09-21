@@ -1,0 +1,364 @@
+{
+  "metadata": {
+    "startedAt": "2026-09-21T16:05:09.629Z",
+    "node": "v24.19.0",
+    "lighthouse": "13.4.1",
+    "runs": 3,
+    "stages": {
+      "baseline": {
+        "sha": "cfe5f46f319c854db80586cd3efe008bdbb2822b",
+        "source": "committed-baseline",
+        "htmlSha256": "62afce04e82c6f414f8ec289840e27829432abe5f950d0895c322098ecc5bd8e",
+        "manifestSha256": "1b1d8f8507da8b07e9fb6e4e92ed2c20896611b9045fe0b1d315d3e991f32b4e",
+        "entry": "/InflammMenu/assets/index-BskcBho-.js",
+        "shellVersion": "8595bb76f0f4",
+        "fixtureSha256": "ae22da4429756ca41a3adf5769a52e2adf078f08f31ac67d15cccb639b6fbd3c"
+      },
+      "after": {
+        "sha": "aa7bd697ef5e331be8be9888e32ac08d1e1d4139",
+        "source": "working-tree-build",
+        "htmlSha256": "6607e48cf4c3792e98a71f322692e6085177eeca5807f49b66e4d5ae485e1de7",
+        "manifestSha256": "c4619c306a11d6267ff56248dbc5c4959905bdf8e1295ce30f774288fdf67bbe",
+        "entry": "/InflammMenu/assets/index-BdaJpHE4.js",
+        "shellVersion": "d4f8bc32d4e2",
+        "fixtureSha256": "ae22da4429756ca41a3adf5769a52e2adf078f08f31ac67d15cccb639b6fbd3c"
+      }
+    },
+    "sourceHashes": {
+      "src/domain.ts": "fec8d87c95dd5278c3b027de5aad237eeca98b68d60ef6b3a339572450959f13",
+      "src/engine.ts": "dd450cae27416265cbf3436ce3d97c1092f7365bc3df1e05ddf6a26e87844ab9",
+      "src/recipes.ts": "d52cd22fa6cb4018d4f25bb897aecc80d66c71d1b39fac053cee6b8cfa508b03",
+      "src/data/planner-recipes.json": "3d8a8e8f2c54fd408c1cd042d319297c4bf128876898877b5edbce67dcbd5b6f",
+      "src/data/recettes-anti-inflammatoires.json": "768892e98213548bd67d70d5596a1fd45fcca00d968ef7805928412058ab70f2"
+    },
+    "sourceManifestSha256": "131bafe1d0b777ab34e59c358de01b092def6c8693c3b3dfdd863c7cdcf3700b",
+    "sourceWorkingDiffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceWorkingTreeModified": false,
+    "fixtureSource": "current generator and catalogue checked byte-identical to baseline",
+    "planOptions": {
+      "seed": "lh95-returning",
+      "startsOn": "2026-09-21",
+      "generatedAt": "2026-09-21T16:05:09.629Z"
+    },
+    "prepareOnly": false,
+    "serving": "same local static server; Pages base; real service worker; deterministic gzip level6 precomputed before timing",
+    "compression": {
+      "algorithm": "gzip",
+      "level": 6,
+      "precomputed": true,
+      "productionComparison": "Pages serves gzip; CDN compression bytes and latency are not reproduced exactly"
+    },
+    "measurement": "catalogue-visible and generation-visible; mobile 390x844; CPU x4; no network throttling",
+    "generationSeed": 1790006709629,
+    "chromeExecutable": "chrome-headless-shell",
+    "browserVersion": "149.0.7827.55"
+  },
+  "summary": {
+    "baseline": {
+      "catalogueMs": 1927.5,
+      "generationMs": 670.6000000014901,
+      "generationLongestTaskMs": 596
+    },
+    "after": {
+      "catalogueMs": 1509.7999999970198,
+      "generationMs": 656.6000000014901,
+      "generationLongestTaskMs": 571
+    }
+  },
+  "results": [
+    {
+      "stage": "baseline",
+      "run": 1,
+      "profile": "current default profile, 2 people",
+      "catalogue": {
+        "durationMs": 1149.6000000014901,
+        "longestTaskMs": 133,
+        "longTasks": [
+          {
+            "start": 1461.3999999985099,
+            "duration": 68
+          },
+          {
+            "start": 2320.5,
+            "duration": 133
+          },
+          {
+            "start": 2454.7000000029802,
+            "duration": 87
+          },
+          {
+            "start": 2542,
+            "duration": 75
+          }
+        ],
+        "cards": 60,
+        "resources": [
+          {
+            "name": "/InflammMenu/assets/recettes-anti-inflammatoires-BbsV96k4.json",
+            "duration": 244.80000000447035,
+            "transferSize": 0,
+            "encodedBodySize": 9729446,
+            "decodedBodySize": 9729446
+          }
+        ]
+      },
+      "generation": {
+        "durationMs": 670.6000000014901,
+        "longestTaskMs": 596,
+        "longTasks": [
+          {
+            "start": 3754.89999999851,
+            "duration": 596
+          }
+        ],
+        "planHash": "f4764e6dabf33889d6e026b01f2a8b1656f0ffe77ae0f53d3292ceb2f484eada"
+      },
+      "errors": []
+    },
+    {
+      "stage": "after",
+      "run": 1,
+      "profile": "current default profile, 2 people",
+      "catalogue": {
+        "durationMs": 1783.5999999940395,
+        "longestTaskMs": 119,
+        "longTasks": [
+          {
+            "start": 1769.2000000029802,
+            "duration": 281
+          },
+          {
+            "start": 3235.3000000044703,
+            "duration": 119
+          },
+          {
+            "start": 3355.5,
+            "duration": 104
+          },
+          {
+            "start": 3459.5,
+            "duration": 95
+          }
+        ],
+        "cards": 60,
+        "resources": [
+          {
+            "name": "/InflammMenu/assets/recettes-anti-inflammatoires-BbsV96k4.json",
+            "duration": 638.2999999970198,
+            "transferSize": 0,
+            "encodedBodySize": 9729446,
+            "decodedBodySize": 9729446
+          }
+        ]
+      },
+      "generation": {
+        "durationMs": 685.2999999970198,
+        "longestTaskMs": 601,
+        "longTasks": [
+          {
+            "start": 4308.20000000298,
+            "duration": 601
+          }
+        ],
+        "planHash": "f4764e6dabf33889d6e026b01f2a8b1656f0ffe77ae0f53d3292ceb2f484eada"
+      },
+      "errors": []
+    },
+    {
+      "stage": "after",
+      "run": 2,
+      "profile": "current default profile, 2 people",
+      "catalogue": {
+        "durationMs": 1363.9000000059605,
+        "longestTaskMs": 190,
+        "longTasks": [
+          {
+            "start": 3920.2999999970198,
+            "duration": 151
+          },
+          {
+            "start": 4072.89999999851,
+            "duration": 106
+          },
+          {
+            "start": 4179.70000000298,
+            "duration": 190
+          }
+        ],
+        "cards": 60,
+        "resources": [
+          {
+            "name": "/InflammMenu/assets/recettes-anti-inflammatoires-BbsV96k4.json",
+            "duration": 275.19999999552965,
+            "transferSize": 0,
+            "encodedBodySize": 9729446,
+            "decodedBodySize": 9729446
+          }
+        ]
+      },
+      "generation": {
+        "durationMs": 656.6000000014901,
+        "longestTaskMs": 571,
+        "longTasks": [
+          {
+            "start": 5053.60000000149,
+            "duration": 571
+          }
+        ],
+        "planHash": "f4764e6dabf33889d6e026b01f2a8b1656f0ffe77ae0f53d3292ceb2f484eada"
+      },
+      "errors": []
+    },
+    {
+      "stage": "baseline",
+      "run": 2,
+      "profile": "current default profile, 2 people",
+      "catalogue": {
+        "durationMs": 3435.39999999851,
+        "longestTaskMs": 315,
+        "longTasks": [
+          {
+            "start": 5656.79999999702,
+            "duration": 55
+          },
+          {
+            "start": 6512.79999999702,
+            "duration": 315
+          },
+          {
+            "start": 8631.10000000149,
+            "duration": 220
+          },
+          {
+            "start": 8853.29999999702,
+            "duration": 110
+          },
+          {
+            "start": 8964.29999999702,
+            "duration": 128
+          }
+        ],
+        "cards": 60,
+        "resources": [
+          {
+            "name": "/InflammMenu/assets/recettes-anti-inflammatoires-BbsV96k4.json",
+            "duration": 535,
+            "transferSize": 0,
+            "encodedBodySize": 9729446,
+            "decodedBodySize": 9729446
+          }
+        ]
+      },
+      "generation": {
+        "durationMs": 795.6000000014901,
+        "longestTaskMs": 722,
+        "longTasks": [
+          {
+            "start": 9920,
+            "duration": 722
+          }
+        ],
+        "planHash": "f4764e6dabf33889d6e026b01f2a8b1656f0ffe77ae0f53d3292ceb2f484eada"
+      },
+      "errors": []
+    },
+    {
+      "stage": "baseline",
+      "run": 3,
+      "profile": "current default profile, 2 people",
+      "catalogue": {
+        "durationMs": 1927.5,
+        "longestTaskMs": 141,
+        "longTasks": [
+          {
+            "start": 1786.8999999985099,
+            "duration": 166
+          },
+          {
+            "start": 3350.3000000044703,
+            "duration": 141
+          },
+          {
+            "start": 3496.5,
+            "duration": 119
+          },
+          {
+            "start": 3616.89999999851,
+            "duration": 101
+          }
+        ],
+        "cards": 60,
+        "resources": [
+          {
+            "name": "/InflammMenu/assets/recettes-anti-inflammatoires-BbsV96k4.json",
+            "duration": 538.8999999985099,
+            "transferSize": 0,
+            "encodedBodySize": 9729446,
+            "decodedBodySize": 9729446
+          }
+        ]
+      },
+      "generation": {
+        "durationMs": 627.6999999955297,
+        "longestTaskMs": 546,
+        "longTasks": [
+          {
+            "start": 4459.60000000149,
+            "duration": 546
+          }
+        ],
+        "planHash": "f4764e6dabf33889d6e026b01f2a8b1656f0ffe77ae0f53d3292ceb2f484eada"
+      },
+      "errors": []
+    },
+    {
+      "stage": "after",
+      "run": 3,
+      "profile": "current default profile, 2 people",
+      "catalogue": {
+        "durationMs": 1509.7999999970198,
+        "longestTaskMs": 183,
+        "longTasks": [
+          {
+            "start": 2935.10000000149,
+            "duration": 104
+          },
+          {
+            "start": 4081.89999999851,
+            "duration": 183
+          },
+          {
+            "start": 4266.60000000149,
+            "duration": 81
+          },
+          {
+            "start": 4348.29999999702,
+            "duration": 94
+          }
+        ],
+        "cards": 60,
+        "resources": [
+          {
+            "name": "/InflammMenu/assets/recettes-anti-inflammatoires-BbsV96k4.json",
+            "duration": 301.79999999701977,
+            "transferSize": 0,
+            "encodedBodySize": 9729446,
+            "decodedBodySize": 9729446
+          }
+        ]
+      },
+      "generation": {
+        "durationMs": 642.7000000029802,
+        "longestTaskMs": 565,
+        "longTasks": [
+          {
+            "start": 5036.20000000298,
+            "duration": 565
+          }
+        ],
+        "planHash": "f4764e6dabf33889d6e026b01f2a8b1656f0ffe77ae0f53d3292ceb2f484eada"
+      },
+      "errors": []
+    }
+  ]
+}
