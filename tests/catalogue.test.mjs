@@ -8,14 +8,16 @@ const plannerUrl = new URL("../src/data/planner-recipes.json", import.meta.url);
 const plannerCautionsUrl = new URL("../public/data/planner-cautions.json", import.meta.url);
 const plannerCatalogUrl = new URL("../src/planner-catalog.ts", import.meta.url);
 const plannerGeneratorUrl = new URL("../scripts/generate-planner-recipes.mjs", import.meta.url);
-const prototypeUrl = new URL("../src/Prototype.tsx", import.meta.url);
+const recipeViewUrl = new URL("../src/screens/RecipeView.tsx", import.meta.url);
+const catalogueRecipeViewUrl = new URL("../src/screens/CatalogueRecipeView.tsx", import.meta.url);
 
 const catalogue = JSON.parse(await readFile(dataUrl, "utf8"));
 const catalogueSource = await readFile(sourceUrl, "utf8");
 const plannerRecipes = JSON.parse(await readFile(plannerUrl, "utf8"));
 const plannerCautions = JSON.parse(await readFile(plannerCautionsUrl, "utf8"));
 const plannerGeneratorSource = await readFile(plannerGeneratorUrl, "utf8");
-const prototypeSource = await readFile(prototypeUrl, "utf8");
+const recipeViewSource = await readFile(recipeViewUrl, "utf8");
+const catalogueRecipeViewSource = await readFile(catalogueRecipeViewUrl, "utf8");
 
 let freshImportId = 0;
 
@@ -208,8 +210,8 @@ test("higher-risk culinary entries retain visible cautions", () => {
     assert.equal(recipe?.app.review.status, "caution");
     assert.ok(recipe?.app.review.caution?.length > 0);
   }
-  assert.match(prototypeSource, /catalogueReview\?\.caution/);
-  assert.match(prototypeSource, /review\.caution/);
+  assert.match(recipeViewSource, /catalogueReview\?\.caution/);
+  assert.match(catalogueRecipeViewSource, /review\.caution/);
 });
 
 test("planner metadata is explicit and no longer inferred from recipe prose", () => {
@@ -289,9 +291,9 @@ test("passive infusion and fermentation are excluded from active kitchen time", 
 });
 
 test("unverified mechanism claims are not rendered as clinical effects", () => {
-  assert.doesNotMatch(prototypeSource, /item\.action/);
-  assert.match(prototypeSource, /ne garantit pas un bénéfice clinique individuel/);
-  assert.match(prototypeSource, /ne prouve pas qu'un ingrédient isolé/);
+  assert.doesNotMatch(catalogueRecipeViewSource, /item\.action/);
+  assert.match(catalogueRecipeViewSource, /ne garantit pas un bénéfice clinique individuel/);
+  assert.match(catalogueRecipeViewSource, /ne prouve pas qu'un ingrédient isolé/);
 });
 
 test("les identifiants de favoris du catalogue correspondent à la projection du planificateur", async () => {
