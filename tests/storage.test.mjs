@@ -824,6 +824,7 @@ function controlledIndexedDb() {
                   return;
                 }
                 request.onsuccess?.();
+                if (finished) return;
                 if (!announced) {
                   finished = true;
                   activeWriters -= 1;
@@ -1105,4 +1106,265 @@ test("saved meal names survive backup, and are bounded on import", async () => {
  const migrated=migrateAppState(state({savedMeals:[meal]}));
  assert.equal(importAppState(exportAppState(migrated)).savedMeals[0].name,"Dîner du dimanche");
  assert.equal(migrateAppState(state({savedMeals:[{...meal,name:"a".repeat(200)}]})).savedMeals[0].name.length,80);
+});
+
+async function withStorageEnvironment(callback, { localStorage = memoryLocalStorage(), indexedDb = controlledIndexedDb() } = {}) {
+  const descriptors = new Map(["window", "indexedDB", "BroadcastChannel"].map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  try {
+    Object.defineProperty(globalThis, "window", { configurable: true, value: { localStorage } });
+    Object.defineProperty(globalThis, "indexedDB", { configurable: true, value: indexedDb.factory });
+    Object.defineProperty(globalThis, "BroadcastChannel", { configurable: true, value: undefined });
+    await callback({ localStorage, indexedDb });
+  } finally {
+    for (const [key, descriptor] of descriptors) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor); else delete globalThis[key];
+    }
+  }
+}
+
+test("startup preserves corrupt, empty, foreign and future local records beside a healthy IndexedDB replica", async () => {
+  const { loadAppState, loadRecoveryAppState, StoredStateReadError } = await import("../src/storage.ts");
+  for (const raw of ["{broken", "", "null", "[]", "{}", JSON.stringify({ version: APP_STATE_VERSION }), JSON.stringify({ ...state(), version: APP_STATE_VERSION + 1 }), JSON.stringify({ ...state(), version: "3" })]) {
+    await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+      const healthy = migrateAppState(state());
+      localStorage.setItem("inflamm-menu:app-state", raw);
+      indexedDb.seed("current", healthy);
+      await assert.rejects(loadAppState(), StoredStateReadError);
+      await assert.rejects(loadRecoveryAppState(), StoredStateReadError);
+      assert.equal(localStorage.getItem("inflamm-menu:app-state"), raw, "la valeur brute doit rester strictement inchangée");
+      assert.deepEqual(indexedDb.read("current"), healthy);
+      assert.equal(indexedDb.metrics().writesStarted, 0);
+    });
+  }
+});
+
+test("startup preserves unreadable IndexedDB records and damaged reset markers", async () => {
+  const { loadAppState, StoredStateReadError } = await import("../src/storage.ts");
+  for (const raw of [null, "broken", [], {}, { ...state(), version: APP_STATE_VERSION + 1 }]) {
+    await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+      const healthy = JSON.stringify(migrateAppState(state()));
+      localStorage.setItem("inflamm-menu:app-state", healthy);
+      indexedDb.seed("current", raw);
+      await assert.rejects(loadAppState(), StoredStateReadError);
+      assert.equal(localStorage.getItem("inflamm-menu:app-state"), healthy);
+      assert.deepEqual(indexedDb.read("current"), raw);
+      assert.equal(indexedDb.metrics().writesStarted, 0);
+    });
+  }
+  for (const replica of ["local", "indexed", "indexed-null"]) {
+    await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+      const marker = replica === "indexed-null" ? null : "broken-marker";
+      if (replica === "local") localStorage.setItem("inflamm-menu:reset-marker", "broken-marker");
+      else indexedDb.seed("reset-marker", marker);
+      await assert.rejects(loadAppState(), StoredStateReadError);
+      assert.equal(localStorage.getItem("inflamm-menu:app-state"), null);
+      assert.equal(indexedDb.read("current"), undefined);
+      assert.equal(replica === "local" ? localStorage.getItem("inflamm-menu:reset-marker") : indexedDb.read("reset-marker"), marker);
+    });
+  }
+});
+
+test("ordinary saves reject newly damaged replicas, including corruption racing the IndexedDB write", async () => {
+  const { saveAppState, StoredStateReadError } = await import("../src/storage.ts");
+  for (const replica of ["local", "indexed", "indexed-race"]) {
+    await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+      const healthy = migrateAppState(state());
+      const future = { ...healthy, version: APP_STATE_VERSION + 1, futureOnly: { preserved: true } };
+      localStorage.setItem("inflamm-menu:app-state", JSON.stringify(healthy));
+      indexedDb.seed("current", healthy);
+      if (replica === "local") localStorage.setItem("inflamm-menu:app-state", "{broken-after-startup");
+      else if (replica === "indexed") indexedDb.seed("current", future);
+      else {
+        const open = indexedDb.factory.open;
+        let opens = 0;
+        indexedDb.factory.open = (...args) => {
+          if (++opens === 2) indexedDb.seed("current", future);
+          return open(...args);
+        };
+      }
+      await assert.rejects(saveAppState(healthy), StoredStateReadError);
+      if (replica === "local") assert.equal(localStorage.getItem("inflamm-menu:app-state"), "{broken-after-startup");
+      else assert.deepEqual(indexedDb.read("current"), future);
+      assert.equal(indexedDb.metrics().writesStarted, 0);
+    });
+  }
+});
+
+test("raw recovery exports both original replicas without writes or normalization", async () => {
+  const { exportRawRecovery, importAppState } = await import("../src/storage.ts");
+  await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+    const raw = '{"version":999,"profile":{"firstName":"À récupérer"},"unfinished":';
+    const shared = ["hob", "oven"];
+    const future = { ...state(), version: 999, savedMeals: [{ untouched: "À votre table" }], futureOnly: [1, "é"], shared, sharedAgain: shared };
+    localStorage.setItem("inflamm-menu:app-state", raw);
+    localStorage.setItem("inflamm-menu:reset-marker", "broken-marker");
+    indexedDb.seed("current", future);
+    const exported = await exportRawRecovery();
+    const evidence = JSON.parse(exported);
+    assert.equal(evidence.format, "inflamm-menu-raw-recovery");
+    assert.equal(evidence.replicas.localStorage.rawState, raw);
+    assert.equal(evidence.replicas.localStorage.resetMarker, "broken-marker");
+    assert.deepEqual(evidence.replicas.IndexedDB.rawState, future);
+    assert.throws(() => importAppState(exported), /ne provient pas/);
+    assert.equal(localStorage.getItem("inflamm-menu:app-state"), raw);
+    assert.deepEqual(indexedDb.read("current"), future);
+    assert.equal(indexedDb.metrics().writesStarted, 0);
+  });
+});
+
+test("explicit reset outranks generations recovered from incompatible records and blocks stale resurrection", async () => {
+  const { resetAppState, saveAppState, loadAppState } = await import("../src/storage.ts");
+  await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+    const future = { ...migrateAppState(state()), version: 999, storageGeneration: "100:replace:future" };
+    localStorage.setItem("inflamm-menu:app-state", JSON.stringify(future));
+    localStorage.setItem("inflamm-menu:reset-marker", "99:reset:previous");
+    indexedDb.seed("current", "corrupt");
+    indexedDb.seed("reset-marker", "9007199254741099:reset:newer");
+    const reset = resetAppState();
+    await indexedDb.waitForWrites(1);
+    indexedDb.releaseNextWrite();
+    await reset;
+    const resetState = JSON.parse(localStorage.getItem("inflamm-menu:app-state"));
+    assert.match(resetState.storageGeneration, /^9007199254741100:reset:/);
+    assert.equal(resetState.profile.firstName, "");
+    assert.deepEqual(indexedDb.read("current"), resetState);
+    const staleSave = saveAppState(migrateAppState({ ...future, version: APP_STATE_VERSION }));
+    await indexedDb.waitForWrites(2);
+    indexedDb.releaseNextWrite();
+    const saved = await staleSave;
+    assert.equal(saved.state.profile.firstName, "");
+    assert.equal(saved.state.storageGeneration, resetState.storageGeneration);
+    const reload = loadAppState();
+    await indexedDb.waitForWrites(3);
+    indexedDb.releaseNextWrite();
+    assert.equal((await reload).profile.firstName, "");
+  });
+});
+
+test("a persisted reset snapshot cannot authorize erasing corruption during an ordinary save", async () => {
+  const { resetAppState, saveAppState, StoredStateReadError } = await import("../src/storage.ts");
+  await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+    const reset = resetAppState();
+    await indexedDb.waitForWrites(1);
+    indexedDb.releaseNextWrite();
+    await reset;
+    const resetState = JSON.parse(localStorage.getItem("inflamm-menu:app-state"));
+    localStorage.setItem("inflamm-menu:app-state", "{newly-broken");
+    await assert.rejects(saveAppState(resetState), StoredStateReadError);
+    assert.equal(localStorage.getItem("inflamm-menu:app-state"), "{newly-broken");
+    assert.equal(indexedDb.metrics().writesStarted, 1);
+  });
+});
+
+test("denied storage uses the healthy replica and a fresh install stays usable", async () => {
+  const { loadAppState, loadRecoveryAppState } = await import("../src/storage.ts");
+  const deniedIndexedDb = { factory: { open: () => { throw new Error("Access denied"); } } };
+  await withStorageEnvironment(async ({ localStorage }) => {
+    localStorage.setItem("inflamm-menu:app-state", JSON.stringify(state()));
+    assert.equal((await loadAppState()).profile.firstName, "Camille");
+    const recovery = await loadRecoveryAppState();
+    assert.equal(recovery.state.profile.firstName, "Camille");
+    assert.equal(recovery.complete, false);
+    assert.deepEqual(recovery.unreadableReplicas, ["IndexedDB"]);
+  }, { indexedDb: deniedIndexedDb });
+  const deniedLocalStorage = { getItem: () => { throw new Error("Access denied"); }, setItem: () => { throw new Error("Access denied"); } };
+  await withStorageEnvironment(async ({ indexedDb }) => {
+    indexedDb.seed("current", migrateAppState(state()));
+    const load = loadAppState();
+    await indexedDb.waitForWrites(1);
+    indexedDb.releaseNextWrite();
+    assert.equal((await load).profile.firstName, "Camille");
+  }, { localStorage: deniedLocalStorage });
+  await withStorageEnvironment(async () => {
+    assert.equal((await loadAppState()).profile.firstName, "");
+  }, { indexedDb: deniedIndexedDb });
+});
+
+test("a newer IndexedDB schema blocks startup and partial reset while raw recovery can read it", async () => {
+  const { loadAppState, resetAppState, exportRawRecovery, StoredStateReadError } = await import("../src/storage.ts");
+  await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+    const healthy = JSON.stringify(migrateAppState(state()));
+    localStorage.setItem("inflamm-menu:app-state", healthy);
+    const future = { version: 999, futureOnly: "à conserver" };
+    indexedDb.seed("current", future);
+    const open = indexedDb.factory.open;
+    indexedDb.factory.open = (name, version) => {
+      if (version === undefined) return open(name);
+      const error = new Error("The requested version is lower than the existing version");
+      error.name = "VersionError";
+      const request = { error, onerror: null };
+      queueMicrotask(() => request.onerror?.());
+      return request;
+    };
+    await assert.rejects(loadAppState(), StoredStateReadError);
+    await assert.rejects(resetAppState(), StoredStateReadError);
+    const raw = JSON.parse(await exportRawRecovery());
+    assert.deepEqual(raw.replicas.IndexedDB.rawState, future);
+    assert.equal(localStorage.getItem("inflamm-menu:app-state"), healthy);
+    assert.equal(localStorage.getItem("inflamm-menu:reset-marker"), null);
+    assert.equal(indexedDb.metrics().writesStarted, 0);
+  });
+});
+
+test("protected startup retains named meals, compositions, collections and standalone shopping in both replicas", async () => {
+  const { loadAppState, APP_STATE_DATA_KEYS } = await import("../src/storage.ts");
+  await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+    const recipeIds = { starter: "r1017", main: "r711", dessert: "r824" };
+    const recipe = {
+      id: "perso-preserve", title: "Repas à conserver", mealTypes: ["lunch"], diet: ["classic"],
+      prepMinutes: 10, costPerPortion: 2, seasons: ["all-year"], equipment: [], allergens: [], tags: [],
+      ingredients: [{ id: "carrot", name: "Carotte", quantity: 100, unit: "g", category: "fruit-vegetable" }],
+      nutrition: { calories: 100, protein: 2, fiber: 3 }, steps: ["Préparer."], image: "/assets/recipe-placeholder.svg",
+    };
+    const source = migrateAppState(state({
+      profile: { ...state().profile, associationMode: "green" },
+      savedMeals: [{ id: "meal-preserve", name: "Dimanche", recipeIds }],
+      composedRecipes: [{ ...recipe, composition: recipeIds, compositionTitles: { starter: "Entrée", main: "Plat", dessert: "Dessert" } }],
+      customRecipes: [recipe],
+      recipeCollections: [{ id: "collection-preserve", name: "À essayer", recipeIds: [recipe.id] }],
+      shoppingRecipes: [{ recipe, portions: 3 }],
+      shoppingItems: [{ id: "article-preserve", name: "Papier cuisson", checked: true }],
+      extraShoppingCheckedIds: ["carrot"],
+      recipeNotes: { [recipe.id]: "Moins de sel" },
+      pantryAmounts: { carrot: { quantity: 50, unit: "g" } },
+    }));
+    for (const key of ["savedMeals", "composedRecipes", "customRecipes", "recipeCollections", "shoppingRecipes", "shoppingItems", "extraShoppingCheckedIds"]) {
+      assert.equal(source[key].length, 1, `le cas de test doit contenir ${key}`);
+    }
+    localStorage.setItem("inflamm-menu:app-state", JSON.stringify(source));
+    const load = loadAppState();
+    await indexedDb.waitForWrites(1);
+    indexedDb.releaseNextWrite();
+    const loaded = await load;
+    for (const key of APP_STATE_DATA_KEYS) assert.deepEqual(loaded[key], source[key], key);
+    assert.deepEqual(indexedDb.read("current"), source);
+    assert.deepEqual(JSON.parse(localStorage.getItem("inflamm-menu:app-state")), source);
+  });
+});
+
+test("older partial profiles remain recoverable and a quota-limited reset marker still dominates them", async () => {
+  const { loadAppState, loadRecoveryAppState, resetAppState, exportAppState, BACKUP_FORMAT } = await import("../src/storage.ts");
+  const indexedDb = { factory: { open: () => { throw new Error("IndexedDB denied during reset"); } } };
+  await withStorageEnvironment(async ({ localStorage }) => {
+    const oldState = state({ version: 2, profile: { firstName: "Profil ancien à conserver" }, favoriteRecipeIds: ["r1"] });
+    const original = JSON.stringify(oldState);
+    localStorage.setItem("inflamm-menu:app-state", original);
+    const recovery = await loadRecoveryAppState();
+    assert.equal(recovery.state.profile.firstName, "Profil ancien à conserver");
+    assert.equal(JSON.parse(exportAppState(recovery.state)).format, BACKUP_FORMAT);
+    assert.equal(localStorage.getItem("inflamm-menu:app-state"), original, "la récupération est en lecture seule");
+    const setItem = localStorage.setItem;
+    localStorage.setItem = (key, value) => {
+      if (key === "inflamm-menu:app-state") throw new Error("Quota exceeded");
+      setItem(key, value);
+    };
+    await resetAppState();
+    assert.match(localStorage.getItem("inflamm-menu:reset-marker"), /^\d+:reset:/);
+    assert.equal(localStorage.getItem("inflamm-menu:app-state"), original, "le snapshot ancien peut subsister sous son marqueur de reset");
+    localStorage.setItem = setItem;
+    const loaded = await loadAppState();
+    assert.equal(loaded.profile.firstName, "");
+    assert.deepEqual(loaded.favoriteRecipeIds, []);
+    assert.equal(JSON.parse(localStorage.getItem("inflamm-menu:app-state")).profile.firstName, "");
+  }, { indexedDb });
 });

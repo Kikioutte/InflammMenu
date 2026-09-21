@@ -95,11 +95,11 @@ export interface AppState {
 
 const DATABASE_NAME = "inflamm-menu";
 const DATABASE_VERSION = 1;
-const STORE_NAME = "app-state";
-const STATE_KEY = "current";
-const RESET_MARKER_KEY = "reset-marker";
-const LOCAL_STORAGE_KEY = "inflamm-menu:app-state";
-const LOCAL_RESET_MARKER_KEY = "inflamm-menu:reset-marker";
+export const STORE_NAME = "app-state";
+export const STATE_KEY = "current";
+export const RESET_MARKER_KEY = "reset-marker";
+export const LOCAL_STORAGE_KEY = "inflamm-menu:app-state";
+export const LOCAL_RESET_MARKER_KEY = "inflamm-menu:reset-marker";
 type StorageGenerationKind = "legacy" | "rollover" | "replace" | "reset";
 const LEGACY_STORAGE_GENERATION = "0:legacy:legacy";
 /** Archived weeks kept on the device; the oldest are dropped beyond this. */
@@ -874,10 +874,78 @@ interface ReplicaWriteResult {
   state: AppState | null;
 }
 
+export class StoredStateReadError extends Error {
+  readonly storageGenerations: string[];
+
+  constructor(storageGenerations: readonly string[] = []) {
+    super("Une sauvegarde locale est illisible ou provient d’une version plus récente. Elle a été conservée : téléchargez une copie de récupération avant toute réinitialisation.");
+    this.name = "StoredStateReadError";
+    this.storageGenerations = [...storageGenerations];
+  }
+}
+
+function storedGenerationHints(...values: unknown[]): string[] {
+  return values.flatMap((value) => {
+    const generation = parseStorageGeneration(value);
+    return generation ? [generation.value] : [];
+  });
+}
+
+/** Missing records are fresh installs; present but unreadable records are not. */
+function migrateStoredState(value: unknown): AppState | null {
+  if (value === undefined) return null;
+  const generations = storedGenerationHints(isRecord(value) ? value.storageGeneration : undefined);
+  if (!isRecord(value)
+    || (value.version !== undefined && (!Number.isInteger(value.version) || Number(value.version) < 0 || Number(value.version) > APP_STATE_VERSION))
+    // Older on-device snapshots could contain a partial profile. Its missing
+    // settings still migrate normally; require the recognizable state envelope,
+    // not the stricter completeness rules used for an explicit backup import.
+    || !isRecord(value.profile)
+    || !(Object.hasOwn(value, "currentPlan") || Object.hasOwn(value, "plan"))
+    || !(Array.isArray(value.favoriteRecipeIds) || Array.isArray(value.favorites))
+    || !Array.isArray(value.history)
+    || !(Array.isArray(value.checkedShoppingItemIds) || Array.isArray(value.checkedShoppingIds))
+    || !(Array.isArray(value.pantryIngredientIds) || Array.isArray(value.pantryIds))
+    || (value.storageGeneration !== undefined && !parseStorageGeneration(value.storageGeneration))) {
+    throw new StoredStateReadError(generations);
+  }
+  const state = migrateAppState(value);
+  if (!state) throw new StoredStateReadError(generations);
+  return state;
+}
+
+function parseLocalState(raw: string | null): AppState | null {
+  if (raw === null) return null;
+  let value: unknown;
+  try { value = JSON.parse(raw); }
+  catch { throw new StoredStateReadError(); }
+  return migrateStoredState(value);
+}
+
+function replicaFromValues(readState: () => AppState | null, rawMarker: unknown): StorageReplica {
+  let state: AppState | null = null;
+  try {
+    state = readState();
+    const markerGeneration = parseStoredGeneration(rawMarker);
+    return {
+      state,
+      generation: newestStorageGeneration([markerGeneration, ...(state ? [state.storageGeneration] : [])]),
+    };
+  } catch (error) {
+    if (error instanceof StoredStateReadError) {
+      throw new StoredStateReadError([
+        ...error.storageGenerations,
+        ...storedGenerationHints(rawMarker, state?.storageGeneration),
+      ]);
+    }
+    throw error;
+  }
+}
+
 function parseStoredGeneration(value: unknown): string {
-  if (value === undefined || value === null) return LEGACY_STORAGE_GENERATION;
+  if (value === undefined) return LEGACY_STORAGE_GENERATION;
   const parsed = parseStorageGeneration(value);
-  if (!parsed) throw new Error("Storage reset marker is unreadable");
+  if (!parsed) throw new StoredStateReadError();
   return parsed.value;
 }
 
@@ -892,29 +960,32 @@ function localStorageAvailable(): boolean {
 
 function readLocalReplica(): StorageReplica {
   if (!localStorageAvailable()) throw new Error("localStorage is unavailable");
-  const markerGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+  const rawMarker = window.localStorage.getItem(LOCAL_RESET_MARKER_KEY);
   const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-  if (!raw) return { state: null, generation: markerGeneration };
-  const state = migrateAppState(JSON.parse(raw) as unknown);
-  if (!state) throw new Error("localStorage contains an unreadable app state");
   // Non-reset generations live in their complete, self-describing snapshot;
   // only a reset owns the separate tombstone marker. The newest of both wins,
   // so a stale snapshot can never erase an already published reset barrier.
-  return {
-    state,
-    generation: newestStorageGeneration([markerGeneration, state.storageGeneration]),
-  };
+  return replicaFromValues(() => parseLocalState(raw), rawMarker ?? undefined);
 }
 
 function writeLocalReplica(state: AppState): ReplicaWriteResult {
   if (!localStorageAvailable()) return { saved: false, activeGeneration: LEGACY_STORAGE_GENERATION, state: null };
   let activeGeneration = LEGACY_STORAGE_GENERATION;
+  let markerGeneration = LEGACY_STORAGE_GENERATION;
   const resetTombstone = isResetTombstone(state);
+  const allowUnreadable = isAuthorizedReset(state);
   try {
-    activeGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+    try {
+      markerGeneration = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY) ?? undefined);
+      activeGeneration = markerGeneration;
+    } catch (error) { if (!allowUnreadable || !(error instanceof StoredStateReadError)) throw error; }
     const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
     let storedState: AppState | null = null;
-    try { storedState = raw ? migrateAppState(JSON.parse(raw) as unknown) : null; } catch { storedState = null; }
+    try { storedState = parseLocalState(raw); }
+    catch (error) {
+      if (!allowUnreadable || !(error instanceof StoredStateReadError)) throw error;
+      activeGeneration = newestStorageGeneration([activeGeneration, ...error.storageGenerations]);
+    }
     if (storedState) {
       activeGeneration = newestStorageGeneration([activeGeneration, storedState.storageGeneration]);
     }
@@ -930,7 +1001,7 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
     // Only a reset may publish this marker. Imports and revision rollovers
     // persist solely as complete snapshots, so a stale writer can never
     // overwrite a reset tombstone between two non-atomic localStorage calls.
-    if (order > 0 && resetTombstone) {
+    if (resetTombstone && compareStorageGenerations(state.storageGeneration, markerGeneration) > 0) {
       window.localStorage.setItem(LOCAL_RESET_MARKER_KEY, state.storageGeneration);
       activeGeneration = state.storageGeneration;
     }
@@ -939,10 +1010,9 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
       ? mergeAppStateReplicas(storedState, state)
       : state;
     window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(stateToWrite));
-    const persistedMarker = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+    const persistedMarker = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY) ?? undefined);
     const persistedRaw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-    let persistedState: AppState | null = null;
-    try { persistedState = persistedRaw ? migrateAppState(JSON.parse(persistedRaw) as unknown) : null; } catch { persistedState = null; }
+    const persistedState = parseLocalState(persistedRaw);
     activeGeneration = newestStorageGeneration([
       persistedMarker,
       ...(persistedState ? [persistedState.storageGeneration] : []),
@@ -957,18 +1027,25 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
       activeGeneration,
       state: completeStateSaved ? persistedState : (markerSaved ? state : null),
     };
-  } catch {
+  } catch (error) {
+    if (error instanceof StoredStateReadError) throw error;
     let persistedState: AppState | null = null;
     let persistedMarker = LEGACY_STORAGE_GENERATION;
     try {
-      persistedMarker = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY));
+      persistedMarker = parseStoredGeneration(window.localStorage.getItem(LOCAL_RESET_MARKER_KEY) ?? undefined);
       const persistedRaw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-      try { persistedState = persistedRaw ? migrateAppState(JSON.parse(persistedRaw) as unknown) : null; } catch { persistedState = null; }
+      try { persistedState = parseLocalState(persistedRaw); }
+      catch (readError) {
+        if (!allowUnreadable || !(readError instanceof StoredStateReadError)) throw readError;
+      }
       activeGeneration = newestStorageGeneration([
         persistedMarker,
         ...(persistedState ? [persistedState.storageGeneration] : []),
       ]);
-    } catch { /* keep the last valid generation */ }
+    } catch (readError) {
+      if (readError instanceof StoredStateReadError) throw readError;
+      /* keep the last valid generation if storage became unavailable */
+    }
     // If a new reset marker survived but the larger state write hit quota, the
     // tombstone itself is the durable reset. Report that truthfully so the UI
     // does not claim that the previous data is still active.
@@ -985,22 +1062,26 @@ function writeLocalReplica(state: AppState): ReplicaWriteResult {
   }
 }
 
-function openDatabase(): Promise<IDBDatabase> {
+export function openDatabase(recovery = false): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     if (typeof indexedDB === "undefined") {
       reject(new Error("IndexedDB is unavailable"));
       return;
     }
 
-    const request = indexedDB.open(DATABASE_NAME, DATABASE_VERSION);
+    const request = recovery ? indexedDB.open(DATABASE_NAME) : indexedDB.open(DATABASE_NAME, DATABASE_VERSION);
     request.onupgradeneeded = () => {
+      // Recovery only reads existing data; it must not create an empty database.
+      if (recovery) { request.transaction?.abort(); return; }
       const database = request.result;
       if (!database.objectStoreNames.contains(STORE_NAME)) {
         database.createObjectStore(STORE_NAME);
       }
     };
     request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error ?? new Error("Unable to open IndexedDB"));
+    request.onerror = () => reject(request.error?.name === "VersionError"
+      ? new StoredStateReadError()
+      : request.error ?? new Error("Unable to open IndexedDB"));
     request.onblocked = () => reject(new Error("IndexedDB upgrade is blocked"));
   });
 }
@@ -1015,19 +1096,7 @@ async function readIndexedReplica(): Promise<StorageReplica> {
       const markerRequest = store.get(RESET_MARKER_KEY);
       transaction.oncomplete = () => {
         try {
-          const state = migrateAppState(stateRequest.result);
-          if (stateRequest.result !== undefined && stateRequest.result !== null && !state) {
-            reject(new Error("IndexedDB contains an unreadable app state"));
-            return;
-          }
-          const markerGeneration = parseStoredGeneration(markerRequest.result);
-          resolve({
-            state,
-            generation: newestStorageGeneration([
-              markerGeneration,
-              ...(state ? [state.storageGeneration] : []),
-            ]),
-          });
+          resolve(replicaFromValues(() => migrateStoredState(stateRequest.result), markerRequest.result));
         } catch (error) {
           reject(error);
         }
@@ -1054,8 +1123,15 @@ async function writeIndexedReplica(state: AppState): Promise<ReplicaWriteResult>
       let handlerError: unknown;
       stateRequest.onsuccess = () => {
         try {
-          activeGeneration = parseStoredGeneration(markerRequest.result);
-          const storedState = migrateAppState(stateRequest.result);
+          const allowUnreadable = isAuthorizedReset(state);
+          try { activeGeneration = parseStoredGeneration(markerRequest.result); }
+          catch (error) { if (!allowUnreadable || !(error instanceof StoredStateReadError)) throw error; }
+          let storedState: AppState | null = null;
+          try { storedState = migrateStoredState(stateRequest.result); }
+          catch (error) {
+            if (!allowUnreadable || !(error instanceof StoredStateReadError)) throw error;
+            activeGeneration = newestStorageGeneration([activeGeneration, ...error.storageGenerations]);
+          }
           if (storedState) {
             activeGeneration = newestStorageGeneration([activeGeneration, storedState.storageGeneration]);
           }
@@ -1133,20 +1209,37 @@ function resolveReplicas(
   };
 }
 
-async function readReplicasBestEffort(): Promise<{ local: StorageReplica | null; indexed: StorageReplica | null }> {
+async function readReplicasBestEffort(): Promise<{
+  local: StorageReplica | null;
+  indexed: StorageReplica | null;
+  unreadable: boolean;
+  storageGenerations: string[];
+}> {
   let local: StorageReplica | null = null;
   let indexed: StorageReplica | null = null;
-  try { local = readLocalReplica(); } catch { /* The other replica may still be usable. */ }
-  try { indexed = await readIndexedReplica(); } catch { /* Safari private mode may reject IndexedDB. */ }
-  return { local, indexed };
+  let unreadable = false;
+  const storageGenerations: string[] = [];
+  const recordFailure = (error: unknown) => {
+    if (error instanceof StoredStateReadError) {
+      unreadable = true;
+      storageGenerations.push(...error.storageGenerations);
+    }
+    // Inaccessible storage is different from a readable, incompatible record.
+    // Private browsing can deny one storage while the other remains usable.
+  };
+  try { local = readLocalReplica(); } catch (error) { recordFailure(error); }
+  try { indexed = await readIndexedReplica(); } catch (error) { recordFailure(error); }
+  return { local, indexed, unreadable, storageGenerations };
 }
 
 export async function loadAppState(): Promise<AppState> {
   const replicas = await readReplicasBestEffort();
+  if (replicas.unreadable) throw new StoredStateReadError(replicas.storageGenerations);
   const resolved = resolveReplicas(replicas.local, replicas.indexed);
   try {
     return (await saveAppState(resolved.state)).state;
-  } catch {
+  } catch (error) {
+    if (error instanceof StoredStateReadError) throw error;
     return resolved.state;
   }
 }
@@ -1166,8 +1259,14 @@ export async function loadRecoveryAppState(): Promise<RecoveryAppStateResult> {
   const unreadableReplicas: RecoveryAppStateResult["unreadableReplicas"] = [];
   let localReplica: StorageReplica | null = null;
   let indexedReplica: StorageReplica | null = null;
-  try { localReplica = readLocalReplica(); } catch { unreadableReplicas.push("localStorage"); }
-  try { indexedReplica = await readIndexedReplica(); } catch { unreadableReplicas.push("IndexedDB"); }
+  try { localReplica = readLocalReplica(); } catch (error) {
+    if (error instanceof StoredStateReadError) throw error;
+    unreadableReplicas.push("localStorage");
+  }
+  try { indexedReplica = await readIndexedReplica(); } catch (error) {
+    if (error instanceof StoredStateReadError) throw error;
+    unreadableReplicas.push("IndexedDB");
+  }
 
   if (!localReplica && !indexedReplica) {
     throw new Error("No readable app-state replica is available for recovery");
@@ -1178,6 +1277,12 @@ export async function loadRecoveryAppState(): Promise<RecoveryAppStateResult> {
     complete: unreadableReplicas.length === 0,
     unreadableReplicas,
   };
+}
+
+/** A raw evidence copy is separate from a validated, directly importable backup. */
+export async function exportRawRecovery(): Promise<string> {
+  const recovery = await import("./raw-recovery.ts");
+  return recovery.exportRawRecovery();
 }
 
 export interface SaveAppStateResult {
@@ -1213,6 +1318,7 @@ function stateCovers(persisted: AppState, requested: AppState): boolean {
 async function performSaveAppState(state: AppState): Promise<SaveAppStateResult> {
   const candidate = migrateAppState(state) ?? cloneDefaultState();
   let replicas = await readReplicasBestEffort();
+  if (replicas.unreadable && !isAuthorizedReset(candidate)) throw new StoredStateReadError(replicas.storageGenerations);
   let resolved = resolveReplicas(replicas.local, replicas.indexed, [candidate.storageGeneration]);
   if (compareStorageGenerations(candidate.storageGeneration, resolved.generation) === 0) {
     resolved.state = mergeAppStateReplicas(candidate, resolved.state);
@@ -1231,6 +1337,7 @@ async function performSaveAppState(state: AppState): Promise<SaveAppStateResult>
     try {
       indexedResult = await writeIndexedReplica(resolved.state);
     } catch (error) {
+      if (error instanceof StoredStateReadError) throw error;
       indexedResult = { saved: false, activeGeneration: LEGACY_STORAGE_GENERATION, state: null };
       indexedError = error;
     }
@@ -1246,6 +1353,7 @@ async function performSaveAppState(state: AppState): Promise<SaveAppStateResult>
     ]);
     if (compareStorageGenerations(observedGeneration, resolved.generation) > 0) {
       replicas = await readReplicasBestEffort();
+      if (replicas.unreadable && !isAuthorizedReset(candidate)) throw new StoredStateReadError(replicas.storageGenerations);
       resolved = resolveReplicas(replicas.local, replicas.indexed, [observedGeneration]);
       continue;
     }
@@ -1352,7 +1460,9 @@ function scheduleSaveDrain(): void {
  */
 export function saveAppState(state: AppState): Promise<SaveAppStateResult> {
   const candidate = migrateAppState(state) ?? cloneDefaultState();
-  const localResult = writeLocalReplica(candidate);
+  let localResult: ReplicaWriteResult;
+  try { localResult = writeLocalReplica(candidate); }
+  catch (error) { return Promise.reject(error); }
   const target = localResult.state
     ? mergeAppStateReplicas(candidate, localResult.state)
     : candidate;
@@ -1411,9 +1521,22 @@ function isResetTombstone(state: AppState): boolean {
     ));
 }
 
+// A persisted reset-shaped snapshot is not authorization to erase damaged data.
+// Only a reset explicitly requested during this session opens the write guard.
+const authorizedResetGenerations = new Set<string>();
+
+function isAuthorizedReset(state: AppState): boolean {
+  return authorizedResetGenerations.has(state.storageGeneration) && isResetTombstone(state);
+}
+
 export async function resetAppState(): Promise<void> {
+  // A newer database schema must be opened by the matching app version. Do not
+  // reset only localStorage and then claim that this unknown database is reset.
+  try { (await openDatabase()).close(); }
+  catch (error) { if (error instanceof StoredStateReadError) throw error; }
   const replicas = await readReplicasBestEffort();
   const seenGenerations = [
+    ...replicas.storageGenerations,
     ...(replicas.local ? [replicas.local.generation] : []),
     ...(replicas.indexed ? [replicas.indexed.generation] : []),
   ];
@@ -1429,9 +1552,18 @@ export async function resetAppState(): Promise<void> {
       fieldRevisions: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, 0])) as AppStateFieldRevisions,
       fieldMutationIds: Object.fromEntries(APP_STATE_DATA_KEYS.map((key) => [key, mutationId])) as AppStateFieldMutationIds,
     });
-    const result = await saveAppState(resetState);
-    if (result.state.storageGeneration === storageGeneration || isResetTombstone(result.state)) return;
-    seenGenerations.push(result.state.storageGeneration);
+    authorizedResetGenerations.add(storageGeneration);
+    try {
+      const result = await saveAppState(resetState);
+      if (result.state.storageGeneration === storageGeneration || isResetTombstone(result.state)) {
+        const remaining = await readReplicasBestEffort();
+        if (remaining.unreadable) throw new StoredStateReadError(remaining.storageGenerations);
+        return;
+      }
+      seenGenerations.push(result.state.storageGeneration);
+    } finally {
+      authorizedResetGenerations.delete(storageGeneration);
+    }
   }
   throw new Error("A newer storage generation prevented the reset from converging");
 }

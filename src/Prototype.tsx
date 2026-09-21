@@ -135,6 +135,7 @@ import {
   DEFAULT_APP_STATE,
   HISTORY_LIMIT,
   exportAppState,
+  exportRawRecovery,
   importAppStateFile,
   loadAppState,
   loadRecoveryAppState,
@@ -143,6 +144,7 @@ import {
   registerOfflineSupport,
   resetAppState,
   saveAppState,
+  StoredStateReadError,
   stampAppStateChanges,
   watchForAppUpdate,
   watchForStoredState,
@@ -207,7 +209,39 @@ function createAppStateStore(initial: AppState): AppStateStore {
 
 function LiveAppState({ store, children }: { store: AppStateStore; children: (state: AppState) => React.ReactNode }) {
   const state = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
+  // Personal recipes are published after the state render. Keep stacked views
+  // current when that registry catches up with a restored or edited recipe.
+  useSyncExternalStore(subscribeRecipeRegistry, () => recipeRegistrySnapshot, () => recipeRegistrySnapshot);
   return <>{children(state)}</>;
+}
+
+type MealActionTarget = { slotId: string; signature: string };
+
+function mealActionTarget(plan: WeeklyPlan | null, meal: PlannedMeal, storageGeneration: string): MealActionTarget | null {
+  if (!plan) return null;
+  return {
+    slotId: meal.id,
+    signature: JSON.stringify([
+      storageGeneration, plan.id, plan.startsOn, plan.generatedAt, meal.id, meal.dayIndex,
+      meal.mealType, meal.recipeId, meal.portions, meal.source,
+      meal.locked === true, meal.completed === true, meal.skipped === true,
+      meal.leftoverOf ?? null,
+      (meal.substitutions ?? []).map((item) => [item.ingredientId, item.substitutionId]).sort(),
+    ]),
+  };
+}
+
+function matchingActionMeal(plan: WeeklyPlan | null, target: MealActionTarget | null, storageGeneration: string): PlannedMeal | null {
+  const meal = plan?.meals.find((item) => item.id === target?.slotId);
+  return meal && target && mealActionTarget(plan, meal, storageGeneration)?.signature === target.signature ? meal : null;
+}
+
+const STALE_MEAL_ACTION = "Le menu ou ce repas a changé. Revenez à la semaine et rouvrez le repas avant de continuer.";
+
+function StaleMealAction() {
+  return <MobileScroll className="app-screen"><main className="page-content pushed-page" data-testid="stale-meal-action">
+    <h1>Ce repas a changé</h1><p className="notice-banner" role="alert">{STALE_MEAL_ACTION}</p>
+  </main></MobileScroll>;
 }
 
 function popFlowToRoot(flow: FlowControls) {
@@ -310,6 +344,12 @@ function useRecipeRegistry(customRecipes: readonly Recipe[]): readonly Recipe[] 
   );
   useEffect(() => replaceRecipeRegistry(customRecipes), [customRecipes]);
   return snapshot.recipes;
+}
+
+function recipesForState(state: AppState): readonly Recipe[] {
+  return state.customRecipes.length || state.composedRecipes.length
+    ? [...RECIPES, ...state.customRecipes, ...state.composedRecipes]
+    : RECIPES;
 }
 const ingredientNameById = new Map(
   RECIPES.flatMap((recipe) => recipe.ingredients).map((ingredient) => [ingredient.id, ingredient.name]),
@@ -2360,12 +2400,18 @@ function CatalogueRecipeView({ tools, recipe, favorite, onFavorite, onPlan, onCo
   </main></MobileScroll>;
 }
 
-function ReplaceView({ plan, current, profile, onConfirm }: { plan: WeeklyPlan; current: PlannedMeal; profile: UserProfile; onConfirm: (recipe: Recipe, options: { dislikeCurrent: boolean }) => void }) {
+function ReplaceView({ plan, current, profile, onConfirm }: { plan: WeeklyPlan; current: PlannedMeal; profile: UserProfile; onConfirm: (recipe: Recipe, options: { dislikeCurrent: boolean }) => string | null }) {
   const [reason, setReason] = useState("Plus rapide");
   const [dislikeCurrent, setDislikeCurrent] = useState(false);
+  const [error, setError] = useState("");
   const candidates = getReplacementCandidates(plan, current.id, ACTIVE_RECIPES, profile, reason).slice(0, 5);
   const [selectedId, setSelectedId] = useState<string | null>(candidates[0]?.id ?? null);
+  const candidateIds = candidates.map((recipe) => recipe.id).join("\n");
   useEffect(() => { setSelectedId(candidates[0]?.id ?? null); }, [reason]);
+  useEffect(() => {
+    setSelectedId((selected) => candidates.some((recipe) => recipe.id === selected) ? selected : candidates[0]?.id ?? null);
+    setError("");
+  }, [candidateIds]);
   const selected = candidates.find((recipe) => recipe.id === selectedId);
   const currentRecipe = recipeById.get(current.recipeId);
   const unusedRecipes = ACTIVE_RECIPES.filter((recipe) =>
@@ -2374,7 +2420,7 @@ function ReplaceView({ plan, current, profile, onConfirm }: { plan: WeeklyPlan; 
   const selectedMinutes = profile.dayConstraints.find((item) => item.dayIndex === current.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes;
   const diagnostic = diagnoseRecipeCompatibility(unusedRecipes, profile, { mealType: current.mealType, maxPrepMinutes: selectedMinutes });
   const compatibleAlreadyPlanned = diagnoseRecipeCompatibility(ACTIVE_RECIPES, profile, { mealType: current.mealType, maxPrepMinutes: selectedMinutes }).compatibleCount > 0;
-  return <MobileScroll className="app-screen"><main className="page-content pushed-page replace-page"><div className="page-heading"><span className="eyebrow">À la place de</span><h1>{currentRecipe?.title}</h1><p>Les allergies, le régime et le temps actif maximum restent strictement respectés.</p></div><Carousel ariaLabel="Motif du remplacement" className="reason-carousel" contentClassName="reason-carousel__track">{["Plus rapide", "Moins cher", "Végétarien", "Autres ingrédients", "Réutiliser mes ingrédients"].map((item) => <button type="button" className={`reason-chip ${reason === item ? "is-selected" : ""}`} aria-pressed={reason === item} key={item} data-testid={`reason-${normalizeText(item).replace(/\s+/g, "-")}`} onClick={() => setReason(item)}>{item}</button>)}</Carousel><div className="replacement-list">{candidates.map((recipe) => <button type="button" key={recipe.id} className={`replacement-card ${selectedId === recipe.id ? "is-selected" : ""}`} aria-pressed={selectedId === recipe.id} onClick={() => setSelectedId(recipe.id)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {recipe.costPerPortion.toFixed(2).replace(".", ",")} €/portion</small><strong>{recipe.title}</strong><em>{recipe.description}</em></span><i>{selectedId === recipe.id ? <CheckIcon /> : null}</i></button>)}</div>{currentRecipe ? <button type="button" className={`dislike-toggle ${dislikeCurrent ? "is-selected" : ""}`} aria-pressed={dislikeCurrent} data-testid="dislike-current" onClick={() => setDislikeCurrent((value) => !value)}><span className="dislike-toggle__box" aria-hidden="true">{dislikeCurrent ? <CheckIcon /> : null}</span><span><strong>Ne plus me proposer « {currentRecipe.title} »</strong><small>La recette est écartée des prochaines semaines. Réversible depuis votre profil.</small></span></button> : null}{selected ? <button type="button" className="primary-button full-button" onClick={() => onConfirm(selected, { dislikeCurrent })}>Choisir ce repas</button> : <><h2 className="empty-guidance-title">Aucune alternative compatible</h2><CompatibilityHelp diagnostic={diagnostic} selectedMinutes={selectedMinutes} allCompatibleAlreadyUsed={compatibleAlreadyPlanned} /></>}</main></MobileScroll>;
+  return <MobileScroll className="app-screen"><main className="page-content pushed-page replace-page" data-testid="replace-view">{error ? <p className="notice-banner" role="alert">{error}</p> : null}<div className="page-heading"><span className="eyebrow">À la place de</span><h1>{currentRecipe?.title}</h1><p>Les allergies, le régime et le temps actif maximum restent strictement respectés.</p></div><Carousel ariaLabel="Motif du remplacement" className="reason-carousel" contentClassName="reason-carousel__track">{["Plus rapide", "Moins cher", "Végétarien", "Autres ingrédients", "Réutiliser mes ingrédients"].map((item) => <button type="button" className={`reason-chip ${reason === item ? "is-selected" : ""}`} aria-pressed={reason === item} key={item} data-testid={`reason-${normalizeText(item).replace(/\s+/g, "-")}`} onClick={() => setReason(item)}>{item}</button>)}</Carousel><div className="replacement-list">{candidates.map((recipe) => <button type="button" key={recipe.id} className={`replacement-card ${selectedId === recipe.id ? "is-selected" : ""}`} aria-pressed={selectedId === recipe.id} onClick={() => setSelectedId(recipe.id)}><img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span><small>{formatRecipeDuration(recipe.prepMinutes)} actives · {recipe.costPerPortion.toFixed(2).replace(".", ",")} €/portion</small><strong>{recipe.title}</strong><em>{recipe.description}</em></span><i>{selectedId === recipe.id ? <CheckIcon /> : null}</i></button>)}</div>{currentRecipe ? <button type="button" className={`dislike-toggle ${dislikeCurrent ? "is-selected" : ""}`} aria-pressed={dislikeCurrent} data-testid="dislike-current" onClick={() => setDislikeCurrent((value) => !value)}><span className="dislike-toggle__box" aria-hidden="true">{dislikeCurrent ? <CheckIcon /> : null}</span><span><strong>Ne plus me proposer « {currentRecipe.title} »</strong><small>La recette est écartée des prochaines semaines. Réversible depuis votre profil.</small></span></button> : null}{selected ? <button type="button" className="primary-button full-button" onClick={() => setError(onConfirm(selected, { dislikeCurrent }) ?? "")}>Choisir ce repas</button> : <><h2 className="empty-guidance-title">Aucune alternative compatible</h2><CompatibilityHelp diagnostic={diagnostic} selectedMinutes={selectedMinutes} allCompatibleAlreadyUsed={compatibleAlreadyPlanned} /></>}</main></MobileScroll>;
 }
 
 function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateStore }) {
@@ -2390,6 +2436,7 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   const hydrateAppState = appStore.hydrateState;
   const mergeAppState = appStore.mergeState;
   const [hydrated, setHydrated] = useState(false);
+  const [startupError, setStartupError] = useState<Error | null>(null);
   const [archivedWeek, setArchivedWeek] = useState<WeeklyPlan | null>(null);
   const [appNotice, setAppNotice] = useState("");
   const [storageWarning, setStorageWarning] = useState("");
@@ -2491,6 +2538,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
         else setAppState(restored);
       }
       setHydrated(true);
+    }).catch((error: unknown) => {
+      if (active) setStartupError(error instanceof Error ? error : new Error("Impossible de lire les données locales."));
     });
     return () => { active = false; };
   }, []);
@@ -2510,8 +2559,10 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
         setAppNotice("Les données locales les plus récentes ont été synchronisées.");
       }
       setStorageWarning(result.localSaved && result.indexedSaved ? "" : "Vos données sont enregistrées dans un seul stockage local. Exportez une sauvegarde par précaution.");
-    }).catch(() => {
-      if (active) setStorageWarning("Impossible d’enregistrer vos changements sur cet appareil. Exportez vos données avant de fermer la page.");
+    }).catch((error: unknown) => {
+      if (active) setStorageWarning(error instanceof StoredStateReadError
+        ? "Une copie locale est illisible ou provient d’une version plus récente. L’enregistrement est suspendu pour la préserver. Exportez vos changements depuis À propos avant de fermer la page."
+        : "Impossible d’enregistrer vos changements sur cet appareil. Exportez vos données avant de fermer la page.");
     });
     return () => { active = false; };
   }, [appState, hydrated, mergeAppState]);
@@ -2642,10 +2693,10 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
    * Applies a change to the running week. Ticked shopping items are kept when
    * they still belong to the list, so editing a meal in the shop is harmless.
    */
-  const withUpdatedPlan = (current: AppState, plan: WeeklyPlan): AppState => ({
+  const withUpdatedPlan = (current: AppState, plan: WeeklyPlan, recipes: readonly Recipe[] = ACTIVE_RECIPES): AppState => ({
     ...current,
     currentPlan: plan,
-    checkedShoppingItemIds: reconcileCheckedItems(plan, ACTIVE_RECIPES, current.checkedShoppingItemIds),
+    checkedShoppingItemIds: reconcileCheckedItems(plan, recipes, current.checkedShoppingItemIds),
   });
 
   const toggleMealLock = (planned: PlannedMeal) => setAppState((current) => (current.currentPlan
@@ -2687,24 +2738,41 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     : current));
 
   function replacementScreen(planned: PlannedMeal): FlowScreen {
-    return { id: `replace-${planned.id}`, title: "Remplacer le repas", headerHeight: 56, header: (route) => <Header title="Remplacer" onBack={route.pop} />, render: (route) => {
-      const liveState = appStore.getSnapshot();
+    const openedState = appStore.getSnapshot();
+    const target = mealActionTarget(openedState.currentPlan, planned, openedState.storageGeneration);
+    return { id: `replace-${planned.id}`, title: "Remplacer le repas", headerHeight: 56, header: (route) => <Header title="Remplacer" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(liveState) => {
       const plan = liveState.currentPlan;
-      if (!plan) return <EmptyRoot icon={CalendarIcon} title="Semaine indisponible" body="Cette semaine n’est plus au menu." />;
-      return <ReplaceView plan={plan} current={planned} profile={liveState.profile} onConfirm={(recipe, options) => {
-        setAppState((current) => {
-          if (!current.currentPlan) return current;
-          const updatedPlan = replacePlannedMeal(current.currentPlan, planned.id, recipe, ACTIVE_RECIPES);
-          return {
-            ...withUpdatedPlan(current, updatedPlan),
-            profile: options.dislikeCurrent && !current.profile.dislikedRecipeIds.includes(planned.recipeId)
-              ? { ...current.profile, dislikedRecipeIds: [...current.profile.dislikedRecipeIds, planned.recipeId] }
-              : current.profile,
-          };
-        });
-        route.pop();
+      const source = matchingActionMeal(plan, target, liveState.storageGeneration);
+      if (!plan || !source) return <StaleMealAction />;
+      return <ReplaceView plan={plan} current={source} profile={liveState.profile} onConfirm={(recipe, options) => {
+        try {
+          setAppState((current) => {
+            const liveSource = matchingActionMeal(current.currentPlan, target, current.storageGeneration);
+            if (!current.currentPlan || !liveSource) throw new Error(STALE_MEAL_ACTION);
+            const recipes = recipesForState(current);
+            // Recheck the latest profile and registry, even if an old click
+            // arrived before React painted a newly synchronized candidate list.
+            const replacement = getReplacementCandidates(current.currentPlan, liveSource.id, recipes, current.profile)
+              .find((candidate) => candidate.id === recipe.id);
+            if (!replacement) throw new Error("Cette recette n’est plus disponible pour ce repas. Choisissez une autre proposition.");
+            const updatedPlan = replacePlannedMeal(current.currentPlan, liveSource.id, replacement, recipes);
+            if (!inspectActivePlan(updatedPlan, recipes, current.profile).canActivate) {
+              throw new Error("Ce remplacement ne respecte plus votre profil ou les contraintes de la semaine.");
+            }
+            return {
+              ...withUpdatedPlan(current, updatedPlan, recipes),
+              profile: options.dislikeCurrent && !current.profile.dislikedRecipeIds.includes(liveSource.recipeId)
+                ? { ...current.profile, dislikedRecipeIds: [...current.profile.dislikedRecipeIds, liveSource.recipeId] }
+                : current.profile,
+            };
+          });
+          route.pop();
+          return null;
+        } catch (error) {
+          return error instanceof Error ? error.message : "Impossible de remplacer ce repas.";
+        }
       }} />;
-    } };
+    }}</LiveAppState> };
   }
 
   function planSlotScreen(recipe: Recipe): FlowScreen {
@@ -2902,47 +2970,67 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
   }} />}</LiveAppState> });
   const openGenerate = () => flow.push({ id: "generate", title: "Générer ma semaine", headerHeight: 56, header: (route) => <Header title="Nouvelle semaine" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <GenerateView profile={live.profile} lockedCount={preservableLockedMeals(live.currentPlan, ACTIVE_RECIPES, live.profile).length} canPrepareNext={Boolean(live.currentPlan)} onCreate={createPlan} onOpenProfile={openProfile} onComplete={(target) => { if (target === "current") setTab("week"); route.pop(); }} />}</LiveAppState> });
   const openTonight = () => flow.push({ id: "tonight", title: "Que cuisiner ce soir ?", headerHeight: 56, header: (route) => <Header title="Ce soir" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <TonightView profile={live.profile} pantryIds={[...live.pantryIngredientIds, ...Object.keys(live.pantryAmounts)]} favoriteIds={live.favoriteRecipeIds} onOpenProfile={openProfile} onOpenRecipe={(recipe, portions) => route.push(recipeScreen(recipe, undefined, portions))} />}</LiveAppState> });
-  function leftoverScreen(planned: PlannedMeal, recipe: Recipe): FlowScreen {
-    return { id: `leftover-${planned.id}`, title: "Restes", headerHeight: 56, header: (route) => <Header title="Cuisiner en double" onBack={route.pop} />, render: (route) => {
-      const plan = appStore.getSnapshot().currentPlan;
-      if (!plan) return <EmptyRoot icon={ArchiveIcon} title="Aucune semaine" body="Générez une semaine avant de prévoir des restes." />;
-      return <LeftoverView plan={plan} source={planned} recipe={recipe} onConfirm={(targetSlotId) => {
-        const live = appStore.getSnapshot().currentPlan;
-        if (!live) return "Cette semaine n’est plus disponible.";
+  function leftoverScreen(planned: PlannedMeal): FlowScreen {
+    const openedState = appStore.getSnapshot();
+    const target = mealActionTarget(openedState.currentPlan, planned, openedState.storageGeneration);
+    return { id: `leftover-${planned.id}`, title: "Restes", headerHeight: 56, header: (route) => <Header title="Cuisiner en double" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(liveState) => {
+      const plan = liveState.currentPlan;
+      const source = matchingActionMeal(plan, target, liveState.storageGeneration);
+      const recipe = source ? recipeById.get(source.recipeId) : undefined;
+      if (!plan || !source || !recipe) return <StaleMealAction />;
+      return <LeftoverView plan={plan} source={source} recipe={recipe} onConfirm={(targetSlotId) => {
+        const displayedMeal = plan.meals.find((meal) => meal.id === targetSlotId);
+        const displayedTarget = displayedMeal ? mealActionTarget(plan, displayedMeal, liveState.storageGeneration) : null;
         try {
-          const updated = planLeftover(live, planned.id, targetSlotId, ACTIVE_RECIPES);
-          setAppState((current) => withUpdatedPlan(current, updated));
+          setAppState((current) => {
+            if (!current.currentPlan || !matchingActionMeal(current.currentPlan, target, current.storageGeneration)) throw new Error(STALE_MEAL_ACTION);
+            if (!matchingActionMeal(current.currentPlan, displayedTarget, current.storageGeneration)) throw new Error("Le repas à remplacer a changé. Vérifiez la liste avant de choisir à nouveau.");
+            const recipes = recipesForState(current);
+            const updated = planLeftover(current.currentPlan, source.id, targetSlotId, recipes);
+            if (!inspectActivePlan(updated, recipes, current.profile).canActivate) {
+              throw new Error("Ces restes ne respectent plus votre profil ou les contraintes du jour choisi.");
+            }
+            return withUpdatedPlan(current, updated, recipes);
+          });
           route.pop();
           return null;
         } catch (error) {
           return error instanceof Error ? error.message : "Impossible de replanifier ces restes.";
         }
       }} />;
-    } };
+    }}</LiveAppState> };
   }
 
   function swapScreen(planned: PlannedMeal): FlowScreen {
-    return { id: `swap-${planned.id}`, title: "Échanger", headerHeight: 56, header: (route) => <Header title="Échanger" onBack={route.pop} />, render: (route) => {
-      const plan = appStore.getSnapshot().currentPlan;
-      if (!plan) return <EmptyRoot icon={CalendarIcon} title="Aucune semaine" body="Générez une semaine avant de déplacer un repas." />;
-      return <SwapView plan={plan} source={planned} profile={appStore.getSnapshot().profile} onConfirm={(targetSlotId) => {
-        const live = appStore.getSnapshot().currentPlan;
-        if (!live) return "Cette semaine n’est plus disponible.";
+    const openedState = appStore.getSnapshot();
+    const target = mealActionTarget(openedState.currentPlan, planned, openedState.storageGeneration);
+    return { id: `swap-${planned.id}`, title: "Échanger", headerHeight: 56, header: (route) => <Header title="Échanger" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(liveState) => {
+      const plan = liveState.currentPlan;
+      const source = matchingActionMeal(plan, target, liveState.storageGeneration);
+      if (!plan || !source) return <StaleMealAction />;
+      return <SwapView plan={plan} source={source} profile={liveState.profile} onConfirm={(targetSlotId) => {
+        const displayedMeal = plan.meals.find((meal) => meal.id === targetSlotId);
+        const displayedTarget = displayedMeal ? mealActionTarget(plan, displayedMeal, liveState.storageGeneration) : null;
         try {
-          const updated = swapPlannedMeals(live, planned.id, targetSlotId, ACTIVE_RECIPES, appStore.getSnapshot().profile);
-          setAppState((current) => withUpdatedPlan(current, updated));
+          setAppState((current) => {
+            if (!current.currentPlan || !matchingActionMeal(current.currentPlan, target, current.storageGeneration)) throw new Error(STALE_MEAL_ACTION);
+            if (!matchingActionMeal(current.currentPlan, displayedTarget, current.storageGeneration)) throw new Error("Le repas à échanger a changé. Vérifiez la liste avant de choisir à nouveau.");
+            const recipes = recipesForState(current);
+            const updated = swapPlannedMeals(current.currentPlan, source.id, targetSlotId, recipes, current.profile);
+            return withUpdatedPlan(current, updated, recipes);
+          });
           route.pop();
           return null;
         } catch (error) {
           return error instanceof Error ? error.message : "Échange impossible.";
         }
       }} />;
-    } };
+    }}</LiveAppState> };
   }
 
   const openSwap = (planned: PlannedMeal) => flow.push(swapScreen(planned));
   const openMeal = (planned: PlannedMeal, recipe: Recipe) => flow.push(recipeScreen(recipe, planned));
-  const openLeftover = (planned: PlannedMeal) => flow.push(leftoverScreen(planned, recipeById.get(planned.recipeId) as Recipe));
+  const openLeftover = (planned: PlannedMeal) => flow.push(leftoverScreen(planned));
   const openReplace = (planned: PlannedMeal) => flow.push(replacementScreen(planned));
   const currentView = useMemo(() => {
     if (tab === "week") return <WeekView plan={appState.currentPlan} onOpenMeal={openMeal} onReplace={openReplace} onToggleLock={toggleMealLock} onToggleCompleted={toggleMealCompleted} onPlanLeftover={openLeftover} onToggleSkipped={toggleMealSkipped} onSwap={openSwap} />;
@@ -2972,6 +3060,8 @@ function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateSt
     if (!appState.onboardingCompleted) return <OnboardingView profile={appState.profile} onOpenProfile={openProfile} onSkip={() => setAppState((current) => ({ ...current, onboardingCompleted: true }))} />;
     return <HomeView onRecipes={() => setTab("recipes")} onInformation={() => flow.push(informationScreen())} profile={appState.profile} plan={appState.currentPlan} archivedWeek={archivedWeek} upcomingPlan={appState.upcomingPlan} onGenerate={openGenerate} onTonight={openTonight} onProfile={openProfile} onOpenMeal={openMeal} onOpenWeek={() => setTab("week")} />;
   }, [tab, appState, activeRecipeSnapshot, archivedWeek, catalogue, catalogueError, ensureCatalogue, retryCatalogue]);
+
+  if (startupError) throw startupError;
 
   return <div className={`app-shell ${appState.textScale === "large" ? "is-large-text" : ""}`} data-text-scale={appState.textScale}>
     {offline ? <p className="offline-strip" role="status" data-testid="offline-strip">Hors ligne : votre semaine, vos recettes planifiées et vos courses restent disponibles. Le catalogue complet demande une connexion s’il n’a pas été téléchargé.</p> : null}
@@ -3003,7 +3093,19 @@ export class PrototypeErrorBoundary extends Component<{ children: ReactNode }, {
 
   private downloadRecovery = async () => {
     try {
-      const recovery = await loadRecoveryAppState();
+      const recovery = await loadRecoveryAppState().catch((error: unknown) => {
+        if (error instanceof StoredStateReadError) return null;
+        throw error;
+      });
+      if (!recovery) {
+        downloadTextFile(
+          `inflamm-menu-recuperation-brute-${isoDate(new Date())}.json`,
+          await exportRawRecovery(),
+          "application/json;charset=utf-8",
+        );
+        this.setState({ recoveryError: "Copie brute téléchargée avec les données accessibles. Conservez ce fichier pour une récupération technique : il ne s’importe pas comme une sauvegarde normale." });
+        return;
+      }
       downloadTextFile(
         `inflamm-menu-recuperation-${isoDate(new Date())}.json`,
         exportAppState(recovery.state),
@@ -3033,7 +3135,9 @@ export class PrototypeErrorBoundary extends Component<{ children: ReactNode }, {
     return <main className="fatal-error" role="alert">
       <Cross2Icon />
       <h1>Inflamm’Menu a rencontré une erreur</h1>
-      <p>Vos données locales n’ont pas été volontairement supprimées. Téléchargez une copie de récupération avant de réinitialiser.</p>
+      <p>{this.state.error instanceof StoredStateReadError
+        ? "Une copie locale est illisible ou provient d’une version plus récente. Son remplacement automatique a été bloqué. Téléchargez une copie de récupération avant toute réinitialisation."
+        : "Vos données locales n’ont pas été volontairement supprimées. Téléchargez une copie de récupération avant de réinitialiser."}</p>
       <button type="button" className="primary-button" onClick={() => window.location.reload()}>Recharger l’application</button>
       <button type="button" className="secondary-button" data-testid="fatal-recovery" onClick={() => void this.downloadRecovery()}>Télécharger une copie de récupération</button>
       {this.state.recoveryError ? <p className="fatal-error__feedback" role="alert" data-testid="fatal-recovery-error">{this.state.recoveryError}</p> : null}
