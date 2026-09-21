@@ -145,6 +145,63 @@ test("une recette personnelle survit au rechargement sous la base GitHub Pages",
   await expect(page.getByText("Ma recette personnelle Pages", { exact: true })).toBeVisible();
 });
 
+test("les écrans secondaires s’ouvrent pour la première fois hors ligne après installation", async ({ page, context }) => {
+  const recipe = { ...structuredClone(IMPORTED_PLAN_RECIPES[0]), id: "perso-deferred-offline", title: "Ma recette hors ligne" };
+  const state = migrateAppState({
+    ...structuredClone(DEFAULT_APP_STATE),
+    onboardingCompleted: true,
+    profile: { ...structuredClone(DEFAULT_PROFILE), firstName: "Camille" },
+    customRecipes: [recipe],
+    favoriteRecipeIds: [recipe.id],
+    recipeNotes: { [recipe.id]: "Note conservée sans réseau" },
+    recipeCollections: [{ id: "collection-deferred-offline", name: "Hors ligne", recipeIds: [recipe.id] }],
+    shoppingItems: [{ id: "article-deferred-offline", name: "Papier cuisson", checked: true }],
+  });
+  await page.addInitScript((value) => {
+    if (!localStorage.getItem("inflamm-menu:app-state")) localStorage.setItem("inflamm-menu:app-state", JSON.stringify(value));
+  }, state);
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await openFreshApp(page);
+  // No profile, information or editor route has been opened in this document.
+  // Wait for the real install precache, then discard the online module map.
+  await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
+  await context.setOffline(true);
+  try {
+    await page.reload();
+    const current = page.getByTestId("flow-current");
+    await expect(current.getByTestId("home-view")).toBeVisible();
+    await current.getByRole("button", { name: "Ajuster mon profil" }).click();
+    await expect(current.getByLabel("Votre prénom")).toHaveValue("Camille");
+    await current.getByRole("button", { name: /Informations et confidentialité/ }).click();
+    await expect(current.getByTestId("backup-card")).toBeVisible();
+    await expect(current.getByRole("heading", { name: "À propos de l’application" })).toBeFocused();
+    await page.getByRole("button", { name: "Retour", exact: true }).click();
+    await current.getByLabel("Votre prénom").fill("Camille hors ligne");
+    await current.getByRole("button", { name: "Enregistrer mon profil", exact: true }).click();
+    await expect(current.getByTestId("home-view")).toBeVisible();
+    await current.getByRole("navigation", { name: "Navigation principale" }).getByRole("button", { name: "Recette", exact: true }).click();
+    await current.getByRole("tab", { name: "Favoris", exact: true }).click();
+    await current.locator(".favorite-card").filter({ hasText: recipe.title }).click();
+    await current.getByTestId("edit-custom-recipe").click();
+    await expect(current.getByRole("heading", { name: "Adapter la recette" })).toBeFocused();
+    await current.getByTestId("custom-title").fill("Ma recette modifiée hors ligne");
+    await current.getByTestId("custom-save").click();
+    await expect(current.getByTestId("edit-custom-recipe")).toBeVisible();
+    await page.reload();
+    await expect(current.getByTestId("home-view")).toBeVisible();
+    const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("inflamm-menu:app-state")!));
+    expect(saved.profile.firstName).toBe("Camille hors ligne");
+    expect(saved.customRecipes[0].title).toBe("Ma recette modifiée hors ligne");
+    expect(saved.recipeNotes).toEqual(state!.recipeNotes);
+    expect(saved.favoriteRecipeIds).toEqual(state!.favoriteRecipeIds);
+    expect(saved.recipeCollections).toEqual(state!.recipeCollections);
+    expect(saved.shoppingItems).toEqual(state!.shoppingItems);
+    expect(errors).toEqual([]);
+  } finally { await context.setOffline(false); }
+});
+
 test("deux onglets conservent des réglages différents et les synchronisent", async ({ page, context }) => {
   await openFreshApp(page);
   const secondPage = await context.newPage();

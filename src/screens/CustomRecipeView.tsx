@@ -8,17 +8,6 @@ import { formatIngredientQuantity as displayQuantity } from "../presentation";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
 
-/** A personal variant of an existing recipe: same canonical ingredients, own wording. */
-export function customRecipeFrom(recipe: Recipe): Recipe {
-  return {
-    ...recipe,
-    id: `perso-${recipe.id}-${Date.now().toString(36)}`,
-    title: `${recipe.title} (ma version)`,
-    ingredients: recipe.ingredients.map((ingredient) => ({ ...ingredient })),
-    steps: [...recipe.steps],
-  };
-}
-
 export function CustomRecipeView({ draft, signal, onSave, onDelete }: { draft: Recipe; signal: AbortSignal; onSave: (recipe: Recipe) => Promise<void>; onDelete?: () => void }) {
   const keyboard = useKeyboard();
   const [title, setTitle] = useState(draft.title);

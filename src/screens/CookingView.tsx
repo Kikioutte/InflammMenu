@@ -60,7 +60,7 @@ export function CookingView({ recipe, portions, planned }: { recipe: Recipe; por
       <p className="cooking-screen-state" data-testid="cooking-wake-lock">{screenHeld ? "Écran maintenu allumé pendant la préparation." : "Votre appareil peut mettre l’écran en veille : gardez-le à portée."}</p>
     </div>
     <ol className="cooking-progress" aria-label="Progression des étapes">
-      {recipe.steps.map((item, index) => <li key={item}><button type="button" className={`${index === step ? "is-current" : ""} ${done.includes(index) ? "is-done" : ""}`} aria-current={index === step ? "step" : undefined} aria-label={`Étape ${index + 1}`} onClick={() => setStep(index)} /></li>)}
+      {recipe.steps.map((item, index) => <li key={`${index}-${item}`}><button type="button" className={`${index === step ? "is-current" : ""} ${done.includes(index) ? "is-done" : ""}`} aria-current={index === step ? "step" : undefined} aria-label={`Étape ${index + 1}`} onClick={() => setStep(index)} /></li>)}
     </ol>
     <p className="cooking-step" data-testid="cooking-step">{(isAssociationRecipe(recipe.id) || recipe.composition) ? scaleAssociationStep(recipe.steps[step], portions / 2) : recipe.steps[step]}</p>
     <button type="button" className={`cooking-done ${isDone ? "is-active" : ""}`} aria-pressed={isDone} data-testid="cooking-done" onClick={() => setDone((current) => (current.includes(step) ? current.filter((entry) => entry !== step) : [...current, step]))}>
