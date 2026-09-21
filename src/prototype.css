@@ -640,9 +640,11 @@ button { -webkit-tap-highlight-color: transparent; }
 .cooking-page { min-height: 100%; padding: 22px 18px calc(34px + var(--mobile-safe-area-height)); background: var(--ivory); color: var(--ink); font-family: var(--sans); }
 .cooking-head h1 { margin: 4px 0 8px; font-family: var(--serif); font-size: var(--font-30); line-height: 1; }
 .cooking-screen-state { margin: 0; color: var(--muted); font-size: var(--font-10); }
-.cooking-progress { list-style: none; display: flex; gap: 6px; margin: 18px 0; padding: 0; }
-.cooking-progress li { flex: 1; }
-.cooking-progress button { width: 100%; height: 26px; padding: 10px 0; border: 0; background: none; }
+/* Audit remediation: WCAG 2.2 target sizes without enlarging the visual progress bar. */
+.cooking-progress { list-style: none; display: flex; gap: 6px; margin: 18px 0; padding: 0; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; }
+.cooking-progress::-webkit-scrollbar { display: none; }
+.cooking-progress li { flex: 0 0 44px; }
+.cooking-progress button { width: 100%; min-height: 44px; height: 44px; padding: 19px 0; border: 0; background: none; }
 .cooking-progress button::before { content: ""; display: block; height: 6px; border-radius: 999px; background: var(--cream); }
 .cooking-progress button.is-done::before { background: var(--sage-soft); }
 .cooking-progress button.is-current::before { background: var(--sage); }
@@ -905,13 +907,6 @@ button { -webkit-tap-highlight-color: transparent; }
 .fatal-error h1 { margin: 0; font-family: var(--serif); font-size: clamp(var(--font-32), 7vw, var(--font-48)); }
 .fatal-error p { max-width: 560px; color: var(--muted); line-height: 1.6; }
 .fatal-error button { width: min(100%, 420px); padding: 0 20px; }
-
-
-/* Audit remediation: WCAG 2.2 target sizes without enlarging the visual progress bar. */
-.cooking-progress { overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; }
-.cooking-progress::-webkit-scrollbar { display: none; }
-.cooking-progress li { flex: 0 0 44px; }
-.cooking-progress button { min-height: 44px; height: 44px; padding: 19px 0; }
 
 
 /* Audit remediation: explicit keyboard focus and reduced-motion completion. */

@@ -1,7 +1,7 @@
 import { type FlowControls, type FlowScreen, MobileScroll } from "../mobile";
 import { useState, useSyncExternalStore, useEffect, useMemo, useCallback, useRef } from "react";
 import { type WeeklyPlan, type Recipe, type PlannedMeal, type PantryAmount, type IngredientCategory } from "../domain";
-import { normalizeCustomRecipe, loadAppState, HISTORY_LIMIT, watchForStoredState, saveAppState, StoredStateReadError, type AppState } from "../storage";
+import { normalizeCustomRecipe, loadAppState, HISTORY_LIMIT, watchForStoredState, saveAppState, StoredStateReadError, APP_STATE_DATA_KEYS, type AppState } from "../storage";
 import { refreshPlanEstimate, reconcileCheckedItems, isPlanExpired, planDayOffset, inspectActivePlan, contextualRemindersForDate, preservableLockedMeals, setPlannedMealLock, setMealSkipped, setPlannedMealCompleted, getReplacementCandidates, replacePlannedMeal, assignRecipeToSlot, setMealPortions, ingredientsForPlannedMeal, setMealIngredientSubstitution, restorePlan, planLeftover, swapPlannedMeals } from "../engine";
 import { type CatalogueData, loadCatalogue, type CatalogueRecipe, catalogueFavoriteId, catalogueImageFor, visibleCatalogueRecipes } from "../catalog";
 import { storedShoppingItemMatches, shoppingIdentityFor } from "../shopping";
@@ -24,7 +24,8 @@ import { ReplaceView } from "../screens/ReplaceView";
 import { PrepareWeekForMeal, PlanSlotView } from "../screens/PlanSlotView";
 import { EmptyRoot } from "../components/EmptyRoot";
 import { popFlowToRoot } from "./navigation";
-import { CustomRecipeView, customRecipeFrom } from "../screens/CustomRecipeView";
+import { customRecipeFrom } from "./custom-recipes";
+import { deferredScreen } from "../components/deferred-screen";
 import { CookingView } from "../screens/CookingView";
 import { RecipeView } from "../screens/RecipeView";
 import { RecipeTools, availabilityForShopping, CollectionsView } from "../screens/CollectionsView";
@@ -33,8 +34,6 @@ import { HistoryPlanView } from "../screens/HistoryPlanView";
 import { CatalogueRecipeView } from "../screens/CatalogueRecipeView";
 import { Wordmark } from "../components/Wordmark";
 import { MEAL_LABELS, DAY_LABELS } from "../components/constants";
-import { InformationView } from "../screens/InformationView";
-import { ProfileView } from "../screens/ProfileView";
 import { GenerateView } from "../screens/GenerateView";
 import { TonightView } from "../screens/TonightView";
 import { LeftoverView } from "../screens/LeftoverView";
@@ -44,6 +43,10 @@ import { CoursesView } from "../screens/CoursesView";
 import { RecipesView } from "../screens/RecipesView";
 import { OnboardingView, HomeView } from "../screens/HomeView";
 import { BottomNav } from "../components/BottomNav";
+
+const ProfileView = deferredScreen(async () => ({ default: (await import("../screens/secondary-views")).ProfileView }), "Mon profil alimentaire");
+const InformationView = deferredScreen(async () => ({ default: (await import("../screens/secondary-views")).InformationView }), "À propos de l’application");
+const CustomRecipeView = deferredScreen(async () => ({ default: (await import("../screens/secondary-views")).CustomRecipeView }), "Adapter la recette");
 
 export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateStore }) {
   const [tab, setTab] = useState<TabId>("home");
@@ -57,6 +60,21 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
   const replaceAppState = appStore.replaceState;
   const hydrateAppState = appStore.hydrateState;
   const mergeAppState = appStore.mergeState;
+  const saveBeforeReload = async () => {
+    const snapshot = appStore.getSnapshot();
+    const result = await saveAppState(snapshot);
+    if (!result.localSaved && !result.indexedSaved) throw new Error("Sauvegarde indisponible");
+    // A concurrent import/reset or edit can win in durable storage before its
+    // notification reaches this tab. Preserve it and require another explicit
+    // reload attempt rather than reloading from a different snapshot.
+    const snapshotIsDurable = result.state.storageGeneration === snapshot.storageGeneration
+      && result.state.stateRevision === snapshot.stateRevision
+      && APP_STATE_DATA_KEYS.every((key) => result.state.fieldRevisions[key] === snapshot.fieldRevisions[key]
+        && result.state.fieldMutationIds[key] === snapshot.fieldMutationIds[key]
+        && JSON.stringify(result.state[key]) === JSON.stringify(snapshot[key]));
+    mergeAppState(result.state);
+    return () => snapshotIsDurable && appStore.getSnapshot() === snapshot;
+  };
   const [hydrated, setHydrated] = useState(false);
   const [startupError, setStartupError] = useState<Error | null>(null);
   const [archivedWeek, setArchivedWeek] = useState<WeeklyPlan | null>(null);
@@ -448,7 +466,7 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
   function customRecipeScreen(draft: Recipe, existing = false, planned?: PlannedMeal): FlowScreen {
     const generation = appStore.getSnapshot().storageGeneration;
     const cancellation = new AbortController();
-    return { id: `custom-${draft.id}`, title: "Ma version", headerHeight: 56, header: (route) => <Header title="Ma version" onBack={() => { cancellation.abort(); route.pop(); }} />, render: (route) => <CustomRecipeView draft={draft} signal={cancellation.signal} onSave={async (recipe) => { const saved = saveCustomRecipe(recipe, generation, existing ? draft : undefined); route.replace(recipeScreen(saved, planned)); }} onDelete={existing ? () => {
+    return { id: `custom-${draft.id}`, title: "Ma version", headerHeight: 56, header: (route) => <Header title="Ma version" onBack={() => { cancellation.abort(); route.pop(); }} />, render: (route) => <CustomRecipeView beforeReload={saveBeforeReload} draft={draft} signal={cancellation.signal} onSave={async (recipe) => { const saved = saveCustomRecipe(recipe, generation, existing ? draft : undefined); route.replace(recipeScreen(saved, planned)); }} onDelete={existing ? () => {
       const current = appStore.getSnapshot();
       const plans = [current.currentPlan, current.upcomingPlan, ...current.history].filter((plan): plan is WeeklyPlan => Boolean(plan));
       if (plans.some((plan) => plan.meals.some((meal) => meal.recipeId === draft.id))) {
@@ -599,8 +617,8 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
     }} onNavigate={(next) => { setTab(next); for (let index = 1; index < route.stack.length; index++) route.pop(); }} /> };
   }
 
-  const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView state={live} onRestore={async (restored) => { await replaceAppState(restored); setArchivedWeek(null); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
-  const openProfile = () => flow.push({ id: "profile", title: "Profil alimentaire", headerHeight: 56, header: (route) => <Header title="Mon profil" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <ProfileView key={JSON.stringify(live.profile)} initial={live.profile} onOpenInformation={() => route.push(informationScreen())} onSave={(profile) => {
+  const informationScreen = (): FlowScreen => ({ id: "information", title: "Informations", headerHeight: 56, header: (route) => <Header title="Informations" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => <InformationView beforeReload={saveBeforeReload} state={live} onRestore={async (restored) => { await replaceAppState(restored); setArchivedWeek(null); }} onTextScale={(textScale) => setAppState((current) => ({ ...current, textScale }))} onReminders={(remindersEnabled) => setAppState((current) => ({ ...current, remindersEnabled }))} />}</LiveAppState> });
+  const openProfile = () => flow.push({ id: "profile", title: "Profil alimentaire", headerHeight: 56, header: (route) => <Header title="Mon profil" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <ProfileView beforeReload={saveBeforeReload} key={JSON.stringify(live.profile)} initial={live.profile} onOpenInformation={() => route.push(informationScreen())} onSave={(profile) => {
     const snapshot = appStore.getSnapshot();
     const currentReport = snapshot.currentPlan ? inspectActivePlan(snapshot.currentPlan, ACTIVE_RECIPES, profile) : null;
     const upcomingReport = snapshot.upcomingPlan ? inspectActivePlan(snapshot.upcomingPlan, ACTIVE_RECIPES, profile) : null;
