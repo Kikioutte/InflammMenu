@@ -26,6 +26,18 @@ import {
   type IngredientSubstitutionRule,
 } from "./substitutions.ts";
 import { canonicalAllergen } from "./allergens.ts";
+import { hasAllergyConflict, hasIngredientExclusionConflict, resolveIngredientExclusions, unsupportedAllergies } from "./food-restrictions.ts";
+
+type IngredientIdentity = Pick<Ingredient, "id" | "name">;
+const RESTRICTION_INGREDIENTS = new WeakMap<readonly Recipe[], readonly IngredientIdentity[]>();
+function restrictionIngredients(recipes: readonly Recipe[]): readonly IngredientIdentity[] {
+  let ingredients = RESTRICTION_INGREDIENTS.get(recipes);
+  if (!ingredients) {
+    ingredients = recipes.flatMap((recipe) => recipe.ingredients);
+    RESTRICTION_INGREDIENTS.set(recipes, ingredients);
+  }
+  return ingredients;
+}
 
 type PlanningSeason = Exclude<Season, "all-year">;
 
@@ -68,6 +80,10 @@ export interface PlanSummary {
   averageCalories: number;
   averageProtein: number;
   averageFiber: number;
+  /** False when an ingredient edit or substitution has no recalculated values. */
+  nutritionComplete: boolean;
+  nutritionUnavailableMeals: number;
+  costComplete: boolean;
 }
 
 const DEFAULT_START = "2026-08-03";
@@ -357,20 +373,24 @@ export function plannedMealCost(recipe: Recipe, meal: Pick<PlannedMeal, "portion
   return round(Math.max(0, (recipe.costPerPortion + delta) * Math.max(0, meal.portions)));
 }
 
-export function recipeIsAllowed(recipe: Recipe, profile: UserProfile): boolean {
-  const allergies = new Set(profile.allergies.map(canonicalAllergen));
-  const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
+function recipeAssociationsAllowed(recipe: Recipe, profile: UserProfile, ingredients = recipe.ingredients): boolean {
+  if (!recipe.composition) return associationRecipeAllowed({ id: recipe.id, ingredients }, profile.associationMode);
+  const parts = Object.values(recipe.composition);
+  const level = evaluateAssociations(ingredients).level;
+  return parts.every((id) => isAssociationRecipe(id))
+    && !parts.some((id) => (profile.dislikedRecipeIds ?? []).includes(`catalog-${id}`))
+    && (level === "verte" || (profile.associationMode !== "green" && level === "orange"));
+}
 
+export function recipeIsAllowed(recipe: Recipe, profile: UserProfile, knownIngredients: readonly IngredientIdentity[] = recipe.ingredients): boolean {
   return (
-    (recipe.composition
-      ? Object.values(recipe.composition).every((id) => isAssociationRecipe(id)) && !Object.values(recipe.composition).some((id) => profile.dislikedRecipeIds.includes(`catalog-${id}`)) && (evaluateAssociations(recipe.ingredients).level === "verte" || (profile.associationMode !== "green" && evaluateAssociations(recipe.ingredients).level === "orange"))
-      : associationRecipeAllowed(recipe, profile.associationMode)) &&
+    recipeAssociationsAllowed(recipe, profile) &&
     !(profile.dislikedRecipeIds ?? []).includes(recipe.id) &&
     recipe.diet.includes(profile.diet) &&
     recipe.prepMinutes <= profile.maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
-    !recipeAllergens(recipe).some((allergen) => allergies.has(allergen)) &&
-    !recipe.ingredients.some((ingredient) => !ingredient.optional && excluded.has(canonicalIngredientId(ingredient.id)))
+    !hasAllergyConflict(profile.allergies, recipeAllergens(recipe), recipe.ingredients, knownIngredients) &&
+    !hasIngredientExclusionConflict(profile.excludedIngredientIds, recipe.ingredients.filter((ingredient) => !ingredient.optional), knownIngredients)
   );
 }
 
@@ -383,31 +403,30 @@ export function recipeIsAllowedForSlot(
   recipe: Recipe,
   profile: UserProfile,
   dayIndex: number,
+  knownIngredients: readonly IngredientIdentity[] = recipe.ingredients,
 ): boolean {
   const constraint = dayConstraintOf(profile, dayIndex);
   const maxPrepMinutes = constraint?.maxPrepMinutes ?? profile.maxPrepMinutes;
   if (recipe.prepMinutes > maxPrepMinutes) return false;
   // Let recipeIsAllowed validate every global rule while substituting only the
   // time limit; daily overrides never weaken allergies, diet or equipment.
-  return recipeIsAllowed(recipe, { ...profile, maxPrepMinutes });
+  return recipeIsAllowed(recipe, { ...profile, maxPrepMinutes }, knownIngredients);
 }
 
 /** Safety check for an already planned meal, after its reviewed substitutions. */
-function plannedMealIsAllowedForSlot(meal: PlannedMeal, recipe: Recipe, profile: UserProfile): boolean {
+function plannedMealIsAllowedForSlot(meal: PlannedMeal, recipe: Recipe, profile: UserProfile, knownIngredients: readonly IngredientIdentity[] = recipe.ingredients): boolean {
   const constraint = dayConstraintOf(profile, meal.dayIndex);
   const maxPrepMinutes = constraint?.maxPrepMinutes ?? profile.maxPrepMinutes;
-  const allergies = new Set(profile.allergies.map(canonicalAllergen));
-  const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
+  const ingredients = ingredientsForPlannedMeal(recipe, meal, 1);
   return (
-    associationRecipeAllowed({ id: recipe.id, ingredients: ingredientsForPlannedMeal(recipe, meal, 1) }, profile.associationMode) &&
+    recipeAssociationsAllowed(recipe, profile, ingredients) &&
     !(profile.dislikedRecipeIds ?? []).includes(recipe.id) &&
     recipe.mealTypes.includes(meal.mealType) &&
     recipe.diet.includes(profile.diet) &&
     recipe.prepMinutes <= maxPrepMinutes &&
     recipe.equipment.every((item) => profile.equipment.includes(item)) &&
-    !plannedMealAllergens(recipe, meal).some((allergen) => allergies.has(allergen)) &&
-    !ingredientsForPlannedMeal(recipe, meal, 1)
-      .some((ingredient) => !ingredient.optional && excluded.has(canonicalIngredientId(ingredient.id)))
+    !hasAllergyConflict(profile.allergies, plannedMealAllergens(recipe, meal), ingredients, knownIngredients) &&
+    !hasIngredientExclusionConflict(profile.excludedIngredientIds, ingredients.filter((ingredient) => !ingredient.optional), knownIngredients)
   );
 }
 
@@ -455,6 +474,8 @@ export interface RecipeCompatibilityDiagnostic {
   minimumCompatibleMinutes?: number;
   /** Equipment needed by otherwise compatible recipes within the selected time. */
   missingEquipment: string[];
+  /** Unrecognized restrictions need correction in the profile, never relaxation. */
+  unresolvedRestrictions?: string[];
 }
 
 /**
@@ -468,17 +489,19 @@ export function diagnoseRecipeCompatibility(
 ): RecipeCompatibilityDiagnostic {
   const candidates = recipes.filter((recipe) => recipe.mealTypes.includes(options.mealType));
   const maxPrepMinutes = options.maxPrepMinutes ?? profile.maxPrepMinutes;
-  const allergies = new Set(profile.allergies.map(canonicalAllergen));
-  const excluded = new Set(profile.excludedIngredientIds.map(canonicalIngredientId));
+  const knownIngredients = restrictionIngredients(recipes);
+  const unresolvedRestrictions = [...new Set([
+    ...unsupportedAllergies(profile.allergies, knownIngredients),
+    ...resolveIngredientExclusions(profile.excludedIngredientIds, knownIngredients).unknown,
+  ])];
   const disliked = new Set(profile.dislikedRecipeIds ?? []);
   const checks = (recipe: Recipe) => ({
-    associations: !associationRecipeAllowed(recipe, profile.associationMode),
-    allergies: recipeAllergens(recipe).some((allergen) => allergies.has(allergen)),
+    associations: !recipeAssociationsAllowed(recipe, profile),
+    allergies: hasAllergyConflict(profile.allergies, recipeAllergens(recipe), recipe.ingredients, knownIngredients),
     disliked: disliked.has(recipe.id),
     diet: !recipe.diet.includes(profile.diet),
     equipment: recipe.equipment.some((item) => !profile.equipment.includes(item)),
-    excludedIngredients: recipe.ingredients.some((ingredient) => !ingredient.optional
-      && excluded.has(canonicalIngredientId(ingredient.id))),
+    excludedIngredients: hasIngredientExclusionConflict(profile.excludedIngredientIds, recipe.ingredients.filter((ingredient) => !ingredient.optional), knownIngredients),
     time: recipe.prepMinutes > maxPrepMinutes,
   });
   const evaluated = candidates.map((recipe) => ({ recipe, checks: checks(recipe) }));
@@ -489,6 +512,7 @@ export function diagnoseRecipeCompatibility(
   const equipmentOnly = evaluated.filter((entry) => isClearExcept(entry, "equipment") && !entry.checks.time);
 
   return {
+    ...(unresolvedRestrictions.length ? { unresolvedRestrictions } : {}),
     compatibleCount: evaluated.filter((entry) => Object.values(entry.checks).every((blocked) => !blocked)).length,
     mealTypeCount: candidates.length,
     blockedBy: {
@@ -537,7 +561,7 @@ export function recommendTonight(
   const seed = `${options.mealType}:${maxPrepMinutes}:${[...pantry].sort().join(",")}`;
   const ranked = recipes
     .filter((recipe) => recipe.mealTypes.includes(options.mealType)
-      && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes }))
+      && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes }, restrictionIngredients(recipes)))
     .map((recipe) => {
       const pantryMatches = requiredIngredientIdsOf(recipe).filter((id) => pantry.has(shoppingIdentityFor(id).shoppingId)).length;
       const seasonal = !options.season || recipe.seasons.includes(options.season) || recipe.seasons.includes("all-year");
@@ -617,6 +641,15 @@ function totalPlanCost(meals: readonly PlannedMeal[], byId: ReadonlyMap<string, 
   );
 }
 
+/** Re-estimate against the current recipe registry, preserving every plan/meal
+ * field. If an active recipe is unavailable, keep the previous full estimate. */
+export function refreshPlanEstimate(plan: WeeklyPlan, recipes: readonly Recipe[]): WeeklyPlan {
+  const byId = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+  if (plan.meals.some((meal) => !meal.skipped && !byId.has(meal.recipeId))) return plan;
+  const estimatedCost = totalPlanCost(plan.meals, byId);
+  return estimatedCost === plan.estimatedCost ? plan : { ...plan, estimatedCost };
+}
+
 function dailyFormConflictCount(
   meals: readonly PlannedMeal[],
   dayIndex: number,
@@ -652,7 +685,7 @@ export function generateWeeklyPlan(
     mealTypes.map((mealType) => ({ dayIndex, mealType })),
   ).flat();
   // Time is evaluated per slot below; all other profile safeguards are shared.
-  const eligible = recipes.filter((recipe) => !recipe.composition && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes: 24 * 60 }));
+  const eligible = recipes.filter((recipe) => !recipe.composition && recipeIsAllowed(recipe, { ...profile, maxPrepMinutes: 24 * 60 }, restrictionIngredients(recipes)));
   const eligibleBySlot = new Map(slots.map((slot) => {
     const maxPrepMinutes = dayConstraintOf(profile, slot.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes;
     return [
@@ -672,7 +705,7 @@ export function generateWeeklyPlan(
     // A leftover only makes sense next to the batch it came from.
     if (meal.leftoverOf) continue;
     // A lock never overrides allergies, diet, equipment or the time limit.
-    if (!lockedRecipe || !recipeIsAllowedForSlot(lockedRecipe, profile, meal.dayIndex)) continue;
+    if (!lockedRecipe || !recipeIsAllowedForSlot(lockedRecipe, profile, meal.dayIndex, restrictionIngredients(recipes))) continue;
     if (!lockedRecipe.mealTypes.includes(meal.mealType)) continue;
     if (!mealTypes.includes(meal.mealType)) continue;
     if (meal.dayIndex < 0 || meal.dayIndex > 6) continue;
@@ -914,7 +947,7 @@ export function getReplacementCandidates(
       (recipe) =>
         !usedIds.has(recipe.id) &&
         recipe.mealTypes.includes(meal.mealType) &&
-        recipeIsAllowedForSlot(recipe, profile, meal.dayIndex),
+        recipeIsAllowedForSlot(recipe, profile, meal.dayIndex, restrictionIngredients(recipes)),
     )
     .sort((left, right) => {
       const softDisliked = new Set(profile.softDislikedRecipeIds ?? []);
@@ -1004,8 +1037,8 @@ export function canSwapPlannedMeals(
   return Boolean(firstRecipe && secondRecipe
     && firstRecipe.mealTypes.includes(second.mealType)
     && secondRecipe.mealTypes.includes(first.mealType)
-    && plannedMealIsAllowedForSlot(firstAtSecondSlot, firstRecipe, profile)
-    && plannedMealIsAllowedForSlot(secondAtFirstSlot, secondRecipe, profile));
+    && plannedMealIsAllowedForSlot(firstAtSecondSlot, firstRecipe, profile, restrictionIngredients(recipes))
+    && plannedMealIsAllowedForSlot(secondAtFirstSlot, secondRecipe, profile, restrictionIngredients(recipes)));
 }
 
 /** Swaps two planned meals, keeping every other mark attached to its dish. */
@@ -1164,17 +1197,8 @@ export function setMealIngredientSubstitution(
 
   if (substitutionId && (isAssociationRecipe(recipe.id) || recipe.composition)) throw new Error("Cette collection utilise des substitutions culinaires indiquées dans la fiche ; les remplacements automatiques ne sont pas encore relus pour ces recettes.");
 
-  if (substitutionId) {
-    const rule = substitutionsForIngredient(sourceIngredient).find((candidate) => candidate.id === substitutionId);
-    if (!rule) throw new Error("Cette substitution n’est pas disponible pour cet ingrédient.");
-    const replacementId = canonicalIngredientId(rule.replacement.id);
-    const blockedAllergens = new Set(profile.allergies.map(canonicalAllergen));
-    if ((rule.replacement.allergens ?? []).map(canonicalAllergen).some((allergen) => blockedAllergens.has(allergen))) {
-      throw new Error("Cette substitution contient un allergène exclu par votre profil.");
-    }
-    if (profile.excludedIngredientIds.map(canonicalIngredientId).includes(replacementId)) {
-      throw new Error("Cet ingrédient de remplacement est exclu par votre profil.");
-    }
+  if (substitutionId && !substitutionsForIngredient(sourceIngredient).some((candidate) => candidate.id === substitutionId)) {
+    throw new Error("Cette substitution n’est pas disponible pour cet ingrédient.");
   }
 
   const rootId = target.leftoverOf ?? target.id;
@@ -1185,6 +1209,17 @@ export function setMealIngredientSubstitution(
   const meals = plan.meals.map((meal) => (meal.id === rootId || meal.leftoverOf === rootId
     ? { ...meal, substitutions: nextSelections(meal) }
     : meal));
+  const affected = meals.filter((meal) => meal.id === rootId || meal.leftoverOf === rootId);
+  const knownIngredients = restrictionIngredients(recipes);
+  for (const meal of affected) {
+    const affectedRecipe = recipes.find((item) => item.id === meal.recipeId);
+    if (!affectedRecipe || !plannedMealIsAllowedForSlot(meal, affectedRecipe, profile, knownIngredients)) {
+      if (affectedRecipe && hasAllergyConflict(profile.allergies, plannedMealAllergens(affectedRecipe, meal), ingredientsForPlannedMeal(affectedRecipe, meal, 1), knownIngredients)) {
+        throw new Error("Ce changement réintroduirait un allergène exclu ou une allergie non reconnue par votre profil. Le repas et ses restes sont conservés.");
+      }
+      throw new Error("Ce changement ne respecte plus les critères du profil pour le repas ou ses restes (ingrédients exclus, régime, associations, équipement ou temps du jour). Aucun repas n’a été modifié.");
+    }
+  }
   const byId = new Map(recipes.map((item) => [item.id, item]));
   const canRecalculate = meals.every((meal) => byId.has(meal.recipeId));
   return { ...plan, meals, estimatedCost: canRecalculate ? totalPlanCost(meals, byId) : plan.estimatedCost };
@@ -1236,7 +1271,7 @@ export function preservableLockedMeals(
     return Boolean(
       !meal.leftoverOf &&
         recipe &&
-        plannedMealIsAllowedForSlot(meal, recipe, profile) &&
+        plannedMealIsAllowedForSlot(meal, recipe, profile, restrictionIngredients(recipes)) &&
         recipe.mealTypes.includes(meal.mealType) &&
         mealTypes.includes(meal.mealType) &&
         meal.dayIndex >= 0 &&
@@ -1311,10 +1346,11 @@ export function assignableSlots(
   plan: WeeklyPlan,
   recipe: Recipe,
   profile: UserProfile,
+  knownIngredients: readonly IngredientIdentity[] = recipe.ingredients,
 ): Array<PlanSlot & { taken: string }> {
-  if (!recipeIsAllowed(recipe, { ...profile, maxPrepMinutes: 24 * 60 })) return [];
+  if (!recipeIsAllowed(recipe, { ...profile, maxPrepMinutes: 24 * 60 }, knownIngredients)) return [];
   return plan.meals
-    .filter((meal) => recipe.mealTypes.includes(meal.mealType) && recipeIsAllowedForSlot(recipe, profile, meal.dayIndex))
+    .filter((meal) => recipe.mealTypes.includes(meal.mealType) && recipeIsAllowedForSlot(recipe, profile, meal.dayIndex, knownIngredients))
     .map((meal) => ({ dayIndex: meal.dayIndex, mealType: meal.mealType, taken: meal.recipeId }));
 }
 
@@ -1333,7 +1369,7 @@ export function assignRecipeToSlot(
     (meal) => meal.dayIndex === slot.dayIndex && meal.mealType === slot.mealType,
   );
   if (!target) throw new Error("Ce créneau n'existe pas dans la semaine.");
-  if (!recipeIsAllowedForSlot(recipe, profile, slot.dayIndex)) {
+  if (!recipeIsAllowedForSlot(recipe, profile, slot.dayIndex, restrictionIngredients(recipes))) {
     throw new Error("Cette recette ne respecte pas votre profil (allergies, régime, équipement ou temps).");
   }
   if (!recipe.mealTypes.includes(slot.mealType)) {
@@ -1521,7 +1557,7 @@ export function inspectActivePlan(
     }
     seenSlots.add(slot);
     const recipe = byId.get(meal.recipeId);
-    if (!recipe || !plannedMealIsAllowedForSlot(meal, recipe, profile)) blockedMeals.push(meal);
+    if (!recipe || !plannedMealIsAllowedForSlot(meal, recipe, profile, restrictionIngredients(recipes))) blockedMeals.push(meal);
   }
 
   const missingSlots = [...requiredSlots].filter((slot) => !seenSlots.has(slot)).length;
@@ -1550,7 +1586,7 @@ export function inspectPlanReplay(
   const usable = plan.meals.filter((meal) => mealTypes.includes(meal.mealType));
   const blockedMeals = usable.filter((meal) => {
     const recipe = byId.get(meal.recipeId);
-    return !recipe || !plannedMealIsAllowedForSlot(meal, recipe, profile);
+    return !recipe || !plannedMealIsAllowedForSlot(meal, recipe, profile, restrictionIngredients(recipes));
   });
   const missingSlots = mealTypes.reduce(
     (total, mealType) => total + Math.max(0, 7 - usable.filter((meal) => meal.mealType === mealType).length),
@@ -1880,6 +1916,10 @@ export function summarizePlan(
   const selected = activeMeals
     .map((meal) => byId.get(meal.recipeId))
     .filter((item): item is Recipe => Boolean(item));
+  const nutritionRecipes = activeMeals.flatMap((meal) => {
+    const recipe = byId.get(meal.recipeId);
+    return recipe && recipe.nutritionRecalculated !== false && !meal.substitutions?.length ? [recipe] : [];
+  });
   // Leftovers are eaten, not cooked: they must not lower the average session time.
   const cooked = plan.meals
     .filter((meal) => !meal.leftoverOf && !meal.skipped)
@@ -1906,9 +1946,12 @@ export function summarizePlan(
     plantDiversity: plantDiversity.count,
     plantIngredients: plantDiversity.ingredients,
     withinBudget: plan.estimatedCost <= profile.weeklyBudget,
-    averageCalories: average(selected.map((recipe) => recipe.nutrition.calories)),
-    averageProtein: average(selected.map((recipe) => recipe.nutrition.protein)),
-    averageFiber: average(selected.map((recipe) => recipe.nutrition.fiber)),
+    nutritionComplete: nutritionRecipes.length === activeMeals.length,
+    nutritionUnavailableMeals: activeMeals.length - nutritionRecipes.length,
+    costComplete: selected.length === activeMeals.length && selected.every((recipe) => recipe.costRecalculated !== false),
+    averageCalories: average(nutritionRecipes.map((recipe) => recipe.nutrition.calories)),
+    averageProtein: average(nutritionRecipes.map((recipe) => recipe.nutrition.protein)),
+    averageFiber: average(nutritionRecipes.map((recipe) => recipe.nutrition.fiber)),
   };
 }
 

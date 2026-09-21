@@ -68,7 +68,7 @@ export interface CompositionTarget {
 export function updatePlannedComposition(plan: WeeklyPlan, target: CompositionTarget, recipe: Recipe, recipes: readonly Recipe[], profile: UserProfile): WeeklyPlan {
   const current = plan.meals.find((meal) => meal.id === target.slotId);
   if (plan.id !== target.planId || !current || current.recipeId !== target.recipeId || current.dayIndex !== target.dayIndex || current.mealType !== target.mealType || current.skipped || current.leftoverOf) throw new Error("Ce repas a changé depuis son ouverture. Revenez à la semaine pour le rouvrir.");
-  if (!assignableSlots(plan, recipe, profile).some((slot) => slot.dayIndex === target.dayIndex && slot.mealType === target.mealType)) throw new Error("Ce repas ne respecte plus les critères de votre profil pour ce jour.");
+  if (!assignableSlots(plan, recipe, profile, recipes.flatMap((item) => item.ingredients)).some((slot) => slot.dayIndex === target.dayIndex && slot.mealType === target.mealType)) throw new Error("Ce repas ne respecte plus les critères de votre profil pour ce jour.");
   if (recipe.id === current.recipeId) return plan;
   const next = assignRecipeToSlot(plan, target, recipe, recipes, profile);
   return { ...next, meals: next.meals.map((meal) => meal.id === current.id ? { ...meal, locked: current.locked, portions: current.portions } : meal) };

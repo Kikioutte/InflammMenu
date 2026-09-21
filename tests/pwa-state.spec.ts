@@ -5,7 +5,7 @@ import { DEFAULT_APP_STATE, migrateAppState } from "../src/storage";
 import { assignRecipeToSlot, generateWeeklyPlan } from "../src/engine";
 import { IMPORTED_PLAN_RECIPES } from "../src/planner-catalog";
 import { expect, test, type Page } from "@playwright/test";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 async function openFreshApp(page: Page) {
@@ -288,12 +288,100 @@ test("une navigation vers une ressource ne peut jamais remplacer le shell HTML h
 
   await page.goto("/InflammMenu/");
   await expect(page.getByTestId("home-view")).toBeVisible();
-  await expect.poll(shellFingerprint).toEqual(initialShell);
+  await expect.poll(shellFingerprint).toEqual({ ...initialShell, sentinel: `audit-shell-${resourcePaths.length - 1}` });
 
   await context.setOffline(true);
   await page.goto("/InflammMenu/");
   await expect(page.getByTestId("home-view")).toBeVisible();
   expect((await page.locator("html").evaluate((element) => element.ownerDocument.contentType))).toBe("text/html");
+});
+
+test("une mise à jour interrompue conserve le shell installé puis reprend sans perdre les données", async ({ page, context }) => {
+  const indexPath = resolve("dist/pages/index.html");
+  const workerPath = resolve("dist/pages/sw.js");
+  const originalIndex = await readFile(indexPath, "utf8");
+  const originalWorker = await readFile(workerPath, "utf8");
+  const originalEntry = originalIndex.match(/<script[^>]+src="([^"]+)"/)?.[1];
+  if (!originalEntry) throw new Error("Script principal absent du build Pages");
+  const newEntry = "/InflammMenu/assets/entry-after-interrupted-update.js";
+  const newEntryPath = resolve("dist/pages/assets/entry-after-interrupted-update.js");
+  const entryContents = await readFile(resolve("dist/pages", originalEntry.replace(/^\/InflammMenu\//, "")), "utf8");
+  const updatedIndex = originalIndex.replace(originalEntry, newEntry)
+    .replace("</head>", '<meta name="inflamm-menu-test-version" content="complete-b"></head>');
+  const updatedWorker = originalWorker.replaceAll(originalEntry, newEntry).replace(
+    /(const SHELL_CACHE = `\$\{SHELL_CACHE_PREFIX\})[^`]+(`;)/,
+    "$1e2e-interrupted-update-b$2",
+  );
+  expect(updatedWorker).not.toBe(originalWorker);
+
+  try {
+    await openFreshApp(page);
+    await page.evaluate(async () => {
+      await navigator.serviceWorker.ready;
+      if (!navigator.serviceWorker.controller) {
+        await new Promise<void>(resolveController => navigator.serviceWorker.addEventListener("controllerchange", () => resolveController(), { once: true }));
+      }
+      localStorage.setItem("inflamm-menu:interrupted-update-sentinel", "conservé");
+    });
+    const installedCaches = await page.evaluate(() => caches.keys());
+
+    // Publish the new document and worker before their required entry arrives.
+    // The real worker fetches from the preview server, without request mocks.
+    await writeFile(indexPath, updatedIndex);
+    await writeFile(workerPath, updatedWorker);
+    const failedState = await page.evaluate(async () => {
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (!registration) throw new Error("Service worker absent");
+      const terminalState = new Promise<string>(resolveState => {
+        registration.addEventListener("updatefound", () => {
+          const candidate = registration.installing!;
+          const observe = () => {
+            if (candidate.state === "redundant" || candidate.state === "activated") resolveState(candidate.state);
+          };
+          candidate.addEventListener("statechange", observe);
+          observe();
+        }, { once: true });
+      });
+      await registration.update();
+      return terminalState;
+    });
+    expect(failedState).toBe("redundant");
+    expect(await page.evaluate(() => caches.keys())).toEqual(installedCaches);
+
+    const newDocument = await page.goto("/InflammMenu/");
+    expect(await newDocument!.text()).toContain(newEntry);
+    await context.setOffline(true);
+    await page.goto("/InflammMenu/");
+    await expect(page.getByTestId("home-view")).toBeVisible();
+    await expect(page.locator(`script[src="${originalEntry}"]`)).toHaveCount(1);
+    expect(await page.evaluate(() => localStorage.getItem("inflamm-menu:interrupted-update-sentinel"))).toBe("conservé");
+
+    // Finish the same deployment and retry. Only the complete version can
+    // activate, display the existing update banner and replace the offline app.
+    await writeFile(newEntryPath, entryContents);
+    await context.setOffline(false);
+    await page.evaluate(async () => {
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (!registration) throw new Error("Service worker absent");
+      const changed = new Promise<void>(resolveController => navigator.serviceWorker.addEventListener("controllerchange", () => resolveController(), { once: true }));
+      await registration.update();
+      await changed;
+    });
+    await expect(page.getByTestId("update-banner")).toBeVisible();
+    await page.getByTestId("update-reload").click();
+    await expect(page.getByTestId("home-view")).toBeVisible();
+    await expect(page.locator('meta[name="inflamm-menu-test-version"]')).toHaveAttribute("content", "complete-b");
+    await context.setOffline(true);
+    await page.reload();
+    await expect(page.getByTestId("home-view")).toBeVisible();
+    await expect(page.locator(`script[src="${newEntry}"]`)).toHaveCount(1);
+    expect(await page.evaluate(() => localStorage.getItem("inflamm-menu:interrupted-update-sentinel"))).toBe("conservé");
+  } finally {
+    await context.setOffline(false);
+    await writeFile(indexPath, originalIndex);
+    await writeFile(workerPath, originalWorker);
+    await rm(newEntryPath, { force: true });
+  }
 });
 
 test("une version B est détectée puis rechargée sans effacer les données locales", async ({ page }) => {

@@ -26,6 +26,139 @@ function state(overrides = {}) {
   };
 }
 
+function personalRecipe(overrides = {}) {
+  return {
+    id: "perso-import-test", title: "Ma recette", mealTypes: ["lunch"],
+    diet: ["classic", "vegetarian", "no-pork"], prepMinutes: 10, costPerPortion: 2,
+    seasons: ["all-year"], equipment: [], allergens: [], tags: [],
+    ingredients: [{ id: "carrot", name: "Carotte", quantity: 100, unit: "g", category: "fruit-vegetable" }],
+    nutrition: { calories: 100, protein: 2, fiber: 3, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    description: "Recette de test.", steps: ["Préparer."], conservation: "Au frais.",
+    image: "/assets/recipe-placeholder.svg", ...overrides,
+  };
+}
+
+test("backup imports reject unknown profile equipment explicitly for current and legacy formats", async () => {
+  const { importAppState, exportAppState } = await import("../src/storage.ts");
+  const current = JSON.parse(exportAppState(migrateAppState(state())));
+  for (const equipment of [["foo"], ["hob", "foo"], ["hob", null], "hob", null]) {
+    const legacy = state({ profile: { ...state().profile, equipment } });
+    const backup = structuredClone(current);
+    backup.state.profile.equipment = equipment;
+    for (const input of [legacy, { state: legacy }, backup]) {
+      const before = JSON.stringify(input);
+      assert.throws(() => importAppState(before), /équipement du profil.*inconnu ou invalide/);
+      assert.equal(JSON.stringify(input), before, "la validation ne modifie pas la sauvegarde fournie");
+    }
+  }
+});
+
+test("profile equipment retains toaster, all six choices, empty lists and missing legacy defaults", async () => {
+  const { importAppState, exportAppState } = await import("../src/storage.ts");
+  const { DEFAULT_PROFILE } = await import("../src/domain.ts");
+  for (const equipment of [[], ["toaster"], ["hob", "oven", "microwave", "blender", "toaster", "steamer"]]) {
+    const legacy = state({ profile: { ...state().profile, equipment } });
+    const restored = importAppState(JSON.stringify(legacy));
+    assert.deepEqual(restored.profile.equipment, equipment);
+    assert.deepEqual(importAppState(exportAppState(restored)).profile.equipment, equipment);
+  }
+  const missing = state();
+  delete missing.profile.equipment;
+  assert.deepEqual(importAppState(JSON.stringify(missing)).profile.equipment, DEFAULT_PROFILE.equipment);
+  assert.deepEqual(migrateAppState(state({ profile: { ...state().profile, equipment: ["hob", "foo"] } })).profile.equipment, ["hob"]);
+});
+
+test("recipe asset paths move between deployments and unsafe paths always use the local placeholder", async () => {
+  const { normalizeRecipeImage } = await import("../src/storage.ts");
+  const asset = "assets/recipes/carotte-1.jpg";
+  for (const base of ["/", "/InflammMenu/", "/preview/v1.0/"]) {
+    for (const oldBase of ["/", "/InflammMenu/", "/old-site/v1.0/"]) {
+      const resolved = normalizeRecipeImage(`${oldBase}${asset}`, base);
+      assert.equal(resolved, `${base}${asset}`);
+      assert.equal(normalizeRecipeImage(resolved, base), resolved);
+    }
+    for (const bad of [
+      "https://example.com/assets/photo.jpg", "https://kikioutte.github.io/InflammMenu/assets/photo.jpg",
+      "//evil.test/assets/photo.jpg", "javascript:alert(1)", "data:image/svg+xml,<svg/>",
+      "/assets/../private.jpg", "/assets/./photo.jpg", "/old/../assets/photo.jpg",
+      "/assets/%2e%2e/photo.jpg", "/assets/%252e%252e/photo.jpg", "/assets/a%2fb.jpg",
+      "/assets\\photo.jpg", "/assets//photo.jpg", "/assets/photo.jpg?next=https://evil.test",
+      "/assets/photo.jpg#fragment", "/ass\u0000ets/photo.jpg", "assets/photo.jpg", "", null,
+    ]) {
+      assert.equal(normalizeRecipeImage(bad, base), `${base}assets/recipe-placeholder.svg`, String(bad));
+    }
+  }
+});
+
+test("custom recipe validation refuses destructive edits without changing the original recipe", async () => {
+  const { normalizeCustomRecipe } = await import("../src/storage.ts");
+  const original = personalRecipe();
+  const before = structuredClone(original);
+  for (const patch of [
+    { ingredients: [] }, { steps: [] }, { steps: [" "] }, { prepMinutes: Number.NaN },
+    { ingredients: [{ ...original.ingredients[0], quantity: 0 }] },
+    { ingredients: [{ ...original.ingredients[0], quantity: Number.POSITIVE_INFINITY }] },
+  ]) {
+    assert.equal(normalizeCustomRecipe({ ...original, ...patch }), null);
+    assert.deepEqual(original, before);
+  }
+  assert.deepEqual(normalizeCustomRecipe(original), original);
+});
+
+test("restored custom, composed and shopping recipes retain assets and estimate status", async () => {
+  const { exportAppState, importAppState } = await import("../src/storage.ts");
+  for (const status of [false, true]) {
+    const recipe = personalRecipe({ image: "/old-deployment/assets/recipes/carotte.jpg", nutritionRecalculated: status, costRecalculated: status });
+    const source = migrateAppState(state({
+      customRecipes: [recipe],
+      composedRecipes: [{ ...recipe, id: "perso-compose", composition: { starter: "r1017", main: "r711", dessert: "r824" } }],
+      shoppingRecipes: [{ recipe: { ...recipe, id: "catalog-r100" }, portions: 3 }],
+      recipeCollections: [{ id: "collection-test", name: "À garder", recipeIds: [recipe.id] }],
+      shoppingItems: [{ id: "article-test", name: "Essuie-tout — 1 paquet", checked: true }],
+    }));
+    const restored = importAppState(exportAppState(source));
+    assert.deepEqual(restored, source);
+    assert.equal(restored.recipeCollections[0].name, "À garder");
+    assert.equal(restored.shoppingItems[0].checked, true);
+    for (const entry of [restored.customRecipes[0], restored.composedRecipes[0], restored.shoppingRecipes[0].recipe]) {
+      assert.equal(entry.image, "/assets/recipes/carotte.jpg");
+      assert.equal(entry.nutritionRecalculated, status);
+      assert.equal(entry.costRecalculated, status);
+    }
+  }
+  const { normalizeCustomRecipe } = await import("../src/storage.ts");
+  const recipe = normalizeCustomRecipe(personalRecipe({ nutritionRecalculated: "true", costRecalculated: 1 }));
+  assert.equal(recipe.nutritionRecalculated, undefined);
+  assert.equal(recipe.costRecalculated, undefined);
+});
+
+test("legacy personal estimates become unverified without degrading composed or catalogue snapshots", async () => {
+  const { exportAppState, importAppState, normalizeCustomRecipe } = await import("../src/storage.ts");
+  const legacy = personalRecipe({ id: "perso-catalog-r001-old" });
+  const composition = { ...legacy, id: "perso-composition-old", composition: { starter: "r1017", main: "r711", dessert: "r824" } };
+  const catalogueSnapshot = { ...legacy, id: "catalog-r001" };
+  const source = state({
+    customRecipes: [legacy, personalRecipe({ id: "perso-partly-recalculated", nutritionRecalculated: true })],
+    composedRecipes: [composition],
+    shoppingRecipes: [{ recipe: catalogueSnapshot, portions: 2 }],
+  });
+  const migrated = migrateAppState(source);
+  const oldPersonal = migrated.customRecipes[0];
+  assert.equal(oldPersonal.nutritionRecalculated, false);
+  assert.equal(oldPersonal.costRecalculated, false);
+  assert.deepEqual(oldPersonal.nutrition, legacy.nutrition, "les chiffres sont conservés pour récupération");
+  assert.equal(oldPersonal.costPerPortion, legacy.costPerPortion);
+  assert.equal(migrated.customRecipes[1].nutritionRecalculated, true);
+  assert.equal(migrated.customRecipes[1].costRecalculated, false);
+  for (const recipe of [migrated.composedRecipes[0], migrated.shoppingRecipes[0].recipe, normalizeCustomRecipe(legacy)]) {
+    assert.equal(recipe.nutritionRecalculated, undefined);
+    assert.equal(recipe.costRecalculated, undefined);
+  }
+  assert.equal(source.customRecipes[0].nutritionRecalculated, undefined, "la source importée reste intacte");
+  assert.deepEqual(migrateAppState(migrated), migrated);
+  assert.deepEqual(importAppState(exportAppState(migrated)), migrated);
+});
+
 test("v1 shopping keys and profile exclusions migrate to canonical v2 identifiers", () => {
   const migrated = migrateAppState(state());
   assert.equal(migrated?.version, APP_STATE_VERSION);
@@ -481,6 +614,17 @@ test("absurd profile numbers are bounded rather than trusted", () => {
   assert.equal(bounded({ people: 2.6 }).people, 3, "les valeurs décimales sont arrondies");
 });
 
+test("profile budgets preserve cents through storage and backups while counts remain integers", async () => {
+  const { exportAppState, importAppState } = await import("../src/storage.ts");
+  const migrated = migrateAppState(state({ profile: { ...state().profile, weeklyBudget: 80.25, people: 2.6, maxPrepMinutes: 25.6 } }));
+  assert.equal(migrated.profile.weeklyBudget, 80.25);
+  assert.equal(migrated.profile.people, 3);
+  assert.equal(migrated.profile.maxPrepMinutes, 26);
+  assert.deepEqual(importAppState(exportAppState(migrated)), migrated);
+  assert.equal(migrateAppState(state({ profile: { ...state().profile, weeklyBudget: 1.257 } })).profile.weeklyBudget, 1.26);
+  assert.equal(migrateAppState(state({ profile: { ...state().profile, weeklyBudget: Number.MAX_VALUE } })).profile.weeklyBudget, 10_000);
+});
+
 test("an imported history cannot exceed the on-device limit", async () => {
   const { importAppState, HISTORY_LIMIT } = await import("../src/storage.ts");
   const week = (index) => ({
@@ -591,7 +735,7 @@ test("audit remediation: strict imports and nested custom recipes", async () => 
   assert.equal(malformed.customRecipes.length, 0);
 });
 
-test("personal recipes survive a Pages base path and an invalid image only falls back", () => {
+test("personal recipes rebase Pages images and an invalid image only falls back", () => {
   const customRecipe = {
     id: "perso-pages",
     title: "Ma recette Pages",
@@ -616,7 +760,7 @@ test("personal recipes survive a Pages base path and an invalid image only falls
 
   const pagesState = migrateAppState(state({ customRecipes: [customRecipe] }));
   assert.equal(pagesState.customRecipes.length, 1);
-  assert.equal(pagesState.customRecipes[0].image, "/InflammMenu/assets/recipes/ma-recette.jpg");
+  assert.equal(pagesState.customRecipes[0].image, "/assets/recipes/ma-recette.jpg");
   assert.equal(pagesState.customRecipes[0].ingredients[1].optional, true);
 
   const unsafeState = migrateAppState(state({
@@ -1121,6 +1265,28 @@ async function withStorageEnvironment(callback, { localStorage = memoryLocalStor
     }
   }
 }
+
+test("unknown stored equipment is recoverable and cannot be silently overwritten at startup or save", async () => {
+  const { loadAppState, saveAppState, StoredStateReadError, exportRawRecovery } = await import("../src/storage.ts");
+  for (const replica of ["local", "indexed"]) {
+    await withStorageEnvironment(async ({ localStorage, indexedDb }) => {
+      const healthy = migrateAppState(state());
+      const invalid = { ...healthy, profile: { ...healthy.profile, equipment: ["hob", "unknown-device"] } };
+      const raw = JSON.stringify(replica === "local" ? invalid : healthy);
+      const indexed = replica === "indexed" ? invalid : healthy;
+      localStorage.setItem("inflamm-menu:app-state", raw);
+      indexedDb.seed("current", indexed);
+      await assert.rejects(loadAppState(), StoredStateReadError);
+      await assert.rejects(saveAppState(healthy), StoredStateReadError);
+      assert.equal(localStorage.getItem("inflamm-menu:app-state"), raw);
+      assert.deepEqual(indexedDb.read("current"), indexed);
+      assert.equal(indexedDb.metrics().writesStarted, 0);
+      const recovery = JSON.parse(await exportRawRecovery());
+      const recovered = replica === "local" ? JSON.parse(recovery.replicas.localStorage.rawState) : recovery.replicas.IndexedDB.rawState;
+      assert.deepEqual(recovered.profile.equipment, invalid.profile.equipment);
+    });
+  }
+});
 
 test("startup preserves corrupt, empty, foreign and future local records beside a healthy IndexedDB replica", async () => {
   const { loadAppState, loadRecoveryAppState, StoredStateReadError } = await import("../src/storage.ts");

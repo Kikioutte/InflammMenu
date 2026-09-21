@@ -403,8 +403,7 @@ const CUSTOM_DIETS = new Set(["classic", "vegetarian", "no-pork"]);
 const CUSTOM_SEASONS = new Set(["spring", "summer", "autumn", "winter", "all-year"]);
 const CUSTOM_EQUIPMENT = new Set(["hob", "oven", "microwave", "blender", "toaster", "steamer"]);
 const CUSTOM_CATEGORIES = new Set(DEFAULT_CATEGORY_ORDER);
-const SAFE_RECIPE_IMAGE = /^\/(?:[a-zA-Z0-9_-]+\/)*assets\/[a-zA-Z0-9_./-]+$/;
-const RECIPE_PLACEHOLDER_IMAGE = "/assets/recipe-placeholder.svg";
+const SAFE_RECIPE_IMAGE = /^\/(?:[a-zA-Z0-9_.-]+\/)*assets\/[a-zA-Z0-9_./-]+$/;
 
 function normalizeShoppingRecipes(value: unknown): ShoppingRecipe[] {
   if (!Array.isArray(value)) return [];
@@ -418,12 +417,17 @@ function normalizeShoppingRecipes(value: unknown): ShoppingRecipe[] {
   }).slice(0, 100);
 }
 
-function normalizeRecipeImage(value: unknown): string {
-  const image = cleanUserText(value, 500);
-  if (!image || !SAFE_RECIPE_IMAGE.test(image)) return RECIPE_PLACEHOLDER_IMAGE;
+/** Restore an asset under this deployment, never under a backup's old origin. */
+export function normalizeRecipeImage(value: unknown, baseUrl = import.meta.env?.BASE_URL ?? "/"): string {
+  const placeholder = `${baseUrl}assets/recipe-placeholder.svg`;
+  const image = typeof value === "string" && value.length <= 500 ? value.trim() : "";
+  if (!image || !SAFE_RECIPE_IMAGE.test(image)) return placeholder;
   const segments = image.split("/");
-  if (segments.some((segment) => segment === "." || segment === "..")) return RECIPE_PLACEHOLDER_IMAGE;
-  return image;
+  if (segments.slice(1).some((segment) => segment === "" || segment === "." || segment === "..")) return placeholder;
+  // Accept root/Pages/previous-base backups, but validate before rebasing: URL
+  // normalisation would otherwise hide traversal in the supplied path.
+  const assetPath = segments.slice(segments.indexOf("assets")).join("/");
+  return `${baseUrl}${assetPath}`;
 }
 
 function normalizedEnumArray(value: unknown, allowed: ReadonlySet<string>, maximum = 30): string[] {
@@ -433,7 +437,12 @@ function normalizedEnumArray(value: unknown, allowed: ReadonlySet<string>, maxim
     .slice(0, maximum);
 }
 
-function normalizeCustomRecipe(value: unknown): Recipe | null {
+function isKnownEquipmentArray(value: unknown): boolean {
+  return Array.isArray(value) && value.every((item) => typeof item === "string" && CUSTOM_EQUIPMENT.has(item));
+}
+
+/** Shared persistence validation: callers must retain the old recipe on null. */
+export function normalizeCustomRecipe(value: unknown): Recipe | null {
   if (!isRecord(value)) return null;
   const id = cleanUserText(value.id, 160);
   const title = cleanUserText(value.title, 90);
@@ -509,6 +518,8 @@ function normalizeCustomRecipe(value: unknown): Recipe | null {
       estimated: true,
       note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif.",
     },
+    ...(typeof value.nutritionRecalculated === "boolean" ? { nutritionRecalculated: value.nutritionRecalculated } : {}),
+    ...(typeof value.costRecalculated === "boolean" ? { costRecalculated: value.costRecalculated } : {}),
     description: cleanUserText(value.description, 2_000),
     ...(cleanUserText(value.caution, 2_000) ? { caution: cleanUserText(value.caution, 2_000) } : {}),
     steps,
@@ -589,7 +600,7 @@ function normalizeProfile(value: unknown): UserProfile {
     // just check their type, or a hand-edited backup breaks the generator.
     people: boundedNumber(value.people, DEFAULT_PROFILE.people, 1, 8),
     mealsPerDay: value.mealsPerDay === 3 ? 3 : 2,
-    weeklyBudget: boundedNumber(value.weeklyBudget, DEFAULT_PROFILE.weeklyBudget, 1, 10_000),
+    weeklyBudget: Math.round(Math.min(10_000, Math.max(1, finiteNumber(value.weeklyBudget, DEFAULT_PROFILE.weeklyBudget))) * 100) / 100,
     maxPrepMinutes: boundedNumber(value.maxPrepMinutes, DEFAULT_PROFILE.maxPrepMinutes, 1, 24 * 60),
     dayConstraints: normalizeDayConstraints(value.dayConstraints),
     allergies: canonicalAllergens(stringArray(value.allergies)),
@@ -598,7 +609,7 @@ function normalizeProfile(value: unknown): UserProfile {
     softDislikedRecipeIds: stringArray(value.softDislikedRecipeIds),
     weeklyTargets: normalizeWeeklyTargets(value.weeklyTargets),
     associationMode: value.associationMode === "green" || value.associationMode === "green-orange" ? value.associationMode : "off",
-    equipment: stringArray(value.equipment, DEFAULT_PROFILE.equipment) as UserProfile["equipment"],
+    equipment: normalizedEnumArray(value.equipment === undefined ? DEFAULT_PROFILE.equipment : value.equipment, CUSTOM_EQUIPMENT, 6) as UserProfile["equipment"],
     diet:
       value.diet === "vegetarian" || value.diet === "no-pork" ? value.diet : "classic",
   } as UserProfile;
@@ -755,7 +766,15 @@ export function migrateAppState(value: unknown): AppState | null {
     recipeNotes: normalizeNotes(value.recipeNotes),
     shoppingCategoryOrder: normalizeCategoryOrder(value.shoppingCategoryOrder),
     actualSpend: normalizeSpend(value.actualSpend),
-    customRecipes: normalizeCustomRecipes(value.customRecipes),
+    // Old personal edits could retain their source's numbers after changing
+    // quantities. Keep those numbers for recovery, but never certify them by
+    // default. Compositions and catalogue shopping snapshots have their own
+    // reviewed baseline and must not inherit this legacy-edit marker.
+    customRecipes: normalizeCustomRecipes(value.customRecipes).map((recipe) => ({
+      ...recipe,
+      nutritionRecalculated: recipe.nutritionRecalculated ?? false,
+      costRecalculated: recipe.costRecalculated ?? false,
+    })),
     recipeCollections: normalizeCollections(value.recipeCollections),
     shoppingRecipes: normalizeShoppingRecipes(value.shoppingRecipes),
     shoppingItems: normalizeManualItems(value.shoppingItems),
@@ -901,6 +920,7 @@ function migrateStoredState(value: unknown): AppState | null {
     // settings still migrate normally; require the recognizable state envelope,
     // not the stricter completeness rules used for an explicit backup import.
     || !isRecord(value.profile)
+    || (isRecord(value.profile) && value.profile.equipment !== undefined && !isKnownEquipmentArray(value.profile.equipment))
     || !(Object.hasOwn(value, "currentPlan") || Object.hasOwn(value, "plan"))
     || !(Array.isArray(value.favoriteRecipeIds) || Array.isArray(value.favorites))
     || !Array.isArray(value.history)
@@ -1612,7 +1632,7 @@ function hasUsableLegacyStateShape(value: Record<string, unknown>): boolean {
     && typeof profile.maxPrepMinutes === "number"
     && Array.isArray(profile.allergies)
     && typeof profile.diet === "string"
-    && Array.isArray(profile.equipment);
+    && (profile.equipment === undefined || isKnownEquipmentArray(profile.equipment));
   const hasPlanSlot = Object.hasOwn(value, "currentPlan") || Object.hasOwn(value, "plan");
   const hasFavorites = Array.isArray(value.favoriteRecipeIds) || Array.isArray(value.favorites);
   const hasCheckedItems = Array.isArray(value.checkedShoppingItemIds) || Array.isArray(value.checkedShoppingIds);
@@ -1670,6 +1690,9 @@ function hasCompleteCurrentStateShape(value: Record<string, unknown>): boolean {
 }
 
 function assertCompleteImport(candidate: Record<string, unknown>, backupVersion?: number): void {
+  if (isRecord(candidate.profile) && candidate.profile.equipment !== undefined && !isKnownEquipmentArray(candidate.profile.equipment)) {
+    throw new Error("Sauvegarde incompatible : un équipement du profil est inconnu ou invalide. Équipements acceptés : plaques, four, micro-ondes, blender, grille-pain et vapeur. Vos données actuelles sont conservées.");
+  }
   const candidateVersion = typeof candidate.version === "number" ? candidate.version : undefined;
   const mustUseCurrentShape = backupVersion === APP_STATE_VERSION || candidateVersion === APP_STATE_VERSION;
   const completeEnough = mustUseCurrentShape

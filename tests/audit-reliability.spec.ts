@@ -116,6 +116,10 @@ for (const action of ["replace", "leftover", "swap"] as const) {
       } else if (changed === "source") {
         const alternative = state.currentPlan!.meals.find((meal) => meal.mealType === source.mealType && meal.recipeId !== source.recipeId)!;
         nextPlan.meals = nextPlan.meals.map((meal) => meal.id === source.id ? { ...meal, recipeId: alternative.recipeId } : meal);
+        // A real meal replacement updates its estimate as well. Keep the peer
+        // fixture coherent so this assertion checks stale-action preservation,
+        // not the separate repair of an outdated imported estimate.
+        nextPlan.estimatedCost = Math.round(nextPlan.meals.reduce((sum, meal) => sum + plannedMealCost(recipeById.get(meal.recipeId)!, meal), 0) * 100) / 100;
       }
       const saved = changed === "generation"
         ? await peer.evaluate(async () => {
