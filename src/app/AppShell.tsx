@@ -14,7 +14,7 @@ import { type AppStateStore } from "./app-state-store";
 import { type TabId, type RecipeRating } from "./types";
 import { useInstallAndConnectivity } from "./useInstallAndConnectivity";
 import { useRecipeRegistry, recipesForState, recipeById, ACTIVE_RECIPES } from "./recipe-registry";
-import { isoDate, mondayOf, formatWeekRange } from "../components/format";
+import { isoDate, mondayOf, formatWeekRange, weekStartForTarget, type WeekTarget } from "../components/format";
 import { makePlan } from "./planning";
 import { mealActionTarget, matchingActionMeal, STALE_MEAL_ACTION } from "./meal-actions";
 import { Header } from "../components/Header";
@@ -329,17 +329,15 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
     return { ...current, pantryIngredientIds: inPantry ? withoutIngredient : [...withoutIngredient, shoppingId] };
   });
 
-  function createPlan(target: "current" | "upcoming" = "current"): WeeklyPlan {
+  function createPlan(target: WeekTarget = "current", startsOn = weekStartForTarget(target)): WeeklyPlan {
     const live = appStore.getSnapshot();
-    const monday = mondayOf();
-    if (target === "upcoming") monday.setDate(monday.getDate() + 7);
     const plan = makePlan(
       live.profile,
       // Preparing next week never disturbs the running one.
       target === "upcoming" ? [] : preservableLockedMeals(live.currentPlan, ACTIVE_RECIPES, live.profile),
       live.favoriteRecipeIds,
       Date.now(),
-      isoDate(monday),
+      startsOn,
     );
     setAppState((current) => (target === "upcoming"
       ? { ...current, upcomingPlan: plan }

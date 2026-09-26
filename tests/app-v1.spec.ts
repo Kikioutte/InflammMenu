@@ -32,11 +32,65 @@ async function expectNoHorizontalOverflow(locator: Locator) {
 async function generateWeek(page: Page) {
   await page.getByRole("button", { name: "Générer ma semaine" }).click();
   await expect(page.getByRole("heading", { name: "Prête en quelques secondes" })).toBeVisible();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await expect(page.getByRole("heading", { name: "Votre semaine est prête" })).toBeVisible();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
   await expect(page.getByTestId("week-view")).toBeVisible();
 }
+
+test("la première génération montre les deux dates et prépare par défaut la semaine prochaine en fin de semaine", async ({ page }) => {
+  await page.clock.setFixedTime(new Date("2026-09-26T12:00:00Z"));
+  await page.setViewportSize({ width: 320, height: 700 });
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Générer ma semaine" }).click();
+  await expect(page.getByTestId("target-current-date")).toContainText("21–27 sept");
+  await expect(page.getByTestId("target-upcoming-date")).toContainText("28 sept – 4 oct");
+  await expect(page.getByTestId("target-upcoming")).toHaveAttribute("aria-pressed", "true");
+  await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
+  await page.getByRole("button", { name: "Créer ma semaine" }).click();
+  await expect(page.getByRole("heading", { name: "Semaine prochaine prête" })).toBeVisible();
+  await page.getByRole("button", { name: "Revenir à l’accueil" }).click();
+  await expect(page.getByTestId("upcoming-banner")).toContainText("28 sept – 4 oct");
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("inflamm-menu:app-state")!));
+  expect(stored.currentPlan).toBeNull();
+  expect(stored.upcomingPlan.startsOn).toBe("2026-09-28");
+});
+
+test("un changement de date pendant la sélection demande de revérifier avant de créer", async ({ page }) => {
+  await page.clock.setFixedTime(new Date("2026-09-27T12:00:00Z"));
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Générer ma semaine" }).click();
+  await expect(page.getByTestId("target-upcoming")).toHaveAttribute("aria-pressed", "true");
+  await page.clock.setFixedTime(new Date("2026-09-28T12:00:00Z"));
+  await page.getByRole("button", { name: "Créer ma semaine" }).click();
+  await expect(page.getByTestId("generation-date-changed")).toContainText("Vérifiez la semaine affichée");
+  await expect(page.getByTestId("target-current")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("target-current-date")).toContainText("28 sept – 4 oct");
+  await page.getByRole("button", { name: "Créer ma semaine" }).click();
+  await expect(page.getByRole("heading", { name: "Votre semaine est prête" })).toBeVisible();
+  await expect(page.locator(".success-state")).toContainText("28 sept – 4 oct");
+});
+
+for (const [day, expected] of [[21, "current"], [22, "current"], [23, "current"], [24, "upcoming"], [25, "upcoming"], [26, "upcoming"], [27, "upcoming"]] as const) {
+  test(`la présélection du ${day} septembre respecte le seuil du jeudi`, async ({ page }) => {
+    await page.clock.setFixedTime(new Date(`2026-09-${day}T12:00:00Z`));
+    await openFreshApp(page);
+    await page.getByRole("button", { name: "Générer ma semaine" }).click();
+    await expect(page.getByTestId(`target-${expected}`)).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByTestId("target-current-date")).toContainText("21–27 sept");
+    await expect(page.getByTestId("target-upcoming-date")).toContainText("28 sept – 4 oct");
+  });
+}
+
+test("les deux choix affichent explicitement leurs années au passage du nouvel an", async ({ page }) => {
+  await page.clock.setFixedTime(new Date("2026-12-31T12:00:00Z"));
+  await openFreshApp(page);
+  await page.getByRole("button", { name: "Générer ma semaine" }).click();
+  await expect(page.getByTestId("target-current-date")).toContainText("2026–2027");
+  await expect(page.getByTestId("target-upcoming-date")).toContainText("2027");
+  await expect(page.getByTestId("target-upcoming")).toHaveAttribute("aria-pressed", "true");
+});
 
 test("l’écran fatal exporte les deux stockages et exige une confirmation avant le reset", async ({ page }) => {
   await page.goto("/tests/error-boundary-fixture.html");
@@ -917,6 +971,7 @@ test("créer une autre semaine renouvelle les recettes dans l’interface", asyn
   await page.getByRole("button", { name: "Accueil", exact: true }).click();
   await page.evaluate(() => { Date.now = () => 1_700_000_000_002; });
   await page.getByRole("button", { name: "Créer une autre semaine" }).click();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
   await page.getByTestId("layout-week").click();
@@ -1018,6 +1073,7 @@ test("un repas conservé survit à une nouvelle génération", async ({ page }) 
   await page.getByRole("button", { name: "Accueil", exact: true }).click();
   await page.getByRole("button", { name: "Créer une autre semaine" }).click();
   await expect(page.getByTestId("generate-locked")).toContainText("1 repas conservé");
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
 
@@ -1262,6 +1318,7 @@ test("une recette écartée disparaît des semaines suivantes et reste réversib
   await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
 
   await page.getByRole("button", { name: "Créer une autre semaine" }).click();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
   for (let day = 0; day < 7; day += 1) {
@@ -1556,7 +1613,7 @@ test("une sauvegarde active partielle ou incompatible ne peut pas remplacer les 
   await page.getByLabel("Votre prénom").fill("Gardé");
   await page.getByRole("button", { name: "Enregistrer mon profil" }).click();
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
-  await page.getByRole("button", { name: /Informations et confidentialité/ }).click();
+  await page.getByTestId("flow-current").getByRole("button", { name: /Informations et confidentialité/ }).click();
 
   await expect.poll(() => page.evaluate(() => {
     const raw = window.localStorage.getItem("inflamm-menu:app-state");
@@ -1973,6 +2030,7 @@ test("une semaine archivée peut être supprimée et le plafond est expliqué", 
   await expect.poll(() => page.evaluate((planId) => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").actualSpend?.[planId], archivedPlanId)).toBe(61.25);
   await page.getByRole("button", { name: "Accueil", exact: true }).click();
   await page.getByRole("button", { name: "Créer une autre semaine" }).click();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
 
@@ -2025,6 +2083,7 @@ test("une semaine archivée s’ouvre et peut être reprise", async ({ page }) =
 
   await page.getByRole("button", { name: "Accueil", exact: true }).click();
   await page.getByRole("button", { name: "Créer une autre semaine" }).click();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
 

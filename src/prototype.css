@@ -662,6 +662,9 @@ button { -webkit-tap-highlight-color: transparent; }
 
 /* --- Vue semaine entière, sessions de cuisine, feuille d'actions --- */
 .layout-switch, .target-switch { margin: 0 0 16px; }
+.target-switch button { min-height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 8px 5px; line-height: 1.2; }
+.target-switch button strong { font-size: var(--font-12); }
+.target-switch button small { font-size: var(--font-10); font-weight: 400; }
 .week-overview { display: flex; flex-direction: column; gap: 10px; }
 .week-overview__day { border: 1px solid var(--line); border-radius: 16px; background: var(--white); overflow: hidden; }
 .week-overview__day.is-today { border-color: var(--sage); }

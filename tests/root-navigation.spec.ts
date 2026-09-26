@@ -13,6 +13,7 @@ test("chaque onglet repart en haut sans interrompre les actions du même écran 
     await expect.poll(() => scroll.evaluate((element) => element.scrollTop)).toBeGreaterThan(100);
   };
   await page.getByRole("button", { name: "Générer ma semaine", exact: true }).click();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine", exact: true }).click();
   await page.getByRole("button", { name: "Voir ma semaine", exact: true }).click();
   await expect(page.getByTestId("week-view")).toBeVisible();

@@ -88,6 +88,7 @@ test("saved association profile governs generation and shopping", async ({ page 
   await page.reload();
   await expect(page.getByTestId("home-view")).toBeVisible();
   await page.getByRole("button", { name: "Générer ma semaine" }).click();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
   await expect(page.getByTestId("week-view")).toBeVisible();

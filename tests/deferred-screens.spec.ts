@@ -107,6 +107,7 @@ test("le démarrage et la génération ne téléchargent aucun écran secondaire
   await page.goto("/");
   await page.getByTestId("onboarding-skip").click();
   await page.getByRole("button", { name: "Générer ma semaine" }).click();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
   await expect(page.getByTestId("week-view")).toBeVisible();

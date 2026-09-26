@@ -59,6 +59,7 @@ test("standalone shopping adds, updates, exports and restores without creating a
   await page.screenshot({ path: info.outputPath("courses-autonomes.png"), fullPage: true });
   await nav(page, "Accueil");
   await page.getByRole("button", { name: "Générer ma semaine", exact: true }).click();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine", exact: true }).click();
   await page.getByRole("button", { name: "Voir ma semaine", exact: true }).click();
   await nav(page, "Courses");

@@ -13,6 +13,20 @@ export function mondayOf(date = new Date()): Date {
   return copy;
 }
 
+export type WeekTarget = "current" | "upcoming";
+
+/** Suggest a full future week once more than half of the current one has passed. */
+export function preferredWeekTarget(date = new Date()): WeekTarget {
+  const dayIndex = (date.getDay() + 6) % 7;
+  return dayIndex >= 3 ? "upcoming" : "current";
+}
+
+export function weekStartForTarget(target: WeekTarget, date = new Date()): string {
+  const monday = mondayOf(date);
+  if (target === "upcoming") monday.setDate(monday.getDate() + 7);
+  return isoDate(monday);
+}
+
 export function dateAt(startsOn: string, dayIndex: number): Date {
   const [year, month, day] = startsOn.split("-").map(Number);
   const result = new Date(year, month - 1, day);
