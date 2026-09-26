@@ -2,6 +2,7 @@ import { normalizeCollections, normalizeManualItems, type RecipeCollection, type
 import { normalizeSavedMeals, type SavedMeal } from "./saved-meals.ts";
 import {
   DEFAULT_PROFILE,
+  MAX_PLAN_ESTIMATED_COST,
   type DayConstraint,
   type IngredientCategory,
   type MealType,
@@ -335,7 +336,7 @@ export function normalizePlan(value: unknown): WeeklyPlan | null {
         : `${value.startsOn}T00:00:00.000Z`,
     profileSnapshot: normalizeProfile(value.profileSnapshot),
     meals: normalizedMeals,
-    estimatedCost: Math.min(100_000, Math.max(0, finiteNumber(value.estimatedCost, 0))),
+    estimatedCost: Math.min(MAX_PLAN_ESTIMATED_COST, Math.max(0, finiteNumber(value.estimatedCost, 0))),
     version: 1,
   };
 }

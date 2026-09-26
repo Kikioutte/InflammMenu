@@ -99,7 +99,7 @@ async function openPersonal(page: Page) {
   await nav(page, "Recette");
   await page.getByRole("tab", { name: "Favoris", exact: true }).click();
   await page.locator(".favorite-card").filter({ hasText: "Ma recette préservée" }).click();
-  await expect(page.getByRole("heading", { name: "Ma recette préservée", exact: true })).toBeVisible();
+  await expect(page.getByTestId("flow-current").getByRole("heading", { name: "Ma recette préservée", exact: true })).toBeVisible();
 }
 
 function expectPreserved(actual: AppState, expected: AppState) {
@@ -246,7 +246,7 @@ test("modifier les quantités actualise les deux semaines sans réécrire histor
   await page.getByTestId("edit-custom-recipe").click();
   await page.getByRole("button", { name: "Augmenter riz complet", exact: true }).click();
   await page.getByTestId("custom-save").click();
-  await expect(page.getByRole("heading", { name: "Ma recette préservée", exact: true })).toBeVisible();
+  await expect(page.getByTestId("flow-current").getByRole("heading", { name: "Ma recette préservée", exact: true })).toBeVisible();
   await expect.poll(async () => (await readState(page)).customRecipes[0].costPerPortion).toBe(4);
   const after = await readState(page);
   for (const field of ["currentPlan", "upcomingPlan"] as const) {
@@ -257,13 +257,33 @@ test("modifier les quantités actualise les deux semaines sans réécrire histor
   }
   expect(after.history).toEqual(before.history);
   expect(after.customRecipes[0].nutrition.calories).toBe(200);
-  await expect(page.locator(".nutrition-section")).toContainText("200");
+  await expect(page.getByTestId("flow-current").locator(".nutrition-section")).toContainText("200");
   expectPreserved(after, before);
   await page.reload();
   const persisted = await readState(page);
   expect(persisted.currentPlan!.estimatedCost).toBe(after.currentPlan!.estimatedCost);
   expect(persisted.upcomingPlan!.estimatedCost).toBe(after.upcomingPlan!.estimatedCost);
   expectPreserved(persisted, before);
+});
+
+test("les petites quantités restent positives dans la fiche, la cuisine et les courses", async ({ page }) => {
+  const recipe = personalRecipe();
+  recipe.ingredients = [
+    { id: "brown-rice", name: "riz complet", quantity: 0.02, unit: "g", category: "grocery" },
+    { id: "personal-fractional-piece", name: "ingrédient personnel", quantity: 0.125, unit: "piece", category: "fruit-vegetable" },
+  ];
+  await open(page, fixtureState({ recipe }));
+  await openPersonal(page);
+  await expect(page.getByTestId("flow-current").locator(".ingredient-list")).toContainText("0,04 g");
+  await expect(page.getByTestId("flow-current").locator(".ingredient-list")).toContainText("0,25 pièce");
+  await page.getByTestId("start-cooking").click();
+  await expect(page.getByTestId("cooking-view").locator(".cooking-ingredients")).toContainText("0,04 g");
+  await expect(page.getByTestId("cooking-view").locator(".cooking-ingredients")).toContainText("0,25 pièce");
+  await page.getByRole("button", { name: "Retour", exact: true }).click();
+  await page.getByRole("button", { name: "Retour", exact: true }).click();
+  await nav(page, "Courses");
+  await expect(page.getByTestId("courses-view").locator(".shopping-groups")).toContainText("0,06 g");
+  await expect(page.getByTestId("courses-view").locator(".shopping-groups")).toContainText("0,375 pièce");
 });
 
 test("une estimation impossible est annoncée et les anciennes valeurs nutritionnelles sont masquées", async ({ page }) => {
@@ -274,13 +294,13 @@ test("une estimation impossible est annoncée et les anciennes valeurs nutrition
   await page.getByTestId("edit-custom-recipe").click();
   await page.getByRole("button", { name: "Augmenter riz complet", exact: true }).click();
   await page.getByTestId("custom-save").click();
-  await expect(page.getByRole("heading", { name: "Ma recette préservée", exact: true })).toBeVisible();
-  await expect(page.locator(".nutrition-section")).toContainText(/indisponibl|non recalcul|pas.*recalcul/i);
-  await expect(page.locator(".nutrition-section")).not.toContainText(/100\s*kcal/);
+  await expect(page.getByTestId("flow-current").getByRole("heading", { name: "Ma recette préservée", exact: true })).toBeVisible();
+  await expect(page.getByTestId("flow-current").locator(".nutrition-section")).toContainText(/indisponibl|non recalcul|pas.*recalcul/i);
+  await expect(page.getByTestId("flow-current").locator(".nutrition-section")).not.toContainText(/100\s*kcal/);
   await expect(page.getByTestId("flow-current")).toContainText(/coût.*non recalcul|coût.*pas.*recalcul|ancienne estimation/i);
   await page.reload();
   await openPersonal(page);
-  await expect(page.locator(".nutrition-section")).toContainText(/indisponibl|non recalcul|pas.*recalcul/i);
+  await expect(page.getByTestId("flow-current").locator(".nutrition-section")).toContainText(/indisponibl|non recalcul|pas.*recalcul/i);
 });
 
 test("une dépense avec virgule se conserve lorsqu’une saisie suivante est invalide @webkit-smoke", async ({ page }) => {

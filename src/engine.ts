@@ -1,4 +1,5 @@
 import { evaluateAssociations, associationRecipeAllowed, isAssociationRecipe } from "./food-associations.ts";
+import { MAX_PLAN_ESTIMATED_COST } from "./domain.ts";
 import type {
   DayConstraint,
   Ingredient,
@@ -293,6 +294,11 @@ function round(value: number, digits = 2): number {
   return Math.round((value + Number.EPSILON) * factor) / factor;
 }
 
+/** Keep the meaningful precision of fractional culinary quantities. */
+function roundQuantity(value: number): number {
+  return value > 0 && value < 1 ? Number(value.toPrecision(12)) : round(value, 2);
+}
+
 function requiredMealTypes(mealsPerDay: UserProfile["mealsPerDay"]): readonly MealType[] {
   return mealsPerDay === 3 ? ["breakfast", "lunch", "dinner"] : ["lunch", "dinner"];
 }
@@ -373,7 +379,7 @@ export function ingredientsForPlannedMeal(recipe: Recipe, meal?: PlannedMeal, se
     const rule = selectedId ? substitutionRuleById(selectedId) : undefined;
     const applicable = rule && substitutionsForIngredient(ingredient).some((candidate) => candidate.id === rule.id);
     const effective = applicable ? applySubstitutionToIngredient(ingredient, rule) : ingredient;
-    return { ...effective, quantity: round(effective.quantity * Math.max(0, servings), 2) };
+    return { ...effective, quantity: roundQuantity(effective.quantity * Math.max(0, servings)) };
   });
 }
 
@@ -654,13 +660,13 @@ function weeklyTargetCount(
 }
 
 function totalPlanCost(meals: readonly PlannedMeal[], byId: ReadonlyMap<string, Recipe>): number {
-  return round(
+  return Math.min(MAX_PLAN_ESTIMATED_COST, round(
     meals.reduce((total, meal) => {
       if (meal.skipped) return total;
       const recipe = byId.get(meal.recipeId);
       return total + (recipe ? plannedMealCost(recipe, meal) : 0);
     }, 0),
-  );
+  ));
 }
 
 /** Re-estimate against the current recipe registry, preserving every plan/meal
@@ -1414,7 +1420,7 @@ export function scaleIngredients(recipe: Recipe, servings: number): Ingredient[]
   const safeServings = Math.max(0, servings);
   return recipe.ingredients.map((ingredient) => ({
     ...ingredient,
-    quantity: round(ingredient.quantity * safeServings, 2),
+    quantity: roundQuantity(ingredient.quantity * safeServings),
   }));
 }
 
@@ -1454,14 +1460,14 @@ export function buildShoppingList(
           : ingredient.quantity;
       const previous = aggregated.get(ingredientId);
       if (previous) {
-        previous.amounts.set(unit, round((previous.amounts.get(unit) ?? 0) + quantity, 2));
+        previous.amounts.set(unit, roundQuantity((previous.amounts.get(unit) ?? 0) + quantity));
         if (!identity.displayName && ingredient.name.localeCompare(previous.name, "fr") < 0) previous.name = ingredient.name;
       } else {
         aggregated.set(ingredientId, {
           ingredientId,
           name: identity.displayName ?? ingredient.name,
           category: identity.category ?? ingredient.category,
-          amounts: new Map([[unit, round(quantity, 2)]]),
+          amounts: new Map([[unit, roundQuantity(quantity)]]),
         });
       }
     }
@@ -1471,7 +1477,7 @@ export function buildShoppingList(
   for (const [id, amount] of Object.entries(options.pantryAmounts ?? {})) {
     const shoppingId = legacyShoppingItemKeyToCanonical(id);
     const amounts = stock.get(shoppingId) ?? new Map<PantryAmount["unit"], number>();
-    amounts.set(amount.unit, round((amounts.get(amount.unit) ?? 0) + amount.quantity, 2));
+    amounts.set(amount.unit, roundQuantity((amounts.get(amount.unit) ?? 0) + amount.quantity));
     stock.set(shoppingId, amounts);
   }
 
@@ -1481,7 +1487,7 @@ export function buildShoppingList(
       // Deduct what is already at home, in each matching unit only.
       for (const [unit, quantity] of ownedByUnit) {
         const current = item.amounts.get(unit);
-        if (current !== undefined) item.amounts.set(unit, round(Math.max(0, current - quantity), 2));
+        if (current !== undefined) item.amounts.set(unit, roundQuantity(Math.max(0, current - quantity)));
       }
     }
     const amounts = [...item.amounts.entries()]

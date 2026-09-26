@@ -1,5 +1,8 @@
 export type MealType = "breakfast" | "lunch" | "dinner";
 
+/** Above the largest valid week (21 meals × 8 portions × 10 000 €/portion, plus reviewed swaps). */
+export const MAX_PLAN_ESTIMATED_COST = 2_000_000;
+
 export type DayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export type DietMode = "classic" | "vegetarian" | "no-pork";

@@ -371,6 +371,23 @@ test("optional ingredients stay visible and allergenic but never enter shopping"
   assert.match(engine.formatShoppingListText(optionalOnlyList), /Aucun achat requis dans la liste générée\./);
 });
 
+test("a tiny positive ingredient survives scaling, shopping aggregation and export", () => {
+  const dish = recipe(5_210, {
+    id: "tiny-quantity",
+    ingredients: [{ id: "tiny-spice", name: "Épice", quantity: 0.004, unit: "g", category: "grocery" }],
+  });
+  const plan = {
+    id: "week-tiny", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: profile, version: 1, estimatedCost: dish.costPerPortion,
+    meals: [{ id: "tiny", dayIndex: 0, mealType: "lunch", recipeId: dish.id, portions: 1, source: "manual" }],
+  };
+  assert.equal(engine.scaleIngredients(dish, 1)[0].quantity, 0.004);
+  assert.equal(engine.ingredientsForPlannedMeal(dish, plan.meals[0])[0].quantity, 0.004);
+  const items = engine.buildShoppingList(plan, [dish]);
+  assert.equal(items[0].amounts[0].quantity, 0.004);
+  assert.match(engine.formatShoppingListText(items), /0,004 g/);
+});
+
 test("a substitution cannot introduce an allergen excluded by the profile", () => {
   const yogurtRecipe = recipe(31, {
     id: "yogurt-bowl",

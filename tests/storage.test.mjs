@@ -601,6 +601,44 @@ test("a malformed stored plan is rejected instead of crashing the app", async ()
   assert.equal(cleaned.version, 1);
 });
 
+test("valid high plan estimates remain stable through current/upcoming backup round trips", async () => {
+  const { normalizePlan, exportAppState, importAppState } = await import("../src/storage.ts");
+  const { MAX_PLAN_ESTIMATED_COST } = await import("../src/domain.ts");
+  const { refreshPlanEstimate } = await import("../src/engine.ts");
+  const dish = personalRecipe({ costPerPortion: 10_000, mealTypes: ["breakfast", "lunch", "dinner"] });
+  const week = (startsOn) => ({
+    id: `week-${startsOn}`, startsOn, generatedAt: `${startsOn}T00:00:00.000Z`,
+    profileSnapshot: { ...state().profile, mealsPerDay: 3 }, version: 1, estimatedCost: 0,
+    meals: ["lunch", "dinner"].map((mealType) => ({
+      id: `${startsOn}-${mealType}`, dayIndex: 0, mealType, recipeId: dish.id, portions: 8, source: "manual",
+    })),
+  });
+  const currentPlan = refreshPlanEstimate(week("2026-09-21"), [dish]);
+  const upcomingPlan = refreshPlanEstimate(week("2026-09-28"), [dish]);
+  assert.equal(currentPlan.estimatedCost, 160_000);
+  assert.equal(normalizePlan(currentPlan).estimatedCost, 160_000);
+
+  const source = migrateAppState(state({ currentPlan, upcomingPlan, customRecipes: [dish] }));
+  const restored = importAppState(exportAppState(source));
+  for (const plan of [restored.currentPlan, restored.upcomingPlan]) {
+    assert.equal(plan.estimatedCost, 160_000);
+    assert.equal(refreshPlanEstimate(plan, restored.customRecipes).estimatedCost, 160_000);
+  }
+
+  const fullWeek = {
+    ...week("2026-10-05"),
+    meals: Array.from({ length: 21 }, (_, index) => ({
+      id: `meal-${index}`, dayIndex: Math.floor(index / 3), mealType: ["breakfast", "lunch", "dinner"][index % 3],
+      recipeId: dish.id, portions: 8, source: "manual",
+    })),
+  };
+  assert.equal(refreshPlanEstimate(fullWeek, [dish]).estimatedCost, 1_680_000);
+  assert.equal(normalizePlan(refreshPlanEstimate(fullWeek, [dish])).estimatedCost, 1_680_000);
+  assert.equal(normalizePlan({ ...currentPlan, estimatedCost: Number.POSITIVE_INFINITY }).estimatedCost, 0);
+  assert.equal(normalizePlan({ ...currentPlan, estimatedCost: -5 }).estimatedCost, 0);
+  assert.equal(normalizePlan({ ...currentPlan, estimatedCost: MAX_PLAN_ESTIMATED_COST + 1 }).estimatedCost, MAX_PLAN_ESTIMATED_COST);
+});
+
 test("absurd profile numbers are bounded rather than trusted", () => {
   const bounded = (patch) => migrateAppState(state({ profile: { ...state().profile, ...patch } }))?.profile;
 
