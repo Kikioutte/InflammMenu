@@ -114,6 +114,31 @@ const NUT_OR_SEED_INGREDIENTS = new Set([
   "sesame",
   "walnut",
 ]);
+// Reviewed food identities, not lexical matches: pearled barley, refined
+// noodles, nut drinks, oils and spice seeds do not qualify for these markers.
+const WHOLE_GRAIN_AND_EQUIVALENT_IDS = new Set([
+  "amarante-grains", "amarante-soufflee", "brown-rice", "catalog-gruau-de-sarrasin",
+  "catalog-pain-au-levain-complet", "catalog-riz-complet-cuit", "chapelure-complete",
+  "epeautre-grain", "flocons-sarrasin", "flocons-seigle", "millet", "millet-decortique",
+  "millet-souffle", "nouilles-riz-complet", "oats", "orge-monde", "pain-levain-complet",
+  "pain-seigle-complet", "petit-epeautre-concasse", "polenta-complete", "quinoa",
+  "quinoa-blanc", "quinoa-noir", "quinoa-rouge", "riz-basmati-complet", "riz-complet",
+  "riz-noir", "riz-noir-sec", "riz-rond-complet", "riz-rouge", "riz-rouge-sec",
+  "riz-sauvage", "riz-sauvage-sec", "sarrasin-concasse", "sarrasin-decortique",
+  "sarrasin-decortique-cru", "sarrasin-decortique-cuit", "sorgho-grain",
+  "wholegrain-bread", "wholegrain-wrap", "wholewheat-couscous", "wholewheat-lasagna",
+  "wholewheat-pasta",
+].map(canonicalIngredientId));
+const NUT_OR_SEED_FOOD_IDS = new Set([
+  "almond", "amande-fraiche", "amandes-effilees", "arachides-non-salees",
+  "catalog-graines-de-courge-torrefiees", "catalog-graines-de-lin",
+  "catalog-noisettes-torrefiees", "catalog-noix-de-pecan-concassees",
+  "catalog-pistaches-non-salees-concassees", "chia", "graines-chanvre-decortiquees",
+  "graines-lin-moulues", "graines-pavot", "graines-sesame-noir", "graines-tournesol",
+  "noisette", "noix-cajou", "noix-grenoble", "noix-pecan", "pignons-pin",
+  "pistaches-non-salees", "poudre-amande", "pumpkin-seed", "puree-amande-blanche",
+  "puree-arachide", "puree-sesame", "sesame", "tahini", "walnut",
+].map(canonicalIngredientId));
 
 export type RecipeForm = "soup" | "salad" | "bowl" | "other";
 
@@ -211,6 +236,7 @@ export function recipeForm(recipe: Recipe): RecipeForm {
   return result;
 }
 
+// Existing generation preference; the more exact weekly-summary classifier is separate.
 function hasNutOrSeed(recipe: Recipe): boolean {
   const cached = NUT_OR_SEED_CACHE.get(recipe);
   if (cached !== undefined) return cached;
@@ -618,10 +644,6 @@ function ingredientReuseFromSet(recipe: Recipe, used: ReadonlySet<string>): numb
 function ingredientReuse(recipe: Recipe, selected: readonly Recipe[]): number {
   if (selected.length === 0) return 0;
   return ingredientReuseFromSet(recipe, new Set(selected.flatMap(requiredIngredientIdsOf)));
-}
-
-function tagCount(recipes: readonly Recipe[], candidates: readonly string[]): number {
-  return recipes.reduce((total, recipe) => total + (hasTag(recipe, candidates) ? 1 : 0), 0);
 }
 
 function weeklyTargetCount(
@@ -1930,6 +1952,13 @@ export function summarizePlan(
     : 0;
   const plantDiversity = plantDiversityOf(plan, recipes);
   const season = seasonForIsoDate(plan.startsOn);
+  const mealsWithFood = (identities: ReadonlySet<string>): number => activeMeals.reduce((count, meal) => {
+    const recipe = byId.get(meal.recipeId);
+    if (!recipe) return count;
+    return count + Number(ingredientsForPlannedMeal(recipe, meal, 1).some((ingredient) =>
+      !ingredient.optional && ingredient.quantity > 0 && identities.has(canonicalIngredientId(ingredient.id)),
+    ));
+  }, 0);
 
   return {
     mealCount: activeMeals.length,
@@ -1938,8 +1967,8 @@ export function summarizePlan(
     averagePrepMinutes,
     legumeMeals: weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.legume),
     fishMeals: weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.fish),
-    wholeGrainMeals: tagCount(selected, TAGS.wholeGrain),
-    nutOrSeedMeals: selected.filter(hasNutOrSeed).length,
+    wholeGrainMeals: mealsWithFood(WHOLE_GRAIN_AND_EQUIVALENT_IDS),
+    nutOrSeedMeals: mealsWithFood(NUT_OR_SEED_FOOD_IDS),
     seasonalMeals: selected.filter(
       (recipe) => recipe.seasons.includes(season) || recipe.seasons.includes("all-year"),
     ).length,

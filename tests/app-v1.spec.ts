@@ -1348,6 +1348,7 @@ test("le bilan de la semaine expose les repères sans promesse médicale", async
   await expect(balance).toContainText("Repas avec légumes secs ou soja");
   await expect(balance).toContainText("/ 2 visés");
   await expect(balance).toContainText("Repas avec poisson");
+  await expect(balance).toContainText("Repas avec céréales complètes et assimilées");
   await expect(balance).toContainText("kcal");
   await expect(balance).toContainText("g fibres");
   await expect(balance).toContainText("ni une évaluation nutritionnelle ni un avis médical");
