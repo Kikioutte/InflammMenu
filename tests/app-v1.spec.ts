@@ -1808,7 +1808,7 @@ test("un catalogue injoignable affiche une erreur et se recharge au réessai", a
 
   blocked = false;
   await page.getByTestId("catalogue-retry").click();
-  await expect(page.getByTestId("recipes-view").locator(".page-heading p")).toHaveText(/1\s?081 recettes à découvrir, à votre rythme\./);
+  await expect(page.getByTestId("recipes-view").locator(".page-heading p")).toHaveText(/1\s?201 recettes à découvrir, à votre rythme\./);
   await expect(page.getByTestId("catalogue-error")).toHaveCount(0);
 });
 
@@ -2052,8 +2052,8 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
   await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
 
-  await expect(page.getByTestId("recipes-view").locator(".page-heading p")).toHaveText(/1\s?081 recettes à découvrir, à votre rythme\./);
-  await expect(page.getByText("1081 résultats")).toBeVisible();
+  await expect(page.getByTestId("recipes-view").locator(".page-heading p")).toHaveText(/1\s?201 recettes à découvrir, à votre rythme\./);
+  await expect(page.getByText("1201 résultats")).toBeVisible();
 
   await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
   await expect(page.getByText("1 résultat", { exact: true })).toBeVisible();
@@ -2227,7 +2227,7 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
 
   await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
-  await expect(page.getByText("1081 résultats")).toBeVisible();
+  await expect(page.getByText("1201 résultats")).toBeVisible();
   const categoryButtons = page.locator(".catalogue-filters button");
   await expect(categoryButtons.first()).toHaveAttribute("aria-pressed", "true");
   await expect(categoryButtons.nth(1)).toHaveAttribute("aria-pressed", "false");
@@ -2250,7 +2250,7 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
 
   const filtered = await page.getByTestId("catalogue-filters-open").innerText();
   expect(filtered).toContain("(2)");
-  await expect(page.getByText("1081 résultats")).toHaveCount(0);
+  await expect(page.getByText("1201 résultats")).toHaveCount(0);
 
   await page.getByTestId("catalogue-sort").selectOption("time");
   await expect(page.locator(".catalogue-card").first()).toBeVisible();
@@ -2258,7 +2258,7 @@ test("le catalogue se filtre et se trie", async ({ page }) => {
   await page.getByTestId("catalogue-filters-open").click();
   await page.getByTestId("catalogue-filters-reset").click();
   await page.getByRole("button", { name: /^Voir \d+ recettes?$/ }).click();
-  await expect(page.getByText("1081 résultats")).toBeVisible();
+  await expect(page.getByText("1201 résultats")).toBeVisible();
 });
 
 test("une recette se note, s’annote et se duplique", async ({ page }) => {
