@@ -118,6 +118,8 @@ for line in authored_lines:
     recipe['materiel']=['Couteau, planche, balance et récipient de préparation']+[{'hob':'Plaque de cuisson et casserole avec couvercle ; panier vapeur si indiqué','oven':'Four et plat adapté','blender':'Mixeur adapté à la préparation','steamer':'Cuiseur vapeur'}[x] for x in equipment.split(',') if x]
     recipes.append(recipe)
 
+recipes += read('research/recipes-r1088-r1207.json')
+
 assert len({r['slug'] for r in recipes})==len(recipes),'titres dupliqués'
 base_slugs={r['slug'] for r in base['recipes']}
 assert not base_slugs.intersection(r['slug'] for r in recipes),'titre déjà présent dans la base'

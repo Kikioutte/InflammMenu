@@ -274,13 +274,13 @@ test("une estimation impossible est annoncée et les anciennes valeurs nutrition
   await page.getByTestId("edit-custom-recipe").click();
   await page.getByRole("button", { name: "Augmenter riz complet", exact: true }).click();
   await page.getByTestId("custom-save").click();
-  await expect(page.getByRole("heading", { name: "Ma recette préservée", exact: true })).toBeVisible();
-  await expect(page.locator(".nutrition-section")).toContainText(/indisponibl|non recalcul|pas.*recalcul/i);
-  await expect(page.locator(".nutrition-section")).not.toContainText(/100\s*kcal/);
+  await expect(page.getByTestId("flow-current").getByRole("heading", { name: "Ma recette préservée", exact: true })).toBeVisible();
+  await expect(page.getByTestId("flow-current").locator(".nutrition-section")).toContainText(/indisponibl|non recalcul|pas.*recalcul/i);
+  await expect(page.getByTestId("flow-current").locator(".nutrition-section")).not.toContainText(/100\s*kcal/);
   await expect(page.getByTestId("flow-current")).toContainText(/coût.*non recalcul|coût.*pas.*recalcul|ancienne estimation/i);
   await page.reload();
   await openPersonal(page);
-  await expect(page.locator(".nutrition-section")).toContainText(/indisponibl|non recalcul|pas.*recalcul/i);
+  await expect(page.getByTestId("flow-current").locator(".nutrition-section")).toContainText(/indisponibl|non recalcul|pas.*recalcul/i);
 });
 
 test("une dépense avec virgule se conserve lorsqu’une saisie suivante est invalide @webkit-smoke", async ({ page }) => {

@@ -1,10 +1,10 @@
 {
-  "recettes": 457,
-  "vertes": 300,
+  "recettes": 577,
+  "vertes": 420,
   "oranges": 157,
-  "planifiables": 304,
+  "planifiables": 342,
   "photos": {
-    "generees_et_validees": 457,
+    "generees_et_validees": 577,
     "reste_a_generer": 0
   },
   "baseline_sha": "6b58fdc9753f09243e7ed7a749acbf7c77834e16",

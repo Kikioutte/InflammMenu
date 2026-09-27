@@ -87,9 +87,9 @@ test('the progressive meal builder keeps only complete compatible combinations',
 });
 
 test('the 207 additions reach 300 green recipes without changing the previous 250 or counting herb-only variants', async () => {
-  const added=collection.slice(250);
+  const added=collection.slice(250,457);
   assert.equal(added.length,207);
-  assert.equal(collection.filter(r=>r.associations.niveau==='verte').length,300);
+  assert.equal(collection.slice(0,457).filter(r=>r.associations.niveau==='verte').length,300);
   assert.equal(createHash('sha256').update(JSON.stringify(culinarySnapshot(collection.slice(0,250)))).digest('hex'),'52da34bbcc86989c71527a41d3264e9beeb28106e9fca37cbb8c92f4ff981817');
   const registry=await read('../src/data/association-ingredients.json');
   const ignored=new Set(['eau','huile-olive-vierge-extra',...Object.keys(registry).filter(id=>/basilic|persil|ciboulette/i.test(registry[id].name))].map(canonicalIngredientId));
@@ -116,10 +116,10 @@ test('whole meal catches incompatibility between two individually acceptable dis
   assert.ok(result.pairs.some((pair) => pair.level === 'grise' && /riz/.test(pair.a)));
 });
 
-test('all 457 authored recipes match the chart at runtime, without changing the original 630', () => {
-  assert.equal(collection.length, 457);
+test('all 577 authored recipes match the chart at runtime, without changing the original 630', () => {
+  assert.equal(collection.length, 577);
   assert.deepEqual(catalogue.recipes.slice(0,630),baseline.recipes);
-  assert.equal(validateCatalogueData(catalogue).recipes.length,1087);
+  assert.equal(validateCatalogueData(catalogue).recipes.length,1207);
   const signatures = new Set();
   for (const recipe of collection) {
     const result = evaluateAssociations(recipe.ingredients);
@@ -181,4 +181,29 @@ test('diagnostic and replacements never silently bypass associations', () => {
   assert.ok(candidates.every((r)=>associationRecipeAllowed(r,profile.associationMode)));
   const recipe=planner.find((r)=>r.id===plan.meals[0].recipeId);
   assert.throws(()=>setMealIngredientSubstitution(plan,plan.meals[0].id,recipe.ingredients[0].id,'unreviewed',planner,profile),/substitutions culinaires/);
+});
+
+test('120 illustrated additions stay green, distinct and scalable', async () => {
+  const added = catalogue.recipes.slice(1087);
+  assert.equal(added.length, 120);
+  const images = await read('../research/generated-images-r1088-r1207-provenance.json');
+  assert.equal(new Set(images.images.map(image => image.sha256)).size, 120);
+  const seen = catalogue.recipes.slice(0,1087).map(r => new Set(r.ingredients.map(i => canonicalIngredientId(i.id)).filter(id => id !== 'eau')));
+  for (const recipe of added) {
+    assert.equal(evaluateAssociations(recipe.ingredients).level, 'verte', recipe.titre);
+    assert.equal(recipe.image.statut, 'generated_inspected_optimized');
+    const ids = new Set(recipe.ingredients.map(i => canonicalIngredientId(i.id)).filter(id => id !== 'eau'));
+    for (const prior of seen) assert.ok([...ids].filter(id => prior.has(id)).length / new Set([...ids,...prior]).size < .7, recipe.titre);
+    seen.push(ids);
+    const projected = planner.find(r => r.id === `catalog-${recipe.id}`);
+    if (projected) {
+      for (const portions of [1,4,8]) {
+        const scaled = scaleIngredients(projected, portions);
+        for (const ingredient of scaled) {
+          const original = projected.ingredients.find(i => i.id === ingredient.id);
+          assert.equal(ingredient.quantity, original.quantity * portions);
+        }
+      }
+    }
+  }
 });
