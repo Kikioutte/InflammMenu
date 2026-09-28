@@ -280,11 +280,14 @@ function selectSeededWeeklyCandidate(
   seed: string | number,
   slotKey: string,
 ): Recipe {
-  const ranked = [...candidates].sort((left, right) =>
-    score(right) - score(left) || left.id.localeCompare(right.id),
+  // Scores are constant during this selection, but change for the next slot.
+  // Keep this cache local and preserve every occurrence and the original order.
+  const ranked = candidates.map((recipe) => ({ recipe, score: score(recipe) })).sort((left, right) =>
+    right.score - left.score || left.recipe.id.localeCompare(right.recipe.id),
   );
-  const bestScore = score(ranked[0]);
-  const pool = ranked.filter((recipe) => score(recipe) >= bestScore - WEEKLY_SELECTION_TOLERANCE);
+  const bestScore = ranked[0].score;
+  const pool = ranked.filter((candidate) => candidate.score >= bestScore - WEEKLY_SELECTION_TOLERANCE)
+    .map((candidate) => candidate.recipe);
   const index = Math.min(pool.length - 1, Math.floor(seededRank(seed, slotKey) * pool.length));
   return pool[index];
 }

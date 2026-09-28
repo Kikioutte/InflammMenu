@@ -373,3 +373,32 @@ existants de navigation et de texte à 200 %, `test:release`, TypeScript, runtim
 protégé et contrôle du diff passent. Relecture indépendante terminée : trois
 captures relues et seize géométries contrôlées, écart de 12 px partout et tous les
 points cliquables. C14 clôturé avant de commencer C9.
+
+## C9 — Mesure et optimisation minimale du générateur
+
+Commencé après C14. La mesure préalable sur 705 recettes confirme le coût des
+recalculs de score dans le tri ; un profil V8 diagnostique séparé concentre environ
+94 % des échantillons de génération dans la sélection des candidats. La passe
+budgétaire n'est pas modifiée. Le correctif calcule chaque score une seule fois
+par sélection, sans cache entre créneaux ni changement de formule, d'ordre de tri,
+de seuil, de graine, de filtre ou de verrou.
+
+Vingt-quatre plans complets à dates/graines fixées et le diagnostic d'échec restent
+strictement identiques, sur 480 mesures Node par version. Le gain médian minimal
+mesuré est de 67 %. Vingt-six tests de référence sans seuil temporel conservent
+cette preuve dans la suite de livraison, en plus de six tests du benchmark.
+
+Deux profils sont aussi vérifiés par dix parcours Chromium ×4 par version :
+207,4 → 108,1 ms pour 14 repas ; 428,4 → 147,4 ms pour 21 repas ×8. Les dix plans
+sauvegardés sont identiques hors horodatage, les captures succès sont identiques
+et aucune erreur n'est observée. Mesures de laboratoire, pas de téléphone réel
+ni d'INP terrain. Protocole, limites, résultats et maintenance des références :
+[engine-benchmark.md](engine-benchmark.md).
+
+Clôture C9 : relecture indépendante, 129 tests ciblés, `test:release`, TypeScript,
+runtime protégé, builds Pages/Worker, Worker/Sites 5/5, PWA complète 20/20 et
+**273/273 parcours navigateur** réussis. Précache final `93f9219c5c6f` ; 32
+ressources et 407 175 octets gzip critiques, budgets inchangés. Aucun début de
+C13 avant cette clôture. La simulation 21 repas ×8 garde une longue tâche médiane
+de 86 ms : aucune promesse d'absence universelle de blocage ou de temps identique
+sur tous les appareils.
