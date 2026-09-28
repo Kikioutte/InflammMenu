@@ -169,3 +169,20 @@ Clôture 6a : 4/4 nouveaux tests interonglets Chromium/WebKit, 6/6 parcours
 existants favoris/collections, `test:release`, TypeScript, runtime protégé et
 relecture indépendante réussis. Deux captures mobiles relues. Les durées et
 quantités n'avaient pas encore été modifiées à ce jalon.
+
+## 6b — Durées de l'éditeur
+
+- L'éditeur accepte de 1 à 1 440 minutes actives, comme la persistance existante,
+  au lieu de bloquer au-delà de 600. Les bornes et le message sont partagés.
+- L'éditeur exige toujours un entier ; la restauration conserve son arrondi
+  historique, après contrôle des bornes. Les valeurs non finies restent refusées.
+- Le repos reste indépendant. Une recette longue n'obtient aucune dérogation
+  aux critères du profil pour entrer dans un menu.
+
+Clôture 6b : 5/5 nouveaux tests unitaires, 10/10 tests Chromium/WebKit,
+6/6 parcours existants de l'éditeur, `test:release`, TypeScript, runtime protégé
+et relecture indépendante réussis. Les tests couvrent 600/601/1 440 minutes,
+les refus hors borne ou invalides, l'édition d'une recette déjà à 1 440 minutes,
+un export/restauration réel avec 2 880 minutes de repos distinctes, les deux
+semaines compatibles et les autres données conservées. Le format des sauvegardes
+et les quantités restent inchangés.

@@ -1,4 +1,4 @@
-import { type Recipe } from "../domain";
+import { MIN_CUSTOM_RECIPE_PREP_MINUTES, MAX_CUSTOM_RECIPE_PREP_MINUTES, type Recipe } from "../domain";
 import { useKeyboard, MobileScroll, KeyboardInput, KeyboardTextarea } from "../mobile";
 import { useState, useRef, useEffect } from "react";
 import { parseNumericInput } from "../numeric-input";
@@ -26,12 +26,12 @@ export function CustomRecipeView({ draft, signal, onSave, onDelete }: { draft: R
   const commit = async () => {
     if (saving) return;
     const cleanedSteps = steps.split("\n").map((step) => step.trim()).filter(Boolean);
-    const minutes = parseNumericInput(prepMinutes, { min: 1, max: 600, integer: true });
+    const minutes = parseNumericInput(prepMinutes, { min: MIN_CUSTOM_RECIPE_PREP_MINUTES, max: MAX_CUSTOM_RECIPE_PREP_MINUTES, integer: true });
     const chosenIngredients = ingredients.filter((item) => item.quantity > 0);
     const field = !title.trim() ? "custom-title" : minutes === null ? "custom-time" : !cleanedSteps.length ? "custom-steps" : "";
     if (field || !chosenIngredients.length) {
       setInvalidField(field);
-      setError(field === "custom-title" ? "Donnez un titre à votre recette." : field === "custom-time" ? "Saisissez un temps entier entre 1 et 600 minutes." : field === "custom-steps" ? "Conservez au moins une étape de préparation." : "Conservez au moins un ingrédient avec une quantité positive. Votre recette précédente est conservée.");
+      setError(field === "custom-title" ? "Donnez un titre à votre recette." : field === "custom-time" ? `Saisissez un temps entier entre ${MIN_CUSTOM_RECIPE_PREP_MINUTES.toLocaleString("fr-FR")} et ${MAX_CUSTOM_RECIPE_PREP_MINUTES.toLocaleString("fr-FR")} minutes.` : field === "custom-steps" ? "Conservez au moins une étape de préparation." : "Conservez au moins un ingrédient avec une quantité positive. Votre recette précédente est conservée.");
       if (field) requestAnimationFrame(() => document.getElementById(field)?.focus());
       return;
     }
