@@ -152,7 +152,7 @@ function WeekBalance({ summary, profile }: { summary: PlanSummary; profile: User
   const rows: Array<{ label: string; value: number; target?: number; hint: string }> = [
     { label: "Repas avec légumes secs ou soja", value: summary.legumeMeals, target: targets.legumeMeals, hint: "Lentilles, pois chiches, haricots, fèves, tofu ou tempeh" },
     ...(profile.diet === "classic" ? [{ label: "Repas avec poisson", value: summary.fishMeals, target: targets.fishMeals, hint: "Dont poissons gras si possible" }] : []),
-    { label: "Repas avec céréales complètes", value: summary.wholeGrainMeals, hint: "Riz complet, épeautre, sarrasin" },
+    { label: "Repas avec céréales complètes et assimilées", value: summary.wholeGrainMeals, hint: "Riz complet, avoine, quinoa ou sarrasin" },
     { label: "Repas avec noix ou graines", value: summary.nutOrSeedMeals, hint: "Sources de graisses insaturées" },
     { label: "Repas de saison", value: summary.seasonalMeals, hint: "Saison en cours ou toute l’année" },
     { label: "Végétaux différents", value: summary.plantDiversity, hint: "Légumes, fruits, légumineuses, céréales, herbes et épices" },

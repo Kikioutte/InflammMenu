@@ -18,6 +18,9 @@ test("culinary quantities use French labels without converting or changing their
   for (const unit of ["c_soupe", "c. à s.", "c. à soupe"]) assert.equal(formatIngredientQuantity(2, unit), "2 c. à soupe");
   for (const unit of ["c_cafe", "c. à c.", "c. à café"]) assert.equal(formatIngredientQuantity(0.5, unit), "0,5 c. à café");
   for (const unit of ["g", "kg", "ml", "l", "cm"]) assert.equal(formatIngredientQuantity(10, unit), `10 ${unit}`);
+  assert.equal(formatIngredientQuantity(0.04, "g"), "0,04 g");
+  assert.equal(formatIngredientQuantity(0.25, "piece"), "0,25 pièce");
+  assert.notEqual(formatIngredientQuantity(0.00000001, "g"), "0 g");
   assert.equal(formatIngredientQuantity(10.01, "g"), "10 g");
   assert.equal(formatIngredientUnit("morceau", 2), "morceaux");
   assert.equal(formatIngredientUnit("gousse", 3), "gousses");
@@ -48,6 +51,12 @@ test("shopping display and all text exports share the same quantities and unit l
   assert.match(text, /2,5 pièces \+ 1 c\. à soupe \+ 0,5 c\. à café/);
   assert.match(text, /1 article à acheter/);
   assert.deepEqual(amounts, snapshot);
+});
+
+test("small positive shopping quantities stay precise in the text export", () => {
+  const amounts = [{ quantity: 0.04, unit: "g" }, { quantity: 0.25, unit: "piece" }];
+  const text = formatShoppingListText([{ ingredientId: "small", name: "Petite quantité", category: "grocery", amounts, checked: false, inPantry: false }]);
+  assert.match(text, /0,04 g \+ 0,25 pièce/);
 });
 
 test("the twelve edited cautions retain every unique warning and one allergen introduction", () => {

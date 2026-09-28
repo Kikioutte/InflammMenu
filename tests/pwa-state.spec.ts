@@ -26,6 +26,7 @@ async function openInformation(page: Page) {
 
 async function generateWeek(page: Page) {
   await page.getByRole("button", { name: "Générer ma semaine" }).click();
+  await page.getByTestId("target-current").click();
   await page.getByRole("button", { name: "Créer ma semaine" }).click();
   await page.getByRole("button", { name: "Voir ma semaine" }).click();
   await expect(page.getByTestId("week-view")).toBeVisible();

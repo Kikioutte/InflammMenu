@@ -371,6 +371,23 @@ test("optional ingredients stay visible and allergenic but never enter shopping"
   assert.match(engine.formatShoppingListText(optionalOnlyList), /Aucun achat requis dans la liste générée\./);
 });
 
+test("a tiny positive ingredient survives scaling, shopping aggregation and export", () => {
+  const dish = recipe(5_210, {
+    id: "tiny-quantity",
+    ingredients: [{ id: "tiny-spice", name: "Épice", quantity: 0.004, unit: "g", category: "grocery" }],
+  });
+  const plan = {
+    id: "week-tiny", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: profile, version: 1, estimatedCost: dish.costPerPortion,
+    meals: [{ id: "tiny", dayIndex: 0, mealType: "lunch", recipeId: dish.id, portions: 1, source: "manual" }],
+  };
+  assert.equal(engine.scaleIngredients(dish, 1)[0].quantity, 0.004);
+  assert.equal(engine.ingredientsForPlannedMeal(dish, plan.meals[0])[0].quantity, 0.004);
+  const items = engine.buildShoppingList(plan, [dish]);
+  assert.equal(items[0].amounts[0].quantity, 0.004);
+  assert.match(engine.formatShoppingListText(items), /0,004 g/);
+});
+
 test("a substitution cannot introduce an allergen excluded by the profile", () => {
   const yogurtRecipe = recipe(31, {
     id: "yogurt-bowl",
@@ -1330,6 +1347,7 @@ test("weekly aggregates ignore every value carried by a meal outside", () => {
   });
   const activeGrain = recipe(5_101, {
     tags: ["céréales-complètes"],
+    ingredients: [{ id: "brown-rice", name: "Riz complet", quantity: 80, unit: "g", category: "grocery" }],
     nutrition: { ...nutrition, calories: 321, protein: 12, fiber: 5 },
   });
   const plan = {
@@ -1353,6 +1371,57 @@ test("weekly aggregates ignore every value carried by a meal outside", () => {
   assert.equal(summary.averageCalories, 321);
   assert.equal(summary.averageProtein, 12);
   assert.equal(summary.averageFiber, 5);
+});
+
+test("weekly grain and nut markers follow required foods in real planner recipes", () => {
+  const summaryFor = (id) => {
+    const selected = IMPORTED_PLAN_RECIPES.find((item) => item.id === `catalog-${id}`);
+    assert.ok(selected, `${id} absente du planificateur`);
+    return engine.summarizePlan({
+      id: `week-${id}`, startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+      profileSnapshot: profile, version: 1, estimatedCost: selected.costPerPortion,
+      meals: [{ id: "day-0-lunch", dayIndex: 0, mealType: "lunch", recipeId: selected.id, portions: 1, source: "manual" }],
+    }, [selected], profile);
+  };
+  assert.deepEqual([summaryFor("r015").wholeGrainMeals, summaryFor("r015").nutOrSeedMeals], [1, 1]);
+  assert.deepEqual([summaryFor("r048").wholeGrainMeals, summaryFor("r048").nutOrSeedMeals], [1, 1]);
+  assert.equal(summaryFor("r124").nutOrSeedMeals, 1);
+  assert.equal(summaryFor("r670").wholeGrainMeals, 1, "le quinoa servi en grains est assimilé");
+});
+
+test("weekly grain and nut markers use effective foods, not optional garnishes or lexical tags", () => {
+  const nuts = recipe(5_200, {
+    id: "required-walnuts", tags: ["noix"],
+    ingredients: [{ id: "walnut", name: "Noix", quantity: 20, unit: "g", category: "grocery" }],
+  });
+  const oats = recipe(5_201, {
+    id: "required-oats", tags: ["whole-grain"],
+    ingredients: [{ id: "oats", name: "Flocons d’avoine", quantity: 50, unit: "g", category: "grocery" }],
+  });
+  const optional = recipe(5_202, {
+    id: "optional-walnuts", tags: ["noix"],
+    ingredients: [{ id: "walnut", name: "Noix", quantity: 20, unit: "g", category: "grocery", optional: true }],
+  });
+  const misleading = recipe(5_203, {
+    id: "nut-drink-and-oil", tags: ["noix-graines"],
+    ingredients: [
+      { id: "almond-drink", name: "Boisson d’amande", quantity: 100, unit: "ml", category: "beverage" },
+      { id: "catalog-huile-de-sesame-grille", name: "Huile de sésame", quantity: 5, unit: "ml", category: "grocery" },
+    ],
+  });
+  const meals = [
+    { id: "nuts", dayIndex: 0, mealType: "lunch", recipeId: nuts.id, portions: 2, source: "manual", substitutions: [{ ingredientId: "walnut", substitutionId: "nuts-to-pumpkin-seeds" }] },
+    { id: "oats", dayIndex: 0, mealType: "dinner", recipeId: oats.id, portions: 1, source: "manual", substitutions: [{ ingredientId: "oats", substitutionId: "oats-to-buckwheat-flakes" }] },
+    { id: "optional", dayIndex: 1, mealType: "lunch", recipeId: optional.id, portions: 1, source: "manual" },
+    { id: "misleading", dayIndex: 1, mealType: "dinner", recipeId: misleading.id, portions: 1, source: "manual" },
+    { id: "outside", dayIndex: 2, mealType: "lunch", recipeId: nuts.id, portions: 1, source: "manual", skipped: true },
+  ];
+  const summary = engine.summarizePlan({
+    id: "week-effective-foods", startsOn: "2026-08-03", generatedAt: "2026-08-03T00:00:00.000Z",
+    profileSnapshot: profile, version: 1, estimatedCost: 10, meals,
+  }, [nuts, oats, optional, misleading], profile);
+  assert.equal(summary.nutOrSeedMeals, 1, "les graines de courge remplacent réellement les noix");
+  assert.equal(summary.wholeGrainMeals, 1, "les flocons de sarrasin remplacent réellement l’avoine");
 });
 
 test("a dormant outside recipe remains reusable and cannot create an active duplicate", () => {

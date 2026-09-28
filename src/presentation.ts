@@ -17,7 +17,13 @@ export function formatIngredientUnit(unit: string, quantity = 1): string {
 }
 
 export function formatIngredientQuantity(quantity: number, unit: string): string {
-  const number = Number.isInteger(quantity) ? String(quantity) : quantity.toFixed(1).replace(/\.0$/, "").replace(".", ",");
+  let number: string;
+  if (Number.isInteger(quantity)) number = String(quantity);
+  else if (quantity > 0 && quantity < 1) {
+    const precise = Number(quantity.toPrecision(12));
+    const localized = precise.toLocaleString("fr-FR", { maximumFractionDigits: 20, useGrouping: false });
+    number = localized === "0" ? precise.toString().replace(".", ",") : localized;
+  } else number = quantity.toFixed(1).replace(/\.0$/, "").replace(".", ",");
   return `${number} ${formatIngredientUnit(unit, quantity)}`.trim();
 }
 
