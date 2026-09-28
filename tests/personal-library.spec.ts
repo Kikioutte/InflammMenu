@@ -93,3 +93,19 @@ test("collections keep recipes independently of favorites and support rename and
   await expect(page.getByLabel("Choisir une collection", { exact: true })).toBeVisible();
   await page.screenshot({ path: info.outputPath("collections-320.png"), fullPage: true });
 });
+
+test("new green recipes load their image and scale portions @webkit-smoke", async ({ page }) => {
+  await fresh(page); await nav(page, "Recette");
+  await page.getByLabel("Filtrer les associations").selectOption("verte");
+  await page.getByLabel("Rechercher une recette", { exact: true }).fill("Papillotes de poulet fenouil côtes de blette");
+  const card = page.locator(".catalogue-card").filter({ hasText: "Papillotes de poulet — fenouil, côtes de blette" });
+  await expect(card).toHaveCount(1);
+  await card.click();
+  const photo = page.getByRole('img', { name: 'Illustration générée par IA : Papillotes de poulet — fenouil, côtes de blette', exact: true });
+  await expect(photo).toBeVisible();
+  await expect.poll(() => photo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(900);
+  await expect(page.locator('.ingredient-list').getByText('320 g', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Ajouter une portion', exact: true }).click();
+  await page.getByRole('button', { name: 'Ajouter une portion', exact: true }).click();
+  await expect(page.locator('.ingredient-list').getByText('640 g', { exact: true })).toBeVisible();
+});

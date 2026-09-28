@@ -12,7 +12,7 @@ const scale = (ingredients, ratio) => ingredients.map(item => ({ ...item, quanti
 test("derived coefficients still match reviewed sources and all current catalogue totals", () => {
   execFileSync(process.execPath, ["scripts/generate-recipe-nutrition.mjs", "--check"], { cwd: new URL("../", import.meta.url) });
   const table = JSON.parse(readFileSync(new URL("../src/data/recipe-nutrition.json", import.meta.url)));
-  assert.equal(Object.keys(table).length, 957);
+  assert.equal(Object.keys(table).length, 1077);
   assert.ok(table["catalog-r1087"], "the recent association recipes are retained");
   assert.equal(table["catalog-r551"], undefined, "unmapped CREAMi ingredients are not guessed");
 });
