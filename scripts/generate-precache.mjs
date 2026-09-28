@@ -14,7 +14,7 @@ const indexPath = path.join(output, "index.html");
 const manifestPath = path.join(output, "manifest.webmanifest");
 const excludedPath = /\/(?:recipes|iphone|android|status|qa)\//;
 const socialImagePath = /\/og\.(?:png|jpe?g)$/i;
-const shellExtension = /\.(?:css|html|js|json|jpg|png|svg|webmanifest|woff2?)$/i;
+const shellExtension = /\.(?:css|html|js|json|jpg|png|svg|webp|webmanifest|woff2?)$/i;
 
 for (const file of [serviceWorkerPath, indexPath, manifestPath]) {
   if (!existsSync(file)) throw new Error(`Fichier de build manquant : ${file}`);
@@ -76,8 +76,22 @@ for (const file of outputFiles) {
   }
 }
 
+// The landing photo was already in the shell. Keep one full-size offline copy,
+// using its smaller WebP rather than also precaching the original JPEG. Recipe
+// photos remain deferred; icons and fonts retain their existing cache rules.
+const originalHero = `${normalizedBase}assets/inflamm-hero-bowl.jpg`;
+let shellHero;
+if (references.has(originalHero) && existsSync(outputFileFor(originalHero))) {
+  const { version: imageVersion } = JSON.parse(readFileSync(path.join(root, "src/data/responsive-images-version.json"), "utf8"));
+  if (!/^[a-f0-9]{12}$/.test(imageVersion)) throw new Error("Version des photos adaptée invalide.");
+  shellHero = `${normalizedBase}assets/recipes/responsive/${imageVersion}/_hero/inflamm-hero-bowl.w1200.webp`;
+  if (!existsSync(outputFileFor(shellHero))) throw new Error("Photo d’accueil adaptée absente du build.");
+  references.delete(originalHero);
+  references.add(shellHero);
+}
+
 const appShell = [...references]
-  .filter((publicPath) => !excludedPath.test(publicPath) && !socialImagePath.test(publicPath))
+  .filter((publicPath) => (publicPath === shellHero || !excludedPath.test(publicPath)) && !socialImagePath.test(publicPath))
   .filter((publicPath) => publicPath === normalizedBase || shellExtension.test(publicPath))
   .filter((publicPath) => existsSync(outputFileFor(publicPath)))
   .sort();
@@ -85,7 +99,7 @@ const appShell = [...references]
 if (!appShell.includes(normalizedBase) || !appShell.includes(`${normalizedBase}index.html`)) {
   throw new Error("Le précache généré ne contient pas les points d’entrée de l’application.");
 }
-if (appShell.some((publicPath) => excludedPath.test(publicPath) || socialImagePath.test(publicPath))) {
+if (appShell.some((publicPath) => (publicPath !== shellHero && excludedPath.test(publicPath)) || socialImagePath.test(publicPath))) {
   throw new Error("Le précache contient une image de recette, de partage, de QA ou de simulateur.");
 }
 

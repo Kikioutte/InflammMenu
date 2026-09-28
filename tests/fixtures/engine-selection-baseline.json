@@ -1,0 +1,131 @@
+{
+  "reference": "7c0fe61809702b303e14f84e1df56a97bf76c3ce",
+  "engineFileHash": "102ed418eee0927dd62a074203763bb4a6ccaa1f407e8c10be1bccecc3059690",
+  "catalogue": {
+    "count": 705,
+    "hash": "d00effa3091f29778b7fe53cf07fba8fb8499d59b93b1ec51bd68eb8290da0c3"
+  },
+  "errorContractHash": "03287303a37d2517d57574b24ac0bc6a47acddafcec6677419d9359832211d6e",
+  "scenarios": [
+    {
+      "id": "default-14/autumn",
+      "inputHash": "24e5ef13cc47bffab05ebb8e613a592bf454447d93f842f0448b968ee13e516e",
+      "outputHash": "3fd05972e541166c7ca708ddb29502338cc734a503b3782d2cba578f369654b4"
+    },
+    {
+      "id": "default-14/summer",
+      "inputHash": "a1f049c2f59a32f34c05b6ab8f9ed610a8733909d28f7635ee5b2a7ec1ac3f95",
+      "outputHash": "1ffbcfcfe2633e3d65a221767c115bb9dedc6c3dbf4da631566d0fa996f5cb33"
+    },
+    {
+      "id": "default-14/winter",
+      "inputHash": "0f1411222450430aff2c235c7349b8c7ef2d3cdd6c14eb28e938c5106becb8e3",
+      "outputHash": "8d9c350ae3a148291a43141cd0c30a71a5e5591c991044a7a97a8aa81ce63b44"
+    },
+    {
+      "id": "large-21x8/autumn",
+      "inputHash": "84a15c33086d59b95acdf0b5a17b96e4ff8b94d8acde5a794722b43bd563e15f",
+      "outputHash": "06ffec297f8b1aeb3d166edf8c92582759b24be525bb2bcc2c88eb427b9afae0"
+    },
+    {
+      "id": "large-21x8/summer",
+      "inputHash": "fb4df26aa7955f288d636190808e704983c876a2204fbb53d098220b82b0ea1c",
+      "outputHash": "e1bfeb5ff68f7aa61f45053757e82b7e8a8877238e9570abb137b2ec9ff0a3ab"
+    },
+    {
+      "id": "large-21x8/winter",
+      "inputHash": "510b280704999c696505fd4cc9f58f28a0b9f7a6db19a1d3388bcdb2df48160c",
+      "outputHash": "3acac452ffdb2305f9a4bb16e66fe8e13099784d99d89da42227cd0fbf85228c"
+    },
+    {
+      "id": "vegetarian/autumn",
+      "inputHash": "e485ad04478c43b51961635ce91c86922079bd7463eba0b82569f9d559cf1d1f",
+      "outputHash": "82d2f978722a8e12b03e6f5cec74c38f69f479625896c546be009d5d0f978db1"
+    },
+    {
+      "id": "vegetarian/summer",
+      "inputHash": "e6723a21eb550627880dabf37aebcdb4f21ff0edc8722523ba6ae0261276000e",
+      "outputHash": "07a059acacf7375c7431eb92b068bdb5b6964487cdd60a687be900e8ab522d8a"
+    },
+    {
+      "id": "vegetarian/winter",
+      "inputHash": "6f456ffcb7ccd0cb1ac16fb0ef4645f5b2d35ecc0e327040764dd3f0d2ca6fac",
+      "outputHash": "2d21563ce0045810f315bb02d1ab36dabb4c79ae1447e10ffbf156e411d79d99"
+    },
+    {
+      "id": "allergies-exclusion/autumn",
+      "inputHash": "fa23063a02800b819b3791a920c8cdade076bc16b1ee37794c7d13c71bc907b6",
+      "outputHash": "a300f323422f44f1ae4241b4fcc6790a220d8156669d93adf957aa7989a1bf4b"
+    },
+    {
+      "id": "allergies-exclusion/summer",
+      "inputHash": "3dfe23ae40db00196ba281b676017ff25b41096a3ecfda3dbbb341ad1f4f196e",
+      "outputHash": "db48152f7a867ec8fe0bcd3c23b18ac5a8d7eca761a40685c1f031967ca63f10"
+    },
+    {
+      "id": "allergies-exclusion/winter",
+      "inputHash": "c9a24f76ec20ed819cd46509173d14a1316310f63516f1b54c9fbb88c7fd939c",
+      "outputHash": "bc4965d65a4ff1a53b9a28423c58153cb8d4c99de84c14303a29acea5fdf31b3"
+    },
+    {
+      "id": "daily-constraints/autumn",
+      "inputHash": "20fdb70dabed0a70dbb8be8500d0e191568f50b62f0099be351f41a81d4b56c3",
+      "outputHash": "eec40ea3434bf639e32b0dec25ee6e549cc59982151c4e164c4d768f9501e991"
+    },
+    {
+      "id": "daily-constraints/summer",
+      "inputHash": "05c887549b8bca75d10883501e9a9406a48e78d5ea74dc1499848a1f335e9446",
+      "outputHash": "ee4b2d365e8bcc673a2f193fdd77f6687d99a997c9f211362ea64f472e445587"
+    },
+    {
+      "id": "daily-constraints/winter",
+      "inputHash": "dcdda5a112daa9e97962c645406c4ed4592749f26eb6e2c3adc90f878c397bd4",
+      "outputHash": "9bf4fc9f6c5bca61fddbc5fbece1a4f1c2c1b795dd56d552550798494f49006b"
+    },
+    {
+      "id": "locked-favorites/autumn",
+      "inputHash": "6c3824860d529ac1099eb3c89e67bc573baa620f4fb4f8da69a48b41bbca22d3",
+      "outputHash": "ae672b420d96f5a7771cbdbae2cf34b4afae423f1283a38fd23959949f91059e"
+    },
+    {
+      "id": "locked-favorites/summer",
+      "inputHash": "3fc7fbc9db043b591f7e73af255b488a3a024e24eb79be707ca6036dd99703ff",
+      "outputHash": "3d03d48fcb164b3b2604e464697c1cd244cfd09d06e9f87889d2ba24fd0e80cc"
+    },
+    {
+      "id": "locked-favorites/winter",
+      "inputHash": "428d981fe5eaa6586ea208d355c8974675c77402f9ca6766d4c69745182f5ea0",
+      "outputHash": "f5eb612f7f73bc70055e829502efa231e771721286c5deeb07c99b57eb7a0932"
+    },
+    {
+      "id": "tight-budget/autumn",
+      "inputHash": "a4bfdf68dbb3f4acaee6bf38545e1c719fc10f703a04fed1a482f31e7a06b699",
+      "outputHash": "a2a217c108395146f43f390e7919c75e7233a08ef25bf645550dd72fa327f902"
+    },
+    {
+      "id": "tight-budget/summer",
+      "inputHash": "e021cf7ef9d40eaacd0602013ec4a72cd018896c333ea959926b1aefe7dd8d25",
+      "outputHash": "0da7104c42389d03940640eb78bbc30cc113b62ecb35f1fbc7b3f400d7d079da"
+    },
+    {
+      "id": "tight-budget/winter",
+      "inputHash": "bf0720540234a6afd036626a65fb7918b3edddab9db88a60f5c4a165cdabc494",
+      "outputHash": "fba999adea37c211763ef691b450c874b9b3d1eaab4eb1db5d1c96a3dc548cf3"
+    },
+    {
+      "id": "mostly-skipped/autumn",
+      "inputHash": "5bb026fb4d97aba8f6e736e2ad9b12fad9478784627bc6771481281f65f670e4",
+      "outputHash": "1b6e7bf4bccdc0ca4d370c0e2cf9af74b037e9e058b0137af9abfcb340f1029f"
+    },
+    {
+      "id": "mostly-skipped/summer",
+      "inputHash": "10caa692bc0356627d323fdb42d498ad44a95e7245e2bc860980d96bc4881e78",
+      "outputHash": "6b46cba1524826dee79ea4f44a25967c37333828ee96bcb21b4b02cd3bec49af"
+    },
+    {
+      "id": "mostly-skipped/winter",
+      "inputHash": "6e80259794c8bf7e40ed2118f23e2c496d67a3eec3e5771652e2960e1ac97eba",
+      "outputHash": "2fd2ff451c056905616519333a4c370d35f976194b9d8a41e4cb53a946e75d6c"
+    }
+  ]
+}

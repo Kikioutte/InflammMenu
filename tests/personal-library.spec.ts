@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import sharp from "sharp";
 
 async function fresh(page: Page) {
   await page.goto("/");
@@ -103,7 +104,16 @@ test("new green recipes load their image and scale portions @webkit-smoke", asyn
   await card.click();
   const photo = page.getByRole('img', { name: 'Illustration générée par IA : Papillotes de poulet — fenouil, côtes de blette', exact: true });
   await expect(photo).toBeVisible();
-  await expect.poll(() => photo.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(900);
+  // With width descriptors, naturalWidth is density-corrected (860 CSS px for
+  // this slot), not the encoded file width. Verify both decoding and the actual
+  // selected photo's physical pixels before checking the portion calculation.
+  await expect.poll(() => photo.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+  const selectedPhoto = await photo.evaluate((img: HTMLImageElement) => img.currentSrc);
+  expect(selectedPhoto).toMatch(/\/responsive\/[a-f0-9]{12}\/generated\/r1088-papillotes-de-poulet-fenouil-cotes-de-blette\.w900\.webp$/);
+  const response = await page.request.get(selectedPhoto);
+  expect(response.ok()).toBe(true);
+  const metadata = await sharp(await response.body()).metadata();
+  expect({ format: metadata.format, width: metadata.width, height: metadata.height }).toEqual({ format: "webp", width: 900, height: 900 });
   await expect(page.locator('.ingredient-list').getByText('320 g', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Ajouter une portion', exact: true }).click();
   await page.getByRole('button', { name: 'Ajouter une portion', exact: true }).click();

@@ -2,6 +2,9 @@ import { normalizeCollections, normalizeManualItems, type RecipeCollection, type
 import { normalizeSavedMeals, type SavedMeal } from "./saved-meals.ts";
 import {
   DEFAULT_PROFILE,
+  MIN_CUSTOM_RECIPE_PREP_MINUTES,
+  MAX_CUSTOM_RECIPE_PREP_MINUTES,
+  MAX_CUSTOM_RECIPE_INGREDIENT_QUANTITY,
   MAX_PLAN_ESTIMATED_COST,
   type DayConstraint,
   type IngredientCategory,
@@ -457,7 +460,7 @@ export function normalizeCustomRecipe(value: unknown): Recipe | null {
 
   const prepMinutes = finiteNumber(value.prepMinutes, Number.NaN);
   const costPerPortion = finiteNumber(value.costPerPortion, Number.NaN);
-  if (!Number.isFinite(prepMinutes) || prepMinutes < 1 || prepMinutes > 1_440) return null;
+  if (!Number.isFinite(prepMinutes) || prepMinutes < MIN_CUSTOM_RECIPE_PREP_MINUTES || prepMinutes > MAX_CUSTOM_RECIPE_PREP_MINUTES) return null;
   if (!Number.isFinite(costPerPortion) || costPerPortion < 0 || costPerPortion > 10_000) return null;
   const restMinutes = value.restMinutes === undefined ? undefined : finiteNumber(value.restMinutes, Number.NaN);
   if (restMinutes !== undefined && (!Number.isFinite(restMinutes) || restMinutes < 0 || restMinutes > 525_600)) return null;
@@ -468,7 +471,7 @@ export function normalizeCustomRecipe(value: unknown): Recipe | null {
     const rawId = cleanUserText(rawIngredient.id, 120);
     const name = cleanUserText(rawIngredient.name, 160);
     const quantity = finiteNumber(rawIngredient.quantity, Number.NaN);
-    if (!rawId || !name || !Number.isFinite(quantity) || quantity <= 0 || quantity > 1_000_000) return [];
+    if (!rawId || !name || !Number.isFinite(quantity) || quantity <= 0 || quantity > MAX_CUSTOM_RECIPE_INGREDIENT_QUANTITY) return [];
     if (typeof rawIngredient.unit !== "string" || !UNITS.has(rawIngredient.unit)) return [];
     if (typeof rawIngredient.category !== "string" || !CUSTOM_CATEGORIES.has(rawIngredient.category as IngredientCategory)) return [];
     return [{

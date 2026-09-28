@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { DEFAULT_PROFILE } from "../src/domain";
 import { DEFAULT_APP_STATE } from "../src/storage";
@@ -936,14 +937,14 @@ test("la génération construit une semaine navigable puis une liste de courses 
 
   await page.getByTestId("enter-store-mode").click();
   await expect(page.getByTestId("store-mode")).toBeVisible();
-  await expect(page.getByText(/Rayon 1 sur/)).toBeVisible();
+  await expect(page.getByTestId("store-mode").locator(".store-mode__progress")).toContainText(/Rayon 1 sur/);
   const storeItem = page.locator('[data-testid^="store-item-"]').first();
   await expect(storeItem).toBeVisible();
   await expect(storeItem).toHaveAttribute("aria-pressed", "false");
   await storeItem.click();
   await expect(storeItem).toHaveAttribute("aria-pressed", "true");
   await page.getByTestId("store-next-aisle").click();
-  await expect(page.getByText(/Rayon 2 sur/)).toBeVisible();
+  await expect(page.getByTestId("store-mode").locator(".store-mode__progress")).toContainText(/Rayon 2 sur/);
   await page.getByTestId("exit-store-mode").click();
   await expect(page.getByTestId("courses-view")).toBeVisible();
 
@@ -2024,7 +2025,7 @@ test("une semaine archivée peut être supprimée et le plafond est expliqué", 
 
   await generateWeek(page);
   const archivedPlanId = await page.evaluate(() => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").currentPlan?.id as string | undefined);
-  expect(archivedPlanId).toBeTruthy();
+  assert.ok(archivedPlanId, "La semaine générée doit avoir un identifiant avant son archivage");
   await page.getByRole("button", { name: "Courses", exact: true }).click();
   await page.getByTestId("spend-input").fill("61,25");
   await expect.poll(() => page.evaluate((planId) => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").actualSpend?.[planId], archivedPlanId)).toBe(61.25);
@@ -2376,6 +2377,7 @@ test("une recette personnelle reste retrouvable, modifiable et ne se supprime qu
     const raw = window.localStorage.getItem("inflamm-menu:app-state");
     return raw ? JSON.parse(raw).customRecipes?.[0]?.id as string | undefined : undefined;
   });
+  assert.ok(customRecipeId, "La recette personnelle sauvegardée doit avoir un identifiant");
   expect(customRecipeId).toMatch(/^perso-/);
 
   await page.getByTestId("edit-custom-recipe").click();

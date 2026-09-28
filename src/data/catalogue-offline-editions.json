@@ -1,0 +1,12 @@
+{
+  "current": {
+    "sha256": "68c72df87b5c146d72f4cc9579f1c1b9b223773fd2f89951a5c0ee72ceb3a467",
+    "recipeCount": 1207
+  },
+  "previous": [
+    {
+      "sha256": "6e5042dfb6203fcbd00df7dc9b59e01cbced09fa034c3b3caefc58101e0d7cab",
+      "recipeCount": 1087
+    }
+  ]
+}

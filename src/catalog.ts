@@ -1,6 +1,7 @@
 import { matchesRecipeSearch } from "./recipe-search.ts";
 import catalogueSummarySource from "./data/catalogue-summary.json" with { type: "json" };
 import generatedRecipeImages from "./data/generated-recipe-images.json" with { type: "json" };
+import offlineEditions from "./data/catalogue-offline-editions.json" with { type: "json" };
 import type { DietMode, Equipment, IngredientCategory, IngredientUnit, MealType } from "./domain.ts";
 
 export type CatalogueReviewStatus = "validated" | "caution";
@@ -127,6 +128,19 @@ let cataloguePromise: Promise<CatalogueData> | null = null;
 const catalogueUrl = new URL("./data/recettes-anti-inflammatoires.json", import.meta.url).href;
 export const CATALOGUE_CACHE_NAME = "inflamm-menu-catalogue-v2";
 const LEGACY_CATALOGUE_CACHE_NAME = "inflamm-menu-catalogue-v1";
+const offlineCatalogueUrl = new URL("../data/recettes-anti-inflammatoires.json", catalogueUrl).href;
+export type CatalogueEditionStatus = { outdated: boolean; recipeCount: number };
+const catalogueStatuses = new WeakMap<CatalogueData, CatalogueEditionStatus>();
+const catalogueListeners = new Set<(data: CatalogueData) => void>();
+
+export function catalogueEditionStatus(data: CatalogueData): CatalogueEditionStatus {
+  return catalogueStatuses.get(data) ?? { outdated: false, recipeCount: data.recipes.length };
+}
+
+export function subscribeCatalogueUpdates(listener: (data: CatalogueData) => void): () => void {
+  catalogueListeners.add(listener);
+  return () => { catalogueListeners.delete(listener); };
+}
 const plannerCautionsUrl = typeof window === "undefined"
   ? "/data/planner-cautions.json"
   : `${import.meta.env.BASE_URL}data/planner-cautions.json`;
@@ -151,51 +165,110 @@ export function loadPlannerCaution(recipeId: string): Promise<string | undefined
   return plannerCautionsPromise.then((cautions) => cautions[recipeId]);
 }
 
-function parseCatalogueResponse(response: Response): Promise<CatalogueData> {
-  if (!response.ok) throw new Error(`Catalogue indisponible (${response.status})`);
-  return response.json().then(async (value: unknown) => (await loadCatalogueValidation()).validateCatalogueData(value));
+async function validateReviewedCatalogue(value: unknown, currentOnly = false): Promise<CatalogueData> {
+  const { validateCatalogueData } = await loadCatalogueValidation();
+  const bytes = new TextEncoder().encode(JSON.stringify(value));
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  const sha256 = [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  const editions = currentOnly ? [offlineEditions.current] : [offlineEditions.current, ...offlineEditions.previous];
+  const edition = editions.find((item) => item.sha256 === sha256);
+  if (!edition) throw new Error("Catalogue invalide (édition non reconnue)");
+  const data = validateCatalogueData(value, { expectedRecipeCount: edition.recipeCount });
+  catalogueStatuses.set(data, { outdated: sha256 !== offlineEditions.current.sha256, recipeCount: edition.recipeCount });
+  return data;
 }
 
-async function readValidatedCatalogueCacheEntry(cache: Cache): Promise<{ data: CatalogueData; response: Response } | null> {
-  const response = await cache.match(catalogueUrl);
+function parseCatalogueResponse(response: Response): Promise<CatalogueData> {
+  if (!response.ok) throw new Error(`Catalogue indisponible (${response.status})`);
+  return response.json().then((value: unknown) => validateReviewedCatalogue(value, true));
+}
+
+async function readValidatedCatalogueCacheEntry(cache: Cache, key: string): Promise<{ data: CatalogueData; response: Response } | null> {
+  const response = await cache.match(key);
   if (!response) return null;
 
   // Load failures for the validator chunk are transient and must never delete
   // an otherwise healthy offline copy. Only parsing/schema failures invalidate
   // the cached catalogue.
-  const { validateCatalogueData } = await loadCatalogueValidation();
+  await loadCatalogueValidation();
   const migratable = response.clone();
   try {
     if (!response.ok) throw new Error(`Catalogue indisponible (${response.status})`);
-    return { data: validateCatalogueData(await response.json() as unknown), response: migratable };
+    const value: unknown = await response.json();
+    // Only explicitly reviewed editions may cross a catalogue-version boundary.
+    // Headers and the payload's declared count alone are not integrity evidence.
+    const data = await validateReviewedCatalogue(value);
+    return { data, response: migratable };
   } catch {
-    try { await cache.delete(catalogueUrl); } catch { /* The invalid entry still cannot be exposed. */ }
+    // Preserve unrecognised editions for another open tab or a future compatible
+    // release. They are never displayed or allowed to replace a verified copy.
     return null;
   }
+}
+
+function isCatalogueKey(key: string): boolean {
+  const candidate = new URL(key);
+  const current = new URL(catalogueUrl);
+  return candidate.origin === current.origin && /\/recettes-anti-inflammatoires(?:-[\w-]+)?\.json$/.test(candidate.pathname);
+}
+
+async function catalogueCacheKeys(cache: Cache): Promise<string[]> {
+  const keys = (await cache.keys()).map((request) => request.url).filter(isCatalogueKey);
+  return [...new Set([offlineCatalogueUrl, catalogueUrl, ...keys.reverse()])];
+}
+
+async function pruneCatalogueCache(cache: Cache, keptKey: string): Promise<void> {
+  // This is called only AFTER the replacement response has been stored.
+  for (const request of await cache.keys()) {
+    if (request.url !== keptKey && isCatalogueKey(request.url)
+      && await readValidatedCatalogueCacheEntry(cache, request.url)) await cache.delete(request);
+  }
+  const legacy = await caches.open(LEGACY_CATALOGUE_CACHE_NAME);
+  for (const request of await legacy.keys()) {
+    if (isCatalogueKey(request.url) && await readValidatedCatalogueCacheEntry(legacy, request.url)) await legacy.delete(request);
+  }
+  if (!(await legacy.keys()).length) await caches.delete(LEGACY_CATALOGUE_CACHE_NAME);
+}
+
+async function storeCurrentCatalogue(cache: Cache, response: Response): Promise<void> {
+  const editionKey = `${offlineCatalogueUrl}?edition=${offlineEditions.current.sha256}`;
+  // Without a cross-tab lock, keep an immutable edition slot and skip cleanup.
+  // This avoids deleting or replacing another tab's newer, unrecognised edition.
+  if (typeof navigator === "undefined" || !navigator.locks) {
+    await cache.put(editionKey, response);
+    return;
+  }
+  await navigator.locks.request(`inflamm-menu:catalogue:${offlineCatalogueUrl}`, async () => {
+    const stable = await cache.match(offlineCatalogueUrl);
+    const recognised = stable ? await readValidatedCatalogueCacheEntry(cache, offlineCatalogueUrl) : null;
+    const destination = stable && !recognised ? editionKey : offlineCatalogueUrl;
+    await cache.put(destination, response);
+    try { await pruneCatalogueCache(cache, destination); } catch { /* The new copy is already durable. */ }
+  });
 }
 
 async function loadValidatedCachedCatalogue(): Promise<CatalogueData | null> {
   if (typeof caches === "undefined") return null;
   const currentCache = await caches.open(CATALOGUE_CACHE_NAME);
-  const current = await readValidatedCatalogueCacheEntry(currentCache);
-  if (current) return current.data;
-
-  // v1 could contain either an explicitly downloaded catalogue or an
-  // unchecked network response from the previous worker. Validate it first,
-  // then migrate only the healthy case so updates preserve offline access.
-  const legacyCache = await caches.open(LEGACY_CATALOGUE_CACHE_NAME);
-  const legacy = await readValidatedCatalogueCacheEntry(legacyCache);
-  if (!legacy) {
-    try { await caches.delete(LEGACY_CATALOGUE_CACHE_NAME); } catch { /* Best-effort cleanup. */ }
-    return null;
+  let fallback: { data: CatalogueData; response: Response } | null = null;
+  for (const name of [CATALOGUE_CACHE_NAME, LEGACY_CATALOGUE_CACHE_NAME]) {
+    const cache = name === CATALOGUE_CACHE_NAME ? currentCache : await caches.open(name);
+    for (const key of await catalogueCacheKeys(cache)) {
+      const entry = await readValidatedCatalogueCacheEntry(cache, key);
+      if (!entry) continue;
+      fallback ??= entry;
+      if (!catalogueEditionStatus(entry.data).outdated) {
+        if (cache !== currentCache || key !== offlineCatalogueUrl) {
+          try {
+            await storeCurrentCatalogue(currentCache, entry.response);
+          } catch { /* The verified source remains readable if persistence fails. */ }
+        }
+        return entry.data;
+      }
+    }
   }
-  try {
-    await currentCache.put(catalogueUrl, legacy.response);
-    await caches.delete(LEGACY_CATALOGUE_CACHE_NAME);
-  } catch {
-    // The validated legacy entry remains readable if quota blocks migration.
-  }
-  return legacy.data;
+  // Merely inspecting an older snapshot must not overwrite a concurrent update.
+  return fallback?.data ?? null;
 }
 
 async function fetchCatalogueWithValidatedFallback(): Promise<CatalogueData> {
@@ -228,10 +301,19 @@ export async function cacheCatalogueForOffline(): Promise<CatalogueData> {
   const data = await parseCatalogueResponse(response);
   if (typeof caches === "undefined") throw new Error("Le cache hors ligne n’est pas disponible sur cet appareil.");
   const cache = await caches.open(CATALOGUE_CACHE_NAME);
-  await cache.put(catalogueUrl, cacheable);
-  try { await caches.delete(LEGACY_CATALOGUE_CACHE_NAME); } catch { /* v2 is already durable. */ }
+  await storeCurrentCatalogue(cache, cacheable);
   cataloguePromise = Promise.resolve(data);
+  for (const listener of catalogueListeners) {
+    try { listener(data); } catch { /* A view failure must not undo durable storage. */ }
+  }
   return data;
+}
+
+export async function catalogueOfflineEdition(): Promise<CatalogueEditionStatus | null> {
+  try {
+    const data = await loadValidatedCachedCatalogue();
+    return data ? catalogueEditionStatus(data) : null;
+  } catch { return null; }
 }
 
 export async function catalogueAvailableOffline(): Promise<boolean> {

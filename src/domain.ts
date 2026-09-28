@@ -3,6 +3,13 @@ export type MealType = "breakfast" | "lunch" | "dinner";
 /** Above the largest valid week (21 meals × 8 portions × 10 000 €/portion, plus reviewed swaps). */
 export const MAX_PLAN_ESTIMATED_COST = 2_000_000;
 
+/** Shared editor/persistence bounds for active time; rest time is separate. */
+export const MIN_CUSTOM_RECIPE_PREP_MINUTES = 1;
+export const MAX_CUSTOM_RECIPE_PREP_MINUTES = 1_440;
+
+/** Maximum per-portion ingredient quantity accepted by personal-recipe storage. */
+export const MAX_CUSTOM_RECIPE_INGREDIENT_QUANTITY = 1_000_000;
+
 export type DayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export type DietMode = "classic" | "vegetarian" | "no-pork";

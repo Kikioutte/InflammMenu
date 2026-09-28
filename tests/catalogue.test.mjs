@@ -364,6 +364,7 @@ test("un HTTP 200 corrompu se replie sur la dernière copie hors ligne validée"
       cacheName = name;
       return {
         match: async () => jsonResponse(catalogue),
+        keys: async () => [],
         delete: async () => { cacheDeletes += 1; return true; },
       };
     },
@@ -384,9 +385,10 @@ test("un ancien payload corrompu n'est jamais annoncé comme catalogue hors lign
     open: async (name) => name === "inflamm-menu-catalogue-v2"
       ? {
           match: async () => jsonResponse(singleRecipeCatalogue({})),
+          keys: async () => [],
           delete: async () => { entryDeletes += 1; return true; },
         }
-      : { match: async () => null, delete: async () => true },
+      : { match: async () => null, keys: async () => [], delete: async () => true },
     delete: async (name) => {
       if (name === "inflamm-menu-catalogue-v1") legacyCacheDeletes += 1;
       return true;
@@ -395,11 +397,12 @@ test("un ancien payload corrompu n'est jamais annoncé comme catalogue hors lign
   const { catalogueAvailableOffline } = await importFreshCatalogueModule("invalid-offline-status");
 
   assert.equal(await catalogueAvailableOffline(), false);
-  assert.equal(entryDeletes, 1, "une entrée invalide détectée doit être retirée du cache courant");
-  assert.equal(legacyCacheDeletes, 1, "un cache v1 vide ou invalide doit être nettoyé après vérification");
+  assert.equal(entryDeletes, 0, "une édition inconnue n'est jamais exposée, mais reste disponible pour un onglet compatible");
+  assert.equal(legacyCacheDeletes, 0, "aucun nettoyage avant l'enregistrement réussi d'une copie validée");
 });
 
 test("un catalogue v1 valide est vérifié puis migré sans perdre le hors-ligne", { concurrency: false }, async (t) => {
+  replaceGlobal(t, "navigator", { locks: { request: async (_name, operation) => operation() } });
   let currentResponse = null;
   let legacyResponse = jsonResponse(catalogue);
   const deletedCaches = [];
@@ -408,11 +411,13 @@ test("un catalogue v1 valide est vérifié puis migré sans perdre le hors-ligne
     open: async (name) => name === "inflamm-menu-catalogue-v2"
       ? {
           match: async () => currentResponse?.clone() ?? null,
+          keys: async () => [],
           put: async (_request, response) => { currentResponse = response.clone(); },
           delete: async () => { currentResponse = null; return true; },
         }
       : {
           match: async () => legacyResponse?.clone() ?? null,
+          keys: async () => [],
           delete: async () => { legacyResponse = null; return true; },
         },
     delete: async (name) => {
@@ -443,30 +448,54 @@ test("le module de validation différé est mémorisé puis libéré après un �
   );
 });
 
-test("le téléchargement hors ligne ne cache qu'un catalogue entièrement validé", { concurrency: false }, async (t) => {
-  const invalid = singleRecipeCatalogue({});
-  let fetchCount = 0;
-  let openCount = 0;
-  let putCount = 0;
-  replaceGlobal(t, "fetch", async () => jsonResponse(fetchCount++ === 0 ? invalid : catalogue));
-  replaceGlobal(t, "caches", {
-    open: async () => {
-      openCount += 1;
-      return { put: async () => { putCount += 1; } };
-    },
+for (const withLocks of [true, false]) {
+  test(`le téléchargement hors ligne ne cache qu'un catalogue entièrement validé, ${withLocks ? "avec" : "sans"} verrou`, { concurrency: false }, async (t) => {
+    const invalid = singleRecipeCatalogue({});
+    let fetchCount = 0;
+    let lockCount = 0;
+    const openedCaches = [];
+    const deletedCaches = [];
+    const writes = [];
+    // Do not inherit Node's navigator: Web Locks is present in Node 26, not 22.
+    // Both browser capability paths must retain validation before any write.
+    replaceGlobal(t, "navigator", withLocks ? { locks: { request: async (_name, operation) => {
+      lockCount += 1;
+      return operation();
+    } } } : {});
+    replaceGlobal(t, "fetch", async () => jsonResponse(fetchCount++ === 0 ? invalid : catalogue));
+    replaceGlobal(t, "caches", {
+      open: async (name) => {
+        openedCaches.push(name);
+        return { match: async () => null, keys: async () => [], put: async (key, response) => {
+          writes.push({ key, payload: await response.json() });
+        } };
+      },
+      delete: async (name) => {
+        assert.equal(writes.length, 1, "la purge ne précède jamais l'écriture validée");
+        deletedCaches.push(name);
+        return true;
+      },
+    });
+    const { CATALOGUE_CACHE_NAME, cacheCatalogueForOffline } = await importFreshCatalogueModule(`cache-atomic-${withLocks}`);
+
+    await assert.rejects(cacheCatalogueForOffline(), /Catalogue invalide/);
+    assert.deepEqual(openedCaches, [], "Cache Storage ne doit pas être ouvert pour un payload invalide");
+    assert.deepEqual(writes, [], "aucune réponse invalide ne doit être écrite");
+    assert.deepEqual(deletedCaches, []);
+    assert.equal(lockCount, 0);
+
+    const recovered = await cacheCatalogueForOffline();
+    assert.equal(recovered.recipes.length, 1207);
+    assert.equal(fetchCount, 2);
+    assert.deepEqual(openedCaches, withLocks ? [CATALOGUE_CACHE_NAME, "inflamm-menu-catalogue-v1"] : [CATALOGUE_CACHE_NAME]);
+    assert.equal(lockCount, withLocks ? 1 : 0);
+    assert.deepEqual(deletedCaches, withLocks ? ["inflamm-menu-catalogue-v1"] : []);
+    assert.equal(writes.length, 1);
+    assert.deepEqual(writes[0].payload, catalogue);
+    const editions = JSON.parse(await readFile(new URL("../src/data/catalogue-offline-editions.json", import.meta.url), "utf8"));
+    assert.equal(writes[0].key, withLocks ? dataUrl.href : `${dataUrl.href}?edition=${editions.current.sha256}`);
   });
-  const { cacheCatalogueForOffline } = await importFreshCatalogueModule("cache-atomic");
-
-  await assert.rejects(cacheCatalogueForOffline(), /Catalogue invalide/);
-  assert.equal(openCount, 0, "Cache Storage ne doit pas être ouvert pour un payload invalide");
-  assert.equal(putCount, 0, "aucune réponse invalide ne doit être écrite");
-
-  const recovered = await cacheCatalogueForOffline();
-  assert.equal(recovered.recipes.length, 1207);
-  assert.equal(fetchCount, 2);
-  assert.equal(openCount, 1);
-  assert.equal(putCount, 1);
-});
+}
 
 test("un payload de précautions invalide est rejeté puis retenté", { concurrency: false }, async (t) => {
   let fetchCount = 0;
@@ -478,6 +507,170 @@ test("un payload de précautions invalide est rejeté puis retenté", { concurre
   await assert.rejects(loadPlannerCaution("catalog-r002"), /Précautions invalides/);
   assert.equal(await loadPlannerCaution("catalog-r002"), plannerCautions["catalog-r002"]);
   assert.equal(fetchCount, 2, "la promesse rejetée doit être oubliée avant le réessai");
+});
+
+function historicalCatalogue() {
+  // Exact reviewed edition 7a11e85; all 1087 recipes are unchanged in this release.
+  const previous = structuredClone(catalogue);
+  previous.recipes = previous.recipes.slice(0, 1087);
+  previous.meta.nombre_recettes = 1087;
+  previous.meta.date_mise_a_jour = "2026-09-06";
+  return previous;
+}
+
+function memoryCaches(t) {
+  let queue = Promise.resolve();
+  replaceGlobal(t, "navigator", { locks: { request: (_name, operation) => {
+    const pending = queue.then(operation);
+    queue = pending.catch(() => {});
+    return pending;
+  } } });
+  const stores = new Map();
+  const controls = { quotaFailure: false, cleanupFailure: false };
+  const keyOf = (request) => typeof request === "string" ? request : request.url;
+  const api = {
+    open: async (name) => {
+      if (!stores.has(name)) stores.set(name, new Map());
+      const entries = stores.get(name);
+      return {
+        match: async (key) => entries.get(keyOf(key))?.clone() ?? null,
+        keys: async () => [...entries.keys()].map((url) => new Request(url)),
+        put: async (key, response) => {
+          if (controls.quotaFailure) throw new Error("quota");
+          entries.set(keyOf(key), response.clone());
+        },
+        delete: async (key) => {
+          if (controls.cleanupFailure) throw new Error("cleanup");
+          return entries.delete(keyOf(key));
+        },
+      };
+    },
+    delete: async (name) => {
+      if (controls.cleanupFailure) throw new Error("cleanup");
+      return stores.delete(name);
+    },
+  };
+  replaceGlobal(t, "caches", api);
+  return { api, stores, controls };
+}
+
+test("le changement d'URL retrouve l'édition historique approuvée sans l'écraser", { concurrency: false }, async (t) => {
+  const { api, stores } = memoryCaches(t);
+  const cache = await api.open("inflamm-menu-catalogue-v2");
+  const previousUrl = new URL("recettes-anti-inflammatoires-ancien.json", dataUrl).href;
+  await cache.put(previousUrl, jsonResponse(historicalCatalogue()));
+  replaceGlobal(t, "fetch", async () => { throw new Error("offline"); });
+  const module = await importFreshCatalogueModule("previous-edition");
+  const data = await module.loadCatalogue();
+  assert.equal(data.recipes.length, 1087);
+  assert.deepEqual(module.catalogueEditionStatus(data), { outdated: true, recipeCount: 1087 });
+  assert.deepEqual(await module.catalogueOfflineEdition(), { outdated: true, recipeCount: 1087 });
+  assert.deepEqual([...stores.get(module.CATALOGUE_CACHE_NAME).keys()], [previousUrl]);
+});
+
+test("une mise à jour validée remplace la copie stable avant de purger et notifie l'interface", { concurrency: false }, async (t) => {
+  const { api, stores } = memoryCaches(t);
+  const cache = await api.open("inflamm-menu-catalogue-v2");
+  const previousUrl = new URL("recettes-anti-inflammatoires-ancien.json", dataUrl).href;
+  await cache.put(previousUrl, jsonResponse(historicalCatalogue()));
+  const unrelatedUrl = new URL("autre-document.json", dataUrl).href;
+  await cache.put(unrelatedUrl, jsonResponse({ unrelated: true }));
+  replaceGlobal(t, "fetch", async () => jsonResponse(catalogue));
+  const module = await importFreshCatalogueModule("replace-edition");
+  let announced = null;
+  const unsubscribe = module.subscribeCatalogueUpdates((data) => { announced = data; });
+  const current = await module.cacheCatalogueForOffline();
+  unsubscribe();
+  assert.equal(announced, current);
+  assert.equal(stores.get(module.CATALOGUE_CACHE_NAME).has(previousUrl), false);
+  assert.equal(stores.get(module.CATALOGUE_CACHE_NAME).has(unrelatedUrl), true);
+  assert.equal(stores.get(module.CATALOGUE_CACHE_NAME).size, 2);
+  replaceGlobal(t, "fetch", async () => { throw new Error("offline"); });
+  const freshModule = await importFreshCatalogueModule("reload-current-edition");
+  assert.equal((await freshModule.loadCatalogue()).recipes.length, 1207);
+  assert.deepEqual(await freshModule.catalogueOfflineEdition(), { outdated: false, recipeCount: 1207 });
+});
+
+test("une édition tronquée ou altérée ne peut se faire passer pour une ancienne édition", { concurrency: false }, async (t) => {
+  const { api } = memoryCaches(t);
+  const cache = await api.open("inflamm-menu-catalogue-v2");
+  const altered = historicalCatalogue();
+  altered.recipes[0].titre += " modifiée";
+  const truncated = historicalCatalogue();
+  truncated.recipes.pop();
+  truncated.meta.nombre_recettes -= 1;
+  await cache.put(new URL("recettes-anti-inflammatoires-fausse.json", dataUrl).href, jsonResponse(altered));
+  await cache.put(new URL("recettes-anti-inflammatoires-tronquee.json", dataUrl).href, jsonResponse(truncated));
+  replaceGlobal(t, "fetch", async () => { throw new Error("offline"); });
+  const module = await importFreshCatalogueModule("unreviewed-edition");
+  assert.equal(await module.catalogueAvailableOffline(), false);
+  await assert.rejects(module.loadCatalogue(), /offline/);
+});
+
+test("échec réseau, contenu invalide ou quota préservent l'édition précédente", { concurrency: false }, async (t) => {
+  const { api, stores, controls } = memoryCaches(t);
+  const cache = await api.open("inflamm-menu-catalogue-v2");
+  const previousUrl = new URL("recettes-anti-inflammatoires-ancien.json", dataUrl).href;
+  await cache.put(previousUrl, jsonResponse(historicalCatalogue()));
+  const module = await importFreshCatalogueModule("failed-edition-update");
+  for (const response of [new Response("error", { status: 500 }), jsonResponse(singleRecipeCatalogue(catalogue.recipes[0]))]) {
+    replaceGlobal(t, "fetch", async () => response.clone());
+    await assert.rejects(module.cacheCatalogueForOffline());
+    assert.equal(stores.get(module.CATALOGUE_CACHE_NAME).has(previousUrl), true);
+  }
+  controls.quotaFailure = true;
+  replaceGlobal(t, "fetch", async () => jsonResponse(catalogue));
+  await assert.rejects(module.cacheCatalogueForOffline(), /quota/);
+  replaceGlobal(t, "fetch", async () => { throw new Error("offline"); });
+  assert.equal((await module.loadCatalogue()).recipes.length, 1087);
+  assert.equal(stores.get(module.CATALOGUE_CACHE_NAME).size, 1);
+});
+
+test("un nettoyage refusé après écriture ne masque pas la nouvelle édition", { concurrency: false }, async (t) => {
+  const { api, controls } = memoryCaches(t);
+  const cache = await api.open("inflamm-menu-catalogue-v2");
+  await cache.put(new URL("recettes-anti-inflammatoires-ancien.json", dataUrl).href, jsonResponse(historicalCatalogue()));
+  controls.cleanupFailure = true;
+  replaceGlobal(t, "fetch", async () => jsonResponse(catalogue));
+  const module = await importFreshCatalogueModule("cleanup-failure");
+  assert.equal((await module.cacheCatalogueForOffline()).recipes.length, 1207);
+  replaceGlobal(t, "fetch", async () => { throw new Error("offline"); });
+  const reloaded = await importFreshCatalogueModule("cleanup-failure-reload");
+  assert.equal((await reloaded.loadCatalogue()).recipes.length, 1207);
+});
+
+test("un ancien onglet ne rétrograde ni ne purge une édition inconnue plus récente", { concurrency: false }, async (t) => {
+  const { api } = memoryCaches(t);
+  const cache = await api.open("inflamm-menu-catalogue-v2");
+  const stableUrl = dataUrl.href;
+  const future = structuredClone(catalogue);
+  future.recipes[0].titre += " — révision future";
+  await cache.put(stableUrl, jsonResponse(future));
+  const hashedCurrent = new URL("recettes-anti-inflammatoires-courante.json", dataUrl).href;
+  const hashedFuture = new URL("recettes-anti-inflammatoires-future.json", dataUrl).href;
+  await cache.put(hashedCurrent, jsonResponse(catalogue));
+  await cache.put(hashedFuture, jsonResponse(future));
+  replaceGlobal(t, "fetch", async () => jsonResponse(catalogue));
+  const module = await importFreshCatalogueModule("newer-edition-open-tab");
+  assert.deepEqual(await module.catalogueOfflineEdition(), { outdated: false, recipeCount: 1207 });
+  assert.deepEqual(await (await cache.match(stableUrl)).json(), future, "l'inspection ne rétrograde pas la copie d'un autre build");
+  await module.cacheCatalogueForOffline();
+  assert.deepEqual(await (await cache.match(stableUrl)).json(), future, "le téléchargement de cet ancien onglet ne rétrograde pas non plus la copie récente");
+  assert.deepEqual(await (await cache.match(hashedFuture)).json(), future, "la purge ne détruit pas les éditions inconnues");
+});
+
+test("sans verrou interonglets, les écritures restent par édition et ne suppriment rien", { concurrency: false }, async (t) => {
+  const { api, stores } = memoryCaches(t);
+  replaceGlobal(t, "navigator", {});
+  const cache = await api.open("inflamm-menu-catalogue-v2");
+  await cache.put(dataUrl.href, jsonResponse(historicalCatalogue()));
+  replaceGlobal(t, "fetch", async () => jsonResponse(catalogue));
+  const module = await importFreshCatalogueModule("no-cross-tab-lock");
+  await Promise.all([module.cacheCatalogueForOffline(), module.cacheCatalogueForOffline()]);
+  assert.equal(stores.get(module.CATALOGUE_CACHE_NAME).size, 2);
+  assert.equal((await (await cache.match(dataUrl.href)).json()).recipes.length, 1087);
+  replaceGlobal(t, "fetch", async () => { throw new Error("offline"); });
+  assert.equal((await (await importFreshCatalogueModule("no-lock-reload")).loadCatalogue()).recipes.length, 1207);
 });
 
 test("les filtres et le tri du catalogue portent sur les vraies données", async () => {

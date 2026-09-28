@@ -427,6 +427,11 @@ button { -webkit-tap-highlight-color: transparent; }
 .setting-row--stack { align-items: flex-start; flex-direction: column; padding: 13px 0; }
 .stepper { display: grid; grid-template-columns: 34px 28px 34px; align-items: center; text-align: center; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 .stepper button { height: 34px; border: 0; background: var(--cream); color: var(--sage-dark); display: grid; place-items: center; }
+.custom-recipe-quantity-row { flex-wrap: wrap; padding-block: 10px; }
+.custom-recipe-quantity-row > span { flex: 1 1 180px; min-width: 0; overflow-wrap: anywhere; }
+.custom-recipe-quantity-stepper { flex: 0 1 auto; min-width: 0; max-width: 100%; grid-template-columns: 44px minmax(0, 1fr) 44px; gap: 8px; overflow: visible; }
+.custom-recipe-quantity-stepper button { width: 44px; height: 44px; border-radius: 10px; }
+.custom-recipe-quantity-stepper b { min-width: 0; padding-inline: 4px; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .choice-row, .choice-grid { display: flex; flex-wrap: wrap; gap: 8px; }
 .choice-row button, .choice-grid button, .reason-chip { min-height: 37px; border: 1px solid var(--line); border-radius: 20px; background: var(--white); color: var(--ink); padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; font-size: var(--font-11); }
 .choice-row button.is-selected, .choice-grid button.is-selected, .reason-chip.is-selected { background: var(--sage); color: #fff; border-color: var(--sage); }
@@ -1230,6 +1235,7 @@ button { -webkit-tap-highlight-color: transparent; }
 
 .home-shortcuts { padding: 20px 24px 0; display: grid; gap: 10px; }
 .home-shortcuts p { color: var(--text-muted, #59604f); font-size: 14px; line-height: 1.5; margin: 0; }
+.home-shortcuts + .week-preview { margin-top: 12px; }
 .plan-slot-page select { display: block; min-height: 44px; width: 100%; margin: 8px 0; padding: 8px 12px; font: inherit; border: 1px solid #d9d1c1; border-radius: 12px; background: #fffdf8; color: #29351f; }
 
 .meal-composition { display: grid !important; gap: 7px; width: 100%; flex-basis: 100%; text-align: left; white-space: normal; }
