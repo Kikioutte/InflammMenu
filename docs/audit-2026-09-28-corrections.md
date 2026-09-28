@@ -60,4 +60,23 @@ Clôture C1 : tests catalogue 30/30, `test:release`, TypeScript, contrôle des 2
 fichiers protégés et relecture du diff réussis ; navigateur complet 161/161,
 PWA 10/10, Worker/Sites 5/5, builds Pages et Worker réussis. Le scénario entre
 deux vrais builds et les captures ont été revalidés sur le build final C1,
-service worker `a136e25066fd`. Les autres points n'ont pas encore été commencés.
+service worker `a136e25066fd`. Les autres points n'avaient pas encore été commencés
+à ce jalon.
+
+## C3 — Retour du focus des fenêtres
+
+- Les neuf usages de WebSheet fournissent leur déclencheur explicitement, y
+  compris sur Safari où le clic ne focalise pas toujours les boutons.
+- Échap, fermeture, clic extérieur et validation rendent le focus au bon
+  contrôle. Un déclencheur supprimé laisse un repli sur le titre de l'écran.
+- Le résumé du constructeur revient à son bouton stable ; « Changer » revient
+  à l'onglet de catégorie. Un nouvel écran ou dialogue conserve son propre focus.
+- Les fenêtres et leur contenu visuel sont conservés ; aucun fichier du runtime
+  protégé ni aucune donnée personnelle n'est modifié.
+
+Clôture C3 : 12/12 tests ciblés Chromium/WebKit, 28/28 parcours existants de
+non-régression, `test:release`, TypeScript, contrôle du runtime et relecture du
+diff réussis. Une fixture indépendante a aussi vérifié la réouverture immédiate,
+le passage à une autre fenêtre et le déclencheur retiré dans les deux moteurs.
+Captures mobiles ouvertes/fermées relues. Pas de validation avec un lecteur
+d'écran physique : les assertions portent sur le focus DOM et le clavier.

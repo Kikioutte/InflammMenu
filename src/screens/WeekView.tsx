@@ -1,8 +1,8 @@
 import { type WeeklyPlan, type PlannedMeal, type Recipe, type UserProfile } from "../domain";
-import { useState } from "react";
+import { useRef, useState, type RefObject } from "react";
 import { CalendarIcon, ArchiveIcon, CopyIcon, CheckCircledIcon, LockClosedIcon, ClockIcon, CheckIcon, ReloadIcon, DotsHorizontalIcon, LockOpen1Icon, Cross2Icon } from "@radix-ui/react-icons";
 import { summarizePlan, planProgress, planToCalendar, cookingSessionsOf, type PlanSummary, weeklyTargetsOf } from "../engine";
-import { Carousel } from "../mobile";
+import { Carousel, useKeyboard } from "../mobile";
 import { currentDayIndex, dateAt, formatWeekRange, formatRecipeDuration } from "../components/format";
 import { EmptyRoot } from "../components/EmptyRoot";
 import { ACTIVE_RECIPES, recipeById } from "../app/recipe-registry";
@@ -16,6 +16,8 @@ export function WeekView({ plan, onOpenMeal, onReplace, onToggleLock, onToggleCo
   const [selectedDay, setSelectedDay] = useState(plan ? currentDayIndex(plan.startsOn) : 0);
   const [layout, setLayout] = useState<"day" | "week">("day");
   const [actionsFor, setActionsFor] = useState<string | null>(null);
+  const actionsTriggerRef = useRef<HTMLButtonElement>(null);
+  const keyboard = useKeyboard();
   if (!plan) return <EmptyRoot icon={CalendarIcon} title="Aucune semaine pour le moment" body="Commencez depuis l’accueil pour générer vos repas." />;
   const summary = summarizePlan(plan, ACTIVE_RECIPES);
   const visibleMeals = plan.meals.filter((meal) => meal.dayIndex === selectedDay);
@@ -50,7 +52,7 @@ export function WeekView({ plan, onOpenMeal, onReplace, onToggleLock, onToggleCo
             {skipped || isLeftover ? null : <button type="button" className={`meal-card__done ${cooked ? "is-active" : ""}`} aria-pressed={cooked} data-testid={`meal-done-${planned.id}`} aria-label={cooked ? `Annuler « cuisiné » pour ${recipe.title}` : `Marquer ${recipe.title} comme cuisiné`} onClick={() => onToggleCompleted(planned)}><CheckIcon /></button>}
             <div className="meal-card__actions meal-card__actions--pair">
               <button className="meal-card__replace" type="button" disabled={skipped} onClick={() => onReplace(planned, recipe)}><ReloadIcon /> Remplacer</button>
-              <button className="meal-card__more" type="button" data-testid={`meal-actions-${planned.id}`} aria-label={`Autres actions pour ${recipe.title}`} onClick={() => setActionsFor(planned.id)}><DotsHorizontalIcon /> Actions</button>
+              <button className="meal-card__more" type="button" data-testid={`meal-actions-${planned.id}`} aria-label={`Autres actions pour ${recipe.title}`} onClick={(event) => { actionsTriggerRef.current = event.currentTarget; keyboard.hide(); setActionsFor(planned.id); }}><DotsHorizontalIcon /> Actions</button>
             </div>
           </article>
         ); })}
@@ -58,7 +60,7 @@ export function WeekView({ plan, onOpenMeal, onReplace, onToggleLock, onToggleCo
       </>}
       <CookingPlanSection plan={plan} />
       <WeekBalance summary={summary} profile={plan.profileSnapshot} />
-      <MealActionsSheet plan={plan} slotId={actionsFor} onClose={() => setActionsFor(null)} onReplace={onReplace} onToggleLock={onToggleLock} onToggleCompleted={onToggleCompleted} onPlanLeftover={onPlanLeftover} onToggleSkipped={onToggleSkipped} onSwap={onSwap} />
+      <MealActionsSheet plan={plan} slotId={actionsFor} returnFocusRef={actionsTriggerRef} onClose={() => setActionsFor(null)} onReplace={onReplace} onToggleLock={onToggleLock} onToggleCompleted={onToggleCompleted} onPlanLeftover={onPlanLeftover} onToggleSkipped={onToggleSkipped} onSwap={onSwap} />
     </main>
   );
 }
@@ -112,9 +114,10 @@ function CookingPlanSection({ plan }: { plan: WeeklyPlan }) {
   );
 }
 
-function MealActionsSheet({ plan, slotId, onClose, onReplace, onToggleLock, onToggleCompleted, onPlanLeftover, onToggleSkipped, onSwap }: {
+function MealActionsSheet({ plan, slotId, returnFocusRef, onClose, onReplace, onToggleLock, onToggleCompleted, onPlanLeftover, onToggleSkipped, onSwap }: {
   plan: WeeklyPlan;
   slotId: string | null;
+  returnFocusRef: RefObject<HTMLElement | null>;
   onClose: () => void;
   onReplace: (planned: PlannedMeal, recipe: Recipe) => void;
   onToggleLock: (planned: PlannedMeal) => void;
@@ -130,7 +133,7 @@ function MealActionsSheet({ plan, slotId, onClose, onReplace, onToggleLock, onTo
   const skipped = planned?.skipped === true;
   const run = (action: () => void) => { onClose(); action(); };
   return (
-    <WebSheet open={Boolean(planned && recipe)} onOpenChange={(open) => { if (!open) onClose(); }} title={recipe?.title ?? "Repas"} description={planned ? `${DAY_LABELS[planned.dayIndex]} · ${MEAL_LABELS[planned.mealType]}` : undefined}>
+    <WebSheet open={Boolean(planned && recipe)} onOpenChange={(open) => { if (!open) onClose(); }} returnFocusRef={returnFocusRef} title={recipe?.title ?? "Repas"} description={planned ? `${DAY_LABELS[planned.dayIndex]} · ${MEAL_LABELS[planned.mealType]}` : undefined}>
       {planned && recipe ? <div className="meal-actions" data-testid="meal-actions-sheet">
         <button type="button" data-testid="action-completed" disabled={skipped || isLeftover} onClick={() => run(() => onToggleCompleted(planned))}><CheckCircledIcon /> {planned.completed ? "Ne plus marquer comme cuisiné" : "Marquer comme cuisiné"}</button>
         <button type="button" data-testid="action-swap" disabled={skipped || isLeftover || hasLeftover} onClick={() => run(() => onSwap(planned))}><ReloadIcon /> Échanger avec un autre repas</button>

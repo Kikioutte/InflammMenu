@@ -2,7 +2,7 @@ import { Cross2Icon, ReloadIcon, MagnifyingGlassIcon, CopyIcon, HeartFilledIcon,
 import { type SavedMeal } from "../saved-meals";
 import { type CatalogueData, type CatalogueRecipe, type CatalogueFilters, EMPTY_CATALOGUE_FILTERS, catalogueRecipeIdOf, filterCatalogueRecipes, visibleCatalogueRecipes, catalogueImageFor, catalogueCategoryName, catalogueEditionStatus, CATALOGUE_CATEGORIES, plannerAvailabilityFor, DUPLICATE_CATALOGUE_RECIPES } from "../catalog";
 import { useKeyboard, KeyboardInput, Carousel } from "../mobile";
-import { useState, type ReactNode, useDeferredValue, useEffect } from "react";
+import { useRef, useState, type ReactNode, useDeferredValue, useEffect } from "react";
 import { normalizeText, formatRecipeDuration, formatCatalogueCardDuration, formatWeekRange } from "../components/format";
 import { mealBuilderGroupFor, mealBuilderEligible } from "./MealBuilderView";
 import { WebSheet } from "../components/WebSheet";
@@ -35,6 +35,7 @@ function SavedMealsView({ meals, catalogue, onLoad, onOpen, onDelete, onRestore,
   const [query, setQuery] = useState("");
   const [removed, setRemoved] = useState<{ meal: SavedMeal; index: number } | null>(null);
   const [editing, setEditing] = useState<SavedMeal | null>(null);
+  const renameTriggerRef = useRef<HTMLButtonElement>(null);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const titlesFor = (meal: SavedMeal) => Object.values(meal.recipeIds).map((id) => catalogue?.recipes.find((recipe) => recipe.id === id)?.titre ?? "");
@@ -47,8 +48,8 @@ function SavedMealsView({ meals, catalogue, onLoad, onOpen, onDelete, onRestore,
     {meals.length ? <label className="catalogue-search"><MagnifyingGlassIcon /><span className="sr-only">Rechercher dans mes repas</span><KeyboardInput value={query} placeholder="Nom du repas ou d’une recette" onChange={(event) => setQuery(event.target.value)} /></label> : <p>Composez une entrée, un plat et un dessert, puis choisissez « Enregistrer mon repas ».</p>}
     {!catalogue && meals.length ? <button type="button" className="secondary-button" onClick={onLoad}>Charger les recettes de mes repas</button> : null}
     {meals.length && !results.length ? <p>Aucun repas trouvé. <button type="button" className="text-button" onClick={() => setQuery("")}>Effacer la recherche</button></p> : null}
-    {results.map((meal) => { const main = catalogue?.recipes.find((recipe) => recipe.id === meal.recipeIds.main && mealBuilderGroupFor(recipe) === "main" && mealBuilderEligible(recipe)); return <article className="saved-meal-card" key={meal.id} data-testid={`saved-meal-${meal.id}`}><h3>{titleFor(meal)}</h3><p>{titlesFor(meal).filter(Boolean).join(" · ") || "Les recettes seront affichées après chargement du catalogue."}</p><div><button type="button" className="secondary-button" disabled={!main} onClick={() => onOpen(meal)}>Ouvrir</button><button type="button" className="text-button" onClick={() => { keyboard.hide(); setName(meal.name ?? ""); setEditing(meal); setMessage(""); }}>Nommer</button><button type="button" className="icon-button" aria-label={`Supprimer le repas ${titleFor(meal)}`} onClick={() => { setRemoved({ meal, index: meals.findIndex((item) => item.id === meal.id) }); onDelete(meal); setMessage(""); }}><Cross2Icon /></button></div></article>; })}
-    <WebSheet open={Boolean(editing)} onOpenChange={(open) => !open && close()} title="Nommer mon repas"><label className="text-field">Nom du repas<KeyboardInput value={name} maxLength={80} placeholder="Ex. Dîner du dimanche" onChange={(event) => setName(event.target.value)} /></label><p className="inline-help">Laissez vide pour utiliser le nom du plat.</p><button type="button" className="primary-button full-button" onClick={() => { if (!editing) return; const error = onRename(editing, name); setMessage(error ?? "Nom enregistré."); if (!error) close(); }}>Enregistrer le nom</button>{message ? <p role="status">{message}</p> : null}</WebSheet>
+    {results.map((meal) => { const main = catalogue?.recipes.find((recipe) => recipe.id === meal.recipeIds.main && mealBuilderGroupFor(recipe) === "main" && mealBuilderEligible(recipe)); return <article className="saved-meal-card" key={meal.id} data-testid={`saved-meal-${meal.id}`}><h3>{titleFor(meal)}</h3><p>{titlesFor(meal).filter(Boolean).join(" · ") || "Les recettes seront affichées après chargement du catalogue."}</p><div><button type="button" className="secondary-button" disabled={!main} onClick={() => onOpen(meal)}>Ouvrir</button><button type="button" className="text-button" onClick={(event) => { renameTriggerRef.current = event.currentTarget; keyboard.hide(); setName(meal.name ?? ""); setEditing(meal); setMessage(""); }}>Nommer</button><button type="button" className="icon-button" aria-label={`Supprimer le repas ${titleFor(meal)}`} onClick={() => { setRemoved({ meal, index: meals.findIndex((item) => item.id === meal.id) }); onDelete(meal); setMessage(""); }}><Cross2Icon /></button></div></article>; })}
+    <WebSheet open={Boolean(editing)} onOpenChange={(open) => !open && close()} returnFocusRef={renameTriggerRef} title="Nommer mon repas"><label className="text-field">Nom du repas<KeyboardInput value={name} maxLength={80} placeholder="Ex. Dîner du dimanche" onChange={(event) => setName(event.target.value)} /></label><p className="inline-help">Laissez vide pour utiliser le nom du plat.</p><button type="button" className="primary-button full-button" onClick={() => { if (!editing) return; const error = onRename(editing, name); setMessage(error ?? "Nom enregistré."); if (!error) close(); }}>Enregistrer le nom</button>{message ? <p role="status">{message}</p> : null}</WebSheet>
   </details>;
 }
 
@@ -59,6 +60,7 @@ export function RecipesView({ libraryTools, savedMeals, onOpenSavedMeal, onDelet
   const [category, setCategory] = useState("all");
   const [filters, setFilters] = useState<CatalogueFilters>(EMPTY_CATALOGUE_FILTERS);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const filtersTriggerRef = useRef<HTMLButtonElement>(null);
   const [visibleCatalogueCount, setVisibleCatalogueCount] = useState(60);
   const [associationFilter, setAssociationFilter] = useState<"all" | "collection" | "verte" | "orange">("all");
   const deferredQuery = useDeferredValue(query);
@@ -139,7 +141,7 @@ export function RecipesView({ libraryTools, savedMeals, onOpenSavedMeal, onDelet
         <label className="text-field association-filter"><span>Associations alimentaires</span><select aria-label="Filtrer les associations" value={associationFilter} onChange={(event) => setAssociationFilter(event.target.value as typeof associationFilter)}><option value="all">Tout le catalogue</option><option value="collection">Collection sans gluten, lait, alcool ni préparations industrielles</option><option value="verte">Associations vertes uniquement</option><option value="orange">Associations orange signalées</option></select></label>
         <Carousel ariaLabel="Filtrer les catégories" className="catalogue-filters" contentClassName="catalogue-filters__track"><button type="button" className={category === "all" ? "is-selected" : ""} aria-pressed={category === "all"} onClick={() => setCategory("all")}>Toutes</button>{CATALOGUE_CATEGORIES.map((item) => <button type="button" key={item.id} className={category === item.id ? "is-selected" : ""} aria-pressed={category === item.id} onClick={() => setCategory(item.id)}>{item.nom}</button>)}</Carousel>
         <div className="catalogue-toolbar">
-          <button type="button" className={`secondary-button ${activeFilterCount ? "is-active" : ""}`} data-testid="catalogue-filters-open" onClick={() => { keyboard.hide(); setFiltersOpen(true); }}><MixerHorizontalIcon /> Filtres{activeFilterCount ? ` (${activeFilterCount})` : ""}</button>
+          <button ref={filtersTriggerRef} type="button" className={`secondary-button ${activeFilterCount ? "is-active" : ""}`} data-testid="catalogue-filters-open" onClick={() => { keyboard.hide(); setFiltersOpen(true); }}><MixerHorizontalIcon /> Filtres{activeFilterCount ? ` (${activeFilterCount})` : ""}</button>
           <label className="catalogue-sort"><span className="sr-only">Trier les recettes</span>
             <select data-testid="catalogue-sort" value={filters.sort} onChange={(event) => setFilters((current) => ({ ...current, sort: event.target.value as CatalogueFilters["sort"] }))}>
               <option value="title">Ordre alphabétique</option>
@@ -149,7 +151,7 @@ export function RecipesView({ libraryTools, savedMeals, onOpenSavedMeal, onDelet
           </label>
         </div>
         <p className="catalogue-count" role="status" aria-live="polite">{catalogueRecipes.length} résultat{catalogueRecipes.length > 1 ? "s" : ""}</p>
-        <WebSheet open={filtersOpen} onOpenChange={setFiltersOpen} title="Filtrer le catalogue" description="Les filtres se cumulent et n’altèrent jamais les relectures éditoriales.">
+        <WebSheet open={filtersOpen} onOpenChange={setFiltersOpen} returnFocusRef={filtersTriggerRef} title="Filtrer le catalogue" description="Les filtres se cumulent et n’altèrent jamais les relectures éditoriales.">
           <div className="catalogue-filter-sheet" data-testid="catalogue-filter-sheet">
             <fieldset><legend>Temps actif maximum</legend><div className="choice-row">{[0, 15, 30, 45].map((minutes) => <button type="button" key={minutes} className={filters.maxActiveMinutes === minutes ? "is-selected" : ""} aria-pressed={filters.maxActiveMinutes === minutes} data-testid={`filter-time-${minutes}`} onClick={() => setFilters((current) => ({ ...current, maxActiveMinutes: minutes }))}>{minutes === 0 ? "Peu importe" : `${minutes} min`}</button>)}</div></fieldset>
             <fieldset><legend>Coût</legend><div className="choice-row">{([["", "Peu importe"], ["economique", "Économique"], ["moyen", "Moyen"], ["eleve", "Élevé"]] as const).map(([value, label]) => <button type="button" key={label} className={filters.cost === value ? "is-selected" : ""} aria-pressed={filters.cost === value} onClick={() => setFilters((current) => ({ ...current, cost: value }))}>{label}</button>)}</div></fieldset>
