@@ -936,14 +936,14 @@ test("la génération construit une semaine navigable puis une liste de courses 
 
   await page.getByTestId("enter-store-mode").click();
   await expect(page.getByTestId("store-mode")).toBeVisible();
-  await expect(page.getByText(/Rayon 1 sur/)).toBeVisible();
+  await expect(page.getByTestId("store-mode").locator(".store-mode__progress")).toContainText(/Rayon 1 sur/);
   const storeItem = page.locator('[data-testid^="store-item-"]').first();
   await expect(storeItem).toBeVisible();
   await expect(storeItem).toHaveAttribute("aria-pressed", "false");
   await storeItem.click();
   await expect(storeItem).toHaveAttribute("aria-pressed", "true");
   await page.getByTestId("store-next-aisle").click();
-  await expect(page.getByText(/Rayon 2 sur/)).toBeVisible();
+  await expect(page.getByTestId("store-mode").locator(".store-mode__progress")).toContainText(/Rayon 2 sur/);
   await page.getByTestId("exit-store-mode").click();
   await expect(page.getByTestId("courses-view")).toBeVisible();
 

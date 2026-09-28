@@ -80,3 +80,22 @@ diff réussis. Une fixture indépendante a aussi vérifié la réouverture immé
 le passage à une autre fenêtre et le déclencheur retiré dans les deux moteurs.
 Captures mobiles ouvertes/fermées relues. Pas de validation avec un lecteur
 d'écran physique : les assertions portent sur le focus DOM et le clavier.
+
+## C4 — Mode magasin
+
+- Entrée sur le titre du rayon contextualisé ; sortie vers le bouton d'entrée
+  recréé. Le cochage conserve le focus sur l'article.
+- Une région polie annonce le rayon et les articles restants ; elle reste vide
+  lorsque le titre focalisé fournit déjà cette information.
+- Repli vers le titre lorsqu'un contrôle disparaît ou devient désactivé.
+  Navigation corrigée après suppression externe d'un rayon ; liste vide sortie
+  réellement du mode magasin, même depuis un inventaire entièrement couvert.
+- Les articles cochés restent dans leur rayon ; calculs, prix, stocks, données
+  personnelles et formats de sauvegarde sont conservés.
+
+Clôture C4 : 10/10 tests ciblés et les deux exécutions du parcours existant
+génération → courses réussis sur Chromium/WebKit. Les tests couvrent aussi un
+second onglet réel, export/restauration et rechargement. `test:release`,
+TypeScript, runtime protégé et relecture indépendante réussis ; captures mobile
+et bureau relues. Deux sélecteurs du test existant ont été limités au repère
+visible pour le distinguer de l'annonce accessible, sans retirer d'assertion.

@@ -1,8 +1,8 @@
 import { type PantryAmount, type ShoppingItem, type WeeklyPlan, type UserProfile, type IngredientCategory } from "../domain";
-import { useState, useRef, useEffect, useSyncExternalStore } from "react";
+import { useState, useRef, useEffect, useLayoutEffect, useSyncExternalStore } from "react";
 import { parseNumericInput } from "../numeric-input";
 import { formatIngredientUnit } from "../presentation";
-import { KeyboardInput } from "../mobile";
+import { KeyboardInput, useKeyboard } from "../mobile";
 import { type ManualShoppingItem, shoppingContext, cleanLabel, shoppingConflict } from "../personal-library";
 import { shoppingIdentityFor, storedShoppingItemMatches } from "../shopping";
 import { buildShoppingList, formatShoppingListText } from "../engine";
@@ -161,6 +161,15 @@ export function CoursesView({ store, onRecipes, plan, profile, checkedIds, pantr
   const [pantryMode, setPantryMode] = useState(false);
   const [storeMode, setStoreMode] = useState(false);
   const [storeCategoryIndex, setStoreCategoryIndex] = useState(0);
+  const [storeAnnouncement, setStoreAnnouncement] = useState("");
+  const coursesRootRef = useRef<HTMLElement>(null);
+  const coursesHeadingRef = useRef<HTMLHeadingElement>(null);
+  const storeHeadingRef = useRef<HTMLHeadingElement>(null);
+  const storeEntryRef = useRef<HTMLButtonElement>(null);
+  const lastStoreFocus = useRef<HTMLElement | null>(null);
+  const previousStoreMode = useRef(false);
+  const previousStoreSummary = useRef("");
+  const keyboard = useKeyboard();
   const [exportFeedback, setExportFeedback] = useState("");
   const feedbackTimer = useRef<number | undefined>(undefined);
   useEffect(() => () => window.clearTimeout(feedbackTimer.current), []);
@@ -236,27 +245,68 @@ export function CoursesView({ store, onRecipes, plan, profile, checkedIds, pantr
   const checkedCount = items.filter((item) => item.checked || item.inPantry || item.fullyCovered).length;
   const safeStoreIndex = Math.min(Math.max(0, storeCategoryIndex), Math.max(0, groups.length - 1));
   const storeGroup = groups[safeStoreIndex];
-  if (storeMode && storeGroup) {
-    const aisleChecked = storeGroup.items.filter((item) => item.checked || item.inPantry).length;
+  const activeStoreMode = storeMode && Boolean(storeGroup);
+  const aisleChecked = storeGroup?.items.filter((item) => item.checked || item.inPantry || item.fullyCovered).length ?? 0;
+  const aisleRemaining = (storeGroup?.items.length ?? 0) - aisleChecked;
+  const remainingCount = items.length - checkedCount;
+  const storeSummary = storeGroup ? `Rayon ${safeStoreIndex + 1} sur ${groups.length} : ${storeGroup.label}. ${aisleRemaining} article${aisleRemaining > 1 ? "s" : ""} restant${aisleRemaining > 1 ? "s" : ""} dans ce rayon. ${remainingCount} article${remainingCount > 1 ? "s" : ""} restant${remainingCount > 1 ? "s" : ""} au total.` : "";
+  const storeFocusTargets = storeGroup?.items.map((item) => `${item.ingredientId}:${item.inPantry}`).join("|") ?? "";
+  useLayoutEffect(() => {
+    const entering = activeStoreMode && !previousStoreMode.current;
+    const leaving = !activeStoreMode && (previousStoreMode.current || storeMode);
+    const summaryChanged = storeSummary !== previousStoreSummary.current;
+    previousStoreMode.current = activeStoreMode;
+    previousStoreSummary.current = storeSummary;
+    // An inventory can contain only fully covered items. Once inventory mode
+    // closes, an empty list must not leave a latent store-mode request behind.
+    if (storeMode && !activeStoreMode) setStoreMode(false);
+    const root = coursesRootRef.current;
+    const screen = root?.closest<HTMLElement>("[data-flow-current]");
+    if (!root || root.closest('[inert], [aria-hidden="true"]') || (screen && screen.dataset.flowCurrent !== "true")) return;
+    let announcedByFocus = false;
+    if (entering) {
+      storeHeadingRef.current?.focus();
+      announcedByFocus = true;
+    } else if (leaving) {
+      const target = storeEntryRef.current;
+      if (target && !target.disabled) target.focus();
+      else coursesHeadingRef.current?.focus();
+      lastStoreFocus.current = null;
+    } else if (activeStoreMode) {
+      const previous = lastStoreFocus.current;
+      const active = document.activeElement;
+      // Keep valid focus on the chosen item or navigation control. A removed
+      // or newly disabled control needs a logical destination, not BODY.
+      if (previous && (!previous.isConnected || previous.matches(":disabled"))
+        && (active === document.body || active === previous)) {
+        storeHeadingRef.current?.focus();
+        announcedByFocus = true;
+      }
+    }
+    if (!activeStoreMode || entering || announcedByFocus) setStoreAnnouncement("");
+    else if (summaryChanged) setStoreAnnouncement(storeSummary);
+  }, [activeStoreMode, storeMode, storeSummary, storeFocusTargets]);
+  if (activeStoreMode && storeGroup) {
     return (
-      <main className="page-content courses-page store-mode" data-testid="store-mode">
+      <main ref={coursesRootRef} className="page-content courses-page store-mode" data-testid="store-mode" onFocusCapture={(event) => { lastStoreFocus.current = event.target as HTMLElement; }}>
         <div className="store-mode__top"><span className="eyebrow">Mode magasin</span><button type="button" className="text-button" data-testid="exit-store-mode" onClick={() => setStoreMode(false)}>Quitter</button></div>
         <div className="store-mode__progress"><strong>Rayon {safeStoreIndex + 1} sur {groups.length}</strong><span>{checkedCount} / {items.length} article{items.length > 1 ? "s" : ""} fait{items.length > 1 ? "s" : ""}</span></div>
-        <header className="store-mode__heading"><small>Rayon actuel</small><h1>{storeGroup.label}</h1><p>{aisleChecked} sur {storeGroup.items.length} article{storeGroup.items.length > 1 ? "s" : ""} coché{storeGroup.items.length > 1 ? "s" : ""}</p></header>
+        <header className="store-mode__heading"><small>Rayon actuel</small><h1 ref={storeHeadingRef} tabIndex={-1} data-testid="store-mode-heading" aria-label={`Mode magasin. ${storeSummary}`}>{storeGroup.label}</h1><p>{aisleChecked} sur {storeGroup.items.length} article{storeGroup.items.length > 1 ? "s" : ""} coché{storeGroup.items.length > 1 ? "s" : ""}</p></header>
+        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true" data-testid="store-mode-status">{storeAnnouncement}</p>
         <nav className="store-mode__nav" aria-label="Changer de rayon">
-          <button type="button" className="secondary-button" disabled={safeStoreIndex === 0} data-testid="store-previous-aisle" onClick={() => setStoreCategoryIndex((value) => Math.max(0, value - 1))}><ArrowLeftIcon /> Précédent</button>
-          <button type="button" className="primary-button" disabled={safeStoreIndex === groups.length - 1} data-testid="store-next-aisle" onClick={() => setStoreCategoryIndex((value) => Math.min(groups.length - 1, value + 1))}>{safeStoreIndex === groups.length - 1 ? "Dernier rayon" : "Rayon suivant"} <ChevronRightIcon /></button>
+          <button type="button" className="secondary-button" disabled={safeStoreIndex === 0} data-testid="store-previous-aisle" onClick={(event) => { event.currentTarget.focus({ preventScroll: true }); setStoreCategoryIndex(Math.max(0, safeStoreIndex - 1)); }}><ArrowLeftIcon /> Précédent</button>
+          <button type="button" className="primary-button" disabled={safeStoreIndex === groups.length - 1} data-testid="store-next-aisle" onClick={(event) => { event.currentTarget.focus({ preventScroll: true }); setStoreCategoryIndex(Math.min(groups.length - 1, safeStoreIndex + 1)); }}>{safeStoreIndex === groups.length - 1 ? "Dernier rayon" : "Rayon suivant"} <ChevronRightIcon /></button>
         </nav>
         <div className="store-mode__items">{storeGroup.items.map((item) => {
           const isRemoved = item.checked || item.inPantry || item.fullyCovered;
-          return <button key={item.ingredientId} type="button" className={`store-item ${isRemoved ? "is-checked" : ""}`} aria-pressed={isRemoved} aria-label={item.inPantry ? `${item.name}, en réserve` : `${item.checked ? "Décocher" : "Cocher"} ${item.name}`} disabled={item.inPantry} data-testid={`store-item-${item.ingredientId}`} onClick={() => toggleItem(item.ingredientId)}><span className="store-item__check" aria-hidden="true">{isRemoved ? <CheckIcon /> : null}</span><span><strong>{item.name}</strong><small>{item.inPantry ? "En réserve" : item.purchaseSuggestion}</small></span></button>;
+          return <button key={item.ingredientId} type="button" className={`store-item ${isRemoved ? "is-checked" : ""}`} aria-pressed={isRemoved} aria-label={item.inPantry ? `${item.name}, en réserve` : `${item.checked ? "Décocher" : "Cocher"} ${item.name}`} disabled={item.inPantry} data-testid={`store-item-${item.ingredientId}`} onClick={(event) => { event.currentTarget.focus({ preventScroll: true }); toggleItem(item.ingredientId); }}><span className="store-item__check" aria-hidden="true">{isRemoved ? <CheckIcon /> : null}</span><span><strong>{item.name}</strong><small>{item.inPantry ? "En réserve" : item.purchaseSuggestion}</small></span></button>;
         })}</div>
       </main>
     );
   }
   return (
-    <main className="page-content courses-page" data-testid="courses-view">
-      <div className="page-heading"><span className="eyebrow">{plan ? `Semaine du ${formatWeekRange(plan.startsOn)}` : "À votre rythme"}</span><h1>Liste de courses</h1><p>{checkedCount} sur {items.length} article{items.length > 1 ? "s" : ""} retiré{items.length > 1 ? "s" : ""} ou coché{items.length > 1 ? "s" : ""}</p></div>
+    <main ref={coursesRootRef} className="page-content courses-page" data-testid="courses-view">
+      <div className="page-heading"><span className="eyebrow">{plan ? `Semaine du ${formatWeekRange(plan.startsOn)}` : "À votre rythme"}</span><h1 ref={coursesHeadingRef} tabIndex={-1} data-testid="courses-heading">Liste de courses</h1><p>{checkedCount} sur {items.length} article{items.length > 1 ? "s" : ""} retiré{items.length > 1 ? "s" : ""} ou coché{items.length > 1 ? "s" : ""}</p></div>
       <section className="personal-shopping" aria-label="Compléter les courses">
         <form className="personal-form" onSubmit={(event) => { event.preventDefault(); const name = cleanLabel(newItem, 160); if (!name) return; if (store.getSnapshot().shoppingItems.length >= 200) { setCartMessage("Retirez un article avant d’en ajouter un autre."); return; } store.setState((current) => ({ ...current, shoppingItems: [...current.shoppingItems, { id: `article-${crypto.randomUUID()}`, name, checked: false }] })); setNewItem(""); setCartMessage("Article ajouté."); }}>
           <label className="text-field"><span>Ajouter un article</span><KeyboardInput placeholder="Par exemple : papier cuisson" maxLength={160} value={newItem} onChange={(event) => setNewItem(event.target.value)} /></label><button className="secondary-button" type="submit" disabled={!newItem.trim()}>Ajouter l’article</button>
@@ -267,7 +317,7 @@ export function CoursesView({ store, onRecipes, plan, profile, checkedIds, pantr
         {removedItem ? <p role="status">Article supprimé. <button className="text-button" type="button" onClick={() => { if (store.getSnapshot().shoppingItems.length >= 200) { setCartMessage("Retirez un article pour libérer une place."); return; } store.setState((current) => ({ ...current, shoppingItems: current.shoppingItems.some((item) => item.id === removedItem.id) ? current.shoppingItems : [...current.shoppingItems, removedItem] })); setRemovedItem(null); }}>Annuler la suppression de l’article</button></p> : null}
       </section>
       <div className="shopping-progress"><span style={{ width: `${items.length ? (checkedCount / items.length) * 100 : 0}%` }} /></div>
-      <button className="primary-button full-button store-mode-entry" type="button" data-testid="enter-store-mode" disabled={!items.length} onClick={() => { setStoreCategoryIndex(0); setPantryMode(false); setStoreMode(true); }}><ArchiveIcon /> Mode magasin simplifié</button>
+      <button ref={storeEntryRef} className="primary-button full-button store-mode-entry" type="button" data-testid="enter-store-mode" disabled={!items.length} onClick={() => { keyboard.hide(); setStoreCategoryIndex(0); setPantryMode(false); setStoreMode(true); }}><ArchiveIcon /> Mode magasin simplifié</button>
       <div className="courses-actions">
         <button className="secondary-button" type="button" data-testid="share-list" onClick={() => void share()}><Share2Icon /> Partager</button>
         <button className="secondary-button" type="button" data-testid="copy-list" onClick={() => void copy()}><CopyIcon /> Copier</button>
