@@ -5,7 +5,7 @@ import { inspectActivePlan } from "../engine";
 import { DownloadIcon, ArchiveIcon, CheckIcon, ReloadIcon, ClockIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { downloadTextFile } from "../components/browser-files";
 import { isoDate } from "../components/format";
-import { catalogueAvailableOffline, CATALOGUE_SUMMARY, cacheCatalogueForOffline } from "../catalog";
+import { catalogueOfflineEdition, catalogueEditionStatus, CATALOGUE_SUMMARY, cacheCatalogueForOffline } from "../catalog";
 import { usesSharedGitHubPagesOrigin } from "../privacy";
 import { MobileScroll } from "../mobile";
 
@@ -112,23 +112,33 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
 }
 
 function OfflineCatalogueSection() {
-  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [edition, setEdition] = useState<{ outdated: boolean; recipeCount: number } | null>(null);
+  const [status, setStatus] = useState<"checking" | "idle" | "loading" | "error">("checking");
   useEffect(() => {
     let active = true;
-    void catalogueAvailableOffline().then((available) => { if (active && available) setStatus("ready"); });
+    void catalogueOfflineEdition().then((available) => {
+      if (!active) return;
+      setEdition(available);
+      setStatus("idle");
+    }).catch(() => { if (active) setStatus("idle"); });
     return () => { active = false; };
   }, []);
+  const ready = edition !== null && !edition.outdated;
   return (
     <section className="information-card" data-testid="offline-catalogue">
       <h2>Catalogue hors ligne</h2>
       <p>La semaine, les recettes planifiées et la liste de courses fonctionnent déjà sans connexion. Le catalogue complet ({CATALOGUE_SUMMARY.nombre_recettes} recettes) peut être conservé explicitement sur cet appareil.</p>
-      <button type="button" className="secondary-button full-button" data-testid="offline-catalogue-download" disabled={status === "loading" || status === "ready"} onClick={() => {
+      {edition?.outdated ? <p className="notice-banner" role="status" data-testid="offline-catalogue-outdated">Une ancienne édition de {edition.recipeCount.toLocaleString("fr-FR")} recettes reste disponible hors ligne. Connectez-vous pour télécharger l’édition actuelle. Votre copie est conservée jusqu’à la réussite de la mise à jour.</p> : null}
+      <button type="button" className="secondary-button full-button" data-testid="offline-catalogue-download" disabled={status === "checking" || status === "loading" || ready} aria-busy={status === "checking" || status === "loading"} onClick={() => {
         setStatus("loading");
-        void cacheCatalogueForOffline().then(() => setStatus("ready")).catch(() => setStatus("error"));
+        void cacheCatalogueForOffline().then((data) => {
+          setEdition(catalogueEditionStatus(data));
+          setStatus("idle");
+        }).catch(() => setStatus("error"));
       }}>
-        {status === "ready" ? <><CheckIcon /> Catalogue vérifié hors ligne</> : status === "loading" ? <><ReloadIcon className="spin" /> Téléchargement et vérification…</> : <><DownloadIcon /> Télécharger pour le hors-ligne</>}
+        {status === "checking" ? <><ReloadIcon className="spin" /> Vérification de la copie…</> : status === "loading" ? <><ReloadIcon className="spin" /> Téléchargement et vérification…</> : ready ? <><CheckIcon /> Catalogue vérifié hors ligne</> : edition?.outdated ? <><DownloadIcon /> Mettre à jour le catalogue</> : <><DownloadIcon /> Télécharger pour le hors-ligne</>}
       </button>
-      {status === "error" ? <p className="notice-banner" role="alert">Le catalogue n’a pas pu être enregistré dans le cache de cet appareil. Libérez de l’espace puis réessayez en ligne.</p> : null}
+      {status === "error" ? <p className="notice-banner" role="alert">Le catalogue n’a pas pu être enregistré sur cet appareil. Vérifiez votre connexion et l’espace disponible, puis réessayez.{edition ? " Votre copie hors ligne précédente est conservée." : ""}</p> : null}
     </section>
   );
 }

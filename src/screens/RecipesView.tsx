@@ -1,6 +1,6 @@
 import { Cross2Icon, ReloadIcon, MagnifyingGlassIcon, CopyIcon, HeartFilledIcon, HeartIcon, MixerHorizontalIcon, CheckIcon, ChevronRightIcon, ArchiveIcon } from "@radix-ui/react-icons";
 import { type SavedMeal } from "../saved-meals";
-import { type CatalogueData, type CatalogueRecipe, type CatalogueFilters, EMPTY_CATALOGUE_FILTERS, catalogueRecipeIdOf, filterCatalogueRecipes, visibleCatalogueRecipes, catalogueImageFor, catalogueCategoryName, CATALOGUE_CATEGORIES, plannerAvailabilityFor, DUPLICATE_CATALOGUE_RECIPES } from "../catalog";
+import { type CatalogueData, type CatalogueRecipe, type CatalogueFilters, EMPTY_CATALOGUE_FILTERS, catalogueRecipeIdOf, filterCatalogueRecipes, visibleCatalogueRecipes, catalogueImageFor, catalogueCategoryName, catalogueEditionStatus, CATALOGUE_CATEGORIES, plannerAvailabilityFor, DUPLICATE_CATALOGUE_RECIPES } from "../catalog";
 import { useKeyboard, KeyboardInput, Carousel } from "../mobile";
 import { useState, type ReactNode, useDeferredValue, useEffect } from "react";
 import { normalizeText, formatRecipeDuration, formatCatalogueCardDuration, formatWeekRange } from "../components/format";
@@ -90,6 +90,7 @@ export function RecipesView({ libraryTools, savedMeals, onOpenSavedMeal, onDelet
     normalizedQuery,
   ).filter((recipe) => associationFilter === "all" || (isAssociationRecipe(recipe.id) && (associationFilter === "collection" || evaluateAssociations(recipe.ingredients).level === associationFilter)));
   const renderedCatalogueRecipes = catalogueRecipes.slice(0, visibleCatalogueCount);
+  const catalogueEdition = catalogue ? catalogueEditionStatus(catalogue) : null;
   useEffect(() => { setVisibleCatalogueCount(60); }, [mode, normalizedQuery, category, filters, associationFilter]);
   const activeFilterCount = [
     filters.maxActiveMinutes > 0,
@@ -102,6 +103,7 @@ export function RecipesView({ libraryTools, savedMeals, onOpenSavedMeal, onDelet
   return (
     <main className="page-content favorites-page" data-testid="recipes-view">
       <div className="page-heading"><span className="eyebrow">Le plaisir de choisir</span><h1>Recette</h1><p>{catalogue ? `${visibleCatalogueRecipes(catalogue).length.toLocaleString("fr-FR")} recettes à découvrir, à votre rythme.` : "Trouvez votre prochaine envie."}</p></div>
+      {catalogueEdition?.outdated ? <p className="notice-banner" role="status" data-testid="catalogue-outdated">Vous consultez une ancienne édition de {catalogueEdition.recipeCount.toLocaleString("fr-FR")} recettes, conservée sur cet appareil. Pour la mettre à jour en ligne, ouvrez « Ajuster mon profil » depuis l’accueil, puis « Informations et confidentialité » et « Mettre à jour le catalogue ».</p> : null}
       {libraryTools}
       <SavedMealsView meals={savedMeals} catalogue={catalogue} onLoad={onRetryCatalogue} onOpen={onOpenSavedMeal} onDelete={onDeleteSavedMeal} onRestore={onRestoreSavedMeal} onRename={onRenameSavedMeal} />
       <div className="segmented-control segmented-control--three" role="tablist" aria-label="Catalogue, favoris et historique" onKeyDown={(event) => {

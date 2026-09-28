@@ -3,7 +3,7 @@ import { useState, useSyncExternalStore, useEffect, useMemo, useCallback, useRef
 import { type WeeklyPlan, type Recipe, type PlannedMeal, type PantryAmount, type IngredientCategory } from "../domain";
 import { normalizeCustomRecipe, loadAppState, HISTORY_LIMIT, watchForStoredState, saveAppState, StoredStateReadError, APP_STATE_DATA_KEYS, type AppState } from "../storage";
 import { refreshPlanEstimate, reconcileCheckedItems, isPlanExpired, planDayOffset, inspectActivePlan, contextualRemindersForDate, preservableLockedMeals, setPlannedMealLock, setMealSkipped, setPlannedMealCompleted, getReplacementCandidates, replacePlannedMeal, assignRecipeToSlot, setMealPortions, ingredientsForPlannedMeal, setMealIngredientSubstitution, restorePlan, planLeftover, swapPlannedMeals } from "../engine";
-import { type CatalogueData, loadCatalogue, type CatalogueRecipe, catalogueFavoriteId, catalogueImageFor, visibleCatalogueRecipes } from "../catalog";
+import { type CatalogueData, loadCatalogue, type CatalogueRecipe, catalogueFavoriteId, catalogueImageFor, visibleCatalogueRecipes, subscribeCatalogueUpdates } from "../catalog";
 import { storedShoppingItemMatches, shoppingIdentityFor } from "../shopping";
 import { CalendarIcon, ArrowLeftIcon, ReloadIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { catalogueShoppingRecipe } from "../personal-library";
@@ -148,15 +148,31 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
   const [catalogue, setCatalogue] = useState<CatalogueData | null>(null);
   const [catalogueError, setCatalogueError] = useState(false);
   const [catalogueAttempt, setCatalogueAttempt] = useState(0);
+  const catalogueRequest = useRef(0);
+  useEffect(() => {
+    const unsubscribe = subscribeCatalogueUpdates((data) => {
+      // A completed download supersedes any older cache read still in flight.
+      catalogueRequest.current += 1;
+      setCatalogue(data);
+      setCatalogueError(false);
+    });
+    return () => { catalogueRequest.current += 1; unsubscribe(); };
+  }, []);
   const ensureCatalogue = useCallback(() => {
     if (catalogue) return;
     setCatalogueError(false);
-    void loadCatalogue().then(setCatalogue).catch(() => setCatalogueError(true));
+    const request = ++catalogueRequest.current;
+    void loadCatalogue().then((data) => {
+      if (request === catalogueRequest.current) setCatalogue(data);
+    }).catch(() => { if (request === catalogueRequest.current) setCatalogueError(true); });
   }, [catalogue, catalogueAttempt]);
   const retryCatalogue = useCallback(() => {
     setCatalogueError(false);
     setCatalogueAttempt((value) => value + 1);
-    void loadCatalogue().then(setCatalogue).catch(() => setCatalogueError(true));
+    const request = ++catalogueRequest.current;
+    void loadCatalogue().then((data) => {
+      if (request === catalogueRequest.current) setCatalogue(data);
+    }).catch(() => { if (request === catalogueRequest.current) setCatalogueError(true); });
   }, []);
 
   useEffect(() => {
