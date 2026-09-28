@@ -24,7 +24,8 @@ garantie absolue sur tous les appareils ; les limites réelles restent indiquée
 9. C10 : demande de stockage persistant, sans garantie trompeuse.
 10. C9 : benchmark du moteur ; optimisation seulement si démontrée utile et
     compatible avec des résultats déterministes inchangés.
-11. C12 : fiabilité des métadonnées de partage ; pages indexables selon décision.
+11. C12 : référencement et métadonnées retirés à la demande de l'utilisateur
+    le 28 septembre ; réglages actuels conservés.
 12. C13 : contrôles de qualité et de typage, entretien du code affecté.
 13. C7/C11 : changement d'origine et travaux dépendant d'un autre hébergement
     retirés à la demande de l'utilisateur le 28 septembre. L'adresse GitHub Pages
@@ -195,3 +196,9 @@ l'adresse actuelle. La migration vers une origine dédiée et les travaux qui
 nécessiteraient un autre hébergement sont retirés du plan. Les protections
 existantes sont conservées ; les limites de l'origine GitHub Pages partagée
 et des en-têtes HTTP configurables ne sont pas présentées comme corrigées.
+
+## C12 — Référencement retiré à la demande de l'utilisateur
+
+Après distinction entre moteurs de recherche et aperçus de partage,
+l'utilisateur demande de retirer également ce point. Aucun chantier SEO,
+nouvelle page indexable ni changement des métadonnées n'est entrepris.
