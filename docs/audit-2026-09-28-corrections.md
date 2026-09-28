@@ -18,7 +18,8 @@ garantie absolue sur tous les appareils ; les limites réelles restent indiquée
 5. C2 : téléchargement du planificateur sur le chemin de démarrage.
 6. Défauts fonctionnels restants : favoris de la fiche catalogue, puis durées
    de l'éditeur, puis pas des quantités, traités séparément.
-7. C8 : icônes et formats de polices du précache.
+7. C8 : retiré du périmètre à la demande de l'utilisateur le 28 septembre ;
+   icônes, polices et leur préchargement restent inchangés.
 8. C6 : variantes d'images adaptées à l'affichage.
 9. C10 : demande de stockage persistant, sans garantie trompeuse.
 10. C9 : benchmark du moteur ; optimisation seulement si démontrée utile et
@@ -147,3 +148,10 @@ Ordre impératif de validation : Worker/Sites, puis reconstruction Pages, puis
 PWA. Le préparateur Sites existant retire `dist/pages` pour éviter de publier
 deux fois les assets ; un premier lancement PWA en parallèle a donc été arrêté
 par l'absence de cette sortie, puis intégralement relancé dans le bon ordre.
+
+## C8 — Retiré à la demande de l'utilisateur
+
+Après explication des poids des icônes et des formats de polices, l'utilisateur
+a demandé de ne pas faire cette optimisation. Aucune modification n'avait été
+commencée : icônes, polices et leur préchargement sont conservés. Cette décision
+ne retire pas le point distinct C6 sur les images des recettes.
