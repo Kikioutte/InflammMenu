@@ -302,3 +302,46 @@ Limite numérique inchangée : une modification reste stockée dans un nombre
 JavaScript. Un résidu subnormal ajouté à un quart ne peut pas être retrouvé
 ensuite ; aucune promesse d'aller-retour universel au-delà de cette précision.
 L'affichage des petites valeurs non modifiées, même extrêmes, reste non nul.
+
+## C10 — Protection facultative du stockage local
+
+La demande `navigator.storage.persist()` est indépendante de l'enregistrement.
+Elle n'est envisagée qu'après la génération d'une nouvelle semaine non vide,
+puis la confirmation d'au moins une copie durable par `saveAppState`. Le plan
+normalisé et la génération du stockage doivent encore correspondre dans l'état
+demandé, le résultat sauvegardé et l'état vivant ; la promotion d'une semaine
+suivante conserve cette éligibilité. Une réponse de sauvegarde ancienne ne
+consomme pas l'intention d'une génération plus récente.
+
+La sonde `persisted()` évite de redemander un stockage déjà persistant. Une seule
+demande effective par session est tentée ; les appels concurrents sont réunis.
+Une intention annulée avant la demande ne prive pas une nouvelle semaine de sa
+tentative. Une restauration ou suppression pendant la sonde invalide l'ancienne
+intention. API absente, refus, exception ou promesse qui ne répond pas n'empêchent
+ni la navigation ni les enregistrements suivants. Aucun nouveau champ n'entre
+dans les données, les sauvegardes ou le stockage local.
+
+Le texte d'information précise que le navigateur reste décisionnaire et qu'un
+export demeure nécessaire. Cela ne constitue pas une garantie contre l'effacement
+manuel, la perte de l'appareil ou toutes les politiques des navigateurs. Références :
+[StorageManager.persist](https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/persist)
+et [politique de stockage WebKit](https://webkit.org/blog/14403/updates-to-storage-policy/).
+
+Les tests doublent explicitement l'API de permission, pas la génération ni la
+sauvegarde : les copies localStorage/IndexedDB, transactions, exports et imports
+restent réels. Un verrou de transaction retarde l'écriture et vérifie l'absence
+de demande avant sa fin. Le témoin de commit est installé avant le callback de
+l'application : certains moteurs exécutent des microtâches entre les listeners
+du même événement ; ce témoin ne modifie pas l'écriture ni ses callbacks.
+
+Validation intermédiaire C10 : 11/11 tests unitaires, les 32 scénarios ciblés
+réussis par sous-ensembles, `test:release`, TypeScript, runtime protégé, Worker/Sites
+5/5, builds Pages/Worker et PWA complète 20/20 réussis. Relecture indépendante
+terminée. Six captures Informations relues sur Chromium/WebKit, à 320, 390 et
+1440 px : texte entier, aucun débordement ni erreur console ; styles inchangés.
+Clôture C10 : **257/257 tests navigateur** réussis sur la passe complète, dont
+32/32 nouveaux parcours ; les autres portes ci-dessus passent également.
+Précache Pages `19e888be7a2a`, 32 ressources et 407 178 octets gzip critiques,
+sous le budget inchangé. Aucun point suivant commencé lors de cette clôture.
+Les permissions accordées dans ces tests sont des doubles API, pas une garantie
+d'accord sur l'appareil de chaque utilisateur.

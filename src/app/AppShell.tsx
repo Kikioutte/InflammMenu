@@ -1,7 +1,8 @@
 import { type FlowControls, type FlowScreen, MobileScroll } from "../mobile";
 import { useState, useSyncExternalStore, useEffect, useMemo, useCallback, useRef } from "react";
 import { type WeeklyPlan, type Recipe, type PlannedMeal, type PantryAmount, type IngredientCategory } from "../domain";
-import { normalizeCustomRecipe, loadAppState, HISTORY_LIMIT, watchForStoredState, saveAppState, StoredStateReadError, APP_STATE_DATA_KEYS, type AppState } from "../storage";
+import { normalizeCustomRecipe, normalizePlan, loadAppState, HISTORY_LIMIT, watchForStoredState, saveAppState, StoredStateReadError, APP_STATE_DATA_KEYS, type AppState } from "../storage";
+import { createStoragePersistenceRequester } from "../storage-persistence";
 import { refreshPlanEstimate, reconcileCheckedItems, isPlanExpired, planDayOffset, inspectActivePlan, contextualRemindersForDate, preservableLockedMeals, setPlannedMealLock, setMealSkipped, setPlannedMealCompleted, getReplacementCandidates, replacePlannedMeal, assignRecipeToSlot, setMealPortions, ingredientsForPlannedMeal, setMealIngredientSubstitution, restorePlan, planLeftover, swapPlannedMeals } from "../engine";
 import { type CatalogueData, loadCatalogue, type CatalogueRecipe, catalogueFavoriteId, catalogueImageFor, visibleCatalogueRecipes, subscribeCatalogueUpdates } from "../catalog";
 import { storedShoppingItemMatches, shoppingIdentityFor } from "../shopping";
@@ -48,6 +49,14 @@ const ProfileView = deferredScreen(async () => ({ default: (await import("../scr
 const InformationView = deferredScreen(async () => ({ default: (await import("../screens/secondary-views")).InformationView }), "À propos de l’application");
 const CustomRecipeView = deferredScreen(async () => ({ default: (await import("../screens/secondary-views")).CustomRecipeView }), "Adapter la recette");
 
+type PendingGeneratedPlan = { planId: string; storageGeneration: string; snapshot: string };
+
+function containsGeneratedPlan(state: AppState, pending: PendingGeneratedPlan): boolean {
+  return state.storageGeneration === pending.storageGeneration
+    && [state.currentPlan, state.upcomingPlan].some((plan) => plan?.id === pending.planId
+      && plan.meals.length > 0 && JSON.stringify(normalizePlan(plan)) === pending.snapshot);
+}
+
 export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: AppStateStore }) {
   const [tab, setTab] = useState<TabId>("home");
   const appState = useSyncExternalStore(appStore.subscribe, appStore.getSnapshot, appStore.getSnapshot);
@@ -80,6 +89,8 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
   const [archivedWeek, setArchivedWeek] = useState<WeeklyPlan | null>(null);
   const [appNotice, setAppNotice] = useState("");
   const [storageWarning, setStorageWarning] = useState("");
+  const pendingGeneratedPlan = useRef<PendingGeneratedPlan | null>(null);
+  const [requestStoragePersistence] = useState(() => createStoragePersistenceRequester());
   const { offline, canInstall, install, updateReady, reload } = useInstallAndConnectivity();
   const registeredPersonalRecipes = useMemo(() => [...appState.customRecipes, ...appState.composedRecipes], [appState.customRecipes, appState.composedRecipes]);
   const activeRecipeSnapshot = useRecipeRegistry(registeredPersonalRecipes);
@@ -224,11 +235,31 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
 
   useEffect(() => {
     if (!hydrated) return;
+    if (pendingGeneratedPlan.current && !containsGeneratedPlan(appStore.getSnapshot(), pendingGeneratedPlan.current)) {
+      pendingGeneratedPlan.current = null;
+    }
+    const generatedPlan = pendingGeneratedPlan.current;
     let active = true;
     void saveAppState(appState).then((result) => {
       if (!active) return;
       if (mergeAppState(result.state)) {
         setAppNotice("Les données locales les plus récentes ont été synchronisées.");
+      }
+      const live = appStore.getSnapshot();
+      if (pendingGeneratedPlan.current && !containsGeneratedPlan(live, pendingGeneratedPlan.current)) {
+        pendingGeneratedPlan.current = null;
+      }
+      // Only a newly generated week proved durable and still active qualifies.
+      // An older save response must not consume a newer generation's ticket.
+      if (generatedPlan && pendingGeneratedPlan.current === generatedPlan
+        && (result.localSaved || result.indexedSaved)
+        && containsGeneratedPlan(appState, generatedPlan)
+        && containsGeneratedPlan(result.state, generatedPlan)
+        && containsGeneratedPlan(live, generatedPlan)) {
+        void requestStoragePersistence(() => pendingGeneratedPlan.current === generatedPlan
+          && containsGeneratedPlan(appStore.getSnapshot(), generatedPlan)).then(() => {
+          if (pendingGeneratedPlan.current === generatedPlan) pendingGeneratedPlan.current = null;
+        });
       }
       setStorageWarning(result.localSaved && result.indexedSaved ? "" : "Vos données sont enregistrées dans un seul stockage local. Exportez une sauvegarde par précaution.");
     }).catch((error: unknown) => {
@@ -237,7 +268,7 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
         : "Impossible d’enregistrer vos changements sur cet appareil. Exportez vos données avant de fermer la page.");
     });
     return () => { active = false; };
-  }, [appState, hydrated, mergeAppState]);
+  }, [appState, hydrated, mergeAppState, appStore, requestStoragePersistence]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -355,14 +386,26 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
       Date.now(),
       startsOn,
     );
-    setAppState((current) => (target === "upcoming"
-      ? { ...current, upcomingPlan: plan }
-      : {
-          ...current,
-          currentPlan: plan,
-          history: current.currentPlan ? [current.currentPlan, ...current.history.filter((item) => item.id !== current.currentPlan?.id)].slice(0, HISTORY_LIMIT) : current.history,
-          checkedShoppingItemIds: [],
-        }));
+    const normalizedPlan = normalizePlan(plan);
+    const pending = normalizedPlan ? {
+      planId: normalizedPlan.id, storageGeneration: live.storageGeneration, snapshot: JSON.stringify(normalizedPlan),
+    } : null;
+    pendingGeneratedPlan.current = pending;
+    try {
+      setAppState((current) => (target === "upcoming"
+        ? { ...current, upcomingPlan: plan }
+        : {
+            ...current,
+            currentPlan: plan,
+            history: current.currentPlan ? [current.currentPlan, ...current.history.filter((item) => item.id !== current.currentPlan?.id)].slice(0, HISTORY_LIMIT) : current.history,
+            checkedShoppingItemIds: [],
+          }));
+      // Stamping can roll a saturated revision into a fresh storage generation.
+      if (pending) pending.storageGeneration = appStore.getSnapshot().storageGeneration;
+    } catch (error) {
+      if (pendingGeneratedPlan.current === pending) pendingGeneratedPlan.current = null;
+      throw error;
+    }
     return plan;
   }
 

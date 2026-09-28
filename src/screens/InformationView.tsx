@@ -88,6 +88,7 @@ function BackupSection({ state, onRestore }: { state: AppState; onRestore: (rest
     <section className="information-card" data-testid="backup-card">
       <h2>Sauvegarder mes données</h2>
       <p>Vos données sont stockées localement par cette adresse web, sur cet appareil : vider les données du site les efface. Exportez un fichier pour les conserver ou les transférer, puis restaurez-le quand vous le souhaitez.</p>
+      <p>Après l’enregistrement d’une nouvelle semaine, l’application peut demander au navigateur de mieux protéger ce stockage contre l’effacement automatique. L’accord dépend du navigateur et ne remplace pas une sauvegarde exportée.</p>
       <div className="backup-actions">
         <button type="button" className="secondary-button" data-testid="backup-export" onClick={download}><DownloadIcon /> Exporter</button>
         <label className="secondary-button backup-import" htmlFor={inputId}><ArchiveIcon /> Restaurer
