@@ -4,7 +4,7 @@ const testPort = Number(process.env.PWA_TEST_PORT ?? 4175);
 
 export default defineConfig({
   testDir: "./tests",
-  testMatch: "pwa-state.spec.ts",
+  testMatch: ["pwa-state.spec.ts", "responsive-images.pwa.spec.ts"],
   timeout: 60_000,
   workers: 1,
   use: {

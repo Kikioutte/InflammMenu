@@ -7,7 +7,7 @@ import { isAssociationRecipe, evaluateAssociations } from "../food-associations"
 import { scaleAssociationStep } from "../composed-meal";
 import { PLANNER_EXCLUSION_TEXT } from "../components/constants";
 import { catalogueDurationItems, formatRecipeDuration } from "../components/format";
-import { handleRecipeImageError } from "../components/recipe-image";
+import { RecipeImage, RECIPE_IMAGE_SIZES } from "../components/RecipeImage";
 import { AllergenNotice, AssociationNotice } from "../components/recipe-facts";
 import { RecipeFeedback } from "../components/RecipeFeedback";
 
@@ -19,7 +19,7 @@ export function CatalogueRecipeView({ tools, recipe, favorite, onFavorite, onPla
   const ratio = portions / Math.max(1, recipe.portions);
   const durationItems = catalogueDurationItems(recipe);
   return <MobileScroll className="app-screen"><main className="catalogue-detail pushed-page">
-    <div className="catalogue-detail__hero"><img src={catalogueImageFor(recipe)} alt={recipe.image.alt || recipe.titre} width={900} height={900} onError={handleRecipeImageError} /><div className="catalogue-detail__hero-copy"><span>{catalogueCategoryName(recipe.categorie)}</span><h1>{recipe.titre}</h1><small>{formatRecipeDuration(recipe.temps.total)} au total · {DIFFICULTY_LABELS[recipe.difficulte]} · {COST_LABELS[recipe.cout]}</small></div></div>
+    <div className="catalogue-detail__hero"><RecipeImage src={catalogueImageFor(recipe)} alt={recipe.image.alt || recipe.titre} width={900} height={900} sizes={RECIPE_IMAGE_SIZES.fullWidth} /><div className="catalogue-detail__hero-copy"><span>{catalogueCategoryName(recipe.categorie)}</span><h1>{recipe.titre}</h1><small>{formatRecipeDuration(recipe.temps.total)} au total · {DIFFICULTY_LABELS[recipe.difficulte]} · {COST_LABELS[recipe.cout]}</small></div></div>
     <div className="recipe-content">
       <div className={`catalogue-verdict is-${review.status}`}><span>{review.status === "validated" ? "Profil cohérent" : "Validée avec repères"}</span><p>{review.summary}</p></div>
       <div className={`recipe-actions ${onPlan ? "" : "recipe-actions--single"}`}>{onPlan ? <button type="button" className="secondary-button" data-testid="catalogue-plan" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${favorite ? "is-favorite" : ""}`} data-testid="catalogue-favorite" aria-pressed={favorite} onClick={onFavorite}>{favorite ? <HeartFilledIcon /> : <HeartIcon />}{favorite ? "Enregistrée" : "Ajouter aux favoris"}</button></div>

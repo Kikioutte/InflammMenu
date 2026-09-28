@@ -31,6 +31,71 @@ garantie absolue sur tous les appareils ; les limites réelles restent indiquée
     retirés à la demande de l'utilisateur le 28 septembre. L'adresse GitHub Pages
     actuelle est conservée ; aucune migration, configuration DNS ou publication.
 
+## C6 — Photos adaptées aux écrans
+
+- Les 1 243 JPEG de recettes et la photo d'accueil restent intacts. SHA global
+  des JPEG de recettes avant/après :
+  `cbbffcaf5efd5517880d829b794f76f4f81930661de2fbaf5b552ecbf7aa91ce`.
+  Aucun changement des URL enregistrées dans les données et sauvegardes.
+- Génération reproductible de 4 975 variantes WebP : recettes 160/320/640/900 px,
+  accueil 640/960/1200 px. Ratios conservés, notamment les quatre JPEG 900×720 ;
+  pas de recadrage ni d'agrandissement. Les dérivés ne sont pas suivis dans Git,
+  les builds les produisent depuis les originaux. L'empreinte inclut sources,
+  réglages et versions des encodeurs ; seul son petit identifiant est embarqué.
+- Treize images réparties sur huit écrans utilisent la même balise `img`
+  responsive, sans changement de CSS. Textes alternatifs, chargement et dimensions
+  existants conservés ; dimensions manquantes ajoutées à l'accueil et aux favoris
+  catalogue. Replis bornés vers JPEG puis illustration neutre, réinitialisés à
+  chaque changement de source.
+- Hors ligne : une variante déjà visitée peut servir une autre taille de la même
+  photo ; compatibilité avec les JPEG existants et anciennes éditions. Écriture
+  avant remplacement, quota conservateur, opérations sérialisées et limite de
+  120 entrées maintenue. Aucune photo jamais visitée n'est annoncée disponible.
+- La seule photo d'accueil précachée est désormais sa variante WebP1200
+  (154 130 octets au lieu du JPEG de 332 807), également utilisable pour ses petites
+  tailles hors ligne. Icônes, polices et leur précache restent inchangés. Aucune
+  photo de recette n'entre dans le précache.
+
+Mesures réelles sur `r1088`, Chromium et WebKit : original 306 691 octets ; aperçu
+52 px en WebP160 : 6 026 octets (−98,0 %) ; carte bureau DPR1 en WebP320 : 18 620
+(−93,9 %) ; carte mobile DPR2/3 en WebP640 : 59 660 (−80,5 %) ; fiche en WebP900 :
+101 908 (−66,8 %). Mesures du corps des réponses, cohérentes avec les octets reçus,
+pas une promesse de réduction de tout le chargement. L'artefact contient toujours
+les JPEG de secours plus les tailles dérivées : il est plus volumineux sur disque.
+
+Les tests ciblés incluent les quatre profils 320/DPR2, 390/DPR3, 1440/DPR1 et
+1440/DPR2, erreurs WebP/JPEG/illustration, modification de photo entre onglets,
+export/restauration et absence de modification des deux plans. Les tests PWA
+ferment réellement le serveur avant d'ouvrir/agrandir les fiches, puis rechargent.
+Captures mobile et bureau relues, ainsi que des JPEG et leurs variantes WebP ;
+les références de mise en page ne changent pas. Procédure de maintenance dans
+[responsive-images.md](responsive-images.md).
+
+Validation intermédiaire C6 : 16/16 tests ciblés, 8 contrôles de génération/précache,
+31 contrôles du service worker, 20/20 PWA (Chromium/WebKit), `test:release`,
+TypeScript, runtime, Worker/Sites 5/5 et les deux builds passent. Première suite
+navigateur complète : 222/225. Deux assertions de largeur décodée supposaient
+l'absence de `srcset` : elles vérifient maintenant les vrais pixels du WebP reçu
+(900×900), son identité et son affichage, puis les portions ; relance 2/2 réussie.
+L'autre échec a été reproduit isolément (1/10). La trace montre le retour correct
+du focus au champ à 1712 ms, puis le focus du H1 par `FlowStack.applyFocus` à
+1719 ms en fin d'animation. L'éditeur et ce runtime sont inchangés depuis 6c.
+Le test doit attendre l'activation de l'écran avant ses saisies ; les assertions
+de focus après chaque erreur restent obligatoires. Cela ne corrige ni ne masque
+la limite préexistante d'une interaction très rapide pendant la transition du
+runtime protégé, laissé inchangé. Les 20 répétitions du test exact après cette
+synchronisation passent (10 Chromium, 10 WebKit), de même que les 20 répétitions
+préalables dans le harnais attendant l'activation. L'audit des dépendances ne
+signale aucune vulnérabilité.
+
+Clôture C6 : **225/225 tests navigateur** sur la relance complète, 20/20 PWA,
+8/8 génération/précache, 31/31 service worker, `test:release`, TypeScript,
+Worker/Sites 5/5, builds Pages et Worker, runtime protégé, relecture indépendante
+et contrôle du diff réussis. Précache Pages `8569edfa2bf2` : 32 ressources, dont
+les mêmes 12 polices et 2 icônes ; graphe critique 7 JavaScript, 2 261 879 octets
+et 406 835 gzip, sous les budgets inchangés. Le point suivant n'avait pas été
+commencé lors de cette clôture.
+
 ## C1 — Catalogue hors ligne
 
 - Clé stable, récupération des anciennes clés et validation par empreinte de

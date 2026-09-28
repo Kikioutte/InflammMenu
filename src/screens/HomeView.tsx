@@ -1,6 +1,6 @@
 import { type PlannedMeal, type Recipe, type UserProfile, type WeeklyPlan } from "../domain";
 import { MoonIcon, SunIcon, CheckCircledIcon, ChevronRightIcon, ClockIcon, ReaderIcon, DownloadIcon, CalendarIcon, PersonIcon } from "@radix-ui/react-icons";
-import { handleRecipeImageError } from "../components/recipe-image";
+import { RecipeImage, RECIPE_IMAGE_SIZES } from "../components/RecipeImage";
 import { CompositionSummary } from "../components/recipe-facts";
 import { MEAL_LABELS, DAY_LABELS } from "../components/constants";
 import { dateAt, currentDayIndex, isoDate, formatWeekRange } from "../components/format";
@@ -14,7 +14,7 @@ function MealPreview({ planned, recipe, startsOn, onOpen }: { planned: PlannedMe
   const cooked = planned.completed === true;
   return (
     <button type="button" className={`meal-preview ${cooked ? "is-cooked" : ""}`} data-completed={cooked ? "true" : "false"} onClick={onOpen}>
-      <img src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" onError={handleRecipeImageError} /><span className="meal-preview__icon" aria-hidden="true">{cooked ? <CheckCircledIcon /> : <MealIcon />}</span>
+      <RecipeImage src={recipe.image} alt="" width={900} height={900} loading="lazy" decoding="async" sizes="52px" /><span className="meal-preview__icon" aria-hidden="true">{cooked ? <CheckCircledIcon /> : <MealIcon />}</span>
       <span className="meal-preview__copy"><strong>{recipe.title}</strong><CompositionSummary recipe={recipe} /><small>{MEAL_LABELS[planned.mealType]} · {DAY_LABELS[planned.dayIndex]} {dateAt(startsOn, planned.dayIndex).getDate()}{cooked ? " · Cuisiné" : ""}</small></span>
       <ChevronRightIcon className="meal-preview__chevron" />
     </button>
@@ -59,7 +59,7 @@ export function HomeView({ profile, plan, archivedWeek, upcomingPlan, onGenerate
   return (
     <main className="home-view" data-testid="home-view">
       <section className="home-hero">
-        <img className="home-hero__image" src="/assets/inflamm-hero-bowl.jpg" alt="Bowl de quinoa, pois chiches et légumes rôtis" />
+        <RecipeImage className="home-hero__image" src="/assets/inflamm-hero-bowl.jpg" alt="Bowl de quinoa, pois chiches et légumes rôtis" width={1200} height={1000} sizes={RECIPE_IMAGE_SIZES.fullWidth} />
         <div className="home-hero__content">
           <Wordmark /><p className="home-kicker">Bonjour{firstName ? ` ${firstName}` : ""}</p><h1>Une semaine<br />qui vous fait<br />du bien</h1>
           <button className="primary-button home-cta" type="button" onClick={onGenerate}>{plan ? "Créer une autre semaine" : "Générer ma semaine"}</button>

@@ -62,6 +62,8 @@ async function editPersonal(page: Page) {
   await openPersonal(page);
   await currentScreen(page).getByTestId("edit-custom-recipe").click();
   await expect(currentScreen(page).getByTestId("custom-recipe-view")).toBeVisible();
+  // Wait for route activation before testing validation's own focus handling.
+  await expect(currentScreen(page).getByRole("heading", { name: "Adapter la recette", exact: true })).toBeFocused();
 }
 
 function expectOtherDataPreserved(actual: AppState, before: AppState) {
