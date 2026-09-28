@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { DEFAULT_PROFILE } from "../src/domain";
 import { DEFAULT_APP_STATE } from "../src/storage";
@@ -2024,7 +2025,7 @@ test("une semaine archivée peut être supprimée et le plafond est expliqué", 
 
   await generateWeek(page);
   const archivedPlanId = await page.evaluate(() => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").currentPlan?.id as string | undefined);
-  expect(archivedPlanId).toBeTruthy();
+  assert.ok(archivedPlanId, "La semaine générée doit avoir un identifiant avant son archivage");
   await page.getByRole("button", { name: "Courses", exact: true }).click();
   await page.getByTestId("spend-input").fill("61,25");
   await expect.poll(() => page.evaluate((planId) => JSON.parse(window.localStorage.getItem("inflamm-menu:app-state") ?? "{}").actualSpend?.[planId], archivedPlanId)).toBe(61.25);
@@ -2376,6 +2377,7 @@ test("une recette personnelle reste retrouvable, modifiable et ne se supprime qu
     const raw = window.localStorage.getItem("inflamm-menu:app-state");
     return raw ? JSON.parse(raw).customRecipes?.[0]?.id as string | undefined : undefined;
   });
+  assert.ok(customRecipeId, "La recette personnelle sauvegardée doit avoir un identifiant");
   expect(customRecipeId).toMatch(/^perso-/);
 
   await page.getByTestId("edit-custom-recipe").click();

@@ -402,3 +402,36 @@ ressources et 407 175 octets gzip critiques, budgets inchangés. Aucun début de
 C13 avant cette clôture. La simulation 21 repas ×8 garde une longue tâche médiane
 de 86 ms : aucune promesse d'absence universelle de blocage ou de temps identique
 sur tous les appareils.
+
+## C13 — Contrôles de qualité et typage des tests
+
+Commencé après le commit de clôture C9 `f49189f`. Le contrôle existant vérifiait
+`src`, mais Playwright exécutait les tests TypeScript sans en vérifier les types.
+Un projet strict séparé couvre maintenant tous les tests `.ts`/`.tsx` et les trois
+configurations Playwright. Les imports navigateur `/src/*` sont résolus vers les
+vraies sources, sans déclaration globale en `any`. Deux assertions de présence
+d'identifiant sont explicitées dans les tests existants ; leurs assertions métier
+et parcours restent conservés. Aucun code produit n'est modifié dans ce point.
+
+ESLint 10.11.0, en dépendance de développement, contrôle les erreurs logiques des
+scripts, tests et outils JavaScript, ainsi que les workers. Toutes les règles
+actives passent sans réécriture, exclusion d'erreur existante ni formatage. Le
+TypeScript reste du ressort du compilateur : pas d'analyseur ESLint incompatible
+avec TypeScript 7. Les types Node 22 sont épinglés ; le lockfile ajoute uniquement
+des dépendances de développement, sans modifier les paquets existants.
+
+`check:quality` et les tests de son fonctionnement ouvrent `test:preview`, donc
+`test:release` et la validation GitHub existante. Le détail du périmètre et ses
+limites sont dans [quality-checks.md](quality-checks.md). Cela ne remplace pas les
+tests fonctionnels ou une relecture ; aucun objectif artificiel de couverture.
+
+Validation : contrôle des types, lint sans erreur ni avertissement, `test:release`,
+runtime protégé (28 fichiers), Worker/Sites 5/5, builds Pages/Worker, PWA 20/20 et
+**273/273 tests navigateur** réussis. Audit npm : aucune vulnérabilité déclarée.
+Le build Pages conserve exactement le shell `93f9219c5c6f`, les 32 ressources et
+407 175 octets gzip critiques de C9. Les captures vérifiées aux points C6, C10,
+C14 et C9 restent représentatives ; aucune modification visuelle dans C13.
+Clôture C13 : six tests des contrôles réussis, dont le câblage bloquant local/CI,
+relecture indépendante et dernière passe `test:release` réussies. Diff propre.
+Exécution locale Node 26.10.0 ; l'exécution Node 22 de GitHub reste à confirmer
+lors de l'ouverture de la PR. Aucun fichier produit modifié par C13.
