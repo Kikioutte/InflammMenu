@@ -4,6 +4,7 @@ import {
   DEFAULT_PROFILE,
   MIN_CUSTOM_RECIPE_PREP_MINUTES,
   MAX_CUSTOM_RECIPE_PREP_MINUTES,
+  MAX_CUSTOM_RECIPE_INGREDIENT_QUANTITY,
   MAX_PLAN_ESTIMATED_COST,
   type DayConstraint,
   type IngredientCategory,
@@ -470,7 +471,7 @@ export function normalizeCustomRecipe(value: unknown): Recipe | null {
     const rawId = cleanUserText(rawIngredient.id, 120);
     const name = cleanUserText(rawIngredient.name, 160);
     const quantity = finiteNumber(rawIngredient.quantity, Number.NaN);
-    if (!rawId || !name || !Number.isFinite(quantity) || quantity <= 0 || quantity > 1_000_000) return [];
+    if (!rawId || !name || !Number.isFinite(quantity) || quantity <= 0 || quantity > MAX_CUSTOM_RECIPE_INGREDIENT_QUANTITY) return [];
     if (typeof rawIngredient.unit !== "string" || !UNITS.has(rawIngredient.unit)) return [];
     if (typeof rawIngredient.category !== "string" || !CUSTOM_CATEGORIES.has(rawIngredient.category as IngredientCategory)) return [];
     return [{

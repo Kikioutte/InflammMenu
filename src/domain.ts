@@ -7,6 +7,9 @@ export const MAX_PLAN_ESTIMATED_COST = 2_000_000;
 export const MIN_CUSTOM_RECIPE_PREP_MINUTES = 1;
 export const MAX_CUSTOM_RECIPE_PREP_MINUTES = 1_440;
 
+/** Maximum per-portion ingredient quantity accepted by personal-recipe storage. */
+export const MAX_CUSTOM_RECIPE_INGREDIENT_QUANTITY = 1_000_000;
+
 export type DayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 export type DietMode = "classic" | "vegetarian" | "no-pork";

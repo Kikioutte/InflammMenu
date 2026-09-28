@@ -20,7 +20,11 @@ async function loadCoefficients(): Promise<Coefficients | null> {
   if (!coefficientPromise) {
     // A failed offline request must not poison later retries. The table is not
     // part of the first-render bundle; editing still works without its download.
-    coefficientPromise = import("./data/recipe-nutrition.json", { with: { type: "json" } })
+    // Vite turns JSON into a JS chunk; native Node tests require the JSON attribute.
+    const request = import.meta.env
+      ? import("./data/recipe-nutrition.json")
+      : import("./data/recipe-nutrition.json", { with: { type: "json" } });
+    coefficientPromise = request
       .then(module => module.default as Coefficients)
       .catch(() => { coefficientPromise = null; return null; });
   }

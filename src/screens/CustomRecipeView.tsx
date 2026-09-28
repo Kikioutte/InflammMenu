@@ -4,7 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { parseNumericInput } from "../numeric-input";
 import { normalizeCustomRecipe } from "../storage";
 import { recalculateRecipeEstimates } from "../recipe-nutrition";
-import { formatIngredientQuantity as displayQuantity } from "../presentation";
+import { formatIngredientUnit } from "../presentation";
+import { adjustCustomRecipeQuantity, formatCustomRecipeQuantity } from "../custom-recipe-quantities";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
 
@@ -20,9 +21,11 @@ export function CustomRecipeView({ draft, signal, onSave, onDelete }: { draft: R
   const editorRef = useRef<HTMLElement>(null);
   const mounted = useRef(true);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
-  const setQuantity = (index: number, delta: number) => setIngredients((current) => current.map((item, position) => (position === index
-    ? { ...item, quantity: Math.max(0, Math.round((item.quantity + delta) * 100) / 100) }
-    : item)));
+  const setQuantity = (index: number, direction: 1 | -1) => setIngredients((current) => current.map((item, position) => {
+    if (position !== index) return item;
+    const quantity = adjustCustomRecipeQuantity(item.quantity, item.unit, direction);
+    return quantity === null || quantity === item.quantity ? item : { ...item, quantity };
+  }));
   const commit = async () => {
     if (saving) return;
     const cleanedSteps = steps.split("\n").map((step) => step.trim()).filter(Boolean);
@@ -64,10 +67,13 @@ export function CustomRecipeView({ draft, signal, onSave, onDelete }: { draft: R
     </section>
     <section className="form-section"><h2>Ingrédients</h2>
       <p className="inline-help">Mettez une quantité à zéro pour retirer un ingrédient.</p>
-      {ingredients.map((item, index) => <div className="setting-row" key={`${item.id}-${index}`}>
-        <span><strong>{item.name}</strong><small>{displayQuantity(item.quantity, item.unit)} par portion</small></span>
-        <div className="stepper"><button type="button" disabled={saving} aria-label={`Réduire ${item.name}`} onClick={() => setQuantity(index, item.unit === "piece" ? -0.5 : -5)}><MinusIcon /></button><b>{item.quantity}</b><button type="button" disabled={saving} aria-label={`Augmenter ${item.name}`} onClick={() => setQuantity(index, item.unit === "piece" ? 0.5 : 5)}><PlusIcon /></button></div>
-      </div>)}
+      {ingredients.map((item, index) => {
+        const quantityLabel = formatCustomRecipeQuantity(item.quantity);
+        return <div className="setting-row custom-recipe-quantity-row" key={`${item.id}-${index}`}>
+          <span><strong>{item.name}</strong><small>{quantityLabel} {formatIngredientUnit(item.unit, item.quantity)} par portion</small></span>
+          <div className="stepper custom-recipe-quantity-stepper"><button type="button" disabled={saving} aria-label={`Réduire ${item.name}`} onClick={() => setQuantity(index, -1)}><MinusIcon /></button><b>{quantityLabel}</b><button type="button" disabled={saving || adjustCustomRecipeQuantity(item.quantity, item.unit, 1) === null} aria-label={`Augmenter ${item.name}`} onClick={() => setQuantity(index, 1)}><PlusIcon /></button></div>
+        </div>;
+      })}
     </section>
     <section className="form-section"><h2>Préparation</h2>
       <label className="text-field"><span>Une étape par ligne</span><KeyboardTextarea disabled={saving} value={steps} rows={8} id="custom-steps" data-testid="custom-steps" aria-invalid={invalidField === "custom-steps"} aria-describedby={error ? "custom-error" : undefined} onChange={(event) => setSteps(event.target.value)} /></label>

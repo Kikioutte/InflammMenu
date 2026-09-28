@@ -1,8 +1,9 @@
 import { composeMeal } from "../src/composed-meal";
 import { catalogueShoppingRecipe } from "../src/personal-library";
 import { DEFAULT_PROFILE } from "../src/domain";
-import { DEFAULT_APP_STATE, migrateAppState } from "../src/storage";
-import { assignRecipeToSlot, generateWeeklyPlan } from "../src/engine";
+import { APP_STATE_DATA_KEYS, DEFAULT_APP_STATE, migrateAppState, type AppState } from "../src/storage";
+import { assignRecipeToSlot, generateWeeklyPlan, refreshPlanEstimate } from "../src/engine";
+import { RECIPES } from "../src/recipes";
 import { IMPORTED_PLAN_RECIPES } from "../src/planner-catalog";
 import { chromium, webkit, expect, test, type Page } from "@playwright/test";
 import { readFile, rm, writeFile } from "node:fs/promises";
@@ -32,6 +33,65 @@ for (const [name, engine] of [["Chromium", chromium], ["WebKit", webkit]] as con
       // This is foreground startup only: the separate service-worker install
       // precache is deliberately excluded, not disguised as a lighter app.
       expect(await page.evaluate(() => navigator.serviceWorker.controller)).toBeNull();
+      await context.close();
+    } finally { await browser.close(); }
+  });
+
+  test(`les quantités de r631 recalculent réellement les deux semaines sous Pages avec ${name}`, async ({ baseURL }) => {
+    const source = RECIPES.find((recipe) => recipe.id === "catalog-r631")!;
+    const recipe = { ...structuredClone(source), id: "perso-catalog-r631-pages", title: "Riz personnel Pages" };
+    const profile = { ...structuredClone(DEFAULT_APP_STATE.profile), maxPrepMinutes: 90 };
+    const makePlan = (seed: string, startsOn: string) => {
+      const generated = generateWeeklyPlan(RECIPES, profile, { seed, startsOn });
+      return assignRecipeToSlot(generated, generated.meals[0], recipe, [...RECIPES, recipe], profile);
+    };
+    const fixture = migrateAppState({
+      ...structuredClone(DEFAULT_APP_STATE), profile, onboardingCompleted: true,
+      currentPlan: makePlan("quantities-pages-current", "2026-09-28"),
+      upcomingPlan: makePlan("quantities-pages-upcoming", "2026-10-05"),
+      customRecipes: [recipe], favoriteRecipeIds: [recipe.id], recipeNotes: { [recipe.id]: "Note conservée" },
+    })!;
+    const browser = await engine.launch();
+    try {
+      // The real built server must deliver its generated data asset. Blocking
+      // service workers here prevents an old cache from hiding a missing asset.
+      const context = await browser.newContext({ baseURL, serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+      const page = await context.newPage();
+      await page.clock.setFixedTime(new Date("2026-09-28T12:00:00Z"));
+      await page.addInitScript((state) => {
+        if (!localStorage.getItem("inflamm-menu:app-state")) localStorage.setItem("inflamm-menu:app-state", JSON.stringify(state));
+      }, fixture);
+      const missingNutritionAssets: string[] = [];
+      page.on("response", (response) => {
+        if (/recipe-nutrition/.test(response.url()) && !response.ok()) missingNutritionAssets.push(`${response.status()} ${response.url()}`);
+      });
+      await openFreshApp(page);
+      const readState = () => page.evaluate(() => JSON.parse(localStorage.getItem("inflamm-menu:app-state")!)) as Promise<AppState>;
+      const before = await readState();
+      expect(before.currentPlan!.meals.some((meal) => meal.recipeId === recipe.id)).toBe(true);
+      expect(before.upcomingPlan!.meals.some((meal) => meal.recipeId === recipe.id)).toBe(true);
+      const current = page.getByTestId("flow-current");
+      await current.getByRole("navigation", { name: "Navigation principale" }).getByRole("button", { name: "Recette", exact: true }).click();
+      await current.getByRole("tab", { name: "Favoris", exact: true }).click();
+      await current.locator(".favorite-card").filter({ hasText: recipe.title }).click();
+      await current.getByTestId("edit-custom-recipe").click();
+      await current.getByRole("button", { name: "Augmenter riz complet cru", exact: true }).click();
+      const dataResponsePromise = page.waitForResponse((response) => /\/assets\/recipe-nutrition-[^/]+\.(?:js|json)(?:\?|$)/.test(response.url()));
+      await current.getByTestId("custom-save").click();
+      const dataResponse = await dataResponsePromise;
+      expect(dataResponse.ok(), dataResponse.url()).toBe(true);
+      await expect(current.getByTestId("edit-custom-recipe")).toBeVisible();
+      const ingredients = before.customRecipes[0].ingredients.map((item) => item.id === "riz-complet" ? { ...item, quantity: 75 } : item);
+      const updated = { ...before.customRecipes[0], ingredients, costPerPortion: 1.36, costRecalculated: true, nutrition: { ...source.nutrition, calories: 378, protein: 10.1, fiber: 10.1 }, nutritionRecalculated: true };
+      const expected = { ...before, customRecipes: [updated], currentPlan: refreshPlanEstimate(before.currentPlan!, [...RECIPES, updated]), upcomingPlan: refreshPlanEstimate(before.upcomingPlan!, [...RECIPES, updated]) };
+      expect(expected.currentPlan.estimatedCost).toBeGreaterThan(before.currentPlan!.estimatedCost);
+      expect(expected.upcomingPlan.estimatedCost).toBeGreaterThan(before.upcomingPlan!.estimatedCost);
+      await expect.poll(async () => (await readState()).customRecipes).toEqual([updated]);
+      for (const key of APP_STATE_DATA_KEYS) expect((await readState())[key], key).toEqual(expected[key]);
+      expect(missingNutritionAssets).toEqual([]);
+      await page.reload();
+      await expect(current.getByTestId("home-view")).toBeVisible();
+      for (const key of APP_STATE_DATA_KEYS) expect((await readState())[key], `après rechargement : ${key}`).toEqual(expected[key]);
       await context.close();
     } finally { await browser.close(); }
   });

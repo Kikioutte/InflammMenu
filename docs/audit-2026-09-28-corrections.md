@@ -202,3 +202,38 @@ et des en-têtes HTTP configurables ne sont pas présentées comme corrigées.
 Après distinction entre moteurs de recherche et aperçus de partage,
 l'utilisateur demande de retirer également ce point. Aucun chantier SEO,
 nouvelle page indexable ni changement des métadonnées n'est entrepris.
+
+## 6c — Pas et précision des quantités
+
+- Pas de 5 g/ml conservés ; pièces et cuillères réglées par quarts. Le calcul
+  décimal local évite l'arrondi systématique à deux décimales ; les lignes non
+  éditées et leurs identifiants, unités, options et allergènes restent intactes.
+- Compteur et explication affichent la même valeur française exacte, par exemple
+  0,004, 0,125 ou 1,25. Le formateur des autres parcours n'est pas modifié.
+- Une diminution peut volontairement atteindre zéro pour retirer un ingrédient ;
+  le dernier ingrédient ne peut toujours pas être supprimé par une sauvegarde.
+- La borne persistée reste 1 000 000. L'augmentation devient indisponible avant
+  de la dépasser, sans tronquer une quantité valide. Les contrôles locaux font
+  44 px et se replient sur les petits écrans sans rogner les chiffres.
+
+Les nouveaux tests ont aussi révélé un défaut préexistant du chargement des
+coefficients : sous Chromium/Vite, un import JSON attendait un type JSON mais
+recevait du JavaScript ; les builds Pages et Worker conservaient également un
+chemin source absent, malgré un fichier de données compilé présent. Le choix
+d'import distingue maintenant Vite et Node. Les coefficients, les formules,
+le chargement à la demande et la possibilité de réessayer après échec restent
+inchangés. Les builds finaux demandent le véritable fichier compilé.
+
+Clôture 6c : 9/9 tests unitaires de quantités, 9/9 tests nutrition, 12/12 nouveaux
+parcours Chromium/WebKit, 18/18 parcours ciblés existants et suite navigateur
+complète 209/209 réussis. `test:release`, TypeScript, runtime protégé, relecture
+indépendante, Worker/Sites 5/5 et PWA complète 14/14 réussis. Les deux nouveaux
+tests Pages chargent réellement les données puis vérifient r631 modifiée
+(1,36 € et 378 kcal), les deux semaines et le rechargement, sans réponse simulée.
+Les parcours de développement couvrent aussi export/restauration. Captures
+320/390 px relues ; build Pages final au jalon : service worker `5e3021de37c3`.
+
+Limite numérique inchangée : une modification reste stockée dans un nombre
+JavaScript. Un résidu subnormal ajouté à un quart ne peut pas être retrouvé
+ensuite ; aucune promesse d'aller-retour universel au-delà de cette précision.
+L'affichage des petites valeurs non modifiées, même extrêmes, reste non nul.
