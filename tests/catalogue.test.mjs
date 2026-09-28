@@ -448,30 +448,54 @@ test("le module de validation différé est mémorisé puis libéré après un �
   );
 });
 
-test("le téléchargement hors ligne ne cache qu'un catalogue entièrement validé", { concurrency: false }, async (t) => {
-  const invalid = singleRecipeCatalogue({});
-  let fetchCount = 0;
-  let openCount = 0;
-  let putCount = 0;
-  replaceGlobal(t, "fetch", async () => jsonResponse(fetchCount++ === 0 ? invalid : catalogue));
-  replaceGlobal(t, "caches", {
-    open: async () => {
-      openCount += 1;
-      return { match: async () => null, keys: async () => [], put: async () => { putCount += 1; } };
-    },
+for (const withLocks of [true, false]) {
+  test(`le téléchargement hors ligne ne cache qu'un catalogue entièrement validé, ${withLocks ? "avec" : "sans"} verrou`, { concurrency: false }, async (t) => {
+    const invalid = singleRecipeCatalogue({});
+    let fetchCount = 0;
+    let lockCount = 0;
+    const openedCaches = [];
+    const deletedCaches = [];
+    const writes = [];
+    // Do not inherit Node's navigator: Web Locks is present in Node 26, not 22.
+    // Both browser capability paths must retain validation before any write.
+    replaceGlobal(t, "navigator", withLocks ? { locks: { request: async (_name, operation) => {
+      lockCount += 1;
+      return operation();
+    } } } : {});
+    replaceGlobal(t, "fetch", async () => jsonResponse(fetchCount++ === 0 ? invalid : catalogue));
+    replaceGlobal(t, "caches", {
+      open: async (name) => {
+        openedCaches.push(name);
+        return { match: async () => null, keys: async () => [], put: async (key, response) => {
+          writes.push({ key, payload: await response.json() });
+        } };
+      },
+      delete: async (name) => {
+        assert.equal(writes.length, 1, "la purge ne précède jamais l'écriture validée");
+        deletedCaches.push(name);
+        return true;
+      },
+    });
+    const { CATALOGUE_CACHE_NAME, cacheCatalogueForOffline } = await importFreshCatalogueModule(`cache-atomic-${withLocks}`);
+
+    await assert.rejects(cacheCatalogueForOffline(), /Catalogue invalide/);
+    assert.deepEqual(openedCaches, [], "Cache Storage ne doit pas être ouvert pour un payload invalide");
+    assert.deepEqual(writes, [], "aucune réponse invalide ne doit être écrite");
+    assert.deepEqual(deletedCaches, []);
+    assert.equal(lockCount, 0);
+
+    const recovered = await cacheCatalogueForOffline();
+    assert.equal(recovered.recipes.length, 1207);
+    assert.equal(fetchCount, 2);
+    assert.deepEqual(openedCaches, withLocks ? [CATALOGUE_CACHE_NAME, "inflamm-menu-catalogue-v1"] : [CATALOGUE_CACHE_NAME]);
+    assert.equal(lockCount, withLocks ? 1 : 0);
+    assert.deepEqual(deletedCaches, withLocks ? ["inflamm-menu-catalogue-v1"] : []);
+    assert.equal(writes.length, 1);
+    assert.deepEqual(writes[0].payload, catalogue);
+    const editions = JSON.parse(await readFile(new URL("../src/data/catalogue-offline-editions.json", import.meta.url), "utf8"));
+    assert.equal(writes[0].key, withLocks ? dataUrl.href : `${dataUrl.href}?edition=${editions.current.sha256}`);
   });
-  const { cacheCatalogueForOffline } = await importFreshCatalogueModule("cache-atomic");
-
-  await assert.rejects(cacheCatalogueForOffline(), /Catalogue invalide/);
-  assert.equal(openCount, 0, "Cache Storage ne doit pas être ouvert pour un payload invalide");
-  assert.equal(putCount, 0, "aucune réponse invalide ne doit être écrite");
-
-  const recovered = await cacheCatalogueForOffline();
-  assert.equal(recovered.recipes.length, 1207);
-  assert.equal(fetchCount, 2);
-  assert.equal(openCount, 2, "le cache courant puis le cache legacy sont inspectés après validation");
-  assert.equal(putCount, 1);
-});
+}
 
 test("un payload de précautions invalide est rejeté puis retenté", { concurrency: false }, async (t) => {
   let fetchCount = 0;

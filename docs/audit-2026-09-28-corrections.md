@@ -435,3 +435,26 @@ Clôture C13 : six tests des contrôles réussis, dont le câblage bloquant loca
 relecture indépendante et dernière passe `test:release` réussies. Diff propre.
 Exécution locale Node 26.10.0 ; l'exécution Node 22 de GitHub reste à confirmer
 lors de l'ouverture de la PR. Aucun fichier produit modifié par C13.
+
+## Première validation GitHub — test de cache indépendant de Node
+
+La première exécution de la PR #28 (`36479006253`, tête `b061f00`) échoue sur
+un seul test de catalogue : une ouverture de cache observée au lieu de deux.
+Reproduction locale rouge sous Node 22.23.3 : contrairement à Node 26.10.0,
+cet environnement n'expose pas `navigator.locks`. Le test hérite implicitement
+de cette API ; le code produit prévoit déjà le repli sans verrou, qui écrit
+une clé d'édition immuable et ne purge aucun cache.
+
+Le test fixe maintenant explicitement les deux capacités, avec et sans verrou.
+Dans chaque cas : aucun accès au cache ni verrou avant validation, rejet du
+contenu invalide, reprise au deuxième téléchargement, une seule écriture du
+catalogue entier, clé exacte, noms des caches et absence de purge avant écriture.
+Le comportement sans verrou conserve sa clé d'édition et ne supprime rien.
+L'assertion « deux caches » n'est pas simplement abaissée à un : les deux chemins
+sont vérifiés séparément.
+
+Relecture indépendante et diff réussis ; **31/31 tests catalogue sous chaque
+version**, `test:release` complet réussi sous Node 26.10.0 puis Node 22.23.3,
+contrôles qualité et runtime réussis. Seuls le test et ce compte rendu changent.
+Le code produit, les builds et les 273 parcours navigateur/20 PWA précédemment
+validés restent identiques. La même PR est actualisée pour relancer la CI.
