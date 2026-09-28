@@ -107,3 +107,43 @@ Le 28 septembre, l'utilisateur a demandé de ne pas ajouter d'annonce en mode
 cuisine. Le travail a été arrêté avant toute modification ; aucun fichier du
 mode cuisine ni test associé n'a été changé pour ce point. Le point suivant est
 C2, le chargement initial du planificateur.
+
+## C2 — Découverte anticipée du planificateur
+
+- Les builds Pages et Worker utilisent le manifeste Vite pour précharger les
+  modules du planificateur et du validateur, ainsi que leur dépendance commune,
+  avant l'entrée HTML. Le registre synchrone et la validation restent inchangés.
+- Le garde-fou compte les scripts d'entrée, les préchargements et leurs imports
+  statiques transitifs, plus les deux imports dynamiques bloquants connus. Un
+  nouvel import bloquant devra être déclaré ; un test navigateur confronte aussi
+  ce graphe aux requêtes réelles. Catalogue complet et écrans secondaires exclus.
+- Budget JavaScript critique fixe : 2 400 000 octets bruts et 425 000 gzip,
+  contre 2 260 576 et 406 225 mesurés sur les sept fichiers avant et après.
+  Aucune réduction du poids JavaScript ni amélioration CPU n'est revendiquée.
+
+Comparaison de cinq navigateurs Chromium 149 neufs par version, vue 390 × 844,
+cache froid, service worker bloqué, gzip niveau 6, réseau à 1,6 Mbit/s avec
+150 ms de latence et CPU ralenti ×4 :
+
+| Mesure | Avant `83caa0d` | Après C2 |
+| --- | --- | --- |
+| Premier affichage, médiane | 2 768 ms | 2 608 ms |
+| Étendue des cinq essais | 2 748–2 792 ms | 2 600–2 724 ms |
+| Début requête planificateur, médiane | 1 680,1 ms | 171,4 ms |
+| Fin requête planificateur, médiane | 2 644,8 ms | 2 479,5 ms |
+
+Premier affichage brut avant : 2792, 2768, 2772, 2748, 2760 ms ; après :
+2724, 2600, 2600, 2612, 2608 ms. Le gain médian observé est de 160 ms (5,8 %),
+pas une promesse pour tous les appareils. Les captures mobiles avant/après sont
+identiques, empreinte `bd40eedcd808a106083ca64af5f307aad00464e3e152263fc5166a8490122ee6`.
+
+Clôture C2 : 17/17 nouveaux tests de graphe/préparation ; suite performance
+26/26 via `test:release` ; PWA complète 12/12, incluant le démarrage réel
+Chromium/WebKit (chaque script une seule fois, catalogue toujours différé) ;
+Worker/Sites 5/5 ; builds Pages/Worker, TypeScript, runtime protégé et relecture
+indépendante réussis. Build Pages final : service worker `6e4db8ba4b2f`.
+
+Ordre impératif de validation : Worker/Sites, puis reconstruction Pages, puis
+PWA. Le préparateur Sites existant retire `dist/pages` pour éviter de publier
+deux fois les assets ; un premier lancement PWA en parallèle a donc été arrêté
+par l'absence de cette sortie, puis intégralement relancé dans le bon ordre.

@@ -4,9 +4,38 @@ import { DEFAULT_PROFILE } from "../src/domain";
 import { DEFAULT_APP_STATE, migrateAppState } from "../src/storage";
 import { assignRecipeToSlot, generateWeeklyPlan } from "../src/engine";
 import { IMPORTED_PLAN_RECIPES } from "../src/planner-catalog";
-import { expect, test, type Page } from "@playwright/test";
+import { chromium, webkit, expect, test, type Page } from "@playwright/test";
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { loadStartupGraph, validateStartupGraph } from "../scripts/startup-graph.mjs";
+
+for (const [name, engine] of [["Chromium", chromium], ["WebKit", webkit]] as const) {
+  test(`le démarrage froid ${name} charge exactement le graphe critique préchargé`, async ({ baseURL }) => {
+    const graph = await loadStartupGraph(resolve("dist/pages"));
+    validateStartupGraph(graph);
+    const browser = await engine.launch();
+    try {
+      const context = await browser.newContext({ baseURL, serviceWorkers: "block", viewport: { width: 390, height: 844 } });
+      const page = await context.newPage();
+      const requests: string[] = [];
+      const errors: string[] = [];
+      page.on("request", (request) => requests.push(new URL(request.url()).pathname));
+      page.on("pageerror", (error) => errors.push(error.message));
+      await openFreshApp(page);
+      await page.waitForLoadState("networkidle");
+      const scripts = requests.filter((url) => /\.m?js$/.test(url));
+      const expected = graph.initialFiles.map(({ file }: { file: string }) => `${graph.basePath}${file}`).sort();
+      expect([...new Set(scripts)].sort()).toEqual(expected);
+      for (const file of expected) expect(scripts.filter((url) => url === file), `une seule requête pour ${file}`).toHaveLength(1);
+      expect(requests.filter((url) => /catalogue-|recettes-anti-inflammatoires[^/]*\.json|secondary-views-/.test(url))).toEqual([]);
+      expect(errors).toEqual([]);
+      // This is foreground startup only: the separate service-worker install
+      // precache is deliberately excluded, not disguised as a lighter app.
+      expect(await page.evaluate(() => navigator.serviceWorker.controller)).toBeNull();
+      await context.close();
+    } finally { await browser.close(); }
+  });
+}
 
 async function openFreshApp(page: Page) {
   await page.goto("/InflammMenu/");
