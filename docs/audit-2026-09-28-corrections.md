@@ -22,6 +22,8 @@ garantie absolue sur tous les appareils ; les limites réelles restent indiquée
    icônes, polices et leur préchargement restent inchangés.
 8. C6 : variantes d'images adaptées à l'affichage.
 9. C10 : demande de stockage persistant, sans garantie trompeuse.
+   Puis C14 : accès au raccourci de sauvegarde, défaut découvert pendant la
+   vérification visuelle C10 et priorisé avant les optimisations.
 10. C9 : benchmark du moteur ; optimisation seulement si démontrée utile et
     compatible avec des résultats déterministes inchangés.
 11. C12 : référencement et métadonnées retirés à la demande de l'utilisateur
@@ -345,3 +347,29 @@ Précache Pages `19e888be7a2a`, 32 ressources et 407 178 octets gzip critiques,
 sous le budget inchangé. Aucun point suivant commencé lors de cette clôture.
 Les permissions accordées dans ces tests sont des doubles API, pas une garantie
 d'accord sur l'appareil de chaque utilisateur.
+
+## C14 — Raccourci de sauvegarde découvert pendant la vérification
+
+À 1440×1000 px, la carte de semaine recouvrait le raccourci « Sauvegarde et
+hors-ligne » de l'accueil : clic réel intercepté par son en-tête. Capture, trace
+et coordonnées conservées au jalon C10. La structure `home-shortcuts` puis
+`week-preview`, la marge de −34 px sur bureau et celle de −8 px sur mobile sont
+déjà présentes dans la source `eb9a54e`. Cette antériorité est vérifiée dans le
+code ; la reproduction visuelle a été faite sur la branche, pas sur un build
+séparé de cette base. Le bas de la cible mobile est également concerné par la
+marge négative, même lorsque son centre reste cliquable.
+
+Point commencé après la clôture de C10. Correction limitée à une règle adjacente :
+`.home-shortcuts + .week-preview { margin-top: 12px; }`. Les marges latérales et
+basse, les autres cartes, les couleurs, polices, handlers et données sont intacts.
+
+Le test rouge reproduit le vrai clic intercepté avant correction. Après : 16/16
+nouveaux parcours Chromium/WebKit passent (320/390/768/1440 px, textes normal et
+agrandi, menus présents et absents répartis dans la matrice). Cinq points de
+hit-test par cible, rectangles non recouvrants, vrais clics Informations/export,
+Recettes et Semaine, aucun débordement horizontal ni changement des données
+exportées ou enregistrées. Captures bureau/mobile relues. Les quatre tests
+existants de navigation et de texte à 200 %, `test:release`, TypeScript, runtime
+protégé et contrôle du diff passent. Relecture indépendante terminée : trois
+captures relues et seize géométries contrôlées, écart de 12 px partout et tous les
+points cliquables. C14 clôturé avant de commencer C9.

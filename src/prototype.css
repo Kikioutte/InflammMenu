@@ -1235,6 +1235,7 @@ button { -webkit-tap-highlight-color: transparent; }
 
 .home-shortcuts { padding: 20px 24px 0; display: grid; gap: 10px; }
 .home-shortcuts p { color: var(--text-muted, #59604f); font-size: 14px; line-height: 1.5; margin: 0; }
+.home-shortcuts + .week-preview { margin-top: 12px; }
 .plan-slot-page select { display: block; min-height: 44px; width: 100%; margin: 8px 0; padding: 8px 12px; font: inherit; border: 1px solid #d9d1c1; border-radius: 12px; background: #fffdf8; color: #29351f; }
 
 .meal-composition { display: grid !important; gap: 7px; width: 100%; flex-basis: 100%; text-align: left; white-space: normal; }
