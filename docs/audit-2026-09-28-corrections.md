@@ -26,8 +26,9 @@ garantie absolue sur tous les appareils ; les limites réelles restent indiquée
     compatible avec des résultats déterministes inchangés.
 11. C12 : fiabilité des métadonnées de partage ; pages indexables selon décision.
 12. C13 : contrôles de qualité et de typage, entretien du code affecté.
-13. C7/C11 : préparation d'une origine dédiée et protections HTTP ; migration et
-    publication uniquement après choix explicite de la destination.
+13. C7/C11 : changement d'origine et travaux dépendant d'un autre hébergement
+    retirés à la demande de l'utilisateur le 28 septembre. L'adresse GitHub Pages
+    actuelle est conservée ; aucune migration, configuration DNS ou publication.
 
 ## C1 — Catalogue hors ligne
 
@@ -186,3 +187,11 @@ les refus hors borne ou invalides, l'édition d'une recette déjà à 1 440 minu
 un export/restauration réel avec 2 880 minutes de repos distinctes, les deux
 semaines compatibles et les autres données conservées. Le format des sauvegardes
 et les quantités restent inchangés.
+
+## C7/C11 — Changement d'adresse retiré à la demande de l'utilisateur
+
+L'utilisateur ne dispose pas d'un autre hébergement et demande de conserver
+l'adresse actuelle. La migration vers une origine dédiée et les travaux qui
+nécessiteraient un autre hébergement sont retirés du plan. Les protections
+existantes sont conservées ; les limites de l'origine GitHub Pages partagée
+et des en-têtes HTTP configurables ne sont pas présentées comme corrigées.
