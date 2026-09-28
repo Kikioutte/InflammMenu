@@ -155,3 +155,17 @@ Après explication des poids des icônes et des formats de polices, l'utilisateu
 a demandé de ne pas faire cette optimisation. Aucune modification n'avait été
 commencée : icônes, polices et leur préchargement sont conservés. Cette décision
 ne retire pas le point distinct C6 sur les images des recettes.
+
+## 6a — Favoris de la fiche catalogue
+
+- Le cœur, le libellé et l'état accessible suivent désormais directement le
+  favori partagé ; aucune copie locale ne peut rester périmée.
+- Un changement dans un autre onglet actualise la fiche déjà ouverte, même
+  sous un écran empilé, sans rechargement ni remise à zéro des portions.
+- Les clics suivants, y compris rapides, utilisent l'état courant ; les autres
+  données et les deux semaines sont conservées après rechargement.
+
+Clôture 6a : 4/4 nouveaux tests interonglets Chromium/WebKit, 6/6 parcours
+existants favoris/collections, `test:release`, TypeScript, runtime protégé et
+relecture indépendante réussis. Deux captures mobiles relues. Les durées et
+quantités n'avaient pas encore été modifiées à ce jalon.

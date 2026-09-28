@@ -13,8 +13,6 @@ import { RecipeFeedback } from "../components/RecipeFeedback";
 
 export function CatalogueRecipeView({ tools, recipe, favorite, onFavorite, onPlan, onComposeMeal }: { tools?: (portions: number) => ReactNode; recipe: CatalogueRecipe; favorite: boolean; onFavorite: () => void; onPlan?: () => void; onComposeMeal?: () => void }) {
   const [portions, setPortions] = useState(recipe.portions);
-  const [isFavorite, setIsFavorite] = useState(favorite);
-  const toggleFavorite = () => { setIsFavorite((value) => !value); onFavorite(); };
   const review = reviewFor(recipe);
   const availability = plannerAvailabilityFor(recipe);
   const exclusion = availability.kind ? PLANNER_EXCLUSION_TEXT[availability.kind] : undefined;
@@ -24,7 +22,7 @@ export function CatalogueRecipeView({ tools, recipe, favorite, onFavorite, onPla
     <div className="catalogue-detail__hero"><img src={catalogueImageFor(recipe)} alt={recipe.image.alt || recipe.titre} width={900} height={900} onError={handleRecipeImageError} /><div className="catalogue-detail__hero-copy"><span>{catalogueCategoryName(recipe.categorie)}</span><h1>{recipe.titre}</h1><small>{formatRecipeDuration(recipe.temps.total)} au total · {DIFFICULTY_LABELS[recipe.difficulte]} · {COST_LABELS[recipe.cout]}</small></div></div>
     <div className="recipe-content">
       <div className={`catalogue-verdict is-${review.status}`}><span>{review.status === "validated" ? "Profil cohérent" : "Validée avec repères"}</span><p>{review.summary}</p></div>
-      <div className={`recipe-actions ${onPlan ? "" : "recipe-actions--single"}`}>{onPlan ? <button type="button" className="secondary-button" data-testid="catalogue-plan" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${isFavorite ? "is-favorite" : ""}`} data-testid="catalogue-favorite" aria-pressed={isFavorite} onClick={toggleFavorite}>{isFavorite ? <HeartFilledIcon /> : <HeartIcon />}{isFavorite ? "Enregistrée" : "Ajouter aux favoris"}</button></div>
+      <div className={`recipe-actions ${onPlan ? "" : "recipe-actions--single"}`}>{onPlan ? <button type="button" className="secondary-button" data-testid="catalogue-plan" onClick={onPlan}><CalendarIcon /> Planifier</button> : null}<button type="button" className={`secondary-button ${favorite ? "is-favorite" : ""}`} data-testid="catalogue-favorite" aria-pressed={favorite} onClick={onFavorite}>{favorite ? <HeartFilledIcon /> : <HeartIcon />}{favorite ? "Enregistrée" : "Ajouter aux favoris"}</button></div>
       {tools?.(portions)}
       {onComposeMeal ? <button type="button" className="primary-button full-button meal-builder-entry" data-testid="compose-meal" onClick={onComposeMeal}><PlusIcon /> Composer un repas compatible</button> : null}
       {durationItems.length ? <section className="catalogue-time-grid" aria-label="Durées de la recette">{durationItems.map((item) => <div key={item.label}><small>{item.label}</small><strong>{formatRecipeDuration(item.minutes)}</strong></div>)}</section> : null}
