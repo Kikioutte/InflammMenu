@@ -13,7 +13,8 @@ garantie absolue sur tous les appareils ; les limites réelles restent indiquée
 1. C1 : catalogue hors ligne conservé entre éditions.
 2. C3 : retour du focus des fenêtres WebSheet.
 3. C4 : focus et annonces du mode magasin.
-4. C5 : annonces des étapes en cuisine.
+4. C5 : retiré du périmètre à la demande de l'utilisateur le 28 septembre ;
+   aucune annonce ajoutée et mode cuisine laissé inchangé.
 5. C2 : téléchargement du planificateur sur le chemin de démarrage.
 6. Défauts fonctionnels restants : favoris de la fiche catalogue, puis durées
    de l'éditeur, puis pas des quantités, traités séparément.
@@ -99,3 +100,10 @@ second onglet réel, export/restauration et rechargement. `test:release`,
 TypeScript, runtime protégé et relecture indépendante réussis ; captures mobile
 et bureau relues. Deux sélecteurs du test existant ont été limités au repère
 visible pour le distinguer de l'annonce accessible, sans retirer d'assertion.
+
+## C5 — Retiré à la demande de l'utilisateur
+
+Le 28 septembre, l'utilisateur a demandé de ne pas ajouter d'annonce en mode
+cuisine. Le travail a été arrêté avant toute modification ; aucun fichier du
+mode cuisine ni test associé n'a été changé pour ce point. Le point suivant est
+C2, le chargement initial du planificateur.
