@@ -150,6 +150,11 @@ test("a complete meal is saved, restored and deleted without modifying the week 
 });
 
 test("plan a complete meal and keep its dessert in shopping after reload @webkit-smoke", async ({ page }, info) => {
+  // This end-to-end journey includes creation, reload, editing and shopping.
+  // Allow cumulative CI latency without letting a blocked action wait a minute.
+  test.setTimeout(60_000);
+  page.setDefaultTimeout(5_000);
+  page.setDefaultNavigationTimeout(15_000);
   await fresh(page);
   await page.getByRole("button", { name: "Ajuster mon profil" }).click();
   await page.getByLabel("Temps actif maximum en cuisine (min)", { exact: true }).fill("90");
