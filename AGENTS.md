@@ -5,7 +5,7 @@
 ### InflammMenu production surface
 
 - The published InflammMenu experience is a responsive web/PWA surface. Do not wrap the production app in `PhoneFrame`, show a device picker, render an iPhone/Pixel bezel, or display simulated status-bar, home-indicator, cursor, or keyboard chrome.
-- Keep the phone runtime available only for its dedicated runtime fixtures and tests. Production must remain full-width on mobile and use a centered responsive web canvas on larger screens.
+- Keep the phone runtime available only for its dedicated runtime fixtures and tests. Decision of 29 September 2026: production uses the full available browser-window width on PC and Mac as well as mobile, with responsive card grids and readable text. The installed PWA permits portrait and landscape orientations, respecting device/user rotation settings.
 
 ### Reviewed recipe catalogue
 
