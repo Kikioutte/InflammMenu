@@ -1,11 +1,11 @@
 {
-  "reference": "7c0fe61809702b303e14f84e1df56a97bf76c3ce",
-  "engineFileHash": "102ed418eee0927dd62a074203763bb4a6ccaa1f407e8c10be1bccecc3059690",
+  "reference": "0a7289e87f549d542549adc251fb796f5b25f689 + reviewed r1208-r1257 catalogue integration",
+  "engineFileHash": "24771c5f8428560841f1d9b79245530b80e4ae9a1b75ea865fdb1a4e79b8d810",
   "catalogue": {
-    "count": 705,
-    "hash": "d00effa3091f29778b7fe53cf07fba8fb8499d59b93b1ec51bd68eb8290da0c3"
+    "count": 725,
+    "hash": "de45f1c57e280b27869be176bffdf187a23a28faa49e980af940e60ba9f3cb16"
   },
-  "errorContractHash": "03287303a37d2517d57574b24ac0bc6a47acddafcec6677419d9359832211d6e",
+  "errorContractHash": "f5b6e42da4e8921164c6d997254a608eb93db10a2f353ff6f9031f2bf2e22399",
   "scenarios": [
     {
       "id": "default-14/autumn",
@@ -25,17 +25,17 @@
     {
       "id": "large-21x8/autumn",
       "inputHash": "84a15c33086d59b95acdf0b5a17b96e4ff8b94d8acde5a794722b43bd563e15f",
-      "outputHash": "06ffec297f8b1aeb3d166edf8c92582759b24be525bb2bcc2c88eb427b9afae0"
+      "outputHash": "3dc902b639c6032945e289d788c955aee7b1af3746589506360a774264a141f1"
     },
     {
       "id": "large-21x8/summer",
       "inputHash": "fb4df26aa7955f288d636190808e704983c876a2204fbb53d098220b82b0ea1c",
-      "outputHash": "e1bfeb5ff68f7aa61f45053757e82b7e8a8877238e9570abb137b2ec9ff0a3ab"
+      "outputHash": "7e510b4226260fa8436911b92efb0c3111010f6ddf917bd484ae5115c1ab6ca9"
     },
     {
       "id": "large-21x8/winter",
       "inputHash": "510b280704999c696505fd4cc9f58f28a0b9f7a6db19a1d3388bcdb2df48160c",
-      "outputHash": "3acac452ffdb2305f9a4bb16e66fe8e13099784d99d89da42227cd0fbf85228c"
+      "outputHash": "f734085864c43f1d6fcb7b04ff9ab2f651f446f946a13bcd9250b67573f5ee75"
     },
     {
       "id": "vegetarian/autumn",
@@ -55,32 +55,32 @@
     {
       "id": "allergies-exclusion/autumn",
       "inputHash": "fa23063a02800b819b3791a920c8cdade076bc16b1ee37794c7d13c71bc907b6",
-      "outputHash": "a300f323422f44f1ae4241b4fcc6790a220d8156669d93adf957aa7989a1bf4b"
+      "outputHash": "5b8d56fbadb57badc899445b0ec2d5f93d37442ed0524651014f86abe88b0f19"
     },
     {
       "id": "allergies-exclusion/summer",
       "inputHash": "3dfe23ae40db00196ba281b676017ff25b41096a3ecfda3dbbb341ad1f4f196e",
-      "outputHash": "db48152f7a867ec8fe0bcd3c23b18ac5a8d7eca761a40685c1f031967ca63f10"
+      "outputHash": "d25cea21672fb24c17cc3a286c0b3fc1f6c9f5dc07bc45d7a300d77af6327759"
     },
     {
       "id": "allergies-exclusion/winter",
       "inputHash": "c9a24f76ec20ed819cd46509173d14a1316310f63516f1b54c9fbb88c7fd939c",
-      "outputHash": "bc4965d65a4ff1a53b9a28423c58153cb8d4c99de84c14303a29acea5fdf31b3"
+      "outputHash": "3a359894d5db3252cf39ab3d5d8ac2f5db8fcf63238255fe296eca37c910780b"
     },
     {
       "id": "daily-constraints/autumn",
       "inputHash": "20fdb70dabed0a70dbb8be8500d0e191568f50b62f0099be351f41a81d4b56c3",
-      "outputHash": "eec40ea3434bf639e32b0dec25ee6e549cc59982151c4e164c4d768f9501e991"
+      "outputHash": "1530ed1791de6cb75e1154f88dcc5ea337ecfc083ea52eb21de73dd4f5d6214c"
     },
     {
       "id": "daily-constraints/summer",
       "inputHash": "05c887549b8bca75d10883501e9a9406a48e78d5ea74dc1499848a1f335e9446",
-      "outputHash": "ee4b2d365e8bcc673a2f193fdd77f6687d99a997c9f211362ea64f472e445587"
+      "outputHash": "7a2e83cf75edf5ae346a1630356d3f1054070d98f6e8242275f81661f9b95c1c"
     },
     {
       "id": "daily-constraints/winter",
       "inputHash": "dcdda5a112daa9e97962c645406c4ed4592749f26eb6e2c3adc90f878c397bd4",
-      "outputHash": "9bf4fc9f6c5bca61fddbc5fbece1a4f1c2c1b795dd56d552550798494f49006b"
+      "outputHash": "0e293e5a64a41448352dab28c85d3de7b433fe3d13caee6c75eedaa65b1e7921"
     },
     {
       "id": "locked-favorites/autumn",
@@ -115,17 +115,17 @@
     {
       "id": "mostly-skipped/autumn",
       "inputHash": "5bb026fb4d97aba8f6e736e2ad9b12fad9478784627bc6771481281f65f670e4",
-      "outputHash": "1b6e7bf4bccdc0ca4d370c0e2cf9af74b037e9e058b0137af9abfcb340f1029f"
+      "outputHash": "dea5217354bc9c096c97d70d79d363c042c0f4f453f0d3b72c46afd20295d2af"
     },
     {
       "id": "mostly-skipped/summer",
       "inputHash": "10caa692bc0356627d323fdb42d498ad44a95e7245e2bc860980d96bc4881e78",
-      "outputHash": "6b46cba1524826dee79ea4f44a25967c37333828ee96bcb21b4b02cd3bec49af"
+      "outputHash": "19841a32da96c629743d4c342b639e81a0a7e09c3642cd88d8c72633528ec8cc"
     },
     {
       "id": "mostly-skipped/winter",
       "inputHash": "6e80259794c8bf7e40ed2118f23e2c496d67a3eec3e5771652e2960e1ac97eba",
-      "outputHash": "2fd2ff451c056905616519333a4c370d35f976194b9d8a41e4cb53a946e75d6c"
+      "outputHash": "b48ca51b8cb7c283bb5cab332b45fd9a79f425f755b33fc2902ddd0ea964b3c2"
     }
   ]
 }

@@ -23,9 +23,9 @@ test("collection, orange pairs, scaled portions and complete meal", async ({ pag
   await fresh(page); await library(page);
   const filter = current.getByLabel("Filtrer les associations");
   await filter.selectOption("collection");
-  await expect(current.locator(".catalogue-count")).toHaveText("577 résultats");
+  await expect(current.locator(".catalogue-count")).toHaveText("627 résultats");
   await filter.selectOption("verte");
-  await expect(current.locator(".catalogue-count")).toHaveText("420 résultats");
+  await expect(current.locator(".catalogue-count")).toHaveText("470 résultats");
   await filter.selectOption("orange");
   await expect(current.locator(".catalogue-count")).toHaveText("157 résultats");
   await current.getByLabel("Rechercher une recette", { exact: true }).fill("Riz complet aux dés de fenouil");
