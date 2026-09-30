@@ -116,10 +116,10 @@ test('whole meal catches incompatibility between two individually acceptable dis
   assert.ok(result.pairs.some((pair) => pair.level === 'grise' && /riz/.test(pair.a)));
 });
 
-test('all 577 authored recipes match the chart at runtime, without changing the original 630', () => {
-  assert.equal(collection.length, 577);
+test('all 627 authored recipes match the chart at runtime, without changing the original 630', () => {
+  assert.equal(collection.length, 627);
   assert.deepEqual(catalogue.recipes.slice(0,630),baseline.recipes);
-  assert.equal(validateCatalogueData(catalogue).recipes.length,1207);
+  assert.equal(validateCatalogueData(catalogue).recipes.length,1257);
   const signatures = new Set();
   for (const recipe of collection) {
     const result = evaluateAssociations(recipe.ingredients);
@@ -184,7 +184,7 @@ test('diagnostic and replacements never silently bypass associations', () => {
 });
 
 test('120 illustrated additions stay green, distinct and scalable', async () => {
-  const added = catalogue.recipes.slice(1087);
+  const added = catalogue.recipes.slice(1087,1207);
   assert.equal(added.length, 120);
   const images = await read('../research/generated-images-r1088-r1207-provenance.json');
   assert.equal(new Set(images.images.map(image => image.sha256)).size, 120);
@@ -205,5 +205,29 @@ test('120 illustrated additions stay green, distinct and scalable', async () => 
         }
       }
     }
+  }
+});
+
+test('50 September 30 cards preserve source mapping, green associations and original catalogue', async () => {
+  const added = catalogue.recipes.slice(1207);
+  const source = (await read('../research/recipes-r1208-r1257-source.json')).recipes;
+  const images = (await read('../research/generated-images-r1208-r1257-provenance.json')).images;
+  assert.equal(added.length, 50);
+  assert.equal(new Set(added.map(r => r.image.nom_fichier)).size, 50);
+  const signature = r => [...new Set(r.ingredients.map(i => canonicalIngredientId(i.id)).filter(id => !['eau','huile-olive-vierge-extra','basil','persil-plat','ciboulette-fraiche'].includes(id)))].sort().join('|');
+  const seen = new Set(catalogue.recipes.slice(0,1207).map(signature));
+  for (const [index, recipe] of added.entries()) {
+    assert.equal(recipe.id, `r${1208+index}`);
+    assert.equal(recipe.source_image_id, source[index].image_id);
+    assert.equal(recipe.titre, source[index].titre);
+    assert.equal(images[index].file, recipe.image.nom_fichier);
+    assert.ok(images[index].bytes <= 350*1024);
+    assert.equal(evaluateAssociations(recipe.ingredients).level, 'verte', recipe.titre);
+    assert.deepEqual(evaluateAssociations(recipe.ingredients).unknown, []);
+    assert.ok(!seen.has(signature(recipe)), recipe.titre); seen.add(signature(recipe));
+    assert.ok(!catalogue.recipes.slice(0,1207).some(r => r.titre === recipe.titre));
+    assert.deepEqual(recipe.etapes, source[index].etapes);
+    assert.equal(recipe.app.planner.eligible, recipe.categorie === 'plat' && recipe.nutrition_par_portion.calories >= 220);
+    assert.equal(planner.some(r => r.id === `catalog-${recipe.id}`), recipe.app.planner.eligible);
   }
 });

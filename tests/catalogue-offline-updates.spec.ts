@@ -66,7 +66,7 @@ test("une ancienne copie reste utilisable puis se met à jour sans rechargement 
   await page.getByRole("button", { name: "Retour", exact: true }).click();
   await nav("Recette");
   await expect(current.getByTestId("catalogue-outdated")).toHaveCount(0);
-  await expect(current.getByText("1201 résultats", { exact: true })).toBeVisible();
+  await expect(current.getByText("1251 résultats", { exact: true })).toBeVisible();
   await expect(current.locator(".catalogue-card")).toHaveCount(60);
   const preserved = await page.evaluate((keys) => {
     const stored = JSON.parse(localStorage.getItem("inflamm-menu:app-state")!);

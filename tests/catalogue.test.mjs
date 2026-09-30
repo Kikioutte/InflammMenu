@@ -74,7 +74,7 @@ test("the imported catalogue is versioned, complete and internally consistent", 
 test("la frontière runtime accepte le vrai catalogue et rejette les payloads incomplets", async () => {
   const { validateCatalogueData, validatePlannerCautions } = await import("../src/catalog-validation.ts");
 
-  assert.equal(validateCatalogueData(catalogue).recipes.length, 1207);
+  assert.equal(validateCatalogueData(catalogue).recipes.length, 1257);
   assert.throws(() => validateCatalogueData({ recipes: [{}] }), /Catalogue invalide/);
   assert.throws(
     () => validateCatalogueData({ ...catalogue, meta: { ...catalogue.meta, nombre_recettes: 0 }, categories: [], recipes: [] }),
@@ -83,7 +83,7 @@ test("la frontière runtime accepte le vrai catalogue et rejette les payloads in
   );
   assert.throws(
     () => validateCatalogueData(singleRecipeCatalogue(catalogue.recipes[0])),
-    /1207 recettes attendues, 1 reçues/,
+    /1257 recettes attendues, 1 reçues/,
     "un catalogue tronqué mais auto-cohérent ne doit pas remplacer l’édition complète",
   );
   assert.throws(
@@ -127,7 +127,7 @@ test("la frontière runtime accepte le vrai catalogue et rejette les payloads in
     /Précautions invalides/,
     "une entrée valide ne doit pas masquer une autre entrée invalide",
   );
-  assert.throws(() => validatePlannerCautions({}), /652 entrées attendues, 0 reçues/);
+  assert.throws(() => validatePlannerCautions({}), /672 entrées attendues, 0 reçues/);
 
   const glutenRecipe = structuredClone(catalogue.recipes.find(({ id }) => id === "r036"));
   glutenRecipe.app.planner.allergens = [];
@@ -331,9 +331,9 @@ test("la disponibilité au planificateur est expliquée sans lever la barrière 
     assert.equal(availability.plannable, !recipe.app.duplicate_of && recipe.app.planner.eligible);
   }
 
-  assert.equal(counts.plannable, 669, "les nouvelles recettes relues rejoignent le planificateur");
+  assert.equal(counts.plannable, 689, "les nouvelles recettes relues rejoignent le planificateur");
   assert.equal(counts.duplicate, 6);
-  assert.equal(counts["side-dish"] + counts.editorial, 532);
+  assert.equal(counts["side-dish"] + counts.editorial, 562);
   assert.ok(counts.editorial > 0, "des exclusions éditoriales subsistent");
 
   const sodiumExcluded = catalogue.recipes.find((recipe) => recipe.id === "r084");
@@ -352,7 +352,7 @@ test("un catalogue invalide n'est pas mémorisé et le chargement peut être ré
   const recovered = await loadCatalogue();
 
   assert.equal(fetchCount, 2, "le second appel doit réellement relancer fetch");
-  assert.equal(recovered.recipes.length, 1207);
+  assert.equal(recovered.recipes.length, 1257);
 });
 
 test("un HTTP 200 corrompu se replie sur la dernière copie hors ligne validée", { concurrency: false }, async (t) => {
@@ -372,7 +372,7 @@ test("un HTTP 200 corrompu se replie sur la dernière copie hors ligne validée"
   const { CATALOGUE_CACHE_NAME, loadCatalogue } = await importFreshCatalogueModule("invalid-network-cache-fallback");
 
   const recovered = await loadCatalogue();
-  assert.equal(recovered.recipes.length, 1207);
+  assert.equal(recovered.recipes.length, 1257);
   assert.equal(cacheName, CATALOGUE_CACHE_NAME);
   assert.equal(CATALOGUE_CACHE_NAME, "inflamm-menu-catalogue-v2");
   assert.equal(cacheDeletes, 0, "la copie validée ne doit pas être supprimée à cause du réseau corrompu");
@@ -432,7 +432,7 @@ test("un catalogue v1 valide est vérifié puis migré sans perdre le hors-ligne
   assert.ok(currentResponse, "la réponse v1 validée doit être recopiée dans v2");
   assert.equal(legacyResponse, null);
   assert.deepEqual(deletedCaches, ["inflamm-menu-catalogue-v1"]);
-  assert.equal((await loadCatalogue()).recipes.length, 1207, "la copie migrée reste utilisable sans réseau");
+  assert.equal((await loadCatalogue()).recipes.length, 1257, "la copie migrée reste utilisable sans réseau");
 });
 
 test("le module de validation différé est mémorisé puis libéré après un échec de chunk", () => {
@@ -485,7 +485,7 @@ for (const withLocks of [true, false]) {
     assert.equal(lockCount, 0);
 
     const recovered = await cacheCatalogueForOffline();
-    assert.equal(recovered.recipes.length, 1207);
+    assert.equal(recovered.recipes.length, 1257);
     assert.equal(fetchCount, 2);
     assert.deepEqual(openedCaches, withLocks ? [CATALOGUE_CACHE_NAME, "inflamm-menu-catalogue-v1"] : [CATALOGUE_CACHE_NAME]);
     assert.equal(lockCount, withLocks ? 1 : 0);
@@ -587,8 +587,8 @@ test("une mise à jour validée remplace la copie stable avant de purger et noti
   assert.equal(stores.get(module.CATALOGUE_CACHE_NAME).size, 2);
   replaceGlobal(t, "fetch", async () => { throw new Error("offline"); });
   const freshModule = await importFreshCatalogueModule("reload-current-edition");
-  assert.equal((await freshModule.loadCatalogue()).recipes.length, 1207);
-  assert.deepEqual(await freshModule.catalogueOfflineEdition(), { outdated: false, recipeCount: 1207 });
+  assert.equal((await freshModule.loadCatalogue()).recipes.length, 1257);
+  assert.deepEqual(await freshModule.catalogueOfflineEdition(), { outdated: false, recipeCount: 1257 });
 });
 
 test("une édition tronquée ou altérée ne peut se faire passer pour une ancienne édition", { concurrency: false }, async (t) => {
@@ -633,10 +633,10 @@ test("un nettoyage refusé après écriture ne masque pas la nouvelle édition",
   controls.cleanupFailure = true;
   replaceGlobal(t, "fetch", async () => jsonResponse(catalogue));
   const module = await importFreshCatalogueModule("cleanup-failure");
-  assert.equal((await module.cacheCatalogueForOffline()).recipes.length, 1207);
+  assert.equal((await module.cacheCatalogueForOffline()).recipes.length, 1257);
   replaceGlobal(t, "fetch", async () => { throw new Error("offline"); });
   const reloaded = await importFreshCatalogueModule("cleanup-failure-reload");
-  assert.equal((await reloaded.loadCatalogue()).recipes.length, 1207);
+  assert.equal((await reloaded.loadCatalogue()).recipes.length, 1257);
 });
 
 test("un ancien onglet ne rétrograde ni ne purge une édition inconnue plus récente", { concurrency: false }, async (t) => {
@@ -652,7 +652,7 @@ test("un ancien onglet ne rétrograde ni ne purge une édition inconnue plus ré
   await cache.put(hashedFuture, jsonResponse(future));
   replaceGlobal(t, "fetch", async () => jsonResponse(catalogue));
   const module = await importFreshCatalogueModule("newer-edition-open-tab");
-  assert.deepEqual(await module.catalogueOfflineEdition(), { outdated: false, recipeCount: 1207 });
+  assert.deepEqual(await module.catalogueOfflineEdition(), { outdated: false, recipeCount: 1257 });
   assert.deepEqual(await (await cache.match(stableUrl)).json(), future, "l'inspection ne rétrograde pas la copie d'un autre build");
   await module.cacheCatalogueForOffline();
   assert.deepEqual(await (await cache.match(stableUrl)).json(), future, "le téléchargement de cet ancien onglet ne rétrograde pas non plus la copie récente");
@@ -670,7 +670,7 @@ test("sans verrou interonglets, les écritures restent par édition et ne suppri
   assert.equal(stores.get(module.CATALOGUE_CACHE_NAME).size, 2);
   assert.equal((await (await cache.match(dataUrl.href)).json()).recipes.length, 1087);
   replaceGlobal(t, "fetch", async () => { throw new Error("offline"); });
-  assert.equal((await (await importFreshCatalogueModule("no-lock-reload")).loadCatalogue()).recipes.length, 1207);
+  assert.equal((await (await importFreshCatalogueModule("no-lock-reload")).loadCatalogue()).recipes.length, 1257);
 });
 
 test("les filtres et le tri du catalogue portent sur les vraies données", async () => {
@@ -678,7 +678,7 @@ test("les filtres et le tri du catalogue portent sur les vraies données", async
   const catalogue = JSON.parse(await readFile(dataUrl, "utf8"));
   const visible = visibleCatalogueRecipes(catalogue);
 
-  assert.equal(filterCatalogueRecipes(visible, EMPTY_CATALOGUE_FILTERS).length, 1201, "sans filtre, tout le catalogue visible");
+  assert.equal(filterCatalogueRecipes(visible, EMPTY_CATALOGUE_FILTERS).length, 1251, "sans filtre, tout le catalogue visible");
 
   const quick = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, maxActiveMinutes: 15 });
   assert.ok(quick.length > 0 && quick.length < visible.length);
@@ -709,7 +709,7 @@ test("les filtres et le tri du catalogue portent sur les vraies données", async
   );
 
   const plannable = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, plannableOnly: true });
-  assert.equal(plannable.length, 669, "le filtre planifiable respecte la relecture éditoriale");
+  assert.equal(plannable.length, 689, "le filtre planifiable respecte la relecture éditoriale");
 
   const winter = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, season: "hiver" });
   assert.ok(winter.every((recipe) => recipe.saisons.includes("hiver") || recipe.saisons.includes("toute-annee")));
