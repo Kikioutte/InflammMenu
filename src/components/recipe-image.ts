@@ -4,10 +4,13 @@ export const RECIPE_IMAGE_PLACEHOLDER = `${import.meta.env?.BASE_URL ?? "/"}asse
 
 /** Keep these slot widths aligned with the responsive rules in prototype.css. */
 export const RECIPE_IMAGE_SIZES = {
-  fullWidth: "(min-width: 860px) 860px, 100vw",
-  catalogueCard: "(min-width: 860px) 238.67px, (min-width: 760px) calc((100vw - 144px) / 3), (min-width: 380px) calc((100vw - 52px) / 2), calc(100vw - 36px)",
-  builderCandidate: "(min-width: 860px) 177px, (min-width: 760px) calc(25vw - 38px), (min-width: 360px) calc(50vw - 28px), calc(50vw - 22px)",
-  builderHero: "(min-width: 860px) 389px, (min-width: 760px) calc(50vw - 41px), (min-width: 360px) calc((100vw - 42px) / 2.1), calc((100vw - 30px) / 2.1)",
+  // Keep the desktop media condition even though both slots fill the window:
+  // WebKit otherwise retains the portrait candidate after a viewport resize
+  // (https://bugs.webkit.org/show_bug.cgi?id=149899).
+  fullWidth: "(min-width: 760px) 100vw, 100vw",
+  catalogueCard: "(min-width: 1920px) calc((100vw - 216px) / 6), (min-width: 1600px) calc((100vw - 192px) / 5), (min-width: 1200px) calc((100vw - 168px) / 4), (min-width: 760px) calc((100vw - 144px) / 3), (min-width: 380px) calc((100vw - 52px) / 2), calc(100vw - 36px)",
+  builderCandidate: "(min-width: 1920px) calc((100vw - 200px) / 6), (min-width: 1600px) calc((100vw - 176px) / 5), (min-width: 760px) calc(25vw - 38px), (min-width: 360px) calc(50vw - 28px), calc(50vw - 22px)",
+  builderHero: "(min-width: 760px) calc(50vw - 41px), (min-width: 360px) calc((100vw - 42px) / 2.1), calc((100vw - 30px) / 2.1)",
 } as const;
 
 /** Derive only local, supported photo paths; recipe and backup URLs stay intact. */
