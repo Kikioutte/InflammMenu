@@ -150,6 +150,18 @@ test.describe("replis et sauvegardes", () => {
 
   for (const placeholderFails of [false, true]) test(`WebP et JPG absents donnent un repli borné, placeholder ${placeholderFails ? "absent" : "présent"} @webkit-smoke`, async ({ page }) => {
     const failed: string[] = [];
+    await page.addInitScript(() => {
+      const writes = new WeakMap<HTMLImageElement, Array<string | null>>();
+      (window as any).__responsiveImageSrcWrites = writes;
+      new MutationObserver((records) => {
+        for (const record of records) {
+          if (!(record.target instanceof HTMLImageElement)) continue;
+          const previous = writes.get(record.target) ?? [];
+          previous.push(record.oldValue);
+          writes.set(record.target, previous);
+        }
+      }).observe(document, { attributes: true, attributeFilter: ["src"], attributeOldValue: true, subtree: true });
+    });
     await page.route(/\/responsive\/[^/]+\/generated\/r1088-.*\.webp$|\/generated\/r1088-.*\.jpg$/, (route) => { failed.push(route.request().url()); return route.abort(); });
     if (placeholderFails) await page.route("**/assets/recipe-placeholder.svg", (route) => { failed.push(route.request().url()); return route.abort(); });
     const before = await fresh(page);
@@ -160,11 +172,22 @@ test.describe("replis et sauvegardes", () => {
     await expect(image).not.toHaveAttribute("sizes");
     await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete)).toBe(true);
     if (!placeholderFails) await decoded(image);
-    // Allow a new layout/selection cycle; it must not restart the failure chain.
-    await page.setViewportSize({ width: 430, height: 844 });
-    await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-    expect(failed).toHaveLength(placeholderFails ? 3 : 2);
-    expect((await readState(page)).customRecipes).toEqual(before.customRecipes);
+    await expect.poll(() => failed.length).toBe(placeholderFails ? 3 : 2);
+    // React must be the only writer of the placeholder, even when it fails.
+    expect(await image.evaluate((element) => (window as any).__responsiveImageSrcWrites.get(element) ?? [])).not.toContain("/assets/recipe-placeholder.svg");
+    // Repeated errors and layout/selection cycles must not restart the chain.
+    for (const width of [430, 320, 390]) {
+      if (placeholderFails) await image.dispatchEvent("error");
+      await page.setViewportSize({ width, height: 844 });
+      await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      expect(failed).toHaveLength(placeholderFails ? 3 : 2);
+      await expect(image).toHaveAttribute("src", "/assets/recipe-placeholder.svg");
+      await expect(image).not.toHaveAttribute("srcset");
+      await expect(image).not.toHaveAttribute("sizes");
+      if (!placeholderFails) await decoded(image);
+    }
+    const after = await readState(page);
+    for (const key of APP_STATE_DATA_KEYS) expect(after[key], key).toEqual(before[key]);
   });
 
   test("un changement distant de photo réinitialise le repli et conserve les URLs de sauvegarde @webkit-smoke", async ({ page }) => {

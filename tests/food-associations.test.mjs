@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { beforeInstructionsReview } from './helpers/recipe-instructions-review.mjs';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { canonicalIngredientId } from '../src/shopping.ts';
@@ -116,9 +117,9 @@ test('whole meal catches incompatibility between two individually acceptable dis
   assert.ok(result.pairs.some((pair) => pair.level === 'grise' && /riz/.test(pair.a)));
 });
 
-test('all 627 authored recipes match the chart at runtime, without changing the original 630', () => {
+test('all 627 authored recipes match the chart at runtime, preserving the original 630 except documented instruction-review changes', () => {
   assert.equal(collection.length, 627);
-  assert.deepEqual(catalogue.recipes.slice(0,630),baseline.recipes);
+  assert.deepEqual(catalogue.recipes.slice(0,630).map(beforeInstructionsReview),baseline.recipes);
   assert.equal(validateCatalogueData(catalogue).recipes.length,1257);
   const signatures = new Set();
   for (const recipe of collection) {
@@ -226,7 +227,7 @@ test('50 September 30 cards preserve source mapping, green associations and orig
     assert.deepEqual(evaluateAssociations(recipe.ingredients).unknown, []);
     assert.ok(!seen.has(signature(recipe)), recipe.titre); seen.add(signature(recipe));
     assert.ok(!catalogue.recipes.slice(0,1207).some(r => r.titre === recipe.titre));
-    assert.deepEqual(recipe.etapes, source[index].etapes);
+    assert.deepEqual(beforeInstructionsReview(recipe).etapes, source[index].etapes);
     assert.equal(recipe.app.planner.eligible, recipe.categorie === 'plat' && recipe.nutrition_par_portion.calories >= 220);
     assert.equal(planner.some(r => r.id === `catalog-${recipe.id}`), recipe.app.planner.eligible);
   }

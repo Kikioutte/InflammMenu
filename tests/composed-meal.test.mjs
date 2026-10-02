@@ -6,10 +6,60 @@ import { DEFAULT_PROFILE } from '../src/domain.ts';
 import { assignRecipeToSlot, buildShoppingList, generateWeeklyPlan, recipeIsAllowed, setMealPortions } from '../src/engine.ts';
 import { migrateAppState, DEFAULT_APP_STATE, exportAppState, importAppState } from '../src/storage.ts';
 import { IMPORTED_PLAN_RECIPES } from '../src/planner-catalog.ts';
+import { mealBuilderEligible, mealBuilderGroupFor, compositionSelectionError } from '../src/meal-composition-rules.ts';
+import { isAssociationRecipe, evaluateAssociations } from '../src/food-associations.ts';
 const catalogue = JSON.parse(readFileSync(new URL('../src/data/recettes-anti-inflammatoires.json', import.meta.url))).recipes;
 const get = id => catalogue.find(recipe => recipe.id === id);
 const make = () => composeMeal(get('r1017'), get('r711'), get('r824'), '/assets/recipe-placeholder.svg');
 const profile = { ...DEFAULT_PROFILE, maxPrepMinutes: 120, weeklyBudget: 500, equipment: ['hob','oven','blender','steamer','microwave','toaster'] };
+
+test('meal builder excludes every nonplannable starter or main and preserves complementary desserts', () => {
+  const previouslyOffered = catalogue.filter(recipe => isAssociationRecipe(recipe.id)
+    && ['soupe', 'salade', 'plat'].includes(recipe.categorie)
+    && !recipe.app.planner.eligible
+    && ['verte', 'orange'].includes(evaluateAssociations(recipe.ingredients).level));
+  assert.equal(previouslyOffered.length, 106);
+  for (const recipe of previouslyOffered) assert.equal(mealBuilderEligible(recipe), false, recipe.id);
+  for (const recipe of catalogue.filter(mealBuilderEligible)) {
+    assert.equal(Boolean(recipe.app.duplicate_of), false, recipe.id);
+    assert.equal(Boolean(recipe.creami), false, recipe.id);
+    if (mealBuilderGroupFor(recipe) !== 'dessert') assert.equal(recipe.app.planner.eligible, true, recipe.id);
+  }
+  const dessert = get('r824');
+  assert.equal(dessert.app.planner.eligible, false);
+  assert.equal(mealBuilderEligible(dessert), true);
+  assert.equal(compositionSelectionError({ starter: get('r1017'), main: get('r711'), dessert }), null);
+  assert.doesNotThrow(make);
+});
+
+test('saving and final composition share the same named exclusion for the audited r765 meal', () => {
+  const selection = { starter: get('r765'), main: get('r838'), dessert: get('r825') };
+  const error = compositionSelectionError(selection);
+  assert.ok(error.includes(selection.starter.titre));
+  assert.match(error, /exclue de la planification/);
+  assert.equal(mealBuilderEligible(selection.starter), false);
+  assert.throws(() => composeMeal(selection.starter, selection.main, selection.dessert, ''), { message: error });
+});
+
+test('final validation rejects duplicates, CREAMi, missing categories and invalid quantities before save or plan', () => {
+  const selection = { starter: get('r1017'), main: get('r711'), dessert: get('r824') };
+  for (const bad of [
+    { ...selection.starter, app: { ...selection.starter.app, duplicate_of: 'r1' } },
+    { ...selection.starter, app: { ...selection.starter.app, planner: { ...selection.starter.app.planner, eligible: false } } },
+    { ...selection.starter, ingredients: selection.starter.ingredients.map((item, index) => index ? item : { ...item, quantite_normalisee: Number.NaN }) },
+  ]) {
+    const candidate = { ...selection, starter: bad };
+    const error = compositionSelectionError(candidate);
+    assert.equal(mealBuilderEligible(bad), false);
+    assert.ok(error);
+    assert.throws(() => composeMeal(candidate.starter, candidate.main, candidate.dessert, ''), { message: error });
+  }
+  const creami = { ...selection.dessert, creami: { modele: 'Ninja CREAMi Deluxe (NC501EU)', programme: 'SORBET', zone: 'FULL' } };
+  assert.equal(mealBuilderEligible(creami), false);
+  assert.ok(compositionSelectionError({ ...selection, dessert: creami }));
+  assert.match(compositionSelectionError({ main: selection.main }), /Complétez/);
+  assert.match(compositionSelectionError({ ...selection, starter: selection.main }), /entrée/);
+});
 
 test('complete meal preserves sources, quantities, cost and associations', () => {
  const meal = make();

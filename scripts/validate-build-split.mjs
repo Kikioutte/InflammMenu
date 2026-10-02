@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { loadStartupGraph, validateStartupGraph } from "./startup-graph.mjs";
 
 const output = path.resolve(process.cwd(), process.argv[2] ?? "dist/client");
@@ -13,6 +14,16 @@ assert.doesNotMatch(index, /catalogue-[A-Za-z0-9_-]+\.js/, "le catalogue complet
 assert.doesNotMatch(index, /secondary-views-[A-Za-z0-9_-]+\.js/, "les écrans secondaires sont préchargés par index.html");
 
 const appShell = serviceWorker.match(/const APP_SHELL = \[[\s\S]*?\];/)?.[0] ?? "";
+// Verify the real minified module too: joining a column into a string can hide
+// image URLs from textual Pages rebasing even when the source tests all pass.
+const plannerSource = graph.initialSources.find(({ src, key }) => src === "src/planner-source.ts" || key === "src/planner-source.ts");
+assert(plannerSource, "la projection compilée du planificateur est absente");
+const { default: builtPlannerRecipes } = await import(pathToFileURL(path.join(output, plannerSource.file)).href);
+const canonicalPlannerRecipes = JSON.parse(await readFile(new URL("../src/data/planner-recipes.json", import.meta.url), "utf8"));
+const expectedPlannerRecipes = canonicalPlannerRecipes.map((recipe) => ({ ...recipe, image: `${graph.basePath}${recipe.image.slice(1)}` }));
+assert.deepEqual(builtPlannerRecipes, expectedPlannerRecipes, "la projection compilée doit préserver les recettes et rebaser toutes les images");
+assert.equal(JSON.stringify(builtPlannerRecipes), JSON.stringify(expectedPlannerRecipes), "la projection compilée doit préserver l'ordre des champs");
+assert(appShell.includes(`${graph.basePath}${plannerSource.file}`), "la projection compilée manque au précache hors ligne");
 const secondaryChunk = (await readdir(path.join(output, "assets"))).find((name) => /^secondary-views-[A-Za-z0-9_-]+\.js$/.test(name));
 assert(secondaryChunk, "les écrans secondaires ne sont pas séparés dans un chunk différé");
 assert(appShell.includes(`/assets/${secondaryChunk}`), "les écrans secondaires manquent au précache hors ligne");

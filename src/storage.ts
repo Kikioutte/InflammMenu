@@ -18,6 +18,7 @@ import {
 import { canonicalIngredientId, legacyShoppingItemKeyToCanonical, shoppingIdentityFor } from "./shopping.ts";
 import { substitutionRuleAppliesToIngredientId, substitutionRuleById } from "./substitutions.ts";
 import { canonicalAllergens } from "./allergens.ts";
+import { isRecipeReferenceId } from "./recipe-references.ts";
 
 export const APP_STATE_VERSION = 3 as const;
 
@@ -413,7 +414,7 @@ function normalizeShoppingRecipes(value: unknown): ShoppingRecipe[] {
   if (!Array.isArray(value)) return [];
   const seen = new Set<string>();
   return value.flatMap((entry) => {
-    if (!isRecord(entry) || !isRecord(entry.recipe) || typeof entry.recipe.id !== "string" || !/^(catalog-r\d+|r\d+|perso-[a-zA-Z0-9._-]+)$/.test(entry.recipe.id) || seen.has(entry.recipe.id)) return [];
+    if (!isRecord(entry) || !isRecord(entry.recipe) || !isRecipeReferenceId(entry.recipe.id) || seen.has(entry.recipe.id)) return [];
     const recipe = normalizeCustomRecipe({ ...entry.recipe, id: `perso-stock-${entry.recipe.id}` });
     if (!recipe || typeof entry.portions !== "number" || !Number.isFinite(entry.portions) || entry.portions < 1) return [];
     seen.add(entry.recipe.id);

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { beforeInstructionsReview } from "./helpers/recipe-instructions-review.mjs";
 
 const dataUrl = new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url);
 const sourceUrl = new URL("../src/catalog.ts", import.meta.url);
@@ -127,7 +128,7 @@ test("la frontière runtime accepte le vrai catalogue et rejette les payloads in
     /Précautions invalides/,
     "une entrée valide ne doit pas masquer une autre entrée invalide",
   );
-  assert.throws(() => validatePlannerCautions({}), /672 entrées attendues, 0 reçues/);
+  assert.throws(() => validatePlannerCautions({}), /669 entrées attendues, 0 reçues/);
 
   const glutenRecipe = structuredClone(catalogue.recipes.find(({ id }) => id === "r036"));
   glutenRecipe.app.planner.allergens = [];
@@ -232,14 +233,17 @@ test("planner metadata is explicit and no longer inferred from recipe prose", ()
   assert.match(plannerGeneratorSource, /recipe\.app\.planner\.eligible/);
 });
 
-test("r036 is rejected for gluten across catalogue, planner and replay boundaries", async () => {
+test("r036 retains gluten protection and its suspension blocks planner and replay boundaries", async () => {
   const engine = await import("../src/engine.ts");
   const { DEFAULT_PROFILE } = await import("../src/domain.ts");
   const { filterCatalogueRecipes, EMPTY_CATALOGUE_FILTERS, visibleCatalogueRecipes } = await import("../src/catalog.ts");
   const sourceRecipe = catalogue.recipes.find((recipe) => recipe.id === "r036");
-  const plannerRecipe = plannerRecipes.find((recipe) => recipe.id === "catalog-r036");
+  const { catalogueShoppingRecipe } = await import("../src/personal-library.ts");
+  const plannerRecipe = catalogueShoppingRecipe(sourceRecipe, "/test.png");
   assert.ok(sourceRecipe, "r036 absente du catalogue source");
-  assert.ok(plannerRecipe, "r036 absente de la projection planificateur");
+  assert.ok(plannerRecipe, "instantané r036 indisponible pour vérifier les protections historiques");
+  assert.equal(sourceRecipe.app.planner.eligible, false, "r036 reste suspendue en attente de protocole");
+  assert.equal(plannerRecipes.some((recipe) => recipe.id === "catalog-r036"), false, "r036 ne doit plus être tirée par le planificateur");
 
   const glutenProfile = { ...DEFAULT_PROFILE, allergies: ["gluten"] };
   assert.equal(engine.recipeIsAllowed(plannerRecipe, glutenProfile), false, "le moteur doit exclure r036");
@@ -276,7 +280,7 @@ test("r036 is rejected for gluten across catalogue, planner and replay boundarie
   assert.ok(engine.plannedMealAllergens(plannerRecipe, archivedMeal).includes("gluten"), "les substitutions ne doivent pas masquer le gluten déclaré");
 });
 
-test("passive infusion and fermentation are excluded from active kitchen time", () => {
+test("passive infusion stays separate and a suspended fermentation has no usable resting duration", () => {
   const infusion = catalogue.recipes.find((recipe) => recipe.id === "r005");
   const fermentation = catalogue.recipes.find((recipe) => recipe.id === "r023");
 
@@ -286,8 +290,10 @@ test("passive infusion and fermentation are excluded from active kitchen time", 
   );
   assert.deepEqual(
     { active: fermentation?.app.planner.active_minutes, rest: fermentation?.temps.repos, total: fermentation?.temps.total },
-    { active: 30, rest: 10_080, total: 10_110 },
+    { active: 30, rest: 0, total: 30 },
   );
+  assert.equal(fermentation.app.planner.eligible, false);
+  assert.match(fermentation.app.review.caution, /sans durée de fermentation validée/);
 });
 
 test("unverified mechanism claims are not rendered as clinical effects", () => {
@@ -331,9 +337,9 @@ test("la disponibilité au planificateur est expliquée sans lever la barrière 
     assert.equal(availability.plannable, !recipe.app.duplicate_of && recipe.app.planner.eligible);
   }
 
-  assert.equal(counts.plannable, 689, "les nouvelles recettes relues rejoignent le planificateur");
+  assert.equal(counts.plannable, 685, "les recettes relues rejoignent le planificateur, sauf quatre protocoles culinaires suspendus");
   assert.equal(counts.duplicate, 6);
-  assert.equal(counts["side-dish"] + counts.editorial, 562);
+  assert.equal(counts["side-dish"] + counts.editorial, 566);
   assert.ok(counts.editorial > 0, "des exclusions éditoriales subsistent");
 
   const sodiumExcluded = catalogue.recipes.find((recipe) => recipe.id === "r084");
@@ -510,9 +516,9 @@ test("un payload de précautions invalide est rejeté puis retenté", { concurre
 });
 
 function historicalCatalogue() {
-  // Exact reviewed edition 7a11e85; all 1087 recipes are unchanged in this release.
+  // Exact previously approved edition 7a11e85, reconstructed before the documented instruction review.
   const previous = structuredClone(catalogue);
-  previous.recipes = previous.recipes.slice(0, 1087);
+  previous.recipes = previous.recipes.slice(0, 1087).map(beforeInstructionsReview);
   previous.meta.nombre_recettes = 1087;
   previous.meta.date_mise_a_jour = "2026-09-06";
   return previous;
@@ -709,7 +715,7 @@ test("les filtres et le tri du catalogue portent sur les vraies données", async
   );
 
   const plannable = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, plannableOnly: true });
-  assert.equal(plannable.length, 689, "le filtre planifiable respecte la relecture éditoriale");
+  assert.equal(plannable.length, 685, "le filtre planifiable respecte la relecture éditoriale et les suspensions de protocole");
 
   const winter = filterCatalogueRecipes(visible, { ...EMPTY_CATALOGUE_FILTERS, season: "hiver" });
   assert.ok(winter.every((recipe) => recipe.saisons.includes("hiver") || recipe.saisons.includes("toute-annee")));

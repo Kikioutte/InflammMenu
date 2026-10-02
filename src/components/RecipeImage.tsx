@@ -26,7 +26,8 @@ function RecipeImageSource({ src, sizes, ...props }: RecipeImageProps) {
     // Remove candidates first: changing src alone would retry the failed WebP.
     event.currentTarget.removeAttribute("srcset");
     event.currentTarget.removeAttribute("sizes");
-    event.currentTarget.src = next === 1 ? src : RECIPE_IMAGE_PLACEHOLDER;
+    // Removing srcset selects the original src. Let React alone assign the
+    // placeholder: writing src here and again on commit can fetch it twice.
     setStage(next);
   };
   return <img {...props} src={stage === 2 ? RECIPE_IMAGE_PLACEHOLDER : src}

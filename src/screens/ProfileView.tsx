@@ -1,7 +1,7 @@
 import { type UserProfile, type DayConstraint, type Equipment, type MealType, type DietMode } from "../domain";
 import { useKeyboard, MobileScroll, KeyboardInput, Carousel } from "../mobile";
 import { useState } from "react";
-import { weeklyTargetsOf, MAX_WEEKLY_TARGET } from "../engine";
+import { weeklyTargetsOf, MAX_WEEKLY_TARGET, fishTargetAppliesToDiet } from "../engine";
 import { parseNumericInput } from "../numeric-input";
 import { unsupportedAllergies, resolveIngredientExclusions } from "../food-restrictions";
 import { type AssociationMode } from "../food-associations";
@@ -119,7 +119,7 @@ export function ProfileView({ initial, onSave, onOpenInformation }: { initial: U
     <section className="form-section" data-testid="targets-section"><h2>Objectifs de la semaine</h2>
       <p className="inline-help">Le générateur vise ces fréquences avant d’optimiser le budget, la saison et le réemploi. Repères issus du modèle méditerranéen, pas une prescription.</p>
       <div className="setting-row"><span><strong>Repas avec légumes secs ou soja</strong><small>Lentilles, pois chiches, haricots, fèves, tofu ou tempeh</small></span><div className="stepper"><button type="button" aria-label="Moins de repas avec légumes secs ou soja" onClick={() => setTarget("legumeMeals", -1)}><MinusIcon /></button><b data-testid="target-legume">{targets.legumeMeals}</b><button type="button" aria-label="Plus de repas avec légumes secs ou soja" onClick={() => setTarget("legumeMeals", 1)}><PlusIcon /></button></div></div>
-      {profile.diet === "classic" ? <div className="setting-row"><span><strong>Repas avec poisson</strong><small>Dont poissons gras si possible</small></span><div className="stepper"><button type="button" aria-label="Moins de repas avec poisson" onClick={() => setTarget("fishMeals", -1)}><MinusIcon /></button><b data-testid="target-fish">{targets.fishMeals}</b><button type="button" aria-label="Plus de repas avec poisson" onClick={() => setTarget("fishMeals", 1)}><PlusIcon /></button></div></div> : <p className="inline-help">L’objectif poisson ne s’applique pas au régime sélectionné.</p>}
+      {fishTargetAppliesToDiet(profile.diet) ? <div className="setting-row"><span><strong>Repas avec poisson</strong><small>Dont poissons gras si possible</small></span><div className="stepper"><button type="button" aria-label="Moins de repas avec poisson" onClick={() => setTarget("fishMeals", -1)}><MinusIcon /></button><b data-testid="target-fish">{targets.fishMeals}</b><button type="button" aria-label="Plus de repas avec poisson" onClick={() => setTarget("fishMeals", 1)}><PlusIcon /></button></div></div> : <p className="inline-help">L’objectif poisson ne s’applique pas au régime sélectionné.</p>}
     </section>
     <section className="form-section" data-testid="disliked-section"><h2>Recettes écartées</h2>
       {profile.dislikedRecipeIds.length

@@ -10,7 +10,7 @@ import { CalendarIcon, ArrowLeftIcon, ReloadIcon, Cross2Icon } from "@radix-ui/r
 import { catalogueShoppingRecipe } from "../personal-library";
 import { type SavedMeal } from "../saved-meals";
 import { type CompositionTarget, composeMeal, updatePlannedComposition } from "../composed-meal";
-import { evaluateAssociationMeal } from "../food-associations";
+import { compositionSelectionError } from "../meal-composition-rules";
 import { type AppStateStore } from "./app-state-store";
 import { type TabId, type RecipeRating } from "./types";
 import { useInstallAndConnectivity } from "./useInstallAndConnectivity";
@@ -18,6 +18,8 @@ import { useRecipeRegistry, recipesForState, recipeById, ACTIVE_RECIPES } from "
 import { isoDate, mondayOf, formatWeekRange, weekStartForTarget, type WeekTarget } from "../components/format";
 import { makePlan } from "./planning";
 import { mealActionTarget, matchingActionMeal, STALE_MEAL_ACTION } from "./meal-actions";
+import { mealDetailTarget, matchingDetailMeal, preparationPortions } from "./meal-detail";
+import { recipeRating, withRecipeRating, withToggledFavorite } from "./recipe-preferences";
 import { Header } from "../components/Header";
 import { LiveAppState } from "./LiveAppState";
 import { StaleMealAction } from "../components/StaleMealAction";
@@ -95,28 +97,9 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
   const registeredPersonalRecipes = useMemo(() => [...appState.customRecipes, ...appState.composedRecipes], [appState.customRecipes, appState.composedRecipes]);
   const activeRecipeSnapshot = useRecipeRegistry(registeredPersonalRecipes);
 
-  const rateRecipe = (recipeId: string, rating: RecipeRating) => setAppState((current) => {
-    const favorites = current.favoriteRecipeIds.filter((id) => id !== recipeId);
-    const disliked = current.profile.dislikedRecipeIds.filter((id) => id !== recipeId);
-    const softDisliked = current.profile.softDislikedRecipeIds.filter((id) => id !== recipeId);
-    return {
-      ...current,
-      favoriteRecipeIds: rating === "loved" ? [...favorites, recipeId] : favorites,
-      profile: {
-        ...current.profile,
-        dislikedRecipeIds: rating === "avoided" ? [...disliked, recipeId] : disliked,
-        softDislikedRecipeIds: rating === "meh" ? [...softDisliked, recipeId] : softDisliked,
-      },
-    };
-  });
-  const ratingOf = (recipeId: string): RecipeRating => {
-    const live = appStore.getSnapshot();
-    if (live.profile.dislikedRecipeIds.includes(recipeId)) return "avoided";
-    if (live.profile.softDislikedRecipeIds.includes(recipeId)) return "meh";
-    if (live.favoriteRecipeIds.includes(recipeId)) return "loved";
-    return "neutral";
-  };
-  const setRecipeNote = (recipeId: string, note: string) => setAppState((current) => {
+  const rateRecipe = (recipeId: string, rating: RecipeRating, isCurrent: (state: AppState) => boolean = () => true) => setAppState((current) => isCurrent(current) ? withRecipeRating(current, recipeId, rating) : current);
+  const setRecipeNote = (recipeId: string, note: string, isCurrent: (state: AppState) => boolean = () => true) => setAppState((current) => {
+    if (!isCurrent(current)) return current;
     const notes = { ...current.recipeNotes };
     if (note.trim()) notes[recipeId] = note.slice(0, 2000); else delete notes[recipeId];
     return { ...current, recipeNotes: notes };
@@ -361,7 +344,7 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
     void showReminder();
   }, [hydrated, appState.remindersEnabled, appState.currentPlan]);
 
-  const toggleFavorite = (id: string) => setAppState((current) => ({ ...current, favoriteRecipeIds: current.favoriteRecipeIds.includes(id) ? current.favoriteRecipeIds.filter((entry) => entry !== id) : [...current.favoriteRecipeIds, id] }));
+  const toggleFavorite = (id: string, isCurrent: (state: AppState) => boolean = () => true) => setAppState((current) => isCurrent(current) ? withToggledFavorite(current, id) : current);
   const toggleChecked = (id: string) => setAppState((current) => {
     const checked = [...current.checkedShoppingItemIds, ...current.extraShoppingCheckedIds].some((entry) => storedShoppingItemMatches(entry, id));
     const withoutIngredient = current.checkedShoppingItemIds.filter((entry) => !storedShoppingItemMatches(entry, id));
@@ -479,12 +462,8 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
             if (!inspectActivePlan(updatedPlan, recipes, current.profile).canActivate) {
               throw new Error("Ce remplacement ne respecte plus votre profil ou les contraintes de la semaine.");
             }
-            return {
-              ...withUpdatedPlan(current, updatedPlan, recipes),
-              profile: options.dislikeCurrent && !current.profile.dislikedRecipeIds.includes(liveSource.recipeId)
-                ? { ...current.profile, dislikedRecipeIds: [...current.profile.dislikedRecipeIds, liveSource.recipeId] }
-                : current.profile,
-            };
+            const updated = withUpdatedPlan(current, updatedPlan, recipes);
+            return options.dislikeCurrent ? withRecipeRating(updated, liveSource.recipeId, "avoided") : updated;
           });
           route.pop();
           return null;
@@ -540,45 +519,69 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
   }
 
   function cookingScreen(recipe: Recipe, portions: number, planned?: PlannedMeal): FlowScreen {
-    return { id: `cooking-${recipe.id}`, title: "Mode cuisine", headerHeight: 56, header: (route) => <Header title="Mode cuisine" onBack={route.pop} />, render: () => <CookingView recipe={recipe} portions={portions} planned={planned} /> };
+    const openedState = appStore.getSnapshot();
+    const target = planned ? mealDetailTarget(openedState.currentPlan, planned, openedState.storageGeneration) : null;
+    return { id: `cooking-${recipe.id}`, title: "Mode cuisine", headerHeight: 56, header: (route) => <Header title="Mode cuisine" onBack={route.pop} />, render: () => <LiveAppState store={appStore}>{(live) => {
+      const livePlanned = planned ? matchingDetailMeal(live.currentPlan, target, live.storageGeneration) : undefined;
+      if (planned && (!livePlanned || livePlanned.leftoverOf || livePlanned.skipped)) return <StaleMealAction />;
+      const visibleRecipe = recipesForState(live).find((item) => item.id === recipe.id) ?? (planned ? undefined : recipe);
+      if (!visibleRecipe) return <StaleMealAction />;
+      return <CookingView key={JSON.stringify([visibleRecipe.steps, livePlanned?.substitutions])} recipe={visibleRecipe} portions={livePlanned ? preparationPortions(live.currentPlan, livePlanned) : portions} servedPortions={livePlanned?.portions} planned={livePlanned ?? undefined} />;
+    }}</LiveAppState> };
   }
 
   function recipeScreen(recipe: Recipe, planned?: PlannedMeal, initialPortions?: number): FlowScreen {
+    const openedState = appStore.getSnapshot();
+    const detailTarget = planned ? mealDetailTarget(openedState.currentPlan, planned, openedState.storageGeneration) : null;
     return {
       id: `recipe-${planned?.id ?? recipe.id}`,
       title: recipe.title,
       headerHeight: 56,
       header: (route) => <Header title="Recette" onBack={route.pop} />,
       render: (route) => <LiveAppState store={appStore}>{(live) => {
-        const livePlanned = planned ? live.currentPlan?.meals.find((meal) => meal.id === planned.id) ?? planned : undefined;
+        const livePlanned = planned ? matchingDetailMeal(live.currentPlan, detailTarget, live.storageGeneration) : undefined;
+        if (planned && !livePlanned) return <StaleMealAction />;
         const personalRecipe = live.customRecipes.find((item) => item.id === recipe.id);
-        const visibleRecipe = personalRecipe ?? recipe;
-        return <RecipeView tools={(portions) => <RecipeTools store={appStore} recipeId={visibleRecipe.id} recipe={{ ...visibleRecipe, ingredients: ingredientsForPlannedMeal(visibleRecipe, livePlanned, 1) }} portions={portions} />}
+        const visibleRecipe = recipesForState(live).find((item) => item.id === recipe.id) ?? (planned ? undefined : recipe);
+        if (!visibleRecipe) return <StaleMealAction />;
+        const actionTarget = livePlanned ? mealActionTarget(live.currentPlan, livePlanned, live.storageGeneration) : null;
+        // Recheck the exact displayed target inside every write/navigation. A
+        // FlowStack closure may still receive a click before the live repaint.
+        const isCurrentDetail = (current: AppState) => !planned || Boolean(
+          matchingActionMeal(current.currentPlan, actionTarget, current.storageGeneration)
+          && JSON.stringify(recipesForState(current).find((item) => item.id === visibleRecipe.id)) === JSON.stringify(visibleRecipe)
+        );
+        const detailStore: AppStateStore = { ...appStore, setState: (update) => setAppState((current) => isCurrentDetail(current) ? typeof update === "function" ? update(current) : update : current) };
+        return <RecipeView tools={(portions) => <RecipeTools store={detailStore} recipeId={visibleRecipe.id} recipe={{ ...visibleRecipe, ingredients: ingredientsForPlannedMeal(visibleRecipe, livePlanned ?? undefined, 1) }} portions={portions} />}
           recipe={visibleRecipe}
-          planned={livePlanned}
+          planned={livePlanned ?? undefined}
+          preparationPortions={livePlanned ? preparationPortions(live.currentPlan, livePlanned) : undefined}
           profile={live.profile}
           initialPortions={initialPortions ?? live.profile.people}
-          favorite={live.favoriteRecipeIds.includes(visibleRecipe.id)}
-          onFavorite={() => toggleFavorite(visibleRecipe.id)}
-          rating={ratingOf(visibleRecipe.id)}
-          onRate={(rating) => rateRecipe(visibleRecipe.id, rating)}
+          favorite={recipeRating(live, visibleRecipe.id) === "loved"}
+          onFavorite={() => toggleFavorite(visibleRecipe.id, isCurrentDetail)}
+          rating={recipeRating(live, visibleRecipe.id)}
+          onRate={(rating) => rateRecipe(visibleRecipe.id, rating, isCurrentDetail)}
           note={live.recipeNotes[visibleRecipe.id] ?? ""}
-          onNoteChange={(note) => setRecipeNote(visibleRecipe.id, note)}
+          onNoteChange={(note) => setRecipeNote(visibleRecipe.id, note, isCurrentDetail)}
           onRecompose={visibleRecipe.composition ? async () => {
+            if (!isCurrentDetail(appStore.getSnapshot())) throw new Error(STALE_MEAL_ACTION);
             const currentPlan = appStore.getSnapshot().currentPlan;
             const currentMeal = currentPlan?.meals.find((meal) => meal.id === livePlanned?.id);
             const source = currentMeal?.leftoverOf ? currentPlan?.meals.find((meal) => meal.id === currentMeal.leftoverOf) : currentMeal;
             const target = currentPlan && source ? { planId: currentPlan.id, slotId: source.id, recipeId: source.recipeId, dayIndex: source.dayIndex, mealType: source.mealType } : undefined;
             if (livePlanned && (!target || target.recipeId !== visibleRecipe.id)) throw new Error("Le repas a changé.");
             const data = await loadCatalogue();
+            if (!isCurrentDetail(appStore.getSnapshot())) throw new Error(STALE_MEAL_ACTION);
             const main = data.recipes.find((item) => item.id === visibleRecipe.composition!.main);
             if (!main || mealBuilderGroupFor(main) !== "main" || !mealBuilderEligible(main)) throw new Error("Recette indisponible");
             setCatalogue(data);
             route.push(mealBuilderScreen(main, { id: `meal-${crypto.randomUUID()}`, recipeIds: visibleRecipe.composition! }, data, target));
           } : undefined}
-          onEdit={personalRecipe ? () => route.replace(customRecipeScreen(personalRecipe, true, livePlanned)) : undefined}
+          onEdit={personalRecipe ? () => { if (isCurrentDetail(appStore.getSnapshot())) route.replace(customRecipeScreen(personalRecipe, true, livePlanned ?? undefined)); } : undefined}
           onDuplicate={visibleRecipe.composition ? undefined : () => {
             const current = appStore.getSnapshot();
+            if (!isCurrentDetail(current)) return;
             if (current.customRecipes.length >= 200) {
               route.push({
                 id: "custom-limit", title: "Limite atteinte", headerHeight: 56,
@@ -589,22 +592,26 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
             }
             route.push(customRecipeScreen(customRecipeFrom(visibleRecipe)));
           }}
-          onReplace={livePlanned ? () => route.replace(replacementScreen(livePlanned)) : undefined}
+          onReplace={livePlanned ? () => { if (isCurrentDetail(appStore.getSnapshot())) route.replace(replacementScreen(livePlanned)); } : undefined}
           onPlan={!livePlanned ? () => route.push(planSlotScreen(visibleRecipe)) : undefined}
-          onPortionsChange={livePlanned ? (portions) => setAppState((current) => (current.currentPlan ? withUpdatedPlan(current, setMealPortions(current.currentPlan, livePlanned.id, portions, ACTIVE_RECIPES)) : current)) : undefined}
+          onPortionsChange={livePlanned ? (portions) => setAppState((current) => {
+            if (!current.currentPlan || !isCurrentDetail(current)) return current;
+            const recipes = recipesForState(current);
+            return withUpdatedPlan(current, setMealPortions(current.currentPlan, livePlanned.id, portions, recipes), recipes);
+          }) : undefined}
           onSubstitutionChange={livePlanned ? (ingredientId, substitutionId) => {
             const target = mealActionTarget(live.currentPlan, livePlanned, live.storageGeneration);
             try {
               setAppState((current) => {
                 const meal = matchingActionMeal(current.currentPlan, target, current.storageGeneration);
-                if (!meal || meal.recipeId !== visibleRecipe.id || !current.currentPlan) throw new Error(STALE_MEAL_ACTION);
+                if (!meal || !current.currentPlan || !isCurrentDetail(current)) throw new Error(STALE_MEAL_ACTION);
                 const recipes = recipesForState(current);
                 return withUpdatedPlan(current, setMealIngredientSubstitution(current.currentPlan, meal.id, ingredientId, substitutionId, recipes, current.profile), recipes);
               });
               return null;
             } catch (error) { return error instanceof Error ? error.message : "Cette substitution est incompatible avec votre profil."; }
           } : undefined}
-          onCook={(portions) => route.push(cookingScreen(visibleRecipe, portions, livePlanned))}
+          onCook={livePlanned?.leftoverOf || livePlanned?.skipped ? undefined : (portions) => { if (isCurrentDetail(appStore.getSnapshot())) route.push(cookingScreen(visibleRecipe, portions, livePlanned ?? undefined)); }}
         />;
       }}</LiveAppState>,
     };
@@ -634,7 +641,7 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
   function catalogueRecipeScreen(recipe: CatalogueRecipe): FlowScreen {
     const favoriteId = catalogueFavoriteId(recipe);
     const projected = recipeById.get(favoriteId);
-    return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette vérifiée" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView tools={(portions) => <RecipeTools store={appStore} recipeId={favoriteId} recipe={catalogueShoppingRecipe(recipe, catalogueImageFor(recipe)) ?? undefined} portions={portions} shoppingAllowed={availabilityForShopping(recipe)} />} recipe={recipe} favorite={live.favoriteRecipeIds.includes(favoriteId)} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} onComposeMeal={mealBuilderEligible(recipe) ? () => route.push(mealBuilderScreen(recipe)) : undefined} />}</LiveAppState> };
+    return { id: `catalogue-${recipe.id}`, title: recipe.titre, headerHeight: 56, header: (route) => <Header title="Recette" onBack={route.pop} />, render: (route) => <LiveAppState store={appStore}>{(live) => <CatalogueRecipeView tools={(portions) => <RecipeTools store={appStore} recipeId={favoriteId} recipe={catalogueShoppingRecipe(recipe, catalogueImageFor(recipe)) ?? undefined} portions={portions} shoppingAllowed={availabilityForShopping(recipe)} />} recipe={recipe} favorite={recipeRating(live, favoriteId) === "loved"} onFavorite={() => toggleFavorite(favoriteId)} onPlan={projected ? () => route.push(planSlotScreen(projected)) : undefined} onComposeMeal={mealBuilderEligible(recipe) ? () => route.push(mealBuilderScreen(recipe)) : undefined} />}</LiveAppState> };
   }
 
   function mealBuilderScreen(recipe: CatalogueRecipe, saved?: SavedMeal, availableCatalogue = catalogue, target?: CompositionTarget): FlowScreen {
@@ -643,8 +650,8 @@ export function AppShell({ flow, appStore }: { flow: FlowControls; appStore: App
     return { id: `meal-builder-${recipe.id}`, title: "Composer mon repas", headerHeight: 56, header: (route) => <div className="app-header meal-builder-header"><button type="button" className="icon-button" aria-label="Retour" onClick={route.pop}><ArrowLeftIcon /></button><Wordmark /><span /></div>, render: (route) => <MealBuilderView initialRecipe={recipe} initialSelection={initialSelection} initialName={saved?.name} planLabel={target ? "Enregistrer les modifications du repas" : "Planifier ce repas"} planningContext={target ? `Modifier le ${MEAL_LABELS[target.mealType].toLocaleLowerCase("fr")} du ${DAY_LABELS[target.dayIndex]} — le créneau et les portions seront conservés.` : undefined} recipes={recipes} onSave={(selection, name) => {
       const { starter, main, dessert } = selection;
       if (!starter || !main || !dessert) return "Complétez les trois catégories.";
-      const result = evaluateAssociationMeal([starter, main, dessert]);
-      if (result.level !== "verte" && result.level !== "orange") return "Les associations de ce repas doivent être revues.";
+      const selectionError = compositionSelectionError(selection);
+      if (selectionError) return selectionError;
       const recipeIds = { starter: starter.id, main: main.id, dessert: dessert.id };
       const current = appStore.getSnapshot();
       const duplicate = current.savedMeals.find((meal) => MEAL_BUILDER_GROUPS.every(({ id }) => meal.recipeIds[id] === recipeIds[id]));

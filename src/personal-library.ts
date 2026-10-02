@@ -1,6 +1,7 @@
 import type { Ingredient, Recipe, WeeklyPlan, UserProfile } from "./domain.ts";
 import type { CatalogueRecipe } from "./catalog.ts";
 import { hasAllergyConflict, hasIngredientExclusionConflict } from "./food-restrictions.ts";
+import { isRecipeReferenceId } from "./recipe-references.ts";
 
 export interface RecipeCollection { id: string; name: string; recipeIds: string[] }
 export interface ShoppingRecipe { recipe: Recipe; portions: number }
@@ -34,7 +35,7 @@ export function normalizeCollections(value: unknown): RecipeCollection[] {
   return value.flatMap((item) => {
     if (!item || typeof item.id !== "string" || !/^collection-[a-zA-Z0-9-]{1,100}$/.test(item.id) || seen.has(item.id) || !cleanLabel(item.name)) return [];
     seen.add(item.id);
-    const recipeIds = Array.isArray(item.recipeIds) ? [...new Set<string>(item.recipeIds.filter((id: unknown): id is string => typeof id === "string" && id.length <= 160 && /^(catalog-r\d+|r\d+|perso-[a-zA-Z0-9._-]+)$/.test(id)))].slice(0, 1500) : [];
+    const recipeIds = Array.isArray(item.recipeIds) ? [...new Set<string>(item.recipeIds.filter(isRecipeReferenceId))].slice(0, 1500) : [];
     return [{ id: item.id, name: cleanLabel(item.name), recipeIds }];
   }).slice(0, 100);
 }

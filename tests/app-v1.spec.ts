@@ -2,9 +2,10 @@ import { expect, test, type Locator, type Page } from "@playwright/test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { DEFAULT_PROFILE } from "../src/domain";
-import { DEFAULT_APP_STATE } from "../src/storage";
-import { generateWeeklyPlan } from "../src/engine";
+import { DEFAULT_APP_STATE, normalizePlan } from "../src/storage";
+import { assignableSlots, generateWeeklyPlan, inspectActivePlan } from "../src/engine";
 import { IMPORTED_PLAN_RECIPES } from "../src/planner-catalog";
+import { RECIPES } from "../src/recipes";
 
 // Keep request interception deterministic. Service-worker update behaviour is
 // covered independently in storage.test.mjs.
@@ -984,33 +985,31 @@ test("créer une autre semaine renouvelle les recettes dans l’interface", asyn
 });
 
 test("une substitution appliquée met à jour la recette, les allergènes et les courses", async ({ page }) => {
-  await page.addInitScript(() => {
-    const now = new Date();
-    const dayIndex = (now.getDay() + 6) % 7;
-    const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayIndex);
-    const startsOn = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, "0")}-${String(monday.getDate()).padStart(2, "0")}`;
-    const recipeIds = [
-      "salade-lentilles-noix", "bowl-quinoa-legumes-houmous", "pates-completes-ratatouille", "salade-sardines-pommes-terre-haricots",
-      "bowl-saumon-riz-complet-avocat", "bowl-poulet-orge-legumes", "bowl-cabillaud-patate-douce", "mijote-aubergine-pois-chiches",
-      "salade-maquereau-betterave-pomme-terre", "curry-pois-chiches-epinards", "omelette-legumes-quinoa", "bowl-tofu-brocoli-sesame",
-      "poulet-curcuma-legumes-semoule", "dal-lentilles-corail-courge",
-    ];
-    [recipeIds[0], recipeIds[dayIndex * 2]] = [recipeIds[dayIndex * 2], recipeIds[0]];
-    const meals = recipeIds.map((recipeId, index) => ({
+  await page.clock.setFixedTime(new Date("2026-09-14T12:00:00Z"));
+  // The reviewed cod bowl takes 40 active minutes. Keep the 30-minute profile
+  // and use a compatible meal, so hydration does not correctly archive the fixture.
+  const recipeIds = [
+    "salade-lentilles-noix", "bowl-quinoa-legumes-houmous", "pates-completes-ratatouille", "salade-sardines-pommes-terre-haricots",
+    "bowl-saumon-riz-complet-avocat", "bowl-poulet-orge-legumes", "minestrone-haricots-blancs-epeautre", "mijote-aubergine-pois-chiches",
+    "salade-maquereau-betterave-pomme-terre", "curry-pois-chiches-epinards", "omelette-legumes-quinoa", "bowl-tofu-brocoli-sesame",
+    "poulet-curcuma-legumes-semoule", "dal-lentilles-corail-courge",
+  ];
+  const plan = normalizePlan({
+    id: "week-2026-09-14-substitution", startsOn: "2026-09-14", generatedAt: "2026-09-14T12:00:00Z", profileSnapshot: DEFAULT_PROFILE,
+    meals: recipeIds.map((recipeId, index) => ({
       id: `day-${Math.floor(index / 2)}-${index % 2 ? "dinner" : "lunch"}`,
       dayIndex: Math.floor(index / 2), mealType: index % 2 ? "dinner" : "lunch", recipeId, portions: 2, source: "generated",
-    }));
-    window.localStorage.setItem("inflamm-menu:app-state", JSON.stringify({
-      version: 3,
-      profile: { people: 2, mealsPerDay: 2, weeklyBudget: 80, maxPrepMinutes: 30, allergies: [], excludedIngredientIds: [], diet: "classic", equipment: ["hob", "oven", "microwave", "blender", "toaster", "steamer"] },
-      currentPlan: {
-        id: `week-${startsOn}-substitution`, startsOn, generatedAt: new Date().toISOString(), profileSnapshot: {},
-        meals,
-        estimatedCost: 4.7, version: 1,
-      },
-      favoriteRecipeIds: [], history: [], checkedShoppingItemIds: [], pantryIngredientIds: [], onboardingCompleted: true,
-    }));
+    })),
+    estimatedCost: 4.7, version: 1,
   });
+  assert.ok(plan, "La fixture de substitution doit être un plan stockable");
+  expect(inspectActivePlan(plan, RECIPES, DEFAULT_PROFILE)).toEqual({
+    blockedMeals: [], missingSlots: 0, unexpectedSlots: 0, inferredMealsPerDay: 2, canActivate: true,
+  });
+  expect(new Set(plan.meals.map((meal) => meal.recipeId)).size).toBe(14);
+  await page.addInitScript((state) => {
+    localStorage.setItem("inflamm-menu:app-state", JSON.stringify(state));
+  }, { ...DEFAULT_APP_STATE, onboardingCompleted: true, currentPlan: plan });
   await openFreshApp(page);
   await page.getByRole("button", { name: "Semaine", exact: true }).click();
   await page.locator(".meal-card__main").first().click();
@@ -1337,11 +1336,19 @@ test("une recette écartée disparaît des semaines suivantes et reste réversib
 test("une recette du catalogue peut être placée sur un créneau précis", async ({ page }) => {
   // The fixture deliberately leaves this recipe out; random generation can
   // otherwise select it and correctly disable every slot as a duplicate.
-  const recipe = IMPORTED_PLAN_RECIPES.find((item) => item.title.startsWith("Soupe miso au wakame"))!;
+  const recipe = IMPORTED_PLAN_RECIPES.find((item) => item.id === "catalog-r037");
+  assert.ok(recipe, "Le gaspacho relu doit rester planifiable, contrairement à la soupe miso suspendue");
   const plan = generateWeeklyPlan(IMPORTED_PLAN_RECIPES.filter((item) => item.id !== recipe.id), DEFAULT_PROFILE, {
     seed: "catalogue-plan-slot",
     startsOn: "2026-09-14",
   });
+  expect(inspectActivePlan(plan, RECIPES, DEFAULT_PROFILE)).toEqual({
+    blockedMeals: [], missingSlots: 0, unexpectedSlots: 0, inferredMealsPerDay: 2, canActivate: true,
+  });
+  expect(plan.meals.some((meal) => meal.recipeId === recipe.id)).toBe(false);
+  expect(assignableSlots(plan, recipe, DEFAULT_PROFILE)).toEqual(expect.arrayContaining([
+    expect.objectContaining({ dayIndex: 2, mealType: "dinner" }),
+  ]));
   await page.clock.setFixedTime(new Date("2026-09-14T12:00:00Z"));
   await page.addInitScript((state) => {
     localStorage.setItem("inflamm-menu:app-state", JSON.stringify(state));
@@ -1350,8 +1357,8 @@ test("une recette du catalogue peut être placée sur un créneau précis", asyn
 
   await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
-  await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
-  await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
+  await page.getByPlaceholder("Recette ou ingrédient").fill(recipe.title);
+  await page.getByRole("button", { name: /Gaspacho tomate, pastèque et basilic/ }).click();
 
   await page.getByTestId("catalogue-plan").click();
   await expect(page.getByTestId("plan-slot-view")).toBeVisible();
@@ -1359,12 +1366,12 @@ test("une recette du catalogue peut être placée sur un créneau précis", asyn
 
   await expect(page.getByTestId("week-view")).toBeVisible();
   await page.locator(".day-card").nth(2).click();
-  await expect(page.locator(".meal-card__main strong", { hasText: "Soupe miso au wakame" })).toHaveCount(1);
+  await expect(page.locator(".meal-card__main strong", { hasText: recipe.title })).toHaveCount(1);
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 
   await page.getByRole("button", { name: "Recette", exact: true }).click();
-  await page.getByPlaceholder("Recette ou ingrédient").fill("wakame");
-  await page.getByRole("button", { name: /Soupe miso au wakame/ }).click();
+  await page.getByPlaceholder("Recette ou ingrédient").fill(recipe.title);
+  await page.getByRole("button", { name: /Gaspacho tomate, pastèque et basilic/ }).click();
   await page.getByTestId("catalogue-plan").click();
   await expect(page.getByTestId("already-planned")).toContainText("Cette recette est déjà au menu");
   await expect(page.getByTestId("plan-slot-2-dinner")).toBeDisabled();
@@ -2123,7 +2130,7 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
   await misoCard.click();
 
   await expect(page.getByRole("heading", { name: "Soupe miso au wakame, shiitakés et tofu" })).toBeVisible();
-  await expect(page.getByText("Validée avec repères")).toBeVisible();
+  await expect(page.getByTestId("flow-current").getByText("Repères et précautions", { exact: true })).toBeVisible();
   await expect(page.getByText(/sodium et d'iode/)).toBeVisible();
   await expect(page.getByText(/ne garantit pas un bénéfice clinique individuel/)).toBeVisible();
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
@@ -2211,13 +2218,21 @@ test("les temps passifs sont séparés du temps de préparation", async ({ page 
   await page.getByRole("button", { name: "Retour" }).click();
   await search.fill("Chou rouge lacto-fermenté");
   const fermentedCard = page.getByRole("button", { name: /Chou rouge lacto-fermenté au gingembre/ });
-  await expect(fermentedCard).toContainText("30 min de préparation · 7 j de fermentation");
+  await expect(fermentedCard).toContainText("30 min de préparation");
+  await expect(fermentedCard).not.toContainText(/\d+\s*j de fermentation/);
   await fermentedCard.click();
 
-  const fermentedDurations = page.getByTestId("flow-current").getByRole("region", { name: "Durées de la recette" });
+  const fermentedDetail = page.getByTestId("flow-current");
+  const fermentedDurations = fermentedDetail.getByRole("region", { name: "Durées de la recette" });
   await expect(fermentedDurations).toContainText("Préparation30 min");
-  await expect(fermentedDurations).toContainText("Fermentation7 j");
-  await expect(fermentedDurations).toContainText("Total7 j 30 min");
+  await expect(fermentedDurations).toContainText("Total30 min");
+  await expect(fermentedDurations.locator("div")).toHaveCount(2);
+  await expect(fermentedDurations.getByText("Fermentation", { exact: true })).toHaveCount(0);
+  await expect(fermentedDetail.locator(".catalogue-verdict")).toContainText("Fiche suspendue : protocole de fermentation et conservation non validés");
+  await expect(fermentedDetail.locator(".catalogue-caution")).toContainText("Ne pas préparer cette recette en l’état");
+  await expect(fermentedDetail.locator(".steps")).toContainText("Protocole suspendu : ne pas préparer ni consommer une fermentation en suivant cette fiche");
+  await expect(fermentedDetail.getByTestId("planner-exclusion")).toContainText("Hors menus hebdomadaires");
+  await expect(fermentedDetail.getByTestId("catalogue-plan")).toHaveCount(0);
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 });
 
