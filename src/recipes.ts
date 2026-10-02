@@ -158,7 +158,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["spring", "summer"], equipment: ["hob", "toaster"], allergens: ["gluten", "oeuf"], tags: ["cereale-complete", "vegetarien"],
     ingredients: [ingredient("wholegrain_bread", 70, "g"), ingredient("avocado", 0.5, "piece"), ingredient("tomato", 0.5, "piece"), ingredient("egg", 1, "piece"), ingredient("lemon", 0.25, "piece"), ingredient("olive_oil", 0.5, "c_cafe")],
     nutrition: nutrition(390, 15, 9), description: "Une tartine complète, fraîche et généreuse.",
-    steps: ["Cuire l’œuf 7 minutes puis l’écaler.", "Écraser l’avocat avec le citron et toaster le pain.", "Garnir de tomate et d’œuf coupé en quartiers."],
+    steps: ["Plonger l’œuf dans une casserole d’eau frémissante et cuire 7 minutes. Le refroidir sous l’eau froide puis l’écaler ; pour un jaune complètement pris, prolonger à 9–10 minutes.","Écraser l’avocat avec le jus du citron et l’huile prévue. Faire griller le pain.","Tartiner le pain d’avocat, puis garnir de tomate en tranches et d’œuf coupé en quartiers."],
     conservation: "À consommer immédiatement après assemblage.", image: "/assets/recipes/tartine-avocat-tomate-oeuf.jpg",
   },
   {
@@ -178,7 +178,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["autumn", "winter"], equipment: ["hob"], allergens: ["fruits-a-coque"], tags: ["sans-gluten", "chaud", "fruit"],
     ingredients: [ingredient("millet", 55, "g"), ingredient("almond_drink", 220, "ml"), ingredient("apple", 1, "piece"), ingredient("walnut", 15, "g"), ingredient("cinnamon", 0.5, "c_cafe")],
     nutrition: nutrition(415, 10, 8), description: "Un porridge chaud au millet pour changer de l’avoine.",
-    steps: ["Rincer le millet et le cuire doucement dans la boisson végétale.", "Ajouter la moitié de la pomme râpée en fin de cuisson.", "Servir avec le reste de pomme, les noix et la cannelle."],
+    steps: ["Rincer le millet, puis le cuire à feu doux dans la boisson végétale, en remuant régulièrement, selon la durée indiquée sur le paquet et jusqu’à ce que les grains soient tendres.","Laver la pomme, retirer le cœur et la râper. Incorporer la moitié en fin de cuisson.","Servir avec le reste de pomme râpée, les noix et la cannelle."],
     conservation: "2 jours au frais; réchauffer avec un peu de boisson végétale.", image: "/assets/recipes/porridge-millet-pomme.jpg",
   },
   {
@@ -188,7 +188,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["spring", "summer"], equipment: ["blender"], allergens: ["lait", "gluten"], tags: ["rapide", "fruit"],
     ingredients: [ingredient("kefir", 180, "ml"), ingredient("strawberry", 80, "g"), ingredient("raspberry", 50, "g"), ingredient("banana", 0.5, "piece"), ingredient("oats", 25, "g"), ingredient("ginger", 5, "g")],
     nutrition: nutrition(285, 11, 7), description: "Un smoothie acidulé et consistant, prêt en quelques minutes.",
-    steps: ["Équeuter les fraises.", "Mixer tous les ingrédients jusqu’à texture lisse.", "Servir sans attendre."],
+    steps: ["Laver et équeuter les fraises. Peler la banane et le gingembre, puis les couper en petits morceaux.","Mixer tous les ingrédients jusqu’à obtenir une texture lisse.","Servir sans attendre."],
     conservation: "À boire le jour même, idéalement juste après mixage.", image: "/assets/recipes/smoothie-kefir-fruits-rouges.jpg",
   },
   {
@@ -198,7 +198,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob"], allergens: ["oeuf", "lait"], tags: ["sans-gluten", "vegetarien"],
     ingredients: [ingredient("buckwheat_flour", 55, "g"), ingredient("egg", 1, "piece"), ingredient("spinach", 80, "g"), ingredient("ricotta", 45, "g"), ingredient("olive_oil", 1, "c_cafe"), ingredient("lemon", 0.25, "piece")],
     nutrition: nutrition(365, 18, 6), description: "Une galette salée souple, garnie de verdure et de ricotta.",
-    steps: ["Délayer la farine avec 100 ml d’eau et la moitié de l’œuf battu.", "Cuire la galette puis faire tomber les épinards à l’huile.", "Garnir de ricotta, épinards et du reste d’œuf cuit."],
+    steps: ["Battre l’œuf. Délayer la farine avec 100 ml d’eau par portion et la moitié de l’œuf battu.","Chauffer une poêle antiadhésive avec la moitié de l’huile et cuire la galette des deux côtés, jusqu’à ce que la pâte soit prise. Réserver.","Faire tomber les épinards avec le reste de l’huile, puis ajouter le reste d’œuf et le cuire en remuant jusqu’à ce qu’il soit complètement pris.","Mélanger la ricotta avec le jus du citron, puis garnir la galette avec cette préparation et les épinards à l’œuf."],
     conservation: "La galette et la garniture se gardent séparément 24 heures au frais.", image: "/assets/recipes/galette-sarrasin-epinards-ricotta.jpg",
   },
   {
@@ -208,7 +208,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob"], allergens: ["soja", "gluten"], tags: ["vegetarien", "rapide"],
     ingredients: [ingredient("tofu", 140, "g"), ingredient("mushroom", 100, "g"), ingredient("spinach", 50, "g"), ingredient("wholegrain_bread", 50, "g"), ingredient("olive_oil", 1, "c_cafe"), ingredient("turmeric", 0.5, "c_cafe")],
     nutrition: nutrition(360, 25, 7), description: "Une assiette salée végétarienne, fondante et rapide.",
-    steps: ["Émincer et dorer les champignons.", "Émietter le tofu, ajouter le curcuma et cuire 5 minutes.", "Incorporer les épinards et servir avec le pain toasté."],
+    steps: ["Émincer les champignons et les faire dorer dans l’huile prévue.","Émietter le tofu, ajouter le curcuma et cuire 5 minutes en remuant.","Incorporer les épinards et poursuivre jusqu’à ce qu’ils soient tombés. Servir avec le pain grillé."],
     conservation: "2 jours au réfrigérateur sans le pain.", image: "/assets/recipes/tofu-brouille-champignons.jpg",
   },
   {
@@ -218,7 +218,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: [], allergens: ["fruits-a-coque", "moutarde"], tags: ["legumineuse", "sans-gluten", "meal-prep"],
     ingredients: [ingredient("green_lentil", 180, "g"), ingredient("carrot", 70, "g"), ingredient("cucumber", 80, "g"), ingredient("walnut", 20, "g"), ingredient("parsley", 10, "g"), ingredient("mustard", 1, "c_cafe"), ingredient("olive_oil", 1, "c_soupe")],
     nutrition: nutrition(460, 19, 16), description: "Une salade de lentilles croquante, facile à emporter.",
-    steps: ["Couper finement les légumes et hacher le persil.", "Mélanger la moutarde et l’huile pour la vinaigrette.", "Réunir lentilles, légumes et noix, puis assaisonner."],
+    steps: ["Laver et couper finement la carotte et le concombre, puis hacher le persil.","Mélanger la moutarde et l’huile pour préparer la vinaigrette.","Réunir les lentilles cuites égouttées, les légumes et le persil. Assaisonner avec la vinaigrette et ajouter les noix au moment de servir."],
     conservation: "3 jours au réfrigérateur; ajouter les noix au dernier moment.", image: "/assets/recipes/salade-lentilles-noix.jpg",
   },
   {
@@ -228,7 +228,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["summer", "autumn"], equipment: ["hob", "oven"], allergens: ["sesame"], tags: ["cereale-complete", "vegetarien", "meal-prep"],
     ingredients: [ingredient("quinoa", 70, "g"), ingredient("zucchini", 120, "g"), ingredient("bell_pepper", 100, "g"), ingredient("chickpea", 80, "g"), ingredient("hummus", 45, "g"), ingredient("olive_oil", 1, "c_soupe"), ingredient("lemon", 0.25, "piece")],
     nutrition: nutrition(555, 19, 13), description: "Un bol coloré avec quinoa, légumes dorés et houmous crémeux.",
-    steps: ["Rôtir courgette et poivron huilés 20 minutes à 210 °C.", "Cuire le quinoa puis l’égrainer.", "Assembler avec les pois chiches, le houmous et le citron."],
+    steps: ["Préchauffer le four à 210 °C. Couper la courgette et le poivron épépiné en petits morceaux, les mélanger avec l’huile et les rôtir environ 20 minutes, jusqu’à tendreté.","Pendant ce temps, rincer et cuire le quinoa selon les indications du paquet, puis l’égoutter si nécessaire et l’égrainer.","Assembler le quinoa, les légumes rôtis, les pois chiches cuits égouttés et le houmous. Arroser avec le jus du citron."],
     conservation: "3 jours au frais, houmous conservé séparément.", image: "/assets/recipes/bowl-quinoa-legumes-houmous.jpg",
   },
   {
@@ -238,7 +238,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["spring", "summer"], equipment: [], allergens: [], tags: ["legumineuse", "sans-gluten", "rapide"],
     ingredients: [ingredient("white_bean", 190, "g"), ingredient("cherry_tomato", 120, "g"), ingredient("cucumber", 90, "g"), ingredient("olive", 25, "g"), ingredient("basil", 8, "g"), ingredient("olive_oil", 1, "c_soupe"), ingredient("lemon", 0.25, "piece")],
     nutrition: nutrition(410, 17, 14), description: "Une salade méditerranéenne économique et sans cuisson.",
-    steps: ["Rincer et égoutter les haricots.", "Couper les tomates, le concombre et les olives.", "Mélanger avec le basilic, le citron et l’huile."],
+    steps: ["Rincer et égoutter les haricots.","Couper les tomates, le concombre et les olives.","Mélanger avec le basilic, le jus du citron et l’huile."],
     conservation: "2 jours au réfrigérateur dans une boîte hermétique.", image: "/assets/recipes/salade-haricots-blancs-tomates.jpg",
   },
   {
@@ -248,7 +248,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["spring", "summer"], equipment: ["hob"], allergens: ["gluten"], tags: ["legumineuse", "cereale-complete", "meal-prep"],
     ingredients: [ingredient("wholewheat_couscous", 65, "g"), ingredient("chickpea", 120, "g"), ingredient("tomato", 1, "piece"), ingredient("cucumber", 80, "g"), ingredient("parsley", 12, "g"), ingredient("mint", 6, "g"), ingredient("lemon", 0.5, "piece"), ingredient("olive_oil", 1, "c_soupe")],
     nutrition: nutrition(505, 18, 13), description: "Un taboulé généreux en herbes, céréales complètes et pois chiches.",
-    steps: ["Réhydrater la semoule puis l’égrainer.", "Détailler les légumes et ciseler les herbes.", "Mélanger avec les pois chiches, le citron et l’huile."],
+    steps: ["Réhydrater la semoule complète avec la quantité d’eau bouillante et pendant la durée indiquées sur le paquet, puis l’égrainer et la laisser tiédir.","Laver et détailler les légumes, puis ciseler le persil et la menthe.","Mélanger la semoule avec les légumes, les herbes et les pois chiches cuits égouttés. Ajouter le jus du citron et l’huile."],
     conservation: "3 jours au réfrigérateur.", image: "/assets/recipes/taboule-pois-chiches-complet.jpg",
   },
   {
@@ -258,7 +258,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["summer", "autumn"], equipment: ["hob"], allergens: ["gluten"], tags: ["cereale-complete", "vegetarien", "batch-cooking"],
     ingredients: [ingredient("wholewheat_pasta", 80, "g"), ingredient("eggplant", 90, "g"), ingredient("zucchini", 90, "g"), ingredient("bell_pepper", 70, "g"), ingredient("crushed_tomato", 130, "g"), ingredient("garlic", 0.5, "piece"), ingredient("olive_oil", 1, "c_soupe"), ingredient("basil", 6, "g")],
     nutrition: nutrition(480, 17, 12), description: "Des pâtes complètes enrobées d’une ratatouille fondante.",
-    steps: ["Faire revenir les légumes en dés avec l’ail et l’huile.", "Ajouter la tomate et mijoter pendant la cuisson des pâtes.", "Mélanger les pâtes égouttées à la sauce et ajouter le basilic."],
+    steps: ["Couper l’aubergine, la courgette et le poivron épépiné en petits dés. Les faire revenir avec l’ail haché et l’huile pendant environ 5 minutes.","Ajouter les tomates concassées et laisser mijoter 15 à 20 minutes, jusqu’à ce que l’aubergine soit tendre. Pendant ce temps, cuire les pâtes selon les indications du paquet.","Mélanger les pâtes égouttées à la sauce et ajouter le basilic ciselé."],
     conservation: "3 jours au réfrigérateur; réchauffer doucement.", image: "/assets/recipes/pates-completes-ratatouille.jpg",
   },
   {
@@ -268,7 +268,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["spring", "summer"], equipment: ["hob"], allergens: ["poisson", "moutarde"], tags: ["poisson-gras", "sans-gluten"],
     ingredients: [ingredient("sardine", 100, "g"), ingredient("potato", 180, "g"), ingredient("green_bean", 120, "g"), ingredient("cherry_tomato", 80, "g"), ingredient("mustard", 1, "c_cafe"), ingredient("lemon", 0.25, "piece"), ingredient("olive_oil", 1, "c_soupe")],
     nutrition: nutrition(515, 31, 9), description: "Une salade tiède complète au poisson gras.",
-    steps: ["Cuire les pommes de terre et les haricots verts à l’eau.", "Préparer une vinaigrette avec moutarde, citron et huile.", "Assembler les légumes tièdes, les tomates et les sardines."],
+    steps: ["Peler les pommes de terre et les couper en petits morceaux. Les cuire dans l’eau frémissante 15 à 20 minutes, jusqu’à tendreté ; ajouter les haricots verts équeutés pendant les 10 à 12 dernières minutes, puis égoutter.","Utiliser des sardines cuites : égoutter celles en conserve ; si elles sont fraîches, les désarêter et cuire les filets dans une poêle antiadhésive jusqu’à 63 °C à cœur, puis les laisser tiédir.","Mélanger la moutarde avec le jus du citron et l’huile. Couper les tomates cerises.","Assembler les légumes tièdes, les tomates et les sardines, puis ajouter la vinaigrette juste avant de servir."],
     conservation: "24 heures au réfrigérateur; conserver la vinaigrette à part.", image: "/assets/recipes/salade-sardines-pommes-terre-haricots.jpg",
   },
   {
@@ -278,7 +278,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: [], allergens: ["poisson"], tags: ["poisson-maigre", "legumineuse", "rapide"],
     ingredients: [ingredient("tuna", 100, "g"), ingredient("kidney_bean", 150, "g"), ingredient("tomato", 1, "piece"), ingredient("bell_pepper", 70, "g"), ingredient("onion", 30, "g"), ingredient("parsley", 8, "g"), ingredient("lemon", 0.25, "piece"), ingredient("olive_oil", 1, "c_soupe")],
     nutrition: nutrition(440, 38, 12), description: "Une salade express riche en textures et facile à emporter.",
-    steps: ["Rincer les haricots et égoutter le thon.", "Émincer les légumes et le persil.", "Tout mélanger avec le citron et l’huile."],
+    steps: ["Rincer les haricots et égoutter le thon.","Émincer les légumes et le persil.","Tout mélanger avec le jus du citron et l’huile."],
     conservation: "24 heures au réfrigérateur.", image: "/assets/recipes/salade-thon-haricots-rouges.jpg",
   },
   {
@@ -288,7 +288,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob"], allergens: ["poisson", "sesame"], tags: ["poisson-gras", "cereale-complete"],
     ingredients: [ingredient("salmon", 120, "g"), ingredient("brown_rice", 70, "g"), ingredient("avocado", 0.5, "piece"), ingredient("cucumber", 80, "g"), ingredient("carrot", 60, "g"), ingredient("sesame", 8, "g"), ingredient("lemon", 0.25, "piece")],
     nutrition: nutrition(650, 36, 10), description: "Un bowl complet au saumon poêlé et aux légumes croquants.",
-    steps: ["Cuire le riz complet et le laisser tiédir.", "Poêler le saumon puis détailler les légumes.", "Assembler le bowl, arroser de citron et parsemer de sésame."],
+    steps: ["Cuire le riz complet selon les indications du paquet, puis l’égoutter et le laisser tiédir.","Pendant la cuisson du riz, cuire le saumon dans une poêle antiadhésive jusqu’à 63 °C à cœur. Laver et tailler le concombre et la carotte.","Prélever et couper la chair d’avocat au dernier moment. Assembler avec le riz, le saumon et les légumes, arroser du jus du citron et parsemer de sésame."],
     conservation: "24 heures au réfrigérateur sans l’avocat, à ajouter au service.", image: "/assets/recipes/bowl-saumon-riz-complet-avocat.jpg",
   },
   {
@@ -298,27 +298,27 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob"], allergens: ["gluten", "moutarde"], tags: ["volaille", "cereale-complete", "meal-prep"],
     ingredients: [ingredient("chicken", 130, "g"), ingredient("barley", 65, "g"), ingredient("broccoli", 110, "g"), ingredient("carrot", 70, "g"), ingredient("spinach", 50, "g"), ingredient("mustard", 1, "c_cafe"), ingredient("olive_oil", 1, "c_soupe")],
     nutrition: nutrition(545, 45, 11), description: "Un bowl de volaille, orge moelleuse et légumes verts.",
-    steps: ["Cuire l’orge dans l’eau frémissante.", "Poêler le poulet et cuire les légumes jusqu’à ce qu’ils restent légèrement croquants.", "Assembler avec une vinaigrette moutardée."],
+    steps: ["Cuire l’orge dans l’eau frémissante selon les indications du paquet, puis l’égoutter.","Pendant ce temps, couper le poulet en lanières et le poêler avec la moitié de l’huile jusqu’à 74 °C à cœur. Cuire le brocoli en petits bouquets et la carotte en fines rondelles à la vapeur ou dans l’eau frémissante jusqu’à tendreté ; ajouter les épinards en fin de cuisson.","Mélanger la moutarde avec le reste de l’huile. Assembler l’orge, le poulet et les légumes, puis les enrober de cet assaisonnement."],
     conservation: "3 jours au réfrigérateur.", image: "/assets/recipes/bowl-poulet-orge-legumes.jpg",
   },
   {
     id: "wrap-dinde-crudites-houmous",
     title: "Wrap complet de dinde, crudités et houmous",
-    mealTypes: ["lunch"], diet: NO_PORK, prepMinutes: 15, costPerPortion: 3.05,
-    seasons: ALL_YEAR, equipment: [], allergens: ["gluten", "sesame"], tags: ["volaille", "rapide", "a-emporter"],
+    mealTypes: ["lunch"], diet: NO_PORK, prepMinutes: 25, costPerPortion: 3.05,
+    seasons: ALL_YEAR, equipment: ["hob"], allergens: ["gluten", "sesame"], tags: ["volaille", "rapide", "a-emporter"],
     ingredients: [ingredient("wholegrain_wrap", 1, "piece"), ingredient("turkey", 100, "g"), ingredient("hummus", 40, "g"), ingredient("carrot", 60, "g"), ingredient("cucumber", 70, "g"), ingredient("spinach", 35, "g"), ingredient("lemon", 0.25, "piece")],
     nutrition: nutrition(475, 35, 9), description: "Un wrap frais, pratique et généreusement garni.",
-    steps: ["Étaler le houmous sur la galette.", "Ajouter la dinde, les crudités taillées finement et les épinards.", "Arroser de citron, rouler serré et couper en deux."],
+    steps: ["Couper la dinde en fines lanières et la cuire dans une poêle antiadhésive à feu modéré, jusqu’à 74 °C à cœur. La laisser tiédir sur une assiette propre.","Étaler le houmous sur la galette. Ajouter la dinde cuite, la carotte et le concombre finement taillés ainsi que les épinards lavés et essorés.","Arroser avec le jus du citron, rouler serré et couper en deux."],
     conservation: "24 heures au frais, bien emballé.", image: "/assets/recipes/wrap-dinde-crudites-houmous.jpg",
   },
   {
     id: "bowl-cabillaud-patate-douce",
     title: "Bowl de cabillaud et patate douce",
-    mealTypes: ["lunch", "dinner"], diet: NO_PORK, prepMinutes: 30, costPerPortion: 4.1,
+    mealTypes: ["lunch", "dinner"], diet: NO_PORK, prepMinutes: 40, costPerPortion: 4.1,
     seasons: ALL_YEAR, equipment: ["oven"], allergens: ["poisson"], tags: ["poisson-maigre", "sans-gluten"],
     ingredients: [ingredient("cod", 140, "g"), ingredient("sweet_potato", 180, "g"), ingredient("broccoli", 110, "g"), ingredient("spinach", 45, "g"), ingredient("lemon", 0.5, "piece"), ingredient("olive_oil", 1, "c_soupe"), ingredient("paprika", 0.5, "c_cafe")],
     nutrition: nutrition(470, 38, 11), description: "Un bowl au cabillaud rôti, doux et coloré.",
-    steps: ["Rôtir les cubes de patate douce huilés 20 minutes à 210 °C.", "Ajouter le brocoli et le cabillaud assaisonné pour 10 minutes.", "Servir sur les épinards avec le citron."],
+    steps: ["Préchauffer le four à 210 °C. Couper la patate douce en petits cubes, les mélanger avec la moitié de l’huile et les rôtir 20 minutes.","Ajouter le brocoli en petits bouquets et le cabillaud désarêté, enrobés du reste de l’huile et du paprika. Poursuivre environ 10 minutes, jusqu’à tendreté des légumes et 63 °C à cœur du poisson ; prolonger si nécessaire.","Servir sur les épinards lavés et essorés avec le jus du citron."],
     conservation: "24 heures au réfrigérateur.", image: "/assets/recipes/bowl-cabillaud-patate-douce.jpg",
   },
   {
@@ -328,7 +328,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["summer", "autumn"], equipment: ["hob"], allergens: [], tags: ["legumineuse", "vegetarien", "sans-gluten"],
     ingredients: [ingredient("eggplant", 180, "g"), ingredient("chickpea", 160, "g"), ingredient("crushed_tomato", 180, "g"), ingredient("onion", 50, "g"), ingredient("garlic", 1, "piece"), ingredient("olive_oil", 1, "c_soupe"), ingredient("cumin", 0.5, "c_cafe"), ingredient("parsley", 8, "g")],
     nutrition: nutrition(430, 16, 15), description: "Un plat mijoté végétarien aux saveurs méditerranéennes.",
-    steps: ["Faire revenir l’oignon, l’ail et l’aubergine dans l’huile.", "Ajouter tomates, pois chiches et cumin puis mijoter 18 minutes.", "Parsemer de persil avant de servir."],
+    steps: ["Hacher l’oignon et l’ail, couper l’aubergine en petits dés, puis les faire revenir dans l’huile pendant environ 5 minutes.","Ajouter les tomates, les pois chiches cuits égouttés et le cumin. Laisser mijoter environ 18 minutes, jusqu’à ce que l’aubergine soit tendre.","Parsemer de persil haché avant de servir."],
     conservation: "3 jours au réfrigérateur ou 2 mois au congélateur.", image: "/assets/recipes/mijote-aubergine-pois-chiches.jpg",
   },
   {
@@ -338,7 +338,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["autumn", "winter", "spring"], equipment: [], allergens: ["lait", "fruits-a-coque"], tags: ["legumineuse", "vegetarien", "sans-gluten"],
     ingredients: [ingredient("green_lentil", 160, "g"), ingredient("beet", 140, "g"), ingredient("goat_cheese", 45, "g"), ingredient("walnut", 15, "g"), ingredient("spinach", 45, "g"), ingredient("balsamic", 1, "c_soupe"), ingredient("olive_oil", 1, "c_cafe")],
     nutrition: nutrition(455, 22, 13), description: "Une salade terreuse et acidulée, adoucie par le chèvre.",
-    steps: ["Couper la betterave et le fromage de chèvre.", "Mélanger vinaigre et huile.", "Assembler avec les lentilles, les épinards et les noix."],
+    steps: ["Couper la betterave cuite et le fromage de chèvre.","Mélanger le vinaigre et l’huile.","Assembler avec les lentilles cuites égouttées, les épinards lavés et les noix. Ajouter l’assaisonnement juste avant de servir."],
     conservation: "2 jours au réfrigérateur, assaisonnement séparé.", image: "/assets/recipes/salade-betterave-chevre-lentilles.jpg",
   },
   {
@@ -348,7 +348,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["autumn", "winter"], equipment: ["hob"], allergens: ["poisson", "moutarde"], tags: ["poisson-gras", "sans-gluten"],
     ingredients: [ingredient("mackerel", 110, "g"), ingredient("beet", 120, "g"), ingredient("potato", 170, "g"), ingredient("spinach", 45, "g"), ingredient("mustard", 1, "c_cafe"), ingredient("lemon", 0.25, "piece"), ingredient("dill", 5, "g")],
     nutrition: nutrition(530, 32, 8), description: "Une salade hivernale au maquereau et aux légumes racines.",
-    steps: ["Cuire les pommes de terre puis les couper en quartiers.", "Mélanger moutarde, citron et aneth.", "Assembler avec la betterave, les épinards et le maquereau."],
+    steps: ["Peler les pommes de terre, les couper en quartiers et les cuire dans l’eau frémissante 15 à 20 minutes, jusqu’à tendreté. Égoutter et laisser tiédir.","Utiliser du maquereau cuit : égoutter celui en conserve ; s’il est frais, le désarêter et cuire les filets dans une poêle antiadhésive jusqu’à 63 °C à cœur, puis les laisser tiédir.","Mélanger la moutarde, le jus du citron et l’aneth ciselé. Couper la betterave cuite.","Assembler les pommes de terre, la betterave, les épinards lavés et le maquereau, puis ajouter l’assaisonnement."],
     conservation: "24 heures au réfrigérateur.", image: "/assets/recipes/salade-maquereau-betterave-pomme-terre.jpg",
   },
   {
@@ -358,7 +358,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob", "steamer"], allergens: ["poisson"], tags: ["poisson-gras", "cereale-complete"],
     ingredients: [ingredient("salmon", 140, "g"), ingredient("broccoli", 180, "g"), ingredient("brown_rice", 70, "g"), ingredient("lemon", 0.5, "piece"), ingredient("olive_oil", 1, "c_cafe"), ingredient("dill", 5, "g")],
     nutrition: nutrition(610, 42, 10), description: "Une assiette simple de saumon, brocoli vapeur et riz complet.",
-    steps: ["Cuire le riz complet selon les indications du paquet.", "Cuire le brocoli à la vapeur et poêler le saumon.", "Servir avec citron, aneth et un filet d’huile."],
+    steps: ["Cuire le riz complet selon les indications du paquet.","Pendant ce temps, cuire le brocoli en petits bouquets à la vapeur jusqu’à tendreté et poêler le saumon dans une poêle antiadhésive jusqu’à 63 °C à cœur.","Servir avec le jus du citron, l’aneth ciselé et toute l’huile prévue."],
     conservation: "24 heures au réfrigérateur.", image: "/assets/recipes/saumon-brocoli-riz-complet.jpg",
   },
   {
@@ -368,7 +368,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob"], allergens: [], tags: ["legumineuse", "vegetarien", "sans-gluten"],
     ingredients: [ingredient("chickpea", 180, "g"), ingredient("spinach", 120, "g"), ingredient("crushed_tomato", 120, "g"), ingredient("coconut_milk", 100, "ml"), ingredient("onion", 50, "g"), ingredient("garlic", 1, "piece"), ingredient("turmeric", 0.5, "c_cafe"), ingredient("ginger", 5, "g")],
     nutrition: nutrition(480, 17, 14), description: "Un curry végétarien crémeux aux épices douces.",
-    steps: ["Faire revenir l’oignon, l’ail, le gingembre et le curcuma.", "Ajouter tomates, lait de coco et pois chiches puis mijoter 12 minutes.", "Faire tomber les épinards dans la sauce en fin de cuisson."],
+    steps: ["Hacher l’oignon et l’ail, râper le gingembre. Les faire cuire doucement avec le curcuma et une petite partie du lait de coco, en remuant, jusqu’à ce que l’oignon s’attendrisse.","Ajouter les tomates, le reste du lait de coco et les pois chiches cuits égouttés, puis laisser mijoter 12 minutes.","Ajouter les épinards lavés et poursuivre jusqu’à ce qu’ils soient tombés."],
     conservation: "3 jours au réfrigérateur ou 2 mois au congélateur.", image: "/assets/recipes/curry-pois-chiches-epinards.jpg",
   },
   {
@@ -378,7 +378,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob"], allergens: ["oeuf"], tags: ["vegetarien", "sans-gluten", "anti-gaspi"],
     ingredients: [ingredient("egg", 2, "piece"), ingredient("quinoa", 45, "g"), ingredient("zucchini", 80, "g"), ingredient("mushroom", 70, "g"), ingredient("spinach", 45, "g"), ingredient("olive_oil", 1, "c_cafe"), ingredient("parsley", 6, "g")],
     nutrition: nutrition(430, 25, 7), description: "Une omelette complète qui accueille facilement les légumes restants.",
-    steps: ["Cuire le quinoa et poêler les légumes.", "Battre les œufs avec le persil puis verser sur les légumes.", "Cuire à feu doux et servir avec le quinoa."],
+    steps: ["Rincer et cuire le quinoa selon les indications du paquet. Pendant ce temps, poêler la courgette en petits dés et les champignons émincés dans l’huile ; ajouter les épinards en fin de cuisson.","Battre les œufs avec le persil haché, puis les verser sur les légumes.","Cuire à feu doux jusqu’à ce que les œufs soient pris au centre et servir avec le quinoa égoutté."],
     conservation: "24 heures au réfrigérateur.", image: "/assets/recipes/omelette-legumes-quinoa.jpg",
   },
   {
@@ -388,7 +388,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob", "steamer"], allergens: ["poisson"], tags: ["poisson-gras", "sans-gluten", "cereale-complete"],
     ingredients: [ingredient("trout", 140, "g"), ingredient("green_bean", 160, "g"), ingredient("quinoa", 65, "g"), ingredient("lemon", 0.5, "piece"), ingredient("dill", 5, "g"), ingredient("olive_oil", 1, "c_cafe")],
     nutrition: nutrition(555, 41, 9), description: "Une assiette légère en apparence, mais complète et rassasiante.",
-    steps: ["Cuire le quinoa et les haricots verts.", "Poêler la truite côté peau puis retourner brièvement.", "Servir avec citron, aneth et huile d’olive."],
+    steps: ["Rincer et cuire le quinoa selon les indications du paquet. En parallèle, cuire les haricots verts équeutés à la vapeur ou dans l’eau frémissante jusqu’à tendreté.","Cuire la truite dans une poêle antiadhésive, côté peau d’abord, puis la retourner et poursuivre jusqu’à 63 °C à cœur.","Servir avec le jus du citron, l’aneth ciselé et toute l’huile d’olive prévue."],
     conservation: "24 heures au réfrigérateur.", image: "/assets/recipes/truite-haricots-verts-quinoa.jpg",
   },
   {
@@ -398,7 +398,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob"], allergens: ["soja", "sesame"], tags: ["vegetarien", "sans-gluten", "cereale-complete"],
     ingredients: [ingredient("tofu", 150, "g"), ingredient("broccoli", 160, "g"), ingredient("brown_rice", 65, "g"), ingredient("carrot", 60, "g"), ingredient("sesame", 10, "g"), ingredient("ginger", 5, "g"), ingredient("olive_oil", 1, "c_cafe")],
     nutrition: nutrition(540, 29, 11), description: "Un bowl végétarien au tofu doré et au brocoli croquant.",
-    steps: ["Cuire le riz et détailler les légumes.", "Dorer le tofu avec le gingembre puis ajouter brocoli et carotte.", "Servir sur le riz et parsemer de sésame."],
+    steps: ["Cuire le riz complet selon les indications du paquet. Pendant ce temps, couper le brocoli en petits bouquets et la carotte en fines lamelles.","Égoutter et couper le tofu en dés, puis le faire dorer dans l’huile avec le gingembre râpé. Ajouter le brocoli, la carotte et quelques cuillerées d’eau. Couvrir et poursuivre à feu doux jusqu’à tendreté, en remuant régulièrement et en ajoutant un peu d’eau si le fond sèche.","Servir sur le riz égoutté et parsemer de sésame."],
     conservation: "3 jours au réfrigérateur.", image: "/assets/recipes/bowl-tofu-brocoli-sesame.jpg",
   },
   {
@@ -408,7 +408,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob"], allergens: ["poisson"], tags: ["poisson-maigre", "sans-gluten", "mediterraneen"],
     ingredients: [ingredient("cod", 150, "g"), ingredient("crushed_tomato", 200, "g"), ingredient("olive", 30, "g"), ingredient("zucchini", 120, "g"), ingredient("onion", 50, "g"), ingredient("garlic", 1, "piece"), ingredient("olive_oil", 1, "c_soupe"), ingredient("parsley", 6, "g")],
     nutrition: nutrition(360, 38, 7), description: "Un cabillaud tendre dans une sauce tomate aux olives.",
-    steps: ["Faire revenir oignon, ail et courgette dans l’huile.", "Ajouter tomate et olives puis mijoter 10 minutes.", "Déposer le cabillaud dans la sauce, couvrir et cuire 8 minutes."],
+    steps: ["Hacher l’oignon et l’ail, couper la courgette en petits dés, puis les faire revenir dans l’huile.","Ajouter les tomates et les olives, puis laisser mijoter 10 minutes.","Déposer le cabillaud désarêté dans la sauce, couvrir et cuire environ 8 minutes, jusqu’à 63 °C à cœur ; prolonger selon l’épaisseur. Parsemer de persil haché avant de servir."],
     conservation: "24 heures au réfrigérateur.", image: "/assets/recipes/cabillaud-tomate-olives.jpg",
   },
   {
@@ -418,7 +418,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ALL_YEAR, equipment: ["hob"], allergens: ["gluten"], tags: ["volaille", "cereale-complete", "batch-cooking"],
     ingredients: [ingredient("chicken", 140, "g"), ingredient("wholewheat_couscous", 65, "g"), ingredient("carrot", 80, "g"), ingredient("zucchini", 100, "g"), ingredient("chickpea", 60, "g"), ingredient("turmeric", 0.5, "c_cafe"), ingredient("cumin", 0.5, "c_cafe"), ingredient("olive_oil", 1, "c_soupe")],
     nutrition: nutrition(590, 47, 11), description: "Une assiette de poulet épicé doucement, semoule et légumes.",
-    steps: ["Dorer le poulet avec le curcuma et le cumin.", "Ajouter carotte et courgette puis cuire à couvert.", "Réhydrater la semoule, ajouter les pois chiches et servir ensemble."],
+    steps: ["Couper le poulet en lanières et le faire dorer dans l’huile avec le curcuma et le cumin.","Ajouter la carotte en fines rondelles, la courgette en petits dés et quelques cuillerées d’eau. Couvrir et cuire à feu doux jusqu’à tendreté des légumes et 74 °C à cœur du poulet ; ajouter un peu d’eau si le fond sèche. Ajouter les pois chiches cuits égouttés en fin de cuisson pour les réchauffer.","Pendant ce temps, réhydrater la semoule avec la quantité d’eau bouillante et pendant la durée indiquées sur le paquet, puis l’égrainer. Servir avec le poulet et les légumes."],
     conservation: "3 jours au réfrigérateur.", image: "/assets/recipes/poulet-curcuma-legumes-semoule.jpg",
   },
   {
@@ -428,17 +428,17 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["summer", "autumn"], equipment: ["hob"], allergens: ["oeuf"], tags: ["volaille", "sans-gluten"],
     ingredients: [ingredient("turkey", 150, "g"), ingredient("egg", 0.25, "piece"), ingredient("zucchini", 130, "g"), ingredient("crushed_tomato", 180, "g"), ingredient("onion", 40, "g"), ingredient("garlic", 0.5, "piece"), ingredient("olive_oil", 1, "c_soupe"), ingredient("basil", 6, "g")],
     nutrition: nutrition(390, 40, 6), description: "Des boulettes de dinde moelleuses dans une sauce tomate aux courgettes.",
-    steps: ["Mélanger la dinde, l’œuf et la moitié de l’oignon puis former des boulettes.", "Dorer les boulettes et réserver.", "Mijoter courgette, ail et tomate puis remettre les boulettes 10 minutes."],
+    steps: ["Hacher la dinde si nécessaire. Hacher l’oignon et mélanger sa moitié avec la dinde et la quantité d’œuf battu prévue. Former de petites boulettes régulières.","Faire dorer les boulettes dans la moitié de l’huile, puis les réserver sur une assiette.","Faire revenir le reste de l’oignon, l’ail haché et la courgette en petits dés dans le reste de l’huile. Ajouter les tomates, remettre les boulettes et laisser mijoter à couvert environ 10 minutes, jusqu’à 74 °C au cœur des boulettes ; prolonger si nécessaire.","Ajouter le basilic ciselé avant de servir, avec des ustensiles propres."],
     conservation: "3 jours au réfrigérateur ou 2 mois au congélateur.", image: "/assets/recipes/boulettes-dinde-courgette-tomate.jpg",
   },
   {
     id: "bar-four-fenouil-pommes-terre",
     title: "Bar au four, fenouil et pommes de terre",
-    mealTypes: ["dinner"], diet: NO_PORK, prepMinutes: 30, costPerPortion: 4.8,
+    mealTypes: ["dinner"], diet: NO_PORK, prepMinutes: 60, costPerPortion: 4.8,
     seasons: ["autumn", "winter", "spring"], equipment: ["oven"], allergens: ["poisson"], tags: ["poisson-maigre", "sans-gluten"],
     ingredients: [ingredient("sea_bass", 150, "g"), ingredient("fennel", 140, "g"), ingredient("potato", 180, "g"), ingredient("lemon", 0.5, "piece"), ingredient("garlic", 0.5, "piece"), ingredient("olive_oil", 1, "c_soupe"), ingredient("dill", 5, "g")],
     nutrition: nutrition(475, 37, 8), description: "Un poisson blanc rôti avec fenouil fondant et pommes de terre.",
-    steps: ["Précuire les pommes de terre en fines rondelles 10 minutes.", "Disposer avec le fenouil, l’ail et l’huile puis rôtir 10 minutes.", "Ajouter le bar et le citron, puis cuire encore 10 minutes."],
+    steps: ["Préchauffer le four à 190 °C. Couper les pommes de terre en rondelles très fines, les répartir dans un plat avec la moitié de l’huile, couvrir et précuire environ 15 minutes.","Ajouter le fenouil très finement émincé et l’ail haché avec le reste de l’huile. Couvrir et poursuivre environ 15 minutes, jusqu’à ce que les légumes soient tendres.","Déposer le bar désarêté et le citron en tranches sur les légumes. Cuire encore 10 à 15 minutes, jusqu’à tendreté des légumes et 63 °C à cœur du poisson. Ajouter l’aneth ciselé avant de servir."],
     conservation: "24 heures au réfrigérateur.", image: "/assets/recipes/bar-four-fenouil-pommes-terre.jpg",
   },
   {
@@ -448,7 +448,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["autumn", "winter"], equipment: ["hob"], allergens: [], tags: ["legumineuse", "vegetarien", "sans-gluten", "batch-cooking"],
     ingredients: [ingredient("red_lentil", 85, "g"), ingredient("squash", 180, "g"), ingredient("coconut_milk", 90, "ml"), ingredient("crushed_tomato", 100, "g"), ingredient("onion", 50, "g"), ingredient("ginger", 5, "g"), ingredient("turmeric", 0.5, "c_cafe"), ingredient("cumin", 0.5, "c_cafe")],
     nutrition: nutrition(475, 19, 15), description: "Un dal doux et velouté aux lentilles corail et à la courge.",
-    steps: ["Faire revenir l’oignon, le gingembre et les épices.", "Ajouter courge, lentilles, tomate et 180 ml d’eau puis mijoter.", "Verser le lait de coco et cuire jusqu’à texture crémeuse."],
+    steps: ["Hacher l’oignon, râper le gingembre et couper la courge en petits dés. Cuire doucement l’oignon, le gingembre et les épices avec une petite partie du lait de coco, en remuant.","Rincer les lentilles. Les ajouter avec la courge, les tomates et 180 ml d’eau par portion. Laisser mijoter à couvert 15 à 20 minutes, en remuant régulièrement et en ajoutant un peu d’eau si le fond sèche.","Verser le reste du lait de coco et poursuivre quelques minutes, jusqu’à ce que les lentilles et la courge soient tendres et la texture crémeuse."],
     conservation: "3 jours au réfrigérateur ou 2 mois au congélateur.", image: "/assets/recipes/dal-lentilles-corail-courge.jpg",
   },
   {
@@ -458,7 +458,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["autumn", "winter", "spring"], equipment: ["hob"], allergens: ["gluten"], tags: ["legumineuse", "cereale-complete", "vegetarien", "batch-cooking"],
     ingredients: [ingredient("white_bean", 140, "g"), ingredient("farro", 55, "g"), ingredient("carrot", 70, "g"), ingredient("leek", 70, "g"), ingredient("zucchini", 70, "g"), ingredient("crushed_tomato", 130, "g"), ingredient("vegetable_stock", 350, "ml"), ingredient("basil", 5, "g")],
     nutrition: nutrition(445, 19, 16), description: "Une soupe-repas italienne aux légumes, haricots et épeautre.",
-    steps: ["Faire suer les légumes coupés en petits dés.", "Ajouter épeautre, tomate et bouillon puis cuire 22 minutes.", "Ajouter les haricots pour les 5 dernières minutes et servir avec le basilic."],
+    steps: ["Couper les légumes en petits dés et les faire suer à couvert avec quelques cuillerées du bouillon prévu, en remuant.","Ajouter l’épeautre rincé, les tomates et le reste du bouillon. Laisser mijoter selon la durée indiquée sur le paquet, jusqu’à ce que les grains soient tendres ; ajouter un peu d’eau si nécessaire pour garder une texture de soupe.","Ajouter les haricots blancs cuits égouttés pendant les 5 dernières minutes. Servir avec le basilic ciselé."],
     conservation: "3 jours au réfrigérateur ou 2 mois au congélateur.", image: "/assets/recipes/minestrone-haricots-blancs-epeautre.jpg",
   },
   {
@@ -468,17 +468,17 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["autumn", "winter"], equipment: ["hob"], allergens: ["gluten", "lait"], tags: ["cereale-complete", "vegetarien"],
     ingredients: [ingredient("barley", 80, "g"), ingredient("mushroom", 160, "g"), ingredient("spinach", 80, "g"), ingredient("onion", 45, "g"), ingredient("vegetable_stock", 320, "ml"), ingredient("ricotta", 35, "g"), ingredient("olive_oil", 1, "c_cafe")],
     nutrition: nutrition(455, 18, 12), description: "Une orge façon risotto, crémeuse et riche en champignons.",
-    steps: ["Dorer les champignons et réserver la moitié.", "Nacrer l’orge avec l’oignon puis ajouter le bouillon progressivement.", "Incorporer épinards, ricotta et champignons en fin de cuisson."],
+    steps: ["Émincer les champignons et l’oignon. Faire dorer les champignons dans la moitié de l’huile et en réserver la moitié.","Ajouter l’oignon et le reste de l’huile dans la poêle, puis faire revenir jusqu’à ce que l’oignon s’attendrisse. Ajouter l’orge et remuer une minute. Verser le bouillon chaud progressivement en remuant et cuire selon la durée indiquée sur le paquet, jusqu’à ce que l’orge soit tendre ; ajouter un peu d’eau chaude si nécessaire.","Incorporer les épinards et les laisser tomber, puis ajouter la ricotta et les champignons réservés. Servir quand l’ensemble est bien chaud."],
     conservation: "2 jours au réfrigérateur; réchauffer avec un peu d’eau.", image: "/assets/recipes/risotto-orge-champignons-epinards.jpg",
   },
   {
     id: "lasagnes-completes-legumes",
     title: "Lasagnes complètes aux légumes",
-    mealTypes: ["lunch", "dinner"], diet: VEGETARIAN, prepMinutes: 30, costPerPortion: 2.9,
+    mealTypes: ["lunch", "dinner"], diet: VEGETARIAN, prepMinutes: 50, costPerPortion: 2.9,
     seasons: ["summer", "autumn"], equipment: ["hob", "oven"], allergens: ["gluten", "lait"], tags: ["cereale-complete", "vegetarien", "batch-cooking"],
     ingredients: [ingredient("wholewheat_lasagna", 75, "g"), ingredient("eggplant", 100, "g"), ingredient("zucchini", 100, "g"), ingredient("spinach", 60, "g"), ingredient("crushed_tomato", 180, "g"), ingredient("ricotta", 65, "g"), ingredient("garlic", 0.5, "piece"), ingredient("olive_oil", 1, "c_cafe")],
     nutrition: nutrition(520, 24, 12), description: "Des lasagnes végétariennes généreuses, à préparer aussi en avance.",
-    steps: ["Poêler aubergine et courgette avec l’ail puis ajouter les épinards.", "Alterner tomate, feuilles de lasagne, légumes et ricotta dans un plat.", "Cuire 25 minutes à 190 °C; le temps actif reste inférieur à 30 minutes."],
+    steps: ["Préchauffer le four à 190 °C. Couper l’aubergine et la courgette en petits dés, puis les poêler dans l’huile avec l’ail haché jusqu’à tendreté. Ajouter les épinards et les laisser tomber.","Si le paquet l’exige, précuire les feuilles de lasagne selon ses instructions, puis les égoutter avant le montage. Dans un petit plat, alterner tomates, feuilles de lasagne, légumes et ricotta, en gardant suffisamment de tomate pour couvrir toutes les feuilles.","Cuire environ 25 minutes, ou selon les indications des feuilles utilisées, jusqu’à ce qu’elles soient tendres au centre ; couvrir si le dessus colore trop vite."],
     conservation: "3 jours au réfrigérateur ou 2 mois au congélateur.", image: "/assets/recipes/lasagnes-completes-legumes.jpg",
   },
   {
@@ -488,7 +488,7 @@ const BASE_RECIPE_SOURCE: readonly Recipe[] = [
     seasons: ["summer", "autumn", "winter"], equipment: ["hob"], allergens: ["mollusques", "gluten"], tags: ["fruits-de-mer", "cereale-complete"],
     ingredients: [ingredient("mussel", 450, "g"), ingredient("wholewheat_couscous", 65, "g"), ingredient("crushed_tomato", 150, "g"), ingredient("fennel", 90, "g"), ingredient("onion", 45, "g"), ingredient("garlic", 1, "piece"), ingredient("olive_oil", 1, "c_cafe"), ingredient("parsley", 8, "g")],
     nutrition: nutrition(520, 39, 9), description: "Des moules parfumées à la tomate, servies avec une semoule complète.",
-    steps: ["Faire revenir oignon, fenouil et ail puis ajouter la tomate.", "Ajouter les moules nettoyées, couvrir et cuire jusqu’à ouverture; jeter celles restées fermées.", "Réhydrater la semoule et servir avec le persil."],
+    steps: ["Trier et nettoyer les moules : jeter celles dont la coquille est cassée et celles qui restent ouvertes après une légère tape. Hacher l’oignon et l’ail, émincer finement le fenouil.","Faire revenir l’oignon, le fenouil et l’ail dans l’huile, puis ajouter les tomates et laisser mijoter jusqu’à ce que le fenouil s’attendrisse.","Ajouter les moules, couvrir et cuire à feu vif en secouant régulièrement la casserole jusqu’à ouverture. Jeter celles qui restent fermées.","Pendant ce temps, réhydrater la semoule avec la quantité d’eau bouillante et pendant la durée indiquées sur le paquet. Égrainer et servir avec les moules, la sauce et le persil haché."],
     conservation: "À consommer le jour même; ne pas conserver les moules non ouvertes.", image: "/assets/recipes/moules-tomate-semoule-complete.jpg",
   },
 ];

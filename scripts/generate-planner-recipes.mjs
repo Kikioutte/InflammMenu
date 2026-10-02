@@ -2,12 +2,14 @@
 import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { canonicalIngredientId, shoppingRuleFor } from "../src/shopping.ts";
+import { packPlannerRecipeColumns, expandPlannerRecipeColumns } from "../src/planner-recipe-columns.ts";
 import { projectCatalogueSeasons } from "./catalogue-seasons.mjs";
 
 const root = new URL("../", import.meta.url);
 const catalogueUrl = new URL("src/data/recettes-anti-inflammatoires.json", root);
 const imagesUrl = new URL("src/data/generated-recipe-images.json", root);
 const outputUrl = new URL("src/data/planner-recipes.json", root);
+const columnsUrl = new URL("src/data/planner-recipes-columns.json", root);
 const cautionsUrl = new URL("public/data/planner-cautions.json", root);
 const cautionIdsUrl = new URL("src/data/planner-caution-ids.json", root);
 const [catalogue, imageNames] = await Promise.all(
@@ -84,15 +86,21 @@ const cautions = Object.fromEntries(catalogue.recipes
   .filter((recipe) => !recipe.app.duplicate_of && recipe.app.planner.eligible && recipe.app.review.caution)
   .map((recipe) => [`catalog-${recipe.id}`, recipe.app.review.caution]));
 const serialized = `${JSON.stringify(recipes)}\n`;
+const columns = packPlannerRecipeColumns(recipes);
+assert.deepEqual(expandPlannerRecipeColumns(columns), recipes, "la projection compacte doit préserver tous les champs");
+assert.equal(JSON.stringify(expandPlannerRecipeColumns(columns)), JSON.stringify(recipes), "la projection compacte doit préserver l'ordre des champs");
+const serializedColumns = `${JSON.stringify(columns)}\n`;
 const serializedCautions = `${JSON.stringify(cautions)}\n`;
 const serializedCautionIds = `${JSON.stringify(Object.keys(cautions).sort())}\n`;
 if (process.argv.includes("--check")) {
-  const [current, currentCautions, currentCautionIds] = await Promise.all([
+  const [current, currentColumns, currentCautions, currentCautionIds] = await Promise.all([
     readFile(outputUrl, "utf8").catch(() => ""),
+    readFile(columnsUrl, "utf8").catch(() => ""),
     readFile(cautionsUrl, "utf8").catch(() => ""),
     readFile(cautionIdsUrl, "utf8").catch(() => ""),
   ]);
   assert.equal(current, serialized, "planner-recipes.json n'est pas synchronisé avec le catalogue");
+  assert.equal(currentColumns, serializedColumns, "planner-recipes-columns.json n'est pas synchronisé avec le catalogue");
   assert.equal(currentCautions, serializedCautions, "planner-cautions.json n'est pas synchronisé avec le catalogue");
   assert.equal(currentCautionIds, serializedCautionIds, "planner-caution-ids.json n'est pas synchronisé avec le catalogue");
   console.log(`Projection planificateur valide : ${recipes.length} recettes, ${Buffer.byteLength(serialized)} octets, ${Object.keys(cautions).length} précautions hors ligne.`);
@@ -100,6 +108,7 @@ if (process.argv.includes("--check")) {
   await mkdir(new URL("./", cautionsUrl), { recursive: true });
   await Promise.all([
     writeFile(outputUrl, serialized),
+    writeFile(columnsUrl, serializedColumns),
     writeFile(cautionsUrl, serializedCautions),
     writeFile(cautionIdsUrl, serializedCautionIds),
   ]);

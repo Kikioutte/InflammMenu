@@ -2,7 +2,7 @@ import type { CatalogueRecipe } from "./catalog.ts";
 import { assignRecipeToSlot, assignableSlots } from "./engine.ts";
 import type { PlannedMeal, WeeklyPlan, UserProfile } from "./domain.ts";
 import type { Ingredient, Recipe, Season } from "./domain.ts";
-import { evaluateAssociationMeal, isAssociationRecipe } from "./food-associations.ts";
+import { compositionSelectionError } from "./meal-composition-rules.ts";
 import { canonicalIngredientId, shoppingRuleFor } from "./shopping.ts";
 
 export function scaleAssociationStep(step: string, ratio: number): string {
@@ -13,10 +13,8 @@ export function scaleAssociationStep(step: string, ratio: number): string {
  * share the existing Recipe contract. Source catalogue records are not changed. */
 export function composeMeal(starter: CatalogueRecipe, main: CatalogueRecipe, dessert: CatalogueRecipe, image: string): Recipe {
   const sources = [starter, main, dessert];
-  if (!["soupe", "salade"].includes(starter.categorie) || main.categorie !== "plat" || dessert.categorie !== "dessert") throw new Error("Choisissez une entrée, un plat et un dessert.");
-  if (sources.some((recipe) => recipe.app.duplicate_of || !isAssociationRecipe(recipe.id)) || !starter.app.planner.eligible || !main.app.planner.eligible || dessert.creami) throw new Error("Une recette de ce repas reste exclue de la planification.");
-  const association = evaluateAssociationMeal(sources);
-  if (association.level !== "verte" && association.level !== "orange") throw new Error("Les associations de ce repas doivent être revues.");
+  const error = compositionSelectionError({ starter, main, dessert });
+  if (error) throw new Error(error);
   const ingredients: Ingredient[] = sources.flatMap((recipe) => recipe.ingredients.map((item) => {
     if (!item.id || item.quantite_normalisee === undefined || !item.unite_normalisee) throw new Error("Une quantité de ce repas doit être vérifiée avant planification.");
     const id = canonicalIngredientId(item.id);

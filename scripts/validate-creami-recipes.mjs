@@ -61,6 +61,13 @@ for (const [index, recipe] of recipes.entries()) {
 for (const [program, count] of Object.entries(programCounts)) {
   assert.ok(count >= 4, `${program}: diversité insuffisante (${count})`);
 }
-assert.equal(planner.filter((recipe) => Number(recipe.id.replace("catalog-r", "")) <= 630).length, 327, "Les 327 recettes planifiables historiques doivent rester inchangées");
+// The instruction audit suspended exactly these four historical recipes until
+// their shiitake/sprout protocols are defined. CREAMi adds no planner entry.
+const suspendedHistoricalIds = ["r036", "r041", "r248", "r264"];
+for (const id of suspendedHistoricalIds) {
+  assert.equal(catalogue.recipes.find((recipe) => recipe.id === id)?.app.planner.eligible, false, `${id}: suspension culinaire requise`);
+  assert.equal(planner.some((recipe) => recipe.id === `catalog-${id}`), false, `${id}: recette suspendue projetée`);
+}
+assert.equal(planner.filter((recipe) => Number(recipe.id.replace("catalog-r", "")) <= 630).length, 327 - suspendedHistoricalIds.length, "Le planificateur historique conserve toutes les recettes sauf les quatre suspensions relues");
 
 console.log(`Lot CREAMi valide : 80 desserts originaux, ${Object.entries(programCounts).map(([program, count]) => `${program} ${count}`).join(" · ")}.`);

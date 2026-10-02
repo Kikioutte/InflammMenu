@@ -2123,7 +2123,7 @@ test("le catalogue expose les recettes uniques relues et leurs précautions", as
   await misoCard.click();
 
   await expect(page.getByRole("heading", { name: "Soupe miso au wakame, shiitakés et tofu" })).toBeVisible();
-  await expect(page.getByText("Validée avec repères")).toBeVisible();
+  await expect(page.getByText("Repères et précautions")).toBeVisible();
   await expect(page.getByText(/sodium et d'iode/)).toBeVisible();
   await expect(page.getByText(/ne garantit pas un bénéfice clinique individuel/)).toBeVisible();
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));

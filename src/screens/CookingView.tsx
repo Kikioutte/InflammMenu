@@ -46,7 +46,7 @@ function useWakeLock(active: boolean): boolean {
   return held;
 }
 
-export function CookingView({ recipe, portions, planned }: { recipe: Recipe; portions: number; planned?: PlannedMeal }) {
+export function CookingView({ recipe, portions, servedPortions = portions, planned }: { recipe: Recipe; portions: number; servedPortions?: number; planned?: PlannedMeal }) {
   const [step, setStep] = useState(0);
   const [done, setDone] = useState<number[]>([]);
   const screenHeld = useWakeLock(true);
@@ -71,6 +71,7 @@ export function CookingView({ recipe, portions, planned }: { recipe: Recipe; por
       <button type="button" className="primary-button" disabled={step >= total - 1} data-testid="cooking-next" onClick={() => setStep((value) => Math.min(total - 1, value + 1))}>Suivante <ChevronRightIcon /></button>
     </div>
     <section className="cooking-ingredients"><h2>Ingrédients pour {portions} portion{portions > 1 ? "s" : ""}</h2>
+      {portions > servedPortions ? <p data-testid="cooking-batch-portions">{servedPortions} portions à servir à ce repas et {portions - servedPortions} à réserver pour les repas de restes. Préparez tout le lot avec les quantités ci-dessous.</p> : null}
       <ul>{ingredients.map((item, index) => <li key={`${item.id}-${item.unit}-${index}`}><span><strong>{displayQuantity(item.quantity, item.unit)}</strong> {item.name}{item.optional ? <small>Facultatif · non ajouté aux courses</small> : null}</span></li>)}</ul>
     </section>
   </main></MobileScroll>;

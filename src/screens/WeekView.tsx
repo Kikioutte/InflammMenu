@@ -1,7 +1,7 @@
 import { type WeeklyPlan, type PlannedMeal, type Recipe, type UserProfile } from "../domain";
 import { useRef, useState, type RefObject } from "react";
 import { CalendarIcon, ArchiveIcon, CopyIcon, CheckCircledIcon, LockClosedIcon, ClockIcon, CheckIcon, ReloadIcon, DotsHorizontalIcon, LockOpen1Icon, Cross2Icon } from "@radix-ui/react-icons";
-import { summarizePlan, planProgress, planToCalendar, cookingSessionsOf, type PlanSummary, weeklyTargetsOf } from "../engine";
+import { summarizePlan, planProgress, planToCalendar, cookingSessionsOf, type PlanSummary, weeklyTargetsOf, fishTargetAppliesToDiet } from "../engine";
 import { Carousel, useKeyboard } from "../mobile";
 import { currentDayIndex, dateAt, formatWeekRange, formatRecipeDuration } from "../components/format";
 import { EmptyRoot } from "../components/EmptyRoot";
@@ -154,7 +154,7 @@ function WeekBalance({ summary, profile }: { summary: PlanSummary; profile: User
   const targets = weeklyTargetsOf(profile);
   const rows: Array<{ label: string; value: number; target?: number; hint: string }> = [
     { label: "Repas avec légumes secs ou soja", value: summary.legumeMeals, target: targets.legumeMeals, hint: "Lentilles, pois chiches, haricots, fèves, tofu ou tempeh" },
-    ...(profile.diet === "classic" ? [{ label: "Repas avec poisson", value: summary.fishMeals, target: targets.fishMeals, hint: "Dont poissons gras si possible" }] : []),
+    ...(fishTargetAppliesToDiet(profile.diet) ? [{ label: "Repas avec poisson", value: summary.fishMeals, target: targets.fishMeals, hint: "Dont poissons gras si possible" }] : []),
     { label: "Repas avec céréales complètes et assimilées", value: summary.wholeGrainMeals, hint: "Riz complet, avoine, quinoa ou sarrasin" },
     { label: "Repas avec noix ou graines", value: summary.nutOrSeedMeals, hint: "Sources de graisses insaturées" },
     { label: "Repas de saison", value: summary.seasonalMeals, hint: "Saison en cours ou toute l’année" },
