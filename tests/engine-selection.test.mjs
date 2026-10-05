@@ -11,9 +11,16 @@ import { RECIPES } from "../src/recipes.ts";
 // planning-rule changes require an explicit review of these reference outputs.
 const baseline = JSON.parse(await readFile(new URL("./fixtures/engine-selection-baseline.json", import.meta.url), "utf8"));
 const scenarios = makeScenarios(DEFAULT_PROFILE);
+// The stored 721-recipe output contract covers r001-r1257 plus the V1 cards.
+// Keep that exact reviewed input stable as content grows. The current full
+// catalogue is exercised by engine, diversity and individual batch tests.
+const historicalRecipes = RECIPES.filter((recipe) => {
+  const catalogueId = /^catalog-r(\d+)$/.exec(recipe.id);
+  return !catalogueId || Number(catalogueId[1]) <= 1257;
+});
 
-test("la référence déterministe utilise le même catalogue et les mêmes entrées", () => {
-  assert.deepEqual({ count: RECIPES.length, hash: fingerprint(RECIPES) }, baseline.catalogue);
+test("la référence déterministe conserve le catalogue historique et les mêmes entrées", () => {
+  assert.deepEqual({ count: historicalRecipes.length, hash: fingerprint(historicalRecipes) }, baseline.catalogue);
   assert.deepEqual(scenarios.map((scenario) => ({ id: scenario.id, inputHash: fingerprint(scenario) })),
     baseline.scenarios.map(({ id, inputHash }) => ({ id, inputHash })));
 });
@@ -23,10 +30,10 @@ for (const scenario of scenarios) {
     const expected = baseline.scenarios.find((entry) => entry.id === scenario.id);
     assert.ok(expected, `Référence manquante : ${scenario.id}`);
     const inputHash = fingerprint(scenario);
-    const plan = generateWeeklyPlan(RECIPES, scenario.profile, scenario.options);
+    const plan = generateWeeklyPlan(historicalRecipes, scenario.profile, scenario.options);
     assert.equal(fingerprint(plan), expected.outputHash);
     assert.equal(fingerprint(scenario), inputHash, "Le moteur ne modifie pas ses entrées");
-    assert.equal(fingerprint(RECIPES), baseline.catalogue.hash, "Les recettes restent intactes");
+    assert.equal(fingerprint(historicalRecipes), baseline.catalogue.hash, "Les recettes historiques restent intactes");
   });
 }
 
@@ -34,7 +41,7 @@ test("un profil impossible conserve le diagnostic exact de la référence", () =
   const profile = { ...structuredClone(DEFAULT_PROFILE), allergies: ["allergene-benchmark-inconnu"] };
   let diagnostic;
   try {
-    generateWeeklyPlan(RECIPES, profile, scenarios[0].options);
+    generateWeeklyPlan(historicalRecipes, profile, scenarios[0].options);
   } catch (error) {
     diagnostic = { name: error.name, message: error.message, diagnostic: error.diagnostic,
       mealType: error.mealType, dayIndex: error.dayIndex };

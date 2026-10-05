@@ -1,3 +1,4 @@
+import { CATALOGUE_VISIBLE_COUNT, GREEN_RECIPE_COUNT } from "./helpers/catalogue-counts";
 import { composeMeal } from "../src/composed-meal";
 import { catalogueShoppingRecipe } from "../src/personal-library";
 import { DEFAULT_PROFILE } from "../src/domain";
@@ -353,10 +354,10 @@ test("le vrai service worker conserve le catalogue et uniquement les polices lat
   await expect(page.getByTestId("home-view")).toBeVisible();
   await page.getByRole("button", { name: "Recette", exact: true }).click();
   await page.getByRole("tab", { name: "Catalogue" }).click();
-  await expect(page.getByTestId("recipes-view").locator(".page-heading p")).toHaveText(/1\s?251 recettes à découvrir, à votre rythme\./);
-  await expect(page.getByText("1251 résultats")).toBeVisible();
+  await expect(page.getByTestId("recipes-view").locator(".page-heading p")).toHaveText(`${CATALOGUE_VISIBLE_COUNT.toLocaleString("fr-FR")} recettes à découvrir, à votre rythme.`);
+  await expect(page.getByText(`${CATALOGUE_VISIBLE_COUNT} résultats`)).toBeVisible();
   await page.getByLabel("Filtrer les associations").selectOption("verte");
-  await expect(page.getByText("470 résultats", { exact: true })).toBeVisible();
+  await expect(page.getByText(`${GREEN_RECIPE_COUNT} résultats`, { exact: true })).toBeVisible();
 });
 
 test("une navigation vers une ressource ne peut jamais remplacer le shell HTML hors ligne", async ({ page, context }) => {

@@ -18,7 +18,7 @@ test('meal builder excludes every nonplannable starter or main and preserves com
     && ['soupe', 'salade', 'plat'].includes(recipe.categorie)
     && !recipe.app.planner.eligible
     && ['verte', 'orange'].includes(evaluateAssociations(recipe.ingredients).level));
-  assert.equal(previouslyOffered.length, 106);
+  assert.equal(previouslyOffered.filter((recipe) => Number(recipe.id.slice(1)) <= 1257).length, 106, "les exclusions historiques restent intactes");
   for (const recipe of previouslyOffered) assert.equal(mealBuilderEligible(recipe), false, recipe.id);
   for (const recipe of catalogue.filter(mealBuilderEligible)) {
     assert.equal(Boolean(recipe.app.duplicate_of), false, recipe.id);
