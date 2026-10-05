@@ -9,6 +9,7 @@ import { generateWeeklyPlan, recipeIsAllowed, scaleIngredients, buildShoppingLis
 import { DEFAULT_PROFILE } from '../src/domain.ts';
 import { migrateAppState, DEFAULT_APP_STATE } from '../src/storage.ts';
 import { validateCatalogueData } from '../src/catalog-validation.ts';
+import { catalogueShoppingRecipe } from '../src/personal-library.ts';
 const read = async (file) => JSON.parse(await readFile(new URL(file, import.meta.url), 'utf8'));
 const catalogue = await read('../src/data/recettes-anti-inflammatoires.json');
 const baseline = await read('../research/association-baseline-catalogue.json');
@@ -117,10 +118,10 @@ test('whole meal catches incompatibility between two individually acceptable dis
   assert.ok(result.pairs.some((pair) => pair.level === 'grise' && /riz/.test(pair.a)));
 });
 
-test('all 627 authored recipes match the chart at runtime, preserving the original 630 except documented instruction-review changes', () => {
-  assert.equal(collection.length, 627);
+test('all authored recipes match the chart at runtime, preserving the original 630 except documented instruction-review changes', () => {
+  assert.equal(collection.length, catalogue.recipes.length - 630);
   assert.deepEqual(catalogue.recipes.slice(0,630).map(beforeInstructionsReview),baseline.recipes);
-  assert.equal(validateCatalogueData(catalogue).recipes.length,1257);
+  assert.equal(validateCatalogueData(catalogue).recipes.length,catalogue.recipes.length);
   const signatures = new Set();
   for (const recipe of collection) {
     const result = evaluateAssociations(recipe.ingredients);
@@ -210,7 +211,7 @@ test('120 illustrated additions stay green, distinct and scalable', async () => 
 });
 
 test('50 September 30 cards preserve source mapping, green associations and original catalogue', async () => {
-  const added = catalogue.recipes.slice(1207);
+  const added = catalogue.recipes.slice(1207,1257);
   const source = (await read('../research/recipes-r1208-r1257-source.json')).recipes;
   const images = (await read('../research/generated-images-r1208-r1257-provenance.json')).images;
   assert.equal(added.length, 50);
@@ -230,5 +231,59 @@ test('50 September 30 cards preserve source mapping, green associations and orig
     assert.deepEqual(beforeInstructionsReview(recipe).etapes, source[index].etapes);
     assert.equal(recipe.app.planner.eligible, recipe.categorie === 'plat' && recipe.nutrition_par_portion.calories >= 220);
     assert.equal(planner.some(r => r.id === `catalog-${recipe.id}`), recipe.app.planner.eligible);
+  }
+});
+
+test('the 64 October 5 additions are individually green, known, distinct and scalable from two to four portions', async () => {
+  const added = catalogue.recipes.slice(1257,1321);
+  const summary = await read('../src/data/catalogue-summary.json');
+  assert.equal(catalogue.recipes.length,1321);
+  assert.equal(summary.nombre_recettes,1321);
+  assert.equal(summary.nombre_recettes_visibles,1315);
+  assert.equal(summary.nombre_doublons_exclus,6);
+  assert.equal(collection.filter((recipe) => recipe.associations.niveau === 'verte').length,534);
+  assert.equal(added.length,64);
+  assert.equal(added.filter((recipe) => recipe.app.planner.eligible).length,28);
+  assert.deepEqual(added.map((recipe) => recipe.id),Array.from({length:64},(_,index) => `r${1258+index}`));
+  assert.equal(new Set(added.map((recipe) => recipe.titre)).size,64);
+  assert.equal(new Set(added.map((recipe) => recipe.slug)).size,64);
+  const ignored = new Set(['eau','huile-olive-vierge-extra','basil','persil-plat','ciboulette-fraiche']);
+  const signature = (recipe) => [...new Set(recipe.ingredients.map((ingredient) => canonicalIngredientId(ingredient.id)).filter((id) => !ignored.has(id)))].sort().join('|');
+  const signatures = new Set(catalogue.recipes.slice(0,1257).map(signature));
+  for (const recipe of added) {
+    assert.equal(recipe.portions,2,recipe.id);
+    assert.equal(recipe.app.duplicate_of,undefined,recipe.id);
+    assert.ok(!catalogue.recipes.slice(0,1257).some((previous) => previous.titre === recipe.titre),recipe.id);
+    const result = evaluateAssociations(recipe.ingredients);
+    assert.equal(result.level,'verte',recipe.id);
+    assert.deepEqual(result.unknown,[],recipe.id);
+    assert.deepEqual(result.pairs,[],recipe.id);
+    assert.equal(recipe.associations.niveau,'verte',recipe.id);
+    assert.deepEqual(recipe.associations.paires,[],recipe.id);
+    assert.ok(!signatures.has(signature(recipe)),`${recipe.id}: duplicate core ingredients`);
+    signatures.add(signature(recipe));
+    assert.ok(recipe.ingredients.every((ingredient) => Number.isFinite(ingredient.quantite_normalisee) && ingredient.quantite_normalisee > 0 && ingredient.facultatif === false),recipe.id);
+    const projected = catalogueShoppingRecipe(recipe,'');
+    assert.ok(projected,`${recipe.id}: manual recipe projection exists even when excluded from the planner`);
+    const atTwo = scaleIngredients(projected,2);
+    const atFour = scaleIngredients(projected,4);
+    for (const [index,ingredient] of recipe.ingredients.entries()) {
+      assert.equal(atTwo[index].quantity,ingredient.quantite_normalisee,`${recipe.id}: two portions of ${ingredient.id}`);
+      assert.equal(atFour[index].quantity,ingredient.quantite_normalisee*2,`${recipe.id}: four portions of ${ingredient.id}`);
+      assert.equal(atFour[index].unit,ingredient.unite_normalisee,recipe.id);
+    }
+    assert.equal(planner.some((item) => item.id === `catalog-${recipe.id}`),recipe.app.planner.eligible,recipe.id);
+  }
+});
+
+test('filtered preparations never publish whole-ingredient nutrition or join the weekly generator', () => {
+  const filtered = catalogue.recipes.slice(1257,1321).filter((recipe) => recipe.nutrition_par_portion.estimation.statut === 'unavailable-filtered-yield');
+  assert.deepEqual(filtered.map((recipe) => recipe.id).sort(),['r1274','r1279','r1311','r1314']);
+  for (const recipe of filtered) {
+    assert.equal(recipe.app.planner.eligible,false,recipe.id);
+    assert.ok(!planner.some((item) => item.id === `catalog-${recipe.id}`),recipe.id);
+    for (const nutrient of ['calories','proteines_g','glucides_g','sucres_g','lipides_g','acides_gras_satures_g','fibres_g','sodium_mg']) {
+      assert.equal(recipe.nutrition_par_portion[nutrient],null,`${recipe.id}: ${nutrient} cannot be inferred from the unfiltered ingredients`);
+    }
   }
 });

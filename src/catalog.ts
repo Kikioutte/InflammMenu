@@ -76,13 +76,13 @@ export interface CatalogueRecipe {
   substitutions: Array<{ remplacer: string; par: string; note: string }>;
   conservation: string;
   nutrition_par_portion: {
-    calories: number;
-    proteines_g: number;
-    glucides_g: number;
+    calories: number | null;
+    proteines_g: number | null;
+    glucides_g: number | null;
     sucres_g: number | null;
-    lipides_g: number;
+    lipides_g: number | null;
     acides_gras_satures_g: number | null;
-    fibres_g: number;
+    fibres_g: number | null;
     sodium_mg: number | null;
   };
   score_anti_inflammatoire: number | null;

@@ -1,5 +1,6 @@
 import type { Ingredient, Recipe, WeeklyPlan, UserProfile } from "./domain.ts";
 import type { CatalogueRecipe } from "./catalog.ts";
+import { catalogueNutritionForRecipe } from "./catalogue-nutrition.ts";
 import { hasAllergyConflict, hasIngredientExclusionConflict } from "./food-restrictions.ts";
 import { isRecipeReferenceId } from "./recipe-references.ts";
 
@@ -21,7 +22,7 @@ export function catalogueShoppingRecipe(source: CatalogueRecipe, image: string):
     diet: source.app.planner.diets, prepMinutes: Math.max(1, source.temps.preparation), costPerPortion: source.app.planner.cost_per_portion_eur,
     seasons: ["all-year"], equipment: source.app.planner.equipment, allergens: source.app.planner.allergens, tags: [],
     ingredients: source.ingredients.map((item) => ({ id: item.id!, name: item.nom, quantity: item.quantite_normalisee! / source.portions, unit: item.unite_normalisee!, category: item.categorie_courses, allergens: item.allergenes, optional: item.facultatif, pantryStaple: item.pantry_staple })),
-    nutrition: { calories: source.nutrition_par_portion.calories, protein: source.nutrition_par_portion.proteines_g, fiber: source.nutrition_par_portion.fibres_g, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    ...catalogueNutritionForRecipe(source),
     description: source.titre, steps: source.etapes, conservation: source.conservation, image,
   };
 }

@@ -6,7 +6,9 @@ import { RECIPES } from '../src/recipes.ts';
 import { audit, beforeInstructionsReview } from './helpers/recipe-instructions-review.mjs';
 const catalogue = JSON.parse(readFileSync(new URL('../src/data/recettes-anti-inflammatoires.json', import.meta.url), 'utf8'));
 const v1 = RECIPES.filter((recipe) => !recipe.id.startsWith('catalog-'));
-const all = [...catalogue.recipes, ...v1];
+// The October 1 audit remains a historical journal for r001-r1257 and V1.
+// Additions receive their own dated journal rather than rewriting this evidence.
+const all = [...catalogue.recipes.filter((recipe) => Number(recipe.id.slice(1)) <= 1257), ...v1];
 const byId = new Map(all.map((recipe) => [recipe.id, recipe]));
 const hash = (value) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 
@@ -23,6 +25,26 @@ test('every catalogue and V1 recipe has an individual evidenced review with veri
     for (const field of ['id', 'ingredients', 'image']) assert.deepEqual(current[field], before[field], `${review.id}.${field} preserved`);
     const nutrition = review.kind === 'v1' ? 'nutrition' : 'nutrition_par_portion';
     assert.deepEqual(current[nutrition], before[nutrition], `${review.id}: nutrition preserved`);
+  }
+});
+
+test('the dated October 5 journal covers exactly the 64 additions and binds their source inventories to their final recipes', () => {
+  const inventory = JSON.parse(readFileSync(new URL('../research/recipes-r1258-r1321-inventory.json', import.meta.url),'utf8'));
+  const addedReview = JSON.parse(readFileSync(new URL('../research/recipe-instructions-review-2026-10-05.json', import.meta.url),'utf8'));
+  const added = catalogue.recipes.slice(1257,1321);
+  assert.equal(inventory.fiches.length,64);
+  assert.equal(addedReview.recipes.length,64);
+  assert.equal(added.length,64);
+  assert.deepEqual(addedReview.recipes.map((review) => review.id),added.map((recipe) => recipe.id));
+  assert.equal(new Set(addedReview.recipes.map((review) => review.id)).size,64);
+  const union = [...audit.recipes,...addedReview.recipes].map((review) => review.id);
+  assert.equal(new Set(union).size,1357);
+  assert.deepEqual(union.sort(),[...catalogue.recipes,...v1].map((recipe) => recipe.id).sort());
+  for (const [index,review] of addedReview.recipes.entries()) {
+    assert.equal(review.sourceInventorySha256,hash(inventory.fiches[index]),`${review.id}: reviewed source inventory`);
+    assert.equal(review.afterSha256,hash(added[index]),`${review.id}: final reviewed card`);
+    assert.equal(review.culinaryTested,false,`${review.id}: no physical kitchen test is claimed`);
+    assert.ok(typeof review.evidence === 'string' && review.evidence.length > 25,`${review.id}: individual review evidence`);
   }
 });
 
