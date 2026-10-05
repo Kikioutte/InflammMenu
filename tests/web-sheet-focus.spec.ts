@@ -44,6 +44,43 @@ async function expectFocusInside(dialog: Locator) {
   await expect.poll(() => dialog.evaluate((element) => element.contains(document.activeElement))).toBe(true);
 }
 
+type NavigationFocusTestWindow = typeof window & {
+  navigationFocusTest: { hold: boolean; pending: () => number; release: () => void };
+};
+
+async function controlNavigationFocus(page: Page) {
+  await page.addInitScript(() => {
+    const pending = new Map<number, () => void>();
+    const requestFrame = window.requestAnimationFrame.bind(window);
+    const cancelFrame = window.cancelAnimationFrame.bind(window);
+    const control = {
+      hold: false,
+      pending: () => pending.size,
+      release: () => {
+        control.hold = false;
+        const callbacks = [...pending.values()];
+        pending.clear();
+        callbacks.forEach((callback) => callback());
+      },
+    };
+    (window as NavigationFocusTestWindow).navigationFocusTest = control;
+    window.requestAnimationFrame = (callback) => {
+      let id = 0;
+      id = requestFrame((time) => {
+        // Hold only FlowStack's real focus callback. Motion and dialog frames
+        // still run, so the test controls the race without freezing the UI.
+        if (control.hold && callback.name === "applyFocus") pending.set(id, () => callback(time));
+        else callback(time);
+      });
+      return id;
+    };
+    window.cancelAnimationFrame = (id) => {
+      pending.delete(id);
+      cancelFrame(id);
+    };
+  });
+}
+
 async function checkDismissals(page: Page, trigger: Locator, title: string) {
   const dialog = page.getByRole("dialog", { name: title, exact: true });
   for (const method of ["escape", "close", "backdrop"] as const) {
@@ -61,6 +98,59 @@ async function checkDismissals(page: Page, trigger: Locator, title: string) {
     await expect(dialog).toHaveCount(0);
     await expect(trigger).toBeFocused();
   }
+}
+
+for (const scenario of [
+  { label: "du dialogue ouvert", dismiss: false, tab: false },
+  { label: "restitué après Échap", dismiss: true, tab: false },
+  { label: "déplacé par Tab après Échap", dismiss: true, tab: true },
+]) {
+  test(`une navigation différée respecte le focus ${scenario.label} @webkit-smoke`, async ({ page }) => {
+    await controlNavigationFocus(page);
+    await fresh(page);
+    const current = currentScreen(page);
+    await current.getByRole("button", { name: "Générer ma semaine", exact: true }).click();
+    await current.getByTestId("target-current").click();
+    await current.getByRole("button", { name: "Créer ma semaine", exact: true }).click();
+    await page.evaluate(() => { (window as NavigationFocusTestWindow).navigationFocusTest.hold = true; });
+    await current.getByRole("button", { name: "Voir ma semaine", exact: true }).click();
+    await expect(current.getByTestId("week-view")).toBeVisible();
+    await expect(page.locator('[data-flow-current="false"]')).toHaveCount(0);
+    await expect.poll(() => page.evaluate(() => (window as NavigationFocusTestWindow).navigationFocusTest.pending())).toBeGreaterThan(0);
+
+    const trigger = current.locator(".meal-card__more").first();
+    await trigger.click();
+    const actions = page.getByRole("dialog");
+    await expectFocusInside(actions);
+    if (scenario.dismiss) {
+      await page.keyboard.press("Escape");
+      await expect(actions).toHaveCount(0);
+      await expect(trigger).toBeFocused();
+    }
+    const tabTarget = current.getByRole("textbox", { name: "Contrôle clavier de la fixture", exact: true });
+    if (scenario.tab) {
+      // macOS WebKit may skip buttons in its native Tab order. A real labelled
+      // input in the fixture keeps this keyboard case independent of that setting.
+      await trigger.evaluate((element) => {
+        const label = document.createElement("label");
+        label.textContent = "Contrôle clavier de la fixture";
+        const input = document.createElement("input");
+        input.type = "text";
+        label.append(input);
+        element.insertAdjacentElement("afterend", label);
+      });
+      await page.keyboard.press("Tab");
+      await expect(tabTarget).toBeFocused();
+    }
+
+    // Cancellation is respected: a superseded request may already be removed.
+    // Otherwise execute the original callback after the later user interaction.
+    await page.evaluate(() => (window as NavigationFocusTestWindow).navigationFocusTest.release());
+    if (scenario.tab) await expect(tabTarget).toBeFocused();
+    else if (scenario.dismiss) await expect(trigger).toBeFocused();
+    else await expectFocusInside(actions);
+    await expect(current.getByRole("heading", { name: "Ma semaine", exact: true, includeHidden: true })).not.toBeFocused();
+  });
 }
 
 test("les filtres du catalogue rendent le focus après chaque fermeture @webkit-smoke", async ({ page }, info) => {

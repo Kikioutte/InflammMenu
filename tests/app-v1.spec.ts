@@ -1444,6 +1444,11 @@ test("les portions d’un repas se règlent et se répercutent sur la semaine", 
 });
 
 test("les données locales s’exportent et se restaurent", async ({ page }) => {
+  // Export, reset, restore and stale-tab verification share this journey's budget.
+  // Bound individual operations in both the main page and the later second tab.
+  test.setTimeout(60_000);
+  page.context().setDefaultTimeout(5_000);
+  page.context().setDefaultNavigationTimeout(15_000);
   await openFreshApp(page);
 
   await generateWeek(page);
