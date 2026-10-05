@@ -109,6 +109,11 @@ test("saved association profile governs generation and shopping", async ({ page 
 
 
 test("a complete meal is saved, restored and deleted without modifying the week @webkit-smoke", async ({ page }) => {
+  // Composition, naming, deletion and two reloads share this journey's budget.
+  // Keep individual actions bounded while allowing cumulative CI latency.
+  test.setTimeout(60_000);
+  page.setDefaultTimeout(5_000);
+  page.setDefaultNavigationTimeout(15_000);
   await fresh(page); await library(page);
   await page.getByLabel("Rechercher une recette", { exact: true }).fill("Cabillaud en papillote de chou et fenouil");
   await expect(page.locator(".catalogue-card")).toHaveCount(1);
@@ -144,6 +149,10 @@ test("a complete meal is saved, restored and deleted without modifying the week 
   await expect(page.getByText("Mes repas enregistrés · 0", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Annuler la suppression", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Dîner du dimanche", exact: true })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => {
+    const savedMeals = JSON.parse(localStorage.getItem("inflamm-menu:app-state")!).savedMeals;
+    return savedMeals.length === 1 && savedMeals[0].name === "Dîner du dimanche";
+  })).toBe(true);
   await page.reload(); await library(page);
   await page.getByText("Mes repas enregistrés · 1", { exact: true }).click();
   await expect(page.getByRole("heading", { name: "Dîner du dimanche", exact: true })).toBeVisible();
