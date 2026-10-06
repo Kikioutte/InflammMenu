@@ -41,9 +41,17 @@ test("la validation et le déploiement partagent un pipeline unique", async () =
   assert.match(deployBlock, new RegExp(deploymentCondition.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
 
   const auditStep = extractStep(validateBlock, "Audit production dependencies");
+  const diagnosticsStep = extractStep(validateBlock, "Upload Playwright diagnostics");
   const uploadStep = extractStep(validateBlock, "Upload site artifact");
   assert.match(auditStep, /run: npm run audit:production/);
   assert.doesNotMatch(auditStep, /continue-on-error:/);
+  assert.match(diagnosticsStep, /if: \$\{\{ always\(\) \}\}/);
+  assert.match(diagnosticsStep, /actions\/upload-artifact@[0-9a-f]{40}/);
+  assert.match(diagnosticsStep, /name: playwright-diagnostics-\$\{\{ github\.run_id \}\}-\$\{\{ github\.run_attempt \}\}/);
+  assert.match(diagnosticsStep, /path: \|\n\s+test-results\/\n\s+playwright-report\//);
+  assert.match(diagnosticsStep, /retention-days: 7\b/);
+  assert.match(diagnosticsStep, /if-no-files-found: warn\b/);
+  assert.doesNotMatch(diagnosticsStep, /continue-on-error:/);
   assert.match(uploadStep, new RegExp(deploymentCondition.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   assert.match(uploadStep, /actions\/upload-pages-artifact@[0-9a-f]{40}[\s\S]*path: dist\/pages/);
   assert.doesNotMatch(workflow, /actions\/configure-pages@/);
@@ -57,6 +65,7 @@ test("la validation et le déploiement partagent un pipeline unique", async () =
     "npm run test:sites",
     "npm run build:pages",
     "npm run test:pwa:built",
+    "actions/upload-artifact@",
     "actions/upload-pages-artifact@",
   ];
   let previousIndex = -1;

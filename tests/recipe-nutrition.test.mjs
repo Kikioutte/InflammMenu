@@ -5,6 +5,13 @@ import { readFileSync } from "node:fs";
 import { recalculateCustomNutrition, recalculateRecipeEstimates } from "../src/recipe-nutrition.ts";
 import { IMPORTED_PLAN_RECIPES } from "../src/planner-catalog.ts";
 import { RECIPES } from "../src/recipes.ts";
+import { catalogueShoppingRecipe } from "../src/personal-library.ts";
+import { hasCatalogueNutrition } from "../src/catalogue-nutrition.ts";
+import { summarizePlan } from "../src/engine.ts";
+import { composeMeal } from "../src/composed-meal.ts";
+import { DEFAULT_PROFILE } from "../src/domain.ts";
+
+const catalogue = JSON.parse(readFileSync(new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url), "utf8"));
 
 const recipe = id => IMPORTED_PLAN_RECIPES.find(item => item.id === id);
 const scale = (ingredients, ratio) => ingredients.map(item => ({ ...item, quantity: item.quantity * ratio }));
@@ -12,9 +19,59 @@ const scale = (ingredients, ratio) => ingredients.map(item => ({ ...item, quanti
 test("derived coefficients still match reviewed sources and all current catalogue totals", () => {
   execFileSync(process.execPath, ["scripts/generate-recipe-nutrition.mjs", "--check"], { cwd: new URL("../", import.meta.url) });
   const table = JSON.parse(readFileSync(new URL("../src/data/recipe-nutrition.json", import.meta.url)));
-  assert.equal(Object.keys(table).length, 1077);
+  const addedWithCoefficients = catalogue.recipes.slice(1257,1321).filter((recipe) => recipe.nutrition_par_portion.estimation?.statut?.startsWith("calculated"));
+  assert.equal(Object.keys(table).length, 1127 + addedWithCoefficients.length);
+  for (const source of addedWithCoefficients) assert.ok(table[`catalog-${source.id}`], source.id);
   assert.ok(table["catalog-r1087"], "the recent association recipes are retained");
   assert.equal(table["catalog-r551"], undefined, "unmapped CREAMi ingredients are not guessed");
+});
+
+test("filtered-yield recipes keep unknown nutrition after projection and proportional ingredient edits", async () => {
+  const filtered = catalogue.recipes.slice(1257,1321).filter((recipe) => recipe.nutrition_par_portion.estimation?.statut === "unavailable-filtered-yield");
+  assert.equal(filtered.length,4);
+  for (const source of filtered) {
+    assert.equal(hasCatalogueNutrition(source),false,source.id);
+    const projected = catalogueShoppingRecipe(source,"");
+    assert.ok(projected,source.id);
+    assert.equal(projected.nutritionRecalculated,false,source.id);
+    assert.equal(await recalculateCustomNutrition(projected.id,projected.ingredients),null,source.id);
+    const edited = await recalculateRecipeEstimates(projected,scale(projected.ingredients,2));
+    assert.equal(edited.nutritionRecalculated,false,source.id);
+    assert.deepEqual(edited.nutrition,projected.nutrition,source.id);
+  }
+});
+
+test("an unavailable filtered meal does not dilute reviewed averages with its internal zero values", () => {
+  const source = catalogue.recipes.slice(1257,1321).find((recipe) => recipe.nutrition_par_portion.estimation?.statut === "unavailable-filtered-yield");
+  assert.ok(source);
+  const unavailable = catalogueShoppingRecipe(source,"");
+  assert.ok(unavailable);
+  const known = RECIPES.find((recipe) => recipe.nutritionRecalculated !== false && recipe.nutrition.calories > 0);
+  assert.ok(known);
+  const plan = {
+    id:"filtered-estimate",startsOn:"2026-10-05",generatedAt:"2026-10-05T12:00:00Z",version:1,
+    profileSnapshot:DEFAULT_PROFILE,estimatedCost:0,
+    meals:[known,unavailable].map((recipe,index) => ({id:`m${index}`,dayIndex:0,mealType:index === 0 ? "lunch" : "dinner",recipeId:recipe.id,portions:2,source:"manual"})),
+  };
+  const summary = summarizePlan(plan,[known,unavailable]);
+  assert.equal(summary.nutritionComplete,false);
+  assert.equal(summary.nutritionUnavailableMeals,1);
+  assert.equal(summary.averageCalories,Math.round(known.nutrition.calories*10)/10);
+  assert.equal(summary.averageProtein,Math.round(known.nutrition.protein*10)/10);
+  assert.equal(summary.averageFiber,Math.round(known.nutrition.fiber*10)/10);
+});
+
+test("a complementary dessert with unavailable nutrition makes the entire composed meal estimate unavailable", () => {
+  const get = (id) => structuredClone(catalogue.recipes.find((recipe) => recipe.id === id));
+  const dessert = get("r824");
+  for (const field of ["calories", "proteines_g", "glucides_g", "sucres_g", "lipides_g", "acides_gras_satures_g", "fibres_g", "sodium_mg"]) dessert.nutrition_par_portion[field] = null;
+  dessert.nutrition_par_portion.estimation.statut = "unavailable-filtered-yield";
+  const meal = composeMeal(get("r1017"),get("r711"),dessert,"");
+  assert.equal(meal.nutritionRecalculated,false);
+  const summary = summarizePlan({id:"filtered-composed",startsOn:"2026-10-05",generatedAt:"2026-10-05T12:00:00Z",version:1,profileSnapshot:DEFAULT_PROFILE,estimatedCost:0,
+    meals:[{id:"m",dayIndex:0,mealType:"lunch",recipeId:meal.id,portions:2,source:"manual"}]},[meal]);
+  assert.equal(summary.nutritionComplete,false);
+  assert.equal(summary.nutritionUnavailableMeals,1);
 });
 
 test("partial quantity edits use reviewed nutrition but retain an explicitly unrecalculated cost without ingredient prices", async () => {

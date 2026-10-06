@@ -10,6 +10,7 @@ import { recipesForState, ACTIVE_RECIPES } from "../app/recipe-registry";
 import { WebSheet } from "../components/WebSheet";
 import { matchesRecipeSearch } from "../recipe-search";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { isRecipeReferenceId } from "../recipe-references";
 
 export function availabilityForShopping(recipe: CatalogueRecipe): boolean {
   const availability = plannerAvailabilityFor(recipe);
@@ -28,7 +29,11 @@ function saveCollection(store: AppStateStore, name: string, id?: string, recipeI
   if (live.recipeCollections.some((item) => item.id !== id && normalizeText(item.name) === normalizeText(name))) return "Une collection porte déjà ce nom.";
   if (id && !live.recipeCollections.some((item) => item.id === id)) return "Cette collection a été supprimée.";
   if (!id && live.recipeCollections.length >= 100) return "Vous avez atteint la limite de 100 collections.";
-  store.setState((current) => ({ ...current, recipeCollections: id ? current.recipeCollections.map((item) => item.id === id ? { ...item, name } : item) : [...current.recipeCollections, { id: `collection-${crypto.randomUUID()}`, name, recipeIds: recipeId ? [recipeId] : [] }] }));
+  if (recipeId && !isRecipeReferenceId(recipeId)) return "Cette recette n’est pas reconnue. Rouvrez sa fiche avant de la classer.";
+  const targetId = id ?? `collection-${crypto.randomUUID()}`;
+  store.setState((current) => ({ ...current, recipeCollections: id ? current.recipeCollections.map((item) => item.id === id ? { ...item, name } : item) : [...current.recipeCollections, { id: targetId, name, recipeIds: recipeId ? [recipeId] : [] }] }));
+  const saved = store.getSnapshot().recipeCollections.find((item) => item.id === targetId);
+  if (!saved || saved.name !== name || (recipeId && !saved.recipeIds.includes(recipeId))) return "La collection n’a pas pu être enregistrée. Réessayez depuis la fiche de la recette.";
   return null;
 }
 
@@ -41,11 +46,13 @@ export function RecipeTools({ store, recipeId, recipe, portions, shoppingAllowed
   const existing = state.shoppingRecipes.find((entry) => entry.recipe.id === recipeId);
   const add = () => {
     const live = store.getSnapshot();
-    if (!recipe || !shoppingAllowed) { setMessage("Cette recette ne peut pas être ajoutée automatiquement aux courses."); return; }
+    if (!recipe || recipe.id !== recipeId || !isRecipeReferenceId(recipeId) || !shoppingAllowed) { setMessage("Cette recette ne peut pas être ajoutée automatiquement aux courses."); return; }
     if (shoppingConflict(recipe, live.profile, recipesForState(live).flatMap((item) => item.ingredients))) { setMessage("Cette recette contient un ingrédient exclu ou ne correspond pas au régime de votre profil. Vérifiez votre profil."); return; }
-    if (!existing && live.shoppingRecipes.length >= 100) { setMessage("Retirez une recette des courses avant d’en ajouter une autre."); return; }
+    if (!live.shoppingRecipes.some((entry) => entry.recipe.id === recipeId) && live.shoppingRecipes.length >= 100) { setMessage("Retirez une recette des courses avant d’en ajouter une autre."); return; }
     const ids = new Set(recipe.ingredients.map((item) => shoppingIdentityFor(item.id).shoppingId));
     store.setState((current) => ({ ...current, shoppingRecipes: [...current.shoppingRecipes.filter((item) => item.recipe.id !== recipeId), { recipe, portions }], extraShoppingCheckedIds: current.extraShoppingCheckedIds.filter((id) => !ids.has(shoppingIdentityFor(id).shoppingId)), checkedShoppingItemIds: current.checkedShoppingItemIds.filter((id) => !ids.has(shoppingIdentityFor(id).shoppingId)) }));
+    const saved = store.getSnapshot().shoppingRecipes.find((entry) => entry.recipe.id === recipeId);
+    if (!saved || saved.portions !== portions) { setMessage("La recette n’a pas pu être ajoutée aux courses. Vérifiez ses portions et ses ingrédients."); return; }
     setMessage(`Courses mises à jour pour ${portions} personne${portions > 1 ? "s" : ""}. Votre semaine est conservée.`);
   };
   return <section className="personal-recipe-tools"><div className="recipe-actions"><button ref={collectionTriggerRef} className="secondary-button" type="button" onClick={() => { keyboard.hide(); setOpen(true); }}>Classer dans une collection</button>{recipe && shoppingAllowed ? <button className="secondary-button" type="button" onClick={add}>{existing ? "Mettre à jour les courses" : "Ajouter aux courses"}</button> : null}</div>{message ? <p role="status">{message}</p> : null}

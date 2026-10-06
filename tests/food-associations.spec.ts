@@ -1,5 +1,7 @@
+import { ASSOCIATION_RECIPE_COUNT, GREEN_RECIPE_COUNT, ORANGE_RECIPE_COUNT } from "./helpers/catalogue-counts";
 import { readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
+import { formatIngredientQuantity as displayCatalogueQuantity } from "../src/presentation";
 
 const greenIds = new Set(JSON.parse(readFileSync(new URL("../research/association-collection.json", import.meta.url), "utf8")).filter((r: any) => r.associations.niveau === "verte").map((r: any) => `catalog-${r.id}`));
 
@@ -23,11 +25,11 @@ test("collection, orange pairs, scaled portions and complete meal", async ({ pag
   await fresh(page); await library(page);
   const filter = current.getByLabel("Filtrer les associations");
   await filter.selectOption("collection");
-  await expect(current.locator(".catalogue-count")).toHaveText("577 résultats");
+  await expect(current.locator(".catalogue-count")).toHaveText(`${ASSOCIATION_RECIPE_COUNT} résultats`);
   await filter.selectOption("verte");
-  await expect(current.locator(".catalogue-count")).toHaveText("420 résultats");
+  await expect(current.locator(".catalogue-count")).toHaveText(`${GREEN_RECIPE_COUNT} résultats`);
   await filter.selectOption("orange");
-  await expect(current.locator(".catalogue-count")).toHaveText("157 résultats");
+  await expect(current.locator(".catalogue-count")).toHaveText(`${ORANGE_RECIPE_COUNT} résultats`);
   await current.getByLabel("Rechercher une recette", { exact: true }).fill("Riz complet aux dés de fenouil");
   await expect(current.locator(".catalogue-card")).toHaveCount(1);
   await expect(current.locator(".catalogue-card")).toHaveCount(1);
@@ -107,6 +109,11 @@ test("saved association profile governs generation and shopping", async ({ page 
 
 
 test("a complete meal is saved, restored and deleted without modifying the week @webkit-smoke", async ({ page }) => {
+  // Composition, naming, deletion and two reloads share this journey's budget.
+  // Keep individual actions bounded while allowing cumulative CI latency.
+  test.setTimeout(60_000);
+  page.setDefaultTimeout(5_000);
+  page.setDefaultNavigationTimeout(15_000);
   await fresh(page); await library(page);
   await page.getByLabel("Rechercher une recette", { exact: true }).fill("Cabillaud en papillote de chou et fenouil");
   await expect(page.locator(".catalogue-card")).toHaveCount(1);
@@ -142,6 +149,10 @@ test("a complete meal is saved, restored and deleted without modifying the week 
   await expect(page.getByText("Mes repas enregistrés · 0", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Annuler la suppression", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Dîner du dimanche", exact: true })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => {
+    const savedMeals = JSON.parse(localStorage.getItem("inflamm-menu:app-state")!).savedMeals;
+    return savedMeals.length === 1 && savedMeals[0].name === "Dîner du dimanche";
+  })).toBe(true);
   await page.reload(); await library(page);
   await page.getByText("Mes repas enregistrés · 1", { exact: true }).click();
   await expect(page.getByRole("heading", { name: "Dîner du dimanche", exact: true })).toBeVisible();
@@ -212,4 +223,39 @@ test("a recipe issue can be prepared as a local file", async ({ page }) => {
   const download = await pending;
   expect(download.suggestedFilename()).toBe("signalement-r711.txt");
   await expect(page.getByRole("dialog", { name: "Préparer un signalement", exact: true })).toContainText("Il reste à le transmettre");
+});
+
+test("les 64 fiches du 5 octobre sont trouvables, vertes et réglables de deux à quatre portions @webkit-smoke", async ({ page }) => {
+  test.setTimeout(240_000);
+  const added = JSON.parse(readFileSync(new URL("../src/data/recettes-anti-inflammatoires.json", import.meta.url), "utf8")).recipes.slice(1257,1321) as {
+    id: string; titre: string; ingredients: { quantite: number; unite: string }[];
+    nutrition_par_portion: { estimation: { statut: string } };
+  }[];
+  expect(added).toHaveLength(64);
+  const current = page.getByTestId("flow-current");
+  await fresh(page);
+  await library(page);
+  await current.getByLabel("Filtrer les associations").selectOption("verte");
+  await expect(current.locator(".catalogue-count")).toHaveText(`${GREEN_RECIPE_COUNT} résultats`);
+  for (const recipe of added) {
+    await current.getByLabel("Rechercher une recette", { exact: true }).fill(recipe.titre);
+    const card = current.locator(".catalogue-card").filter({ hasText: recipe.titre });
+    await expect(card,recipe.id).toHaveCount(1);
+    await card.click();
+    await expect(current.getByTestId("association-notice")).toContainText("Associations vertes");
+    await expect(current.locator(".portions-stepper b")).toHaveText("2");
+    const quantity = current.locator(".ingredient-list li strong").first();
+    const ingredient = recipe.ingredients[0];
+    await expect(quantity).toHaveText(displayCatalogueQuantity(ingredient.quantite,ingredient.unite));
+    await current.getByRole("button", { name: "Ajouter une portion", exact: true }).click();
+    await current.getByRole("button", { name: "Ajouter une portion", exact: true }).click();
+    await expect(current.locator(".portions-stepper b")).toHaveText("4");
+    await expect(quantity).toHaveText(displayCatalogueQuantity(ingredient.quantite*2,ingredient.unite));
+    if (recipe.nutrition_par_portion.estimation.statut === "unavailable-filtered-yield") {
+      await expect(current.locator(".nutrition-section")).toContainText("Valeurs non estimées");
+      await expect(current.locator(".nutrition-section strong")).toHaveCount(0);
+    }
+    // FlowStack renders the active route header outside the flow-current scene.
+    await page.getByTestId("flow-fixed-header").getByRole("button", { name: "Retour", exact: true }).click();
+  }
 });

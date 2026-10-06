@@ -1,6 +1,8 @@
 import type { Ingredient, Recipe, WeeklyPlan, UserProfile } from "./domain.ts";
 import type { CatalogueRecipe } from "./catalog.ts";
+import { catalogueNutritionForRecipe } from "./catalogue-nutrition.ts";
 import { hasAllergyConflict, hasIngredientExclusionConflict } from "./food-restrictions.ts";
+import { isRecipeReferenceId } from "./recipe-references.ts";
 
 export interface RecipeCollection { id: string; name: string; recipeIds: string[] }
 export interface ShoppingRecipe { recipe: Recipe; portions: number }
@@ -20,7 +22,7 @@ export function catalogueShoppingRecipe(source: CatalogueRecipe, image: string):
     diet: source.app.planner.diets, prepMinutes: Math.max(1, source.temps.preparation), costPerPortion: source.app.planner.cost_per_portion_eur,
     seasons: ["all-year"], equipment: source.app.planner.equipment, allergens: source.app.planner.allergens, tags: [],
     ingredients: source.ingredients.map((item) => ({ id: item.id!, name: item.nom, quantity: item.quantite_normalisee! / source.portions, unit: item.unite_normalisee!, category: item.categorie_courses, allergens: item.allergenes, optional: item.facultatif, pantryStaple: item.pantry_staple })),
-    nutrition: { calories: source.nutrition_par_portion.calories, protein: source.nutrition_par_portion.proteines_g, fiber: source.nutrition_par_portion.fibres_g, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    ...catalogueNutritionForRecipe(source),
     description: source.titre, steps: source.etapes, conservation: source.conservation, image,
   };
 }
@@ -34,7 +36,7 @@ export function normalizeCollections(value: unknown): RecipeCollection[] {
   return value.flatMap((item) => {
     if (!item || typeof item.id !== "string" || !/^collection-[a-zA-Z0-9-]{1,100}$/.test(item.id) || seen.has(item.id) || !cleanLabel(item.name)) return [];
     seen.add(item.id);
-    const recipeIds = Array.isArray(item.recipeIds) ? [...new Set<string>(item.recipeIds.filter((id: unknown): id is string => typeof id === "string" && id.length <= 160 && /^(catalog-r\d+|r\d+|perso-[a-zA-Z0-9._-]+)$/.test(id)))].slice(0, 1500) : [];
+    const recipeIds = Array.isArray(item.recipeIds) ? [...new Set<string>(item.recipeIds.filter(isRecipeReferenceId))].slice(0, 1500) : [];
     return [{ id: item.id, name: cleanLabel(item.name), recipeIds }];
   }).slice(0, 100);
 }

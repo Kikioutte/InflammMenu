@@ -4,6 +4,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { formatIngredientQuantity, formatIngredientUnit, formatDietLabel, DIET_LABELS, DIFFICULTY_LABELS, COST_LABELS } from "../src/presentation.ts";
 import { formatShoppingAmount } from "../src/shopping.ts";
 import { formatShoppingListText } from "../src/engine.ts";
+import { beforeInstructionsReview } from "./helpers/recipe-instructions-review.mjs";
 
 const json = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), "utf8"));
 const catalogue = json("../src/data/recettes-anti-inflammatoires.json");
@@ -68,7 +69,9 @@ test("the twelve edited cautions retain every unique warning and one allergen in
     assert.ok(second > 0);
     const tail = original.slice(second + intro.length + 2);
     const expected = original.slice(0, second) + tail[0].toLocaleUpperCase("fr") + tail.slice(1);
-    assert.equal(catalogue.recipes.find((recipe) => recipe.id === id).app.review.caution, expected, id);
+    const current = catalogue.recipes.find((recipe) => recipe.id === id);
+    assert.equal(beforeInstructionsReview(current).app.review.caution, expected, `${id}: avertissement historique conservé dans le journal`);
+    assert.ok(current.app.review.caution.includes(expected), `${id}: avertissement complet conservé après les réserves de protocole`);
     assert.equal(final.recipes.find((recipe) => recipe.id === id).app.review.caution, expected, `${id}: final authoring source`);
   }
 });

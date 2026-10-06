@@ -1,8 +1,9 @@
 import type { CatalogueRecipe } from "./catalog.ts";
+import { catalogueNutritionForRecipe } from "./catalogue-nutrition.ts";
 import { assignRecipeToSlot, assignableSlots } from "./engine.ts";
 import type { PlannedMeal, WeeklyPlan, UserProfile } from "./domain.ts";
 import type { Ingredient, Recipe, Season } from "./domain.ts";
-import { evaluateAssociationMeal, isAssociationRecipe } from "./food-associations.ts";
+import { compositionSelectionError } from "./meal-composition-rules.ts";
 import { canonicalIngredientId, shoppingRuleFor } from "./shopping.ts";
 
 export function scaleAssociationStep(step: string, ratio: number): string {
@@ -13,10 +14,10 @@ export function scaleAssociationStep(step: string, ratio: number): string {
  * share the existing Recipe contract. Source catalogue records are not changed. */
 export function composeMeal(starter: CatalogueRecipe, main: CatalogueRecipe, dessert: CatalogueRecipe, image: string): Recipe {
   const sources = [starter, main, dessert];
-  if (!["soupe", "salade"].includes(starter.categorie) || main.categorie !== "plat" || dessert.categorie !== "dessert") throw new Error("Choisissez une entrée, un plat et un dessert.");
-  if (sources.some((recipe) => recipe.app.duplicate_of || !isAssociationRecipe(recipe.id)) || !starter.app.planner.eligible || !main.app.planner.eligible || dessert.creami) throw new Error("Une recette de ce repas reste exclue de la planification.");
-  const association = evaluateAssociationMeal(sources);
-  if (association.level !== "verte" && association.level !== "orange") throw new Error("Les associations de ce repas doivent être revues.");
+  const error = compositionSelectionError({ starter, main, dessert });
+  if (error) throw new Error(error);
+  const estimates = sources.map(catalogueNutritionForRecipe);
+  const nutritionAvailable = estimates.every((estimate) => estimate.nutritionRecalculated !== false);
   const ingredients: Ingredient[] = sources.flatMap((recipe) => recipe.ingredients.map((item) => {
     if (!item.id || item.quantite_normalisee === undefined || !item.unite_normalisee) throw new Error("Une quantité de ce repas doit être vérifiée avant planification.");
     const id = canonicalIngredientId(item.id);
@@ -38,7 +39,8 @@ export function composeMeal(starter: CatalogueRecipe, main: CatalogueRecipe, des
     allergens: [...new Set(sources.flatMap((recipe) => recipe.app.planner.allergens))],
     tags: [...new Set(sources.flatMap((recipe) => [...(recipe.app.planner.targets ?? []), ...recipe.tags]))],
     ingredients,
-    nutrition: { calories: sources.reduce((sum, r) => sum + r.nutrition_par_portion.calories, 0), protein: sources.reduce((sum, r) => sum + r.nutrition_par_portion.proteines_g, 0), fiber: sources.reduce((sum, r) => sum + r.nutrition_par_portion.fibres_g, 0), estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    nutrition: { calories: nutritionAvailable ? estimates.reduce((sum, r) => sum + r.nutrition.calories, 0) : 0, protein: nutritionAvailable ? estimates.reduce((sum, r) => sum + r.nutrition.protein, 0) : 0, fiber: nutritionAvailable ? estimates.reduce((sum, r) => sum + r.nutrition.fiber, 0) : 0, estimated: true, note: "Valeurs nutritionnelles estimatives par portion, à titre indicatif." },
+    ...(!nutritionAvailable ? { nutritionRecalculated: false } : {}),
     description: `Entrée : ${starter.titre}. Plat : ${main.titre}. Dessert : ${dessert.titre}.`,
     caution: sources.map((recipe) => `${recipe.titre} : ${recipe.app.review.caution ?? recipe.app.review.summary}`).join("\n"),
     // RecipeView scales association quantities from a two-person reference.

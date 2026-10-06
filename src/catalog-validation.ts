@@ -159,7 +159,17 @@ function validateRecipe(value: unknown, path: string, schemaVersion: string): { 
   stringAt(recipe.conservation, `${path}.conservation`);
 
   const nutrition = recordAt(recipe.nutrition_par_portion, `${path}.nutrition_par_portion`);
-  for (const field of ["calories", "proteines_g", "glucides_g", "sucres_g", "lipides_g", "acides_gras_satures_g", "fibres_g", "sodium_mg"] as const) {
+  const nutritionFields = ["calories", "proteines_g", "glucides_g", "sucres_g", "lipides_g", "acides_gras_satures_g", "fibres_g", "sodium_mg"] as const;
+  const estimation = nutrition.estimation && typeof nutrition.estimation === "object" ? nutrition.estimation as Record<string, unknown> : undefined;
+  const filteredYieldUnavailable = associationRecipeIds.includes(`catalog-${id}`)
+    && estimation?.statut === "unavailable-filtered-yield"
+    && nutritionFields.every((field) => nutrition[field] === null);
+  if (filteredYieldUnavailable) {
+    const planner = recordAt(recordAt(recipe.app, `${path}.app`).planner, `${path}.app.planner`);
+    if (planner.eligible !== false) invalidCatalogue(`${path}: rendement filtré inconnu incompatible avec le planificateur`);
+  }
+  for (const field of nutritionFields) {
+    if (filteredYieldUnavailable) continue;
     if (nutrition[field] === null && ["sucres_g", "acides_gras_satures_g", "sodium_mg"].includes(field) && associationRecipeIds.includes(`catalog-${id}`)) continue;
     numberAt(nutrition[field], `${path}.nutrition_par_portion.${field}`);
   }

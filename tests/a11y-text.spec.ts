@@ -13,8 +13,8 @@ async function openHomeAtTwoHundredPercent(page: Page, width: number) {
   });
 }
 
-test("l’accueil et la navigation restent utilisables avec le texte à 200 % @webkit-smoke", async ({ page }) => {
-  for (const width of [320, 390]) {
+for (const width of [320, 390]) {
+  test(`l’accueil et la navigation restent utilisables avec le texte à 200 % (${width} px) @webkit-smoke`, async ({ page }) => {
     await openHomeAtTwoHundredPercent(page, width);
 
     const layout = await page.evaluate(() => {
@@ -61,5 +61,5 @@ test("l’accueil et la navigation restent utilisables avec le texte à 200 % @w
       await page.keyboard.press("Enter");
       await expect(tab).toHaveAttribute("aria-current", "page");
     }
-  }
-});
+  });
+}

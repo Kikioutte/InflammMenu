@@ -309,6 +309,11 @@ function requiredMealTypes(mealsPerDay: UserProfile["mealsPerDay"]): readonly Me
 export const DEFAULT_WEEKLY_TARGETS = { legumeMeals: 2, fishMeals: 2 } as const;
 export const MAX_WEEKLY_TARGET = 7;
 
+/** Fish frequencies remain relevant for every diet that permits fish. */
+export function fishTargetAppliesToDiet(diet: UserProfile["diet"]): boolean {
+  return diet === "classic" || diet === "no-pork";
+}
+
 /** Weekly frequencies aimed for, clamped and tolerant of profiles saved before they existed. */
 export function weeklyTargetsOf(profile: UserProfile): { legumeMeals: number; fishMeals: number } {
   const clamp = (value: unknown, fallback: number): number => {
@@ -699,6 +704,43 @@ function dailyFormConflictCount(
   return [...counts.values()].reduce((total, count) => total + Math.max(0, count - 1), 0);
 }
 
+/** Check a distinct recipe-to-slot assignment, including overlapping scarce pools. */
+function canAssignDistinctRecipes(
+  candidatePools: readonly (readonly Recipe[])[],
+  unavailable: ReadonlySet<string>,
+): boolean {
+  const slotCount = candidatePools.length;
+  if (slotCount === 0) return true;
+  const availableBySlot = candidatePools.map((pool) => {
+    const ids = new Set<string>();
+    for (const recipe of pool) {
+      if (!unavailable.has(recipe.id)) ids.add(recipe.id);
+      // A pool of N choices cannot constrain an assignment of N slots: even
+      // after the other N-1 slots are filled, one of these choices remains.
+      // Capping large pools keeps this guard cheap on the full catalogue.
+      if (ids.size === slotCount) break;
+    }
+    return [...ids];
+  }).sort((left, right) => left.length - right.length);
+  if (availableBySlot[0].length === 0) return false;
+  if (availableBySlot[0].length === slotCount) return true;
+
+  const assignedSlotByRecipe = new Map<string, number>();
+  const assign = (slotIndex: number, visited: Set<string>): boolean => {
+    for (const recipeId of availableBySlot[slotIndex]) {
+      if (visited.has(recipeId)) continue;
+      visited.add(recipeId);
+      const previousSlot = assignedSlotByRecipe.get(recipeId);
+      if (previousSlot === undefined || assign(previousSlot, visited)) {
+        assignedSlotByRecipe.set(recipeId, slotIndex);
+        return true;
+      }
+    }
+    return false;
+  };
+  return availableBySlot.every((_, slotIndex) => assign(slotIndex, new Set()));
+}
+
 /**
  * Creates a menu using only local rule evaluation. A recipe is never repeated.
  * Throws when the filtered catalogue cannot fill every requested slot safely.
@@ -773,13 +815,33 @@ export function generateWeeklyPlan(
     }
   }
 
+  const pendingSlots = slots.filter((slot) => !keptSlots.has(`${slot.dayIndex}-${slot.mealType}`)
+    && !slotIsSkipped(profile, slot.dayIndex, slot.mealType));
+  const noDistinctAssignmentError = (slot: { dayIndex: number; mealType: MealType }): RecipeCompatibilityError => {
+    const diagnostic = diagnoseRecipeCompatibility(recipes, profile, {
+      mealType: slot.mealType,
+      maxPrepMinutes: dayConstraintOf(profile, slot.dayIndex)?.maxPrepMinutes ?? profile.maxPrepMinutes,
+    });
+    return new RecipeCompatibilityError(
+      "Les recettes compatibles ne permettent pas de remplir tous les créneaux sans répétition.",
+      diagnostic,
+      slot.mealType,
+      slot.dayIndex,
+    );
+  };
+  // Reject collectively impossible weeks once, instead of retrying every
+  // candidate of a flexible early slot against an impossible later pool.
+  if (!canAssignDistinctRecipes(pendingSlots.map((slot) => eligibleBySlot.get(`${slot.dayIndex}-${slot.mealType}`) ?? []), keptRecipeIds)) {
+    throw noDistinctAssignmentError(pendingSlots[0]);
+  }
+
   const used = new Set<string>(keptRecipeIds);
   const selected: Recipe[] = [...keptSlots.values()]
     .map((meal) => catalogue.get(meal.recipeId))
     .filter((recipe): recipe is Recipe => Boolean(recipe));
   const meals: PlannedMeal[] = [];
 
-  for (const slot of slots) {
+  for (const [slotIndex, slot] of slots.entries()) {
     const kept = keptSlots.get(`${slot.dayIndex}-${slot.mealType}`);
     if (kept) {
       meals.push(kept);
@@ -821,8 +883,8 @@ export function generateWeeklyPlan(
     }
 
     const legumeDeficit = Math.max(0, targets.legumeMeals - weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.legume));
-    const fishDeficit = profile.diet === "classic" ? Math.max(0, targets.fishMeals - weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.fish)) : 0;
-    const candidates = slotCandidates
+    const fishDeficit = fishTargetAppliesToDiet(profile.diet) ? Math.max(0, targets.fishMeals - weeklyTargetCount(selected, WEEKLY_TARGET_TAGS.fish)) : 0;
+    let candidates = slotCandidates
       .filter((recipe) => !used.has(recipe.id));
     const selectedIngredientIds = new Set(selected.flatMap(requiredIngredientIdsOf));
     const formsAlreadyServedToday = new Set(
@@ -872,12 +934,19 @@ export function generateWeeklyPlan(
       return targetScore + favoriteScore + softDislikeScore + qualityScore + dailyFormScore
         - cappedWeeklyCostPenalty(recipe, portions);
     };
-    const selectedRecipe = selectSeededWeeklyCandidate(
-      candidates,
-      score,
-      seed,
-      `${slot.dayIndex}-${slot.mealType}`,
-    );
+    const remainingPools = slots.slice(slotIndex + 1)
+      .filter((next) => !keptSlots.has(`${next.dayIndex}-${next.mealType}`)
+        && !slotIsSkipped(profile, next.dayIndex, next.mealType))
+      .map((next) => eligibleBySlot.get(`${next.dayIndex}-${next.mealType}`) ?? []);
+    let selectedRecipe = selectSeededWeeklyCandidate(candidates, score, seed, slotKey);
+    // Preserve the established ranking and seeded choice whenever it leaves a
+    // complete assignment. Otherwise retry without the candidate that would
+    // strand a later slot; never relax a hard filter or consume a kept recipe.
+    while (!canAssignDistinctRecipes(remainingPools, new Set([...used, selectedRecipe.id]))) {
+      candidates = candidates.filter((recipe) => recipe.id !== selectedRecipe.id);
+      if (candidates.length === 0) throw noDistinctAssignmentError(slot);
+      selectedRecipe = selectSeededWeeklyCandidate(candidates, score, seed, slotKey);
+    }
 
     used.add(selectedRecipe.id);
     selected.push(selectedRecipe);
@@ -920,7 +989,7 @@ export function generateWeeklyPlan(
         const losesLegume = hasWeeklyTarget(previous, WEEKLY_TARGET_TAGS.legume) && !hasWeeklyTarget(candidate, WEEKLY_TARGET_TAGS.legume);
         const losesFish = hasWeeklyTarget(previous, WEEKLY_TARGET_TAGS.fish) && !hasWeeklyTarget(candidate, WEEKLY_TARGET_TAGS.fish);
         if (losesLegume && currentLegumes <= targets.legumeMeals) continue;
-        if (profile.diet === "classic" && losesFish && currentFish <= targets.fishMeals) continue;
+        if (fishTargetAppliesToDiet(profile.diet) && losesFish && currentFish <= targets.fishMeals) continue;
         const saving = (previous.costPerPortion - candidate.costPerPortion) * meal.portions;
         if (saving <= 0) continue;
         const beforeConflicts = dailyFormConflictCount(meals, meal.dayIndex, byId);

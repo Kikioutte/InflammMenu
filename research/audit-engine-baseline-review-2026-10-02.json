@@ -1,0 +1,1611 @@
+{
+  "excluded": [
+    "catalog-r036",
+    "catalog-r041",
+    "catalog-r248",
+    "catalog-r264"
+  ],
+  "oldCatalogue": {
+    "count": 725,
+    "hash": "96cc4663a52f28b982985258992383ad68c63a83acf0ad52eb47564b7cc4a48c"
+  },
+  "newCatalogue": {
+    "count": 721,
+    "hash": "30269451da4dcdd1858694668ca8a58e10d8f6c0e63a1d3af21ae310a4dacf83"
+  },
+  "oldDiagnostic": {
+    "name": "RecipeCompatibilityError",
+    "message": "Aucune recette compatible pour le jour 1.",
+    "diagnostic": {
+      "unresolvedRestrictions": [
+        "allergene-benchmark-inconnu"
+      ],
+      "compatibleCount": 0,
+      "mealTypeCount": 643,
+      "blockedBy": {
+        "allergies": 643,
+        "disliked": 0,
+        "diet": 0,
+        "equipment": 62,
+        "excludedIngredients": 0,
+        "time": 422
+      },
+      "missingEquipment": []
+    },
+    "mealType": "lunch",
+    "dayIndex": 0
+  },
+  "newDiagnostic": {
+    "name": "RecipeCompatibilityError",
+    "message": "Aucune recette compatible pour le jour 1.",
+    "diagnostic": {
+      "unresolvedRestrictions": [
+        "allergene-benchmark-inconnu"
+      ],
+      "compatibleCount": 0,
+      "mealTypeCount": 639,
+      "blockedBy": {
+        "allergies": 639,
+        "disliked": 0,
+        "diet": 0,
+        "equipment": 62,
+        "excludedIngredients": 0,
+        "time": 421
+      },
+      "missingEquipment": []
+    },
+    "mealType": "lunch",
+    "dayIndex": 0
+  },
+  "invariants": "All scenario inputs, dates, slots, portions, meal-state fields, preserved locks, strict filters, uniqueness and prior target/budget attainment verified. Corrected and original engines return byte-identical plans on the final catalogue for all 24 scenarios.",
+  "scenarios": [
+    {
+      "id": "default-14/autumn",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 60.1,
+        "legumeMeals": 9,
+        "fishMeals": 4
+      },
+      "after": {
+        "cost": 64.26,
+        "legumeMeals": 9,
+        "fishMeals": 4
+      },
+      "swaps": [
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r041",
+          "after": "pates-completes-ratatouille"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r631",
+          "after": "poulet-curcuma-legumes-semoule"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r995",
+          "after": "catalog-r537"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r281",
+          "after": "catalog-r209"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r223",
+          "after": "catalog-r339"
+        }
+      ]
+    },
+    {
+      "id": "default-14/summer",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 52.94,
+        "legumeMeals": 10,
+        "fishMeals": 3
+      },
+      "after": {
+        "cost": 53.92,
+        "legumeMeals": 9,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r368",
+          "after": "catalog-r137"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r048",
+          "after": "catalog-r641"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r418",
+          "after": "catalog-r224"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r162",
+          "after": "catalog-r534"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r535",
+          "after": "catalog-r418"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r235",
+          "after": "bowl-tofu-brocoli-sesame"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r1014",
+          "after": "catalog-r987"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r527",
+          "after": "catalog-r513"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r705",
+          "after": "catalog-r267"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r413",
+          "after": "moules-tomate-semoule-complete"
+        }
+      ]
+    },
+    {
+      "id": "default-14/winter",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 63.98,
+        "legumeMeals": 6,
+        "fishMeals": 3
+      },
+      "after": {
+        "cost": 65.2,
+        "legumeMeals": 7,
+        "fishMeals": 4
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r530",
+          "after": "catalog-r631"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r256",
+          "after": "catalog-r1009"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r673",
+          "after": "catalog-r672"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r422",
+          "after": "catalog-r141"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r308",
+          "after": "catalog-r421"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r638",
+          "after": "catalog-r010"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r979",
+          "after": "catalog-r380"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r358",
+          "after": "salade-lentilles-noix"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r416",
+          "after": "catalog-r358"
+        }
+      ]
+    },
+    {
+      "id": "large-21x8/autumn",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 372.56,
+        "legumeMeals": 8,
+        "fishMeals": 7
+      },
+      "after": {
+        "cost": 438.56,
+        "legumeMeals": 5,
+        "fishMeals": 5
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r279",
+          "after": "catalog-r311"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r150",
+          "after": "catalog-r325"
+        },
+        {
+          "slot": "day-2-breakfast",
+          "before": "catalog-r079",
+          "after": "catalog-r035"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r923",
+          "after": "omelette-legumes-quinoa"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r365",
+          "after": "catalog-r654"
+        },
+        {
+          "slot": "day-3-breakfast",
+          "before": "catalog-r100",
+          "after": "catalog-r050"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r322",
+          "after": "catalog-r928"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r1127",
+          "after": "catalog-r801"
+        },
+        {
+          "slot": "day-4-breakfast",
+          "before": "catalog-r077",
+          "after": "catalog-r086"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r714",
+          "after": "catalog-r430"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r1005",
+          "after": "catalog-r723"
+        },
+        {
+          "slot": "day-5-breakfast",
+          "before": "catalog-r034",
+          "after": "catalog-r091"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r996",
+          "after": "catalog-r361"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "poulet-curcuma-legumes-semoule",
+          "after": "catalog-r432"
+        },
+        {
+          "slot": "day-6-breakfast",
+          "before": "catalog-r504",
+          "after": "catalog-r077"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r301",
+          "after": "catalog-r380"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r742",
+          "after": "catalog-r288"
+        }
+      ]
+    },
+    {
+      "id": "large-21x8/summer",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 309.2,
+        "legumeMeals": 8,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 353.68,
+        "legumeMeals": 9,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r716",
+          "after": "catalog-r722"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r959",
+          "after": "catalog-r963"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r264",
+          "after": "catalog-r277"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r655",
+          "after": "catalog-r691"
+        },
+        {
+          "slot": "day-3-breakfast",
+          "before": "catalog-r076",
+          "after": "catalog-r033"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r963",
+          "after": "catalog-r538"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r688",
+          "after": "catalog-r280"
+        },
+        {
+          "slot": "day-4-breakfast",
+          "before": "catalog-r089",
+          "after": "catalog-r043"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r704",
+          "after": "catalog-r1134"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r993",
+          "after": "catalog-r226"
+        },
+        {
+          "slot": "day-5-breakfast",
+          "before": "catalog-r044",
+          "after": "catalog-r072"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r841",
+          "after": "catalog-r875"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r640",
+          "after": "catalog-r281"
+        },
+        {
+          "slot": "day-6-breakfast",
+          "before": "catalog-r053",
+          "after": "catalog-r094"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r166",
+          "after": "catalog-r343"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r344",
+          "after": "catalog-r1029"
+        }
+      ]
+    },
+    {
+      "id": "large-21x8/winter",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 394.24,
+        "legumeMeals": 6,
+        "fishMeals": 7
+      },
+      "after": {
+        "cost": 378.32,
+        "legumeMeals": 7,
+        "fishMeals": 4
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r733",
+          "after": "catalog-r743"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r371",
+          "after": "catalog-r412"
+        },
+        {
+          "slot": "day-2-breakfast",
+          "before": "porridge-millet-pomme",
+          "after": "yaourt-pomme-amandes"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r675",
+          "after": "catalog-r681"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r935",
+          "after": "catalog-r942"
+        },
+        {
+          "slot": "day-3-breakfast",
+          "before": "catalog-r074",
+          "after": "catalog-r067"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r040",
+          "after": "catalog-r407"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r238",
+          "after": "catalog-r218"
+        },
+        {
+          "slot": "day-4-breakfast",
+          "before": "catalog-r050",
+          "after": "tartine-avocat-tomate-oeuf"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r419",
+          "after": "catalog-r266"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r322",
+          "after": "catalog-r921"
+        },
+        {
+          "slot": "day-5-breakfast",
+          "before": "catalog-r057",
+          "after": "catalog-r061"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r797",
+          "after": "catalog-r409"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r804",
+          "after": "catalog-r841"
+        },
+        {
+          "slot": "day-6-breakfast",
+          "before": "catalog-r058",
+          "after": "catalog-r076"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r1028",
+          "after": "catalog-r1023"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r918",
+          "after": "catalog-r045"
+        }
+      ]
+    },
+    {
+      "id": "vegetarian/autumn",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 49.36,
+        "legumeMeals": 6,
+        "fishMeals": 0
+      },
+      "after": {
+        "cost": 52.28,
+        "legumeMeals": 10,
+        "fishMeals": 0
+      },
+      "swaps": [
+        {
+          "slot": "day-0-lunch",
+          "before": "catalog-r231",
+          "after": "catalog-r281"
+        },
+        {
+          "slot": "day-0-dinner",
+          "before": "catalog-r678",
+          "after": "catalog-r685"
+        },
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r514",
+          "after": "catalog-r231"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r037",
+          "after": "catalog-r010"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "pates-completes-ratatouille",
+          "after": "catalog-r530"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "galette-sarrasin-epinards-ricotta",
+          "after": "taboule-pois-chiches-complet"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r653",
+          "after": "catalog-r699"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r124",
+          "after": "catalog-r270"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r797",
+          "after": "catalog-r125"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r705",
+          "after": "catalog-r325"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r168",
+          "after": "minestrone-haricots-blancs-epeautre"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r263",
+          "after": "catalog-r343"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r641",
+          "after": "catalog-r657"
+        }
+      ]
+    },
+    {
+      "id": "vegetarian/summer",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 45.46,
+        "legumeMeals": 10,
+        "fishMeals": 0
+      },
+      "after": {
+        "cost": 45.18,
+        "legumeMeals": 11,
+        "fishMeals": 0
+      },
+      "swaps": [
+        {
+          "slot": "day-0-lunch",
+          "before": "salade-lentilles-noix",
+          "after": "catalog-r695"
+        },
+        {
+          "slot": "day-0-dinner",
+          "before": "catalog-r705",
+          "after": "catalog-r267"
+        },
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r683",
+          "after": "catalog-r513"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r162",
+          "after": "catalog-r231"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r129",
+          "after": "catalog-r683"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r249",
+          "after": "catalog-r037"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r010",
+          "after": "catalog-r145"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r514",
+          "after": "catalog-r286"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r1009",
+          "after": "catalog-r324"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r672",
+          "after": "catalog-r673"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r519",
+          "after": "galette-sarrasin-epinards-ricotta"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r526",
+          "after": "catalog-r537"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r995",
+          "after": "catalog-r152"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r284",
+          "after": "catalog-r651"
+        }
+      ]
+    },
+    {
+      "id": "vegetarian/winter",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 49.02,
+        "legumeMeals": 8,
+        "fishMeals": 0
+      },
+      "after": {
+        "cost": 50.2,
+        "legumeMeals": 11,
+        "fishMeals": 0
+      },
+      "swaps": [
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r145",
+          "after": "minestrone-haricots-blancs-epeautre"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r284",
+          "after": "catalog-r325"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r045",
+          "after": "catalog-r224"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r325",
+          "after": "catalog-r517"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r1020",
+          "after": "catalog-r258"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "risotto-orge-champignons-epinards",
+          "after": "catalog-r527"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r1014",
+          "after": "catalog-r204"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r707",
+          "after": "curry-pois-chiches-epinards"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r167",
+          "after": "catalog-r869"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r260",
+          "after": "bowl-quinoa-legumes-houmous"
+        }
+      ]
+    },
+    {
+      "id": "allergies-exclusion/autumn",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 60.76,
+        "legumeMeals": 6,
+        "fishMeals": 3
+      },
+      "after": {
+        "cost": 57.7,
+        "legumeMeals": 4,
+        "fishMeals": 3
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r161",
+          "after": "catalog-r642"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r636",
+          "after": "catalog-r632"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r1026",
+          "after": "catalog-r1015"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "bowl-quinoa-legumes-houmous",
+          "after": "catalog-r640"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r208",
+          "after": "catalog-r711"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r737",
+          "after": "catalog-r842"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r1227",
+          "after": "catalog-r402"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r415",
+          "after": "catalog-r1016"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r955",
+          "after": "catalog-r270"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r700",
+          "after": "catalog-r868"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r1122",
+          "after": "catalog-r948"
+        }
+      ]
+    },
+    {
+      "id": "allergies-exclusion/summer",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 56.46,
+        "legumeMeals": 4,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 56.42,
+        "legumeMeals": 5,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r955",
+          "after": "catalog-r657"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r634",
+          "after": "catalog-r658"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r962",
+          "after": "catalog-r141"
+        }
+      ]
+    },
+    {
+      "id": "allergies-exclusion/winter",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 78.42,
+        "legumeMeals": 4,
+        "fishMeals": 5
+      },
+      "after": {
+        "cost": 68.8,
+        "legumeMeals": 4,
+        "fishMeals": 4
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r634",
+          "after": "catalog-r653"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r527",
+          "after": "catalog-r1128"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "omelette-legumes-quinoa",
+          "after": "catalog-r295"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r750",
+          "after": "catalog-r836"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r715",
+          "after": "catalog-r392"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r295",
+          "after": "catalog-r517"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r736",
+          "after": "catalog-r723"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r939",
+          "after": "catalog-r012"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r637",
+          "after": "catalog-r954"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r920",
+          "after": "catalog-r893"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r959",
+          "after": "catalog-r1127"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r884",
+          "after": "catalog-r801"
+        }
+      ]
+    },
+    {
+      "id": "daily-constraints/autumn",
+      "inputUnchanged": true,
+      "outputChanged": false,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Association-only candidate pool unaffected by the exclusions.",
+      "before": {
+        "cost": 106.87,
+        "legumeMeals": 0,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 106.87,
+        "legumeMeals": 0,
+        "fishMeals": 2
+      },
+      "swaps": []
+    },
+    {
+      "id": "daily-constraints/summer",
+      "inputUnchanged": true,
+      "outputChanged": false,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Association-only candidate pool unaffected by the exclusions.",
+      "before": {
+        "cost": 91.4,
+        "legumeMeals": 0,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 91.4,
+        "legumeMeals": 0,
+        "fishMeals": 2
+      },
+      "swaps": []
+    },
+    {
+      "id": "daily-constraints/winter",
+      "inputUnchanged": true,
+      "outputChanged": false,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Association-only candidate pool unaffected by the exclusions.",
+      "before": {
+        "cost": 107.53,
+        "legumeMeals": 0,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 107.53,
+        "legumeMeals": 0,
+        "fishMeals": 2
+      },
+      "swaps": []
+    },
+    {
+      "id": "locked-favorites/autumn",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 62.04,
+        "legumeMeals": 6,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 64.14,
+        "legumeMeals": 6,
+        "fishMeals": 3
+      },
+      "swaps": [
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r343",
+          "after": "catalog-r514"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r1009",
+          "after": "catalog-r523"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r037",
+          "after": "catalog-r737"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r705",
+          "after": "catalog-r631"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r631",
+          "after": "catalog-r325"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r263",
+          "after": "catalog-r524"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r325",
+          "after": "catalog-r641"
+        }
+      ]
+    },
+    {
+      "id": "locked-favorites/summer",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 69.82,
+        "legumeMeals": 5,
+        "fishMeals": 4
+      },
+      "after": {
+        "cost": 66.52,
+        "legumeMeals": 7,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r363",
+          "after": "catalog-r869"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r399",
+          "after": "catalog-r519"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r987",
+          "after": "catalog-r657"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r015",
+          "after": "catalog-r254"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r207",
+          "after": "catalog-r1021"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r685",
+          "after": "bowl-quinoa-legumes-houmous"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r971",
+          "after": "catalog-r685"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r638",
+          "after": "catalog-r224"
+        }
+      ]
+    },
+    {
+      "id": "locked-favorites/winter",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 74.86,
+        "legumeMeals": 7,
+        "fishMeals": 4
+      },
+      "after": {
+        "cost": 79.22,
+        "legumeMeals": 7,
+        "fishMeals": 4
+      },
+      "swaps": [
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r538",
+          "after": "catalog-r351"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r167",
+          "after": "catalog-r699"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r357",
+          "after": "catalog-r355"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r248",
+          "after": "catalog-r227"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r358",
+          "after": "catalog-r413"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "mijote-aubergine-pois-chiches",
+          "after": "catalog-r308"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r409",
+          "after": "catalog-r412"
+        }
+      ]
+    },
+    {
+      "id": "tight-budget/autumn",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 30.32,
+        "legumeMeals": 11,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 30.32,
+        "legumeMeals": 11,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-0-dinner",
+          "before": "catalog-r526",
+          "after": "catalog-r678"
+        },
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r534",
+          "after": "catalog-r529"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r678",
+          "after": "catalog-r517"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r513",
+          "after": "catalog-r521"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r521",
+          "after": "catalog-r534"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r517",
+          "after": "catalog-r513"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r535",
+          "after": "catalog-r526"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r529",
+          "after": "catalog-r535"
+        }
+      ]
+    },
+    {
+      "id": "tight-budget/summer",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 30.32,
+        "legumeMeals": 11,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 30.32,
+        "legumeMeals": 11,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-0-dinner",
+          "before": "catalog-r538",
+          "after": "catalog-r013"
+        },
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r515",
+          "after": "catalog-r535"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r013",
+          "after": "catalog-r517"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r513",
+          "after": "catalog-r515"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r526",
+          "after": "catalog-r514"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r521",
+          "after": "catalog-r534"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r535",
+          "after": "catalog-r678"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r517",
+          "after": "catalog-r526"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r514",
+          "after": "catalog-r521"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r529",
+          "after": "catalog-r513"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r534",
+          "after": "catalog-r529"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r678",
+          "after": "catalog-r538"
+        }
+      ]
+    },
+    {
+      "id": "tight-budget/winter",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 30.32,
+        "legumeMeals": 11,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 30.32,
+        "legumeMeals": 11,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r636",
+          "after": "catalog-r535"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r513",
+          "after": "catalog-r529"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r529",
+          "after": "catalog-r636"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r678",
+          "after": "catalog-r515"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r535",
+          "after": "catalog-r678"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r515",
+          "after": "catalog-r538"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r526",
+          "after": "catalog-r513"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r538",
+          "after": "catalog-r526"
+        }
+      ]
+    },
+    {
+      "id": "mostly-skipped/autumn",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 11.4,
+        "legumeMeals": 2,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 11.4,
+        "legumeMeals": 2,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r152",
+          "after": "catalog-r153"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r526",
+          "after": "catalog-r527"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r367",
+          "after": "catalog-r368"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r265",
+          "after": "catalog-r267"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r301",
+          "after": "catalog-r303"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r205",
+          "after": "catalog-r206"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r651",
+          "after": "catalog-r653"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r129",
+          "after": "catalog-r132"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r168",
+          "after": "catalog-r171"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r523",
+          "after": "catalog-r524"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r277",
+          "after": "catalog-r284"
+        }
+      ]
+    },
+    {
+      "id": "mostly-skipped/summer",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 11.4,
+        "legumeMeals": 2,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 11.4,
+        "legumeMeals": 2,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r253",
+          "after": "catalog-r254"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r423",
+          "after": "catalog-r513"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r371",
+          "after": "catalog-r380"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r128",
+          "after": "catalog-r132"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r413",
+          "after": "catalog-r414"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r161",
+          "after": "catalog-r162"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r037",
+          "after": "catalog-r045"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r141",
+          "after": "catalog-r150"
+        },
+        {
+          "slot": "day-5-dinner",
+          "before": "catalog-r228",
+          "after": "catalog-r230"
+        },
+        {
+          "slot": "day-6-lunch",
+          "before": "catalog-r324",
+          "after": "catalog-r339"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r422",
+          "after": "catalog-r423"
+        }
+      ]
+    },
+    {
+      "id": "mostly-skipped/winter",
+      "inputUnchanged": true,
+      "outputChanged": true,
+      "oldEngineOnFinalDataIdentical": true,
+      "reason": "Four editorial recipe exclusions change eligible-pool sizes and the seeded draw; no engine-induced difference with the final catalogue.",
+      "before": {
+        "cost": 11.4,
+        "legumeMeals": 2,
+        "fishMeals": 2
+      },
+      "after": {
+        "cost": 11.4,
+        "legumeMeals": 2,
+        "fishMeals": 2
+      },
+      "swaps": [
+        {
+          "slot": "day-1-lunch",
+          "before": "catalog-r1012",
+          "after": "catalog-r1015"
+        },
+        {
+          "slot": "day-1-dinner",
+          "before": "catalog-r246",
+          "after": "catalog-r249"
+        },
+        {
+          "slot": "day-2-lunch",
+          "before": "catalog-r276",
+          "after": "catalog-r281"
+        },
+        {
+          "slot": "day-2-dinner",
+          "before": "catalog-r210",
+          "after": "catalog-r218"
+        },
+        {
+          "slot": "day-3-lunch",
+          "before": "catalog-r534",
+          "after": "catalog-r535"
+        },
+        {
+          "slot": "day-3-dinner",
+          "before": "catalog-r341",
+          "after": "catalog-r351"
+        },
+        {
+          "slot": "day-4-lunch",
+          "before": "catalog-r411",
+          "after": "catalog-r413"
+        },
+        {
+          "slot": "day-4-dinner",
+          "before": "catalog-r1021",
+          "after": "catalog-r1023"
+        },
+        {
+          "slot": "day-5-lunch",
+          "before": "catalog-r414",
+          "after": "catalog-r416"
+        },
+        {
+          "slot": "day-6-dinner",
+          "before": "catalog-r527",
+          "after": "catalog-r529"
+        }
+      ]
+    }
+  ]
+}

@@ -11,6 +11,8 @@ export default defineConfig({
     baseURL: `http://127.0.0.1:${testPort}`,
     viewport: { width: 390, height: 844 },
     serviceWorkers: "allow",
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
   },
   webServer: {
     command: `npx vite preview --host 127.0.0.1 --port ${testPort} --base /InflammMenu/ --outDir dist/pages`,

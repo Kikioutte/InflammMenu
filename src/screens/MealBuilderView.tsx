@@ -1,5 +1,6 @@
 import { type CatalogueRecipe, catalogueImageFor } from "../catalog";
-import { isAssociationRecipe, evaluateAssociations, evaluateAssociationMeal } from "../food-associations";
+import { evaluateAssociationMeal } from "../food-associations";
+import { MEAL_BUILDER_GROUPS, mealBuilderGroupFor, mealBuilderEligible, compositionSelectionError, type MealBuilderGroupId } from "../meal-composition-rules";
 import { useKeyboard, MobileScroll, KeyboardInput } from "../mobile";
 import { useState, useMemo, useDeferredValue, useEffect, useRef } from "react";
 import { matchesRecipeSearch } from "../recipe-search";
@@ -11,23 +12,7 @@ import { ASSOCIATION_LABELS, AssociationNotice } from "../components/recipe-fact
 import { BottomNav } from "../components/BottomNav";
 import { WebSheet } from "../components/WebSheet";
 
-type MealBuilderGroupId = "starter" | "main" | "dessert";
-
-export const MEAL_BUILDER_GROUPS: ReadonlyArray<{ id: MealBuilderGroupId; label: string; singular: string; categories: readonly string[] }> = [
-  { id: "starter", label: "Entrées", singular: "Entrée", categories: ["soupe", "salade"] },
-  { id: "main", label: "Plats", singular: "Plat", categories: ["plat"] },
-  { id: "dessert", label: "Desserts", singular: "Dessert", categories: ["dessert"] },
-];
-
-export function mealBuilderGroupFor(recipe: CatalogueRecipe): MealBuilderGroupId | null {
-  return MEAL_BUILDER_GROUPS.find((group) => group.categories.includes(recipe.categorie))?.id ?? null;
-}
-
-export function mealBuilderEligible(recipe: CatalogueRecipe): boolean {
-  if (!isAssociationRecipe(recipe.id) || !mealBuilderGroupFor(recipe)) return false;
-  const level = evaluateAssociations(recipe.ingredients).level;
-  return level === "verte" || level === "orange";
-}
+export { MEAL_BUILDER_GROUPS, mealBuilderGroupFor, mealBuilderEligible } from "../meal-composition-rules";
 
 export function MealBuilderView({ initialRecipe, initialSelection, initialName = "", planLabel = "Planifier ce repas", planningContext, recipes, onSave, onPlan, onNavigate }: { initialRecipe: CatalogueRecipe; initialSelection?: Partial<Record<MealBuilderGroupId, CatalogueRecipe>>; initialName?: string; planLabel?: string; planningContext?: string; recipes: CatalogueRecipe[]; onSave: (selection: Partial<Record<MealBuilderGroupId, CatalogueRecipe>>, name: string) => string; onPlan: (selection: Partial<Record<MealBuilderGroupId, CatalogueRecipe>>) => string | null; onNavigate: (tab: TabId) => void }) {
   const keyboard = useKeyboard();
@@ -49,6 +34,7 @@ export function MealBuilderView({ initialRecipe, initialSelection, initialName =
   const selectedRecipes = useMemo(() => MEAL_BUILDER_GROUPS.map((group) => selection[group.id]).filter((recipe): recipe is CatalogueRecipe => Boolean(recipe)), [selection]);
   const mealResult = useMemo(() => evaluateAssociationMeal(selectedRecipes), [selectedRecipes]);
   const complete = selectedRecipes.length === MEAL_BUILDER_GROUPS.length;
+  const selectionError = complete ? compositionSelectionError(selection) : null;
   const reviewed = useMemo(() => recipes.filter(mealBuilderEligible), [recipes]);
   const candidates = useMemo(() => {
     const context = selectedRecipes.filter((recipe) => mealBuilderGroupFor(recipe) !== activeGroup);
@@ -73,12 +59,13 @@ export function MealBuilderView({ initialRecipe, initialSelection, initialName =
   };
   const changeGroup = (id: MealBuilderGroupId) => { setActiveGroup(id); setQuery(""); };
   const choose = (recipe: CatalogueRecipe) => {
+    if (!mealBuilderEligible(recipe)) return;
     const next = { ...selection, [activeGroup]: recipe };
     setSelection(next);
     setFeedback("");
     setQuery("");
     const missing = MEAL_BUILDER_GROUPS.find((item) => !next[item.id]);
-    setAnnouncement(`${group.singular} ajouté${activeGroup === "starter" ? "e" : ""} : ${recipe.titre}. ${missing ? `Choisissez maintenant votre ${missing.singular.toLocaleLowerCase("fr")}.` : "Votre repas complet a été vérifié."}`);
+    setAnnouncement(`${group.singular} ajouté${activeGroup === "starter" ? "e" : ""} : ${recipe.titre}. ${missing ? `Choisissez maintenant votre ${missing.singular.toLocaleLowerCase("fr")}.` : compositionSelectionError(next) ?? "Votre repas complet a été vérifié."}`);
     if (missing) {
       setActiveGroup(missing.id);
       document.getElementById(`meal-tab-${missing.id}`)?.focus();
@@ -115,11 +102,11 @@ export function MealBuilderView({ initialRecipe, initialSelection, initialName =
     <span className="sr-only" role="status" aria-live="polite">{announcement}</span>
     <WebSheet returnFocusRef={filtersTrigger} open={sheet === "filters"} onOpenChange={(open) => !open && openSheet(null)} title="Affiner les propositions" description="Chaque résultat reste vérifié avec votre repas."><div className="catalogue-filter-sheet"><fieldset><legend>Temps actif maximum</legend><div className="choice-row">{[0, 15, 30, 45].map((minutes) => <button type="button" key={minutes} aria-pressed={maxMinutes === minutes} className={maxMinutes === minutes ? "is-selected" : ""} onClick={() => setMaxMinutes(minutes)}>{minutes ? `${minutes} min` : "Peu importe"}</button>)}</div></fieldset><fieldset><legend>Associations du repas</legend><div className="choice-row"><button type="button" aria-pressed={!greenOnly} className={!greenOnly ? "is-selected" : ""} onClick={() => setGreenOnly(false)}>Vertes et orange signalées</button><button type="button" aria-pressed={greenOnly} className={greenOnly ? "is-selected" : ""} onClick={() => setGreenOnly(true)}>Tout vert uniquement</button></div></fieldset><button type="button" className="primary-button full-button" onClick={() => openSheet(null)}>Voir {filtered.length} proposition{filtered.length > 1 ? "s" : ""}</button></div></WebSheet>
     <WebSheet returnFocusRef={associationsTrigger} open={sheet === "associations"} onOpenChange={(open) => !open && openSheet(null)} title="Les associations de votre repas" description="Lecture du tableau personnel pour les recettes déjà choisies."><AssociationNotice result={mealResult} /><p className="inline-help">Le repère sur chaque proposition indique le résultat si vous l’ajoutez à votre sélection.</p></WebSheet>
-    <WebSheet returnFocusRef={summaryReturnFocus} open={sheet === "summary"} onOpenChange={(open) => !open && openSheet(null)} title="Votre repas" description={complete ? "Entrée, plat et dessert vérifiés ensemble." : "Choisissez une recette dans chaque catégorie pour compléter votre repas."}>
-      <div className={`meal-builder-status is-${mealResult.level}`} data-testid="meal-builder-status"><CheckCircledIcon /><span><strong>{complete ? mealResult.level === "verte" ? "Tout vert selon votre tableau" : mealResult.level === "orange" ? "Associations orange présentes" : "Repas à revoir" : "Repas à compléter"}</strong><small>{ASSOCIATION_LABELS[mealResult.level]}{!complete ? " pour la sélection actuelle" : ""}</small></span></div>
+    <WebSheet returnFocusRef={summaryReturnFocus} open={sheet === "summary"} onOpenChange={(open) => !open && openSheet(null)} title="Votre repas" description={complete && !selectionError ? "Entrée, plat et dessert vérifiés ensemble." : "Choisissez une recette dans chaque catégorie pour compléter votre repas."}>
+      <div className={`meal-builder-status is-${mealResult.level}`} data-testid="meal-builder-status"><CheckCircledIcon /><span><strong>{complete ? selectionError ? "Repas à revoir" : mealResult.level === "verte" ? "Tout vert selon votre tableau" : mealResult.level === "orange" ? "Associations orange présentes" : "Repas à revoir" : "Repas à compléter"}</strong><small>{ASSOCIATION_LABELS[mealResult.level]}{!complete ? " pour la sélection actuelle" : ""}</small></span></div>
       <section className="meal-builder-selection" aria-label="Recettes choisies">{MEAL_BUILDER_GROUPS.map((item) => { const recipe = selection[item.id]; return <article className={`meal-builder-slot ${recipe ? "is-filled" : ""}`} key={item.id} data-testid={`meal-builder-slot-${item.id}`}>{recipe ? <RecipeImage src={catalogueImageFor(recipe)} alt="" width={900} height={900} sizes="58px" /> : null}<span><small>{item.singular}</small><strong>{recipe?.titre ?? "À choisir"}</strong></span><button type="button" aria-label={`${recipe ? "Changer" : "Choisir"} ${item.singular.toLocaleLowerCase("fr")}`} onClick={() => { changeGroup(item.id); summaryReturnFocus.current = document.getElementById(`meal-tab-${item.id}`); openSheet(null); }}>{recipe ? "Changer" : "Choisir"}</button>{recipe && item.id !== initialGroup ? <button type="button" aria-label={`Retirer ${recipe.titre}`} onClick={() => { setSelection((current) => ({ ...current, [item.id]: undefined })); setAnnouncement(`${item.singular} retiré.`); setFeedback(""); }}><Cross2Icon /></button> : null}</article>; })}</section>
       {complete ? <label className="text-field">Nom du repas (facultatif)<KeyboardInput value={mealName} maxLength={80} placeholder="Ex. Mon dîner du dimanche" onChange={(event) => setMealName(event.target.value)} /></label> : null}
-      <AssociationNotice result={mealResult} detailsOpen={false} /><p className="inline-help">Enregistrez cette composition pour la retrouver dans « Mes repas ». Cet enregistrement ne modifie ni la semaine ni les courses.</p>{complete && (mealResult.level === "verte" || mealResult.level === "orange") ? <button type="button" className="secondary-button full-button" onClick={() => setFeedback(onSave(selection, mealName))}><HeartIcon /> Enregistrer mon repas</button> : null}<p role="status">{feedback}</p>{complete ? <button type="button" className="primary-button full-button" onClick={() => { const error = onPlan(selection); if (error) setFeedback(error); else openSheet(null); }}><CalendarIcon /> {planLabel}</button> : null}<button type="button" className="secondary-button full-button" onClick={() => openSheet(null)}>{complete ? "Revenir aux recettes compatibles" : "Continuer mon repas"}</button>
+      <AssociationNotice result={mealResult} detailsOpen={false} /><p className="inline-help">Enregistrez cette composition pour la retrouver dans « Mes repas ». Cet enregistrement ne modifie ni la semaine ni les courses.</p>{selectionError ? <p role="alert">{selectionError}</p> : null}{complete && !selectionError ? <button type="button" className="secondary-button full-button" onClick={() => setFeedback(compositionSelectionError(selection) ?? onSave(selection, mealName))}><HeartIcon /> Enregistrer mon repas</button> : null}<p role="status">{feedback}</p>{complete && !selectionError ? <button type="button" className="primary-button full-button" onClick={() => { const error = compositionSelectionError(selection) ?? onPlan(selection); if (error) setFeedback(error); else openSheet(null); }}><CalendarIcon /> {planLabel}</button> : null}<button type="button" className="secondary-button full-button" onClick={() => openSheet(null)}>{complete ? "Revenir aux recettes compatibles" : "Continuer mon repas"}</button>
     </WebSheet>
   </div>;
 }

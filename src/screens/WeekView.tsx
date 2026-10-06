@@ -1,7 +1,7 @@
 import { type WeeklyPlan, type PlannedMeal, type Recipe, type UserProfile } from "../domain";
 import { useRef, useState, type RefObject } from "react";
 import { CalendarIcon, ArchiveIcon, CopyIcon, CheckCircledIcon, LockClosedIcon, ClockIcon, CheckIcon, ReloadIcon, DotsHorizontalIcon, LockOpen1Icon, Cross2Icon } from "@radix-ui/react-icons";
-import { summarizePlan, planProgress, planToCalendar, cookingSessionsOf, type PlanSummary, weeklyTargetsOf } from "../engine";
+import { summarizePlan, planProgress, planToCalendar, cookingSessionsOf, type PlanSummary, weeklyTargetsOf, fishTargetAppliesToDiet } from "../engine";
 import { Carousel, useKeyboard } from "../mobile";
 import { currentDayIndex, dateAt, formatWeekRange, formatRecipeDuration } from "../components/format";
 import { EmptyRoot } from "../components/EmptyRoot";
@@ -154,7 +154,7 @@ function WeekBalance({ summary, profile }: { summary: PlanSummary; profile: User
   const targets = weeklyTargetsOf(profile);
   const rows: Array<{ label: string; value: number; target?: number; hint: string }> = [
     { label: "Repas avec légumes secs ou soja", value: summary.legumeMeals, target: targets.legumeMeals, hint: "Lentilles, pois chiches, haricots, fèves, tofu ou tempeh" },
-    ...(profile.diet === "classic" ? [{ label: "Repas avec poisson", value: summary.fishMeals, target: targets.fishMeals, hint: "Dont poissons gras si possible" }] : []),
+    ...(fishTargetAppliesToDiet(profile.diet) ? [{ label: "Repas avec poisson", value: summary.fishMeals, target: targets.fishMeals, hint: "Dont poissons gras si possible" }] : []),
     { label: "Repas avec céréales complètes et assimilées", value: summary.wholeGrainMeals, hint: "Riz complet, avoine, quinoa ou sarrasin" },
     { label: "Repas avec noix ou graines", value: summary.nutOrSeedMeals, hint: "Sources de graisses insaturées" },
     { label: "Repas de saison", value: summary.seasonalMeals, hint: "Saison en cours ou toute l’année" },
@@ -172,7 +172,7 @@ function WeekBalance({ summary, profile }: { summary: PlanSummary; profile: User
         ))}
       </ul>
       {summary.plantIngredients.length ? <details className="plant-diversity-details" data-testid="plant-diversity"><summary>Voir les {summary.plantDiversity} végétaux comptés</summary><p>{summary.plantIngredients.join(" · ")}</p></details> : null}
-      {summary.nutritionComplete ? <div className="week-balance__nutrition"><span><strong>{summary.averageCalories.toFixed(0)}</strong> kcal</span><span><strong>{summary.averageProtein.toFixed(0)}</strong> g protéines</span><span><strong>{summary.averageFiber.toFixed(0)}</strong> g fibres</span></div> : <p className="inline-help" data-testid="nutrition-incomplete">Moyennes nutritionnelles non disponibles : certaines recettes modifiées ou substitutions ne disposent pas d’une estimation recalculée.</p>}
+      {summary.nutritionComplete ? <div className="week-balance__nutrition"><span><strong>{summary.averageCalories.toFixed(0)}</strong> kcal</span><span><strong>{summary.averageProtein.toFixed(0)}</strong> g protéines</span><span><strong>{summary.averageFiber.toFixed(0)}</strong> g fibres</span></div> : <p className="inline-help" data-testid="nutrition-incomplete">Moyennes nutritionnelles non disponibles : certaines recettes ne disposent pas d’une estimation complète, notamment après filtration ou modification des ingrédients.</p>}
       {!summary.costComplete ? <p className="inline-help">Certains coûts n’ont pas pu être recalculés après modification des ingrédients ; le total conserve ces estimations antérieures.</p> : null}
       <p className="catalogue-disclaimer">Moyennes estimatives par portion, à titre indicatif. Ces repères décrivent l’organisation de vos repas selon un modèle méditerranéen ; ils ne constituent ni une évaluation nutritionnelle ni un avis médical.</p>
     </section>

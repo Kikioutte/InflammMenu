@@ -169,6 +169,19 @@ export function FlowStack({ initial }: { initial: FlowScreen }) {
         return;
       }
 
+      // A later interaction may already own focus while the old scene exits.
+      // Respect controls in the current scene and newly opened dialogs.
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && active !== document.body && active !== screen
+        && active.isConnected && !active.closest('[inert], [aria-hidden="true"]')
+        && !active.matches(":disabled") && active.getClientRects().length
+        && getComputedStyle(active).visibility !== "hidden"
+        && (screen.contains(active) || active.closest('[role="dialog"][data-state="open"], [role="alertdialog"][data-state="open"]'))) {
+        navigationFocus.current = null;
+        restoreFocusTo.current = null;
+        return;
+      }
+
       const restoreTarget = navigationFocus.current === "restore" ? restoreFocusTo.current : null;
       const restorable = restoreTarget?.isConnected
         && screen.contains(restoreTarget)

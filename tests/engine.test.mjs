@@ -81,6 +81,140 @@ test("generation is deterministic, creates 14 unique slots, and meets available 
   assert.ok(summary.withinBudget);
 });
 
+test("the real catalogue reserves quick Sunday recipes across 100 deterministic seeds", async () => {
+  const { DEFAULT_PROFILE } = await import("../src/domain.ts");
+  const { RECIPES } = await import("../src/recipes.ts");
+  const constrained = {
+    ...structuredClone(DEFAULT_PROFILE),
+    dayConstraints: [{ dayIndex: 6, maxPrepMinutes: 15, skippedMealTypes: [] }],
+  };
+  const before = structuredClone(constrained);
+  const signatures = new Set();
+  for (let seed = 1; seed <= 100; seed += 1) {
+    const options = { seed, startsOn: "2026-09-28" };
+    const plan = engine.generateWeeklyPlan(RECIPES, constrained, options);
+    assert.deepEqual(plan, engine.generateWeeklyPlan(RECIPES, constrained, options), `seed ${seed}`);
+    assert.equal(plan.meals.length, 14);
+    assert.equal(new Set(plan.meals.map((meal) => meal.recipeId)).size, 14);
+    assert.equal(engine.inspectActivePlan(plan, RECIPES, constrained).canActivate, true);
+    for (const meal of plan.meals) {
+      const dish = RECIPES.find((item) => item.id === meal.recipeId);
+      assert.ok(engine.recipeIsAllowedForSlot(dish, constrained, meal.dayIndex));
+      assert.ok(dish.mealTypes.includes(meal.mealType));
+      assert.equal(meal.portions, constrained.people);
+    }
+    const summary = engine.summarizePlan(plan, RECIPES, constrained);
+    assert.ok(summary.legumeMeals >= constrained.weeklyTargets.legumeMeals, `legumes, seed ${seed}`);
+    assert.ok(summary.fishMeals >= constrained.weeklyTargets.fishMeals, `fish, seed ${seed}`);
+    assert.ok(summary.withinBudget, `budget, seed ${seed}: ${summary.estimatedCost}`);
+    signatures.add(plan.meals.map((meal) => meal.recipeId).join("|"));
+  }
+  assert.ok(signatures.size > 20, "different seeds still explore distinct menus");
+  assert.deepEqual(constrained, before);
+});
+
+test("matching reserves overlapping scarce pools and ignores outside slots", () => {
+  const fastFish = recipe(9100, { prepMinutes: 10, tags: ["finfish"], diet: ["classic", "no-pork"] });
+  const fastLegume = recipe(9101, { prepMinutes: 10, tags: ["pulse"] });
+  const slow = recipe(9102, { prepMinutes: 30, tags: [] });
+  const pool = [fastFish, fastLegume, slow];
+  const constrained = {
+    ...profile, weeklyBudget: 6, weeklyTargets: { legumeMeals: 1, fishMeals: 1 },
+    dayConstraints: Array.from({ length: 7 }, (_, dayIndex) => ({
+      dayIndex, maxPrepMinutes: dayIndex === 6 ? 10 : 30,
+      skippedMealTypes: dayIndex === 6 ? [] : dayIndex === 0 ? ["dinner"] : ["lunch", "dinner"],
+    })),
+  };
+  for (let seed = 0; seed < 20; seed += 1) {
+    const plan = engine.generateWeeklyPlan(pool, constrained, { seed });
+    const active = plan.meals.filter((meal) => !meal.skipped);
+    assert.equal(active.length, 3);
+    assert.equal(active[0].recipeId, slow.id, "neither scarce quick candidate can be consumed on Monday");
+    assert.deepEqual(new Set(active.slice(1).map((meal) => meal.recipeId)), new Set([fastFish.id, fastLegume.id]));
+    assert.equal(plan.estimatedCost, 6);
+    const summary = engine.summarizePlan(plan, pool, constrained);
+    assert.equal(summary.fishMeals, 1);
+    assert.equal(summary.legumeMeals, 1);
+  }
+});
+
+test("matching preserves a future lock and its portions without reserving an invalid leftover lock", () => {
+  const quick = recipe(9110, { prepMinutes: 10, tags: ["finfish", "pulse"] });
+  const lockedRecipe = recipe(9111, { prepMinutes: 30, tags: [] });
+  const slow = recipe(9112, { prepMinutes: 30, tags: [] });
+  const pool = [quick, lockedRecipe, slow];
+  const constrained = {
+    ...profile, weeklyBudget: 12, weeklyTargets: { legumeMeals: 1, fishMeals: 1 },
+    dayConstraints: Array.from({ length: 7 }, (_, dayIndex) => ({
+      dayIndex, maxPrepMinutes: dayIndex === 6 ? 10 : 30,
+      skippedMealTypes: [0, 5, 6].includes(dayIndex) ? ["lunch"] : ["lunch", "dinner"],
+    })),
+  };
+  const kept = { id: "day-5-dinner", dayIndex: 5, mealType: "dinner", recipeId: lockedRecipe.id,
+    portions: 4, source: "manual", locked: true, completed: true };
+  const leftover = { id: "day-0-dinner", dayIndex: 0, mealType: "dinner", recipeId: quick.id,
+    portions: 1, source: "manual", locked: true, leftoverOf: "old-source" };
+  const options = { seed: 1, lockedMeals: [kept, leftover] };
+  const before = structuredClone(options);
+  const plan = engine.generateWeeklyPlan(pool, constrained, options);
+  const active = plan.meals.filter((meal) => !meal.skipped);
+  assert.deepEqual(active.map((meal) => meal.recipeId), [slow.id, lockedRecipe.id, quick.id]);
+  assert.equal(active[1].portions, 4);
+  assert.equal(active[1].locked, true);
+  assert.equal(active[1].source, "manual");
+  assert.equal(active[1].completed, false);
+  assert.equal(active[0].locked, undefined);
+  assert.equal(active[0].leftoverOf, undefined);
+  assert.equal(plan.estimatedCost, 12);
+  assert.deepEqual(options, before);
+});
+
+test("three-meal constrained weeks agree with an independent complete-assignment search", () => {
+  const mealTypes = ["breakfast", "lunch", "dinner"];
+  const constrained = {
+    ...profile, mealsPerDay: 3, weeklyBudget: 100, weeklyTargets: { legumeMeals: 0, fishMeals: 0 },
+    dayConstraints: Array.from({ length: 7 }, (_, dayIndex) => ({
+      dayIndex, maxPrepMinutes: dayIndex === 6 ? 10 : 30,
+      skippedMealTypes: dayIndex === 0 || dayIndex === 6 ? [] : mealTypes,
+    })),
+  };
+  const slots = [0, 6].flatMap((dayIndex) => mealTypes.map((mealType) => ({ dayIndex, mealType })));
+  // Deliberately exhaustive and independent of the augmenting-path guard.
+  const hasAssignment = (pools, slotIndex = 0, used = new Set()) => {
+    if (slotIndex === pools.length) return true;
+    for (const dish of pools[slotIndex]) {
+      if (used.has(dish.id)) continue;
+      if (hasAssignment(pools, slotIndex + 1, new Set([...used, dish.id]))) return true;
+    }
+    return false;
+  };
+  let feasibleCases = 0;
+  let impossibleCases = 0;
+  for (let scenario = 0; scenario < 36; scenario += 1) {
+    const pool = Array.from({ length: 9 }, (_, index) => recipe(9400 + index, {
+      // A universally quick recipe keeps every individual slot nonempty,
+      // including dormant outside slots, even in collectively impossible cases.
+      mealTypes: index === 0 ? mealTypes : mealTypes.filter((_, bit) => ((scenario * 5 + index * 3) % 7 + 1) & (1 << bit)),
+      prepMinutes: index === 0 || (index + scenario) % (3 + scenario % 4) === 0 ? 10 : 30,
+      tags: [],
+    }));
+    const pools = slots.map((slot) => pool.filter((dish) => dish.mealTypes.includes(slot.mealType)
+      && dish.prepMinutes <= (slot.dayIndex === 6 ? 10 : 30)));
+    if (hasAssignment(pools)) {
+      feasibleCases += 1;
+      const plan = engine.generateWeeklyPlan(pool, constrained, { seed: scenario });
+      const active = plan.meals.filter((meal) => !meal.skipped);
+      assert.equal(active.length, 6);
+      assert.equal(new Set(active.map((meal) => meal.recipeId)).size, 6);
+      assert.equal(engine.inspectActivePlan(plan, pool, constrained).canActivate, true);
+    } else {
+      impossibleCases += 1;
+      assert.throws(() => engine.generateWeeklyPlan(pool, constrained, { seed: scenario }), engine.RecipeCompatibilityError);
+    }
+  }
+  assert.ok(feasibleCases > 0 && impossibleCases > 0, `both feasible and impossible assignment graphs are covered (${feasibleCases}/${impossibleCases})`);
+});
+
 test("weekly targets use exact business tags instead of lexical food prefixes", () => {
   const summaryFor = (recipeId) => {
     const selected = IMPORTED_PLAN_RECIPES.find((item) => item.id === `catalog-${recipeId}`);
@@ -1243,6 +1377,37 @@ test("weekly targets are configurable, clamped and honoured by the generator", (
   assert.ok(relaxedPlan.estimatedCost <= 20, "sans objectif, le budget peut être pleinement optimisé");
 });
 
+test("fish targets apply to classic and no-pork, including the budget pass, but never vegetarian", () => {
+  const fish = Array.from({ length: 14 }, (_, index) => recipe(9200 + index, {
+    diet: ["classic", "no-pork"], tags: ["finfish"], costPerPortion: index < 7 ? 5 : 3,
+  }));
+  const plants = Array.from({ length: 20 }, (_, index) => recipe(9300 + index, { tags: ["pulse"], costPerPortion: 1 }));
+  const pool = [...fish, ...plants];
+  const options = { seed: "fish-budget", favoriteRecipeIds: fish.slice(0, 7).map((dish) => dish.id) };
+  for (const diet of ["classic", "no-pork"]) {
+    assert.equal(engine.fishTargetAppliesToDiet(diet), true);
+    const demanding = { ...profile, diet, weeklyBudget: 28, weeklyTargets: { legumeMeals: 2, fishMeals: 7 } };
+    const plan = engine.generateWeeklyPlan(pool, demanding, options);
+    const summary = engine.summarizePlan(plan, pool, demanding);
+    assert.equal(summary.fishMeals, 7, diet);
+    assert.ok(summary.legumeMeals >= 2, diet);
+    assert.ok(summary.withinBudget, `${diet}: ${plan.estimatedCost}`);
+    assert.ok(plan.meals.filter((meal) => fish.some((dish) => dish.id === meal.recipeId))
+      .every((meal) => fish.find((dish) => dish.id === meal.recipeId).costPerPortion === 3), "budget swaps preserve fish");
+    assert.deepEqual(plan, engine.generateWeeklyPlan(pool, demanding, options));
+    const relaxed = { ...demanding, weeklyBudget: 14, weeklyTargets: { legumeMeals: 2, fishMeals: 0 } };
+    const relaxedPlan = engine.generateWeeklyPlan(pool, relaxed, options);
+    assert.equal(engine.summarizePlan(relaxedPlan, pool, relaxed).fishMeals, 0);
+    assert.ok(relaxedPlan.estimatedCost <= relaxed.weeklyBudget);
+  }
+  assert.equal(engine.fishTargetAppliesToDiet("vegetarian"), false);
+  const vegetarian = { ...profile, diet: "vegetarian", weeklyTargets: { legumeMeals: 2, fishMeals: 7 } };
+  const plan = engine.generateWeeklyPlan(pool, vegetarian, options);
+  const withoutTarget = engine.generateWeeklyPlan(pool, { ...vegetarian, weeklyTargets: { legumeMeals: 2, fishMeals: 0 } }, options);
+  assert.deepEqual(plan.meals, withoutTarget.meals);
+  assert.equal(engine.summarizePlan(plan, pool, vegetarian).fishMeals, 0);
+});
+
 test("two meals can be swapped, marks included", () => {
   const plan = engine.generateWeeklyPlan(catalogue, profile, { seed: "swap" });
   const marked = engine.setPlannedMealCompleted(engine.setPlannedMealLock(plan, plan.meals[0].id, true), plan.meals[3].id, true);
@@ -1279,13 +1444,13 @@ test("a swap validates the substitutions carried by each planned meal", () => {
   assert.equal(engine.canSwapPlannedMeals(plan, "a", "b", [yogurtDish, otherDish], { ...profile, allergies: ["soja"] }), false);
 });
 
-test("generation explains when every compatible recipe is already used", () => {
+test("generation explains when compatible recipes cannot fill the week without repetition", () => {
   const tinyCatalogue = [recipe(860), recipe(861)];
   assert.throws(
     () => engine.generateWeeklyPlan(tinyCatalogue, profile, { seed: "unique-empty" }),
     (error) => error instanceof engine.RecipeCompatibilityError
       && error.diagnostic.compatibleCount === 2
-      && /déjà utilisées/.test(error.message),
+      && /sans répétition/.test(error.message),
   );
 });
 
