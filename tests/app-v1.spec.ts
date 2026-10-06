@@ -1027,8 +1027,10 @@ test("une substitution appliquée met à jour la recette, les allergènes et les
   await expect(page.getByText("Fruits à coque", { exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: "Retour" }).click();
   await page.getByRole("button", { name: "Courses", exact: true }).click();
-  await expect(page.getByRole("button", { name: /graines de courge/i })).toBeVisible();
-  await expect(page.getByRole("button", { name: /Cocher noix$/i })).toHaveCount(0);
+  const courses = page.getByTestId("flow-current").getByTestId("courses-view");
+  await expect(courses).toBeVisible();
+  await expect(courses.getByRole("button", { name: /graines de courge/i })).toBeVisible();
+  await expect(courses.getByRole("button", { name: /Cocher noix$/i })).toHaveCount(0);
 });
 
 test("la semaine permet d’ouvrir une recette et le remplacement d’un repas", async ({ page }) => {
@@ -1356,26 +1358,29 @@ test("une recette du catalogue peut être placée sur un créneau précis", asyn
   }, { ...DEFAULT_APP_STATE, onboardingCompleted: true, currentPlan: plan });
   await openFreshApp(page);
 
+  const current = page.getByTestId("flow-current");
+  const recipes = current.getByTestId("recipes-view");
   await page.getByRole("button", { name: "Recette", exact: true }).click();
-  await page.getByRole("tab", { name: "Catalogue" }).click();
-  await page.getByPlaceholder("Recette ou ingrédient").fill(recipe.title);
-  await page.getByRole("button", { name: /Gaspacho tomate, pastèque et basilic/ }).click();
+  await recipes.getByRole("tab", { name: "Catalogue" }).click();
+  await recipes.getByPlaceholder("Recette ou ingrédient").fill(recipe.title);
+  await recipes.getByRole("button", { name: /Gaspacho tomate, pastèque et basilic/ }).click();
 
-  await page.getByTestId("catalogue-plan").click();
-  await expect(page.getByTestId("plan-slot-view")).toBeVisible();
-  await page.getByTestId("plan-slot-2-dinner").click();
+  await current.getByTestId("catalogue-plan").click();
+  await expect(current.getByTestId("plan-slot-view")).toBeVisible();
+  await current.getByTestId("plan-slot-2-dinner").click();
 
-  await expect(page.getByTestId("week-view")).toBeVisible();
-  await page.locator(".day-card").nth(2).click();
-  await expect(page.locator(".meal-card__main strong", { hasText: recipe.title })).toHaveCount(1);
+  await expect(current.getByTestId("week-view")).toBeVisible();
+  await current.locator(".day-card").nth(2).click();
+  await expect(current.locator(".meal-card__main strong", { hasText: recipe.title })).toHaveCount(1);
   await expectNoHorizontalOverflow(page.getByTestId("mobile-app-viewport"));
 
   await page.getByRole("button", { name: "Recette", exact: true }).click();
-  await page.getByPlaceholder("Recette ou ingrédient").fill(recipe.title);
-  await page.getByRole("button", { name: /Gaspacho tomate, pastèque et basilic/ }).click();
-  await page.getByTestId("catalogue-plan").click();
-  await expect(page.getByTestId("already-planned")).toContainText("Cette recette est déjà au menu");
-  await expect(page.getByTestId("plan-slot-2-dinner")).toBeDisabled();
+  await recipes.getByPlaceholder("Recette ou ingrédient").fill(recipe.title);
+  await recipes.getByRole("button", { name: /Gaspacho tomate, pastèque et basilic/ }).click();
+  await current.getByTestId("catalogue-plan").click();
+  await expect(current.getByTestId("plan-slot-view")).toBeVisible();
+  await expect(current.getByTestId("already-planned")).toContainText("Cette recette est déjà au menu");
+  await expect(current.getByTestId("plan-slot-2-dinner")).toBeDisabled();
 });
 
 test("un plat peut être cuisiné en double et servi en restes", async ({ page }) => {
@@ -1444,6 +1449,11 @@ test("les portions d’un repas se règlent et se répercutent sur la semaine", 
 });
 
 test("les données locales s’exportent et se restaurent", async ({ page }) => {
+  // Export, reset, restore and stale-tab verification share this journey's budget.
+  // Bound individual operations in both the main page and the later second tab.
+  test.setTimeout(60_000);
+  page.context().setDefaultTimeout(5_000);
+  page.context().setDefaultNavigationTimeout(15_000);
   await openFreshApp(page);
 
   await generateWeek(page);

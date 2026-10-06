@@ -45,7 +45,8 @@ async function replicas(page: Page): Promise<{ local: AppState; indexed: AppStat
 
 async function open(page: Page, state: AppState, mode: Mode = "granted") {
   await page.clock.setFixedTime(new Date("2026-09-28T12:00:00Z"));
-  await page.goto("/tests/error-boundary-fixture.html");
+  // Establish the origin without importing the app before both replicas are seeded.
+  await page.goto("/tests/storage-fixture.html");
   await page.evaluate(async ({ key, state }) => {
     localStorage.setItem(key, JSON.stringify(state));
     const request = indexedDB.open("inflamm-menu", 1);
