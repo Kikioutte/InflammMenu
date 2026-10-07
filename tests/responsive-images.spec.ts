@@ -62,7 +62,7 @@ async function selectedImage(image: Locator, width: number, original: string) {
 const profiles = [
   { name: "mobile320-DPR2", viewport: { width: 320, height: 844 }, dpr: 2, hero: 640, card: 640, detail: 640 },
   { name: "mobile390-DPR3", viewport: { width: 390, height: 844 }, dpr: 3, hero: 1200, card: 640, detail: 900 },
-  { name: "desktop1440-DPR1", viewport: { width: 1440, height: 1000 }, dpr: 1, hero: 960, card: 320, detail: 900 },
+  { name: "desktop1440-DPR1", viewport: { width: 1440, height: 1000 }, dpr: 1, hero: 1200, card: 320, detail: 900 },
   { name: "desktop1440-DPR2", viewport: { width: 1440, height: 1000 }, dpr: 2, hero: 1200, card: 640, detail: 900 },
 ];
 
@@ -121,7 +121,8 @@ for (const profile of profiles) test.describe(profile.name, () => {
     await expect(detail).toHaveAttribute("alt", `Illustration générée par IA : ${catalogueTitle}`);
     await expect(detail).not.toHaveAttribute("loading", "lazy");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
-    await expect.poll(() => current(page).evaluate((element) => Math.round(element.getBoundingClientRect().left))).toBe(profile.viewport.width > 860 ? Math.round((profile.viewport.width - 860) / 2) : 0);
+    await expect.poll(() => current(page).evaluate((element) => Math.round(element.getBoundingClientRect().left))).toBe(0);
+    await expect.poll(() => current(page).evaluate((element) => Math.round(element.getBoundingClientRect().width))).toBe(profile.viewport.width);
     await page.screenshot({ path: info.outputPath(`${profile.name}.png`), fullPage: true });
     const after = await readState(page);
     for (const key of APP_STATE_DATA_KEYS) expect(after[key], key).toEqual(before[key]);

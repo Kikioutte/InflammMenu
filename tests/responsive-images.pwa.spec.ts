@@ -1,7 +1,5 @@
 import { chromium, webkit, expect, test, type Page } from "@playwright/test";
-import { createServer } from "node:http";
-import { readFile } from "node:fs/promises";
-import { extname, resolve, sep } from "node:path";
+import { builtOrigin } from "./helpers/built-pages-origin";
 import { assignRecipeToSlot, generateWeeklyPlan } from "../src/engine";
 import { RECIPES } from "../src/recipes";
 import { APP_STATE_DATA_KEYS, DEFAULT_APP_STATE, migrateAppState, type AppState } from "../src/storage";
@@ -25,33 +23,6 @@ function fixtureState(withPlan: boolean): AppState {
     customRecipes: [first, second], favoriteRecipeIds: [first.id, second.id], currentPlan: withPlan ? plan : null,
     recipeNotes: { [first.id]: "Note hors ligne conservée" },
   })!;
-}
-
-// Serve the actual built files, then close the origin for genuine offline
-// checks. Context-level offline emulation alone does not stop every SW fetch.
-async function builtOrigin() {
-  const root = resolve("dist/pages");
-  const requests: string[] = [];
-  const mime: Record<string, string> = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".webmanifest": "application/manifest+json", ".jpg": "image/jpeg", ".webp": "image/webp", ".png": "image/png", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".woff": "font/woff" };
-  const server = createServer(async (request, response) => {
-    try {
-      const pathname = new URL(request.url ?? "/", "http://local.test").pathname;
-      requests.push(pathname);
-      if (!pathname.startsWith(base)) { response.writeHead(404); response.end(); return; }
-      const filename = resolve(root, decodeURIComponent(pathname.slice(base.length)) || "index.html");
-      if (!filename.startsWith(`${root}${sep}`)) { response.writeHead(404); response.end(); return; }
-      const bytes = await readFile(filename);
-      response.writeHead(200, { "Content-Type": mime[extname(filename)] ?? "application/octet-stream", "Content-Length": bytes.byteLength, "Cache-Control": "no-cache" });
-      response.end(bytes);
-    } catch { response.writeHead(404); response.end(); }
-  });
-  await new Promise<void>((resolve, reject) => { server.once("error", reject); server.listen(0, "127.0.0.1", resolve); });
-  const address = server.address();
-  if (!address || typeof address === "string") throw new Error("Serveur de build indisponible");
-  return { url: `http://127.0.0.1:${address.port}`, requests, stop: async () => {
-    if (!server.listening) return;
-    await new Promise<void>((resolve, reject) => { server.close((error) => error ? reject(error) : resolve()); server.closeAllConnections(); });
-  } };
 }
 
 async function boot(page: Page, origin: string, withPlan: boolean) {
@@ -103,11 +74,11 @@ for (const [name, engine] of [["Chromium", chromium], ["WebKit", webkit]] as con
       expect(shellPhotos[0]).toMatch(/\/assets\/recipes\/responsive\/[a-f0-9]{12}\/_hero\/inflamm-hero-bowl\.w1200\.webp$/);
       expect(origin.requests).toContain(shellPhotos[0]);
       expect(origin.requests.filter((path) => path.endsWith("/assets/inflamm-hero-bowl.jpg"))).toEqual([]);
-      // 960 px was not previously displayed: after this origin is stopped,
+      // 1200 px was not previously displayed: after this origin is stopped,
       // the worker must make its shell image available for the larger slot.
       await origin.stop();
       await page.setViewportSize({ width: 1440, height: 1000 });
-      await expect.poll(() => hero.evaluate((image: HTMLImageElement) => image.currentSrc)).toMatch(/\.w960\.webp$/);
+      await expect.poll(() => hero.evaluate((image: HTMLImageElement) => image.currentSrc)).toMatch(/\.w1200\.webp$/);
       await expectDecoded(hero);
       await expect(hero).toHaveAttribute("src", `${base}assets/inflamm-hero-bowl.jpg`);
       await page.reload();
