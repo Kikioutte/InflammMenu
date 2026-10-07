@@ -7,6 +7,10 @@ export default defineConfig({
   testMatch: ["pwa-state.spec.ts", "responsive-images.pwa.spec.ts", "responsive-layout.pwa.spec.ts"],
   timeout: 60_000,
   workers: 1,
+  retries: process.env.CI ? 1 : 0,
+  // Keep the earlier browser-suite results: this run would otherwise empty
+  // test-results/ and drop the traces of tests reported as flaky.
+  outputDir: "test-results/pwa",
   use: {
     baseURL: `http://127.0.0.1:${testPort}`,
     viewport: { width: 390, height: 844 },
