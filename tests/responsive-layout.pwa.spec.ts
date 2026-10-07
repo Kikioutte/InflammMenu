@@ -115,6 +115,7 @@ for (const [browserName, engine] of [["Chromium", chromium], ["WebKit", webkit]]
         await page.getByRole("dialog").getByRole("button", { name: "Continuer mon repas", exact: true }).click();
 
         // The real precache must retain the unrestricted manifest and menu.
+        expect(errors).toEqual([]);
         await origin.stop();
         await page.setViewportSize({ width: 390, height: 844 });
         await page.reload();
@@ -130,7 +131,12 @@ for (const [browserName, engine] of [["Chromium", chromium], ["WebKit", webkit]]
         for (const key of APP_STATE_DATA_KEYS) expect((await readState(page))[key], key).toEqual(saved[key]);
         await current(page).getByRole("navigation", { name: "Navigation principale" }).getByRole("button", { name: "Courses", exact: true }).click();
         await expect(current(page).getByRole("button", { name: "Décocher Papier cuisson paysage", exact: true })).toBeVisible();
-        expect(errors).toEqual([]);
+        // Offline, a photo size never downloaded fails by design and
+        // RecipeImage falls back (see responsive-images.pwa.spec.ts). WebKit
+        // reports the worker's rejected fetch for it as page errors; anything
+        // else after the server stops is still a failure.
+        expect(errors.filter((message) => message !== "TypeError: Load failed"
+          && !/\/InflammMenu\/assets\/recipes\/responsive\/[a-f0-9]{12}\/[^\s]+\.w\d+\.webp\.?$/.test(message))).toEqual([]);
         await context.close();
       } finally { await browser.close(); await origin.stop(); }
     });
